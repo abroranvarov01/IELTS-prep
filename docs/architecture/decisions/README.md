@@ -1,0 +1,41 @@
+# Architecture Decision Records
+
+Canonical owner of **when and how ADRs are written**. The procedure for making a decision is the `architecture-decision` skill.
+
+## When to write an ADR
+
+Write one when a decision does at least one of the following:
+
+- has meaningful architectural impact,
+- is difficult to reverse,
+- affects multiple features,
+- establishes a project-wide pattern,
+- deliberately rejects credible alternatives.
+
+**Do not** write ADRs for trivial implementation choices (naming a helper, choosing between two equivalent loops, styling a single component).
+
+## Foundation ADR
+
+When application scaffolding begins, record the tightly related foundational choices in **one coherent foundation ADR**. Do not write separate ADRs for each initial tool. Typical scope:
+- framework, TypeScript configuration, package manager
+- styling strategy (including how design tokens are implemented)
+- basic test tooling
+- PWA foundation
+
+Split a choice into its own ADR only when it independently meets the criteria above. The backend framework (NestJS) and the persistence stack (PostgreSQL + Prisma) are included because the owner confirmed them. AI-provider choices are **not** part of the foundation ADR. They stay TBD until a current requirement needs them.
+
+## Rules
+
+- Before reversing or working around an established pattern, **read the relevant ADRs**. Reversing an accepted ADR requires a new ADR that supersedes it. Do not silently diverge.
+- Files are named `NNNN-short-kebab-title.md` (e.g. `0001-application-stack.md`), numbered in sequence and never reused.
+- Status values: `Proposed` → `Accepted` → (`Superseded by NNNN` | `Deprecated`). Accepted ADRs are not rewritten. Only their status line changes.
+- An agent may draft an ADR as `Proposed`. Only the project owner marks it `Accepted`.
+- Use [ADR-TEMPLATE.md](ADR-TEMPLATE.md).
+
+## Index
+
+| ADR | Title | Status |
+|---|---|---|
+| [0001](0001-initial-application-foundation.md) | Initial Application Foundation | Accepted |
+
+Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).

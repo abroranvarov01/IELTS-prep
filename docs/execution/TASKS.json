@@ -1,0 +1,487 @@
+{
+  "schemaVersion": 1,
+  "description": "Executable task queue. Procedure: docs/execution/AUTONOMOUS_WORKFLOW.md. A task is READY when status is 'todo', owner is 'worker', and every dependsOn task is 'done'. Workers take the first ready task in array order.",
+  "statusValues": [
+    "todo",
+    "in_progress",
+    "done",
+    "blocked"
+  ],
+  "milestone": {
+    "id": "M0",
+    "name": "Foundation",
+    "goal": "A clean monorepo (apps/web Next.js, apps/api NestJS) with working gates (format, lint, typecheck, unit, e2e, build), localization, design tokens, PWA shell, and CI, as defined by ADR-0001. No product features."
+  },
+  "tasks": [
+    {
+      "id": "F-00",
+      "title": "Owner accepts ADR-0001 and prepares the machine",
+      "owner": "human",
+      "status": "done",
+      "dependsOn": [],
+      "goal": "Unblock autonomous work with an accepted foundation decision and the required runtime.",
+      "scope": [
+        "Review docs/architecture/decisions/0001-initial-application-foundation.md; set Status to Accepted (or request changes)",
+        "Update the ADR index in docs/architecture/decisions/README.md accordingly",
+        "Install Node.js 24 LTS on the development machine (node --version prints v24.x)"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "ADR-0001 status is Accepted",
+        "node --version prints v24.x"
+      ],
+      "validation": [
+        "node --version",
+        "grep -n 'Status' docs/architecture/decisions/0001-initial-application-foundation.md"
+      ],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
+      ],
+      "completedAt": "2026-10-09"
+    },
+    {
+      "id": "F-01",
+      "title": "Repository baseline and governance commit",
+      "owner": "worker",
+      "status": "done",
+      "dependsOn": [
+        "F-00"
+      ],
+      "goal": "Version the approved governance and establish repository hygiene files.",
+      "scope": [
+        "Add .gitignore (node_modules, build outputs such as .next/ and dist/, coverage, Playwright reports, OS/editor files, .env and .env.* with an exception for .env.example)",
+        "Add .gitattributes (text=auto, LF line endings)",
+        "Add .editorconfig (UTF-8, LF, 2-space indent, final newline)",
+        "Add .nvmrc pinned to Node 24",
+        "Commit the existing untracked governance (CLAUDE.md, .claude/, docs/) together with these files"
+      ],
+      "outOfScope": [
+        "package.json or any tooling",
+        "README content changes",
+        "pushing"
+      ],
+      "acceptanceCriteria": [
+        "git status is clean after the commit",
+        "git check-ignore .env succeeds; git check-ignore .env.example fails (not ignored)",
+        "All governance files are tracked"
+      ],
+      "validation": [
+        "git status --porcelain",
+        "git check-ignore -v .env",
+        "! git check-ignore -q .env.example",
+        "git ls-files CLAUDE.md .claude docs | wc -l"
+      ],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
+      ],
+      "completedAt": "2026-10-09"
+    },
+    {
+      "id": "F-02",
+      "title": "pnpm workspace root and TypeScript base config",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-01"
+      ],
+      "goal": "A workspace root that apps and packages plug into.",
+      "scope": [
+        "Activate pnpm via Corepack; pin the current stable pnpm in root package.json packageManager",
+        "Root package.json: private, engines.node for Node 24, no dependencies beyond what this task needs",
+        "pnpm-workspace.yaml with apps/* and packages/*",
+        "tsconfig.base.json with the strict options listed in ADR-0001 §2",
+        "Generate and commit pnpm-lock.yaml"
+      ],
+      "outOfScope": [
+        "apps/web",
+        "apps/api",
+        "lint/format tooling",
+        "creating empty packages"
+      ],
+      "acceptanceCriteria": [
+        "pnpm install --frozen-lockfile succeeds",
+        "tsconfig.base.json contains strict, noUncheckedIndexedAccess, noImplicitOverride, noFallthroughCasesInSwitch"
+      ],
+      "validation": [
+        "node --version",
+        "pnpm --version",
+        "pnpm install --frozen-lockfile"
+      ],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
+      ]
+    },
+    {
+      "id": "F-03",
+      "title": "Prettier and base ESLint at the root",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-02"
+      ],
+      "goal": "Deterministic formatting and linting before any application code exists.",
+      "scope": [
+        "Prettier config and .prettierignore (exclude lockfile, build outputs, generated files)",
+        "ESLint flat config at the root with typescript-eslint recommended rules; structured so apps can add their own rules",
+        "Root scripts: format, format:check, lint",
+        "Format existing files only if Prettier changes are limited to formatting (Markdown docs may be excluded if formatting would churn them; decide and record in PROGRESS)"
+      ],
+      "outOfScope": [
+        "Next.js/React/Nest-specific lint rules (added by F-04/F-05)",
+        "custom lint rules"
+      ],
+      "acceptanceCriteria": [
+        "pnpm format:check passes",
+        "pnpm lint passes",
+        "QUALITY_GATES.md command table lists format:check and lint as existing"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "pnpm lint"
+      ],
+      "references": [
+        "docs/engineering/QUALITY_GATES.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md"
+      ]
+    },
+    {
+      "id": "F-04",
+      "title": "Scaffold apps/web (Next.js)",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-03"
+      ],
+      "goal": "A minimal, boilerplate-free Next.js app that passes all gates.",
+      "scope": [
+        "Create apps/web with the official create-next-app non-interactively: TypeScript, App Router, src/ directory, Tailwind, ESLint, pnpm; no nested git repo and no nested lockfile",
+        "Remove template content: demo page markup, demo images/SVGs, template fonts, template CSS beyond the Tailwind import",
+        "tsconfig extends ../../tsconfig.base.json",
+        "Integrate Next.js, React Hooks and jsx-a11y lint rules into the root ESLint config; remove the app-local duplicate config if redundant",
+        "Scripts in apps/web: dev, build, start, lint, typecheck (tsc --noEmit); root typecheck and build scripts run across workspaces",
+        "The root page renders a bare <main> landmark with no user-facing text (text arrives with localization in F-06)"
+      ],
+      "outOfScope": [
+        "localization",
+        "design tokens and fonts",
+        "PWA",
+        "any product UI",
+        "shadcn/ui"
+      ],
+      "acceptanceCriteria": [
+        "pnpm --filter web build succeeds",
+        "pnpm lint, pnpm typecheck and pnpm format:check pass at the root",
+        "No template/demo assets remain",
+        "The Next.js version used is recorded in PROGRESS.md"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "pnpm lint",
+        "pnpm typecheck",
+        "pnpm --filter web build"
+      ],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md",
+        ".claude/rules/frontend/react.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md"
+      ]
+    },
+    {
+      "id": "F-05",
+      "title": "Scaffold apps/api (NestJS) with a health endpoint",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-03"
+      ],
+      "goal": "A minimal NestJS app with strict TypeScript and real tests.",
+      "scope": [
+        "Create apps/api with the official Nest CLI using pnpm, skipping git init",
+        "tsconfig extends ../../tsconfig.base.json plus the decorator options NestJS needs; strict mode on",
+        "Remove the hello-world AppController/AppService; add GET /health returning {\"status\":\"ok\"}",
+        "Port from the PORT environment variable with a documented default (3001); add apps/api/.env.example if any variable is introduced",
+        "Use the root ESLint/Prettier configs; delete Nest-generated duplicates",
+        "Jest unit test for the health controller and the generated e2e test adapted to /health",
+        "Scripts: dev, build, start, test, test:e2e, typecheck; included in root lint/typecheck/test/build"
+      ],
+      "outOfScope": [
+        "database",
+        "auth",
+        "validation/contract libraries",
+        "config module beyond reading PORT",
+        "Docker"
+      ],
+      "acceptanceCriteria": [
+        "pnpm --filter api test and pnpm --filter api test:e2e pass",
+        "pnpm --filter api build succeeds",
+        "Root lint, typecheck and format:check pass",
+        "The NestJS version used is recorded in PROGRESS.md"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "pnpm lint",
+        "pnpm typecheck",
+        "pnpm --filter api test",
+        "pnpm --filter api test:e2e",
+        "pnpm --filter api build"
+      ],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md",
+        ".claude/rules/security/security.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md"
+      ]
+    },
+    {
+      "id": "F-06",
+      "title": "Localization foundation (next-intl, uz/ru/en)",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-04"
+      ],
+      "goal": "Every page is served under /uz, /ru or /en with the correct html lang, and no hard-coded interface strings.",
+      "scope": [
+        "Install and configure next-intl following its documentation for the installed Next.js version",
+        "Locales uz (Uzbek Latin), ru, en; default uz; locale prefix always; / redirects by Accept-Language with uz fallback",
+        "<html lang> matches the active locale",
+        "Message catalogs apps/web/messages/{uz,ru,en}.json",
+        "The root page shows only the working product name from the catalogs (key app.name, value 'IELTS Prep' in all locales; the product name is TBD, so flag it in PROGRESS)"
+      ],
+      "outOfScope": [
+        "Uzbek Cyrillic",
+        "language switcher UI",
+        "any other copy or product UI"
+      ],
+      "acceptanceCriteria": [
+        "/uz, /ru and /en render with matching html lang",
+        "/ redirects to a locale",
+        "All catalogs have identical keys",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "pnpm lint",
+        "pnpm typecheck",
+        "pnpm --filter web build",
+        "start the production build and curl -sI /, /uz, /ru, /en"
+      ],
+      "references": [
+        "docs/product/LOCALIZATION.md",
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/LOCALIZATION.md (technical section: library, catalog location, routing)"
+      ]
+    },
+    {
+      "id": "F-07",
+      "title": "Web unit test tooling (Vitest + Testing Library)",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-06"
+      ],
+      "goal": "Unit and component testing for apps/web, with a first test that protects a real rule.",
+      "scope": [
+        "Vitest, @testing-library/react, jsdom (and the React plugin) for apps/web",
+        "First test: message catalogs uz/ru/en have identical key sets and no empty values",
+        "apps/web test script; root test script runs all workspace tests (web Vitest + api Jest)"
+      ],
+      "outOfScope": [
+        "coverage thresholds",
+        "snapshot tests",
+        "tests of template code"
+      ],
+      "acceptanceCriteria": [
+        "pnpm test runs web and api tests and passes",
+        "Removing a key from one catalog makes the test fail (verified once, then reverted)"
+      ],
+      "validation": [
+        "pnpm test",
+        "pnpm lint",
+        "pnpm typecheck"
+      ],
+      "references": [
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/testing/test-code.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md"
+      ]
+    },
+    {
+      "id": "F-08",
+      "title": "End-to-end tooling (Playwright + axe), mobile first",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-07"
+      ],
+      "goal": "Smoke-level e2e and automated accessibility checks against the production build.",
+      "scope": [
+        "Playwright in apps/web with projects: mobile Chromium (~360x800, primary) and desktop Chromium (1280x800)",
+        "Install Chromium for Playwright; if system dependencies require installing OS packages, STOP and ask the owner",
+        "Tests: / redirects to a locale; /uz, /ru, /en render with correct html lang; @axe-core/playwright reports no violations on each locale page",
+        "Root script test:e2e (builds/starts the web app via Playwright webServer)"
+      ],
+      "outOfScope": [
+        "visual regression",
+        "API e2e (already in F-05)",
+        "CI wiring (F-11)"
+      ],
+      "acceptanceCriteria": [
+        "pnpm test:e2e passes for both projects"
+      ],
+      "validation": [
+        "pnpm test:e2e",
+        "pnpm lint",
+        "pnpm typecheck"
+      ],
+      "references": [
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/design/ACCESSIBILITY.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md"
+      ]
+    },
+    {
+      "id": "F-09",
+      "title": "Design tokens, fonts and token enforcement",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-08"
+      ],
+      "goal": "The design system exists in code as the single source of visual values.",
+      "scope": [
+        "One Tailwind v4 @theme token file in apps/web transcribing DESIGN_SYSTEM.md: approved brand palette, neutrals, skill colors, type scale, spacing, radii, shadows, motion",
+        "Remove Tailwind's default color palette so only token colors exist",
+        "Base styles: surface.base background, ink text, 16px minimum body, visible focus style, prefers-reduced-motion handling",
+        "Manrope and Literata via next/font with latin, latin-ext and cyrillic subsets, exposed as CSS variables",
+        "Verify that the shipped Manrope/Literata files contain U+02BB, U+02BC and Cyrillic glyphs (inspect the font cmap or render a test string in Playwright); record the result in PROGRESS. If coverage is missing, STOP and ask (design decision)",
+        "Token check script (run by root lint) that fails on raw hex/rgb/hsl colors and arbitrary color utilities outside the token file and the documented platform-metadata exception"
+      ],
+      "outOfScope": [
+        "components",
+        "dark mode",
+        "status colors (TBD)",
+        "shadcn/ui"
+      ],
+      "acceptanceCriteria": [
+        "Token values match DESIGN_SYSTEM.md exactly",
+        "A raw color added to a component makes pnpm lint fail (verified once, then reverted)",
+        "Font glyph coverage result recorded",
+        "All gates including test:e2e pass"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "pnpm lint",
+        "pnpm typecheck",
+        "pnpm test",
+        "pnpm test:e2e"
+      ],
+      "references": [
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        ".claude/rules/styling/visual-implementation.md"
+      ],
+      "docsToUpdate": [
+        "docs/design/DESIGN_SYSTEM.md (status note: path of the token source in code)"
+      ]
+    },
+    {
+      "id": "F-10",
+      "title": "PWA foundation (manifest + app-shell service worker)",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-09"
+      ],
+      "goal": "The app is installable and caches its shell; no offline data.",
+      "scope": [
+        "app/manifest.ts with working name, start_url, display standalone, theme/background colors mirroring tokens (documented platform-metadata exception)",
+        "Temporary placeholder icons (192, 512, maskable) clearly marked as placeholders in PROGRESS; final icons are an owner asset",
+        "Service worker: Serwist if it supports the installed Next.js version and bundler, otherwise a minimal hand-written worker per the official Next.js PWA guide; record the choice and reason in PROGRESS",
+        "App-shell caching only; service worker disabled in development",
+        "e2e test: manifest is served and valid; service worker registers in the production build"
+      ],
+      "outOfScope": [
+        "offline data or sync",
+        "push notifications",
+        "install prompts UI"
+      ],
+      "acceptanceCriteria": [
+        "Manifest and service worker e2e tests pass",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "pnpm lint",
+        "pnpm typecheck",
+        "pnpm test",
+        "pnpm test:e2e",
+        "pnpm build"
+      ],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
+      ]
+    },
+    {
+      "id": "F-11",
+      "title": "Gate consolidation, CI and governance sync",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "F-10",
+        "F-05"
+      ],
+      "goal": "One command validates everything; CI runs it; governance describes the real setup.",
+      "scope": [
+        "Root check script: format:check, lint (including token check), typecheck, test",
+        "GitHub Actions workflow (.github/workflows/ci.yml): Node from .nvmrc, pnpm via Corepack, install --frozen-lockfile, check, build on push and pull_request. Do NOT push; CI activates when the owner pushes",
+        "QUALITY_GATES.md: final command table; mark implemented items in 'Future deterministic enforcement'",
+        "CLAUDE.md: Current state and Commands sections reflect reality",
+        "ARCHITECTURE.md: move ADR-0001 items to Confirmed (if accepted)",
+        "BOUNDARIES.md: concrete apps/web, apps/api, packages/* rules; add ESLint import restrictions so apps never import from each other",
+        "Narrow .claude/rules path globs (security → apps/api/**, etc.) to the real layout",
+        "README.md: short project description, prerequisites (Node 24, Corepack), the check command, pointer to CLAUDE.md and docs/"
+      ],
+      "outOfScope": [
+        "deployment",
+        "branch protection (owner action)",
+        "e2e in CI (follow-up once stable)",
+        "pre-commit hooks"
+      ],
+      "acceptanceCriteria": [
+        "pnpm check and pnpm build pass from a clean install",
+        "An import from apps/api inside apps/web fails lint (verified once, then reverted)",
+        "All governance references to commands and layout are accurate"
+      ],
+      "validation": [
+        "pnpm install --frozen-lockfile",
+        "pnpm check",
+        "pnpm build",
+        "pnpm test:e2e"
+      ],
+      "references": [
+        "docs/engineering/QUALITY_GATES.md",
+        "docs/architecture/BOUNDARIES.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md",
+        "CLAUDE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/BOUNDARIES.md",
+        "README.md"
+      ]
+    }
+  ]
+}
