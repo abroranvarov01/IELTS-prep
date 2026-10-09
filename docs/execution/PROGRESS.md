@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-06` (worker): Localization foundation (next-intl, uz/ru/en).
+- **Next:** `F-07` (worker): Web unit test tooling (Vitest + Testing Library).
 
 ## Open questions for the owner
 
@@ -83,3 +83,10 @@ Entry format:
 - Versions / choices: NestJS 12.1.2 (`@nestjs/core`, `common`, `platform-express`, `testing`), `@nestjs/cli` 12.0.8, Vitest 4.1.11, TypeScript 6.0.3 (template asks for ^6.0.2). The template is ESM (`"type": "module"`).
 - Removed from the template: the `deploy` script and `@nestjs/mau` (Nest cloud deployment; agents never deploy); oxlint, `oxlint-tsgolint`, and app-local Prettier (root configs replace them); `@vitest/coverage-v8` and the `test:cov`/`test:watch`/`test:debug`/`start:debug`/`format`/`lint` scripts (outside the required script set; coverage thresholds belong to a later decision); `vite-tsconfig-paths` (no path aliases exist, and its `tsconfck` dependency is deprecated with a TypeScript ^5 peer); `source-map-support` (not referenced by Nest). `strictPropertyInitialization: false` was dropped so the API runs fully strict. Add it back with a reason if DTO classes need it.
 - Notes: The template's oxlint config enforced `no-floating-promises`. The root ESLint uses non-type-checked typescript-eslint rules, so that check is not active. Follow-up: consider type-aware linting (owner or a later task).
+
+### 2026-10-09: F-06 Localization foundation (next-intl, uz/ru/en)
+- Result: done
+- Changes: Added `next-intl` to `apps/web`, following the official App Router example (`next/root-params`): `src/i18n/routing.ts` (uz/ru/en, default uz, `localePrefix: "always"`), `src/i18n/request.ts`, `src/proxy.ts` (locale redirect; skips `/api`, `/_next`, and files with an extension), and the next-intl plugin in `next.config.ts`. Layout and page moved to `src/app/[locale]/`. The layout sets `<html lang>` from the active locale and prerenders all three locales with `generateStaticParams`. The page shows only `app.name` from `messages/{uz,ru,en}.json`. LOCALIZATION.md gained a "Technical setup" section and now points at ADR-0001 §6 instead of saying TBD.
+- Verification: `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, and `pnpm --filter web build` pass. The build prerenders `/uz`, `/ru`, `/en` as static. Against `pnpm start`: `/` → 307 `/uz`; with `Accept-Language: ru` → `/ru`, `en` → `/en`, `de` → `/uz` (fallback); a `NEXT_LOCALE=en` cookie wins over `Accept-Language: ru`. `/uz`, `/ru`, `/en` → 200 with `<html lang="uz|ru|en">` and `<h1>IELTS Prep</h1>`. `/uz/does-not-exist` → 404. The three catalogs have identical keys (one key, `app.name`). Tests: none for web yet (F-07 adds the catalog key test).
+- Versions / choices: next-intl 4.14.9 (npm `latest`, peers include Next 16). Uses `next/root-params`, the approach next-intl documents for Cache Components (the app keeps `cacheComponents: true`). Left out because nothing needs them yet: `i18n/navigation.ts` (no links), `NextIntlClientProvider` (no client components), and typed message keys (`AppConfig` augmentation). next-intl depends on `@parcel/watcher` and `@swc/core`, whose install scripts pnpm 12 blocks. They are set to `false` in root `allowBuilds` (same as `sharp` and `unrs-resolver`), and their prebuilt binaries load.
+- Notes: **Product name is still TBD.** `app.name` = "IELTS Prep" in all three catalogs is the working placeholder (see open questions). Follow-up: typed message keys would let `pnpm typecheck` catch unknown keys.

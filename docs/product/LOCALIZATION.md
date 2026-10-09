@@ -1,6 +1,6 @@
 # Localization
 
-Canonical owner of **interface language rules**. The technical architecture (library, file format, routing) is **TBD** and will be recorded in an ADR (or in the foundation ADR) when implementation starts.
+Canonical owner of **interface language rules**. The technical architecture is decided in [ADR-0001 §6](../architecture/decisions/0001-initial-application-foundation.md#6-localization) and its implementation is described under [Technical setup](#technical-setup).
 
 ## Languages
 
@@ -22,6 +22,13 @@ Canonical owner of **interface language rules**. The technical architecture (lib
 5. **Uzbek Latin orthography:** use the proper characters in oʻ and gʻ (U+02BB) and the tutuq belgisi ʼ (U+02BC), not ASCII apostrophes or backticks. Search and input matching should tolerate the ASCII variants that users type.
 6. **Fonts must cover every script used:** Latin, U+02BB/U+02BC, and Cyrillic. Verify this before adopting any font (see [DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md#typography)).
 7. Plain-language rules ([UX_PRINCIPLES.md](UX_PRINCIPLES.md#6-plain-language)) and honest-feedback wording ([PRODUCT.md](PRODUCT.md#honest-feedback-non-negotiable)) apply in every language. Translations are reviewed by fluent speakers, not shipped raw from machine translation.
+
+## Technical setup
+
+- **Library:** next-intl (App Router, `next/root-params`), configured in `apps/web/src/i18n/routing.ts` (locales, default, prefix) and `apps/web/src/i18n/request.ts` (loads the catalog for the active locale).
+- **Locales:** `uz` (Uzbek Latin), `ru`, `en`. Default `uz`.
+- **Routing:** every page lives under `apps/web/src/app/[locale]/` and is served at `/uz/...`, `/ru/...`, `/en/...` (prefix always). `apps/web/src/proxy.ts` redirects `/` and unprefixed paths using the `NEXT_LOCALE` cookie, then `Accept-Language`, with `uz` as the fallback. `<html lang>` is set from the active locale in `app/[locale]/layout.tsx`.
+- **Catalogs:** one JSON file per locale in `apps/web/messages/` (`uz.json`, `ru.json`, `en.json`), nested by namespace (e.g. `app.name`). All three files must have the same keys.
 
 ## Future deterministic enforcement
 

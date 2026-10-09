@@ -219,7 +219,7 @@
       "id": "F-06",
       "title": "Localization foundation (next-intl, uz/ru/en)",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["F-04"],
       "goal": "Every page is served under /uz, /ru or /en with the correct html lang, and no hard-coded interface strings.",
       "scope": [
@@ -253,7 +253,8 @@
       ],
       "docsToUpdate": [
         "docs/product/LOCALIZATION.md (technical section: library, catalog location, routing)"
-      ]
+      ],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-07",

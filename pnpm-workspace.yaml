@@ -2,8 +2,10 @@ packages:
   - apps/*
   - packages/*
 
-# pnpm install-script approvals. Both packages ship prebuilt binaries,
-# so their scripts stay off (create-next-app default).
+# pnpm install-script approvals. These packages ship prebuilt binaries,
+# so their scripts stay off (sharp, unrs-resolver: create-next-app default).
 allowBuilds:
+  "@parcel/watcher": false
+  "@swc/core": false
   sharp: false
   unrs-resolver: false
