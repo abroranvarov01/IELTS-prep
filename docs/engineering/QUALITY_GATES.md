@@ -6,7 +6,7 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 
 ## Current state (2026-10-09)
 
-**Format, lint, typecheck, unit tests, API e2e tests, and build exist; browser end-to-end tests do not yet.** There is no CI. The Foundation tasks ([TASKS.json](../execution/TASKS.json)) create the rest and update this table as each command becomes real. Run commands from the repository root with Node 24 and pnpm (Corepack).
+**All gates below exist.** There is no CI yet. The Foundation tasks ([TASKS.json](../execution/TASKS.json)) create the rest and update this table as each command becomes real. Run commands from the repository root with Node 24 and pnpm (Corepack).
 
 | Gate | Command | Status |
 |---|---|---|
@@ -14,8 +14,9 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 | Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended for all files; `apps/web/**` adds `eslint-config-next/core-web-vitals` (Next.js, React Hooks) and the full jsx-a11y recommended set) | Exists |
 | Format | `pnpm format:check` (check), `pnpm format` (write). Prettier defaults; Markdown and the lockfile are excluded (`.prettierignore`) | Exists |
 | Unit/component tests | `pnpm test` (Vitest in every workspace: `apps/web` with jsdom + Testing Library, `apps/api`) | Exists |
-| API HTTP e2e tests | `pnpm --filter api test:e2e` (Vitest + supertest against the Nest app) | Exists |
-| Browser end-to-end tests | — | Does not exist |
+| End-to-end tests | `pnpm test:e2e` (runs `test:e2e` in every workspace) | Exists |
+| ↳ API HTTP e2e | `pnpm --filter api test:e2e` (Vitest + supertest against the Nest app) | Exists |
+| ↳ Browser e2e + accessibility | `pnpm --filter web test:e2e` (Playwright against the production build, started by `webServer`; projects `mobile` 360×800 and `desktop` 1280×800; `@axe-core/playwright` WCAG 2.2 AA checks). Needs Chromium: `pnpm --filter web exec playwright install chromium` | Exists |
 | Build | `pnpm build` (runs `build` in every workspace); one app: `pnpm --filter web build` or `pnpm --filter api build` | Exists |
 
 **Agents must not claim that a check passed if the command does not exist.** When scaffolding adds these commands, replace the table above with the real command names. This table is their only canonical list.

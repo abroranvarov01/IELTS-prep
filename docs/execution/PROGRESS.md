@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-08` (worker): End-to-end tooling (Playwright + axe), mobile first.
+- **Next:** `F-09` (worker): Design tokens, fonts and token enforcement.
 
 ## Open questions for the owner
 
@@ -97,3 +97,10 @@ Entry format:
 - Verification: `pnpm test` (api 1 test + web 6 tests), `pnpm lint`, `pnpm typecheck`, `pnpm format:check`, and `pnpm --filter web build` pass. `pnpm peers check`: no issues. Probes, both reverted: removing `app.name` from `ru.json` failed "ru has exactly the keys of the default locale"; setting it to `" "` failed "ru has no empty messages".
 - Versions / choices: **Vitest 4.1.11, not the npm `latest` 5.0.3.** It matches the version the NestJS 12 template installed in `apps/api`, so the monorepo runs a single Vitest version. Follow-up: upgrade both apps to Vitest 5 together. @vitejs/plugin-react 6.1.2 (requires Vite 8; Vite 8.3.4 is installed via Vitest), @testing-library/react 16.3.3, @testing-library/dom 10.4.2, jsdom 30.1.2. Catalogs are loaded with static JSON imports: `new URL(..., import.meta.url)` is rewritten into an asset URL under jsdom.
 - Notes: `apps/web` tests import `describe`/`it`/`expect` from `vitest` explicitly; `apps/api` keeps the Nest template's `globals: true`. TESTING_STRATEGY.md's status line now points to ADR-0001 §7 and QUALITY_GATES.md, because it claimed no test tooling was installed.
+
+### 2026-10-09: F-08 End-to-end tooling (Playwright + axe), mobile first
+- Result: done
+- Changes: `apps/web` dev dependencies `@playwright/test` and `@axe-core/playwright`. `apps/web/playwright.config.ts`: projects `mobile` (Pixel 7 device profile, viewport 360×800) and `desktop` (Desktop Chrome, 1280×800). `webServer` builds and starts the production app on port 3100 and never reuses an existing server. `apps/web/e2e/locales.spec.ts`: `/` redirects to the browser language (ru-RU → `/ru`) or the default locale (de-DE → `/uz`); each locale page sets `<html lang>`; axe (tags wcag2a/2aa/21a/21aa/22aa) reports no violations on each locale page. Scripts: `apps/web` `test:e2e` (`playwright test`), root `test:e2e` (`pnpm -r test:e2e`, so it includes the API HTTP e2e). Vitest is limited to `src/**/*.test.{ts,tsx}` so it does not pick up Playwright specs. Updated QUALITY_GATES.md, and ACCESSIBILITY.md's "Verification" line (automated checks now exist).
+- **Accessibility fix found by the new test:** every locale page had no `<title>` (axe `document-title`, WCAG 2.4.2). `app/[locale]/layout.tsx` now sets the title from the existing `app.name` catalog key via `generateMetadata` (next-intl example pattern). No new copy. The locale pages remain statically prerendered.
+- Verification: `pnpm test:e2e` passes (api 1, web 16 = 8 tests × 2 projects). The first run failed 6 axe tests on the missing title, which shows the check is effective. `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm format:check`, and `pnpm --filter web build` pass.
+- Versions / choices: @playwright/test 1.64.0, @axe-core/playwright 4.13.0. Chromium (Chrome for Testing 156.0.8078.4) was installed by `playwright install chromium` into `~/.cache/ms-playwright`. `ldd` reports no missing system libraries and headless launch works, so no OS packages were needed.

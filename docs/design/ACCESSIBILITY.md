@@ -34,4 +34,4 @@ Canonical owner of **accessibility requirements**. Target: **WCAG 2.2 Level AA**
 ## Verification
 
 - Manual: keyboard pass, screen-reader spot check (TalkBack on Android is the priority for our users), 200% zoom, 320 px width.
-- Automated checks are planned. See [QUALITY_GATES.md](../engineering/QUALITY_GATES.md#future-deterministic-enforcement).
+- Automated: `eslint-plugin-jsx-a11y` in lint, and axe (WCAG 2.2 AA tags) on every locale page in the browser e2e tests. Commands are in [QUALITY_GATES.md](../engineering/QUALITY_GATES.md).

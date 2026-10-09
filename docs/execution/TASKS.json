@@ -289,7 +289,7 @@
       "id": "F-08",
       "title": "End-to-end tooling (Playwright + axe), mobile first",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["F-07"],
       "goal": "Smoke-level e2e and automated accessibility checks against the production build.",
       "scope": [
@@ -309,7 +309,8 @@
         "docs/engineering/TESTING_STRATEGY.md",
         "docs/design/ACCESSIBILITY.md"
       ],
-      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-09",
