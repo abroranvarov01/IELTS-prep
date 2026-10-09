@@ -316,7 +316,7 @@
       "id": "F-09",
       "title": "Design tokens, fonts and token enforcement",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["F-08"],
       "goal": "The design system exists in code as the single source of visual values.",
       "scope": [
@@ -353,7 +353,8 @@
       ],
       "docsToUpdate": [
         "docs/design/DESIGN_SYSTEM.md (status note: path of the token source in code)"
-      ]
+      ],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-10",

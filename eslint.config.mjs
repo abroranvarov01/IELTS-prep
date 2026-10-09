@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import path from "node:path";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import jsxA11y from "eslint-plugin-jsx-a11y";
+import globals from "globals";
 import { defineConfig, globalIgnores } from "eslint/config";
 import tseslint from "typescript-eslint";
 
@@ -18,6 +19,10 @@ export default defineConfig(
   ]),
   js.configs.recommended,
   tseslint.configs.recommended,
+  {
+    files: ["scripts/**"],
+    languageOptions: { globals: globals.node },
+  },
   {
     files: ["apps/web/**"],
     // core-web-vitals includes the Next.js and React Hooks rules and registers

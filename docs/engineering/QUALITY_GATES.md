@@ -11,7 +11,7 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 | Gate | Command | Status |
 |---|---|---|
 | Typecheck | `pnpm typecheck` (runs `typecheck` in every workspace; `apps/web`: `next typegen && tsc --noEmit`; `apps/api`: `tsc --noEmit`) | Exists |
-| Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended for all files; `apps/web/**` adds `eslint-config-next/core-web-vitals` (Next.js, React Hooks) and the full jsx-a11y recommended set) | Exists |
+| Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended for all files; `apps/web/**` adds `eslint-config-next/core-web-vitals` (Next.js, React Hooks) and the full jsx-a11y recommended set; then `scripts/check-tokens.mjs` rejects raw hex/rgb/hsl colors and arbitrary color utilities outside `apps/web/src/styles/tokens.css`) | Exists |
 | Format | `pnpm format:check` (check), `pnpm format` (write). Prettier defaults; Markdown and the lockfile are excluded (`.prettierignore`) | Exists |
 | Unit/component tests | `pnpm test` (Vitest in every workspace: `apps/web` with jsdom + Testing Library, `apps/api`) | Exists |
 | End-to-end tests | `pnpm test:e2e` (runs `test:e2e` in every workspace) | Exists |

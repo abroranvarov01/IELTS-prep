@@ -7,6 +7,8 @@ Canonical owner of **design token values, the token policy, and component state 
 > - **Everything else** (neutrals, skill shades, type sizes, spacing, radii, shadows, breakpoints): **INITIAL DIRECTION / SUBJECT TO DESIGN REVIEW.**
 >
 > Once implementation starts, the token source in code becomes the single source of truth for values. This document then describes intent and usage and stops duplicating raw numbers.
+>
+> **Token source in code:** `apps/web/src/styles/tokens.css` (Tailwind v4 `@theme`). Tailwind's default colors, spacing, radii, font sizes, font weights, and shadows are reset there, so only these tokens produce utilities. Fonts are loaded in `apps/web/src/app/[locale]/layout.tsx` (`next/font`). `pnpm lint` runs `scripts/check-tokens.mjs`, which rejects raw colors outside the token file. Not yet in code (added when first needed, owner decision 2026-10-09): the raised shadow, motion durations, heading sizes, passage and meta text sizes.
 
 ## Token policy
 

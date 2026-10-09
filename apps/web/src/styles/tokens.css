@@ -1,0 +1,76 @@
+/*
+ * Design tokens: the single source of visual values in code.
+ * Values are transcribed from docs/design/DESIGN_SYSTEM.md. Change them there
+ * first. Tailwind's defaults are reset for every namespace defined here, so
+ * only these tokens produce utilities.
+ */
+@theme {
+  /* Color */
+  --color-*: initial;
+
+  /* Core brand palette (approved) */
+  --color-brand-primary: #e51f3a;
+  --color-brand-primary-deep: #d90d31;
+  --color-brand-highlight: #ff5268;
+  --color-brand-blush: #f7c7ca;
+  --color-ink: #111318;
+  --color-surface-warm: #fff8f4;
+  --color-surface-base: #ffffff;
+
+  /* Neutrals */
+  --color-text-secondary: #4a4f59;
+  --color-text-tertiary: #5b616b;
+  --color-border-subtle: #e2e4e8;
+  --color-border-control: #8a9099;
+
+  /* Skill recognition: strong (icons, markers) and tint (backgrounds) */
+  --color-skill-reading: var(--color-brand-primary-deep);
+  --color-skill-reading-tint: #fde8ea;
+  --color-skill-listening: #1d5fd1;
+  --color-skill-listening-tint: #eaf1fd;
+  --color-skill-speaking: #0f7a5a;
+  --color-skill-speaking-tint: #e8f6f0;
+  --color-skill-writing: #c2410c;
+  --color-skill-writing-tint: #ffeddf;
+
+  /* Typography (families come from next/font, see the inline block below) */
+  --font-*: initial;
+  --text-*: initial;
+  --text-body: 1rem;
+  --font-weight-*: initial;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Spacing: 4 px base unit, scale 4, 8, 12, 16, 24, 32, 48, 64 */
+  --spacing: initial;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-gutter: 1rem;
+
+  /* Radii */
+  --radius-*: initial;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Elevation: only "none" until the raised level is specified */
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+}
+
+@theme inline {
+  --font-sans: var(--font-onest), sans-serif;
+  --font-passage: var(--font-literata), serif;
+}

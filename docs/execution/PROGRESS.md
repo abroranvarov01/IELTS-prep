@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-09` (worker): Design tokens, fonts and token enforcement.
+- **Next:** `F-10` (worker): PWA foundation (manifest + app-shell service worker).
 
 ## Open questions for the owner
 
@@ -115,3 +115,10 @@ Entry format:
 - Result: done
 - Changes: (1) **UI font: Onest replaces Manrope.** Manrope has no U+02BB/U+02BC. Onest's shipped subsets cover ʻ, ʼ, Latin, and Cyrillic. Updated DESIGN_SYSTEM.md (typography), ADR-0001 §5 (amended in place with a dated note, like the earlier §7 amendment), and the F-09 scope. DESIGN_CONSTITUTION.md ("Manrope, or an equivalent…") stays accurate. (2) **Only specified token values** are transcribed now. Shadow, motion, and heading tokens are added when a component first needs them. F-09 is back to `todo`.
 - Verification: `pnpm format:check` passes.
+
+### 2026-10-09: F-09 Design tokens, fonts and token enforcement
+- Result: done
+- Changes: `apps/web/src/styles/tokens.css` is the single `@theme` token file. It holds the brand palette, neutrals, skill strong/tint colors (Reading strong references `brand.primaryDeep`), body size 16 px (`--text-body`), weights 400/500/700/800, the spacing scale 4–64 plus `gutter` (16 px), and radii sm/md/lg/xl/full. Tailwind defaults are reset for colors, fonts, font sizes, font weights, spacing, radii, and shadows, so off-scale utilities (`p-5`, `rounded-2xl`, `text-sm`, `shadow-*`, `bg-red-500`, `bg-white`) are not generated (checked in the built CSS). `globals.css` imports the tokens and adds base styles: surface.base background, ink text, 16 px body, a 2 px ink `:focus-visible` outline with 2 px offset, and `prefers-reduced-motion` handling. Fonts: Onest (UI, weights 400/500/700/800, `--font-onest`, the default `font-sans`) and Literata (passages, 400/700, `--font-literata` → `font-passage`, `preload: false` because no passage exists yet), each with latin, latin-ext, and cyrillic subsets. `scripts/check-tokens.mjs` runs from root `pnpm lint` and flags hex colors, color functions (rgb/hsl/hwb/lab/lch/oklab/oklch/color), and arbitrary named-color utilities in tracked source files outside the token file. DESIGN_SYSTEM.md status note and QUALITY_GATES.md lint row updated.
+- Verification: `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm test:e2e` (api 1 + web 16, including axe) pass. **Token check probe** (reverted): adding `bg-[#e11] text-[red] border-[rgb(0,0,0)]` and inline `#112233` / `hsl(...)` to the page made `pnpm lint` fail with 5 findings. **Font coverage of the shipped files:** parsed the `cmap` of all 14 WOFF2 files in `.next/static/media` (grouped by `name`-table family). Onest and Literata both cover U+02BB, U+02BC, Russian Cyrillic А–я Ёё, and Latin a–z. In Chromium, the body's computed family is `Onest, "Onest Fallback", sans-serif` and Onest is loaded.
+- Versions / choices: `globals` 17.13.0 added as a root dev dependency, so ESLint knows Node globals in `scripts/**` (the standard flat-config way; small, not pattern-setting). Token values match DESIGN_SYSTEM.md; spacing and body size are in rem (4 px = 0.25rem) so they follow the user's font-size setting, as DESIGN_SYSTEM.md asks.
+- Notes: **Assumption, for design review:** the focus-visible style is a 2 px `ink` outline with 2 px offset. DESIGN_SYSTEM.md requires a visible focus state (≥ 3:1) but no exact style; ink is the highest-contrast token and does not compete with the red primary action. Breakpoints keep Tailwind's defaults: DESIGN_SYSTEM.md defers exact values to an ADR that has not decided them, and they were not in this task's scope. Motion durations are not restricted by tokens yet (owner decision).
