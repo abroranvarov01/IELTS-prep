@@ -12,10 +12,12 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@serwist/turbopack": "9.5.13",
     "next": "16.4.0",
     "next-intl": "4.14.9",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "serwist": "9.5.13"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
@@ -27,6 +29,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "6.1.2",
+    "esbuild": "0.28.2",
     "jsdom": "30.1.2",
     "tailwindcss": "^4",
     "typescript": "6.0.3",

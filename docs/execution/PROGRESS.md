@@ -5,10 +5,11 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-10` (worker): PWA foundation (manifest + app-shell service worker).
+- **Next:** `F-11` (worker): Gate consolidation, CI and governance sync.
 
 ## Open questions for the owner
 
+- **PWA icons are placeholders.** `apps/web/public/icons/placeholder-{192,512,maskable-512}.png` are plain `brand.primary` squares. Final icons are an owner asset; replace the files and the paths in `apps/web/src/app/manifest.ts`.
 ## Log
 
 Entry format:
@@ -122,3 +123,10 @@ Entry format:
 - Verification: `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm test:e2e` (api 1 + web 16, including axe) pass. **Token check probe** (reverted): adding `bg-[#e11] text-[red] border-[rgb(0,0,0)]` and inline `#112233` / `hsl(...)` to the page made `pnpm lint` fail with 5 findings. **Font coverage of the shipped files:** parsed the `cmap` of all 14 WOFF2 files in `.next/static/media` (grouped by `name`-table family). Onest and Literata both cover U+02BB, U+02BC, Russian Cyrillic А–я Ёё, and Latin a–z. In Chromium, the body's computed family is `Onest, "Onest Fallback", sans-serif` and Onest is loaded.
 - Versions / choices: `globals` 17.13.0 added as a root dev dependency, so ESLint knows Node globals in `scripts/**` (the standard flat-config way; small, not pattern-setting). Token values match DESIGN_SYSTEM.md; spacing and body size are in rem (4 px = 0.25rem) so they follow the user's font-size setting, as DESIGN_SYSTEM.md asks.
 - Notes: **Assumption, for design review:** the focus-visible style is a 2 px `ink` outline with 2 px offset. DESIGN_SYSTEM.md requires a visible focus state (≥ 3:1) but no exact style; ink is the highest-contrast token and does not compete with the red primary action. Breakpoints keep Tailwind's defaults: DESIGN_SYSTEM.md defers exact values to an ADR that has not decided them, and they were not in this task's scope. Motion durations are not restricted by tokens yet (owner decision).
+
+### 2026-10-09: F-10 PWA foundation (manifest + app-shell service worker)
+- Result: done
+- Changes: `src/app/manifest.ts` (`/manifest.webmanifest`): name and short_name from the `uz` catalog's `app.name` (working name "IELTS Prep", product name TBD), `lang: uz`, `start_url: /` (the proxy redirects to a locale), `display: standalone`, background and theme color `#ffffff` mirroring `surface.base`. It is allowlisted in `scripts/check-tokens.mjs`, and `manifest.test.ts` fails if the colors drift from `tokens.css`. **Placeholder icons** 192, 512, and maskable 512 (solid `brand.primary` squares) in `public/icons/`, named `placeholder-*`; final icons are an owner asset (open question). Service worker via Serwist: `withSerwist` in `next.config.ts`, route `src/app/serwist/[path]/route.ts` (serves `/serwist/sw.js` with `Service-Worker-Allowed: /`), worker `src/app/sw.ts`, and `SerwistProvider` in the locale layout (scope `/`, `disable` in development, `cacheOnNavigation` and `reloadOnOnline` off). Vitest resolves the `@/*` alias via Vite 8's `resolve.tsconfigPaths`. `e2e/pwa.spec.ts` added.
+- Verification: `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (web 7, api 1), `pnpm test:e2e` (web 20 = 10 × 2 projects, api 1), and `pnpm build` (api + web) pass. The e2e tests check that `/uz` links `/manifest.webmanifest`; the manifest has `start_url`, `display: standalone`, a name, and 192/512/maskable icons that each load as `image/png`; and the worker becomes active from `/serwist/sw.js` with scope `/`. The built worker's precache list contains only the app shell (3 build manifests, 1 CSS, 7 JS chunks, 3 icons). Against `next dev`, a page load registered 0 service workers. Probe (reverted): changing `--color-surface-base` in `tokens.css` failed `manifest.test.ts`.
+- Versions / choices: **Serwist** (`@serwist/turbopack` 9.5.13, `serwist` 9.5.13, `esbuild` 0.28.2 dev). Serwist supports the installed Next.js 16.4 with Turbopack (the default bundler here) through `@serwist/turbopack` (peer `next >=14`), so the hand-written fallback was not needed. Unlike Serwist's quick-start, there is no `defaultCache` runtime caching (it caches pages and `/api` responses) and no offline fallback page (new copy). ADR-0001 limits the scope to installability and app-shell caching. esbuild's install script is `false` in `allowBuilds`; its platform binary loads without it.
+- Notes: **Assumption, for design review:** `theme_color` is `surface.base` (white-first), not brand red. No `theme-color` meta tag or `viewport.themeColor` was added (not in scope). If one is added later, it must mirror a token and be allowlisted like the manifest.

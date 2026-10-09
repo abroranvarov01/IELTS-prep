@@ -4,7 +4,10 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
-const ALLOWED_FILES = new Set(["apps/web/src/styles/tokens.css"]);
+const ALLOWED_FILES = new Set([
+  "apps/web/src/styles/tokens.css",
+  "apps/web/src/app/manifest.ts",
+]);
 const SOURCE_FILE = /\.(css|[cm]?[jt]sx?)$/;
 
 const RULES = [

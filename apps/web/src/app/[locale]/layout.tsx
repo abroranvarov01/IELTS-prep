@@ -1,3 +1,4 @@
+import { SerwistProvider } from "@serwist/turbopack/react";
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Literata, Onest } from "next/font/google";
@@ -35,7 +36,16 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${onest.variable} ${literata.variable}`}>
-      <body>{children}</body>
+      <body>
+        <SerwistProvider
+          swUrl="/serwist/sw.js"
+          disable={process.env.NODE_ENV === "development"}
+          cacheOnNavigation={false}
+          reloadOnOnline={false}
+        >
+          {children}
+        </SerwistProvider>
+      </body>
     </html>
   );
 }

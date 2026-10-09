@@ -360,7 +360,7 @@
       "id": "F-10",
       "title": "PWA foundation (manifest + app-shell service worker)",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["F-09"],
       "goal": "The app is installable and caches its shell; no offline data.",
       "scope": [
@@ -389,7 +389,8 @@
       ],
       "references": [
         "docs/architecture/decisions/0001-initial-application-foundation.md"
-      ]
+      ],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-11",
