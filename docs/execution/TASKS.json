@@ -1,16 +1,88 @@
 {
-  "schemaVersion": 1,
-  "description": "Executable task queue. Procedure: docs/execution/AUTONOMOUS_WORKFLOW.md. A task is READY when status is 'todo', owner is 'worker', and every dependsOn task is 'done'. Workers take the first ready task in array order.",
+  "schemaVersion": 2,
+  "description": "Executable task queue for all milestones. Procedure: docs/execution/AUTONOMOUS_WORKFLOW.md. Exactly one milestone is 'active'. A task is READY when its milestone is active, its status is 'todo', its owner is 'worker', and every dependsOn task is 'done'. Workers take the first ready task in array order. Goals of planned milestones are drafts, refined when the owner activates the milestone and its tasks are written. Rationale and blocking decisions per milestone: docs/execution/ROADMAP.md.",
   "statusValues": ["todo", "in_progress", "done", "blocked"],
-  "milestone": {
-    "id": "M0",
-    "name": "Foundation",
-    "goal": "A clean monorepo (apps/web Next.js, apps/api NestJS) with working gates (format, lint, typecheck, unit, e2e, build), localization, design tokens, PWA shell, and CI, as defined by ADR-0001. No product features."
-  },
+  "milestoneStatusValues": ["planned", "active", "done"],
+  "milestones": [
+    {
+      "id": "M0",
+      "name": "Foundation",
+      "status": "done",
+      "goal": "A clean monorepo (apps/web Next.js, apps/api NestJS) with working gates (format, lint, typecheck, unit, e2e, build), localization, design tokens, PWA shell, and CI, as defined by ADR-0001. No product features.",
+      "completedAt": "2026-10-09"
+    },
+    {
+      "id": "M1",
+      "name": "App Shell & Design Foundation",
+      "status": "active",
+      "goal": "The shared app shell every screen uses (header, main landmark, skip link, language switcher, localized not-found and error states) and the design values it needs, specified and approved by the owner before they are built. No product features."
+    },
+    {
+      "id": "M2",
+      "name": "Backend & Persistence Foundation",
+      "status": "planned",
+      "goal": "PostgreSQL + Prisma wired into apps/api (ADR-0001 §4a) with migrations, and an agreed approach for API contracts and input validation."
+    },
+    {
+      "id": "M3",
+      "name": "Onboarding + Home",
+      "status": "planned",
+      "goal": "The 'First open → first practice' and 'Returning user → next action' flows (USER_FLOWS.md): value before registration, optional target band and exam date, and a home screen with one recommended next action."
+    },
+    {
+      "id": "M4",
+      "name": "Reading Engine",
+      "status": "planned",
+      "goal": "Reading practice as approved in READING_EXPERIENCE.md (passage-first layout, question bottom sheet, Pin Evidence, Practice and Exam modes), with answer checking and band conversion in domain code (INVARIANTS I-2, I-3)."
+    },
+    {
+      "id": "M5",
+      "name": "Reading Review + Error Intelligence",
+      "status": "planned",
+      "goal": "Evidence-first review of every Reading mistake with 'Explain simpler' in uz/ru/en, and detection of recurring error patterns that lead to targeted practice."
+    },
+    {
+      "id": "M6",
+      "name": "Listening",
+      "status": "planned",
+      "goal": "Listening practice with audio and questions, including realistic play-once behavior in Exam Mode, that works on weak mobile connections."
+    },
+    {
+      "id": "M7",
+      "name": "Accounts + Sync",
+      "status": "planned",
+      "goal": "Optional accounts so progress carries across devices, without blocking practice before registration."
+    },
+    {
+      "id": "M8",
+      "name": "Progress + Personalization",
+      "status": "planned",
+      "goal": "'Your progress' (trend and current estimate, honestly labeled) and next-action recommendations based on the user's own history."
+    },
+    {
+      "id": "M9",
+      "name": "Content System",
+      "status": "planned",
+      "goal": "Authoring, versioning, and review of original passages, questions, answer keys, and explanations."
+    },
+    {
+      "id": "M10",
+      "name": "PWA + Performance + Reliability",
+      "status": "planned",
+      "goal": "The agreed offline scope, mobile performance budgets enforced in CI, and production reliability (monitoring, error handling)."
+    },
+    {
+      "id": "M11",
+      "name": "Beta Hardening",
+      "status": "planned",
+      "goal": "Readiness for a beta with real users: security and privacy review, accessibility audit, fluent-speaker translation review, and a launch checklist."
+    }
+  ],
   "tasks": [
     {
       "id": "F-00",
       "title": "Owner accepts ADR-0001 and prepares the machine",
+      "milestone": "M0",
       "owner": "human",
       "status": "done",
       "dependsOn": [],
@@ -37,6 +109,7 @@
     {
       "id": "F-01",
       "title": "Repository baseline and governance commit",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-00"],
@@ -72,6 +145,7 @@
     {
       "id": "F-02",
       "title": "pnpm workspace root and TypeScript base config",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-01"],
@@ -106,6 +180,7 @@
     {
       "id": "F-03",
       "title": "Prettier and base ESLint at the root",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-02"],
@@ -133,6 +208,7 @@
     {
       "id": "F-04",
       "title": "Scaffold apps/web (Next.js)",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-03"],
@@ -174,6 +250,7 @@
     {
       "id": "F-05",
       "title": "Scaffold apps/api (NestJS) with a health endpoint",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-03"],
@@ -218,6 +295,7 @@
     {
       "id": "F-06",
       "title": "Localization foundation (next-intl, uz/ru/en)",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-04"],
@@ -259,6 +337,7 @@
     {
       "id": "F-07",
       "title": "Web unit test tooling (Vitest + Testing Library)",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-06"],
@@ -288,6 +367,7 @@
     {
       "id": "F-08",
       "title": "End-to-end tooling (Playwright + axe), mobile first",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-07"],
@@ -315,6 +395,7 @@
     {
       "id": "F-09",
       "title": "Design tokens, fonts and token enforcement",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-08"],
@@ -359,6 +440,7 @@
     {
       "id": "F-10",
       "title": "PWA foundation (manifest + app-shell service worker)",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-09"],
@@ -395,6 +477,7 @@
     {
       "id": "F-11",
       "title": "Gate consolidation, CI and governance sync",
+      "milestone": "M0",
       "owner": "worker",
       "status": "done",
       "dependsOn": ["F-10", "F-05"],
@@ -439,6 +522,206 @@
         "README.md"
       ],
       "completedAt": "2026-10-09"
+    },
+    {
+      "id": "M1-01",
+      "title": "Draft the app shell, language-switch and error-state flow specs",
+      "milestone": "M1",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Give the owner a concrete, reviewable specification of the shell before any shell UI is built.",
+      "scope": [
+        "In docs/product/USER_FLOWS.md, write flow specs in the documented format for: (1) the app shell on phone and desktop (what is always visible, what the header contains, whether any navigation exists before M3, skip link); (2) switching the interface language; (3) a page that does not exist and an unexpected error",
+        "Mark each new spec 'DRAFT: awaiting owner approval' and list its open questions (for example where the language switch lives and how languages are labeled)",
+        "Propose all new interface copy (language names, switcher label, skip link, not-found and error messages, recovery action) as a uz/ru/en table marked as proposed. Uzbek uses U+02BB/U+02BC. Note that translations need fluent-speaker review (LOCALIZATION.md rule 7)",
+        "Check each spec against UX_PRINCIPLES.md (10-second rule, 3-click rule, one primary action) and state its step count"
+      ],
+      "outOfScope": [
+        "any code",
+        "product screens (home, practice): M3 and later",
+        "answering the open questions"
+      ],
+      "acceptanceCriteria": [
+        "The three specs exist in the USER_FLOWS.md format, with step counts, empty/error states and open questions",
+        "Every proposed string has uz, ru and en entries and is marked as proposed",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md"
+      ],
+      "docsToUpdate": ["docs/product/USER_FLOWS.md"]
+    },
+    {
+      "id": "M1-02",
+      "title": "Propose the design values the shell needs",
+      "milestone": "M1",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Turn the open DESIGN_SYSTEM.md items that the shell depends on into concrete proposals the owner can approve.",
+      "scope": [
+        "In docs/design/DESIGN_SYSTEM.md, propose one exact value each for: the type scale (heading levels, small meta text, passage size and line height), breakpoints (exact px for the documented ranges), the raised elevation level, motion durations and easing, and the focus-visible style (currently an F-09 implementation assumption)",
+        "Mark each proposal 'PROPOSED: awaiting owner approval' with a one-line rationale. Give WCAG contrast ratios for any value that depends on color",
+        "Stay within the documented constraints: body ≥ 16 px, meta 13–14 px, passage 17–18 px with line height ~1.6, motion ≤ 200 ms, at most two elevation levels, relative units for text"
+      ],
+      "outOfScope": [
+        "status colors (first needed by answer states in M4)",
+        "dark mode",
+        "changing any approved value",
+        "any code"
+      ],
+      "acceptanceCriteria": [
+        "Every listed item has one concrete proposed value and a rationale",
+        "No approved value changed",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"]
+    },
+    {
+      "id": "M1-03",
+      "title": "Owner approves the M1 specs, copy and design values",
+      "milestone": "M1",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M1-01", "M1-02"],
+      "goal": "Decide what the shell looks like and says before it is built.",
+      "scope": [
+        "Review the M1-01 flow specs and proposed copy in USER_FLOWS.md. Edit as needed, answer the open questions, and mark the specs and copy Approved (arrange fluent-speaker review of uz/ru if wanted)",
+        "Review the M1-02 proposals in DESIGN_SYSTEM.md. Edit as needed and mark them Approved"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The shell, language-switch and error-state specs and their copy are marked Approved in USER_FLOWS.md",
+        "The M1 design values are marked Approved in DESIGN_SYSTEM.md",
+        "No open question blocks M1-04 to M1-06"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md"
+      ]
+    },
+    {
+      "id": "M1-04",
+      "title": "App shell layout and the tokens it uses",
+      "milestone": "M1",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M1-03"],
+      "goal": "Every locale page renders inside the approved shell on phone and desktop.",
+      "scope": [
+        "Implement the approved shell spec in apps/web (locale layout and the components it needs): header as specified, one main landmark, a skip link to the main content, the page gutter, and the responsive layout at the approved breakpoints",
+        "Add to tokens.css only the approved design values the shell uses, and apply the approved focus-visible style. Update the 'Not yet in code' note in DESIGN_SYSTEM.md",
+        "All new strings come from the uz/ru/en catalogs with the approved copy",
+        "e2e on both projects: landmarks present; the skip link moves focus to main by keyboard; no horizontal scroll at 320 and 360 px; uz and ru strings do not truncate; axe passes in every locale"
+      ],
+      "outOfScope": [
+        "language switcher (M1-05)",
+        "not-found and error states (M1-06)",
+        "navigation destinations or product screens not in the approved spec",
+        "UI primitives without a consumer in this task (a Button arrives with its first consumer, the bottom sheet with Reading in M4)",
+        "dark mode"
+      ],
+      "acceptanceCriteria": [
+        "The shell matches the approved spec at 320, 360 and 1280 px",
+        "Only approved token values are added, and each one is used",
+        "All gates pass"
+      ],
+      "validation": ["pnpm check", "pnpm build", "pnpm test:e2e"],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/UX_PRINCIPLES.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md (token status note)"]
+    },
+    {
+      "id": "M1-05",
+      "title": "Language switcher",
+      "milestone": "M1",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M1-04"],
+      "goal": "Users can change the interface language from any page in the approved number of steps, and the choice persists.",
+      "scope": [
+        "Implement the approved language-switch spec in the shell, using next-intl navigation helpers (apps/web/src/i18n/navigation.ts via createNavigation(routing))",
+        "Switching keeps the current path and replaces only the locale segment. The choice persists through next-intl's NEXT_LOCALE cookie, so a later visit to / redirects to it",
+        "Languages are labeled with the approved copy (each name with its own lang attribute), and the control has an accessible name in every locale",
+        "e2e on both projects: switching from /uz to /ru and /en changes the URL and html lang; after switching, / redirects to the chosen language; the switcher works by keyboard only; axe passes"
+      ],
+      "outOfScope": [
+        "Uzbek Cyrillic",
+        "language preference stored in an account (no accounts yet)",
+        "other shell changes"
+      ],
+      "acceptanceCriteria": [
+        "The step count matches the approved spec",
+        "The chosen language persists across visits to /",
+        "All gates pass"
+      ],
+      "validation": ["pnpm check", "pnpm build", "pnpm test:e2e"],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/LOCALIZATION.md (Technical setup: navigation helpers and switcher)"
+      ]
+    },
+    {
+      "id": "M1-06",
+      "title": "Localized not-found and error states",
+      "milestone": "M1",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M1-04"],
+      "goal": "Missing pages and unexpected errors show plain-language messages in the user's language, never the framework's default English page.",
+      "scope": [
+        "A localized not-found page for unknown paths under a locale (today /uz/does-not-exist shows Next.js's default English 404), with the approved copy",
+        "An error boundary for the locale segment with the approved copy and recovery action",
+        "Unknown paths without a locale behave as the approved spec says (today the proxy redirects /xx to /uz/xx, which then 404s)",
+        "e2e on both projects: unknown paths in /uz, /ru and /en return 404 with the matching html lang and localized text, and axe passes. Component test for the error boundary's rendering and recovery action"
+      ],
+      "outOfScope": [
+        "error reporting or monitoring services (M10)",
+        "an offline page (offline scope is TBD)"
+      ],
+      "acceptanceCriteria": [
+        "No default framework error text is reachable in any locale",
+        "All gates pass"
+      ],
+      "validation": ["pnpm check", "pnpm build", "pnpm test:e2e"],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/design/ACCESSIBILITY.md"
+      ]
     }
   ]
 }

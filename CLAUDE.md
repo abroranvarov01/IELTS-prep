@@ -42,8 +42,8 @@ Each topic has exactly **one** owner. Other files link to it instead of restatin
 | Module and dependency boundaries | `docs/architecture/BOUNDARIES.md` |
 | Must-always-hold statements | `docs/architecture/INVARIANTS.md` |
 | ADR rules, index, template | `docs/architecture/decisions/` |
-| Milestone sequencing | `docs/execution/ROADMAP.md` |
-| Current milestone tasks and status | `docs/execution/TASKS.json` |
+| Milestone sequencing rationale and blocking decisions | `docs/execution/ROADMAP.md` |
+| Milestones (order, goal, status) and their tasks | `docs/execution/TASKS.json` |
 | Execution log, open questions for the owner | `docs/execution/PROGRESS.md` |
 | Autonomous worker loop, hard limits, stop conditions | `docs/execution/AUTONOMOUS_WORKFLOW.md` |
 | Properties of good code | `docs/engineering/CODE_QUALITY.md` |

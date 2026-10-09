@@ -20,10 +20,11 @@ Canonical owner of **how an autonomous worker executes tasks** from [TASKS.json]
 1. `git status --porcelain` is empty, **or** the only changes are ones the next task explicitly expects (e.g. F-01 commits pre-existing untracked governance). Otherwise **stop**: uncommitted work may belong to the owner.
 2. No task is `in_progress`. If one is, a previous run was interrupted. Inspect its diff against the task scope. Resume only if the state is clearly understood. Otherwise **stop**.
 3. Runtime matches ADR-0001 (`node --version` → v24.x) once F-00 is done.
+4. Exactly one milestone in `TASKS.json` has `status: "active"`. If none does, the owner has not approved the next milestone: report and **stop**. If more than one does, **stop**.
 
 ### 1. Select
-Take the **first** task in `TASKS.json` order where `owner` is `"worker"`, `status` is `"todo"`, and every `dependsOn` task is `"done"`.
-- If none is ready and all tasks are `done`: the milestone is complete. Report and stop.
+Take the **first** task in `TASKS.json` order whose `milestone` is the active milestone, where `owner` is `"worker"`, `status` is `"todo"`, and every `dependsOn` task is `"done"`. Never take a task from a `planned` milestone.
+- If none is ready and all tasks of the active milestone are `done`: the milestone is complete. Set its `status` to `"done"` and add `"completedAt"`, append a PROGRESS.md entry, commit both, report, and stop. **Never activate the next milestone.** The owner does that, after its tasks are written.
 - If none is ready otherwise: report which tasks wait on what (human tasks, blocked tasks) and stop.
 
 ### 2. Claim
@@ -64,7 +65,7 @@ Run `git diff` (and `git status` for new files). Apply the `review-change` skill
 - Afterwards, `git status --porcelain` must be empty.
 
 ### 9. Continue
-Return to step 0 for the next task. Stop when the milestone is complete or a stop condition occurs.
+Return to step 0 for the next task. Stop when the active milestone is complete or a stop condition occurs.
 
 ## Stop conditions (ask for human approval)
 
