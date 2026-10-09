@@ -1,7 +1,7 @@
 # ADR-0001: Initial Application Foundation
 
 - **Status:** Accepted (2026-10-09). Sections marked *Owner-confirmed* were decided directly by the project owner. The rest was the agent's recommendation, accepted by the owner.
-- **Amended:** 2026-10-09 by the owner: §7 API test runner changed from Jest to Vitest, because the NestJS 12 CLI now generates Vitest.
+- **Amended:** 2026-10-09 by the owner: §7 API test runner changed from Jest to Vitest, because the NestJS 12 CLI now generates Vitest. 2026-10-09 by the owner: §5 UI font changed from Manrope to Onest, because Manrope has no U+02BB/U+02BC glyphs.
 - **Date:** 2026-10-09
 - **Deciders:** Project owner (acceptance), Claude (draft)
 
@@ -54,7 +54,7 @@ packages/       shared TypeScript packages, created only when the first real sha
 - Tailwind's default color palette is removed, so non-token color utilities do not exist.
 - A token check (part of `lint`) rejects raw color values outside the token file and the documented platform-metadata exception.
 - shadcn/ui or Radix primitives are **not** installed in the foundation. They are added when the first component needs one, and restyled through tokens.
-- Fonts: **Manrope** (UI) and **Literata** (passages) via `next/font` (self-hosted at build time), with Latin, Latin Extended, and Cyrillic subsets. Coverage of U+02BB/U+02BC must be verified.
+- Fonts: **Onest** (UI) and **Literata** (passages) via `next/font` (self-hosted at build time), with Latin, Latin Extended, and Cyrillic subsets. Coverage of U+02BB/U+02BC must be verified.
 
 ### 6. Localization
 - **next-intl**, with locales `uz`, `ru`, `en` and a **locale prefix in every URL** (`/uz/...`). Prefixed URLs make direct acquisition links (PRODUCT.md) shareable in a specific language, and they are explicit for SEO.

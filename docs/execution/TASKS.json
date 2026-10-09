@@ -320,11 +320,11 @@
       "dependsOn": ["F-08"],
       "goal": "The design system exists in code as the single source of visual values.",
       "scope": [
-        "One Tailwind v4 @theme token file in apps/web transcribing DESIGN_SYSTEM.md: approved brand palette, neutrals, skill colors, type scale, spacing, radii, shadows, motion",
+        "One Tailwind v4 @theme token file in apps/web transcribing DESIGN_SYSTEM.md: approved brand palette, neutrals, skill colors, the specified type sizes, spacing, radii. Shadow, motion and heading tokens are added when a component first needs them (owner decision)",
         "Remove Tailwind's default color palette so only token colors exist",
         "Base styles: surface.base background, ink text, 16px minimum body, visible focus style, prefers-reduced-motion handling",
-        "Manrope and Literata via next/font with latin, latin-ext and cyrillic subsets, exposed as CSS variables",
-        "Verify that the shipped Manrope/Literata files contain U+02BB, U+02BC and Cyrillic glyphs (inspect the font cmap or render a test string in Playwright); record the result in PROGRESS. If coverage is missing, STOP and ask (design decision)",
+        "Onest and Literata via next/font with latin, latin-ext and cyrillic subsets, exposed as CSS variables",
+        "Verify that the shipped Onest/Literata files contain U+02BB, U+02BC and Cyrillic glyphs (inspect the font cmap or render a test string in Playwright); record the result in PROGRESS. If coverage is missing, STOP and ask (design decision)",
         "Token check script (run by root lint) that fails on raw hex/rgb/hsl colors and arbitrary color utilities outside the token file and the documented platform-metadata exception"
       ],
       "outOfScope": [

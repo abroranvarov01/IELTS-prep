@@ -104,3 +104,14 @@ Entry format:
 - **Accessibility fix found by the new test:** every locale page had no `<title>` (axe `document-title`, WCAG 2.4.2). `app/[locale]/layout.tsx` now sets the title from the existing `app.name` catalog key via `generateMetadata` (next-intl example pattern). No new copy. The locale pages remain statically prerendered.
 - Verification: `pnpm test:e2e` passes (api 1, web 16 = 8 tests × 2 projects). The first run failed 6 axe tests on the missing title, which shows the check is effective. `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm format:check`, and `pnpm --filter web build` pass.
 - Versions / choices: @playwright/test 1.64.0, @axe-core/playwright 4.13.0. Chromium (Chrome for Testing 156.0.8078.4) was installed by `playwright install chromium` into `~/.cache/ms-playwright`. `ldd` reports no missing system libraries and headless launch works, so no OS packages were needed.
+
+### 2026-10-09: F-09 Design tokens, fonts and token enforcement
+- Result: blocked
+- Changes: none in the repository. The font investigation ran in a scratch directory.
+- Verification: a WOFF2/TTF `cmap` parser (Node built-in Brotli) found U+02BB/U+02BC in Literata's latin subset, and in neither Manrope's subsets nor the upstream Manrope TTF. Its positives were sanity-checked (é, ’ present in Manrope).
+- Notes: stopped per the task ("If coverage is missing, STOP and ask"). Questions are under "Open questions for the owner".
+
+### 2026-10-09: Owner decisions on F-09 (not a task)
+- Result: done
+- Changes: (1) **UI font: Onest replaces Manrope.** Manrope has no U+02BB/U+02BC. Onest's shipped subsets cover ʻ, ʼ, Latin, and Cyrillic. Updated DESIGN_SYSTEM.md (typography), ADR-0001 §5 (amended in place with a dated note, like the earlier §7 amendment), and the F-09 scope. DESIGN_CONSTITUTION.md ("Manrope, or an equivalent…") stays accurate. (2) **Only specified token values** are transcribed now. Shadow, motion, and heading tokens are added when a component first needs them. F-09 is back to `todo`.
+- Verification: `pnpm format:check` passes.

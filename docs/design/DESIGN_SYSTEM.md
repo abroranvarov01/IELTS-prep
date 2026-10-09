@@ -78,7 +78,7 @@ Because Reading shares the brand's red family, Reading identity must rely on the
 
 | Role | Proposal |
 |---|---|
-| UI font | **Manrope** (approved direction). Weights 400, 500, 700, 800. |
+| UI font | **Onest** (owner decision 2026-10-09, replacing Manrope, which has no U+02BB/U+02BC glyphs). Weights 400, 500, 700, 800. |
 | Passage font | **Literata** (approved direction), subject to real readability and font-coverage testing on phones. Weights 400, 700. |
 | Body size (mobile) | 16 px minimum. Never smaller for running text. |
 | Passage size (mobile) | 17–18 px, line height ~1.6, measure ≤ ~70 characters on desktop |
