@@ -396,7 +396,7 @@
       "id": "F-11",
       "title": "Gate consolidation, CI and governance sync",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["F-10", "F-05"],
       "goal": "One command validates everything; CI runs it; governance describes the real setup.",
       "scope": [
@@ -437,7 +437,8 @@
         "docs/architecture/ARCHITECTURE.md",
         "docs/architecture/BOUNDARIES.md",
         "README.md"
-      ]
+      ],
+      "completedAt": "2026-10-09"
     }
   ]
 }

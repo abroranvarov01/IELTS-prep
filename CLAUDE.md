@@ -6,9 +6,9 @@ A mobile-first IELTS preparation PWA for candidates in **Uzbekistan**, with an U
 
 ## Current state
 
-- **Governance only. No application code exists yet.** No `package.json`, no toolchain, no tests, no CI. Git repository with a GitHub `origin`.
+- **Foundation (M0) is in place; no product features yet.** pnpm monorepo: `apps/web` (Next.js, next-intl uz/ru/en, Tailwind v4 tokens, PWA shell) and `apps/api` (NestJS, `GET /health`). Gates, tests, and CI exist. Git repository with a GitHub `origin`.
 - **Confirmed:** Next.js frontend, NestJS backend, TypeScript end-to-end, PostgreSQL + Prisma. The full foundation is in ADR-0001 (`docs/architecture/decisions/0001-initial-application-foundation.md`, **Accepted**). See `docs/architecture/ARCHITECTURE.md` for confirmed vs. proposed vs. TBD.
-- **Execution:** work is done task by task from `docs/execution/TASKS.json` via the `work-next-task` skill. Do not scaffold, install dependencies, or write product code outside a task that asks for it.
+- **Execution:** work is done task by task from `docs/execution/TASKS.json` via the `work-next-task` skill. Do not install dependencies or write product code outside a task that asks for it.
 - `.claude/settings.json` denies `git push`, remote changes, history rewrites, and reading or writing secret `.env` files. Local status, diff, add, and commit follow normal permissions. The owner pushes.
 
 ## Non-negotiables
@@ -59,13 +59,13 @@ Each topic has exactly **one** owner. Other files link to it instead of restatin
 |---|---|
 | `00-engineering-core.md` | Always: priorities, assumptions, existing-pattern-first, tool enforcement |
 | `01-change-discipline.md` | Always: surgical changes, cleanup, diff self-review |
-| `frontend/react.md` | `*.tsx`, `*.jsx` |
-| `styling/visual-implementation.md` | `*.tsx`, `*.jsx`, `*.css`, Tailwind config |
-| `testing/test-code.md` | `*.test.*`, `*.spec.*`, `__tests__/`, `e2e/` |
-| `security/security.md` | API, server, auth, actions, middleware, db, ai, `.env*` paths |
-| `domain/ielts-scoring.md` | Files and directories named for scoring, bands, feedback, or assessment |
+| `frontend/react.md` | `*.tsx` in `apps/web` and `packages/*` |
+| `styling/visual-implementation.md` | `*.tsx`, `*.css` in `apps/web` (tokens: `apps/web/src/styles/tokens.css`) |
+| `testing/test-code.md` | `*.test.*`, `*.spec.*`, `apps/web/e2e/`, `apps/api/test/` |
+| `security/security.md` | `apps/api/**`, web server code (proxy, route handlers, `*.server.*`, actions), `.env*` |
+| `domain/ielts-scoring.md` | Source files and directories under `apps/` or `packages/` named for scoring, bands, feedback, or assessment |
 
-The security and scoring globs are name-based because no source tree exists yet. **Narrow them** when the repository layout is decided. Add a feature-specific domain rule (e.g. `domain/reading.md` scoped to the Reading feature directory) only once that directory exists and has rules worth stating.
+The rule globs are scoped to the real layout (`apps/web`, `apps/api`, `packages/*`). Add a feature-specific domain rule (e.g. `domain/reading.md` scoped to the Reading feature directory) only once that directory exists and has rules worth stating.
 
 ## Workflows (skills)
 
@@ -82,7 +82,14 @@ The security and scoring globs are name-based because no source tree exists yet.
 
 ## Commands
 
-None exist yet. `docs/engineering/QUALITY_GATES.md` is the only canonical list of commands, and it will be updated at scaffolding time. **Never claim a check passed if you did not run it.**
+Run from the repository root with Node 24 (`.nvmrc`; e.g. `nvm use`) and pnpm via Corepack (`corepack enable`). The canonical list is `docs/engineering/QUALITY_GATES.md`.
+
+- `pnpm install --frozen-lockfile`: install
+- `pnpm check`: format check, lint (including the token check), typecheck, unit tests. Run it before reporting done.
+- `pnpm build`: build both apps
+- `pnpm test:e2e`: API e2e and Playwright (needs Chromium: `pnpm --filter web exec playwright install chromium`)
+
+**Never claim a check passed if you did not run it.**
 
 ## Maintaining this governance
 

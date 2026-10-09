@@ -1,9 +1,7 @@
 ---
 paths:
-  - "**/*.tsx"
-  - "**/*.jsx"
-  - "**/*.css"
-  - "**/tailwind.config.*"
+  - "apps/web/**/*.tsx"
+  - "apps/web/**/*.css"
 ---
 
 # Visual implementation

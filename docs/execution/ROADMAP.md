@@ -7,7 +7,7 @@ Canonical owner of **milestone sequencing**. Feature scope and status: [FEATURE_
 | ID | Milestone | Status |
 |---|---|---|
 | — | Governance v1.1 (pre-milestone) | Done (2026-10-09) |
-| M0 | **Foundation**: monorepo, Next.js web, NestJS api, gates, localization, tokens, PWA shell, CI ([ADR-0001](../architecture/decisions/0001-initial-application-foundation.md)) | ADR-0001 accepted. Tasks defined, waiting on F-00 (Node 24) |
+| M0 | **Foundation**: monorepo, Next.js web, NestJS api, gates, localization, tokens, PWA shell, CI ([ADR-0001](../architecture/decisions/0001-initial-application-foundation.md)) | Done (2026-10-09) |
 | M1+ | See candidates below | Not approved |
 
 ## Candidate sequence after Foundation (NOT APPROVED)

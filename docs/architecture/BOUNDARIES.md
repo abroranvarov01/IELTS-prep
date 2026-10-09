@@ -2,7 +2,17 @@
 
 Canonical owner of **module and dependency boundaries**.
 
-> **STATUS: PRINCIPLES ONLY.** No folder structure exists yet. When the repository layout is decided (the foundation ADR), replace this section with concrete module names and allowed dependency directions. Then enforce them with tooling (see [QUALITY_GATES.md](../engineering/QUALITY_GATES.md#future-deterministic-enforcement)).
+## Workspaces
+
+| Workspace | Owns | May import from | Must not |
+|---|---|---|---|
+| `apps/web` | Next.js UI: pages, components, localization, design tokens, PWA shell | its own code, `packages/*` | import from `apps/api`; access the database; own business rules |
+| `apps/api` | NestJS HTTP API; later persistence (Prisma) | its own code, `packages/*` | import from `apps/web` |
+| `packages/*` | Code that both apps genuinely need (e.g. IELTS domain rules, INVARIANTS I-2). Created only when such code exists. | other packages | import from `apps/*` |
+
+- **Enforcement:** `pnpm lint` fails on any import between `apps/web` and `apps/api` (`import/no-restricted-paths` in `eslint.config.mjs`). When the first package is created, add a zone so `packages/*` cannot import from `apps/*`.
+- The web app talks to the API over HTTP only. The contract approach is TBD ([ARCHITECTURE.md](ARCHITECTURE.md#open-decisions-tbd)).
+- Module boundaries inside each app wait for the feature folder structure decision. The layering below is the intended direction.
 
 ## Intended layering (proposal)
 

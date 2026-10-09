@@ -4,8 +4,8 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 ## Current state
 
-- **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-11` (worker): Gate consolidation, CI and governance sync.
+- **Milestone:** M0 Foundation is **complete** (2026-10-09). All tasks F-00 to F-11 are `done`, and the full gate suite passes (`pnpm check`, `pnpm build`, `pnpm test:e2e`).
+- **Next:** the owner approves the next milestone ([ROADMAP.md](ROADMAP.md) candidates), and its tasks replace TASKS.json. CI activates when the owner pushes.
 
 ## Open questions for the owner
 
@@ -135,3 +135,9 @@ Entry format:
 - Result: done
 - Changes: Commit `ecf318b` (F-10) accidentally included `apps/web/AGENTS.md`. `next dev` generated it during the dev-mode service-worker check, and it was staged with `git add apps/web` without rechecking the untracked files. Removed the file and set `agentRules: false` in `apps/web/next.config.ts`, so `next dev` no longer writes it. This matches F-04's `--no-agents-md` decision: CLAUDE.md is the single agent guide. Corrected in a follow-up commit, because history is not rewritten.
 - Verification: with `agentRules: false`, a `next dev` run created no AGENTS.md. `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:e2e`, and `pnpm build` pass.
+
+### 2026-10-09: F-11 Gate consolidation, CI and governance sync
+- Result: done
+- Changes: Root `check` script (`format:check`, `lint` including the token check, `typecheck`, `test`). `.github/workflows/ci.yml`: on push and pull_request, `actions/checkout@v7`, `actions/setup-node@v7` with `node-version-file: .nvmrc`, `corepack enable`, `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm build`. Not pushed; CI activates when the owner pushes. ESLint `import/no-restricted-paths` zones forbid imports between `apps/web` and `apps/api` (root dev dependencies `eslint-plugin-import` 2.32.0 and `eslint-import-resolver-typescript` 3.10.1, the versions `eslint-config-next` already resolves; one shared plugin instance, so no redefinition conflict). Governance sync: QUALITY_GATES.md (final table with `pnpm check`, CI note, Status column in "Future deterministic enforcement", hooks note), CLAUDE.md (Current state, Commands, rule table), ARCHITECTURE.md (foundation moved to Confirmed), BOUNDARIES.md (workspace table plus enforcement), ROADMAP.md (M0 done), README.md (description, prerequisites, check command, pointers). `.claude/rules` globs narrowed to `apps/*` / `packages/*`; stale notes in `security.md` and `react.md` updated.
+- Verification: `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm build`, and `pnpm test:e2e` (api 1, web 20) pass. **Clean install:** a copy of only tracked and non-ignored files (fresh git index, no `node_modules` or `.next`) passed `corepack enable`, `pnpm install --frozen-lockfile`, `pnpm check`, and `pnpm build`, mirroring the CI steps. **Boundary probe** (reverted): importing `apps/api/src/health.controller` from `apps/web` failed `pnpm lint` with the boundary message. An earlier probe also showed api→web (NodeNext `.js` specifier) is rejected and a web-internal `../api/helper` import is allowed. The workflow YAML parses, but has not run on GitHub (not pushed).
+- Notes: Follow-ups, not done: e2e in CI (out of scope); branch protection (owner); DESIGN_SYSTEM.md "Responsive behavior" still says exact breakpoints are finalized in the foundation ADR, which did not decide them (Tailwind defaults apply); the lockfile change here includes pnpm deduplicating a Vite peer variant.

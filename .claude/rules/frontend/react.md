@@ -1,12 +1,12 @@
 ---
 paths:
-  - "**/*.tsx"
-  - "**/*.jsx"
+  - "apps/web/**/*.tsx"
+  - "packages/*/src/**/*.tsx"
 ---
 
 # React components
 
-Framework-specific rules (for example Next.js server/client components and data fetching) will be added here once the framework ADR is accepted. Until then these rules are framework-agnostic.
+The framework is Next.js App Router (ADR-0001). Framework-specific rules (for example server/client components and data fetching) are added here when the first feature needs them. Until then these rules are framework-agnostic.
 
 - **Components render and collect input.** Scoring, answer checking, band conversion, and recommendation logic come from domain code (docs/architecture/INVARIANTS.md I-2, I-3). If you are writing an IELTS rule inside JSX or a hook, move it to domain code.
 - **Keep state as local as possible.** Lift it only when a second consumer actually exists. Do not add global state for data that one screen uses.

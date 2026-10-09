@@ -2,7 +2,7 @@
 
 Canonical owner of the **current high-level architecture** and the list of open architecture decisions.
 
-> **Current state (2026-10-09):** no application code exists. The repository contains only governance and documentation. Nothing below is implemented. The Foundation milestone ([ROADMAP.md](../execution/ROADMAP.md)) builds the setup described in ADR-0001.
+> **Current state (2026-10-09):** the Foundation milestone ([ROADMAP.md](../execution/ROADMAP.md)) is implemented: the setup in ADR-0001 exists in code. No product features exist yet.
 
 ## Confirmed decisions
 
@@ -16,10 +16,7 @@ Changing these requires owner approval and an ADR.
 | Interface languages: Uzbek, Russian, English. Test content in English. | [LOCALIZATION.md](../product/LOCALIZATION.md) |
 | AI scores are always presented as estimates | [PRODUCT.md](../product/PRODUCT.md#honest-feedback-non-negotiable) |
 | Launch market is Uzbekistan. No multi-region architecture up front. | [PRODUCT.md](../product/PRODUCT.md) |
-
-## Foundation (ADR-0001, Accepted 2026-10-09; not yet implemented)
-
-[ADR-0001](decisions/0001-initial-application-foundation.md) also decides the rest of the foundation: a pnpm-workspace monorepo (`apps/web`, `apps/api`, `packages/*` on demand), Node 24 LTS, Tailwind CSS v4 tokens, next-intl with locale-prefixed URLs, Vitest/Playwright, ESLint and Prettier, a PWA shell, and GitHub Actions CI. The Foundation milestone implements it.
+| **Foundation:** pnpm-workspace monorepo (`apps/web`, `apps/api`, `packages/*` on demand), Node 24 LTS, Tailwind CSS v4 tokens, next-intl with locale-prefixed URLs (`uz` default), Vitest (web and api) and Playwright, ESLint and Prettier, a PWA shell (Serwist, app-shell caching only), GitHub Actions CI. Implemented. | [ADR-0001](decisions/0001-initial-application-foundation.md), Accepted 2026-10-09 (amended §5, §7) |
 
 Still TBD until a current requirement exists: database schema, API contract and validation approach.
 

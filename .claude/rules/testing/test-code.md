@@ -1,9 +1,9 @@
 ---
 paths:
-  - "**/*.test.*"
-  - "**/*.spec.*"
-  - "**/__tests__/**"
-  - "**/e2e/**"
+  - "{apps,packages}/**/*.test.*"
+  - "{apps,packages}/**/*.spec.*"
+  - "apps/web/e2e/**"
+  - "apps/api/test/**"
 ---
 
 # Writing test code

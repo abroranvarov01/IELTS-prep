@@ -1,10 +1,10 @@
 ---
 paths:
-  - "**/*scor*"
-  - "**/*band*"
-  - "**/scoring/**"
-  - "**/feedback/**"
-  - "**/assessment/**"
+  - "{apps,packages}/*/src/**/*scor*"
+  - "{apps,packages}/*/src/**/*band*"
+  - "{apps,packages}/*/src/**/scoring/**"
+  - "{apps,packages}/*/src/**/feedback/**"
+  - "{apps,packages}/*/src/**/assessment/**"
 ---
 
 # IELTS scoring and feedback code

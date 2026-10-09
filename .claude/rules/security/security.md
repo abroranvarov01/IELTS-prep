@@ -1,19 +1,16 @@
 ---
 paths:
-  - "**/api/**"
-  - "**/server/**"
-  - "**/*.server.*"
-  - "**/actions/**"
-  - "**/auth/**"
-  - "**/middleware.*"
-  - "**/db/**"
-  - "**/ai/**"
+  - "apps/api/**"
+  - "apps/web/src/proxy.ts"
+  - "apps/web/src/app/**/route.ts"
+  - "apps/web/src/**/*.server.*"
+  - "apps/web/src/**/actions/**"
   - "**/.env*"
 ---
 
 # Security and privacy
 
-Globs are name-based because the server structure is not decided yet. Narrow them once docs/architecture/BOUNDARIES.md has concrete modules.
+Scope: the whole API (`apps/api`) and the web app's server-side code (proxy, route handlers, server-only files, server actions). Workspaces: docs/architecture/BOUNDARIES.md.
 
 - **Secrets** come from environment/configuration. They are never committed, logged, or sent to the client. Only values intended to be public may use client-exposed env prefixes.
 - **Validate all untrusted input at the boundary**: request bodies, query params, uploaded audio, and **AI model output**. AI output is untrusted data. Parse it against a schema before using it.
