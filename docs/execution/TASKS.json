@@ -260,7 +260,7 @@
       "id": "F-07",
       "title": "Web unit test tooling (Vitest + Testing Library)",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["F-06"],
       "goal": "Unit and component testing for apps/web, with a first test that protects a real rule.",
       "scope": [
@@ -282,7 +282,8 @@
         "docs/engineering/TESTING_STRATEGY.md",
         ".claude/rules/testing/test-code.md"
       ],
-      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-08",

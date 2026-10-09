@@ -13,7 +13,7 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 | Typecheck | `pnpm typecheck` (runs `typecheck` in every workspace; `apps/web`: `next typegen && tsc --noEmit`; `apps/api`: `tsc --noEmit`) | Exists |
 | Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended for all files; `apps/web/**` adds `eslint-config-next/core-web-vitals` (Next.js, React Hooks) and the full jsx-a11y recommended set) | Exists |
 | Format | `pnpm format:check` (check), `pnpm format` (write). Prettier defaults; Markdown and the lockfile are excluded (`.prettierignore`) | Exists |
-| Unit/component tests | `pnpm test` (runs `test` in every workspace that has one; currently `apps/api`: Vitest) | Exists (API only) |
+| Unit/component tests | `pnpm test` (Vitest in every workspace: `apps/web` with jsdom + Testing Library, `apps/api`) | Exists |
 | API HTTP e2e tests | `pnpm --filter api test:e2e` (Vitest + supertest against the Nest app) | Exists |
 | Browser end-to-end tests | — | Does not exist |
 | Build | `pnpm build` (runs `build` in every workspace); one app: `pnpm --filter web build` or `pnpm --filter api build` | Exists |

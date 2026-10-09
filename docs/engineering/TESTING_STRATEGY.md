@@ -2,7 +2,7 @@
 
 Canonical owner of **what we test, at which level, and why**. How to write individual test files is owned by [`.claude/rules/testing/test-code.md`](../../.claude/rules/testing/test-code.md). The procedure is the `testing` skill.
 
-> **STATUS:** no test tooling is installed yet. Runner choices (likely Vitest for unit/component tests and Playwright for end-to-end) will be confirmed in the foundation ADR.
+> **STATUS:** runners are decided in [ADR-0001 §7](../architecture/decisions/0001-initial-application-foundation.md#7-testing): Vitest for unit/component tests (web and API) and Playwright for end-to-end. Commands are in [QUALITY_GATES.md](QUALITY_GATES.md).
 
 ## Levels
 

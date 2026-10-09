@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-07` (worker): Web unit test tooling (Vitest + Testing Library).
+- **Next:** `F-08` (worker): End-to-end tooling (Playwright + axe), mobile first.
 
 ## Open questions for the owner
 
@@ -90,3 +90,10 @@ Entry format:
 - Verification: `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, and `pnpm --filter web build` pass. The build prerenders `/uz`, `/ru`, `/en` as static. Against `pnpm start`: `/` → 307 `/uz`; with `Accept-Language: ru` → `/ru`, `en` → `/en`, `de` → `/uz` (fallback); a `NEXT_LOCALE=en` cookie wins over `Accept-Language: ru`. `/uz`, `/ru`, `/en` → 200 with `<html lang="uz|ru|en">` and `<h1>IELTS Prep</h1>`. `/uz/does-not-exist` → 404. The three catalogs have identical keys (one key, `app.name`). Tests: none for web yet (F-07 adds the catalog key test).
 - Versions / choices: next-intl 4.14.9 (npm `latest`, peers include Next 16). Uses `next/root-params`, the approach next-intl documents for Cache Components (the app keeps `cacheComponents: true`). Left out because nothing needs them yet: `i18n/navigation.ts` (no links), `NextIntlClientProvider` (no client components), and typed message keys (`AppConfig` augmentation). next-intl depends on `@parcel/watcher` and `@swc/core`, whose install scripts pnpm 12 blocks. They are set to `false` in root `allowBuilds` (same as `sharp` and `unrs-resolver`), and their prebuilt binaries load.
 - Notes: **Product name is still TBD.** `app.name` = "IELTS Prep" in all three catalogs is the working placeholder (see open questions). Follow-up: typed message keys would let `pnpm typecheck` catch unknown keys.
+
+### 2026-10-09: F-07 Web unit test tooling (Vitest + Testing Library)
+- Result: done
+- Changes: `apps/web` dev dependencies `vitest`, `@vitejs/plugin-react`, `@testing-library/react`, `@testing-library/dom` (its peer), `jsdom`. `apps/web/vitest.config.ts` (React plugin, jsdom environment). `apps/web` `test` script (`vitest run`). First test, `src/i18n/messages.test.ts`: every locale in `routing.locales` has exactly the default locale's keys, and no message is empty. Catalogs are typed as `Record<Locale, Catalog>`, so a locale without a catalog is a type error. The root `test` script (added in F-05) now runs both apps.
+- Verification: `pnpm test` (api 1 test + web 6 tests), `pnpm lint`, `pnpm typecheck`, `pnpm format:check`, and `pnpm --filter web build` pass. `pnpm peers check`: no issues. Probes, both reverted: removing `app.name` from `ru.json` failed "ru has exactly the keys of the default locale"; setting it to `" "` failed "ru has no empty messages".
+- Versions / choices: **Vitest 4.1.11, not the npm `latest` 5.0.3.** It matches the version the NestJS 12 template installed in `apps/api`, so the monorepo runs a single Vitest version. Follow-up: upgrade both apps to Vitest 5 together. @vitejs/plugin-react 6.1.2 (requires Vite 8; Vite 8.3.4 is installed via Vitest), @testing-library/react 16.3.3, @testing-library/dom 10.4.2, jsdom 30.1.2. Catalogs are loaded with static JSON imports: `new URL(..., import.meta.url)` is rewritten into an asset URL under jsdom.
+- Notes: `apps/web` tests import `describe`/`it`/`expect` from `vitest` explicitly; `apps/api` keeps the Nest template's `globals: true`. TESTING_STRATEGY.md's status line now points to ADR-0001 §7 and QUALITY_GATES.md, because it claimed no test tooling was installed.
