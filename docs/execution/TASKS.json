@@ -1,12 +1,7 @@
 {
   "schemaVersion": 1,
   "description": "Executable task queue. Procedure: docs/execution/AUTONOMOUS_WORKFLOW.md. A task is READY when status is 'todo', owner is 'worker', and every dependsOn task is 'done'. Workers take the first ready task in array order.",
-  "statusValues": [
-    "todo",
-    "in_progress",
-    "done",
-    "blocked"
-  ],
+  "statusValues": ["todo", "in_progress", "done", "blocked"],
   "milestone": {
     "id": "M0",
     "name": "Foundation",
@@ -44,9 +39,7 @@
       "title": "Repository baseline and governance commit",
       "owner": "worker",
       "status": "done",
-      "dependsOn": [
-        "F-00"
-      ],
+      "dependsOn": ["F-00"],
       "goal": "Version the approved governance and establish repository hygiene files.",
       "scope": [
         "Add .gitignore (node_modules, build outputs such as .next/ and dist/, coverage, Playwright reports, OS/editor files, .env and .env.* with an exception for .env.example)",
@@ -81,9 +74,7 @@
       "title": "pnpm workspace root and TypeScript base config",
       "owner": "worker",
       "status": "done",
-      "dependsOn": [
-        "F-01"
-      ],
+      "dependsOn": ["F-01"],
       "goal": "A workspace root that apps and packages plug into.",
       "scope": [
         "Activate pnpm via Corepack; pin the current stable pnpm in root package.json packageManager",
@@ -116,10 +107,8 @@
       "id": "F-03",
       "title": "Prettier and base ESLint at the root",
       "owner": "worker",
-      "status": "todo",
-      "dependsOn": [
-        "F-02"
-      ],
+      "status": "done",
+      "dependsOn": ["F-02"],
       "goal": "Deterministic formatting and linting before any application code exists.",
       "scope": [
         "Prettier config and .prettierignore (exclude lockfile, build outputs, generated files)",
@@ -136,25 +125,17 @@
         "pnpm lint passes",
         "QUALITY_GATES.md command table lists format:check and lint as existing"
       ],
-      "validation": [
-        "pnpm format:check",
-        "pnpm lint"
-      ],
-      "references": [
-        "docs/engineering/QUALITY_GATES.md"
-      ],
-      "docsToUpdate": [
-        "docs/engineering/QUALITY_GATES.md"
-      ]
+      "validation": ["pnpm format:check", "pnpm lint"],
+      "references": ["docs/engineering/QUALITY_GATES.md"],
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-04",
       "title": "Scaffold apps/web (Next.js)",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": [
-        "F-03"
-      ],
+      "dependsOn": ["F-03"],
       "goal": "A minimal, boilerplate-free Next.js app that passes all gates.",
       "scope": [
         "Create apps/web with the official create-next-app non-interactively: TypeScript, App Router, src/ directory, Tailwind, ESLint, pnpm; no nested git repo and no nested lockfile",
@@ -187,18 +168,14 @@
         "docs/architecture/decisions/0001-initial-application-foundation.md",
         ".claude/rules/frontend/react.md"
       ],
-      "docsToUpdate": [
-        "docs/engineering/QUALITY_GATES.md"
-      ]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
     },
     {
       "id": "F-05",
       "title": "Scaffold apps/api (NestJS) with a health endpoint",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": [
-        "F-03"
-      ],
+      "dependsOn": ["F-03"],
       "goal": "A minimal NestJS app with strict TypeScript and real tests.",
       "scope": [
         "Create apps/api with the official Nest CLI using pnpm, skipping git init",
@@ -234,18 +211,14 @@
         "docs/architecture/decisions/0001-initial-application-foundation.md",
         ".claude/rules/security/security.md"
       ],
-      "docsToUpdate": [
-        "docs/engineering/QUALITY_GATES.md"
-      ]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
     },
     {
       "id": "F-06",
       "title": "Localization foundation (next-intl, uz/ru/en)",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": [
-        "F-04"
-      ],
+      "dependsOn": ["F-04"],
       "goal": "Every page is served under /uz, /ru or /en with the correct html lang, and no hard-coded interface strings.",
       "scope": [
         "Install and configure next-intl following its documentation for the installed Next.js version",
@@ -285,9 +258,7 @@
       "title": "Web unit test tooling (Vitest + Testing Library)",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": [
-        "F-06"
-      ],
+      "dependsOn": ["F-06"],
       "goal": "Unit and component testing for apps/web, with a first test that protects a real rule.",
       "scope": [
         "Vitest, @testing-library/react, jsdom (and the React plugin) for apps/web",
@@ -303,27 +274,19 @@
         "pnpm test runs web and api tests and passes",
         "Removing a key from one catalog makes the test fail (verified once, then reverted)"
       ],
-      "validation": [
-        "pnpm test",
-        "pnpm lint",
-        "pnpm typecheck"
-      ],
+      "validation": ["pnpm test", "pnpm lint", "pnpm typecheck"],
       "references": [
         "docs/engineering/TESTING_STRATEGY.md",
         ".claude/rules/testing/test-code.md"
       ],
-      "docsToUpdate": [
-        "docs/engineering/QUALITY_GATES.md"
-      ]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
     },
     {
       "id": "F-08",
       "title": "End-to-end tooling (Playwright + axe), mobile first",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": [
-        "F-07"
-      ],
+      "dependsOn": ["F-07"],
       "goal": "Smoke-level e2e and automated accessibility checks against the production build.",
       "scope": [
         "Playwright in apps/web with projects: mobile Chromium (~360x800, primary) and desktop Chromium (1280x800)",
@@ -336,30 +299,20 @@
         "API e2e (already in F-05)",
         "CI wiring (F-11)"
       ],
-      "acceptanceCriteria": [
-        "pnpm test:e2e passes for both projects"
-      ],
-      "validation": [
-        "pnpm test:e2e",
-        "pnpm lint",
-        "pnpm typecheck"
-      ],
+      "acceptanceCriteria": ["pnpm test:e2e passes for both projects"],
+      "validation": ["pnpm test:e2e", "pnpm lint", "pnpm typecheck"],
       "references": [
         "docs/engineering/TESTING_STRATEGY.md",
         "docs/design/ACCESSIBILITY.md"
       ],
-      "docsToUpdate": [
-        "docs/engineering/QUALITY_GATES.md"
-      ]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
     },
     {
       "id": "F-09",
       "title": "Design tokens, fonts and token enforcement",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": [
-        "F-08"
-      ],
+      "dependsOn": ["F-08"],
       "goal": "The design system exists in code as the single source of visual values.",
       "scope": [
         "One Tailwind v4 @theme token file in apps/web transcribing DESIGN_SYSTEM.md: approved brand palette, neutrals, skill colors, type scale, spacing, radii, shadows, motion",
@@ -402,9 +355,7 @@
       "title": "PWA foundation (manifest + app-shell service worker)",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": [
-        "F-09"
-      ],
+      "dependsOn": ["F-09"],
       "goal": "The app is installable and caches its shell; no offline data.",
       "scope": [
         "app/manifest.ts with working name, start_url, display standalone, theme/background colors mirroring tokens (documented platform-metadata exception)",
@@ -439,10 +390,7 @@
       "title": "Gate consolidation, CI and governance sync",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": [
-        "F-10",
-        "F-05"
-      ],
+      "dependsOn": ["F-10", "F-05"],
       "goal": "One command validates everything; CI runs it; governance describes the real setup.",
       "scope": [
         "Root check script: format:check, lint (including token check), typecheck, test",

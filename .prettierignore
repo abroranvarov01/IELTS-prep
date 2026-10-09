@@ -1,0 +1,5 @@
+# Prettier also skips everything in .gitignore (build output, coverage, reports).
+pnpm-lock.yaml
+
+# Markdown is hand-written prose; table padding would churn every diff (see PROGRESS.md, F-03).
+*.md

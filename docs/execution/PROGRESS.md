@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-03` (worker): Prettier and base ESLint at the root.
+- **Next:** `F-04` (worker): Scaffold apps/web (Next.js).
 
 ## Open questions for the owner
 
@@ -49,3 +49,10 @@ Entry format:
 - Verification: `node --version` → v24.21.0; `pnpm --version` → 12.10.1; `pnpm install --frozen-lockfile` succeeds (after removing `node_modules`). The four strict options are present in `tsconfig.base.json` and it parses as JSON. Lint/typecheck/test gates: not available yet.
 - Versions / choices: pnpm 12.10.1 (npm `latest` tag on 2026-10-09). `corepack enable` was run, which adds pnpm shims to the nvm-managed Node 24 bin directory (task-mandated activation; no system Node change). pnpm 12 records itself under `packageManagerDependencies` in the first YAML document of the lockfile; that is pnpm's own format.
 - Notes: The base tsconfig deliberately holds only the shared strictness options. Module, target, and JSX settings differ between Next.js and NestJS, so each app sets them. CLAUDE.md and QUALITY_GATES.md still say "no package.json"; F-11 owns that sync.
+
+### 2026-10-09: F-03 Prettier and base ESLint at the root
+- Result: done
+- Changes: Root dev dependencies `prettier`, `eslint`, `@eslint/js`, `typescript-eslint`, `typescript` (exact pins). `.prettierrc.json` (Prettier defaults), `.prettierignore` (lockfile, Markdown; Prettier already honors `.gitignore`). `eslint.config.mjs` (flat config: global ignores, `@eslint/js` recommended, typescript-eslint recommended; apps add `files`-scoped entries). Root scripts `format`, `format:check`, `lint`. `TASKS.json` and `eslint.config.mjs` reformatted by Prettier (format-only; TASKS.json content verified identical apart from the F-03 status). QUALITY_GATES.md table updated.
+- Verification: `pnpm format:check` passes; `pnpm lint` passes. A temporary `probe.ts` with `const x: any` made `pnpm lint` fail with `@typescript-eslint/no-explicit-any` (then deleted). Typecheck/test gates: not available yet.
+- Versions / choices: Prettier 3.9.9, ESLint 10.12.0, @eslint/js 10.0.1, typescript-eslint 8.71.1. **TypeScript 6.0.3, not the npm `latest` 7.0.2**: typescript-eslint 8.71.1 declares the peer range `typescript >=4.8.4 <6.1.0`, so 6.0.3 is the newest compatible release. Revisit when typescript-eslint supports TypeScript 7.
+- Notes: **Markdown is excluded from Prettier.** Running it would only change formatting, but it pads every table column, so editing one cell rewrites the whole table and makes governance diffs noisy. Markdown stays hand-formatted. Because `docs/execution/TASKS.json` is now under `format:check`, workers must keep it in Prettier format (run `pnpm format` after editing it).

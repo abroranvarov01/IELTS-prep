@@ -6,13 +6,13 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 
 ## Current state (2026-10-09)
 
-**No quality gates exist yet.** The repository has no `package.json`, no toolchain, and no CI. The Foundation tasks ([TASKS.json](../execution/TASKS.json)) create them and update this table as each command becomes real.
+**Format and lint exist; the other gates do not yet.** There is no CI. The Foundation tasks ([TASKS.json](../execution/TASKS.json)) create the rest and update this table as each command becomes real. Run commands from the repository root with Node 24 and pnpm (Corepack).
 
 | Gate | Command | Status |
 |---|---|---|
 | Typecheck | — | Does not exist |
-| Lint | — | Does not exist |
-| Format | — | Does not exist |
+| Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended) | Exists |
+| Format | `pnpm format:check` (check), `pnpm format` (write). Prettier defaults; Markdown and the lockfile are excluded (`.prettierignore`) | Exists |
 | Unit/component tests | — | Does not exist |
 | End-to-end tests | — | Does not exist |
 | Build | — | Does not exist |
