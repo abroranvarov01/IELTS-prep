@@ -134,7 +134,7 @@
       "id": "F-04",
       "title": "Scaffold apps/web (Next.js)",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["F-03"],
       "goal": "A minimal, boilerplate-free Next.js app that passes all gates.",
       "scope": [
@@ -168,7 +168,8 @@
         "docs/architecture/decisions/0001-initial-application-foundation.md",
         ".claude/rules/frontend/react.md"
       ],
-      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-05",

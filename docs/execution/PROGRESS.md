@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-04` (worker): Scaffold apps/web (Next.js).
+- **Next:** `F-05` (worker): Scaffold apps/api (NestJS) with a health endpoint.
 
 ## Open questions for the owner
 
@@ -56,3 +56,11 @@ Entry format:
 - Verification: `pnpm format:check` passes; `pnpm lint` passes. A temporary `probe.ts` with `const x: any` made `pnpm lint` fail with `@typescript-eslint/no-explicit-any` (then deleted). Typecheck/test gates: not available yet.
 - Versions / choices: Prettier 3.9.9, ESLint 10.12.0, @eslint/js 10.0.1, typescript-eslint 8.71.1. **TypeScript 6.0.3, not the npm `latest` 7.0.2**: typescript-eslint 8.71.1 declares the peer range `typescript >=4.8.4 <6.1.0`, so 6.0.3 is the newest compatible release. Revisit when typescript-eslint supports TypeScript 7.
 - Notes: **Markdown is excluded from Prettier.** Running it would only change formatting, but it pads every table column, so editing one cell rewrites the whole table and makes governance diffs noisy. Markdown stays hand-formatted. Because `docs/execution/TASKS.json` is now under `format:check`, workers must keep it in Prettier format (run `pnpm format` after editing it).
+
+### 2026-10-09: F-04 Scaffold apps/web (Next.js)
+- Result: done
+- Changes: `apps/web` from `create-next-app@16.4.0 --ts --app --src-dir --tailwind --eslint --use-pnpm --skip-install --disable-git --empty --no-agents-md --no-react-compiler`. Removed the app-local `pnpm-workspace.yaml` (its `allowBuilds` moved to the root), `eslint.config.mjs` (rules moved into the root config), `.gitignore` (`next-env.d.ts` and `*.pem` moved to the root), template `README.md`, and the template metadata ("Create Next App"). The page is a bare `<main />`. `tsconfig.json` extends `../../tsconfig.base.json`. App scripts: dev, build, start, lint, typecheck. Root scripts: `typecheck` and `build` run recursively. Root ESLint adds a `files: ["apps/web/**"]` entry with `eslint-config-next/core-web-vitals` plus the full jsx-a11y recommended rules.
+- Verification: `pnpm format:check`, `pnpm lint`, `pnpm --filter web lint`, `pnpm typecheck`, and `pnpm --filter web build` pass. `pnpm install --frozen-lockfile` from a clean `node_modules` shows no peer warnings. A temporary `probe.tsx` (conditional `useState`, clickable `div`, `<img>` without alt) failed lint with react-hooks/rules-of-hooks, jsx-a11y (alt-text, click-events-have-key-events, no-static-element-interactions), and @next/next/no-img-element. The probe was then deleted. Tests: not available yet.
+- Versions / choices: Next.js 16.4.0 (npm `latest`, published 2026-10-09), React 19.3.0, Tailwind CSS 4.3.3 through `@tailwindcss/turbopack` (template default), `@types/node` ^24 (template had ^20; aligned to the runtime), TypeScript 6.0.3 (template asks for ^5; Next's build and `tsc` accept 6.0.3). `cacheComponents` and `partialPrefetching` are kept as create-next-app defaults. `--no-agents-md`: CLAUDE.md is the single agent guide.
+- **ESLint changed from 10.12.0 (F-03) to 9.39.5**, with `@eslint/js` 9.39.5. Reasons: the create-next-app 16.4.0 template pins `eslint ^9`, and `eslint-plugin-jsx-a11y` 6.10.2 (required by ADR-0001), `eslint-plugin-react`, and `eslint-plugin-import` (both pulled in by `eslint-config-next`) declare peer support only up to ESLint 9. npm marks 9.39.5 as "no longer supported". Follow-up: move to ESLint 10 once those plugins declare support.
+- Notes: `<html lang="en">` is a placeholder until F-06 sets the locale. Running `eslint` from inside `apps/web` needs `settings.next.rootDir` to be absolute, so the config builds it from `import.meta.dirname`. The `.claude/rules/frontend/react.md` note about adding framework-specific rules is not addressed here (not in scope).

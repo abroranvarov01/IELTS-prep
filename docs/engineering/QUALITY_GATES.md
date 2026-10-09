@@ -6,16 +6,16 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 
 ## Current state (2026-10-09)
 
-**Format and lint exist; the other gates do not yet.** There is no CI. The Foundation tasks ([TASKS.json](../execution/TASKS.json)) create the rest and update this table as each command becomes real. Run commands from the repository root with Node 24 and pnpm (Corepack).
+**Format, lint, typecheck, and build exist; tests do not yet.** There is no CI. The Foundation tasks ([TASKS.json](../execution/TASKS.json)) create the rest and update this table as each command becomes real. Run commands from the repository root with Node 24 and pnpm (Corepack).
 
 | Gate | Command | Status |
 |---|---|---|
-| Typecheck | — | Does not exist |
-| Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended) | Exists |
+| Typecheck | `pnpm typecheck` (runs `typecheck` in every workspace; `apps/web`: `next typegen && tsc --noEmit`) | Exists |
+| Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended for all files; `apps/web/**` adds `eslint-config-next/core-web-vitals` (Next.js, React Hooks) and the full jsx-a11y recommended set) | Exists |
 | Format | `pnpm format:check` (check), `pnpm format` (write). Prettier defaults; Markdown and the lockfile are excluded (`.prettierignore`) | Exists |
 | Unit/component tests | — | Does not exist |
 | End-to-end tests | — | Does not exist |
-| Build | — | Does not exist |
+| Build | `pnpm build` (runs `build` in every workspace); one app: `pnpm --filter web build` | Exists |
 
 **Agents must not claim that a check passed if the command does not exist.** When scaffolding adds these commands, replace the table above with the real command names. This table is their only canonical list.
 

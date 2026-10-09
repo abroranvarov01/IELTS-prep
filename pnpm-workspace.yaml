@@ -1,3 +1,9 @@
 packages:
   - apps/*
   - packages/*
+
+# pnpm install-script approvals. Both packages ship prebuilt binaries,
+# so their scripts stay off (create-next-app default).
+allowBuilds:
+  sharp: false
+  unrs-resolver: false
