@@ -80,7 +80,7 @@
       "id": "F-02",
       "title": "pnpm workspace root and TypeScript base config",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [
         "F-01"
       ],
@@ -109,7 +109,8 @@
       ],
       "references": [
         "docs/architecture/decisions/0001-initial-application-foundation.md"
-      ]
+      ],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-03",

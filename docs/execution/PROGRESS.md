@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-02` (worker): pnpm workspace root and TypeScript base config.
+- **Next:** `F-03` (worker): Prettier and base ESLint at the root.
 
 ## Open questions for the owner
 
@@ -42,3 +42,10 @@ Entry format:
 - Verification: `node --version` → v24.21.0 (via nvm). `git check-ignore -v .env` matches; `.env.example` not ignored; `.env.local`, `apps/web/.env.production`, `node_modules/`, `apps/web/.next/` ignored; no governance file ignored. No CRLF in tracked text. `git status --porcelain` empty and `git ls-files CLAUDE.md .claude docs | wc -l` checked after the commit. Lint/typecheck/test gates: not available yet.
 - Versions / choices: `.nvmrc` pins the major (`24`), matching ADR-0001's "Node.js 24 LTS".
 - Notes: Node 24 is installed via nvm (default alias `24`), but non-interactive shells that do not source nvm still resolve `/usr/bin/node` v22.23.3. Workers activate nvm per command. Entries for framework-specific generated files (e.g. `next-env.d.ts`) are left to the app scaffold tasks.
+
+### 2026-10-09: F-02 pnpm workspace root and TypeScript base config
+- Result: done
+- Changes: Root `package.json` (private, `packageManager: pnpm@12.10.1`, `engines.node: ^24`, no dependencies). `pnpm-workspace.yaml` with `apps/*` and `packages/*`. `tsconfig.base.json` with only the four ADR-0001 §2 options. `pnpm-lock.yaml` generated.
+- Verification: `node --version` → v24.21.0; `pnpm --version` → 12.10.1; `pnpm install --frozen-lockfile` succeeds (after removing `node_modules`). The four strict options are present in `tsconfig.base.json` and it parses as JSON. Lint/typecheck/test gates: not available yet.
+- Versions / choices: pnpm 12.10.1 (npm `latest` tag on 2026-10-09). `corepack enable` was run, which adds pnpm shims to the nvm-managed Node 24 bin directory (task-mandated activation; no system Node change). pnpm 12 records itself under `packageManagerDependencies` in the first YAML document of the lockfile; that is pnpm's own format.
+- Notes: The base tsconfig deliberately holds only the shared strictness options. Module, target, and JSX settings differ between Next.js and NestJS, so each app sets them. CLAUDE.md and QUALITY_GATES.md still say "no package.json"; F-11 owns that sync.
