@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestone:** M0 Foundation (see [ROADMAP.md](ROADMAP.md))
-- **Next:** `F-05` (worker): Scaffold apps/api (NestJS) with a health endpoint.
+- **Next:** `F-06` (worker): Localization foundation (next-intl, uz/ru/en).
 
 ## Open questions for the owner
 
@@ -75,3 +75,11 @@ Entry format:
 - Changes: Owner chose **Vitest for `apps/api`** on NestJS 12. ADR-0001 §7 is amended in place, at the owner's request (amendment noted in its status block): Vitest is the unit runner for web and API, and Jest is removed. ARCHITECTURE.md summary updated. F-05 scope now says Vitest, F-07's root test note says both apps use Vitest, and F-05 is back to `todo`. Constraints: keep NestJS 12, no downgrade to 11, no manual Jest setup.
 - Verification: `pnpm format:check` passes. The only remaining Jest mentions are in the ADR amendment note and its rejected-alternatives rows.
 - Notes: `decisions/README.md` says accepted ADRs are superseded rather than rewritten. The owner explicitly asked for an in-place update.
+
+### 2026-10-09: F-05 Scaffold apps/api (NestJS) with a health endpoint
+- Result: done
+- Changes: `apps/api` from `@nestjs/cli@12.0.8 new api --directory apps/api --skip-git --skip-install --package-manager pnpm --no-observe`. Removed the hello-world AppController/AppService/spec, template README, `.prettierrc`, and `.oxlintrc.json`; the root Prettier and ESLint configs apply. Added `HealthController` (`GET /health` → `{"status":"ok"}`) with a Vitest unit test, and adapted the generated e2e test to `/health`. `main.ts` reads `PORT` with default 3001, documented in `apps/api/.env.example` (placeholder, no secrets). `tsconfig.json` extends the base config and keeps the Nest decorator options. Scripts: dev, build, start (`node dist/main.js`), test, test:e2e, typecheck. Root `test` script added (`pnpm -r test`).
+- Verification: `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm --filter api test`, `pnpm --filter api test:e2e`, `pnpm --filter api build`, and root `pnpm test` pass. `pnpm peers check`: no issues. Probes, all reverted: a changed health response failed both the unit and e2e test; `any` in `apps/api` failed lint; constructor injection (service into controller) works under Vitest; the built server answered `{"status":"ok"}` on 3001 by default and on `PORT=3055`.
+- Versions / choices: NestJS 12.1.2 (`@nestjs/core`, `common`, `platform-express`, `testing`), `@nestjs/cli` 12.0.8, Vitest 4.1.11, TypeScript 6.0.3 (template asks for ^6.0.2). The template is ESM (`"type": "module"`).
+- Removed from the template: the `deploy` script and `@nestjs/mau` (Nest cloud deployment; agents never deploy); oxlint, `oxlint-tsgolint`, and app-local Prettier (root configs replace them); `@vitest/coverage-v8` and the `test:cov`/`test:watch`/`test:debug`/`start:debug`/`format`/`lint` scripts (outside the required script set; coverage thresholds belong to a later decision); `vite-tsconfig-paths` (no path aliases exist, and its `tsconfck` dependency is deprecated with a TypeScript ^5 peer); `source-map-support` (not referenced by Nest). `strictPropertyInitialization: false` was dropped so the API runs fully strict. Add it back with a reason if DTO classes need it.
+- Notes: The template's oxlint config enforced `no-floating-promises`. The root ESLint uses non-type-checked typescript-eslint rules, so that check is not active. Follow-up: consider type-aware linting (owner or a later task).

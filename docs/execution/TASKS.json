@@ -175,7 +175,7 @@
       "id": "F-05",
       "title": "Scaffold apps/api (NestJS) with a health endpoint",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["F-03"],
       "goal": "A minimal NestJS app with strict TypeScript and real tests.",
       "scope": [
@@ -212,7 +212,8 @@
         "docs/architecture/decisions/0001-initial-application-foundation.md",
         ".claude/rules/security/security.md"
       ],
-      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"],
+      "completedAt": "2026-10-09"
     },
     {
       "id": "F-06",
