@@ -19,7 +19,7 @@ Changing these requires owner approval and an ADR.
 
 ## Foundation (ADR-0001, Accepted 2026-10-09; not yet implemented)
 
-[ADR-0001](decisions/0001-initial-application-foundation.md) also decides the rest of the foundation: a pnpm-workspace monorepo (`apps/web`, `apps/api`, `packages/*` on demand), Node 24 LTS, Tailwind CSS v4 tokens, next-intl with locale-prefixed URLs, Vitest/Jest/Playwright, ESLint and Prettier, a PWA shell, and GitHub Actions CI. The Foundation milestone implements it.
+[ADR-0001](decisions/0001-initial-application-foundation.md) also decides the rest of the foundation: a pnpm-workspace monorepo (`apps/web`, `apps/api`, `packages/*` on demand), Node 24 LTS, Tailwind CSS v4 tokens, next-intl with locale-prefixed URLs, Vitest/Playwright, ESLint and Prettier, a PWA shell, and GitHub Actions CI. The Foundation milestone implements it.
 
 Still TBD until a current requirement exists: database schema, API contract and validation approach.
 

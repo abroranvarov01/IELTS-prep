@@ -9,8 +9,6 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 ## Open questions for the owner
 
-- **Product name** is TBD. F-06/F-10 use the working name "IELTS Prep" as a placeholder. Note that "IELTS" is a third-party trademark (PRODUCT.md § Content integrity and brand).
-
 ## Log
 
 Entry format:
@@ -64,3 +62,16 @@ Entry format:
 - Versions / choices: Next.js 16.4.0 (npm `latest`, published 2026-10-09), React 19.3.0, Tailwind CSS 4.3.3 through `@tailwindcss/turbopack` (template default), `@types/node` ^24 (template had ^20; aligned to the runtime), TypeScript 6.0.3 (template asks for ^5; Next's build and `tsc` accept 6.0.3). `cacheComponents` and `partialPrefetching` are kept as create-next-app defaults. `--no-agents-md`: CLAUDE.md is the single agent guide.
 - **ESLint changed from 10.12.0 (F-03) to 9.39.5**, with `@eslint/js` 9.39.5. Reasons: the create-next-app 16.4.0 template pins `eslint ^9`, and `eslint-plugin-jsx-a11y` 6.10.2 (required by ADR-0001), `eslint-plugin-react`, and `eslint-plugin-import` (both pulled in by `eslint-config-next`) declare peer support only up to ESLint 9. npm marks 9.39.5 as "no longer supported". Follow-up: move to ESLint 10 once those plugins declare support.
 - Notes: `<html lang="en">` is a placeholder until F-06 sets the locale. Running `eslint` from inside `apps/web` needs `settings.next.rootDir` to be absolute, so the config builds it from `import.meta.dirname`. The `.claude/rules/frontend/react.md` note about adding framework-specific rules is not addressed here (not in scope).
+
+### 2026-10-09: F-05 Scaffold apps/api (NestJS) with a health endpoint
+- Result: blocked
+- Changes: none in the repository. A trial `nest new` ran in a scratch directory outside the repo.
+- Verification: `@nestjs/cli` 12.0.8 / `@nestjs/core` 12.1.2 are npm `latest`. The generated project uses Vitest 4, oxlint, ESM, and TypeScript ^6.
+- Versions / choices: none made.
+- Notes: Stopped per AUTONOMOUS_WORKFLOW (deviating from an ADR). The question is under "Open questions for the owner".
+
+### 2026-10-09: Owner decision on F-05 (not a task)
+- Result: done
+- Changes: Owner chose **Vitest for `apps/api`** on NestJS 12. ADR-0001 §7 is amended in place, at the owner's request (amendment noted in its status block): Vitest is the unit runner for web and API, and Jest is removed. ARCHITECTURE.md summary updated. F-05 scope now says Vitest, F-07's root test note says both apps use Vitest, and F-05 is back to `todo`. Constraints: keep NestJS 12, no downgrade to 11, no manual Jest setup.
+- Verification: `pnpm format:check` passes. The only remaining Jest mentions are in the ADR amendment note and its rejected-alternatives rows.
+- Notes: `decisions/README.md` says accepted ADRs are superseded rather than rewritten. The owner explicitly asked for an in-place update.

@@ -184,7 +184,7 @@
         "Remove the hello-world AppController/AppService; add GET /health returning {\"status\":\"ok\"}",
         "Port from the PORT environment variable with a documented default (3001); add apps/api/.env.example if any variable is introduced",
         "Use the root ESLint/Prettier configs; delete Nest-generated duplicates",
-        "Jest unit test for the health controller and the generated e2e test adapted to /health",
+        "Vitest unit test for the health controller and the generated Vitest e2e test adapted to /health",
         "Scripts: dev, build, start, test, test:e2e, typecheck; included in root lint/typecheck/test/build"
       ],
       "outOfScope": [
@@ -264,7 +264,7 @@
       "scope": [
         "Vitest, @testing-library/react, jsdom (and the React plugin) for apps/web",
         "First test: message catalogs uz/ru/en have identical key sets and no empty values",
-        "apps/web test script; root test script runs all workspace tests (web Vitest + api Jest)"
+        "apps/web test script; root test script runs all workspace tests (web and api, both Vitest)"
       ],
       "outOfScope": [
         "coverage thresholds",
