@@ -4,8 +4,8 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 ## Current state
 
-- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). **M3 Onboarding + Home is active** (owner, 2026-10-10). M4–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
-- **Next:** M3-01 to M3-05 are done (drafts approved). Workers build M3-06 to M3-09 in order. When M3 is done, M4 is not activated by a worker. CI activates when the owner pushes. When M2 is done, M3 is not activated by a worker. CI activates when the owner pushes.
+- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). M3 Onboarding + Home is done (2026-10-10). **No milestone is active.** M4–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
+- **Next:** the owner activates M4 (Reading Engine) after its tasks are written in TASKS.json. Its blocking decisions are in [ROADMAP.md](ROADMAP.md). A worker does not activate milestones. CI activates when the owner pushes. When M3 is done, M4 is not activated by a worker. CI activates when the owner pushes. When M2 is done, M3 is not activated by a worker. CI activates when the owner pushes.
 
 ## Open questions for the owner
 
@@ -339,4 +339,10 @@ Entry format:
 - Verification: `pnpm check` (web unit 34, api 16), `pnpm build`, and `DATABASE_URL=<local> pnpm test:e2e` (api 16, web 242) pass. New `e2e/level-check.spec.ts` (both projects): per locale, home's "Start the level check" opens `/{locale}/level-check` with the matching `html lang`, title, heading and sentence, and "Go to home page" returns home; the page answers 200; axe; 320 and 360 px without overflow or clipping. The onboarding invitation's button reaches the same page. All 19 approved M3 copy keys (57 strings) were compared with the catalogs by script: no mismatch, none missing. **Visual check:** production-build screenshot, ru 320.
 - Versions / choices: The page reuses `StatusMessage`, M1's approved heading-sentence-button layout, with its approved inline button (DESIGN_SYSTEM.md: the M1 status pages keep it). The page is static, so it also works without JavaScript.
 - Notes: The sentence "Your goal is saved on this device." is the approved copy. A visitor who opens this address directly without a saved goal also sees it. FEATURE_MAP's "Diagnostic assessment" stays Not started: only its address exists, and its design is still open.
+
+### 2026-10-10: Milestone M3 Onboarding + Home complete
+- Result: done
+- Changes: M3 marked `done` with `completedAt` in TASKS.json. All nine tasks are done: M3-01 to M3-04 (specs and copy, design values, ADR-0003, ADR-0004), M3-05 (owner approval), M3-06 (guest goal domain and cookie), M3-07 (onboarding), M3-08 (home and the proxy redirect), M3-09 (the interim level-check page). CLAUDE.md "Current state" was updated in M3-09. **M4 was not activated.**
+- Verification: the full gate suite passed on the M3-09 commit: `pnpm check`, `pnpm build`, `DATABASE_URL=<local> pnpm test:e2e` (api 16, web 242), with the local database up.
+- Notes: Follow-ups collected from the M3 entries, none started: (1) the flaky M1 test `language-switcher.spec.ts` "works with the keyboard only" (about 1 in 30–40 runs, also before M3; Escape is handled only after hydration and an effect); (2) without JavaScript, home's goal line does not show (the cookie read is a streamed part); (3) the level check itself (design, content, estimate) remains open for M4 or later; (4) where practice state lives (ARCHITECTURE.md, guest practice state); (5) "Your goal is saved on this device" also shows to a visitor without a saved goal; (6) the M1 status pages use an inline primary button while M3's is full width on phones (owner may align them); (7) fluent-speaker review of the uz and ru copy before beta; and from M2: the `apps/api/.env` file, web e2e in CI, a test database, API types for the web, API docs in production, hosting and data residency, the `apps/web` Vitest ESM warning, type-aware linting, and the icon task M10-01. The local database container was stopped (`pnpm db:down`, data kept).
 

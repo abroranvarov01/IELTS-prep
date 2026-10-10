@@ -28,8 +28,9 @@
     {
       "id": "M3",
       "name": "Onboarding + Home",
-      "status": "active",
-      "goal": "A new user gets from first open to an invitation to start a diagnostic in three short onboarding steps (exam type, target band) without registering, and a returning user's home answers 'What should I do now?' with one dominant next action and their target band. Guest state stays on the device; no auth, no product tables. Specs, copy, design values and the guest-state and feature-structure ADRs are approved before code."
+      "status": "done",
+      "goal": "A new user gets from first open to an invitation to start a diagnostic in three short onboarding steps (exam type, target band) without registering, and a returning user's home answers 'What should I do now?' with one dominant next action and their target band. Guest state stays on the device; no auth, no product tables. Specs, copy, design values and the guest-state and feature-structure ADRs are approved before code.",
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4",
