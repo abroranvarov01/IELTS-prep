@@ -1473,7 +1473,7 @@
       "title": "Draft the Reading question-type scope and per-type interactions",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "Decide with the owner which IELTS Reading question types M4 renders and how each is answered on a phone and on desktop.",
       "scope": [
@@ -1511,7 +1511,8 @@
         "docs/design/UI_ANTI_PATTERNS.md",
         ".claude/rules/domain/ielts-scoring.md"
       ],
-      "docsToUpdate": ["docs/product/READING_EXPERIENCE.md"]
+      "docsToUpdate": ["docs/product/READING_EXPERIENCE.md"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-02",

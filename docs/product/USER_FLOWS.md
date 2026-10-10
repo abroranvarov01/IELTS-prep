@@ -312,3 +312,16 @@ The questions as they were put to the owner, with the options considered:
 - The interim page's button reuses `common.goHome` ("Go to home page"). The band values (6.0, 6.5, 7.0, 7.5, 8+) are not translated.
 - **Note on module names:** "Academic" and "General Training" are the names candidates see when they register. They stay in English in all three languages for now (owner, 2026-10-10). Alternatives for the fluent review: ru "Академический" / "Общий (General Training)", uz "Akademik" / "Umumiy (General Training)".
 - The "Estimated band" wording for section 3 of home is not needed until an estimate exists (M4 or later). It will follow [PRODUCT.md](PRODUCT.md#honest-feedback-non-negotiable) in all three languages.
+
+## Interface copy (M4)
+
+**PROPOSED: awaiting owner approval** (tasks M4-01 to M4-04, decided at the M4-09 gate). Interface strings only: test content (passages, questions, instructions, TRUE/FALSE/NOT GIVEN, option texts) stays in English and comes from the content, not from the catalogs. A fluent-speaker review of the uz and ru strings is required before beta. Uzbek uses U+02BB for oʻ and gʻ. Keys are suggestions for M4-13 to M4-21.
+
+| Key (suggested) | Used in | en | ru | uz |
+|---|---|---|---|---|
+| `reading.answer.clear` | Quiet action under a "choose one" question once answered (M4-01) | Clear answer | Очистить ответ | Javobni tozalash |
+| `reading.answer.choose` | Answer button of a "choose from a list" question when empty (M4-01) | Choose an answer | Выберите ответ | Javobni tanlang |
+| `reading.answer.chosenCount` | Count under a "choose several" instruction (M4-01) | {count} of {total} chosen | Выбрано {count} из {total} | {total} tadan {count} tasi tanlandi |
+| `reading.answer.chosenFor` | Marker on an option chosen for another question; `{question}` is its number or label (M4-01) | Chosen for {question} | Выбрано для {question} | {question} uchun tanlangan |
+| `reading.answer.label` | Label of a typed-answer field (M4-01) | Answer {number} | Ответ {number} | {number}-javob |
+| `reading.answer.selected` | Screen-reader text on a chosen option row, where the native control does not already announce it (M4-01) | Selected | Выбрано | Tanlangan |
