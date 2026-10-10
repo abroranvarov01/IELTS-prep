@@ -885,7 +885,7 @@
       "title": "Migration workflow and database connectivity checks",
       "milestone": "M2",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M2-04"],
       "goal": "Schema changes follow one documented migration workflow that a tool checks, and the API can report whether its database is reachable.",
       "scope": [
@@ -925,7 +925,8 @@
       "docsToUpdate": [
         "docs/engineering/QUALITY_GATES.md (db:migrate, db:deploy, db:status, db:check)",
         "CLAUDE.md (rules table: backend/database.md)"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M2-06",

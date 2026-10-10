@@ -63,6 +63,7 @@ Each topic has exactly **one** owner. Other files link to it instead of restatin
 | `styling/visual-implementation.md` | `*.tsx`, `*.css` in `apps/web` (tokens: `apps/web/src/styles/tokens.css`) |
 | `testing/test-code.md` | `*.test.*`, `*.spec.*`, `apps/web/e2e/`, `apps/api/test/` |
 | `security/security.md` | `apps/api/**`, web server code (proxy, route handlers, `*.server.*`, actions), `.env*` |
+| `backend/database.md` | `apps/api/prisma/**`, `apps/api/prisma.config.ts`, `apps/api/src/database/**`: schema changes, migrations, database access |
 | `domain/ielts-scoring.md` | Source files and directories under `apps/` or `packages/` named for scoring, bands, feedback, or assessment |
 
 The rule globs are scoped to the real layout (`apps/web`, `apps/api`, `packages/*`). Add a feature-specific domain rule (e.g. `domain/reading.md` scoped to the Reading feature directory) only once that directory exists and has rules worth stating.
