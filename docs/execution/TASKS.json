@@ -1184,7 +1184,7 @@
       "title": "Draft ADR-0004: feature structure and domain code in apps/web",
       "milestone": "M3",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "Decide the folder structure and module boundaries for the first features (guest profile, onboarding, home) before their code exists. ARCHITECTURE.md says to decide this with the first feature.",
       "scope": [
@@ -1220,7 +1220,8 @@
       "docsToUpdate": [
         "docs/architecture/decisions/README.md",
         "docs/architecture/ARCHITECTURE.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3-05",

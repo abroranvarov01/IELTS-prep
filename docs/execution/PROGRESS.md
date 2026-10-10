@@ -5,7 +5,7 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). **M3 Onboarding + Home is active** (owner, 2026-10-10). M4–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
-- **Next:** workers draft M3-01 to M3-04 (specs and copy, design values, ADR-0003, ADR-0004); then the owner's approval gate M3-05; then M3-06 to M3-09 build it. When M3 is done, M4 is not activated by a worker. CI activates when the owner pushes. When M2 is done, M3 is not activated by a worker. CI activates when the owner pushes.
+- **Next:** the drafts M3-01 to M3-04 are done. **The owner's approval gate M3-05** (specs and copy, design values, ADR-0003, ADR-0004, the open questions) comes next; M3-06 to M3-09 wait on it. When M3 is done, M4 is not activated by a worker. CI activates when the owner pushes. When M2 is done, M3 is not activated by a worker. CI activates when the owner pushes.
 
 ## Open questions for the owner
 
@@ -298,4 +298,10 @@ Entry format:
 - Verification: `pnpm format:check` passes; no file under `apps/` or `packages/` changed. Facts the ADR relies on were checked in the repository: the service worker precaches static assets only and caches no pages (`sw.ts`); `cacheComponents` is on (`next.config.ts`); `proxy.ts` is the next-intl middleware for every non-asset path.
 - Versions / choices: The cookie was preferred over `localStorage` mainly because the server can then render home correctly on first paint and redirect before rendering, and onboarding works without JavaScript (like the language switcher). A server-side guest record was rejected because it needs an identifier and a table (close to auth, ruled out by the owner) and runs into the open data-residency decision.
 - Notes: Open by design: where practice state lives (M4), the offline scope, migration to accounts (M7). Known costs: home renders per request; on iOS an installed home-screen app has storage separate from Safari.
+
+### 2026-10-10: M3-04 Draft ADR-0004: feature structure and domain code in apps/web
+- Result: done
+- Changes: `docs/architecture/decisions/0004-web-feature-structure.md` (Proposed). Recommendation: `apps/web/src` keeps `app/` for routes, layouts and the shell with thin pages, and adds `features/<feature>/` (screens and their Server Actions: `onboarding`, `home`), `components/` (UI used by two or more features), `domain/` (pure rules: the goal's values and parsing, the next-action rule, later Reading scoring), and `data/` (server-only data access: the goal cookie). An import table per folder, enforced by zones in the existing `import/no-restricted-paths` rule plus `no-restricted-imports` bans (React, Next.js, next-intl, `node:*`) in `domain/`. Each folder is created by its first real use; components start in their feature and move to `components/` on a second consumer; domain code moves to `packages/` only when the API needs it. Four layouts compared. Added to the ADR index as Proposed; ARCHITECTURE.md's open decision points to it (`apps/api` stays open).
+- Verification: `pnpm format:check` passes; no file under `apps/` or `packages/` changed. Existing conventions the ADR keeps were checked in the repository: colocated `*.test.ts(x)` tests, the `@/*` alias, PascalCase component files (`LanguageSwitcher.tsx`), and the existing `import/no-restricted-paths` rule.
+- Notes: `StatusMessage` and `LanguageSwitcher` stay in `app/` as shell code; moving them is out of M3.
 

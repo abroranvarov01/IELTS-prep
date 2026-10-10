@@ -34,7 +34,7 @@ Do not invent answers to these in code. Each one is a candidate ADR.
 - **Offline scope.** What works offline (for example downloaded Reading sets) and how results sync.
 - **Content model and authoring.** How passages, questions, answer keys, and explanations are authored, versioned, and reviewed.
 - **Analytics and privacy.** What is measured, with what tool, and the consent requirements (including for minors).
-- **Feature folder structure** inside `apps/web` and `apps/api`. Decide with the first feature.
+- **Feature folder structure** inside `apps/web` and `apps/api`. Decide with the first feature. For `apps/web`, proposed in [ADR-0004](decisions/0004-web-feature-structure.md) (feature folders plus `domain/`, `data/`, `components/`, enforced by lint); waiting for acceptance (M3-05). `apps/api` stays open.
 
 ## Related
 
