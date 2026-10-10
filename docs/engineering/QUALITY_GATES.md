@@ -6,7 +6,7 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 
 ## Current state (2026-10-09)
 
-**All gates below exist.** Run commands from the repository root with Node 24 (`.nvmrc`) and pnpm via Corepack (`corepack enable`). **`pnpm check` is the one command to run before reporting a change as done.** CI (`.github/workflows/ci.yml`, GitHub Actions) runs `pnpm install --frozen-lockfile`, `pnpm check`, and `pnpm build` on every push and pull request. It becomes active when the owner pushes. End-to-end tests are not in CI yet.
+**All gates below exist.** Run commands from the repository root with Node 24 (`.nvmrc`) and pnpm via Corepack (`corepack enable`). **`pnpm check` is the one command to run before reporting a change as done.** CI (`.github/workflows/ci.yml`, GitHub Actions) runs two jobs on every push and pull request: `check` (`pnpm install --frozen-lockfile`, `pnpm check`, `pnpm build`, no database) and `api-database` (a `postgres:18.6` service container like `compose.yaml`, then `pnpm --filter api db:deploy`, `db:check`, and `test:e2e`). It becomes active when the owner pushes. Browser e2e tests (Playwright) are not in CI yet.
 
 | Gate | Command | Status |
 |---|---|---|
@@ -16,11 +16,11 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 | Format | `pnpm format:check` (check), `pnpm format` (write). Prettier defaults; Markdown and the lockfile are excluded (`.prettierignore`) | Exists |
 | Unit/component tests | `pnpm test` (Vitest in every workspace: `apps/web` with jsdom + Testing Library, `apps/api`) | Exists |
 | End-to-end tests | `pnpm test:e2e` (runs `test:e2e` in every workspace) | Exists |
-| ↳ API HTTP e2e | `pnpm --filter api test:e2e` (Vitest + supertest against the Nest app). Needs the local database running (`pnpm db:up`) and `DATABASE_URL` (exported, or in `apps/api/.env` from `.env.example`) | Exists |
+| ↳ API HTTP e2e | `pnpm --filter api test:e2e` (Vitest + supertest against the Nest app). Needs the local database running (`pnpm db:up`) and `DATABASE_URL` (exported, or in `apps/api/.env` from `.env.example`) | Exists (CI) |
 | ↳ Browser e2e + accessibility | `pnpm --filter web test:e2e` (Playwright against the production build, started by `webServer`; projects `mobile` 360×800 and `desktop` 1280×800; `@axe-core/playwright` WCAG 2.2 AA checks). Needs Chromium: `pnpm --filter web exec playwright install chromium` | Exists |
 | Build | `pnpm build` (runs `build` in every workspace); one app: `pnpm --filter web build` or `pnpm --filter api build` | Exists (CI) |
 | Local database | `pnpm db:up` (starts PostgreSQL 18.6 from `compose.yaml` on 127.0.0.1:5432 and waits until it is healthy), `pnpm db:down` (stops it and keeps the data volume). Needs Docker with the Compose plugin. The URL is the one in `apps/api/.env.example` | Exists |
-| Database migrations | `pnpm --filter api db:migrate --name <change>` (authors: create and apply a migration locally, `prisma migrate dev`), `db:deploy` (apply committed migrations, `prisma migrate deploy`; the only way outside a local database), `db:status` (`prisma migrate status`), `db:check` (fails, exit 2 from Prisma, when the database differs from `schema.prisma`; run after `db:deploy` it checks the committed migrations against the schema). All need `DATABASE_URL`. Rules: `.claude/rules/backend/database.md` | Exists |
+| Database migrations | `pnpm --filter api db:migrate --name <change>` (authors: create and apply a migration locally, `prisma migrate dev`), `db:deploy` (apply committed migrations, `prisma migrate deploy`; the only way outside a local database), `db:status` (`prisma migrate status`), `db:check` (fails, exit 2 from Prisma, when the database differs from `schema.prisma`; run after `db:deploy` it checks the committed migrations against the schema). All need `DATABASE_URL`. Rules: `.claude/rules/backend/database.md` | Exists (CI: `db:deploy`, `db:check`) |
 | Prisma Client | `pnpm --filter api db:generate` (also runs on install as `postinstall`). The client is generated into `apps/api/src/generated/` and not committed. Needs no database and no `DATABASE_URL` | Exists |
 
 **Agents must not claim that a check passed if they did not run it.** This table is the only canonical list of commands. Update it when a command changes.
@@ -38,7 +38,7 @@ Rows marked **Implemented** are configured (commands above). The others are reco
 | Architecture boundaries | ESLint import restrictions or dependency-cruiser, once [BOUNDARIES.md](../architecture/BOUNDARIES.md) has concrete modules | **Implemented** for apps (`import/no-restricted-paths`). Module-level rules come with the feature folder structure. |
 | Hard-coded UI strings | A no-literal-string lint rule for JSX, plus a missing-translation-key check for uz/ru/en | Partly: catalog key parity and non-empty messages are tested (`apps/web/src/i18n/messages.test.ts`). No JSX literal-string rule yet. |
 | Raw design values | A lint rule or Tailwind config that rejects arbitrary colors outside the tokens | **Implemented** (`scripts/check-tokens.mjs`, Tailwind defaults reset in `tokens.css`) |
-| Behavior | Unit, component, and e2e suites per [TESTING_STRATEGY.md](TESTING_STRATEGY.md) | **Implemented** (tooling; e2e not in CI yet) |
+| Behavior | Unit, component, and e2e suites per [TESTING_STRATEGY.md](TESTING_STRATEGY.md) | **Implemented** (tooling; API e2e in CI, browser e2e not yet) |
 | Accessibility (runtime) | axe checks in component/e2e tests | **Implemented** in browser e2e |
 | PWA, performance | Lighthouse CI with budgets for mobile (bundle size, LCP, installability) | Not yet |
 | Regressions | CI runs typecheck, lint, format check, tests, and build on every PR. The main branch is protected. | **Implemented** in CI. Branch protection is an owner action. |

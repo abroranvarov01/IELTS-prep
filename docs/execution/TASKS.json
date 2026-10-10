@@ -933,7 +933,7 @@
       "title": "CI database job",
       "milestone": "M2",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M2-05"],
       "goal": "CI applies the migrations to a real PostgreSQL, checks for schema drift, and runs the API e2e tests against it on every push and pull request.",
       "scope": [
@@ -960,7 +960,8 @@
         "docs/engineering/QUALITY_GATES.md",
         ".github/workflows/ci.yml"
       ],
-      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md (CI description)"]
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md (CI description)"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M2-07",
