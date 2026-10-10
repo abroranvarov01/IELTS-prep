@@ -6,7 +6,7 @@ A mobile-first IELTS preparation PWA for candidates in **Uzbekistan**, with an U
 
 ## Current state
 
-- **Foundation (M0) is in place; no product features yet.** pnpm monorepo: `apps/web` (Next.js, next-intl uz/ru/en, Tailwind v4 tokens, PWA shell) and `apps/api` (NestJS, `GET /health`). Gates, tests, and CI exist. Git repository with a GitHub `origin`.
+- **Foundation (M0) and the app shell (M1) are in place; no product features yet.** pnpm monorepo: `apps/web` (Next.js, next-intl uz/ru/en, Tailwind v4 tokens, PWA shell; header with logo and language switcher, localized not-found and error states) and `apps/api` (NestJS, `GET /health`). Gates, tests, and CI exist. Git repository with a GitHub `origin`.
 - **Confirmed:** Next.js frontend, NestJS backend, TypeScript end-to-end, PostgreSQL + Prisma. The full foundation is in ADR-0001 (`docs/architecture/decisions/0001-initial-application-foundation.md`, **Accepted**). See `docs/architecture/ARCHITECTURE.md` for confirmed vs. proposed vs. TBD.
 - **Execution:** work is done task by task from `docs/execution/TASKS.json` via the `work-next-task` skill. Do not install dependencies or write product code outside a task that asks for it.
 - `.claude/settings.json` denies `git push`, remote changes, history rewrites, and reading or writing secret `.env` files. Local status, diff, add, and commit follow normal permissions. The owner pushes.

@@ -14,8 +14,9 @@
     {
       "id": "M1",
       "name": "App Shell & Design Foundation",
-      "status": "active",
-      "goal": "The shared app shell every screen uses (header, main landmark, skip link, language switcher, localized not-found and error states) and the design values it needs, specified and approved by the owner before they are built. No product features."
+      "status": "done",
+      "goal": "The shared app shell every screen uses (header, main landmark, skip link, language switcher, localized not-found and error states) and the design values it needs, specified and approved by the owner before they are built. No product features.",
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M2",
