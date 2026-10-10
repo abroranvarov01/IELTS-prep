@@ -313,6 +313,31 @@ The questions as they were put to the owner, with the options considered:
 - **Note on module names:** "Academic" and "General Training" are the names candidates see when they register. They stay in English in all three languages for now (owner, 2026-10-10). Alternatives for the fluent review: ru "Академический" / "Общий (General Training)", uz "Akademik" / "Umumiy (General Training)".
 - The "Estimated band" wording for section 3 of home is not needed until an estimate exists (M4 or later). It will follow [PRODUCT.md](PRODUCT.md#honest-feedback-non-negotiable) in all three languages.
 
+## Reading flows (M4)
+
+**DRAFT: awaiting owner approval** (task M4-02, decided at the M4-09 gate). The screen they run on is specified in [READING_EXPERIENCE.md, Mobile reading screen (M4)](READING_EXPERIENCE.md#mobile-reading-screen-m4); modes in [Practice and Exam Mode (M4)](READING_EXPERIENCE.md#practice-and-exam-mode-m4).
+
+### Open a Reading test
+- **Goal:** start reading and answering at once.
+- **Entry point:** the test's direct link `/{locale}/reading/{testId}` (open question 3 of M4-02). The link may carry the mode (M4-04).
+- **Steps:** 1. Open the link → the test's start screen (its title, the mode, the time, one red "Start" button; M4-04). 2. Tap "Start" → the reading screen with question 1 in the partial sheet and the timer running if the mode has one.
+- **Step count:** 2.
+- **Empty / error states:** unknown test → the localized not-found page; offline → the M1 error state.
+
+### Answer and move between questions
+- **Steps:** 1. Answer in the sheet (one tap, or typing). 2. "Next" (or a number in the navigator: "All questions", then the number).
+- **Step count:** 2 per question; any question is 2 actions away through the navigator.
+
+### Finish a test
+- **Steps:** 1. "Finish test" (on question 40 or at the end of the navigator) → a confirmation in the expanded sheet: "Finish the test?", the number of unanswered questions if any, the red "Finish" and a quiet "Keep working". 2. "Finish" → the finished state (M4-04).
+- **Step count:** 2. In Exam Mode, time-out finishes without the confirmation (M4-04).
+
+### Leave and come back
+- **Goal:** nothing is lost when the phone locks, the tab closes, or the user taps "Exit".
+- **Steps:** opening the same test link again → the reading screen exactly where the user left it: same question, answers, flags, highlights and pins, sheet state, passage positions (kept on the device, ADR-0006). In Exam Mode the timer has kept running in the meantime (M4-04).
+- **"Exit":** returns to home. In Exam Mode it first asks "Leave the test? The time keeps running." (M4-04).
+- **Step count:** 1 to resume.
+
 ## Interface copy (M4)
 
 **PROPOSED: awaiting owner approval** (tasks M4-01 to M4-04, decided at the M4-09 gate). Interface strings only: test content (passages, questions, instructions, TRUE/FALSE/NOT GIVEN, option texts) stays in English and comes from the content, not from the catalogs. A fluent-speaker review of the uz and ru strings is required before beta. Uzbek uses U+02BB for oʻ and gʻ. Keys are suggestions for M4-13 to M4-21.
@@ -325,3 +350,31 @@ The questions as they were put to the owner, with the options considered:
 | `reading.answer.chosenFor` | Marker on an option chosen for another question; `{question}` is its number or label (M4-01) | Chosen for {question} | Выбрано для {question} | {question} uchun tanlangan |
 | `reading.answer.label` | Label of a typed-answer field (M4-01) | Answer {number} | Ответ {number} | {number}-javob |
 | `reading.answer.selected` | Screen-reader text on a chosen option row, where the native control does not already announce it (M4-01) | Selected | Выбрано | Tanlangan |
+| `reading.skipToQuestion` | Skip link on the test screen (M4-02) | Skip to the question | Перейти к вопросу | Savolga oʻtish |
+| `reading.exit` | Test bar (M4-02) | Exit | Выйти | Chiqish |
+| `reading.passageOf` | Test bar: the current passage (M4-02) | Passage {number} of {total} | Текст {number} из {total} | {total} tadan {number}-matn |
+| `reading.sheet.label` | Accessible name of the question sheet region (M4-02) | Questions | Вопросы | Savollar |
+| `reading.sheet.show` | Sheet handle when collapsed (M4-02) | Show question | Показать вопрос | Savolni koʻrsatish |
+| `reading.sheet.hide` | Sheet handle when partial (M4-02) | Hide question | Скрыть вопрос | Savolni yashirish |
+| `reading.sheet.back` | Closes an option list or the navigator in the expanded sheet (M4-02) | Back | Назад | Orqaga |
+| `reading.question.of` | Sheet header (M4-02) | Question {number} of {total} | Вопрос {number} из {total} | {total} tadan {number}-savol |
+| `reading.question.range` | Sheet header for a "choose several" item (M4-02) | Questions {from}–{to} | Вопросы {from}–{to} | {from}–{to}-savollar |
+| `reading.question.previous` | Sheet footer (M4-02) | Previous | Предыдущий | Oldingi |
+| `reading.question.next` | Sheet footer (M4-02) | Next | Следующий | Keyingi |
+| `reading.flag.add` | Flag toggle when off (M4-02) | Mark for review | Отметить для проверки | Tekshirish uchun belgilash |
+| `reading.flag.remove` | Flag toggle when on (M4-02) | Remove mark | Снять отметку | Belgini olib tashlash |
+| `reading.navigator.open` | Sheet header button and the navigator heading (M4-02) | All questions | Все вопросы | Barcha savollar |
+| `reading.navigator.passage` | Navigator group heading (M4-02) | Passage {number} | Текст {number} | {number}-matn |
+| `reading.navigator.item` | Accessible name of a navigator button; `{states}` joins the state words below (M4-02) | Question {number}, {states} | Вопрос {number}, {states} | {number}-savol, {states} |
+| `reading.navigator.answered` | State word (M4-02) | answered | есть ответ | javob berilgan |
+| `reading.navigator.unanswered` | State word (M4-02) | no answer | нет ответа | javob yoʻq |
+| `reading.navigator.flagged` | State word (M4-02) | marked for review | отмечен для проверки | tekshirish uchun belgilangan |
+| `reading.navigator.current` | State word (M4-02) | current | текущий | joriy |
+| `reading.finish.button` | Last question and navigator; the screen's red action (M4-02) | Finish test | Завершить тест | Testni yakunlash |
+| `reading.finish.title` | Finish confirmation heading (M4-02) | Finish the test? | Завершить тест? | Test yakunlansinmi? |
+| `reading.finish.unanswered` | Finish confirmation; ICU plural (M4-02) | {count, plural, one {# question has no answer.} other {# questions have no answer.}} | {count, plural, one {# вопрос без ответа.} few {# вопроса без ответа.} many {# вопросов без ответа.} other {# вопроса без ответа.}} | {count} ta savolga javob berilmagan. |
+| `reading.finish.confirm` | Finish confirmation, red (M4-02) | Finish | Завершить | Yakunlash |
+| `reading.finish.cancel` | Finish confirmation, quiet (M4-02) | Keep working | Продолжить | Davom etish |
+| `reading.timer.label` | Accessible name of the timer (M4-02) | Time left: {time} | Осталось времени: {time} | Qolgan vaqt: {time} |
+| `reading.timer.warning` | Live announcement at 10 and 5 minutes; ICU plural (M4-02) | {minutes, plural, one {# minute left} other {# minutes left}} | {minutes, plural, one {Осталась # минута} few {Осталось # минуты} many {Осталось # минут} other {Осталось # минуты}} | {minutes} daqiqa qoldi |
+| `reading.storage.unavailable` | Notice when answers cannot be kept (M4-02) | Your answers can't be saved on this device. Don't close this page. | Ответы не сохраняются на этом устройстве. Не закрывайте страницу. | Javoblar bu qurilmada saqlanmaydi. Sahifani yopmang. |

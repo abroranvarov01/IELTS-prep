@@ -114,3 +114,60 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 3. **Auto-advance after choosing?** Options: (a) no, "Next" is deliberate; (b) advance after choosing. **Recommendation: (a)**, as in computer-delivered IELTS, so a mis-tap is visible before moving on.
 4. **Drag and drop for matching on desktop?** Computer-delivered IELTS uses dragging for some matching types. Options: (a) the answer button and option list everywhere in M4; (b) also drag and drop in desktop Exam Mode. **Recommendation: (a)** for M4: one accessible interaction on all devices; dragging can be added later for realism with a keyboard equivalent.
 5. **Word counter for typed answers?** Options: (a) none; (b) a counter in Practice Mode only; (c) a warning in Practice Mode when an answer exceeds the limit. **Recommendation: decide with Practice help in M4-04**; none in Exam Mode in any case.
+
+### Mobile reading screen (M4)
+
+**DRAFT: awaiting owner approval** (task M4-02). The phone layout for both modes; mode differences are in [Practice and Exam Mode (M4)](#practice-and-exam-mode-m4) and the desktop exam layout there too. Flows with step counts: [USER_FLOWS.md, Reading flows (M4)](USER_FLOWS.md#reading-flows-m4).
+
+**The screen at 360 px, top to bottom:**
+1. **Test bar** (the screen's `header`, about 48 px, replacing the shell header on the test screen only): "Exit" on the start side, the current passage ("Passage 1 of 3") in the middle, the timer on the end side when the mode has one. Nothing else (open questions 1 and 2).
+2. **The passage** (the `main` landmark): the passage title, then its paragraphs in the approved passage typography (Literata, 17 px, line height 1.6) inside the 16 px gutters. Paragraph letters (A, B, …) are shown in the margin when the content has them (matching headings and matching information need them). The passage scrolls freely; it has bottom padding equal to the sheet's current height, so its last line can always be scrolled above the sheet.
+3. **The question sheet** (a `region` named "Questions", after `main` in the DOM): persistent, non-modal, floating over the bottom of the passage. The passage stays readable and scrollable behind it in every state.
+
+**Sheet states:**
+
+| State | Height | Shows | Used for |
+|---|---|---|---|
+| **Collapsed** | Its content only (about 96 px) | The handle, "Question 5 of 40", whether it is answered, the flag | Reading the passage with the most room |
+| **Partial** (default) | About 45% of the visible screen height | The handle and header row, the group instruction, the prompt, the answer control, Previous / Next | Reading and answering in the same place |
+| **Expanded** | Everything below the test bar | The same as partial with room for long content, or a list that opened in the sheet (a "choose from a list" option list, the navigator) | Long option lists, summaries, the navigator |
+
+- **Moving between states without a gesture** (no gesture-only action, [ACCESSIBILITY.md](../design/ACCESSIBILITY.md)): the handle is a button ("Show question" / "Hide question") that toggles collapsed ↔ partial; opening an option list or the navigator expands the sheet, and closing it (its own "Back" button, Escape, or choosing) returns to partial.
+- **Dragging:** the handle area can also be dragged; on release the sheet snaps to the nearest state. Dragging the sheet's content scrolls the content, not the sheet.
+- **Content longer than the state:** the sheet's body scrolls inside the sheet; the header row and Previous / Next stay visible.
+- **Phone keyboard:** when a typed-answer field gets focus, the sheet stays docked on top of the on-screen keyboard (tracking the visible viewport), showing the text with the current gap and the field; the passage area above shrinks but stays scrollable. When the keyboard closes, the sheet returns to its earlier state.
+- **Rotation and resizing** keep the state; heights are recomputed.
+- **Motion:** state changes animate in at most 200 ms (the approved "base" duration); with reduced motion they are instant.
+
+**Sheet header and footer:**
+- Header row: "Question 5 of 40" (or "Questions 14–15" for a "choose several" item), the flag toggle ("Mark for review", available in both modes as in computer-delivered IELTS; M4-04), and "All questions" (opens the navigator).
+- Footer row: "Previous" and "Next" as quiet bordered buttons (not red). "Next" on question 40 is replaced by "Finish test", the screen's one red action. "Finish test" is also at the end of the navigator.
+
+**Passage and current question:** changing question **does not scroll the passage** (open question 4): the reader keeps their place, and IELTS questions do not always follow the passage order. Moving to a question of another passage (e.g. from 13 to 14) shows that passage at the position where the user last left it (its top the first time), and the test bar updates ("Passage 2 of 3").
+
+**The question navigator** (opens in the expanded sheet from "All questions"):
+- Grouped by passage: a heading "Passage 1" and its question numbers, then Passage 2 and Passage 3.
+- Each number is a button of at least 44 × 44 px. At 320 px, six fit per row (6 × 44 px plus five 4 px gaps = 284 px of the 288 px between the gutters), so 40 questions take about seven rows plus three headings, scrolling inside the sheet.
+- **States, never by color alone (I-8):** unanswered: an outlined button; answered: a filled button with a contrasting number; current: a heavier border and an underline; marked for review: a small flag icon in the corner. Each button's accessible name says it all, e.g. "Question 5, answered, marked for review, current".
+- Tapping a number shows that question in the partial sheet. "Finish test" sits after the last group.
+
+**The timer** (modes in M4-04): remaining time as `mm:ss` in the test bar, updated once a second visually but announced to screen readers only at 10 minutes and 5 minutes left (a polite live region: "10 minutes left"), and shown bolder from 5 minutes left. Nothing blinks or moves.
+
+**Accessibility:**
+- **Order:** skip link "Skip to the question" (first focusable), test bar, passage (`main`), question sheet (region). Screen readers can read the whole passage and then the question, as on paper.
+- **Changing question** moves focus to the sheet's question heading ("Question 6 of 40"), so the new question is announced. Previous / Next stay reachable by Tab.
+- **Keyboard:** every control reachable by Tab; the handle, flag, navigator, Previous, Next and Finish are buttons; Escape closes an open option list or the navigator.
+- **200% zoom and 320 px:** the sheet's partial state may then show only the header and prompt with the rest scrolling inside it; nothing is clipped, and the expanded state is always available.
+- **Reduced motion:** no sheet animation, no timer animation.
+
+**Empty, error and offline states:**
+- **Unknown test address:** the localized not-found page.
+- **Answers cannot be saved on this device** (storage blocked or full; ADR-0006): a one-line notice above the passage: "Your answers can't be saved on this device. Don't close this page." The test still works.
+- **Offline after the test has loaded:** answering, navigating, highlighting and pinning keep working (they need no network). Opening a test while offline shows the M1 error state (offline scope is TBD).
+
+**Open questions (M4-02):**
+1. **Test bar instead of the shell header on the test screen?** Options: (a) a compact test bar (Exit, passage, timer); (b) the shell header plus a test bar under it. **Recommendation: (a)**: on a 360 × 640 screen every 48 px of passage matters, and the logo is not useful mid-test.
+2. **Language switcher during a test?** Options: (a) not on the test screen (the language is chosen before; "Exit" leads back to it); (b) in the test bar. **Recommendation: (a).** Answers are kept on the device either way, so switching later loses nothing.
+3. **How a Reading test is reached in M4:** options: (a) only by its direct link (`/{locale}/reading/{testId}`), home unchanged; (b) also a link on home. **Recommendation: (a)**: home's next action stays the level check until its design decides how Reading fits in, and direct links are an approved acquisition path.
+4. **Scroll the passage when the question changes?** Options: (a) never; (b) to the paragraph a question refers to. **Recommendation: (a)** in M4: predictable, and it does not reveal where an answer is.
+5. **Three sheet states or two?** The owner allowed "collapsed / partial / expanded if needed". **Recommendation: three**: collapsed for reading on small phones, expanded for option lists and the navigator.

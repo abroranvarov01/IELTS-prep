@@ -1519,7 +1519,7 @@
       "title": "Draft the mobile reading screen: passage, bottom sheet, navigator, timer",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-01"],
       "goal": "Specify the signature mobile layout: the passage as the main object, the question bottom sheet and its states, the full-test navigator, the timer, and how a test starts and finishes.",
       "scope": [
@@ -1560,7 +1560,8 @@
       "docsToUpdate": [
         "docs/product/READING_EXPERIENCE.md",
         "docs/product/USER_FLOWS.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-03",
