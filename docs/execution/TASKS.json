@@ -2146,7 +2146,8 @@
         "docs/architecture/decisions/0004-web-feature-structure.md",
         "docs/architecture/decisions/0006-reading-session-state.md",
         "docs/architecture/decisions/0007-reading-ui-primitives.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-19",
