@@ -566,7 +566,7 @@
       "title": "Propose the design values the shell needs",
       "milestone": "M1",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "Turn the open DESIGN_SYSTEM.md items that the shell depends on into concrete proposals the owner can approve.",
       "scope": [
@@ -595,7 +595,8 @@
         "docs/design/ACCESSIBILITY.md",
         "docs/design/UI_ANTI_PATTERNS.md"
       ],
-      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"]
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M1-03",
