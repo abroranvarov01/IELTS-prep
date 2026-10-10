@@ -21,8 +21,9 @@
     {
       "id": "M2",
       "name": "Backend & Persistence Foundation",
-      "status": "active",
-      "goal": "PostgreSQL + Prisma wired into apps/api (ADR-0001 §4a) with a validated DATABASE_URL, a database module, a migration workflow, a local and CI database workflow, and connectivity checks; plus the API contract and validation approach of ADR-0002 (DTOs, global ValidationPipe, one error format, OpenAPI). No product tables (owner decision 2026-10-10). Hosting and data residency stay TBD and do not block M2."
+      "status": "done",
+      "goal": "PostgreSQL + Prisma wired into apps/api (ADR-0001 §4a) with a validated DATABASE_URL, a database module, a migration workflow, a local and CI database workflow, and connectivity checks; plus the API contract and validation approach of ADR-0002 (DTOs, global ValidationPipe, one error format, OpenAPI). No product tables (owner decision 2026-10-10). Hosting and data residency stay TBD and do not block M2.",
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3",

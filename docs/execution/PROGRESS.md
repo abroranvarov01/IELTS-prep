@@ -4,8 +4,8 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 ## Current state
 
-- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). **M2 Backend & Persistence Foundation is active** (owner, 2026-10-10). M3–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
-- **Next:** M2-01, M2-02, M2-03 and M2-07 are done. The remaining worker tasks run in order: M2-04, M2-05, M2-06, M2-08. When M2 is done, M3 is not activated by a worker. CI activates when the owner pushes.
+- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). **No milestone is active.** M3–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
+- **Next:** the owner activates M3 (Onboarding + Home) after its tasks are written in TASKS.json. Its blocking decisions are in [ROADMAP.md](ROADMAP.md). A worker does not activate milestones. CI (now with the `api-database` job) activates when the owner pushes. When M2 is done, M3 is not activated by a worker. CI activates when the owner pushes.
 
 ## Open questions for the owner
 
@@ -265,4 +265,10 @@ Entry format:
 - Verification: `pnpm check` (api unit 16, web 8), `pnpm build`, and `DATABASE_URL=<local> pnpm test:e2e` (api 16, web 96) pass. New `test/openapi.e2e-spec.ts`: both health operations reference `HealthResponse` (and `ApiErrorResponse` for the 503); the error schema requires `statusCode`, `code` and `message`, with `errors` an optional array of `FieldError`; `/docs-json` lists both paths and `/docs` returns HTML; with `NODE_ENV=production` both return 404 `not_found`. **Probes** (reverted): without the 503 decorator, 2 document tests fail; ignoring production mode fails the production test. **Built API:** with `NODE_ENV=development`, `/docs` is 200 HTML and `/docs-json` has `info` `{title: "IELTS Prep API", version: "0.0.1"}`; with `NODE_ENV=production` both give the 404 error body.
 - Versions / choices: The document is built by a factory passed to `SwaggerModule.setup`, so it is generated on first request (NestJS docs). The tests call `setUpApiDocs` before `app.init()`, as `main.ts` does before `listen`. The document test lives in the e2e suite because generating it needs the whole `AppModule`, which needs `DATABASE_URL` (unit tests run without it).
 - Notes: Unexpected 500s are not documented per operation; the error schema is in the document through the 503. Whether to publish docs in production stays with the hosting decision (ADR-0002 §5).
+
+### 2026-10-10: Milestone M2 Backend & Persistence Foundation complete
+- Result: done
+- Changes: M2 marked `done` with `completedAt` in TASKS.json. All eight tasks are done: M2-01 (ADR-0002 accepted), M2-02 (Docker, owner), M2-03 (Prisma, `DATABASE_URL`, `DatabaseModule`), M2-04 (local PostgreSQL 18.6 via Compose), M2-05 (migration scripts, `db:check`, `/health/ready`, database rule), M2-06 (CI `api-database` job), M2-07 (global validation and the error format), M2-08 (OpenAPI outside production). PROGRESS "Current state" updated; CLAUDE.md was updated in M2-08. **M3 was not activated.**
+- Verification: the full gate suite passed on the M2-08 commit: `pnpm check`, `pnpm build`, `DATABASE_URL=<local> pnpm test:e2e` (api 16, web 96), with the local database up.
+- Notes: Follow-ups collected from the M2 entries, none started: the `apps/api/.env` file for the owner (workers may not create it); web Playwright e2e in CI; a separate test database once a test writes data; how the web app gets API types (open in ARCHITECTURE.md, decided with its first consumer); publishing API docs in production (with hosting); hosting and data residency (TBD, before any production database); the `apps/web` Vitest Vite warning about ESM syntax in `vitest.config.ts`; type-aware linting (`no-floating-promises`, from F-05); the icon replacement task M10-01. The local database container was stopped (`pnpm db:down`, data kept).
 
