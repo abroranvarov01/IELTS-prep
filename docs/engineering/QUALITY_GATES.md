@@ -19,6 +19,7 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 | ↳ API HTTP e2e | `pnpm --filter api test:e2e` (Vitest + supertest against the Nest app). Needs `DATABASE_URL` (exported, or in `apps/api/.env` from `.env.example`); no running database yet | Exists |
 | ↳ Browser e2e + accessibility | `pnpm --filter web test:e2e` (Playwright against the production build, started by `webServer`; projects `mobile` 360×800 and `desktop` 1280×800; `@axe-core/playwright` WCAG 2.2 AA checks). Needs Chromium: `pnpm --filter web exec playwright install chromium` | Exists |
 | Build | `pnpm build` (runs `build` in every workspace); one app: `pnpm --filter web build` or `pnpm --filter api build` | Exists (CI) |
+| Local database | `pnpm db:up` (starts PostgreSQL 18.6 from `compose.yaml` on 127.0.0.1:5432 and waits until it is healthy), `pnpm db:down` (stops it and keeps the data volume). Needs Docker with the Compose plugin. The URL is the one in `apps/api/.env.example` | Exists |
 | Prisma Client | `pnpm --filter api db:generate` (also runs on install as `postinstall`). The client is generated into `apps/api/src/generated/` and not committed. Needs no database and no `DATABASE_URL` | Exists |
 
 **Agents must not claim that a check passed if they did not run it.** This table is the only canonical list of commands. Update it when a command changes.

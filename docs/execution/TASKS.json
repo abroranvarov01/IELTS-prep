@@ -847,7 +847,7 @@
       "title": "Local development database (Docker Compose)",
       "milestone": "M2",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M2-02", "M2-03"],
       "goal": "One command starts a local PostgreSQL that matches apps/api/.env.example.",
       "scope": [
@@ -877,7 +877,8 @@
       "docsToUpdate": [
         "docs/engineering/QUALITY_GATES.md (db:up, db:down)",
         "README.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M2-05",
