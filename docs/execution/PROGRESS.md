@@ -373,3 +373,8 @@ Entry format:
 - Verification: `pnpm format:check` passes; no file under `apps/` or `packages/` changed; the Uzbek copy uses U+02BB and no ASCII apostrophes (34 rows checked by script). Navigator arithmetic: 6 × 44 px + 5 × 4 px = 284 px of the 288 px between the gutters at 320 px.
 - Notes: Recommended at the gate: reach Reading only by direct link in M4 (home unchanged); no language switcher on the test screen; three sheet states.
 
+### 2026-10-10: M4-03 Draft highlighting and Pin Evidence
+- Result: done
+- Changes: READING_EXPERIENCE.md "Highlighting and Pin Evidence (M4)" (DRAFT): the sentence as the unit (stable sentence identifiers from the content contract); selection by tap or click (outline plus an action bar above the sheet) and by keyboard (the passage as one Tab stop with roving focus over sentences, Enter for actions, Escape to close), without taking plain reading taps or the browser's long-press selection; one highlight style drawn with `<mark>`; Pin Evidence to the current question, up to three sentences per question, shown in the sheet as "Your evidence" (quote, paragraph, "Show in passage", "Remove from evidence") and as pin markers in the passage for the current question only; pins stored for M5 review with no correctness shown in M4; persistence on the device; five open questions with recommendations (sentences rather than free ranges; Pin Evidence in Practice only; 3 pins; mark only the current question's pins; one highlight style). USER_FLOWS.md: 14 more PROPOSED copy keys.
+- Verification: `pnpm format:check` passes; no file under `apps/` or `packages/` changed.
+

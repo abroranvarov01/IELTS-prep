@@ -1568,7 +1568,7 @@
       "title": "Draft highlighting and Pin Evidence",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-02"],
       "goal": "Specify how a user highlights passage text and pins evidence to the current question on a phone and with a keyboard.",
       "scope": [
@@ -1598,7 +1598,8 @@
         "docs/design/ACCESSIBILITY.md",
         "docs/design/UI_ANTI_PATTERNS.md"
       ],
-      "docsToUpdate": ["docs/product/READING_EXPERIENCE.md"]
+      "docsToUpdate": ["docs/product/READING_EXPERIENCE.md"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-04",

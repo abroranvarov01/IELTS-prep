@@ -171,3 +171,38 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 3. **How a Reading test is reached in M4:** options: (a) only by its direct link (`/{locale}/reading/{testId}`), home unchanged; (b) also a link on home. **Recommendation: (a)**: home's next action stays the level check until its design decides how Reading fits in, and direct links are an approved acquisition path.
 4. **Scroll the passage when the question changes?** Options: (a) never; (b) to the paragraph a question refers to. **Recommendation: (a)** in M4: predictable, and it does not reveal where an answer is.
 5. **Three sheet states or two?** The owner allowed "collapsed / partial / expanded if needed". **Recommendation: three**: collapsed for reading on small phones, expanded for option lists and the navigator.
+
+### Highlighting and Pin Evidence (M4)
+
+**DRAFT: awaiting owner approval** (task M4-03). Whether each is available in Exam Mode is in [Practice and Exam Mode (M4)](#practice-and-exam-mode-m4).
+
+**The unit is a sentence** (open question 1). The passage's sentences have stable identifiers in the content (content contract, M4-06), so highlights and pins can be stored and found again, and later compared with the real evidence in review (M5).
+
+**Selecting a sentence:**
+- **Touch:** tapping a sentence selects it: it gets a visible outline and a small action bar appears just above the sheet: "Highlight" (or "Remove highlight"), "Pin to question 5" (or "Unpin from question 5"), and "Cancel". Tapping another sentence moves the selection; tapping "Cancel", the selected sentence again, or scrolling far away clears it. Plain reading taps are not taken: a tap without a selection does nothing else, and a long press still starts the browser's own text selection for copying.
+- **Mouse (desktop):** the same, with a click.
+- **Keyboard:** the passage is one Tab stop ("Passage. Use the arrow keys to move between sentences, Enter for actions."). Inside it, Up and Down arrows move a visible focus from sentence to sentence (roving focus, so 40 sentences do not become 40 Tab stops), Enter opens the action bar for the focused sentence, Escape closes it, and Tab leaves the passage.
+- **Screen readers:** in reading mode the passage reads as plain text; focusing it as above gives the same actions. Each action is announced politely ("Highlighted", "Pinned to question 5").
+
+**Highlighting:**
+- One highlight style: a soft background tint on the whole sentence (value in M4-05), drawn with the semantic `<mark>` element, so screen readers that support it announce "highlighted" and the text stays one continuous text.
+- "Highlight" adds it, "Remove highlight" removes it. Highlights belong to the test session, not to a question, and stay when the question changes.
+
+**Pin Evidence:**
+- "Pin to question 5" attaches the selected sentence to **the current question** as the user's evidence for their answer.
+- **Up to three sentences per question** (open question 3), from anywhere in that question's passage. A fourth pin is refused with a short message ("You can pin up to 3 sentences to one question."). The same sentence may be pinned to several questions.
+- **In the sheet:** under the answer control, a block "Your evidence" lists the pinned sentences in passage order, each as a short quote with its paragraph ("Paragraph C"), "Show in passage" (scrolls the passage to it and selects it) and "Remove from evidence".
+- **In the passage:** sentences pinned to the current question carry a small pin marker in the margin with the question number (open question 4). Pins of other questions are not marked, so the passage stays calm.
+- **Changing question:** the sheet shows the new question's evidence and the passage's pin markers change with it.
+- **Stored for review:** pins are kept with the session (ADR-0006) so evidence-first review (M5) can compare them with the real evidence. M4 never says whether a pin is right.
+
+**Not by color alone (I-8):** the selection has an outline as well as any fill; highlights use `<mark>` and a tint; pin markers are an icon plus the number.
+
+**Persistence:** highlights and pins are part of the session on this device: they survive a reload and "Exit" (ADR-0006), not a cleared browser or another device (no accounts yet).
+
+**Open questions (M4-03):**
+1. **Sentence or any text range?** Options: (a) whole sentences, chosen by tap, click or arrow keys; (b) any range, chosen with the browser's text selection plus a custom action bar (closer to computer-delivered IELTS on desktop, but on phones it competes with the system's selection menu, and ranges are hard to choose by keyboard). **Recommendation: (a)** for M4 on all devices: reliable on phones, operable by keyboard and screen reader, and pins line up exactly with the evidence sentences review will use.
+2. **Pin Evidence in Exam Mode?** Decided with Practice vs Exam (M4-04): **recommendation: Practice only**, since the real test has no such aid.
+3. **How many pins per question?** Options: (a) up to 3 sentences; (b) one; (c) unlimited. **Recommendation: (a)**: some answers need two sentences, and a limit keeps evidence a choice, not a copy of the passage.
+4. **Which pins are marked in the passage?** Options: (a) only the current question's; (b) all, with their numbers. **Recommendation: (a).**
+5. **One highlight style or several colors?** **Recommendation: one** (computer-delivered IELTS has one, and colors would need meanings).

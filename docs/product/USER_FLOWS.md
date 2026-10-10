@@ -378,3 +378,17 @@ The questions as they were put to the owner, with the options considered:
 | `reading.timer.label` | Accessible name of the timer (M4-02) | Time left: {time} | Осталось времени: {time} | Qolgan vaqt: {time} |
 | `reading.timer.warning` | Live announcement at 10 and 5 minutes; ICU plural (M4-02) | {minutes, plural, one {# minute left} other {# minutes left}} | {minutes, plural, one {Осталась # минута} few {Осталось # минуты} many {Осталось # минут} other {Осталось # минуты}} | {minutes} daqiqa qoldi |
 | `reading.storage.unavailable` | Notice when answers cannot be kept (M4-02) | Your answers can't be saved on this device. Don't close this page. | Ответы не сохраняются на этом устройстве. Не закрывайте страницу. | Javoblar bu qurilmada saqlanmaydi. Sahifani yopmang. |
+| `reading.passage.label` | Accessible name and hint of the passage when focused (M4-03) | Passage. Use the arrow keys to move between sentences, Enter for actions. | Текст. Стрелки — переход между предложениями, Enter — действия. | Matn. Gaplar orasida oʻtish uchun strelkalar, amallar uchun Enter. |
+| `reading.mark.actions` | Accessible name of the sentence action bar (M4-03) | Sentence actions | Действия с предложением | Gap bilan amallar |
+| `reading.mark.highlight` | Action bar (M4-03) | Highlight | Выделить | Ajratib koʻrsatish |
+| `reading.mark.removeHighlight` | Action bar on a highlighted sentence (M4-03) | Remove highlight | Снять выделение | Ajratishni olib tashlash |
+| `reading.mark.pin` | Action bar (M4-03) | Pin to question {number} | Закрепить за вопросом {number} | {number}-savolga biriktirish |
+| `reading.mark.unpin` | Action bar on a sentence pinned to the current question (M4-03) | Unpin from question {number} | Открепить от вопроса {number} | {number}-savoldan ajratish |
+| `reading.mark.cancel` | Action bar (M4-03) | Cancel | Отмена | Bekor qilish |
+| `reading.mark.highlighted` | Polite announcement (M4-03) | Highlighted | Выделено | Ajratib koʻrsatildi |
+| `reading.mark.pinned` | Polite announcement (M4-03) | Pinned to question {number} | Закреплено за вопросом {number} | {number}-savolga biriktirildi |
+| `reading.evidence.title` | Sheet block heading (M4-03) | Your evidence | Ваше обоснование | Sizning dalilingiz |
+| `reading.evidence.paragraph` | Label of a pinned quote (M4-03) | Paragraph {letter} | Абзац {letter} | {letter} xatboshi |
+| `reading.evidence.show` | Pinned quote action (M4-03) | Show in passage | Показать в тексте | Matnda koʻrsatish |
+| `reading.evidence.remove` | Pinned quote action (M4-03) | Remove from evidence | Убрать из обоснования | Dalildan olib tashlash |
+| `reading.evidence.limit` | Message when a fourth pin is refused (M4-03) | You can pin up to {max} sentences to one question. | К одному вопросу можно закрепить до {max} предложений. | Bitta savolga {max} tagacha gap biriktirish mumkin. |
