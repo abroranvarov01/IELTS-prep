@@ -81,7 +81,8 @@
       "next": "Keyingi"
     },
     "answer": {
-      "clear": "Javobni tozalash"
+      "clear": "Javobni tozalash",
+      "chosenCount": "{total} tadan {count} tasi tanlandi"
     },
     "storage": {
       "unavailable": "Javoblar bu qurilmada saqlanmaydi. Sahifani yopmang."

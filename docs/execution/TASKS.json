@@ -2012,7 +2012,7 @@
       "title": "Question renderers: choice types",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-14"],
       "goal": "The approved choice-type questions (e.g. True/False/Not Given, Yes/No/Not Given, multiple choice with one or several answers) render and record answers as approved.",
       "scope": [
@@ -2039,7 +2039,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         "docs/architecture/decisions/0004-web-feature-structure.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-16",

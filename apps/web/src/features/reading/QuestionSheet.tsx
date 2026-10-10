@@ -6,6 +6,7 @@ import { QUESTION_COUNT } from "@/domain/reading/content";
 import { type SheetState, answeredNumbers } from "@/domain/reading/session";
 import { unitOf } from "@/domain/reading/units";
 import { ChoiceQuestion } from "./ChoiceQuestion";
+import { MultiChoiceQuestion } from "./MultiChoiceQuestion";
 import { FlagIcon, QuestionNavigator } from "./QuestionNavigator";
 import { useReading } from "./reading-context";
 import { SecondaryButton } from "./SecondaryButton";
@@ -295,6 +296,9 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
             <div className="mt-4">
               {unit.kind === "single" && (
                 <ChoiceQuestion key={unit.key} unit={unit} />
+              )}
+              {unit.kind === "multi" && (
+                <MultiChoiceQuestion key={unit.key} unit={unit} />
               )}
             </div>
           </div>

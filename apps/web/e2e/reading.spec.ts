@@ -407,3 +407,93 @@ test.describe("question navigator", () => {
     });
   }
 });
+
+/** Opens a question through the navigator. */
+async function goToQuestion(page: Page, number: number, locale: Locale = "en") {
+  await page
+    .getByRole("button", { name: catalogs[locale].reading.navigator.open })
+    .click();
+  await sheet(page, locale)
+    .getByRole("button", {
+      name: new RegExp(
+        `^${fill(catalogs[locale].reading.navigator.item, { number, states: "" })}`,
+      ),
+    })
+    .click();
+}
+
+test.describe("choice questions", () => {
+  test("multiple choice takes one lettered option", async ({ page }) => {
+    await startPractice(page);
+    await goToQuestion(page, 5);
+    await page
+      .locator("label")
+      .filter({ hasText: "Cyclists stop more often than drivers." })
+      .click();
+    await expect(
+      page.getByRole("radio", {
+        name: "B Cyclists stop more often than drivers.",
+      }),
+    ).toBeChecked();
+  });
+
+  test("'choose two' takes at most two, and answers both of its numbers", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await goToQuestion(page, 22);
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Questions 22–23" }),
+    ).toBeVisible();
+    await page
+      .locator("label")
+      .filter({ hasText: "Rooms on the top floor stay cooler." })
+      .click();
+    await page
+      .locator("label")
+      .filter({ hasText: "Drains are less likely to overflow." })
+      .click();
+    await expect(
+      page.getByText(
+        fill(en.reading.answer.chosenCount, { count: 2, total: 2 }),
+      ),
+    ).toBeVisible();
+    await expect(page.getByRole("checkbox", { name: /^B / })).toBeDisabled();
+
+    await page.getByRole("button", { name: en.reading.navigator.open }).click();
+    await expect(
+      sheet(page).getByRole("button", {
+        name: "Question 22, answered, current",
+      }),
+    ).toBeVisible();
+    await expect(
+      sheet(page).getByRole("button", { name: "Question 23, answered" }),
+    ).toBeVisible();
+  });
+
+  test("YES / NO / NOT GIVEN questions answer the writer's views", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await goToQuestion(page, 28);
+    await choose(page, "NO");
+    await expect(
+      page.getByRole("radio", { name: "NO", exact: true }),
+    ).toBeChecked();
+  });
+
+  for (const number of [5, 22]) {
+    test(`question ${number} fits 320 px and has no WCAG 2.2 AA violations`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 320, height: 640 });
+      await startPractice(page, "ru");
+      await goToQuestion(page, number, "ru");
+      await noOverflow(page);
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+        .analyze();
+      expect(results.violations).toEqual([]);
+    });
+  }
+});

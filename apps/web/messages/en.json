@@ -81,7 +81,8 @@
       "next": "Next"
     },
     "answer": {
-      "clear": "Clear answer"
+      "clear": "Clear answer",
+      "chosenCount": "{count} of {total} chosen"
     },
     "storage": {
       "unavailable": "Your answers can't be saved on this device. Don't close this page."

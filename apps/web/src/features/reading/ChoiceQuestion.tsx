@@ -33,7 +33,11 @@ export function ChoiceQuestion({ unit }: { unit: QuestionUnit }) {
                 send({ type: "answer", number, answer: option.id })
               }
             >
-              {option.letter && <span className="font-bold">{option.id} </span>}
+              {option.letter && (
+                <>
+                  <span className="font-bold">{option.id}</span>{" "}
+                </>
+              )}
               {option.text}
             </OptionRow>
           ))}

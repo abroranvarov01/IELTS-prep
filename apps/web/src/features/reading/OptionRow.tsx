@@ -10,6 +10,7 @@ export function OptionRow({
   name,
   value,
   checked,
+  disabled = false,
   onChange,
   children,
 }: {
@@ -17,16 +18,19 @@ export function OptionRow({
   name: string;
   value: string;
   checked: boolean;
+  /** "Choose several" at its limit: the other options (DESIGN_SYSTEM.md, M4: disabled). */
+  disabled?: boolean;
   onChange: () => void;
   children: ReactNode;
 }) {
   return (
-    <label className="group flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-border-control bg-surface-base px-4 py-3 font-medium transition-colors hover:border-ink active:bg-surface-warm has-checked:border-ink has-checked:bg-brand-blush has-checked:ring-1 has-checked:ring-ink has-checked:ring-inset has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink">
+    <label className="group flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-border-control bg-surface-base px-4 py-3 font-medium transition-colors hover:border-ink active:bg-surface-warm has-disabled:cursor-default has-disabled:border-border-subtle has-disabled:text-text-tertiary has-disabled:hover:border-border-subtle has-disabled:active:bg-surface-base has-checked:border-ink has-checked:bg-brand-blush has-checked:ring-1 has-checked:ring-ink has-checked:ring-inset has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink">
       <input
         type={type}
         name={name}
         value={value}
         checked={checked}
+        disabled={disabled}
         onChange={onChange}
         className="sr-only"
       />
