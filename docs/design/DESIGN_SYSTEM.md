@@ -53,6 +53,8 @@ Red is the application's **unmistakable** primary action color. No other color (
 | `border.subtle` | `#E2E4E8` | Decorative dividers only | 1.3:1 (not for essential boundaries) |
 | `border.control` | `#8A9099` | Input and control boundaries | 3.2:1 white, 3.1:1 warm (meets 3:1 for non-text UI) |
 
+**PROPOSED for approval in M3** (task M3-02): `text.secondary` (the "You can change this later." line and the step indicator text), `border.control` (the answer option's boundary), and `border.subtle` (the progress track, decorative). `text.tertiary` stays a proposal until used.
+
 ### Status colors
 
 Status colors (correct, incorrect, warning, info) are **TBD** and will be set at implementation. Constraints:
@@ -109,6 +111,8 @@ All headings and body text use `ink` (18.6:1 on `surface.base`, 17.7:1 on `surfa
 
 A 4 px base unit. Proposed scale: 4, 8, 12, 16, 24, 32, 48, 64. Mobile page gutter: 16 px (verify at 320 px width).
 
+**PROPOSED for approval in M3** (task M3-02): the steps the M3 components use, 4, 8, 12, 16 (gutter), 24, 32, and 48. See [M3 components](#m3-components-onboarding-and-home). 64 stays a proposal until something uses it.
+
 ## Radii
 
 Soft, modern surfaces with moderately generous corners, applied **systematically by element size**, so the result does not look like "everything is a pill".
@@ -122,6 +126,8 @@ Soft, modern surfaces with moderately generous corners, applied **systematically
 | `radius.full` | 9999 px | **Only** avatars, toggles, progress tracks, and small status chips |
 
 Primary buttons use `radius.md`. They are not pills. Nested surfaces use a smaller radius than their container.
+
+**PROPOSED for approval in M3** (task M3-02): `radius.md` (14 px: the primary button and the answer option) and `radius.full` (the step indicator's progress track). The others stay proposals until used.
 
 ## Shadows / elevation
 
@@ -174,3 +180,82 @@ Every interactive component defines: default, hover (pointer devices), focus-vis
 - Today, Tailwind's default breakpoints still apply, because no approved values existed when the foundation was built (ADR-0001 did not decide them).
 
 **Content max width: Approved** (owner decision 2026-10-10). Page content on desktop sits in a centered column with a default maximum width of 1200 px. Feature-specific layouts, such as Reading Exam mode, may override it later.
+
+## M3 components (onboarding and home)
+
+**PROPOSED: awaiting owner approval** (task M3-02, to be decided in M3-05). Visual values for the components in the M3 flow drafts ([USER_FLOWS.md](../product/USER_FLOWS.md#onboarding-and-home-flows-m3)). Approved values are reused unchanged: the brand palette, the type scale (H1, H2, body, small meta text), the focus-visible style, the motion durations and easing, and the breakpoints. Contrast ratios were computed with the WCAG 2.x formula. Nothing here is in code yet; each value goes into `tokens.css` with its first use (M3-07, M3-08), and no other token is added.
+
+### Primary button
+
+The one red action per screen ("Start the level check"). It formalizes the style M1 already uses for its red action (`StatusMessage.tsx`), so the app has one primary button.
+
+| Property | Proposed value | Rationale |
+|---|---|---|
+| Height | at least 48 px (`spacing` 48); grows when the label wraps | ACCESSIBILITY.md prefers 48 px for primary actions |
+| Padding | 12 px vertical, 24 px horizontal | Room for a two-line Russian or Uzbek label without touching the edges |
+| Radius | `radius.md` (14 px) | Not a pill (Radii section) |
+| Type | Body size (1rem), weight 700, centered; the label wraps and is never truncated | Bold carries the emphasis; the size stays readable at 200% zoom |
+| Default | `surface.base` text on `brand.primary` | 4.58:1 (AA for 16 px bold) |
+| Hover (pointer) and pressed | `brand.primaryDeep` background | 5.18:1. The palette names `primaryDeep` as the hover and pressed color. Background change in 120 ms (motion "fast") |
+| Focus-visible | The approved 2 px `ink` ring, offset 2 px | Approved style, 4.1:1 against the red |
+| Width | Full column width below the tablet breakpoint (600 px); its natural width from 600 px, aligned with the column's start | A full-width target is easiest to hit with a thumb; on wide screens a stretched button looks like a banner |
+| Disabled, loading | Not proposed: no M3 screen has a disabled or loading primary button | No speculative states (Token policy) |
+
+The M1 status pages keep their approved inline button layout unless the owner wants them to adopt the full-width rule.
+
+### Quiet secondary action (text link)
+
+"Not now" (onboarding step 3) and "Change goal" (home). It formalizes M1's quieter "Go to home page" link.
+
+| Property | Proposed value | Rationale |
+|---|---|---|
+| Look | `ink` text, weight 500, always underlined; no fill, no border | Clearly an action, clearly quieter than the red button; underline means it is not told apart by color |
+| Tap area | At least 48 px high (the text sits in a 48 px tall link) | Touch target |
+| Hover, pressed | No change other than the browser default cursor | Nothing to compete with the primary button |
+| Contrast | 18.58:1 on `surface.base` | |
+
+### Answer option (single-choice answer button)
+
+The answers on onboarding steps 1 and 2. Each is a button that saves and advances (USER_FLOWS.md: answering rules).
+
+| State | Proposed treatment | Contrast |
+|---|---|---|
+| Default | `surface.base` fill, 1 px `border.control` boundary, `radius.md`, `ink` text at body size weight 500, left-aligned; at least 48 px high with 12 px vertical and 16 px horizontal padding; full column width | Boundary 3.22:1 against white (meets 3:1 for an essential boundary); text 18.58:1 |
+| Hover (pointer) | Boundary becomes `ink` | 18.58:1 |
+| Pressed | `surface.warm` fill | Text 17.68:1 |
+| Focus-visible | The approved ring | |
+| Selected (the earlier answer when returning to a step) | `brand.blush` fill, a 2 px `ink` boundary, and a 20 px `ink` check mark at the end (an inline SVG like the language switcher's, hidden from screen readers, with the text "Selected" for them) | Text and check 12.37:1 on blush. Selected is shown by the check mark and the heavier boundary, not by the fill alone (I-8) |
+
+- **Arrangement:** one vertical list with 12 px between answers, the same on step 1 and step 2. The five band values are a list too, not a grid: one scan direction, the same component on both steps, and it works at 320 px and at 200% zoom. Six 48 px answers with 12 px gaps take about 350 px, so the whole step still fits a 360 × 800 screen without scrolling.
+- **Not red:** the answers are not primary buttons. Steps 1 and 2 have no red element at all (USER_FLOWS.md: one primary action).
+
+### Step indicator
+
+"Step 1 of 3" above the question on every onboarding step.
+
+| Part | Proposed treatment | Contrast |
+|---|---|---|
+| Text | Small meta text (0.875rem), weight 500, `text.secondary` | 8.22:1. The text alone carries the meaning |
+| Progress bar (optional) | A 4 px high track in `border.subtle` with `radius.full`, filled one third per step in `brand.highlight`, 8 px under the text; decorative and hidden from screen readers | Fill against track 2.48:1, below 3:1. Acceptable only because the text carries the meaning (WCAG 1.4.11 applies to graphics needed for understanding). `brand.highlight` is the palette's color for progress fills |
+
+**Option:** drop the bar and keep the text only. **Recommendation: keep the bar.** It shows at a glance that the flow is short, which matters on the first screen a new user sees.
+
+### Home: next-action block and goal line
+
+- **Next-action block:** no card. No border, no fill, no shadow: the H2 ("Find your level", approved H2 size), the sentence (body, 8 px under the H2), and the primary button (24 px under the sentence) on the white page. The block is not one tappable unit (only its button is), so the card rule in [UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md) says no card. Hierarchy comes from the H2's size and the red button.
+- **Goal line:** body text in `ink`, the band value in weight 700 ("Target band: **7.0**"), the exam type after it in regular weight, and "Change goal" as the quiet link. 32 px above it separate it from the next-action block. No divider.
+- **Spacing on home:** 24 px between the H1 and the next-action block, 32 px between the block and the goal line.
+
+### Column width for onboarding and home
+
+| Property | Proposed value | Rationale |
+|---|---|---|
+| Maximum width | 36rem (576 px at the default font size), centered in the 1200 px content column | About 65 characters of body text per line, and answers and buttons do not stretch across a desktop screen. In rem, so it grows with the user's font size |
+| Below 600 px | The full width between the 16 px gutters | |
+
+This would be one new layout token (a container width) used by onboarding and home only.
+
+### Spacing used by these components
+
+4 (progress bar height), 8 (heading to sentence, indicator to bar), 12 (button vertical padding, gap between answers), 16 (gutter, answer horizontal padding), 24 (button horizontal padding, H1 to block, sentence to button, indicator to question), 32 (block to goal line), 48 (minimum heights). All are on the proposed 4 px scale.
+

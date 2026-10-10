@@ -1101,7 +1101,7 @@
       "title": "Propose the design values onboarding and home need",
       "milestone": "M3",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M3-01"],
       "goal": "Turn every visual decision the M3 specs need, and that is not approved yet, into one concrete proposal the owner can approve.",
       "scope": [
@@ -1132,7 +1132,8 @@
         "docs/design/UI_ANTI_PATTERNS.md",
         "docs/product/USER_FLOWS.md"
       ],
-      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"]
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3-03",
