@@ -603,7 +603,7 @@
       "title": "Owner approves the M1 specs, copy and design values",
       "milestone": "M1",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M1-01", "M1-02"],
       "goal": "Decide what the shell looks like and says before it is built.",
       "scope": [
@@ -622,7 +622,8 @@
       "references": [
         "docs/product/USER_FLOWS.md",
         "docs/design/DESIGN_SYSTEM.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M1-04",
@@ -635,6 +636,7 @@
       "scope": [
         "Implement the approved shell spec in apps/web (locale layout and the components it needs): header as specified, one main landmark, a skip link to the main content, the page gutter, and the responsive layout at the approved breakpoints",
         "Add to tokens.css only the approved design values the shell uses, and apply the approved focus-visible style. Update the 'Not yet in code' note in DESIGN_SYSTEM.md",
+        "Header logo: the approved brand-kit lockup without tagline (svg/logo-horizontal-no-tagline.svg from the owner's IELTS_Prep_Brand_Kit.zip) as an image file, with app.name as its accessible name (owner decision 2026-10-10)",
         "All new strings come from the uz/ru/en catalogs with the approved copy",
         "e2e on both projects: landmarks present; the skip link moves focus to main by keyboard; no horizontal scroll at 320 and 360 px; uz and ru strings do not truncate; axe passes in every locale"
       ],

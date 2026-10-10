@@ -4,11 +4,11 @@ Canonical owner of **design token values, the token policy, and component state 
 
 > **STATUS:**
 > - **Core brand palette: APPROVED.** Change it only with explicit product approval.
-> - **Everything else** (neutrals, skill shades, type sizes, spacing, radii, shadows, breakpoints): **INITIAL DIRECTION / SUBJECT TO DESIGN REVIEW.**
+> - **Everything else** (neutrals, skill shades, type sizes, spacing, radii, shadows, breakpoints): **INITIAL DIRECTION / SUBJECT TO DESIGN REVIEW**, unless a section marks a value Approved.
 >
 > Once implementation starts, the token source in code becomes the single source of truth for values. This document then describes intent and usage and stops duplicating raw numbers.
 >
-> **Token source in code:** `apps/web/src/styles/tokens.css` (Tailwind v4 `@theme`). Tailwind's default colors, spacing, radii, font sizes, font weights, and shadows are reset there, so only these tokens produce utilities. Fonts are loaded in `apps/web/src/app/[locale]/layout.tsx` (`next/font`). `pnpm lint` runs `scripts/check-tokens.mjs`, which rejects raw colors outside the token file. Not yet in code (added when first needed, owner decision 2026-10-09): the raised shadow, motion durations, heading sizes, passage and meta text sizes, breakpoints, the content max width.
+> **Token source in code:** `apps/web/src/styles/tokens.css` (Tailwind v4 `@theme`). Tailwind's default colors, spacing, radii, font sizes, font weights, and shadows are reset there, so only these tokens produce utilities. Fonts are loaded in `apps/web/src/app/[locale]/layout.tsx` (`next/font`). `pnpm lint` runs `scripts/check-tokens.mjs`, which rejects raw colors outside the token file. Not yet in code (added when first needed, owner decision 2026-10-09; the M1 values were approved on 2026-10-10 with the condition that no speculative token is added): the raised shadow, motion durations, heading sizes, passage and meta text sizes, breakpoints, the content max width.
 
 ## Token policy
 
@@ -92,7 +92,7 @@ Because Reading shares the brand's red family, Reading identity must rely on the
 
 ### Type scale
 
-**PROPOSED: awaiting owner approval** (task M1-02). Sizes are in rem (16 px = 1rem at the default browser setting), so text follows the user's font-size setting. Line heights are unitless. One scale for every width: on desktop, hierarchy comes from layout and spacing, not from bigger type.
+**Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). Sizes are in rem (16 px = 1rem at the default browser setting), so text follows the user's font-size setting. Line heights are unitless. One scale for every width: on desktop, hierarchy comes from layout and spacing, not from bigger type.
 
 | Role | Size | Line height | Weight | Rationale |
 |---|---|---|---|---|
@@ -127,7 +127,7 @@ Primary buttons use `radius.md`. They are not pills. Nested surfaces use a small
 
 Minimal. Proposal: **two levels at most**: none (default) and a subtle raised level for overlays, bottom sheets, and sticky elements. Separation comes from spacing and surface color (`surface.base` on `surface.warm`) first.
 
-**Raised level: PROPOSED: awaiting owner approval** (task M1-02). One shadow: `0 2px 12px 0` in `ink` at 12% opacity. The only other level is none.
+**Raised level: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). One shadow: `0 2px 12px 0` in `ink` at 12% opacity. The only other level is none.
 - Rationale: a soft, short shadow lifts overlays, bottom sheets, and sticky elements without looking dated. With a small vertical offset and a larger blur, it also shows along the top edge of a bottom sheet. Deriving it from `ink` keeps it inside the palette.
 - Contrast: the shadow is supporting depth, not an essential boundary, so it has no contrast requirement. Where an edge is essential to understand the component, it also needs a boundary of at least 3:1 (`border.control`) or a scrim.
 
@@ -135,7 +135,7 @@ Minimal. Proposal: **two levels at most**: none (default) and a subtle raised le
 
 Short (≤ 200 ms) and functional: it shows a state change or a spatial relationship (for example, a bottom sheet expanding). Never delay interaction. Honor `prefers-reduced-motion`.
 
-**Durations and easing: PROPOSED: awaiting owner approval** (task M1-02).
+**Durations and easing: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02).
 
 | Token | Value | Use | Rationale |
 |---|---|---|---|
@@ -149,7 +149,7 @@ With `prefers-reduced-motion: reduce`, transitions and animations are effectivel
 
 Every interactive component defines: default, hover (pointer devices), focus-visible, pressed, disabled, loading. Where it applies, also selected, error, and correct/incorrect (answer states). The focus-visible state is never removed.
 
-**Focus-visible style: PROPOSED: awaiting owner approval** (task M1-02). A 2 px solid `ink` outline, offset 2 px from the element, on every focusable element. This is the style F-09 implemented as an assumption, now proposed for approval unchanged.
+**Focus-visible style: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). A 2 px solid `ink` outline, offset 2 px from the element, on every focusable element. This is the style F-09 implemented as an assumption, approved unchanged.
 - Rationale: `ink` is the highest-contrast token and does not compete with the red primary action or look like an error. The offset puts the ring on the surface around the element, so it stays visible on red buttons too. An outline (not a box shadow) also stays visible in Windows forced-colors mode.
 - Contrast of the ring against the surface around it: 18.6:1 on `surface.base`, 17.7:1 on `surface.warm`, 12.4:1 on `brand.blush`, and 15.8:1 or more on every skill tint. All meet the 3:1 minimum for non-text UI. The ring is 2 px thick and fully surrounds the element, as WCAG 2.2's focus appearance criterion (2.4.13) describes.
 - Limit: against `brand.primary` the ring would be only 4.1:1, and 3.6:1 against `brand.primaryDeep`. Both still pass 3:1, with less margin.
@@ -163,7 +163,7 @@ Every interactive component defines: default, hover (pointer devices), focus-vis
 | 600–1023 px | Tablet: phone layout given more room, or two columns where that is meaningful |
 | ≥ 1024 px | Desktop layout of its own where it helps (e.g. realistic Exam Mode with passage and questions side by side, see [READING_EXPERIENCE.md](../product/READING_EXPERIENCE.md)) |
 
-**Breakpoints: PROPOSED: awaiting owner approval** (task M1-02). Two breakpoints, as minimum widths. They are written in rem, so a user with a larger default font size gets the roomier layout later, which keeps text from being squeezed.
+**Breakpoints: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). Two breakpoints, as minimum widths. They are written in rem, so a user with a larger default font size gets the roomier layout later, which keeps text from being squeezed.
 
 | Breakpoint | Value | Starts the range |
 |---|---|---|
@@ -173,4 +173,4 @@ Every interactive component defines: default, hover (pointer devices), focus-vis
 - Rationale: they match the documented range boundaries exactly. 320–599 px is one phone layout, so there is no breakpoint at 360 px. 360 px is a design target, not a layout change. Tailwind's default breakpoints would be reset like the other token namespaces, so only these two exist.
 - Today, Tailwind's default breakpoints still apply, because no approved values existed when the foundation was built (ADR-0001 did not decide them).
 
-**Content max width: APPROVED** (owner decision 2026-10-10). Page content on desktop sits in a centered column with a default maximum width of 1200 px. Feature-specific layouts, such as Reading Exam mode, may override it later.
+**Content max width: Approved** (owner decision 2026-10-10). Page content on desktop sits in a centered column with a default maximum width of 1200 px. Feature-specific layouts, such as Reading Exam mode, may override it later.
