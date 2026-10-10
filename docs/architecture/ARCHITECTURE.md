@@ -17,7 +17,7 @@ Changing these requires owner approval and an ADR.
 | AI scores are always presented as estimates | [PRODUCT.md](../product/PRODUCT.md#honest-feedback-non-negotiable) |
 | Launch market is Uzbekistan. No multi-region architecture up front. | [PRODUCT.md](../product/PRODUCT.md) |
 | **Foundation:** pnpm-workspace monorepo (`apps/web`, `apps/api`, `packages/*` on demand), Node 24 LTS, Tailwind CSS v4 tokens, next-intl with locale-prefixed URLs (`uz` default), Vitest (web and api) and Playwright, ESLint and Prettier, a PWA shell (Serwist, app-shell caching only), GitHub Actions CI. Implemented. | [ADR-0001](decisions/0001-initial-application-foundation.md), Accepted 2026-10-09 (amended §5, §7) |
-| **API contracts and validation:** REST + JSON, NestJS DTO and response classes, class-validator with one global `ValidationPipe` that rejects unknown properties, one error format for every error, OpenAPI via `@nestjs/swagger` outside production, no shared contracts package yet. Validation and the error format are implemented (`apps/api/src/errors/`); OpenAPI follows in M2-08. | Owner, 2026-10-10 ([ADR-0002](decisions/0002-api-contracts-and-validation.md)) |
+| **API contracts and validation:** REST + JSON, NestJS DTO and response classes, class-validator with one global `ValidationPipe` that rejects unknown properties, one error format for every error, OpenAPI via `@nestjs/swagger` outside production, no shared contracts package yet. Implemented in `apps/api` (`src/errors/`, `src/openapi.ts`). | Owner, 2026-10-10 ([ADR-0002](decisions/0002-api-contracts-and-validation.md)) |
 
 Still TBD until a current requirement exists: database schema (M2 adds Prisma without product models, owner decision 2026-10-10).
 

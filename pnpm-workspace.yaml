@@ -6,9 +6,11 @@ packages:
 # so their scripts stay off (sharp, unrs-resolver: create-next-app default).
 # @prisma/engines downloads the schema engine Prisma Migrate needs; prisma's
 # own script only checks the Node version, which .nvmrc already pins.
+# @scarf/scarf (via swagger-ui-dist) only reports install analytics.
 allowBuilds:
   "@parcel/watcher": false
   "@prisma/engines": true
+  "@scarf/scarf": false
   "@swc/core": false
   esbuild: false
   prisma: false

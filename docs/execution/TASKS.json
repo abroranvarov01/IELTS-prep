@@ -1011,7 +1011,7 @@
       "title": "OpenAPI document via @nestjs/swagger (ADR-0002)",
       "milestone": "M2",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M2-05", "M2-07"],
       "goal": "The API describes itself in an OpenAPI document generated from its classes, available during development.",
       "scope": [
@@ -1042,7 +1042,8 @@
       "docsToUpdate": [
         "docs/engineering/QUALITY_GATES.md (where the API docs are served)",
         "CLAUDE.md (Current state: M2 backend foundation)"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M10-01",
