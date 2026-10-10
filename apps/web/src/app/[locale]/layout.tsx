@@ -1,11 +1,13 @@
 import { SerwistProvider } from "@serwist/turbopack/react";
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Literata, Onest } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const onest = Onest({
   subsets: ["latin", "latin-ext", "cyrillic"],
@@ -52,7 +54,7 @@ export default async function LocaleLayout({
           >
             {t("shell.skipToContent")}
           </a>
-          <header className="px-gutter py-2">
+          <header className="flex items-center justify-between gap-4 px-gutter py-2">
             <Link href={`/${locale}`} className="inline-block">
               <Image
                 src="/brand/logo-horizontal-no-tagline.svg"
@@ -63,6 +65,9 @@ export default async function LocaleLayout({
                 className="h-12 w-auto"
               />
             </Link>
+            <NextIntlClientProvider>
+              <LanguageSwitcher />
+            </NextIntlClientProvider>
           </header>
           {/* main is only a skip-link target, not a control: no focus ring. */}
           <main

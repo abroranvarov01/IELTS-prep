@@ -4,5 +4,15 @@
   },
   "shell": {
     "skipToContent": "Перейти к основному содержанию"
+  },
+  "languageSwitcher": {
+    "code": "RU",
+    "label": "{code} ({language}), сменить язык",
+    "listLabel": "Выберите язык",
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Русский",
+      "en": "English"
+    }
   }
 }

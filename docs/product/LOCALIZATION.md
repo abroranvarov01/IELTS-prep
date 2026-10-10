@@ -28,6 +28,8 @@ Canonical owner of **interface language rules**. The technical architecture is d
 - **Library:** next-intl (App Router, `next/root-params`), configured in `apps/web/src/i18n/routing.ts` (locales, default, prefix) and `apps/web/src/i18n/request.ts` (loads the catalog for the active locale).
 - **Locales:** `uz` (Uzbek Latin), `ru`, `en`. Default `uz`.
 - **Routing:** every page lives under `apps/web/src/app/[locale]/` and is served at `/uz/...`, `/ru/...`, `/en/...` (prefix always). `apps/web/src/proxy.ts` redirects `/` and unprefixed paths using the `NEXT_LOCALE` cookie, then `Accept-Language`, with `uz` as the fallback. `<html lang>` is set from the active locale in `app/[locale]/layout.tsx`.
+- **Navigation helpers:** `apps/web/src/i18n/navigation.ts` (`createNavigation(routing)`) exports the locale-aware `Link` and `usePathname`. A `Link` with a `locale` prop switches the language and keeps the path.
+- **Language switcher:** `apps/web/src/app/[locale]/LanguageSwitcher.tsx`, in the header (spec: [USER_FLOWS.md](USER_FLOWS.md#switching-the-interface-language)). A native `<details>` disclosure with plain links, so it also works without JavaScript. The choice persists in next-intl's `NEXT_LOCALE` cookie: the `Link` writes it on the client, and the proxy updates it on page requests. Client components get their messages from `NextIntlClientProvider` in the locale layout, which currently wraps only the switcher.
 - **Catalogs:** one JSON file per locale in `apps/web/messages/` (`uz.json`, `ru.json`, `en.json`), nested by namespace (e.g. `app.name`). All three files must have the same keys.
 
 ## Future deterministic enforcement

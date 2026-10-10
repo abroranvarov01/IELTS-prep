@@ -69,8 +69,10 @@
   --radius-xl: 28px;
   --radius-full: 9999px;
 
-  /* Elevation: only "none" until the raised level is specified */
+  /* Elevation: none (the default) and raised */
   --shadow-*: initial;
+  --shadow-raised: 0 2px 12px 0
+    color-mix(in srgb, var(--color-ink) 12%, transparent);
   --inset-shadow-*: initial;
   --drop-shadow-*: initial;
   --text-shadow-*: initial;

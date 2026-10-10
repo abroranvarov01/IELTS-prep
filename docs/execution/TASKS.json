@@ -669,7 +669,7 @@
       "title": "Language switcher",
       "milestone": "M1",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M1-04"],
       "goal": "Users can change the interface language from any page in the approved number of steps, and the choice persists.",
       "scope": [
@@ -696,7 +696,8 @@
       ],
       "docsToUpdate": [
         "docs/product/LOCALIZATION.md (Technical setup: navigation helpers and switcher)"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M1-06",

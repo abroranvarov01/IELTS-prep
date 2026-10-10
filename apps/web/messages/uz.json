@@ -4,5 +4,15 @@
   },
   "shell": {
     "skipToContent": "Asosiy mazmunga oʻtish"
+  },
+  "languageSwitcher": {
+    "code": "UZ",
+    "label": "{code} ({language}), tilni oʻzgartirish",
+    "listLabel": "Tilni tanlang",
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Русский",
+      "en": "English"
+    }
   }
 }
