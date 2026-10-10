@@ -1431,7 +1431,7 @@
       "title": "Fix the flaky language-switcher keyboard test at its cause",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "The M1 test 'works with the keyboard only' passes reliably because the race behind it is fixed, not because the test is weaker.",
       "scope": [
@@ -1465,7 +1465,8 @@
         "docs/product/USER_FLOWS.md",
         ".claude/rules/testing/test-code.md",
         "docs/engineering/TESTING_STRATEGY.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-01",

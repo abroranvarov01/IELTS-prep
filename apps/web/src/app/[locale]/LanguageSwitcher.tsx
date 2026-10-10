@@ -1,51 +1,47 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { type KeyboardEvent, useEffect, useRef } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
 // A disclosure with plain links (not an ARIA menu), so it also works
-// without JavaScript. The effect only adds Escape and outside-tap closing.
+// without JavaScript. JavaScript only adds Escape and outside-tap closing.
+// Both read details.open directly: the list can open before hydration, when
+// React does not see the toggle event, so mirroring it in state would miss it.
+// Escape is a React handler on the focusable parts, so a key pressed while
+// the page is still hydrating is replayed by React rather than lost.
 export function LanguageSwitcher() {
   const t = useTranslations("languageSwitcher");
   const locale = useLocale();
   const pathname = usePathname();
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const summaryRef = useRef<HTMLElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+
+  const closeOnEscape = (event: KeyboardEvent) => {
+    const details = detailsRef.current;
+    if (event.key !== "Escape" || !details?.open) return;
+    details.open = false;
+    summaryRef.current?.focus();
+  };
 
   useEffect(() => {
-    const details = detailsRef.current;
-    if (!isOpen || !details) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      details.open = false;
-      summaryRef.current?.focus();
-    };
     const onPointerDown = (event: PointerEvent) => {
-      if (!details.contains(event.target as Node)) {
+      const details = detailsRef.current;
+      if (details?.open && !details.contains(event.target as Node)) {
         details.open = false;
       }
     };
 
-    document.addEventListener("keydown", onKeyDown);
     document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [isOpen]);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, []);
 
   return (
-    <details
-      ref={detailsRef}
-      className="group relative"
-      onToggle={(event) => setIsOpen(event.currentTarget.open)}
-    >
+    <details ref={detailsRef} className="group relative">
       <summary
         ref={summaryRef}
+        onKeyDown={closeOnEscape}
         aria-label={t("label", {
           code: t("code"),
           language: t(`languages.${locale}`),
@@ -77,6 +73,7 @@ export function LanguageSwitcher() {
                 locale={code}
                 lang={code}
                 aria-current={isCurrent ? "true" : undefined}
+                onKeyDown={closeOnEscape}
                 onClick={(event) => {
                   if (isCurrent) event.preventDefault();
                   if (detailsRef.current) detailsRef.current.open = false;

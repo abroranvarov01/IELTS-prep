@@ -31,6 +31,17 @@ test.beforeEach(async ({ context, baseURL }) => {
   await saveGoal(context, baseURL);
 });
 
+/**
+ * Escape, tapping outside, and choosing the current language need JavaScript.
+ * The list itself works without it, so tests of those behaviors first wait
+ * until hydration has finished and the main thread is idle.
+ */
+async function untilInteractive(page: Page) {
+  await page.evaluate(
+    () => new Promise((resolve) => requestIdleCallback(resolve)),
+  );
+}
+
 // A browser language that matches none of the targets, so a redirect from /
 // can only come from the saved choice.
 test.use({ locale: "de-DE" });
@@ -75,6 +86,7 @@ test("choosing the current language closes the list and stays on the page", asyn
   page,
 }) => {
   await page.goto("/uz");
+  await untilInteractive(page);
   await switcherButton(page, "uz").click();
   await languageLink(page, "uz", "uz").click();
 
@@ -84,6 +96,7 @@ test("choosing the current language closes the list and stays on the page", asyn
 
 test("works with the keyboard only", async ({ page }) => {
   await page.goto("/uz");
+  await untilInteractive(page);
   const button = switcherButton(page, "uz");
   // Skip link, logo, switcher.
   for (let i = 0; i < 3; i++) await page.keyboard.press("Tab");
@@ -106,8 +119,40 @@ test("works with the keyboard only", async ({ page }) => {
   await expect(page).toHaveURL("/en");
 });
 
+test("Escape closes a list that was opened before the page finished loading", async ({
+  page,
+}) => {
+  // Hold the JavaScript back, so the native disclosure opens before React
+  // hydrates and React never sees that toggle (the cause of the old flake).
+  let releaseScripts = () => {};
+  const scriptsHeld = new Promise<void>((resolve) => {
+    releaseScripts = resolve;
+  });
+  await page.route("**/_next/static/chunks/**", async (route) => {
+    await scriptsHeld;
+    await route.continue();
+  });
+  await page.goto("/uz", { waitUntil: "commit" });
+  const button = switcherButton(page, "uz");
+  await expect(button).toBeVisible();
+  for (let i = 0; i < 3; i++) await page.keyboard.press("Tab");
+  await expect(button).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(languageLink(page, "uz", "en")).toBeVisible();
+
+  releaseScripts();
+  // Once the page is interactive, Escape from inside the list closes it.
+  await expect(async () => {
+    await languageLink(page, "uz", "uz").focus();
+    await page.keyboard.press("Escape");
+    await expect(languageLink(page, "uz", "en")).toBeHidden({ timeout: 500 });
+  }).toPass({ timeout: 20_000 });
+  await expect(button).toBeFocused();
+});
+
 test("tapping outside closes the list", async ({ page }) => {
   await page.goto("/uz");
+  await untilInteractive(page);
   await switcherButton(page, "uz").click();
   await expect(languageLink(page, "uz", "en")).toBeVisible();
 
