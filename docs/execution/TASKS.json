@@ -35,8 +35,8 @@
     {
       "id": "M4",
       "name": "Reading Engine",
-      "status": "planned",
-      "goal": "Reading practice as approved in READING_EXPERIENCE.md (passage-first layout, question bottom sheet, Pin Evidence, Practice and Exam modes), with answer checking and band conversion in domain code (INVARIANTS I-2, I-3)."
+      "status": "active",
+      "goal": "The Reading engine as approved in READING_EXPERIENCE.md: a Reading domain model and content contract, session state with answers kept on the device, the passage-first mobile screen with the question bottom sheet and a full-test navigator, renderers for the approved IELTS question types, highlighting, Pin Evidence, Practice and Exam Modes with timing, and the desktop exam layout, all accessible and tested, with original demo content only. Review, explanations and Error Intelligence are M5. Answer checking and band conversion (in the earlier draft goal) are decided at the M4-09 gate."
     },
     {
       "id": "M5",
@@ -1425,6 +1425,855 @@
         "docs/product/FEATURE_MAP.md (Diagnostic assessment, if its status changes)"
       ],
       "completedAt": "2026-10-10"
+    },
+    {
+      "id": "M4-00",
+      "title": "Fix the flaky language-switcher keyboard test at its cause",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "The M1 test 'works with the keyboard only' passes reliably because the race behind it is fixed, not because the test is weaker.",
+      "scope": [
+        "Owner decision 2026-10-10: do not weaken or delete the test; find and fix the hydration/race cause",
+        "Known so far (PROGRESS.md, M3-07): about 1 failure in 30–40 runs before and after M3; after Enter and Escape the list stays open. The switcher keeps an isOpen state set by onToggle and attaches its Escape and outside-tap listeners in an effect only while isOpen is true, so a toggle that happens before hydration, or an Escape before the effect runs, is missed",
+        "Reproduce first and make the failure frequent (for example CPU throttling through the Chrome DevTools protocol, or delayed script loading), and confirm which step fails and why, before changing anything",
+        "Fix the cause in the component (for example handle Escape with a React onKeyDown on the disclosure, which React replays when it arrives during hydration, and read details.open instead of mirroring it in state), keeping it a native disclosure that works without JavaScript",
+        "If the test also relies on an unstated precondition (for example pressing keys before the page is interactive), fix that precondition explicitly without removing any assertion",
+        "Prove it: the original test passes in many repeated runs (at least 100) and under the reproduction conditions"
+      ],
+      "outOfScope": [
+        "other switcher behavior or design",
+        "other tests' flakiness unless the same cause"
+      ],
+      "acceptanceCriteria": [
+        "The cause is identified and recorded in PROGRESS.md with the evidence",
+        "No assertion of the test is removed or loosened",
+        "The keyboard test passes 100 repeated runs and under the reproduction conditions (verified and recorded)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e",
+        "pnpm --filter web exec playwright test e2e/language-switcher.spec.ts --repeat-each=50"
+      ],
+      "references": [
+        "apps/web/src/app/[locale]/LanguageSwitcher.tsx",
+        "apps/web/e2e/language-switcher.spec.ts",
+        "docs/product/USER_FLOWS.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ]
+    },
+    {
+      "id": "M4-01",
+      "title": "Draft the Reading question-type scope and per-type interactions",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner which IELTS Reading question types M4 renders and how each is answered on a phone and on desktop.",
+      "scope": [
+        "Owner decisions 2026-10-10 (M4 activation): mobile-first; the passage is the main visual object; the current question lives in a persistent bottom sheet with collapsed / partial / expanded states if needed; a question navigator for the full Reading test; question UI adapts by IELTS question type; highlighting; Pin Evidence associates passage text with the current question; Practice Mode may provide help; Exam Mode removes learning assistance and follows realistic IELTS constraints; desktop Exam Mode may use passage + questions side by side. Review, explanations and Error Intelligence belong to M5. No copyrighted (e.g. Cambridge) content: only small original fixture/demo content.",
+        "In READING_EXPERIENCE.md, a section 'Question types (M4)' marked 'DRAFT: awaiting owner approval': the full list of IELTS Reading question types (multiple choice with one or more answers, True/False/Not Given, Yes/No/Not Given, matching information, matching headings, matching features, matching sentence endings, sentence completion, summary completion from the passage or from a word box, note, table and flow-chart completion, diagram label completion, short-answer questions), grouped by interaction (choose one, choose several, choose from a list, type words)",
+        "A proposed M4 scope with reasons (for example defer table, flow-chart and diagram completion if they need layouts or images the first sets do not need) and what is deferred to when",
+        "For each in-scope type: what the sheet shows, how an answer is given and changed on a phone and with a keyboard, how 'NOT GIVEN' and word limits ('NO MORE THAN TWO WORDS') are presented, how shared option lists (headings, features, word boxes) are shown, and how the type looks in the desktop layout",
+        "What an answer is in data for each type (one option, several options, typed text), so the content contract (M4-06) and session state (M4-07) can store it",
+        "Open questions with options and a recommendation. At least: Academic only or also General Training content in M4 (PRODUCT.md open question; the engine is the same, the content and band conversion differ); whether M4 includes answer checking (correct/incorrect against an answer key, spelling and word-limit rules) or leaves it to M5 with review (the earlier draft M4 goal had it; band conversion needs official sources per .claude/rules/domain/ielts-scoring.md)",
+        "Proposed uz/ru/en copy for any interface text these interactions need (instructions stay in English as test content), marked PROPOSED"
+      ],
+      "outOfScope": [
+        "any code",
+        "the sheet, navigator and screen layout (M4-02)",
+        "review, explanations, Error Intelligence (M5)",
+        "answering the open questions"
+      ],
+      "acceptanceCriteria": [
+        "Every IELTS Reading question type is listed, with the proposed M4 scope and reasons",
+        "Every in-scope type has its phone and keyboard interaction and its answer data shape",
+        "Open questions have options and a recommendation",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/domain/ielts-scoring.md"
+      ],
+      "docsToUpdate": ["docs/product/READING_EXPERIENCE.md"]
+    },
+    {
+      "id": "M4-02",
+      "title": "Draft the mobile reading screen: passage, bottom sheet, navigator, timer",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-01"],
+      "goal": "Specify the signature mobile layout: the passage as the main object, the question bottom sheet and its states, the full-test navigator, the timer, and how a test starts and finishes.",
+      "scope": [
+        "Owner decisions 2026-10-10 (M4 activation): mobile-first; the passage is the main visual object; the current question lives in a persistent bottom sheet with collapsed / partial / expanded states if needed; a question navigator for the full Reading test; question UI adapts by IELTS question type; highlighting; Pin Evidence associates passage text with the current question; Practice Mode may provide help; Exam Mode removes learning assistance and follows realistic IELTS constraints; desktop Exam Mode may use passage + questions side by side. Review, explanations and Error Intelligence belong to M5. No copyrighted (e.g. Cambridge) content: only small original fixture/demo content.",
+        "In READING_EXPERIENCE.md, 'Mobile reading screen (M4)' marked DRAFT: the screen's parts at 360 px and 320 px; the passage typography (approved passage size); the bottom sheet's states (collapsed / partial / expanded, or fewer if fewer suffice), what each shows, the snap points as share of the screen, how to move between states by drag AND by tap or keyboard (no gesture-only action), what happens when the phone keyboard opens for a typed answer, and how the passage scroll relates to the current question (e.g. does changing question scroll the passage)",
+        "The question navigator for a full test (3 passages, 40 questions): where it opens from, how 40 questions fit at 320 px, how answered, unanswered, current and flagged-for-review questions are shown (never by color alone), and how it moves between passages",
+        "The timer where applicable (format, position, warnings, reduced motion) and what happens at time-out (details per mode are in M4-04)",
+        "Flow specs in USER_FLOWS.md format: entering a Reading test (from a direct link /{locale}/reading/...; whether home links to it in M4 is an open question), answering and moving between questions, finishing a test (confirmation, unanswered questions), leaving and coming back (resume, details per persistence in M4-07). Step counts and empty/error/offline states",
+        "Accessibility: screen-reader order between passage and sheet, landmarks, focus when the question changes, keyboard access, 200% zoom, reduced motion",
+        "Open questions with options and recommendations, and PROPOSED uz/ru/en copy"
+      ],
+      "outOfScope": [
+        "any code",
+        "highlighting and Pin Evidence (M4-03)",
+        "Practice vs Exam differences and the desktop layout (M4-04)",
+        "visual values (M4-05)"
+      ],
+      "acceptanceCriteria": [
+        "Every part of the mobile screen and every sheet state is specified, with tap/keyboard alternatives to gestures",
+        "The navigator handles 40 questions at 320 px",
+        "Flows have step counts and states",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/design/DESIGN_SYSTEM.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md"
+      ]
+    },
+    {
+      "id": "M4-03",
+      "title": "Draft highlighting and Pin Evidence",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-02"],
+      "goal": "Specify how a user highlights passage text and pins evidence to the current question on a phone and with a keyboard.",
+      "scope": [
+        "Owner decisions 2026-10-10 (M4 activation): mobile-first; the passage is the main visual object; the current question lives in a persistent bottom sheet with collapsed / partial / expanded states if needed; a question navigator for the full Reading test; question UI adapts by IELTS question type; highlighting; Pin Evidence associates passage text with the current question; Practice Mode may provide help; Exam Mode removes learning assistance and follows realistic IELTS constraints; desktop Exam Mode may use passage + questions side by side. Review, explanations and Error Intelligence belong to M5. No copyrighted (e.g. Cambridge) content: only small original fixture/demo content.",
+        "In READING_EXPERIENCE.md, 'Highlighting and Pin Evidence (M4)' marked DRAFT: what can be selected (any text range, a sentence, a paragraph) and how on a phone (the native selection menu competes with custom actions; consider tapping a sentence) and on desktop with mouse and keyboard; how a highlight is removed; whether highlights have one style or several",
+        "Pin Evidence: what is pinned (sentence or paragraph), to which question (the current one), how many pins per question, where pinned text shows (next to the question in the sheet), how to remove or replace a pin, how a pinned passage part is marked in the passage, and what happens when the user changes question",
+        "That pins are stored for review in M5 (evidence-first review compares them with the real evidence), but M4 shows no correctness",
+        "Accessibility: selection and pinning without a pointer, screen-reader announcements, not by color alone",
+        "Open questions with options and recommendations (including: is Pin Evidence available in Exam Mode, decided with M4-04), and PROPOSED uz/ru/en copy"
+      ],
+      "outOfScope": ["any code", "evidence-first review (M5)"],
+      "acceptanceCriteria": [
+        "Highlighting and pinning are specified for touch, mouse and keyboard",
+        "Open questions have options and recommendations",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md"
+      ],
+      "docsToUpdate": ["docs/product/READING_EXPERIENCE.md"]
+    },
+    {
+      "id": "M4-04",
+      "title": "Draft Practice vs Exam behavior and the desktop exam layout",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-02", "M4-03"],
+      "goal": "Specify what differs between Practice and Exam Mode, and the desktop side-by-side exam layout.",
+      "scope": [
+        "Owner decisions 2026-10-10 (M4 activation): mobile-first; the passage is the main visual object; the current question lives in a persistent bottom sheet with collapsed / partial / expanded states if needed; a question navigator for the full Reading test; question UI adapts by IELTS question type; highlighting; Pin Evidence associates passage text with the current question; Practice Mode may provide help; Exam Mode removes learning assistance and follows realistic IELTS constraints; desktop Exam Mode may use passage + questions side by side. Review, explanations and Error Intelligence belong to M5. No copyrighted (e.g. Cambridge) content: only small original fixture/demo content.",
+        "In READING_EXPERIENCE.md, 'Practice and Exam Mode (M4)' marked DRAFT, replacing the table's open cells: how the user chooses a mode; for each mode the scope (one passage or the full test), timing (Exam: 60 minutes for the full test, no pause; Practice: optional or none, per ACCESSIBILITY.md), what happens at time-out, highlighting, Pin Evidence, the navigator, flag for review, which help Practice offers in M4 without explanations (explanations and review are M5), and what the user sees after finishing in M4",
+        "Desktop Exam Mode (from the approved desktop breakpoint): passage and questions side by side like computer-delivered IELTS, independent scrolling, where the navigator and timer sit, keyboard use. Whether desktop Practice uses the same layout or the phone layout widened",
+        "Realistic constraints in Exam Mode stated with their source (official IELTS test format information), without copying protected material",
+        "Open questions with options and recommendations, and PROPOSED uz/ru/en copy"
+      ],
+      "outOfScope": [
+        "any code",
+        "review, results screens with explanations (M5)"
+      ],
+      "acceptanceCriteria": [
+        "Both modes are specified for every engine feature, and the desktop layout is described",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md"
+      ]
+    },
+    {
+      "id": "M4-05",
+      "title": "Propose the design values the Reading engine needs",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-04"],
+      "goal": "Turn every visual decision in the M4 drafts that is not approved yet into one concrete proposal.",
+      "scope": [
+        "In DESIGN_SYSTEM.md, 'M4 components (Reading)' marked PROPOSED: the bottom sheet (radius.xl, raised shadow, handle, heights per state), the navigator cells and their states, the timer, typed-answer input and option-list controls, highlight style(s), the pinned-evidence marker and pin card, the passage column, the desktop exam split (the approved desktop breakpoint, column widths, divider), Heading 3 if used",
+        "Contrast ratios for every color pairing, and no meaning by color alone (I-8). Status colors (correct/incorrect) stay TBD unless M4 shows correctness (M4-01 open question)",
+        "Bring to approval only existing proposals these use (e.g. radius.xl, text.tertiary). No token without a use"
+      ],
+      "outOfScope": ["changing approved values", "dark mode", "any code"],
+      "acceptanceCriteria": [
+        "Every component in the M4 drafts has its values, approved or proposed",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/READING_EXPERIENCE.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"]
+    },
+    {
+      "id": "M4-06",
+      "title": "Draft ADR-0005: the Reading content contract",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-01"],
+      "goal": "Decide the data shape of a Reading test before any is written: passages, question groups, questions per type, options, answer keys, and stable anchors for highlights and pins.",
+      "scope": [
+        "docs/architecture/decisions/0005-reading-content-contract.md, Status Proposed: the model (test → passages → paragraphs → question groups → questions), each M4-01 type's question and answer shape, instructions and word limits as data, Academic / General Training as a field, stable passage anchors (paragraph and sentence identifiers or offsets) that highlights and pins can reference, and content versioning enough to keep stored answers valid",
+        "Where M4's demo content lives and in which format (e.g. typed TypeScript or JSON validated at build/test time) and how it is validated as untrusted data; that content is served by the web app in M4 and authoring, review and storage in the API belong to M9 (content model and authoring ADR)",
+        "Whether answer keys ship to the browser (only if answer checking is in M4), and the content integrity rule: original or licensed content only, never Cambridge or other published IELTS material (INVARIANTS I-5)",
+        "Compare at least two options and recommend one. Add it to the ADR index as Proposed and to ARCHITECTURE.md open decisions"
+      ],
+      "outOfScope": [
+        "any code or content",
+        "authoring tools, API endpoints, database tables (M9)"
+      ],
+      "acceptanceCriteria": [
+        "The ADR follows the template and covers every in-scope question type",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        "docs/product/PRODUCT.md",
+        "docs/product/READING_EXPERIENCE.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M4-07",
+      "title": "Draft ADR-0006: Reading session state and persistence",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-02", "M4-03", "M4-04"],
+      "goal": "Decide how a Reading session's state is modeled and where it is kept on the device, so it survives a reload and can be resumed, without accounts.",
+      "scope": [
+        "docs/architecture/decisions/0006-reading-session-state.md, Status Proposed: the session state (mode, current question, answers, flags, highlights, pins, timer start and elapsed time, finished) as a pure domain model with transitions (e.g. a reducer) tested without rendering",
+        "Where it is kept: compare at least localStorage, IndexedDB, and a small cookie pointer plus client storage (ADR-0003 keeps cookies for small preferences only); recommend one. Include size, schema versioning and migration, validation of stored data as untrusted input, what happens with stale content versions, clearing, and private browsing",
+        "Timer semantics that survive reloads and closed tabs (time measured from a stored start, not a running counter) and what Exam Mode does when the user leaves and returns",
+        "Client state management in React (React state/reducer and context vs a library); a library is a pattern-setting dependency and needs a reason",
+        "How 'Continue previous activity' on home could read it later (home is server-rendered from a cookie today), without building it unless approved",
+        "Add it to the ADR index as Proposed; ARCHITECTURE.md 'Guest practice state' points to it"
+      ],
+      "outOfScope": [
+        "any code",
+        "server-side persistence or accounts (M7)",
+        "offline scope (M10)"
+      ],
+      "acceptanceCriteria": [
+        "The ADR follows the template, compares the options and makes one recommendation",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/ARCHITECTURE.md",
+        ".claude/rules/security/security.md",
+        "docs/product/READING_EXPERIENCE.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M4-08",
+      "title": "Draft ADR-0007: building blocks for the bottom sheet and text selection",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-02", "M4-03"],
+      "goal": "Decide how the persistent bottom sheet, its gestures, and passage selection are built (ROADMAP: 'UI primitives approach, shadcn/Radix or not').",
+      "scope": [
+        "docs/architecture/decisions/0007-reading-ui-primitives.md, Status Proposed: for the non-modal, persistent bottom sheet with snap states, compare a hand-built component (pointer events, CSS, the VisualViewport API for the phone keyboard) with libraries (e.g. vaul, Radix, react-modal-sheet), checking accessibility (the sheet is not a modal dialog), bundle size on mid-range phones, maintenance and license, and fit with tokens; recommend one",
+        "For highlighting and pinning, the selection approach that the M4-03 draft needs (Selection/Range APIs or sentence-level targets) and how highlights are drawn without breaking the passage's text for screen readers",
+        "Whether shadcn/ui or Radix are adopted for other controls in M4 (option lists, dialogs for finishing a test); DESIGN_CONSTITUTION.md allows them for behavior only, restyled through tokens",
+        "Add it to the ADR index as Proposed"
+      ],
+      "outOfScope": ["any code or dependency"],
+      "acceptanceCriteria": [
+        "The ADR follows the template, compares options with sizes and accessibility, and recommends one",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/engineering/CODE_QUALITY.md",
+        "docs/product/READING_EXPERIENCE.md"
+      ],
+      "docsToUpdate": ["docs/architecture/decisions/README.md"]
+    },
+    {
+      "id": "M4-09",
+      "title": "Owner approves the Reading specs, design values and ADRs",
+      "milestone": "M4",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": [
+        "M4-01",
+        "M4-02",
+        "M4-03",
+        "M4-04",
+        "M4-05",
+        "M4-06",
+        "M4-07",
+        "M4-08"
+      ],
+      "goal": "One approval gate for the Reading engine: question-type scope, mobile bottom-sheet behavior, Pin Evidence, Practice vs Exam, the persistence model, and the desktop exam layout.",
+      "scope": [
+        "Review the M4-01 to M4-04 drafts in READING_EXPERIENCE.md and USER_FLOWS.md with their copy, answer the open questions (including answer checking in M4 or M5, Academic/General Training, Pin Evidence in Exam Mode, entry points), and mark them Approved",
+        "Review the M4-05 design values and mark them Approved",
+        "Review ADR-0005, ADR-0006 and ADR-0007 and set them to Accepted",
+        "If an answer changes M4's scope (e.g. answer checking in M4), say so; the implementation tasks M4-10 to M4-22 are then adjusted before work continues"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The M4 specs, copy and design values are Approved; ADR-0005 to ADR-0007 are Accepted",
+        "No open question blocks M4-10 to M4-22"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/READING_EXPERIENCE.md docs/design/DESIGN_SYSTEM.md",
+        "grep -n 'Status' docs/architecture/decisions/0005-*.md docs/architecture/decisions/0006-*.md docs/architecture/decisions/0007-*.md"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/README.md"
+      ]
+    },
+    {
+      "id": "M4-10",
+      "title": "Reading domain model and content contract in code",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-09"],
+      "goal": "The Reading test model from ADR-0005 exists as pure domain code with validation, before any screen uses it.",
+      "scope": [
+        "Per ADR-0005 and ADR-0004: domain types for tests, passages, anchors, question groups, the approved question types and their answer shapes; a validator that rejects malformed content with clear errors (content is untrusted data)",
+        "Small original fixtures for unit tests only (a few sentences, written for the tests)",
+        "Unit tests: each question type validates; malformed content (missing anchors, duplicate question numbers, options out of range, wrong word limits) is rejected"
+      ],
+      "outOfScope": ["demo content (M4-11)", "session state (M4-12)", "UI"],
+      "acceptanceCriteria": [
+        "The contract matches ADR-0005, proven by tests",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/testing/test-code.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/BOUNDARIES.md (if the Reading domain adds a boundary)"
+      ]
+    },
+    {
+      "id": "M4-11",
+      "title": "Original demo Reading test",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-10"],
+      "goal": "An original demo test exercises every approved question type and the full-test navigator, without any published IELTS material.",
+      "scope": [
+        "Write original demo content in the ADR-0005 format and location: as many passages and questions as the approved specs need to exercise the engine (the navigator needs a full-length structure; passages may be short), covering every approved question type, with English test content",
+        "Content integrity (INVARIANTS I-5): written for this project, on neutral topics, not adapted from Cambridge or any published IELTS material; marked as demo content",
+        "The content passes the M4-10 validator in a test"
+      ],
+      "outOfScope": [
+        "real product content (content sourcing is TBD, M9)",
+        "UI"
+      ],
+      "acceptanceCriteria": [
+        "The demo test validates and covers every approved type",
+        "A note in PROGRESS.md states it was written originally for the project",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/INVARIANTS.md",
+        "docs/product/PRODUCT.md"
+      ]
+    },
+    {
+      "id": "M4-12",
+      "title": "Reading session state and persistence on the device",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-10"],
+      "goal": "A Reading session's state and its transitions exist as tested domain code and are kept on the device as ADR-0006 says.",
+      "scope": [
+        "Per ADR-0006: the session model and its transitions (start, answer, change question, flag, highlight, pin, finish) as pure domain code; the device storage adapter with a versioned, validated shape (old, invalid or tampered data never crashes); timer state measured from a stored start",
+        "Unit tests for every transition, the timer arithmetic (reload, time-out), and storage validation; adapter tests at the storage boundary"
+      ],
+      "outOfScope": ["UI", "server persistence"],
+      "acceptanceCriteria": [
+        "Behavior matches ADR-0006, proven by tests",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        ".claude/rules/testing/test-code.md"
+      ]
+    },
+    {
+      "id": "M4-13",
+      "title": "Mobile reading screen and the question bottom sheet",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-11", "M4-12"],
+      "goal": "The demo test opens at its address with the passage as the main object and the current question in the approved bottom sheet.",
+      "scope": [
+        "Implement the approved mobile screen and bottom sheet (states, snap points, drag plus tap and keyboard alternatives, phone keyboard handling) with the ADR-0007 building blocks; the approved entry route; previous/next question; passage typography; the session state from M4-12",
+        "A placeholder question body is allowed only until M4-15 to M4-17 add the renderers; this task renders one simple approved type to prove the sheet",
+        "e2e on both projects: open, move between sheet states by tap and keyboard, change question, reload keeps the position; axe; 320 and 360 px; reduced motion"
+      ],
+      "outOfScope": [
+        "the navigator (M4-14)",
+        "other question types",
+        "highlighting, pins, modes, desktop exam layout"
+      ],
+      "acceptanceCriteria": [
+        "The screen and sheet match the approved spec at 320 and 360 px",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md (token note)"]
+    },
+    {
+      "id": "M4-14",
+      "title": "Question navigator for the full test",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-13"],
+      "goal": "The user sees every question's state and jumps to any question across all passages, as approved.",
+      "scope": [
+        "Implement the approved navigator: answered, unanswered, current and flagged states (not by color alone), passage grouping, opening and closing, flag for review if approved",
+        "Component tests for the states; e2e: jump across passages, keyboard use, 40 questions at 320 px, axe"
+      ],
+      "outOfScope": [
+        "question renderers beyond what exists",
+        "modes and timer"
+      ],
+      "acceptanceCriteria": [
+        "The navigator matches the approved spec with 40 questions",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md"
+      ]
+    },
+    {
+      "id": "M4-15",
+      "title": "Question renderers: choice types",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-14"],
+      "goal": "The approved choice-type questions (e.g. True/False/Not Given, Yes/No/Not Given, multiple choice with one or several answers) render and record answers as approved.",
+      "scope": [
+        "Implement the approved interactions for the choice types in scope, recording answers in the session state",
+        "Component tests per type (answer, change, keyboard, accessible names, word 'NOT GIVEN' as text); e2e answering each type in the demo test; axe; 320 px"
+      ],
+      "outOfScope": ["matching and completion types (M4-16, M4-17)"],
+      "acceptanceCriteria": [
+        "Each in-scope choice type matches its approved interaction",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md"
+      ]
+    },
+    {
+      "id": "M4-16",
+      "title": "Question renderers: matching types",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-15"],
+      "goal": "The approved matching types (e.g. headings, information, features, sentence endings, summary from a word box) render and record answers as approved.",
+      "scope": [
+        "Implement the approved interactions for the matching types in scope, including shared option lists",
+        "Component tests per type; e2e answering each type; axe; 320 px with long option lists"
+      ],
+      "outOfScope": ["completion types (M4-17)"],
+      "acceptanceCriteria": [
+        "Each in-scope matching type matches its approved interaction",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md"
+      ]
+    },
+    {
+      "id": "M4-17",
+      "title": "Question renderers: completion types",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-16"],
+      "goal": "The approved completion types (e.g. sentence, summary from the passage, note completion, short answer) render, respect word-limit presentation and work with the phone keyboard.",
+      "scope": [
+        "Implement the approved typed-answer interactions in scope, with the approved phone-keyboard behavior of the sheet",
+        "Component tests per type; e2e typing answers with the sheet and phone keyboard behavior; axe; 320 px"
+      ],
+      "outOfScope": ["answer checking unless approved for M4 at M4-09"],
+      "acceptanceCriteria": [
+        "Each in-scope completion type matches its approved interaction",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md"
+      ]
+    },
+    {
+      "id": "M4-18",
+      "title": "Highlighting",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-17"],
+      "goal": "The user highlights and unhighlights passage text as approved, by touch, mouse and keyboard, and highlights persist per ADR-0006.",
+      "scope": [
+        "Implement the approved highlighting with the ADR-0007 selection approach; highlights stored in the session and restored on reload; the passage stays readable to screen readers",
+        "Tests: domain tests for highlight ranges on anchors; e2e by touch emulation and keyboard; axe; reduced motion"
+      ],
+      "outOfScope": ["Pin Evidence (M4-19)"],
+      "acceptanceCriteria": [
+        "Highlighting matches the approved spec",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0007-reading-ui-primitives.md"
+      ]
+    },
+    {
+      "id": "M4-19",
+      "title": "Pin Evidence",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-18"],
+      "goal": "The user pins passage text to the current question and sees it next to the question, as approved, and pins persist for M5 review.",
+      "scope": [
+        "Implement the approved Pin Evidence interaction, display in the sheet, passage marker, remove/replace; pins stored in the session per ADR-0006",
+        "Tests: domain tests for pins; e2e pin, change question, remove, reload; keyboard; axe"
+      ],
+      "outOfScope": ["evidence-first review (M5)"],
+      "acceptanceCriteria": [
+        "Pin Evidence matches the approved spec",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0007-reading-ui-primitives.md"
+      ]
+    },
+    {
+      "id": "M4-20",
+      "title": "Practice and Exam Modes with the timer",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-19"],
+      "goal": "Choosing a mode changes scope, timing and assistance exactly as approved, and the timer is correct across reloads.",
+      "scope": [
+        "Implement mode choice and the approved per-mode behavior (scope, timer, time-out, highlighting, Pin Evidence, navigator and flags, Practice help that is not explanations); finishing a test as approved for M4",
+        "Tests: domain tests for mode rules and timer edge cases (reload, time-out, leaving and returning); e2e for both modes on phone, with a controlled clock"
+      ],
+      "outOfScope": ["desktop exam layout (M4-21)", "review and results (M5)"],
+      "acceptanceCriteria": ["Both modes behave as approved", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0006-reading-session-state.md"
+      ]
+    },
+    {
+      "id": "M4-21",
+      "title": "Desktop exam layout",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-20"],
+      "goal": "Desktop Exam Mode shows passage and questions side by side as approved.",
+      "scope": [
+        "Implement the approved desktop layout from the approved desktop breakpoint: independent scrolling, navigator and timer placement, keyboard use; desktop Practice as approved",
+        "e2e on the desktop project: full keyboard path through a passage, axe, 1024 and 1280 px; the phone layout unchanged below the breakpoint"
+      ],
+      "outOfScope": ["new question types or modes"],
+      "acceptanceCriteria": [
+        "The desktop layout matches the approved spec",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md"
+      ]
+    },
+    {
+      "id": "M4-22",
+      "title": "Reading engine end to end, accessibility pass and docs",
+      "milestone": "M4",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-21"],
+      "goal": "The whole engine works as one flow on phone and desktop, and the docs describe what exists.",
+      "scope": [
+        "e2e journeys: a full Practice session and a full Exam session on phone and desktop (enter, answer every type, highlight, pin, navigate, reload and resume, finish), in uz/ru/en interface with English test content marked lang=en",
+        "Accessibility pass per ACCESSIBILITY.md (keyboard, screen-reader order, 200% zoom, 320 px, reduced motion) with findings fixed or recorded",
+        "Docs: FEATURE_MAP (Reading practice), CLAUDE.md Current state, READING_EXPERIENCE.md status line"
+      ],
+      "outOfScope": ["review, explanations, Error Intelligence (M5)"],
+      "acceptanceCriteria": [
+        "The journeys pass on both projects",
+        "The accessibility pass is recorded",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md (Current state)",
+        "docs/product/READING_EXPERIENCE.md"
+      ]
     },
     {
       "id": "M10-01",
