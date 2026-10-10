@@ -764,7 +764,7 @@
       "title": "Owner makes Docker available for the local database",
       "milestone": "M2",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "The development machine can run the PostgreSQL container that M2-04 defines. Installing OS packages is outside what a worker may do.",
       "scope": [
@@ -783,7 +783,8 @@
       ],
       "references": [
         "docs/architecture/decisions/0001-initial-application-foundation.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M2-03",

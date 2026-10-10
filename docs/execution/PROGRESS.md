@@ -5,11 +5,11 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). **M2 Backend & Persistence Foundation is active** (owner, 2026-10-10). M3–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
-- **Next:** M2-01, M2-03 and M2-07 are done. Every remaining worker task (M2-04 to M2-06, M2-08) waits on M2-02: the owner installs Docker and confirms. When M2 is done, M3 is not activated by a worker. CI activates when the owner pushes.
+- **Next:** M2-01, M2-02, M2-03 and M2-07 are done. The remaining worker tasks run in order: M2-04, M2-05, M2-06, M2-08. When M2 is done, M3 is not activated by a worker. CI activates when the owner pushes.
 
 ## Open questions for the owner
 
-- **Docker for the local database** (TASKS.json `M2-02`). Decided 2026-10-10: Docker Engine + Docker Compose v2. The owner installs it manually and confirms; M2-02 stays `todo` until then. M2-04 to M2-06 and M2-08 wait on it.
+- **`apps/api/.env`.** Workers may not create real `.env` files (AUTONOMOUS_WORKFLOW hard limits, `.claude/settings.json`). For local `pnpm --filter api dev` and `pnpm test:e2e` without exporting `DATABASE_URL`, copy `apps/api/.env.example` to `apps/api/.env`.
 ## Log
 
 Entry format:
@@ -232,4 +232,10 @@ Entry format:
 - Verification: `pnpm check` (api unit 16, web 8), `pnpm build`, and `DATABASE_URL=<placeholder> pnpm test:e2e` (api 10, web 96) pass. New e2e (`test/errors.e2e-spec.ts`, test-only controller and DTOs in the test file): a valid payload arrives as a DTO instance; an unknown property gives `whitelistValidation`; a wrong type gives `max/min/isInt` and the value (`secret-17`) is not in the response; a nested invalid value gives the `answers.1.value` path; a query value converts only where `@Type` declares it; malformed JSON gives 400 `bad_request` "Bad Request"; a 200 kB body gives 413 `payload_too_large`; an unknown route gives exactly `{404, not_found, "Not Found"}`; a thrown `Error` gives a generic 500. **Probe** (reverted): without the `APP_PIPE` provider, the 5 validation tests fail. **Built API:** `/nope?email=…` gives the 404 body, a malformed POST gives the 400 body, and neither the query nor the body appears in the log. `/health/ready` does not exist yet (M2-05), so its 503 is covered only by the filter's unit test for `ServiceUnavailableException`.
 - Versions / choices: **The `message` of non-validation errors is always the standard status text, never the exception's message.** The first e2e run showed that NestJS's Express adapter wraps body-parser `SyntaxError`s as `new BadRequestException(error.message)`, and that message quotes the request body (`"…onCount\": secret-17\" is not valid JSON"`); its 404 message also contains the requested path. Forwarding exception messages would break ADR-0002's rule that rejected input is never echoed. This stays within the ADR (`message` is "a short English text for developers and logs"; `code` carries the meaning). When a feature needs its own code, it adds it to the filter then (ADR-0002 §4).
 - Notes: There is no `URIError` e2e case (NestJS also wraps malformed percent-encoding as a `BadRequestException`), because no route has a path parameter yet; the status-text rule covers it. The filter does not handle errors raised after response headers were sent (no streaming endpoint exists).
+
+### 2026-10-10: M2-02 Owner makes Docker available (owner task)
+- Result: done
+- Changes: The owner installed Docker Engine with the Compose plugin and confirmed it. M2-02 is marked `done` at the owner's direction.
+- Verification (run by the worker as `root`, confirmed by the owner): `docker --version` 29.9.0; `docker compose version` v5.6.0 (the `docker compose` plugin; its version numbering has moved past 2.x); `docker run --rm hello-world` passed.
+- Notes: `apps/api/.env` was not created: workers may not create real `.env` files. It is listed under open questions for the owner. Validation commands pass `DATABASE_URL` inline.
 
