@@ -1606,7 +1606,7 @@
       "title": "Draft Practice vs Exam behavior and the desktop exam layout",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-02", "M4-03"],
       "goal": "Specify what differs between Practice and Exam Mode, and the desktop side-by-side exam layout.",
       "scope": [
@@ -1640,7 +1640,8 @@
       "docsToUpdate": [
         "docs/product/READING_EXPERIENCE.md",
         "docs/product/USER_FLOWS.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-05",

@@ -206,3 +206,43 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 3. **How many pins per question?** Options: (a) up to 3 sentences; (b) one; (c) unlimited. **Recommendation: (a)**: some answers need two sentences, and a limit keeps evidence a choice, not a copy of the passage.
 4. **Which pins are marked in the passage?** Options: (a) only the current question's; (b) all, with their numbers. **Recommendation: (a).**
 5. **One highlight style or several colors?** **Recommendation: one** (computer-delivered IELTS has one, and colors would need meanings).
+
+### Practice and Exam Mode (M4)
+
+**DRAFT: awaiting owner approval** (task M4-04). This fills in the open cells of the [Practice Mode vs Exam Mode](#practice-mode-vs-exam-mode) table for M4. Test-format facts (3 passages, 40 questions, 60 minutes, no extra time to transfer answers in Reading) come from the IELTS partners' public test-format pages (British Council, IDP).
+
+**Choosing a mode:** the test's start screen (its address, `/{locale}/reading/{testId}`) shows the test's title and two choices as option rows: **Practice** ("No time limit. Mark evidence for your answers.") and **Exam** ("60 minutes, like the real test. No help."), then the red "Start". A link can preselect a mode (e.g. `?mode=exam`); the user still taps "Start". Step count: 2 (choose, start), 1 with a preselected mode. A test with an unfinished session skips the start screen and resumes ([Leave and come back](USER_FLOWS.md#leave-and-come-back)).
+
+**Per mode in M4:**
+
+| | Practice | Exam |
+|---|---|---|
+| Scope | The whole test (3 passages, 40 questions), at the user's pace; leaving and resuming at any time | The whole test as one sitting |
+| Timing | No timer (open question 2) | 60:00 counting down from "Start"; no pause; keeps running while the user is away (measured from the stored start time, ADR-0006); warnings at 10 and 5 minutes |
+| Time-out | n/a | At 0:00 the answers are final and the test finishes by itself, without the confirmation; the finished page says "Time is up." |
+| Highlighting | Yes | Yes (computer-delivered IELTS allows it) |
+| Pin Evidence | Yes | **No** (the real test has no such aid; open question 2 of M4-03) |
+| Mark for review, navigator | Yes | Yes (both exist in computer-delivered IELTS) |
+| Help in M4 | Pin Evidence; a word-limit warning under a typed answer that has more words than the instruction allows ("This answer has more than 2 words.") | None |
+| Explanations, hints, checking answers | Not in M4 (M5) | Not in M4; after the test only (M5) |
+| "Exit" | Back to home; everything is kept | Asks first: "Leave the test? The time keeps running while you are away." ("Leave" / "Stay") |
+| After finishing | The finished page (below) | The finished page |
+
+**The finished page in M4** (both modes): the heading "Test finished" (or "Time is up." above it after a time-out), "You answered 37 of 40 questions.", and one honest line: "Checking answers and explanations will come in a later version." Then the red "Go to home page" and a quiet "Start again" (a new session; the finished one stays stored for M5 review, ADR-0006). No score, no estimate: nothing in M4 computes one (honest feedback, [PRODUCT.md](PRODUCT.md#honest-feedback-non-negotiable)). Opening a finished test's link again shows this page.
+
+**Desktop layout (from the approved desktop breakpoint, 1024 px):**
+- **Test bar** across the top (Exit, "Passage 1 of 3", timer).
+- **Two columns**, each scrolling independently: the passage on the start side (about 55% of the width, its text at a comfortable reading measure) and the questions on the end side (about 45%). The question column shows **all questions of the current passage** in order, as computer-delivered IELTS does, each with its answer control in place; the current question is marked and kept in view. A thin divider separates the columns. No bottom sheet.
+- **Navigator** as a bar along the bottom: the current passage's numbers as buttons, the other passages as one button each with their progress ("Passage 2: 3 of 14 answered"); choosing another passage switches both columns. Previous / Next and "Finish test" sit at the bar's end.
+- **Keyboard:** Tab moves test bar → passage (one stop, arrow keys inside, M4-03) → question column → navigator bar. Option lists open in place in the question column.
+- **Same layout in both modes** on desktop (open question 5): Practice adds Pin Evidence and its "Your evidence" blocks in the question column.
+- **Tablet (600–1023 px):** the phone layout with the bottom sheet, the passage centered at a comfortable measure and the sheet as wide as the passage column.
+
+**Open questions (M4-04):**
+1. **Mode choice:** options: (a) a start screen with both modes and "Start"; (b) the mode only from the link. **Recommendation: (a)**, with optional preselection by link.
+2. **A timer in Practice?** Options: (a) none; (b) elapsed time shown quietly; (c) an optional countdown. **Recommendation: (a)** in M4: Practice is for comfortable learning, and ACCESSIBILITY.md requires practice timers to be optional anyway.
+3. **Word-limit warning in Practice?** (M4-01 open question 5.) **Recommendation: yes, in Practice only**, as the one piece of Practice help that is not an explanation.
+4. **What the user sees after finishing in M4:** options: (a) the honest finished page with the answered count; (b) go straight home. **Recommendation: (a).**
+5. **Desktop Practice layout:** options: (a) the same side-by-side layout as Exam; (b) the phone layout widened. **Recommendation: (a)**: side by side is simply better for reading on a wide screen.
+6. **Exam time while away:** options: (a) keeps running, as in a real sitting; (b) pauses. **Recommendation: (a)**, stated on the start screen and in the "Exit" confirmation.
+7. **Notes:** computer-delivered IELTS also lets candidates attach notes to text. **Recommendation: not in M4**; highlighting covers the main need.

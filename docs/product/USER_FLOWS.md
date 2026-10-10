@@ -392,3 +392,20 @@ The questions as they were put to the owner, with the options considered:
 | `reading.evidence.show` | Pinned quote action (M4-03) | Show in passage | Показать в тексте | Matnda koʻrsatish |
 | `reading.evidence.remove` | Pinned quote action (M4-03) | Remove from evidence | Убрать из обоснования | Dalildan olib tashlash |
 | `reading.evidence.limit` | Message when a fourth pin is refused (M4-03) | You can pin up to {max} sentences to one question. | К одному вопросу можно закрепить до {max} предложений. | Bitta savolga {max} tagacha gap biriktirish mumkin. |
+| `reading.mode.legend` | Start screen, above the two modes (M4-04) | Choose how to take it | Выберите режим | Rejimni tanlang |
+| `reading.mode.practice` | Start screen option (M4-04) | Practice | Практика | Mashq |
+| `reading.mode.practiceDetail` | Start screen option detail (M4-04) | No time limit. Mark evidence for your answers. | Без ограничения времени. Отмечайте обоснование ответов. | Vaqt cheklanmagan. Javoblaringiz uchun dalillarni belgilang. |
+| `reading.mode.exam` | Start screen option (M4-04) | Exam | Экзамен | Imtihon |
+| `reading.mode.examDetail` | Start screen option detail (M4-04) | 60 minutes, like the real test. No help. The time keeps running if you leave. | 60 минут, как на настоящем тесте. Без подсказок. Если выйти, время продолжает идти. | Haqiqiy testdagidek 60 daqiqa. Yordamsiz. Chiqib ketsangiz ham vaqt davom etadi. |
+| `reading.start` | Start screen, red (M4-04) | Start | Начать | Boshlash |
+| `reading.exitExam.title` | Exam "Exit" confirmation (M4-04) | Leave the test? | Выйти из теста? | Testdan chiqasizmi? |
+| `reading.exitExam.body` | Exam "Exit" confirmation (M4-04) | The time keeps running while you are away. | Пока вас нет, время идёт. | Siz yoʻqligingizda vaqt davom etadi. |
+| `reading.exitExam.leave` | Exam "Exit" confirmation, quiet (M4-04) | Leave | Выйти | Chiqish |
+| `reading.exitExam.stay` | Exam "Exit" confirmation, red (M4-04) | Stay | Остаться | Qolish |
+| `reading.wordLimit` | Practice warning under a typed answer; ICU plural (M4-04) | {max, plural, one {This answer has more than # word.} other {This answer has more than # words.}} | {max, plural, one {В ответе больше # слова.} few {В ответе больше # слов.} many {В ответе больше # слов.} other {В ответе больше # слова.}} | Bu javobda {max} tadan ortiq soʻz bor. |
+| `reading.finished.title` | Finished page heading (M4-04) | Test finished | Тест завершён | Test yakunlandi |
+| `reading.finished.timeUp` | Finished page, after a time-out (M4-04) | Time is up. | Время вышло. | Vaqt tugadi. |
+| `reading.finished.answered` | Finished page (M4-04) | You answered {answered} of {total} questions. | Вы ответили на {answered} из {total} вопросов. | {total} ta savoldan {answered} tasiga javob berdingiz. |
+| `reading.finished.notChecked` | Finished page, honest note (M4-04) | Checking answers and explanations will come in a later version. | Проверка ответов и разборы появятся в следующей версии. | Javoblarni tekshirish va izohlar keyingi versiyada paydo boʻladi. |
+| `reading.finished.again` | Finished page, quiet (M4-04) | Start again | Начать заново | Qaytadan boshlash |
+| `reading.navigator.passageProgress` | Desktop navigator button for another passage (M4-04) | Passage {number}: {answered} of {total} answered | Текст {number}: отвечено {answered} из {total} | {number}-matn: {total} tadan {answered} tasiga javob berilgan |
