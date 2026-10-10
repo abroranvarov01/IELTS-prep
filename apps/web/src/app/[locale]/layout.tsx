@@ -2,6 +2,8 @@ import { SerwistProvider } from "@serwist/turbopack/react";
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Literata, Onest } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -33,6 +35,7 @@ export default async function LocaleLayout({
   children,
 }: LayoutProps<"/[locale]">) {
   const locale = await getLocale();
+  const t = await getTranslations();
 
   return (
     <html lang={locale} className={`${onest.variable} ${literata.variable}`}>
@@ -43,7 +46,32 @@ export default async function LocaleLayout({
           cacheOnNavigation={false}
           reloadOnOnline={false}
         >
-          {children}
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:block focus:px-gutter focus:py-3 focus:font-bold focus:underline"
+          >
+            {t("shell.skipToContent")}
+          </a>
+          <header className="px-gutter py-2">
+            <Link href={`/${locale}`} className="inline-block">
+              <Image
+                src="/brand/logo-horizontal-no-tagline.svg"
+                alt={t("app.name")}
+                width={470}
+                height={120}
+                loading="eager"
+                className="h-12 w-auto"
+              />
+            </Link>
+          </header>
+          {/* main is only a skip-link target, not a control: no focus ring. */}
+          <main
+            id="main"
+            tabIndex={-1}
+            className="px-gutter focus:outline-none"
+          >
+            <div className="mx-auto max-w-content">{children}</div>
+          </main>
         </SerwistProvider>
       </body>
     </html>

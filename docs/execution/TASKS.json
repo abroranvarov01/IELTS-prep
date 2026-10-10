@@ -630,7 +630,7 @@
       "title": "App shell layout and the tokens it uses",
       "milestone": "M1",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M1-03"],
       "goal": "Every locale page renders inside the approved shell on phone and desktop.",
       "scope": [
@@ -661,7 +661,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md"
       ],
-      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md (token status note)"]
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md (token status note)"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M1-05",

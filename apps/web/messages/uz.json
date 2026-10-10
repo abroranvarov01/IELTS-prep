@@ -1,5 +1,8 @@
 {
   "app": {
     "name": "IELTS Prep"
+  },
+  "shell": {
+    "skipToContent": "Asosiy mazmunga oʻtish"
   }
 }

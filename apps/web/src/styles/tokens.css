@@ -55,6 +55,12 @@
   --spacing-16: 4rem;
   --spacing-gutter: 1rem;
 
+  /* Layout: Tailwind's default breakpoints and container sizes are reset.
+     The approved breakpoints (DESIGN_SYSTEM.md) are added when first used. */
+  --breakpoint-*: initial;
+  --container-*: initial;
+  --container-content: 1200px;
+
   /* Radii */
   --radius-*: initial;
   --radius-sm: 8px;
