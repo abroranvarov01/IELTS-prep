@@ -315,7 +315,7 @@ The questions as they were put to the owner, with the options considered:
 
 ## Reading flows (M4)
 
-**DRAFT: awaiting owner approval** (task M4-02, decided at the M4-09 gate). The screen they run on is specified in [READING_EXPERIENCE.md, Mobile reading screen (M4)](READING_EXPERIENCE.md#mobile-reading-screen-m4); modes in [Practice and Exam Mode (M4)](READING_EXPERIENCE.md#practice-and-exam-mode-m4).
+**Approved** (owner, 2026-10-10, task M4-09; drafted in M4-02). The screen they run on is specified in [READING_EXPERIENCE.md, Mobile reading screen (M4)](READING_EXPERIENCE.md#mobile-reading-screen-m4); modes in [Practice and Exam Mode (M4)](READING_EXPERIENCE.md#practice-and-exam-mode-m4).
 
 ### Open a Reading test
 - **Goal:** start reading and answering at once.
@@ -340,7 +340,7 @@ The questions as they were put to the owner, with the options considered:
 
 ## Interface copy (M4)
 
-**PROPOSED: awaiting owner approval** (tasks M4-01 to M4-04, decided at the M4-09 gate). Interface strings only: test content (passages, questions, instructions, TRUE/FALSE/NOT GIVEN, option texts) stays in English and comes from the content, not from the catalogs. A fluent-speaker review of the uz and ru strings is required before beta. Uzbek uses U+02BB for oʻ and gʻ. Keys are suggestions for M4-13 to M4-21.
+**Approved for implementation** (owner, 2026-10-10, task M4-09; proposed in M4-01 to M4-04). Interface strings only: test content (passages, questions, instructions, TRUE/FALSE/NOT GIVEN, option texts) stays in English and comes from the content, not from the catalogs. A fluent-speaker review of the uz and ru strings is still required before beta. Uzbek uses U+02BB for oʻ and gʻ. Keys are suggestions for M4-13 to M4-21.
 
 | Key (suggested) | Used in | en | ru | uz |
 |---|---|---|---|---|

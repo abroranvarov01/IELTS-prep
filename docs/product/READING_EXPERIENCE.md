@@ -49,13 +49,25 @@ If the user pinned evidence, review compares it with the actual evidence. Review
 
 ## M4 specifications (drafts)
 
-**DRAFT: awaiting owner approval** (tasks M4-01 to M4-04, decided together at the M4-09 gate). These sections turn the approved direction above into buildable specs for the Reading engine (M4). Review, explanations and Error Intelligence are M5. Interface copy for these specs is in [USER_FLOWS.md, Interface copy (M4)](USER_FLOWS.md#interface-copy-m4). Test content (passages, questions, instructions such as "Do the following statements agree with the information given in the passage?", and answer words such as TRUE or NOT GIVEN) stays in English and is marked `lang="en"` inside a Russian or Uzbek interface.
+**Approved** (owner, 2026-10-10, task M4-09; drafted in M4-01 to M4-04). These sections turn the approved direction above into buildable specs for the Reading engine (M4). Review, explanations and Error Intelligence are M5. Interface copy for these specs is in [USER_FLOWS.md, Interface copy (M4)](USER_FLOWS.md#interface-copy-m4). Test content (passages, questions, instructions such as "Do the following statements agree with the information given in the passage?", and answer words such as TRUE or NOT GIVEN) stays in English and is marked `lang="en"` inside a Russian or Uzbek interface.
 
 **Owner decisions these specs implement (2026-10-10):** mobile-first; the passage is the main visual object; the current question lives in a persistent bottom sheet with collapsed / partial / expanded states if needed; a question navigator for the full Reading test; question UI adapts by IELTS question type; highlighting; Pin Evidence associates passage text with the current question; Practice Mode may provide help; Exam Mode removes learning assistance and follows realistic IELTS constraints; desktop Exam Mode may use passage and questions side by side; only small original demo content.
 
+**Decided at the M4-09 gate (owner, 2026-10-10):**
+- **Scope:** the four interaction families as specified. Table, flow-chart and diagram label completion are deferred and recorded as **required pre-beta Reading follow-ups** (TASKS.json M11-01 to M11-03).
+- **Answer checking is M5, not M4.** M4 shows no score, correctness or band.
+- **M4 demo content is Academic only.** The engine must not prevent General Training content later, but nothing General-specific is built now.
+- **Reading is reachable only by its direct route in M4.** Home is not changed.
+- No auto-advance after choosing; matching uses the answer button and list, no drag and drop; autocorrect and spell checking are off for typed answers.
+- Mobile: the compact test bar, three sheet states (partial about 45%), every state reachable without dragging, keyboard-safe while typing, the passage never scrolls because the question changes, the navigator usable at 320 px, no state by color alone.
+- Sentence-level highlighting and Pin Evidence; one highlight style (the yellow tint plus a subtle bottom border, DESIGN_SYSTEM.md); up to 3 evidence sentences per question, stored with the question for M5 review.
+- Exam: 60 minutes, no pause, no Pin Evidence, auto-finish at 0:00. Practice: no timer, Pin Evidence, the word-limit warning. The finished page shows only completion and answered information.
+- Desktop: passage and questions side by side with a bottom navigator, the same layout for both modes; mode-specific controls still differ.
+- The other open questions in these sections are decided as recommended (the owner approved the sections as drafted).
+
 ### Question types (M4)
 
-**DRAFT: awaiting owner approval** (task M4-01).
+**Approved** (owner, 2026-10-10, task M4-09; drafted in M4-01).
 
 **The IELTS Reading question types** (sources: the official test-format pages of the IELTS partners, e.g. British Council "IELTS exam format" and IDP "IELTS test format explained"; a Reading test has 3 sections and 40 questions in 60 minutes, one mark per question). Grouped by how the user answers:
 
@@ -117,7 +129,7 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 
 ### Mobile reading screen (M4)
 
-**DRAFT: awaiting owner approval** (task M4-02). The phone layout for both modes; mode differences are in [Practice and Exam Mode (M4)](#practice-and-exam-mode-m4) and the desktop exam layout there too. Flows with step counts: [USER_FLOWS.md, Reading flows (M4)](USER_FLOWS.md#reading-flows-m4).
+**Approved** (owner, 2026-10-10, task M4-09; drafted in M4-02). The phone layout for both modes; mode differences are in [Practice and Exam Mode (M4)](#practice-and-exam-mode-m4) and the desktop exam layout there too. Flows with step counts: [USER_FLOWS.md, Reading flows (M4)](USER_FLOWS.md#reading-flows-m4).
 
 **The screen at 360 px, top to bottom:**
 1. **Test bar** (the screen's `header`, about 48 px, replacing the shell header on the test screen only): "Exit" on the start side, the current passage ("Passage 1 of 3") in the middle, the timer on the end side when the mode has one. Nothing else (open questions 1 and 2).
@@ -174,7 +186,7 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 
 ### Highlighting and Pin Evidence (M4)
 
-**DRAFT: awaiting owner approval** (task M4-03). Whether each is available in Exam Mode is in [Practice and Exam Mode (M4)](#practice-and-exam-mode-m4).
+**Approved** (owner, 2026-10-10, task M4-09; drafted in M4-03). Whether each is available in Exam Mode is in [Practice and Exam Mode (M4)](#practice-and-exam-mode-m4).
 
 **The unit is a sentence** (open question 1). The passage's sentences have stable identifiers in the content (content contract, M4-06), so highlights and pins can be stored and found again, and later compared with the real evidence in review (M5).
 
@@ -209,7 +221,7 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 
 ### Practice and Exam Mode (M4)
 
-**DRAFT: awaiting owner approval** (task M4-04). This fills in the open cells of the [Practice Mode vs Exam Mode](#practice-mode-vs-exam-mode) table for M4. Test-format facts (3 passages, 40 questions, 60 minutes, no extra time to transfer answers in Reading) come from the IELTS partners' public test-format pages (British Council, IDP).
+**Approved** (owner, 2026-10-10, task M4-09; drafted in M4-04). This fills in the open cells of the [Practice Mode vs Exam Mode](#practice-mode-vs-exam-mode) table for M4. Test-format facts (3 passages, 40 questions, 60 minutes, no extra time to transfer answers in Reading) come from the IELTS partners' public test-format pages (British Council, IDP).
 
 **Choosing a mode:** the test's start screen (its address, `/{locale}/reading/{testId}`) shows the test's title and two choices as option rows: **Practice** ("No time limit. Mark evidence for your answers.") and **Exam** ("60 minutes, like the real test. No help."), then the red "Start". A link can preselect a mode (e.g. `?mode=exam`); the user still taps "Start". Step count: 2 (choose, start), 1 with a preselected mode. A test with an unfinished session skips the start screen and resumes ([Leave and come back](USER_FLOWS.md#leave-and-come-back)).
 

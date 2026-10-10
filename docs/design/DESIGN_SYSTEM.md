@@ -55,7 +55,7 @@ Red is the application's **unmistakable** primary action color. No other color (
 
 **Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02): `text.secondary` (the "You can change this later." line and the step indicator text), `border.control` (the answer option's boundary), and `border.subtle` (the progress track, decorative). `text.tertiary` remains a proposal until used.
 
-**PROPOSED for approval in M4** (task M4-05): `text.tertiary` (disabled option text in "choose several").
+**Approved** (owner, 2026-10-10, task M4-09; proposed in M4-05): `text.tertiary` (disabled option text in "choose several").
 
 ### Status colors
 
@@ -131,7 +131,7 @@ Primary buttons use `radius.md`. They are not pills. Nested surfaces use a small
 
 **Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02): `radius.md` (14 px: the primary button and the answer option) and `radius.full` (the step indicator's progress track). The others remain proposals until used.
 
-**PROPOSED for approval in M4** (task M4-05): `radius.sm` (navigator cells, the selected-sentence background) and `radius.xl` (the question sheet's top corners).
+**Approved** (owner, 2026-10-10, task M4-09; proposed in M4-05): `radius.sm` (navigator cells, the selected-sentence background) and `radius.xl` (the question sheet's top corners).
 
 ## Shadows / elevation
 
@@ -265,7 +265,7 @@ This would be one new layout token (a container width) used by onboarding and ho
 
 ## M4 components (Reading)
 
-**PROPOSED: awaiting owner approval** (task M4-05, decided at the M4-09 gate). Visual values for the M4 Reading drafts ([READING_EXPERIENCE.md, M4 specifications](../product/READING_EXPERIENCE.md#m4-specifications-drafts)). Reused unchanged: the brand palette, the type scale (including the approved Heading 3 and passage sizes), the focus style, motion, the breakpoints, the M3 primary button, quiet link and answer option. Contrast computed with the WCAG 2.x formula. Status colors (correct/incorrect) stay TBD: M4 shows no correctness (M4-01 open question 2).
+**Approved** (owner, 2026-10-10, task M4-09; proposed in M4-05), with the highlight's bottom border added at approval. Visual values for the M4 Reading specs ([READING_EXPERIENCE.md, M4 specifications](../product/READING_EXPERIENCE.md#m4-specifications-drafts)). Reused unchanged: the brand palette, the type scale (including the approved Heading 3 and passage sizes), the focus style, motion, the breakpoints, the M3 primary button, quiet link and answer option. Contrast computed with the WCAG 2.x formula. Status colors (correct/incorrect) stay TBD: M4 shows no correctness (M4-01 open question 2).
 
 ### New color: passage highlight
 
@@ -274,7 +274,7 @@ This would be one new layout token (a container width) used by onboarding and ho
 | `highlight` | `#FFEFA3` (soft yellow) | Background of highlighted sentences (`<mark>`) | `ink` text on it 16.04:1. Against white 1.16:1. |
 
 - Yellow is what readers expect from a highlighter (computer-delivered IELTS uses it too), and it is clearly not the red of actions or the blush of selection (blush against it 1.30:1, plus selection has its own underline below).
-- The tint is light by design, so the text stays easy to read. A highlight is a reading aid the user made, not information needed to understand the page; screen readers get it from `<mark>`. If the owner wants highlights to stand out more, the option is a 2 px underline in `ink` as well.
+- **Plus a subtle bottom border** (owner decision at approval, 2026-10-10): a 2 px bottom border in `border.control` (3.22:1 against white), so a highlight stays visible against white without relying on the light fill alone. The fill keeps the text easy to read (`ink` 16.04:1); screen readers get the highlight from `<mark>`.
 
 ### Test bar
 - 48 px high, `surface.base`, a 1 px `border.subtle` line under it (decorative).

@@ -1,6 +1,6 @@
 # ADR-0007: Building Blocks for the Question Sheet and Passage Selection
 
-- **Status:** Proposed (2026-10-10, task M4-08). Waiting for the owner's acceptance at the M4-09 gate.
+- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-08).
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

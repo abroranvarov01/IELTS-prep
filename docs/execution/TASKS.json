@@ -36,13 +36,13 @@
       "id": "M4",
       "name": "Reading Engine",
       "status": "active",
-      "goal": "The Reading engine as approved in READING_EXPERIENCE.md: a Reading domain model and content contract, session state with answers kept on the device, the passage-first mobile screen with the question bottom sheet and a full-test navigator, renderers for the approved IELTS question types, highlighting, Pin Evidence, Practice and Exam Modes with timing, and the desktop exam layout, all accessible and tested, with original demo content only. Review, explanations and Error Intelligence are M5. Answer checking and band conversion (in the earlier draft goal) are decided at the M4-09 gate."
+      "goal": "The Reading engine as approved in READING_EXPERIENCE.md: a Reading domain model and content contract, session state with answers kept on the device, the passage-first mobile screen with the question bottom sheet and a full-test navigator, renderers for the approved IELTS question types, highlighting, Pin Evidence, Practice and Exam Modes with timing, and the desktop exam layout, all accessible and tested, with original demo content only. Review, explanations and Error Intelligence are M5. Answer checking and band conversion are M5 (owner, M4-09). Demo content is Academic only; Reading is reached by direct route only, home unchanged."
     },
     {
       "id": "M5",
       "name": "Reading Review + Error Intelligence",
       "status": "planned",
-      "goal": "Evidence-first review of every Reading mistake with 'Explain simpler' in uz/ru/en, and detection of recurring error patterns that lead to targeted practice."
+      "goal": "Answer checking against the answer key (moved from M4 by the owner, 2026-10-10) and results, evidence-first review of every Reading mistake with 'Explain simpler' in uz/ru/en, and detection of recurring error patterns that lead to targeted practice."
     },
     {
       "id": "M6",
@@ -1794,7 +1794,7 @@
       "title": "Owner approves the Reading specs, design values and ADRs",
       "milestone": "M4",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [
         "M4-01",
         "M4-02",
@@ -1825,7 +1825,8 @@
         "docs/product/READING_EXPERIENCE.md",
         "docs/design/DESIGN_SYSTEM.md",
         "docs/architecture/decisions/README.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-10",
@@ -1870,7 +1871,7 @@
       "dependsOn": ["M4-10"],
       "goal": "An original demo test exercises every approved question type and the full-test navigator, without any published IELTS material.",
       "scope": [
-        "Write original demo content in the ADR-0005 format and location: as many passages and questions as the approved specs need to exercise the engine (the navigator needs a full-length structure; passages may be short), covering every approved question type, with English test content",
+        "Write original demo content in the ADR-0005 format and location: as many passages and questions as the approved specs need to exercise the engine (the navigator needs a full-length structure; passages may be short), covering every approved question type, with English test content. Academic only (owner, M4-09)",
         "Content integrity (INVARIANTS I-5): written for this project, on neutral topics, not adapted from Cambridge or any published IELTS material; marked as demo content",
         "The content passes the M4-10 validator in a test"
       ],
@@ -1933,7 +1934,7 @@
       "dependsOn": ["M4-11", "M4-12"],
       "goal": "The demo test opens at its address with the passage as the main object and the current question in the approved bottom sheet.",
       "scope": [
-        "Implement the approved mobile screen and bottom sheet (states, snap points, drag plus tap and keyboard alternatives, phone keyboard handling) with the ADR-0007 building blocks; the approved entry route; previous/next question; passage typography; the session state from M4-12",
+        "Implement the approved mobile screen and bottom sheet (states, snap points, drag plus tap and keyboard alternatives, phone keyboard handling) with the ADR-0007 building blocks; the approved entry route (direct route only; home unchanged, owner M4-09); previous/next question; passage typography; the session state from M4-12",
         "A placeholder question body is allowed only until M4-15 to M4-17 add the renderers; this task renders one simple approved type to prove the sheet",
         "e2e on both projects: open, move between sheet states by tap and keyboard, change question, reload keeps the position; axe; 320 and 360 px; reduced motion"
       ],
@@ -2112,7 +2113,7 @@
       "dependsOn": ["M4-17"],
       "goal": "The user highlights and unhighlights passage text as approved, by touch, mouse and keyboard, and highlights persist per ADR-0006.",
       "scope": [
-        "Implement the approved highlighting with the ADR-0007 selection approach; highlights stored in the session and restored on reload; the passage stays readable to screen readers",
+        "Implement the approved highlighting (the yellow tint plus the 2 px `border.control` bottom border) with the ADR-0007 selection approach; highlights stored in the session and restored on reload; the passage stays readable to screen readers",
         "Tests: domain tests for highlight ranges on anchors; e2e by touch emulation and keyboard; axe; reduced motion"
       ],
       "outOfScope": ["Pin Evidence (M4-19)"],
@@ -2309,6 +2310,93 @@
         "docs/execution/PROGRESS.md"
       ],
       "notes": "Follow-up created at the owner's request on 2026-10-10. Kept out of M2; the owner may move it to the active milestone at any time."
+    },
+    {
+      "id": "M11-01",
+      "title": "Required before beta: Reading table completion",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-22"],
+      "goal": "Table completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "scope": [
+        "Design pass for table completion on phone and desktop (it needs a two-dimensional table layout that works at 320 px) and owner approval of it",
+        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), tests at every level, demo or real content using it",
+        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate; may move to an earlier milestone when content needs it"
+      ],
+      "outOfScope": ["changes to the other question types"],
+      "acceptanceCriteria": [
+        "Table completion works on phone and desktop in both modes, approved and tested",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md"
+      ]
+    },
+    {
+      "id": "M11-02",
+      "title": "Required before beta: Reading flow-chart completion",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-22"],
+      "goal": "Flow-chart completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "scope": [
+        "Design pass for flow-chart completion on phone and desktop (it needs a flow-chart layout that works at 320 px) and owner approval of it",
+        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), tests at every level, demo or real content using it",
+        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate; may move to an earlier milestone when content needs it"
+      ],
+      "outOfScope": ["changes to the other question types"],
+      "acceptanceCriteria": [
+        "Flow-chart completion works on phone and desktop in both modes, approved and tested",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md"
+      ]
+    },
+    {
+      "id": "M11-03",
+      "title": "Required before beta: Reading diagram label completion",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-22"],
+      "goal": "Diagram label completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "scope": [
+        "Design pass for diagram label completion on phone and desktop (it needs images with text alternatives and an image pipeline in the content contract) and owner approval of it",
+        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), tests at every level, demo or real content using it",
+        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate; may move to an earlier milestone when content needs it"
+      ],
+      "outOfScope": ["changes to the other question types"],
+      "acceptanceCriteria": [
+        "Diagram label completion works on phone and desktop in both modes, approved and tested",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md"
+      ]
     }
   ]
 }
