@@ -1258,7 +1258,7 @@
       "title": "Guest profile: exam type and target band kept on the device",
       "milestone": "M3",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M3-05"],
       "goal": "The answers onboarding collects have one domain definition and are saved and read back on the device as ADR-0003 says, before any screen uses them.",
       "scope": [
@@ -1295,7 +1295,8 @@
       "docsToUpdate": [
         "docs/architecture/BOUNDARIES.md (the web feature and domain boundaries, with their lint enforcement)",
         "docs/engineering/QUALITY_GATES.md (the new lint boundary)"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3-07",

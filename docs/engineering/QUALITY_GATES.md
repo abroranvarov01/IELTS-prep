@@ -12,7 +12,7 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 |---|---|---|
 | **All fast gates** | `pnpm check` = `format:check`, `lint` (including the token check), `typecheck`, `test` | Exists (CI) |
 | Typecheck | `pnpm typecheck` (runs `typecheck` in every workspace; `apps/web`: `next typegen && tsc --noEmit`; `apps/api`: `tsc --noEmit`) | Exists |
-| Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended for all files; `apps/web/**` adds `eslint-config-next/core-web-vitals` (Next.js, React Hooks) and the full jsx-a11y recommended set; `import/no-restricted-paths` stops `apps/web` and `apps/api` importing from each other; then `scripts/check-tokens.mjs` rejects raw hex/rgb/hsl colors and arbitrary color utilities outside `apps/web/src/styles/tokens.css`) | Exists |
+| Lint | `pnpm lint` (ESLint flat config, `eslint.config.mjs`: `@eslint/js` + typescript-eslint recommended for all files; `apps/web/**` adds `eslint-config-next/core-web-vitals` (Next.js, React Hooks) and the full jsx-a11y recommended set; `import/no-restricted-paths` stops `apps/web` and `apps/api` importing from each other and enforces the `apps/web` folder rules of ADR-0004 (`domain/` imports only `domain/`, `data/` never imports UI or routes), with `no-restricted-imports` banning React, Next.js, next-intl and `node:*` in `domain/`; then `scripts/check-tokens.mjs` rejects raw hex/rgb/hsl colors and arbitrary color utilities outside `apps/web/src/styles/tokens.css`) | Exists |
 | Format | `pnpm format:check` (check), `pnpm format` (write). Prettier defaults; Markdown and the lockfile are excluded (`.prettierignore`) | Exists |
 | Unit/component tests | `pnpm test` (Vitest in every workspace: `apps/web` with jsdom + Testing Library, `apps/api`) | Exists |
 | End-to-end tests | `pnpm test:e2e` (runs `test:e2e` in every workspace) | Exists |
@@ -36,7 +36,7 @@ Rows marked **Implemented** are configured (commands above). The others are reco
 | Formatting | Prettier (or equivalent), checked in CI. Never argue formatting in review. | **Implemented** |
 | Code smells and imports | ESLint with recommended TypeScript and React Hooks rules | **Implemented** |
 | Accessibility (static) | `eslint-plugin-jsx-a11y` | **Implemented** |
-| Architecture boundaries | ESLint import restrictions or dependency-cruiser, once [BOUNDARIES.md](../architecture/BOUNDARIES.md) has concrete modules | **Implemented** for apps (`import/no-restricted-paths`). Module-level rules come with the feature folder structure. |
+| Architecture boundaries | ESLint import restrictions or dependency-cruiser, once [BOUNDARIES.md](../architecture/BOUNDARIES.md) has concrete modules | **Implemented** for apps and for the `apps/web` folders that exist (`import/no-restricted-paths`, `no-restricted-imports`; ADR-0004). `apps/api` module rules come with its feature structure. |
 | Hard-coded UI strings | A no-literal-string lint rule for JSX, plus a missing-translation-key check for uz/ru/en | Partly: catalog key parity and non-empty messages are tested (`apps/web/src/i18n/messages.test.ts`). No JSX literal-string rule yet. |
 | Raw design values | A lint rule or Tailwind config that rejects arbitrary colors outside the tokens | **Implemented** (`scripts/check-tokens.mjs`, Tailwind defaults reset in `tokens.css`) |
 | Behavior | Unit, component, and e2e suites per [TESTING_STRATEGY.md](TESTING_STRATEGY.md) | **Implemented** (tooling; API e2e in CI, browser e2e not yet) |
