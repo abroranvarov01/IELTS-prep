@@ -5,12 +5,11 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 ## Current state
 
 - **Milestones:** M0 Foundation is done (2026-10-09). **M1 App Shell & Design Foundation is active.** M2–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
-- **Next:** `M1-04` (app shell layout). M1-03 is done: the shell specs, copy, and M1 design values are approved. Before the next worker run, the brand kit zip at the repository root needs a home (see open questions), because the worker requires a clean working tree. CI activates when the owner pushes.
+- **Next:** `M1-04` (app shell layout). M1-03 is done: the shell specs, copy, and M1 design values are approved. The brand kit lives outside the repository at `/var/www/IELTS_Prep_Brand_Kit.zip`; M1-04 copies the logo SVG it needs. CI activates when the owner pushes.
 
 ## Open questions for the owner
 
 - **PWA icons are placeholders.** `apps/web/public/icons/placeholder-{192,512,maskable-512}.png` are plain `brand.primary` squares. Final icons are an owner asset; replace the files and the paths in `apps/web/src/app/manifest.ts`. The brand kit (2026-10-10) now contains PWA icons (`pwa/icon-192.png`, `icon-512.png`, `maskable-512.png`, `apple-touch-icon-180.png`, `favicon.ico`). Replacing the placeholders is not part of any M1 task; it needs a task or an owner instruction.
-- **Where does the brand kit live?** `IELTS_Prep_Brand_Kit.zip` (owner, 2026-10-10) is untracked at the repository root, so the worker's clean-tree precondition fails. Options: (a) move it out of the repository, and M1-04 copies the one SVG it needs into `apps/web/public/`; (b) commit the kit, for example unpacked under `docs/design/brand/`. Recommendation: (a), so only assets the app uses are tracked.
 ## Log
 
 Entry format:
@@ -173,3 +172,8 @@ Entry format:
 - Verification: `grep -n 'Approved' docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md` lists the approvals. `pnpm format:check` passes; TASKS.json parses. No "DRAFT: awaiting owner approval" or "PROPOSED" marker remains in the shell specs or the M1 design values.
 - Versions / choices: the brand kit was inspected in a scratch directory outside the repository: SVG, PNG, WebP, ICO, PDF, and EPS files, a README, and brand-tokens.json; the SVGs contain no scripts or external references. The header uses `svg/logo-horizontal-no-tagline.svg` (text as paths, about 470 × 120), because the other lockups carry the English-only tagline "Your Study Partner". The kit has no separate compact lockup, and this one fits a 320 px header beside the switcher.
 - Notes: The logo has two red gradients and two colors that are not tokens (`#F31D3D`, `#D81938`). They are part of the approved asset. Used as an image file, the token check does not scan it (it scans CSS/JS/TS only); inlined into TSX it would fail. The kit's "muted" gray (`#676B73`) differs from `text.secondary` / `text.tertiary`; it appears only in the tagline lockups. The kit's README calls "IELTS Prep" a working name and asks for a trademark check before a public launch; the product name stays TBD.
+
+### 2026-10-10: Brand kit location (not a task)
+- Result: done
+- Changes: Owner chose option (a): the brand kit is not tracked. `IELTS_Prep_Brand_Kit.zip` moved from the repository root to `/var/www/IELTS_Prep_Brand_Kit.zip`, next to the repository. M1-04's scope names that path; only the logo SVG it uses gets copied into `apps/web/public/`. The open question about the kit's location is removed.
+- Verification: `git status --porcelain` is empty after the commit. TASKS.json parses.
