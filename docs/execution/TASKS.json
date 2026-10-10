@@ -1303,7 +1303,7 @@
       "title": "Onboarding: three steps to the diagnostic invitation",
       "milestone": "M3",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M3-06"],
       "goal": "A new user answers the exam type and target band and reaches the diagnostic invitation exactly as the approved spec describes, in uz, ru and en, on phone and desktop.",
       "scope": [
@@ -1339,7 +1339,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md"
       ],
-      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md (token status note)"]
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md (token status note)"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3-08",

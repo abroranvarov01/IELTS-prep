@@ -26,5 +26,30 @@
     "title": "Что-то пошло не так",
     "body": "Попробуйте ещё раз. Если ошибка повторится, зайдите позже.",
     "retry": "Попробовать снова"
+  },
+  "onboarding": {
+    "step": "Шаг {current} из {total}",
+    "changeLater": "Это можно изменить позже.",
+    "selected": "Выбрано",
+    "dontKnow": "Пока не знаю",
+    "notNow": "Не сейчас",
+    "examType": {
+      "title": "Какой IELTS вы сдаёте?"
+    },
+    "targetBand": {
+      "title": "Какой балл вам нужен?"
+    }
+  },
+  "examType": {
+    "academic": "Academic",
+    "general": "General Training"
+  },
+  "targetBand": {
+    "eightPlusLabel": "8 или выше"
+  },
+  "levelCheck": {
+    "title": "Узнайте свой уровень",
+    "body": "Короткая проверка уровня покажет, где вы сейчас и что тренировать в первую очередь.",
+    "start": "Начать проверку уровня"
   }
 }

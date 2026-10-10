@@ -26,5 +26,30 @@
     "title": "Something went wrong",
     "body": "Please try again. If it keeps happening, come back later.",
     "retry": "Try again"
+  },
+  "onboarding": {
+    "step": "Step {current} of {total}",
+    "changeLater": "You can change this later.",
+    "selected": "Selected",
+    "dontKnow": "I don't know yet",
+    "notNow": "Not now",
+    "examType": {
+      "title": "Which IELTS are you taking?"
+    },
+    "targetBand": {
+      "title": "Which band score do you need?"
+    }
+  },
+  "examType": {
+    "academic": "Academic",
+    "general": "General Training"
+  },
+  "targetBand": {
+    "eightPlusLabel": "8 or higher"
+  },
+  "levelCheck": {
+    "title": "Find your level",
+    "body": "A short level check shows where you are now and what to practice first.",
+    "start": "Start the level check"
   }
 }

@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import fs from "node:fs";
 import path from "node:path";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import importPlugin from "eslint-plugin-import";
@@ -9,6 +10,14 @@ import tseslint from "typescript-eslint";
 
 const SHARE_VIA_PACKAGES =
   "Apps never import from each other. Move shared code to packages/*.";
+// Each folder in apps/web/src/features is one feature (ADR-0004).
+const WEB_FEATURES_DIR = path.join(
+  import.meta.dirname,
+  "apps/web/src/features",
+);
+const WEB_FEATURES = fs.existsSync(WEB_FEATURES_DIR)
+  ? fs.readdirSync(WEB_FEATURES_DIR)
+  : [];
 const DOMAIN_IS_PURE =
   "Domain code is plain TypeScript without framework, platform or other app code (ADR-0004).";
 
@@ -80,6 +89,28 @@ export default defineConfig(
               ],
               message: "Data access never imports UI or routes (ADR-0004).",
             },
+            {
+              target: "apps/web/src/components",
+              from: [
+                "apps/web/src/app",
+                "apps/web/src/features",
+                "apps/web/src/data",
+              ],
+              message:
+                "Shared components never import features, data or routes (ADR-0004).",
+            },
+            {
+              target: "apps/web/src/features",
+              from: "apps/web/src/app",
+              message: "Features never import routes (ADR-0004).",
+            },
+            ...WEB_FEATURES.map((feature) => ({
+              target: `apps/web/src/features/${feature}`,
+              from: "apps/web/src/features",
+              except: [`./${feature}`],
+              message:
+                "A feature never imports another feature. Move shared code to components/, domain/ or data/ (ADR-0004).",
+            })),
           ],
         },
       ],
