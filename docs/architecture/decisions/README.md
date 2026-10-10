@@ -41,5 +41,6 @@ Split a choice into its own ADR only when it independently meets the criteria ab
 | [0003](0003-guest-state-on-the-device.md) | Guest State on the Device | Accepted |
 | [0004](0004-web-feature-structure.md) | Feature Structure and Domain Code in apps/web | Accepted |
 | [0005](0005-reading-content-contract.md) | Reading Content Contract | Proposed |
+| [0006](0006-reading-session-state.md) | Reading Session State and Persistence | Proposed |
 
 Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).

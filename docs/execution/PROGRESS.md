@@ -396,3 +396,9 @@ Entry format:
 - Verification: `pnpm format:check` passes; no file under `apps/` or `packages/` changed.
 - Notes: No schema-validation library is proposed: the validator is hand-written, and could move onto a library chosen with ADR-0002 §6 later.
 
+### 2026-10-10: M4-07 Draft ADR-0006: Reading session state and persistence
+- Result: done
+- Changes: `docs/architecture/decisions/0006-reading-session-state.md` (Proposed): the session as a pure domain model (test id and version, mode, status and finish reason, start/finish times, current question, answers, flags, highlights, pins, view state) with one transition function `apply(session, event, now)` that enforces the rules (no changes after finishing, no pins in Exam Mode, at most three pins, limits of "choose several"); the timer derived from the stored start (time-out applied on load), trusting the device clock; storage in `localStorage` (`reading:<testId>` and the latest finished session at `reading:<testId>:finished`), a `{ schema, session }` envelope written after every transition and validated on read (bad or stale-version data reads as no session; unavailable storage falls back to memory with the M4-02 notice); React `useReducer` plus one context and a storage effect, no state library, with the storage adapter in `data/`; home's "Continue" left for later (a small cookie pointer would fit ADR-0003). Five alternatives compared (IndexedDB, a cookie per session, a server guest record, a state library). ADR index and ARCHITECTURE.md updated.
+- Verification: `pnpm format:check` passes; no file under `apps/` or `packages/` changed.
+- Notes: Accepted costs stated in the ADR: the sheet renders a moment after the static passage on first load; Safari may clear an abandoned session after 7 days without a visit; device-clock changes affect the Exam timer.
+

@@ -1720,7 +1720,7 @@
       "title": "Draft ADR-0006: Reading session state and persistence",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-02", "M4-03", "M4-04"],
       "goal": "Decide how a Reading session's state is modeled and where it is kept on the device, so it survives a reload and can be resumed, without accounts.",
       "scope": [
@@ -1754,7 +1754,8 @@
       "docsToUpdate": [
         "docs/architecture/decisions/README.md",
         "docs/architecture/ARCHITECTURE.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-08",
