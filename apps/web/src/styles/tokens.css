@@ -23,6 +23,9 @@
   --color-border-subtle: #e2e4e8;
   --color-border-control: #8a9099;
 
+  /* Reading: highlighted sentences (approved M4) */
+  --color-highlight: #ffefa3;
+
   /* Skill recognition: strong (icons, markers) and tint (backgrounds) */
   --color-skill-reading: var(--color-brand-primary-deep);
   --color-skill-reading-tint: #fde8ea;

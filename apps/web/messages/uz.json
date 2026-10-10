@@ -114,6 +114,16 @@
     },
     "evidence": {
       "paragraph": "{letter} xatboshi"
+    },
+    "passage": {
+      "label": "Matn. Gaplar orasida oʻtish uchun strelkalar, amallar uchun Enter."
+    },
+    "mark": {
+      "actions": "Gap bilan amallar",
+      "highlight": "Ajratib koʻrsatish",
+      "removeHighlight": "Ajratishni olib tashlash",
+      "cancel": "Bekor qilish",
+      "highlighted": "Ajratib koʻrsatildi"
     }
   }
 }

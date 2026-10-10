@@ -114,6 +114,16 @@
     },
     "evidence": {
       "paragraph": "Paragraph {letter}"
+    },
+    "passage": {
+      "label": "Passage. Use the arrow keys to move between sentences, Enter for actions."
+    },
+    "mark": {
+      "actions": "Sentence actions",
+      "highlight": "Highlight",
+      "removeHighlight": "Remove highlight",
+      "cancel": "Cancel",
+      "highlighted": "Highlighted"
     }
   }
 }

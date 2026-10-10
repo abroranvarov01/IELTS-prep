@@ -667,3 +667,157 @@ test.describe("typed answers", () => {
     expect(results.violations).toEqual([]);
   });
 });
+
+test.describe("highlighting", () => {
+  test.use({ hasTouch: true });
+  const sentence = (page: Page, id: string) =>
+    page.locator(`main [data-sentence="${id}"]`);
+  const actions = (page: Page, locale: Locale = "en") =>
+    page.getByRole("group", { name: catalogs[locale].reading.mark.actions });
+
+  test("tapping a sentence selects it; Highlight marks it, survives a reload, and can be removed", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await sentence(page, "p1-1-s2").tap();
+    await expect(actions(page)).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: en.reading.mark.highlight }),
+    ).toBeFocused();
+    // Selection is not shown by color alone.
+    expect(
+      await sentence(page, "p1-1-s2").evaluate(
+        (e) => getComputedStyle(e).textDecorationLine,
+      ),
+    ).toBe("underline");
+
+    await page.getByRole("button", { name: en.reading.mark.highlight }).tap();
+    await expect(actions(page)).toHaveCount(0);
+    await expect(sentence(page, "p1-1-s2").locator("mark")).toHaveText(
+      /^Workers rode to factories/,
+    );
+    await expect(sentence(page, "p1-1-s2")).toBeFocused();
+    await expect(
+      page.getByText(en.reading.mark.highlighted, { exact: true }),
+    ).toBeAttached();
+
+    await page.reload();
+    await expect(sentence(page, "p1-1-s2").locator("mark")).toBeVisible();
+    // Highlights stay when the question changes.
+    await page.getByRole("button", { name: en.reading.question.next }).click();
+    await expect(sentence(page, "p1-1-s2").locator("mark")).toBeVisible();
+
+    await sentence(page, "p1-1-s2").tap();
+    await page
+      .getByRole("button", { name: en.reading.mark.removeHighlight })
+      .tap();
+    await expect(sentence(page, "p1-1-s2").locator("mark")).toHaveCount(0);
+  });
+
+  test("tapping another sentence moves the selection; Cancel, the same sentence or scrolling away closes it", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await sentence(page, "p1-1-s1").tap();
+    await sentence(page, "p1-1-s2").tap();
+    await expect(actions(page)).toHaveCount(1);
+    expect(
+      await sentence(page, "p1-1-s1").evaluate(
+        (e) => getComputedStyle(e).textDecorationLine,
+      ),
+    ).toBe("none");
+
+    await sentence(page, "p1-1-s2").tap();
+    await expect(actions(page)).toHaveCount(0);
+
+    await sentence(page, "p1-1-s2").tap();
+    await page.getByRole("button", { name: en.reading.mark.cancel }).tap();
+    await expect(actions(page)).toHaveCount(0);
+    await expect(page.locator("main mark")).toHaveCount(0);
+
+    await sentence(page, "p1-1-s2").tap();
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect(actions(page)).toHaveCount(0);
+  });
+
+  test("works with the keyboard only, with the passage as one Tab stop", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    // Skip link, Exit, then the passage.
+    for (let i = 0; i < 3; i++) await page.keyboard.press("Tab");
+    await expect(sentence(page, "p1-1-s1")).toBeFocused();
+    await expect(sentence(page, "p1-1-s1")).toHaveAccessibleDescription(
+      en.reading.passage.label,
+    );
+
+    await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("ArrowUp");
+    await expect(sentence(page, "p1-1-s2")).toBeFocused();
+
+    await page.keyboard.press("Enter");
+    await expect(
+      page.getByRole("button", { name: en.reading.mark.highlight }),
+    ).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(sentence(page, "p1-1-s2").locator("mark")).toBeVisible();
+    await expect(sentence(page, "p1-1-s2")).toBeFocused();
+
+    await page.keyboard.press("Enter");
+    await expect(actions(page)).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(actions(page)).toHaveCount(0);
+    await expect(sentence(page, "p1-1-s2")).toBeFocused();
+    await expect(sentence(page, "p1-1-s2").locator("mark")).toBeVisible();
+
+    // Tab leaves the passage, and Shift+Tab comes back to the same sentence.
+    await page.keyboard.press("Tab");
+    await expect(page.locator("main [data-sentence]:focus")).toHaveCount(0);
+    await page.keyboard.press("Shift+Tab");
+    await expect(sentence(page, "p1-1-s2")).toBeFocused();
+  });
+
+  test("a focused sentence is not hidden under the sheet", async ({ page }) => {
+    await startPractice(page);
+    await sentence(page, "p1-1-s1").focus();
+    const sheetTop = (await sheet(page).boundingBox())!.y;
+    for (let i = 0; i < 12; i++) {
+      await page.keyboard.press("ArrowDown");
+      const box = (await page.locator(":focus").boundingBox())!;
+      expect(box.y + box.height).toBeLessThanOrEqual(sheetTop);
+    }
+  });
+
+  test("Exam Mode allows highlighting too", async ({ page }) => {
+    await page.goto(`/en/reading/${TEST}`);
+    await page
+      .locator("label")
+      .filter({
+        has: page.getByRole("radio", {
+          name: new RegExp(en.reading.mode.exam),
+        }),
+      })
+      .click();
+    await page.getByRole("button", { name: en.reading.start }).click();
+    await sentence(page, "p1-1-s1").tap();
+    await page.getByRole("button", { name: en.reading.mark.highlight }).tap();
+    await expect(sentence(page, "p1-1-s1").locator("mark")).toBeVisible();
+  });
+
+  test("the action bar and highlights fit 320 px and have no WCAG 2.2 AA violations", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await startPractice(page, "uz");
+    await sentence(page, "p1-1-s1").tap();
+    await page.getByRole("button", { name: uz.reading.mark.highlight }).tap();
+    await sentence(page, "p1-1-s1").tap();
+    await expect(actions(page, "uz")).toBeVisible();
+    await noOverflow(page);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+});

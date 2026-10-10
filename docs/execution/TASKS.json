@@ -2117,7 +2117,7 @@
       "title": "Highlighting",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-17"],
       "goal": "The user highlights and unhighlights passage text as approved, by touch, mouse and keyboard, and highlights persist per ADR-0006.",
       "scope": [

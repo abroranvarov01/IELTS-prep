@@ -114,6 +114,16 @@
     },
     "evidence": {
       "paragraph": "Абзац {letter}"
+    },
+    "passage": {
+      "label": "Текст. Стрелки — переход между предложениями, Enter — действия."
+    },
+    "mark": {
+      "actions": "Действия с предложением",
+      "highlight": "Выделить",
+      "removeHighlight": "Снять выделение",
+      "cancel": "Отмена",
+      "highlighted": "Выделено"
     }
   }
 }
