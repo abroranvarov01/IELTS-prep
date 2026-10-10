@@ -390,3 +390,9 @@ Entry format:
 - Verification: `pnpm format:check` passes; no file under `apps/` or `packages/` changed. Contrast by script: `ink` on `highlight` 16.04, `highlight` vs white 1.16 (stated honestly, with a 2 px underline offered as an option), blush vs highlight 1.30, `text.tertiary` on white 6.24, `text.secondary` on warm 7.83, `ink` on warm 17.68, `border.control` on white 3.22.
 - Notes: The checkbox indicator's 4 px corners are proposed as a local dimension (the Token policy's "may stay local"), since `radius.sm` would make a 20 px square look round.
 
+### 2026-10-10: M4-06 Draft ADR-0005: the Reading content contract
+- Result: done
+- Changes: `docs/architecture/decisions/0005-reading-content-contract.md` (Proposed): the model (test → passages → paragraphs with optional letters → sentences with explicit stable ids → question groups → questions numbered 1–40), the 13 in-scope question types and their fields, group-level option lists with `allowRepeat`, gap texts as structured segments (never strings with markers), `wordLimit` as data, a content `version` for stored sessions, a required `origin` (original or licensed); the answer key and evidence ids in a separate `.key.json` that the web app does not load while nothing checks answers, but that the validator checks; JSON files in `apps/web/content/reading/`, typed and validated by one domain validator in `domain/reading/`, loaded and validated at build time in `data/`, every file validated by a unit test. Five alternatives compared. ADR index (Proposed) and ARCHITECTURE.md's content-model item updated.
+- Verification: `pnpm format:check` passes; no file under `apps/` or `packages/` changed.
+- Notes: No schema-validation library is proposed: the validator is hand-written, and could move onto a library chosen with ADR-0002 §6 later.
+

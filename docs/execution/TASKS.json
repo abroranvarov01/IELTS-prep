@@ -1680,7 +1680,7 @@
       "title": "Draft ADR-0005: the Reading content contract",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-01"],
       "goal": "Decide the data shape of a Reading test before any is written: passages, question groups, questions per type, options, answer keys, and stable anchors for highlights and pins.",
       "scope": [
@@ -1712,7 +1712,8 @@
       "docsToUpdate": [
         "docs/architecture/decisions/README.md",
         "docs/architecture/ARCHITECTURE.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-07",

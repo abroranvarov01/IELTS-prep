@@ -40,5 +40,6 @@ Split a choice into its own ADR only when it independently meets the criteria ab
 | [0002](0002-api-contracts-and-validation.md) | API Contracts and Input Validation | Accepted |
 | [0003](0003-guest-state-on-the-device.md) | Guest State on the Device | Accepted |
 | [0004](0004-web-feature-structure.md) | Feature Structure and Domain Code in apps/web | Accepted |
+| [0005](0005-reading-content-contract.md) | Reading Content Contract | Proposed |
 
 Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).

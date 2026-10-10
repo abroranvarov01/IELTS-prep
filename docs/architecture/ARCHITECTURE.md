@@ -34,7 +34,7 @@ Do not invent answers to these in code. Each one is a candidate ADR.
 - **AI provider and evaluation pipeline** for Writing/Speaking. This includes how estimates are calibrated and how user content is handled.
 - **Audio.** Delivery of Listening audio on weak connections. Capture, upload, and processing of Speaking recordings.
 - **Offline scope.** What works offline (for example downloaded Reading sets) and how results sync.
-- **Content model and authoring.** How passages, questions, answer keys, and explanations are authored, versioned, and reviewed.
+- **Content model and authoring.** How passages, questions, answer keys, and explanations are authored, versioned, and reviewed. The Reading content contract (the shape of tests, keys and anchors, JSON files validated in `apps/web`) is proposed in [ADR-0005](decisions/0005-reading-content-contract.md), waiting for acceptance (M4-09); authoring, review and delivery by the API stay with M9.
 - **Analytics and privacy.** What is measured, with what tool, and the consent requirements (including for minors).
 - **Feature folder structure inside `apps/api`.** Decide with its first feature module. (`apps/web`: [ADR-0004](decisions/0004-web-feature-structure.md), accepted.)
 
