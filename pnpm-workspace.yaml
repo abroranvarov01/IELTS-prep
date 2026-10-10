@@ -4,9 +4,13 @@ packages:
 
 # pnpm install-script approvals. These packages ship prebuilt binaries,
 # so their scripts stay off (sharp, unrs-resolver: create-next-app default).
+# @prisma/engines downloads the schema engine Prisma Migrate needs; prisma's
+# own script only checks the Node version, which .nvmrc already pins.
 allowBuilds:
   "@parcel/watcher": false
+  "@prisma/engines": true
   "@swc/core": false
   esbuild: false
+  prisma: false
   sharp: false
   unrs-resolver: false

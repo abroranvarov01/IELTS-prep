@@ -87,7 +87,7 @@ Run from the repository root with Node 24 (`.nvmrc`; e.g. `nvm use`) and pnpm vi
 - `pnpm install --frozen-lockfile`: install
 - `pnpm check`: format check, lint (including the token check), typecheck, unit tests. Run it before reporting done.
 - `pnpm build`: build both apps
-- `pnpm test:e2e`: API e2e and Playwright (needs Chromium: `pnpm --filter web exec playwright install chromium`)
+- `pnpm test:e2e`: API e2e and Playwright (needs Chromium: `pnpm --filter web exec playwright install chromium`; the API e2e needs `DATABASE_URL`, see `apps/api/.env.example`)
 
 **Never claim a check passed if you did not run it.**
 

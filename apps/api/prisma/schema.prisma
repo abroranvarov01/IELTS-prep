@@ -1,0 +1,14 @@
+// Models are added by the feature task that first needs them (owner decision
+// 2026-10-10).
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  // apps/api compiles with "module": "nodenext", which needs .js in imports.
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}

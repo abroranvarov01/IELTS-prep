@@ -16,9 +16,10 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 | Format | `pnpm format:check` (check), `pnpm format` (write). Prettier defaults; Markdown and the lockfile are excluded (`.prettierignore`) | Exists |
 | Unit/component tests | `pnpm test` (Vitest in every workspace: `apps/web` with jsdom + Testing Library, `apps/api`) | Exists |
 | End-to-end tests | `pnpm test:e2e` (runs `test:e2e` in every workspace) | Exists |
-| ↳ API HTTP e2e | `pnpm --filter api test:e2e` (Vitest + supertest against the Nest app) | Exists |
+| ↳ API HTTP e2e | `pnpm --filter api test:e2e` (Vitest + supertest against the Nest app). Needs `DATABASE_URL` (exported, or in `apps/api/.env` from `.env.example`); no running database yet | Exists |
 | ↳ Browser e2e + accessibility | `pnpm --filter web test:e2e` (Playwright against the production build, started by `webServer`; projects `mobile` 360×800 and `desktop` 1280×800; `@axe-core/playwright` WCAG 2.2 AA checks). Needs Chromium: `pnpm --filter web exec playwright install chromium` | Exists |
 | Build | `pnpm build` (runs `build` in every workspace); one app: `pnpm --filter web build` or `pnpm --filter api build` | Exists (CI) |
+| Prisma Client | `pnpm --filter api db:generate` (also runs on install as `postinstall`). The client is generated into `apps/api/src/generated/` and not committed. Needs no database and no `DATABASE_URL` | Exists |
 
 **Agents must not claim that a check passed if they did not run it.** This table is the only canonical list of commands. Update it when a command changes.
 

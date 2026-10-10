@@ -11,7 +11,7 @@ Changing these requires owner approval and an ADR.
 | Decision | Source |
 |---|---|
 | **Frontend: Next.js. Backend: NestJS. TypeScript end-to-end.** | Owner, 2026-10-09 ([ADR-0001](decisions/0001-initial-application-foundation.md)) |
-| **Persistence: PostgreSQL + Prisma ORM** (api only; not scaffolded until a persistence requirement exists) | Owner, 2026-10-09 ([ADR-0001](decisions/0001-initial-application-foundation.md)) |
+| **Persistence: PostgreSQL + Prisma ORM** (api only; Prisma Client and `DatabaseModule` in `apps/api` since M2-03, no models yet) | Owner, 2026-10-09 ([ADR-0001](decisions/0001-initial-application-foundation.md)) |
 | The product is a **mobile-first web app delivered as a PWA** | Product brief |
 | Interface languages: Uzbek, Russian, English. Test content in English. | [LOCALIZATION.md](../product/LOCALIZATION.md) |
 | AI scores are always presented as estimates | [PRODUCT.md](../product/PRODUCT.md#honest-feedback-non-negotiable) |

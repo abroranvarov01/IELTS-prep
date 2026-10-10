@@ -789,7 +789,7 @@
       "title": "Prisma client, DATABASE_URL config and database module in apps/api",
       "milestone": "M2",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "apps/api has a Prisma client behind one NestJS database module, configured from a validated DATABASE_URL, without any product model and without needing a running database to build, typecheck or unit-test.",
       "scope": [
@@ -837,7 +837,8 @@
       "docsToUpdate": [
         "docs/engineering/QUALITY_GATES.md (db:generate, and that api e2e needs DATABASE_URL)",
         "docs/architecture/BOUNDARIES.md (Prisma is used only inside apps/api through the database module)"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M2-04",

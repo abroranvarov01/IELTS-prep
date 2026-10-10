@@ -7,6 +7,9 @@ dist/
 *.tsbuildinfo
 next-env.d.ts
 
+# Generated code (Prisma Client: pnpm --filter api db:generate)
+apps/api/src/generated/
+
 # Test output
 coverage/
 playwright-report/
