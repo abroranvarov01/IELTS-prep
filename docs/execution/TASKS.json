@@ -1051,7 +1051,7 @@
       "title": "Draft the onboarding, home and direct-link flow specs and their copy",
       "milestone": "M3",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "Give the owner a concrete, reviewable specification of onboarding and home before any of it is built.",
       "scope": [
@@ -1093,7 +1093,8 @@
         "docs/product/FEATURE_MAP.md",
         "docs/execution/ROADMAP.md"
       ],
-      "docsToUpdate": ["docs/product/USER_FLOWS.md"]
+      "docsToUpdate": ["docs/product/USER_FLOWS.md"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3-02",
