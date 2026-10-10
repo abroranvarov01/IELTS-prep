@@ -528,7 +528,7 @@
       "title": "Draft the app shell, language-switch and error-state flow specs",
       "milestone": "M1",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "Give the owner a concrete, reviewable specification of the shell before any shell UI is built.",
       "scope": [
@@ -558,7 +558,8 @@
         "docs/design/ACCESSIBILITY.md",
         "docs/design/UI_ANTI_PATTERNS.md"
       ],
-      "docsToUpdate": ["docs/product/USER_FLOWS.md"]
+      "docsToUpdate": ["docs/product/USER_FLOWS.md"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M1-02",
