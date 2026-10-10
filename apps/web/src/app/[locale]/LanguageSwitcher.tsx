@@ -9,8 +9,8 @@ import { routing } from "@/i18n/routing";
 // without JavaScript. JavaScript only adds Escape and outside-tap closing.
 // Both read details.open directly: the list can open before hydration, when
 // React does not see the toggle event, so mirroring it in state would miss it.
-// Escape is a React handler on the focusable parts, so a key pressed while
-// the page is still hydrating is replayed by React rather than lost.
+// Escape is handled on the focusable parts (summary and links), where it
+// arrives; jsx-a11y does not allow a key handler on <details> itself.
 export function LanguageSwitcher() {
   const t = useTranslations("languageSwitcher");
   const locale = useLocale();
