@@ -1228,7 +1228,7 @@
       "title": "Owner approves the M3 specs, copy, design values and ADRs",
       "milestone": "M3",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M3-01", "M3-02", "M3-03", "M3-04"],
       "goal": "Decide what onboarding and home look like, say and store before they are built.",
       "scope": [
@@ -1250,7 +1250,8 @@
         "docs/product/USER_FLOWS.md",
         "docs/design/DESIGN_SYSTEM.md",
         "docs/architecture/decisions/README.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3-06",

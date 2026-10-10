@@ -1,6 +1,6 @@
 # ADR-0003: Guest State on the Device
 
-- **Status:** Proposed (2026-10-10, task M3-03). Waiting for the owner's acceptance in M3-05.
+- **Status:** Accepted (2026-10-10, owner, task M3-05; drafted in M3-03).
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

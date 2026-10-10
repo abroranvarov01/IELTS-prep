@@ -2,7 +2,7 @@
 
 Canonical owner of **flow specifications**: the step-by-step paths users take. This is where the 3-click rule from [UX_PRINCIPLES.md](UX_PRINCIPLES.md) gets checked.
 
-**STATUS: DRAFT.** The core flows below record intent only. No screens are designed yet. Do not treat any of their steps as an approved screen design. The [shell flows](#shell-flows-m1) are approved. The [onboarding and home flows](#onboarding-and-home-flows-m3) are drafts awaiting owner approval (M3-05).
+**STATUS: DRAFT.** The core flows below record intent only. No screens are designed yet. Do not treat any of their steps as an approved screen design. The [shell flows](#shell-flows-m1) are approved. The [onboarding and home flows](#onboarding-and-home-flows-m3) are approved.
 
 ## Flow spec format
 
@@ -25,17 +25,17 @@ Open questions:  anything unresolved
 ### First open → first practice
 Goal: a new user practices something useful within their first minute.
 Intent: no tour, no feature overview. One clear starting action, either a short level check or a first practice. No mandatory registration before the user gets value. Personalization may ask for target band and exam date ([PRODUCT.md](PRODUCT.md#approved-product-principles)).
-Refined for M3 (draft): [First open → onboarding → level-check invitation](#first-open--onboarding--level-check-invitation).
+Refined for M3 (approved): [First open → onboarding → level-check invitation](#first-open--onboarding--level-check-invitation).
 
 ### Direct link → practice
 Goal: a user arriving from a direct link (for example a Reading practice link) starts that practice immediately.
 Intent: the link opens the practice itself, with minimal or no onboarding and no sign-up wall.
-Refined for M3 (draft): [Direct link → practice bypasses onboarding](#direct-link--practice-bypasses-onboarding).
+Refined for M3 (approved): [Direct link → practice bypasses onboarding](#direct-link--practice-bypasses-onboarding).
 
 ### Returning user → next action
 Goal: the user continues without choosing from a library.
 Intent: home shows one recommended next action. Browsing is secondary.
-Refined for M3 (draft): [Returning user → home](#returning-user--home).
+Refined for M3 (approved): [Returning user → home](#returning-user--home).
 
 ### Practice → understand mistakes
 Goal: after practice, the user understands what they got wrong and why.
@@ -181,7 +181,7 @@ The working product name (`app.name`, "IELTS Prep") is not new copy. It is the l
 
 ## Onboarding and home flows (M3)
 
-**DRAFT: awaiting owner approval** (task M3-01, to be decided in M3-05). Specs for onboarding (M3-07), home (M3-08), and the rule that direct links bypass onboarding. Visual values come from [DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md) (M3 proposals in M3-02). Where answers are stored is decided in ADR-0003 (M3-03); these specs only say that answers are kept **on this device**. The copy each spec uses is in [Interface copy (M3)](#interface-copy-m3).
+**Approved** (owner, 2026-10-10, task M3-05; drafted in M3-01). Specs for onboarding (M3-07), home (M3-08), the level-check destination (M3-09), and the rule that direct links bypass onboarding. Visual values are in [DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md#m3-components-onboarding-and-home). Where answers are stored is decided in [ADR-0003](../architecture/decisions/0003-guest-state-on-the-device.md) (a server-managed cookie); these specs only say that answers are kept **on this device**. The copy each spec uses is in [Interface copy (M3)](#interface-copy-m3).
 
 **Owner decisions these specs implement (2026-10-10):**
 - No mandatory registration before value. The first flow is extremely short: (1) Academic / General Training / Don't know, (2) target band 6.0 / 6.5 / 7.0 / 7.5 / 8+ / Don't know, (3) an invitation to start a diagnostic.
@@ -194,7 +194,7 @@ The working product name (`app.name`, "IELTS Prep") is not new copy. It is the l
 
 ### First open → onboarding → level-check invitation
 
-**DRAFT: awaiting owner approval.**
+**Approved** (owner, 2026-10-10, task M3-05).
 
 - **Goal:** a new user tells us which IELTS they are taking and the band they need, and is invited to find their level, in three taps and well under a minute.
 - **Entry point:** the home page (`/{locale}`) opened by someone with no saved answers on this device: directly, from the installed app icon, or after `/` redirects to a language. Onboarding is triggered **only** from home ([Direct link → practice](#direct-link--practice-bypasses-onboarding)).
@@ -225,7 +225,7 @@ The working product name (`app.name`, "IELTS Prep") is not new copy. It is the l
 
 ### Returning user → home
 
-**DRAFT: awaiting owner approval.**
+**Approved** (owner, 2026-10-10, task M3-05).
 
 - **Goal:** the user opens the app and knows within seconds what to do now to improve their IELTS, and does it in one tap.
 - **Entry point:** the home page (`/{locale}`) for a user whose onboarding is complete on this device. Also the header logo from any page.
@@ -255,7 +255,7 @@ The working product name (`app.name`, "IELTS Prep") is not new copy. It is the l
 
 ### Direct link → practice bypasses onboarding
 
-**DRAFT: awaiting owner approval.**
+**Approved** (owner, 2026-10-10, task M3-05).
 
 - **Goal:** someone who follows a link to a specific practice starts it immediately ([PRODUCT.md](PRODUCT.md#approved-product-principles): direct entry paths).
 - **Rule:** onboarding is triggered **only** by opening home without saved answers. No other page redirects to onboarding, asks the onboarding questions, or waits for them. Practice pages do not exist until M4; M4 keeps this rule, and its e2e tests check it.
@@ -265,7 +265,14 @@ The working product name (`app.name`, "IELTS Prep") is not new copy. It is the l
 
 ### Open questions (M3)
 
-For the owner to answer in M3-05. Each has options and a recommendation.
+**Decided (owner, 2026-10-10, task M3-05):**
+1. "Start the level check" leads to the level check's future address with an honest "being prepared" state (option a). The address stays when the real level check replaces it.
+2. The target band answers stay exactly as decided: 6.0 / 6.5 / 7.0 / 7.5 / 8+ / I don't know yet.
+3. Home shows the IELTS type on the goal line.
+4. "Not now" stays on onboarding step 3. It takes the user to home without starting the level check.
+5. "Academic" and "General Training" stay in English in all locales for now.
+
+The questions as they were put to the owner, with the options considered:
 
 1. **Where does "Start the level check" lead in M3?** The level check is not designed (questions, length, scoring), and Reading practice arrives in M4.
    - (a) An honest interim page at the level check's future address (e.g. `/{locale}/level-check`): "The level check is being prepared", one sentence, and "Go to home page". The address stays when the real level check replaces it.
@@ -278,7 +285,7 @@ For the owner to answer in M3-05. Each has options and a recommendation.
 
 ### Interface copy (M3)
 
-**PROPOSED: awaiting owner approval** (task M3-01). A fluent-speaker review of the uz and ru strings is required before beta ([LOCALIZATION.md](LOCALIZATION.md#rules-apply-once-ui-code-exists), rule 7). Uzbek is in Latin script with oʻ and gʻ written with U+02BB; none of these strings needs the tutuq belgisi (U+02BC). Band values use IELTS notation in every language ("6.5", never "6,5"). Catalog keys are suggestions for M3-07 to M3-09. Strings shared by onboarding step 3 and home live under `levelCheck`.
+**Approved for implementation** (owner, 2026-10-10, task M3-05; proposed in M3-01). A fluent-speaker review of the uz and ru strings is still required before beta ([LOCALIZATION.md](LOCALIZATION.md#rules-apply-once-ui-code-exists), rule 7). Uzbek is in Latin script with oʻ and gʻ written with U+02BB; none of these strings needs the tutuq belgisi (U+02BC). Band values use IELTS notation in every language ("6.5", never "6,5"). Catalog keys are suggestions for M3-07 to M3-09. Strings shared by onboarding step 3 and home live under `levelCheck`.
 
 | Key (suggested) | Used in | en | ru | uz |
 |---|---|---|---|---|
@@ -299,9 +306,9 @@ For the owner to answer in M3-05. Each has options and a recommendation.
 | `home.goal.targetBand` | Goal line. `{band}` is the band in IELTS notation | Target band: {band} | Целевой балл: {band} | Maqsadli ball: {band} |
 | `home.goal.targetBandNotSet` | Goal line when the band is "I don't know yet" | Target band: not set yet | Целевой балл: пока не выбран | Maqsadli ball: hali tanlanmagan |
 | `home.goal.change` | Link on the goal line | Change goal | Изменить цель | Maqsadni oʻzgartirish |
-| `levelCheck.comingSoon.title` | Only if open question 1 is answered (a): the interim page's H1 and page title | The level check is being prepared | Проверка уровня готовится | Daraja tekshiruvi tayyorlanmoqda |
-| `levelCheck.comingSoon.body` | Only with (a): the interim page's sentence | It will be available here soon. Your goal is saved on this device. | Скоро она будет доступна здесь. Ваша цель сохранена на этом устройстве. | Tez orada shu yerda paydo boʻladi. Maqsadingiz shu qurilmada saqlangan. |
+| `levelCheck.comingSoon.title` | The interim level-check page's H1 and page title (open question 1, decided: a) | The level check is being prepared | Проверка уровня готовится | Daraja tekshiruvi tayyorlanmoqda |
+| `levelCheck.comingSoon.body` | The interim level-check page's sentence | It will be available here soon. Your goal is saved on this device. | Скоро она будет доступна здесь. Ваша цель сохранена на этом устройстве. | Tez orada shu yerda paydo boʻladi. Maqsadingiz shu qurilmada saqlangan. |
 
 - The interim page's button reuses `common.goHome` ("Go to home page"). The band values (6.0, 6.5, 7.0, 7.5, 8+) are not translated.
-- **Note on module names:** "Academic" and "General Training" are the names candidates see when they register, so they are proposed in English in all three languages, like a proper name. Alternatives for the fluent review: ru "Академический" / "Общий (General Training)", uz "Akademik" / "Umumiy (General Training)".
+- **Note on module names:** "Academic" and "General Training" are the names candidates see when they register. They stay in English in all three languages for now (owner, 2026-10-10). Alternatives for the fluent review: ru "Академический" / "Общий (General Training)", uz "Akademik" / "Umumiy (General Training)".
 - The "Estimated band" wording for section 3 of home is not needed until an estimate exists (M4 or later). It will follow [PRODUCT.md](PRODUCT.md#honest-feedback-non-negotiable) in all three languages.

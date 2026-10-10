@@ -1,6 +1,6 @@
 # ADR-0004: Feature Structure and Domain Code in apps/web
 
-- **Status:** Proposed (2026-10-10, task M3-04). Waiting for the owner's acceptance in M3-05.
+- **Status:** Accepted (2026-10-10, owner, task M3-05; drafted in M3-04).
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

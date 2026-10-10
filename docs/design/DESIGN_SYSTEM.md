@@ -53,7 +53,7 @@ Red is the application's **unmistakable** primary action color. No other color (
 | `border.subtle` | `#E2E4E8` | Decorative dividers only | 1.3:1 (not for essential boundaries) |
 | `border.control` | `#8A9099` | Input and control boundaries | 3.2:1 white, 3.1:1 warm (meets 3:1 for non-text UI) |
 
-**PROPOSED for approval in M3** (task M3-02): `text.secondary` (the "You can change this later." line and the step indicator text), `border.control` (the answer option's boundary), and `border.subtle` (the progress track, decorative). `text.tertiary` stays a proposal until used.
+**Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02): `text.secondary` (the "You can change this later." line and the step indicator text), `border.control` (the answer option's boundary), and `border.subtle` (the progress track, decorative). `text.tertiary` remains a proposal until used.
 
 ### Status colors
 
@@ -111,7 +111,7 @@ All headings and body text use `ink` (18.6:1 on `surface.base`, 17.7:1 on `surfa
 
 A 4 px base unit. Proposed scale: 4, 8, 12, 16, 24, 32, 48, 64. Mobile page gutter: 16 px (verify at 320 px width).
 
-**PROPOSED for approval in M3** (task M3-02): the steps the M3 components use, 4, 8, 12, 16 (gutter), 24, 32, and 48. See [M3 components](#m3-components-onboarding-and-home). 64 stays a proposal until something uses it.
+**Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02): the steps the M3 components use, 4, 8, 12, 16 (gutter), 24, 32, and 48. See [M3 components](#m3-components-onboarding-and-home). 64 remains a proposal until something uses it.
 
 ## Radii
 
@@ -127,7 +127,7 @@ Soft, modern surfaces with moderately generous corners, applied **systematically
 
 Primary buttons use `radius.md`. They are not pills. Nested surfaces use a smaller radius than their container.
 
-**PROPOSED for approval in M3** (task M3-02): `radius.md` (14 px: the primary button and the answer option) and `radius.full` (the step indicator's progress track). The others stay proposals until used.
+**Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02): `radius.md` (14 px: the primary button and the answer option) and `radius.full` (the step indicator's progress track). The others remain proposals until used.
 
 ## Shadows / elevation
 
@@ -183,7 +183,7 @@ Every interactive component defines: default, hover (pointer devices), focus-vis
 
 ## M3 components (onboarding and home)
 
-**PROPOSED: awaiting owner approval** (task M3-02, to be decided in M3-05). Visual values for the components in the M3 flow drafts ([USER_FLOWS.md](../product/USER_FLOWS.md#onboarding-and-home-flows-m3)). Approved values are reused unchanged: the brand palette, the type scale (H1, H2, body, small meta text), the focus-visible style, the motion durations and easing, and the breakpoints. Contrast ratios were computed with the WCAG 2.x formula. Nothing here is in code yet; each value goes into `tokens.css` with its first use (M3-07, M3-08), and no other token is added.
+**Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02), including the progress bar under the step indicator. Visual values for the components in the M3 flows ([USER_FLOWS.md](../product/USER_FLOWS.md#onboarding-and-home-flows-m3)). Approved values are reused unchanged: the brand palette, the type scale (H1, H2, body, small meta text), the focus-visible style, the motion durations and easing, and the breakpoints. Contrast ratios were computed with the WCAG 2.x formula. Nothing here is in code yet; each value goes into `tokens.css` with its first use (M3-07, M3-08), and no other token is added.
 
 ### Primary button
 
