@@ -2082,7 +2082,7 @@
       "title": "Question renderers: completion types",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-16"],
       "goal": "The approved completion types (e.g. sentence, summary from the passage, note completion, short answer) render, respect word-limit presentation and work with the phone keyboard.",
       "scope": [
@@ -2109,7 +2109,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         "docs/architecture/decisions/0004-web-feature-structure.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-18",

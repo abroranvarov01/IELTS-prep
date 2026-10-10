@@ -576,3 +576,94 @@ test.describe("matching questions", () => {
     expect(results.violations).toEqual([]);
   });
 });
+
+test.describe("typed answers", () => {
+  const field = (page: Page, number: number) =>
+    page.getByRole("textbox", {
+      name: fill(en.reading.answer.label, { number }),
+    });
+
+  test("each completion type takes typed words, shows them in the gap, and keeps them", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    for (const [number, answer] of [
+      [7, "phone"],
+      [10, "lanes"],
+      [24, "strengthened"],
+    ] as const) {
+      await goToQuestion(page, number);
+      await field(page, number).fill(answer);
+      await expect(
+        sheet(page).getByText(`(${number})`).locator(".."),
+      ).toContainText(answer);
+    }
+    // A short-answer question has no gap, only its field.
+    await goToQuestion(page, 13);
+    await field(page, 13).fill("winter weather");
+    await page.reload();
+    await goToQuestion(page, 13);
+    await expect(field(page, 13)).toHaveValue("winter weather");
+  });
+
+  test("Enter in a field does not change the question", async ({ page }) => {
+    await startPractice(page);
+    await goToQuestion(page, 12);
+    await field(page, 12).fill("baskets");
+    await page.keyboard.press("Enter");
+    await expect(questionHeading(page, "en", 12)).toBeVisible();
+  });
+
+  test("the sheet stays docked above the on-screen keyboard while typing", async ({
+    page,
+  }) => {
+    // A stand-in for the browser's visual viewport, so the keyboard can be
+    // "opened" in a test (Chromium has no on-screen keyboard here).
+    await page.addInitScript(() => {
+      const viewport = new EventTarget() as EventTarget & {
+        height: number;
+        offsetTop: number;
+      };
+      viewport.height = window.innerHeight;
+      viewport.offsetTop = 0;
+      Object.defineProperty(window, "visualViewport", { value: viewport });
+      (
+        window as unknown as { openKeyboard: (h: number) => void }
+      ).openKeyboard = (h) => {
+        viewport.height = window.innerHeight - h;
+        viewport.dispatchEvent(new Event("resize"));
+      };
+    });
+    await startPractice(page);
+    await goToQuestion(page, 12);
+    await field(page, 12).focus();
+    await page.evaluate(() =>
+      (window as unknown as { openKeyboard: (h: number) => void }).openKeyboard(
+        300,
+      ),
+    );
+
+    const viewport = page.viewportSize()!.height;
+    await expect
+      .poll(async () => {
+        const box = await sheet(page).boundingBox();
+        return box && Math.round(box.y + box.height);
+      })
+      .toBe(viewport - 300);
+    const fieldBox = await field(page, 12).boundingBox();
+    expect(fieldBox!.y + fieldBox!.height).toBeLessThanOrEqual(viewport - 300);
+  });
+
+  test("a summary with typed gaps fits 320 px and has no WCAG 2.2 AA violations", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await startPractice(page, "uz");
+    await goToQuestion(page, 24, "uz");
+    await noOverflow(page);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+});

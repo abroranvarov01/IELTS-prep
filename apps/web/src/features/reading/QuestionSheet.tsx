@@ -12,6 +12,7 @@ import { OptionPicker } from "./OptionPicker";
 import { FlagIcon, QuestionNavigator } from "./QuestionNavigator";
 import { useReading } from "./reading-context";
 import { SecondaryButton } from "./SecondaryButton";
+import { TypedQuestion } from "./TypedQuestion";
 
 /** Sheet heights per state (DESIGN_SYSTEM.md, M4: question sheet). */
 export const SHEET_HEIGHT: Record<SheetState, string> = {
@@ -359,7 +360,7 @@ function QuestionBody({
     case "select":
       return <MatchingQuestion unit={unit} onChoose={onChoose} />;
     case "text":
-      return null;
+      return <TypedQuestion unit={unit} />;
   }
 }
 
