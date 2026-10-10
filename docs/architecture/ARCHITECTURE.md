@@ -27,6 +27,7 @@ Do not invent answers to these in code. Each one is a candidate ADR.
 
 - **Hosting and data residency.** Uzbekistan's personal-data law contains data-localization requirements for citizens' personal data. Check the legal requirements before choosing hosting or managed databases.
 - **API types in the web app.** How `apps/web` gets the API's request and response types (generated from the OpenAPI document, a shared package, or something else). Decide with the first web consumer of an endpoint ([ADR-0002 §6](decisions/0002-api-contracts-and-validation.md)).
+- **Guest state before accounts.** Where a guest's answers (and later practice state) are kept. Proposed in [ADR-0003](decisions/0003-guest-state-on-the-device.md): the onboarding goal in one server-written, server-read cookie; practice state decided when it exists. Waiting for acceptance (M3-05).
 - **Authentication.** Methods (phone/SMS, Telegram, Google, email) and when registration is offered. Practice before registration is already a product decision ([PRODUCT.md](../product/PRODUCT.md#approved-product-principles)).
 - **AI provider and evaluation pipeline** for Writing/Speaking. This includes how estimates are calibrated and how user content is handled.
 - **Audio.** Delivery of Listening audio on weak connections. Capture, upload, and processing of Speaking recordings.

@@ -1140,7 +1140,7 @@
       "title": "Draft ADR-0003: guest state on the device before accounts",
       "milestone": "M3",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "Decide, with the owner, where and how a guest's answers (and later their practice state) are kept before accounts exist, without inventing auth.",
       "scope": [
@@ -1176,7 +1176,8 @@
       "docsToUpdate": [
         "docs/architecture/decisions/README.md",
         "docs/architecture/ARCHITECTURE.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3-04",
