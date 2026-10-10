@@ -1833,7 +1833,7 @@
       "title": "Reading domain model and content contract in code",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-09"],
       "goal": "The Reading test model from ADR-0005 exists as pure domain code with validation, before any screen uses it.",
       "scope": [
@@ -1860,7 +1860,8 @@
       ],
       "docsToUpdate": [
         "docs/architecture/BOUNDARIES.md (if the Reading domain adds a boundary)"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-11",
