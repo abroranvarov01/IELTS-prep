@@ -18,14 +18,14 @@ Changing these requires owner approval and an ADR.
 | Launch market is Uzbekistan. No multi-region architecture up front. | [PRODUCT.md](../product/PRODUCT.md) |
 | **Foundation:** pnpm-workspace monorepo (`apps/web`, `apps/api`, `packages/*` on demand), Node 24 LTS, Tailwind CSS v4 tokens, next-intl with locale-prefixed URLs (`uz` default), Vitest (web and api) and Playwright, ESLint and Prettier, a PWA shell (Serwist, app-shell caching only), GitHub Actions CI. Implemented. | [ADR-0001](decisions/0001-initial-application-foundation.md), Accepted 2026-10-09 (amended §5, §7) |
 
-Still TBD until a current requirement exists: database schema (M2 adds Prisma without product models, owner decision 2026-10-10), API contract and validation approach (ADR-0002, Proposed).
+Still TBD until a current requirement exists: database schema (M2 adds Prisma without product models, owner decision 2026-10-10), API contract and validation approach (ADR-0002, Accepted, not yet implemented).
 
 ## Open decisions (TBD)
 
 Do not invent answers to these in code. Each one is a candidate ADR.
 
 - **Hosting and data residency.** Uzbekistan's personal-data law contains data-localization requirements for citizens' personal data. Check the legal requirements before choosing hosting or managed databases.
-- **API contracts and validation.** Proposed in [ADR-0002](decisions/0002-api-contracts-and-validation.md) from the owner's 2026-10-10 decisions (REST + JSON, DTO classes, class-validator with a global `ValidationPipe`, one error format, OpenAPI via `@nestjs/swagger`, no shared contracts package yet). Waiting for acceptance. How the web app gets API types is decided with its first consumer of an endpoint.
+- **API contracts and validation.** Proposed in [ADR-0002](decisions/0002-api-contracts-and-validation.md) from the owner's 2026-10-10 decisions (REST + JSON, DTO classes, class-validator with a global `ValidationPipe`, one error format, OpenAPI via `@nestjs/swagger`, no shared contracts package yet). Accepted 2026-10-10; implemented by TASKS.json M2-07 and M2-08. How the web app gets API types is decided with its first consumer of an endpoint.
 - **Authentication.** Methods (phone/SMS, Telegram, Google, email) and when registration is offered. Practice before registration is already a product decision ([PRODUCT.md](../product/PRODUCT.md#approved-product-principles)).
 - **AI provider and evaluation pipeline** for Writing/Speaking. This includes how estimates are calibrated and how user content is handled.
 - **Audio.** Delivery of Listening audio on weak connections. Capture, upload, and processing of Speaking recordings.

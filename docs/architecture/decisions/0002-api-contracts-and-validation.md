@@ -1,6 +1,6 @@
 # ADR-0002: API Contracts and Input Validation
 
-- **Status:** Proposed (2026-10-10). Sections marked *Owner-decided* were decided directly by the project owner on 2026-10-10. The rest is the agent's proposal, waiting for the owner's acceptance (TASKS.json `M2-01`).
+- **Status:** Accepted (2026-10-10). Sections marked *Owner-decided* were decided directly by the project owner on 2026-10-10. The agent's proposals were accepted by the owner on 2026-10-10: the error response shape (§4), rejecting unknown request properties (§3), and OpenAPI served only outside production with explicit decorators (§5).
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (decisions, acceptance), Claude (draft)
 

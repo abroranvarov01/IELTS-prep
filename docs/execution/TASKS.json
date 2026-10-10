@@ -739,7 +739,7 @@
       "title": "Owner accepts ADR-0002 (API contracts and validation)",
       "milestone": "M2",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "An accepted contract and validation decision before any validation or OpenAPI code is written.",
       "scope": [
@@ -756,7 +756,8 @@
       ],
       "references": [
         "docs/architecture/decisions/0002-api-contracts-and-validation.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M2-02",
