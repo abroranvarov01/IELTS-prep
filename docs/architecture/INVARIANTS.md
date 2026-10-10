@@ -27,4 +27,4 @@ Status: **Active** = applies from the first line of code. **Pending** = becomes 
 | # | Invariant | Status | Owner |
 |---|---|---|---|
 | I-9 | Secrets never live in the repository. Personal data and user submissions (essays, recordings) never appear in logs. | Active | [security rule](../../.claude/rules/security/security.md) |
-| I-10 | Database entities are not exposed directly as API contracts. | Pending: backend ADR | [BOUNDARIES.md](BOUNDARIES.md) |
+| I-10 | Database entities are not exposed directly as API contracts. | Active ([ADR-0002](decisions/0002-api-contracts-and-validation.md)) | [BOUNDARIES.md](BOUNDARIES.md) |

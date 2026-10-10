@@ -28,8 +28,8 @@
     {
       "id": "M3",
       "name": "Onboarding + Home",
-      "status": "planned",
-      "goal": "The 'First open → first practice' and 'Returning user → next action' flows (USER_FLOWS.md): value before registration, optional target band and exam date, and a home screen with one recommended next action."
+      "status": "active",
+      "goal": "A new user gets from first open to an invitation to start a diagnostic in three short onboarding steps (exam type, target band) without registering, and a returning user's home answers 'What should I do now?' with one dominant next action and their target band. Guest state stays on the device; no auth, no product tables. Specs, copy, design values and the guest-state and feature-structure ADRs are approved before code."
     },
     {
       "id": "M4",
@@ -1045,6 +1045,374 @@
         "CLAUDE.md (Current state: M2 backend foundation)"
       ],
       "completedAt": "2026-10-10"
+    },
+    {
+      "id": "M3-01",
+      "title": "Draft the onboarding, home and direct-link flow specs and their copy",
+      "milestone": "M3",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Give the owner a concrete, reviewable specification of onboarding and home before any of it is built.",
+      "scope": [
+        "Owner decisions 2026-10-10 (M3 activation): no mandatory registration before value; a very short first flow: step 1 Academic / General Training / Don't know, step 2 target band 6.0 / 6.5 / 7.0 / 7.5 / 8+ / Don't know, step 3 an invitation to start a diagnostic; never ask name, age, occupation, country, motivation or self-rated level; direct links to practice may bypass onboarding. Home answers 'What should I do now to improve IELTS?': one dominant CTA, the target band, the current estimate only when real data exists, Today's Practice / recommended next action, Continue previous activity when relevant, a small progress preview only, no dashboard of cards, the approved white + red design. Guest-first: usable before an account; persist only what fits the current architecture; no auth.",
+        "In docs/product/USER_FLOWS.md, a new section 'Onboarding and home flows (M3)' with specs in the documented format, each marked 'DRAFT: awaiting owner approval': (1) First open → onboarding → diagnostic invitation, exactly the owner's three steps; (2) Returning user → home; (3) Direct link → practice (onboarding never blocks a direct link). Replace or link the existing intent-only core flows they refine",
+        "Onboarding spec: how a step is answered (e.g. one tap selects and advances, or select then Continue), going back, whether a step can be skipped, what is saved and when, what happens when the user leaves half-way, the step count from first open to the diagnostic invitation",
+        "Home spec: the sections in priority order with the one dominant CTA (Today's Practice / recommended next action), the target band (including 'Don't know'), Continue previous activity (only with an unfinished activity), the current estimate (only with real data, honest-feedback wording 'Estimated band'), a small progress preview; which of them can appear in M3 (no practice data exists before M4, so sections without data do not render) and which milestone brings each; how the user changes the exam type and target band",
+        "The next-action rules for M3, written so a pure domain function can implement and test them (with no practice history the recommendation is the diagnostic; anything else waits for real data)",
+        "A text layout description per screen at 360 px and at desktop width (no images). Check each spec against UX_PRINCIPLES.md (10-second rule, 3-click rule, one primary action, progressive disclosure) and UI_ANTI_PATTERNS.md (no dashboard of cards, no carousel or coach marks) and state the step counts",
+        "Open questions for the owner, each with options and a recommendation. At least: where the diagnostic CTA leads in M3, since the diagnostic itself is not designed (ROADMAP: level-check design) and Reading practice arrives in M4",
+        "All new interface copy as a uz/ru/en table marked PROPOSED, following the Interface copy (M1) table's format: plain language (UX_PRINCIPLES rule 6, e.g. 'Find your level', not 'Diagnostic evaluation'), Uzbek Latin with U+02BB/U+02BC, band values in IELTS notation in every language ('6.5', never '6,5'), 'Estimated band' wording where an estimate appears. Note that translations need fluent-speaker review (LOCALIZATION.md rule 7)"
+      ],
+      "outOfScope": [
+        "any code",
+        "design values (M3-02)",
+        "the storage mechanism (M3-03); the specs say only that answers are kept on this device",
+        "the diagnostic's own design (questions, length, scoring)",
+        "accounts, registration prompts, sign-in",
+        "exam date (PRODUCT.md allows it; the owner's M3 steps do not include it)",
+        "answering the open questions"
+      ],
+      "acceptanceCriteria": [
+        "The three specs exist in the USER_FLOWS.md format with step counts, empty/error/offline states, layout descriptions and open questions",
+        "The owner's M3 decisions are all reflected, and none of the forbidden questions appears",
+        "Every proposed string has uz, ru and en entries and is marked PROPOSED",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/FEATURE_MAP.md",
+        "docs/execution/ROADMAP.md"
+      ],
+      "docsToUpdate": ["docs/product/USER_FLOWS.md"]
+    },
+    {
+      "id": "M3-02",
+      "title": "Propose the design values onboarding and home need",
+      "milestone": "M3",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M3-01"],
+      "goal": "Turn every visual decision the M3 specs need, and that is not approved yet, into one concrete proposal the owner can approve.",
+      "scope": [
+        "In docs/design/DESIGN_SYSTEM.md, propose one exact value or treatment for each component the M3-01 drafts use, for example: the primary button (height, padding, radius, type, width on phones; states default, hover, pressed, disabled, plus the approved focus style), the quieter secondary action, the single-choice answer option (default, hover, selected, focus; selected never shown by color alone), the onboarding step indicator, the next-action block on home (card or not, per the UI_ANTI_PATTERNS card rule), the target-band display",
+        "Bring to approval only the existing proposals these components use (spacing steps, radii, neutrals such as text.secondary or border.control). Nothing else",
+        "Mark each item 'PROPOSED: awaiting owner approval' with a one-line rationale and WCAG contrast ratios for every color pairing. Stay within the approved core: white-first, red only for the one primary action, at most the two elevation levels, touch targets per ACCESSIBILITY.md, relative units for text"
+      ],
+      "outOfScope": [
+        "status colors (first needed by answer states in M4)",
+        "dark mode",
+        "Reading components (bottom sheet etc.)",
+        "changing any approved value",
+        "any code"
+      ],
+      "acceptanceCriteria": [
+        "Every component in the M3-01 drafts has the visual values it needs, either already approved or proposed here",
+        "No approved value changed and no token is proposed without a use in M3",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/USER_FLOWS.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"]
+    },
+    {
+      "id": "M3-03",
+      "title": "Draft ADR-0003: guest state on the device before accounts",
+      "milestone": "M3",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide, with the owner, where and how a guest's answers (and later their practice state) are kept before accounts exist, without inventing auth.",
+      "scope": [
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md from ADR-TEMPLATE.md, Status Proposed, citing the owner's decision 'persist only what is appropriate for the current architecture; do not invent auth' (2026-10-10)",
+        "What is stored in M3 (exam type, target band, onboarding progress) and the rule for adding more later; never personal data (the product may be used by minors)",
+        "Compare at least: a cookie the server can read (no flash of the wrong screen, works without JavaScript, sent with every request), localStorage, IndexedDB, and a server-side anonymous guest record (needs a guest identifier and a table, close to auth). Include the effect on Next.js rendering (cacheComponents / partial prerendering) and on the PWA service worker. Recommend one",
+        "Stored data is untrusted input: a versioned shape, validation on read, and what happens with an old, invalid or tampered value (treated as no saved answers, never a crash)",
+        "How the user can reset or change the answers, what clearing browser data means, and that moving guest state into an account (M7) and offline scope stay open",
+        "Add the ADR to the index as Proposed, and add 'Guest state before accounts (proposed in ADR-0003)' to ARCHITECTURE.md open decisions"
+      ],
+      "outOfScope": [
+        "any code",
+        "accounts or auth",
+        "API endpoints or database tables",
+        "analytics"
+      ],
+      "acceptanceCriteria": [
+        "The ADR follows the template, compares the options with pros and cons, and makes one recommendation",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/product/PRODUCT.md",
+        ".claude/rules/security/security.md",
+        "docs/product/LOCALIZATION.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M3-04",
+      "title": "Draft ADR-0004: feature structure and domain code in apps/web",
+      "milestone": "M3",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide the folder structure and module boundaries for the first features (guest profile, onboarding, home) before their code exists. ARCHITECTURE.md says to decide this with the first feature.",
+      "scope": [
+        "docs/architecture/decisions/0004-web-feature-structure.md from ADR-TEMPLATE.md, Status Proposed",
+        "Where feature code lives (e.g. a folder per feature, or colocated with app routes), where pure domain code lives (exam type, target band, next-action rules: no React, Next.js or browser APIs, unit-testable, INVARIANTS I-3/I-4), and where shared UI components (the first Button) live",
+        "How the boundaries are enforced by lint (e.g. import restrictions so domain code cannot import React, Next.js or UI code), per BOUNDARIES.md's rule that a boundary must be tool-enforced",
+        "When code moves to packages/* (only when apps/api needs the same domain code, ADR-0001 §1). apps/api's structure stays open",
+        "Compare at least two layouts with pros and cons and recommend one, using the M3 features as the worked example",
+        "Add the ADR to the index as Proposed, and point ARCHITECTURE.md's 'Feature folder structure' open decision to it"
+      ],
+      "outOfScope": [
+        "any code or lint change",
+        "apps/api structure",
+        "creating packages"
+      ],
+      "acceptanceCriteria": [
+        "The ADR follows the template, names the lint enforcement, and makes one recommendation",
+        "No file under apps/ or packages/ changed"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/architecture/INVARIANTS.md",
+        "docs/engineering/CODE_QUALITY.md",
+        ".claude/rules/frontend/react.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M3-05",
+      "title": "Owner approves the M3 specs, copy, design values and ADRs",
+      "milestone": "M3",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M3-01", "M3-02", "M3-03", "M3-04"],
+      "goal": "Decide what onboarding and home look like, say and store before they are built.",
+      "scope": [
+        "Review the M3-01 flow specs and proposed copy in USER_FLOWS.md. Edit as needed, answer the open questions (including where the diagnostic CTA leads in M3), and mark the specs and copy Approved",
+        "Review the M3-02 proposals in DESIGN_SYSTEM.md and mark them Approved",
+        "Review ADR-0003 and ADR-0004, edit as needed, and set them to Accepted (and the ADR index)"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The M3 specs and copy are Approved in USER_FLOWS.md and the M3 design values in DESIGN_SYSTEM.md",
+        "ADR-0003 and ADR-0004 are Accepted",
+        "No open question blocks M3-06 to M3-09"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md",
+        "grep -n 'Status' docs/architecture/decisions/0003-*.md docs/architecture/decisions/0004-*.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/README.md"
+      ]
+    },
+    {
+      "id": "M3-06",
+      "title": "Guest profile: exam type and target band kept on the device",
+      "milestone": "M3",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M3-05"],
+      "goal": "The answers onboarding collects have one domain definition and are saved and read back on the device as ADR-0003 says, before any screen uses them.",
+      "scope": [
+        "Following the accepted ADR-0004 layout: pure domain code for the exam type (Academic, General Training, Don't know) and the target band (6.0, 6.5, 7.0, 7.5, 8+, Don't know) as approved in M3-05, including the band's display value in IELTS notation in every locale",
+        "The storage mechanism of the accepted ADR-0003: write, read and reset, with the versioned shape validated on read. An old, invalid or tampered value counts as no saved answers and never throws",
+        "The lint boundary ADR-0004 defines for domain code, verified once with a forbidden import (then reverted)",
+        "Unit tests: every valid value round-trips; invalid, unknown-version and tampered values read as none; band display values ('6.0', '8+') are the same in uz, ru and en"
+      ],
+      "outOfScope": [
+        "onboarding and home screens (M3-07, M3-08)",
+        "API or database persistence",
+        "accounts",
+        "exam date"
+      ],
+      "acceptanceCriteria": [
+        "Domain and storage behave as ADR-0003 says, proven by unit tests",
+        "The domain lint boundary fails on a forbidden import (verified once, then reverted)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/testing/test-code.md",
+        ".claude/rules/security/security.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/BOUNDARIES.md (the web feature and domain boundaries, with their lint enforcement)",
+        "docs/engineering/QUALITY_GATES.md (the new lint boundary)"
+      ]
+    },
+    {
+      "id": "M3-07",
+      "title": "Onboarding: three steps to the diagnostic invitation",
+      "milestone": "M3",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M3-06"],
+      "goal": "A new user answers the exam type and target band and reaches the diagnostic invitation exactly as the approved spec describes, in uz, ru and en, on phone and desktop.",
+      "scope": [
+        "Implement the approved onboarding spec in apps/web per ADR-0004: its entry, the three steps, going back and skipping as approved, saving through M3-06",
+        "The primary button and the single-choice answer option are created here, their first consumer, styled only with approved tokens. Add to tokens.css only the approved values this task uses",
+        "All strings from the uz/ru/en catalogs with the approved copy",
+        "Component tests for the answer option group (selection, accessible names, keyboard). e2e on both projects: complete the flow (including the 'Don't know' answers), answers survive a reload, keyboard-only completion, axe passes on every step in uz, ru and en, no horizontal scroll at 320 and 360 px, uz and ru strings do not truncate"
+      ],
+      "outOfScope": [
+        "home (M3-08)",
+        "the diagnostic CTA's destination (M3-09)",
+        "exam date",
+        "accounts",
+        "analytics"
+      ],
+      "acceptanceCriteria": [
+        "The flow and its step count match the approved spec at 320, 360 and 1280 px",
+        "Only approved token values are added, and each one is used",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md (token status note)"]
+    },
+    {
+      "id": "M3-08",
+      "title": "Home: the next action and the target band",
+      "milestone": "M3",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M3-07"],
+      "goal": "A returning user's home answers 'What should I do now to improve IELTS?' with one dominant next action, as the approved spec describes.",
+      "scope": [
+        "The approved next-action rules as pure domain code with unit tests (per ADR-0004)",
+        "Implement the approved home spec: the next action as the one dominant CTA, the target band, changing the answers if the spec includes it; sections whose data does not exist yet (current estimate, Continue previous activity, progress preview) do not render",
+        "Entry as approved: without saved answers home leads into onboarding, with saved answers it shows home. Onboarding never blocks any other page (direct links)",
+        "e2e on both projects: first open → onboarding → home; a returning user lands on home with their target band; the 'Don't know' states; changing answers if approved; exactly one primary action on home; axe in uz, ru and en; 320, 360 and 1280 px; no truncation in uz and ru"
+      ],
+      "outOfScope": [
+        "the diagnostic CTA's destination (M3-09)",
+        "practice history, estimates, progress (no data before M4)",
+        "accounts"
+      ],
+      "acceptanceCriteria": [
+        "Home matches the approved spec, and no section renders without real data",
+        "The next-action rules are covered by domain tests",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/product/PRODUCT.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md"
+      ],
+      "docsToUpdate": ["docs/product/FEATURE_MAP.md (Personalized next action)"]
+    },
+    {
+      "id": "M3-09",
+      "title": "The diagnostic CTA's destination, as approved",
+      "milestone": "M3",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M3-08"],
+      "goal": "The diagnostic CTA on the onboarding invitation and on home leads where the owner decided in M3-05, and never to a dead end the spec does not describe.",
+      "scope": [
+        "Implement the destination the owner approved for the diagnostic CTA in M3 (the diagnostic itself is not built; its level-check design stays open)",
+        "e2e on both projects: the CTA from the onboarding invitation and from home reaches it; axe in uz, ru and en; 320 and 360 px",
+        "CLAUDE.md 'Current state' reflects M3"
+      ],
+      "outOfScope": [
+        "diagnostic questions, scoring or estimates",
+        "Reading practice (M4)"
+      ],
+      "acceptanceCriteria": [
+        "The CTA behaves as approved in every locale",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/product/PRODUCT.md",
+        "docs/design/ACCESSIBILITY.md"
+      ],
+      "docsToUpdate": [
+        "CLAUDE.md (Current state)",
+        "docs/product/FEATURE_MAP.md (Diagnostic assessment, if its status changes)"
+      ]
     },
     {
       "id": "M10-01",
