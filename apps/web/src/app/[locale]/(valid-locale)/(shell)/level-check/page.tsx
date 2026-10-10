@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
-import { StatusMessage } from "../../../StatusMessage";
+import { StatusMessage } from "../../../../StatusMessage";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("levelCheck.comingSoon");

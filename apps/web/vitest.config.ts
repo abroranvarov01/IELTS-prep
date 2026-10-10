@@ -9,5 +9,8 @@ export default defineConfig({
     environment: "jsdom",
     // e2e/ holds Playwright specs.
     include: ["src/**/*.test.{ts,tsx}"],
+    // next-intl imports "next/navigation", which Node cannot resolve from its
+    // ESM build; inlining lets Vite resolve it (next-intl testing guide).
+    server: { deps: { inline: ["next-intl"] } },
   },
 });

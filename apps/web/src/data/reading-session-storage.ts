@@ -74,3 +74,45 @@ export function saveSession(
     return false;
   }
 }
+
+export type StorageSnapshot = StoredSessions & {
+  /** False when the device does not keep anything (blocked or full). */
+  canSave: boolean;
+};
+
+// useSyncExternalStore needs the same snapshot object until the stored values
+// change, so parsed snapshots are cached by their raw stored text.
+const snapshots = new Map<string, { raw: string; snapshot: StorageSnapshot }>();
+
+/** The stored sessions of a test, for `useSyncExternalStore` (ADR-0006). */
+export function storageSnapshot(test: ReadingTest): StorageSnapshot {
+  const storage = deviceStorage();
+  const raw = [currentKey(test.id), finishedKey(test.id)]
+    .map((key) => {
+      try {
+        return storage?.getItem(key) ?? "";
+      } catch {
+        return "";
+      }
+    })
+    .join("\n");
+  const cached = snapshots.get(test.id);
+  if (cached?.raw === raw) return cached.snapshot;
+  const snapshot = {
+    ...loadSessions(storage, test),
+    canSave: canWrite(storage),
+  };
+  snapshots.set(test.id, { raw, snapshot });
+  return snapshot;
+}
+
+function canWrite(storage: KeyValueStore | undefined): boolean {
+  if (!storage) return false;
+  try {
+    storage.setItem("reading:probe", "1");
+    storage.removeItem("reading:probe");
+    return true;
+  } catch {
+    return false;
+  }
+}

@@ -63,5 +63,38 @@
       "targetBandNotSet": "Maqsadli ball: hali tanlanmagan",
       "change": "Maqsadni oʻzgartirish"
     }
+  },
+  "reading": {
+    "skipToQuestion": "Savolga oʻtish",
+    "exit": "Chiqish",
+    "passageOf": "{total} tadan {number}-matn",
+    "sheet": {
+      "label": "Savollar",
+      "show": "Savolni koʻrsatish",
+      "hide": "Savolni yashirish"
+    },
+    "question": {
+      "of": "{total} tadan {number}-savol",
+      "range": "{from}–{to}-savollar",
+      "previous": "Oldingi",
+      "next": "Keyingi"
+    },
+    "answer": {
+      "clear": "Javobni tozalash"
+    },
+    "storage": {
+      "unavailable": "Javoblar bu qurilmada saqlanmaydi. Sahifani yopmang."
+    },
+    "mode": {
+      "legend": "Rejimni tanlang",
+      "practice": "Mashq",
+      "practiceDetail": "Vaqt cheklanmagan. Javoblaringiz uchun dalillarni belgilang.",
+      "exam": "Imtihon",
+      "examDetail": "Haqiqiy testdagidek 60 daqiqa. Yordamsiz. Chiqib ketsangiz ham vaqt davom etadi."
+    },
+    "start": "Boshlash",
+    "navigator": {
+      "answered": "javob berilgan"
+    }
   }
 }

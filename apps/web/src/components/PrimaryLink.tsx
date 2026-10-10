@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
+import { PRIMARY_ACTION } from "./primary-action";
 
 /**
  * The one red action of a screen, when it navigates (DESIGN_SYSTEM.md, M3
@@ -14,10 +15,7 @@ export function PrimaryLink({
   children: ReactNode;
 }) {
   return (
-    <Link
-      href={href}
-      className="inline-flex min-h-12 w-full items-center justify-center rounded-md bg-brand-primary px-6 py-3 text-center font-bold text-surface-base transition-colors hover:bg-brand-primary-deep active:bg-brand-primary-deep tablet:w-auto"
-    >
+    <Link href={href} className={PRIMARY_ACTION}>
       {children}
     </Link>
   );

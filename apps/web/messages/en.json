@@ -63,5 +63,38 @@
       "targetBandNotSet": "Target band: not set yet",
       "change": "Change goal"
     }
+  },
+  "reading": {
+    "skipToQuestion": "Skip to the question",
+    "exit": "Exit",
+    "passageOf": "Passage {number} of {total}",
+    "sheet": {
+      "label": "Questions",
+      "show": "Show question",
+      "hide": "Hide question"
+    },
+    "question": {
+      "of": "Question {number} of {total}",
+      "range": "Questions {from}–{to}",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "answer": {
+      "clear": "Clear answer"
+    },
+    "storage": {
+      "unavailable": "Your answers can't be saved on this device. Don't close this page."
+    },
+    "mode": {
+      "legend": "Choose how to take it",
+      "practice": "Practice",
+      "practiceDetail": "No time limit. Mark evidence for your answers.",
+      "exam": "Exam",
+      "examDetail": "60 minutes, like the real test. No help. The time keeps running if you leave."
+    },
+    "start": "Start",
+    "navigator": {
+      "answered": "answered"
+    }
   }
 }

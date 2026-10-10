@@ -4,6 +4,13 @@ import { describe, expect, it, vi } from "vitest";
 import ru from "../../../messages/ru.json";
 import LocaleError from "./error";
 
+// The error state sits in the shell, whose language switcher reads the
+// current path from the Next.js router, which a component test does not run.
+vi.mock("next/navigation", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("next/navigation")>()),
+  usePathname: () => "/ru/some-page",
+}));
+
 describe("locale error boundary", () => {
   it("explains the error in the interface language, retries on Try again, and links home", () => {
     const retry = vi.fn();
