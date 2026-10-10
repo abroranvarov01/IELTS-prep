@@ -58,14 +58,15 @@ Intent: progress carries across devices. How the session moves between devices i
   - One **main** landmark holding the page content.
   - A **skip link** ("Skip to main content"), the first focusable element on every page. It is visually hidden until it receives keyboard focus.
   - No navigation menu, tab bar, or footer before M3, because there are no destinations to navigate to yet (progressive disclosure).
+- **Header position (decided):** the header scrolls away with the page. It is not fixed to the top.
 - **Phone (primary target, verify at 320 px):** header in one row, page gutter on both sides, content full width below it.
   ```
   ┌──────────────────────────────┐
-  │ IELTS Prep        Oʻzbekcha ▾ │  header
+  │ IELTS Prep               UZ ▾ │  header
   ├──────────────────────────────┤
   │ <page content>               │  main
   ```
-- **Desktop:** the same header and items, spanning the window. Page content sits in a centered column of limited width (see open questions). It is not an enlarged phone layout, but before M3 there is no content that needs a different structure.
+- **Desktop:** the same header and items, spanning the window. Page content sits in a centered column with a maximum width of 1200 px (decided; [DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md#responsive-behavior)). Feature-specific layouts, such as Reading Exam mode, may override it later. It is not an enlarged phone layout, but before M3 there is no content that needs a different structure.
 - **Steps:**
   1. Open any page → header and main content render. The shell needs no action (0 steps).
   2. Keyboard: press Tab → the skip link appears. Press Enter → focus moves to the start of the main content (1 activation).
@@ -75,12 +76,13 @@ Intent: progress carries across devices. How the session moves between devices i
   - Missing page or unexpected error: see [Page not found and unexpected error](#page-not-found-and-unexpected-error). The header stays visible there, so the user can still change language or go home.
   - Without JavaScript: the header, the product-name link, and the skip link still work, because they are plain links.
   - Offline: the app shell's static files are cached, but pages are not. An offline page is out of scope while the offline scope is TBD ([ARCHITECTURE.md](../architecture/ARCHITECTURE.md)).
-- **Languages checked:** not yet. To verify in M1-04 at 320 px with the longest strings: the product name with "Oʻzbekcha" (the longest language name) in one header row, and the Russian skip link (the longest skip-link text).
+- **Languages checked:** not yet. To verify in M1-04 at 320 px with the longest strings: the product name and the switcher in one header row, and the Russian skip link (the longest skip-link text).
+- **Decided (owner, 2026-10-10):**
+  - The header scrolls away with the page.
+  - Desktop content has a default maximum width of 1200 px. Feature-specific layouts, such as Reading Exam mode, may override it later.
 - **Open questions:**
-  1. Does the header scroll away with the page or stay fixed at the top? Recommendation: scroll away. It leaves more height for content on phones. The Reading screens get their own layout in M4.
-  2. Product name in the header: the name is TBD, and "IELTS Prep" is the working name. Recommendation: show the working name as bold text until a name and logo exist. No placeholder logo.
-  3. Desktop content width: the page column needs a maximum width, and M1-02's list does not include one. Recommendation: one maximum width for text pages, set by the owner together with the M1-02 values.
-  4. No navigation and no footer before M3: confirm. Navigation (for example a bottom tab bar) is decided with the M3 home screen.
+  1. Product name in the header: the name is TBD, and "IELTS Prep" is the working name. Recommendation: show the working name as bold text until a name and logo exist. No placeholder logo.
+  2. No navigation and no footer before M3: confirm. Navigation (for example a bottom tab bar) is decided with the M3 home screen.
 
 ### Switching the interface language
 
@@ -89,7 +91,7 @@ Intent: progress carries across devices. How the session moves between devices i
 - **Goal:** the user reads the interface in Uzbek, Russian, or English, and the app remembers the choice.
 - **Entry point:** the language switcher in the header, on any page.
 - **Primary action:** choosing a language.
-- **Proposed form:** a quiet button in the header that shows the current language's name (for example "Oʻzbekcha ▾"). It opens a short list of all three languages. Each language is named in its own language ("Oʻzbekcha", "Русский", "English") and marked with its own `lang` attribute, so screen readers pronounce it correctly. The order is fixed (uz, ru, en). The current language is marked visibly with more than color and announced as current. Each entry is a plain link to the same page in that language (a disclosure with links, not an app-style menu), so it also works without JavaScript.
+- **Form (decided):** a quiet button in the header that shows the current language's code (for example "UZ ▾"). It opens a short list of all three languages. Each language is named in its own language ("Oʻzbekcha", "Русский", "English") and marked with its own `lang` attribute, so screen readers pronounce it correctly. The order is fixed (uz, ru, en). The current language is marked visibly with more than color and announced as current. Each entry is a plain link to the same page in that language (a disclosure with links, not an app-style menu), so it also works without JavaScript.
 - **Steps:**
   1. Tap the language button → the list of three languages opens. The current one is marked.
   2. Tap a language → the same page opens in that language (only the locale part of the address changes, e.g. `/uz/x` → `/ru/x`). The list closes. The choice is saved, so opening the app again (`/`) opens in that language.
@@ -105,12 +107,13 @@ Intent: progress carries across devices. How the session moves between devices i
   - Offline or a failed load: the browser cannot open the other language's page, and the current page stays as it is. A dedicated offline message is out of scope (offline scope TBD).
   - On a not-found page: switching keeps the address and shows the not-found page in the new language.
   - An error while loading the new page: the [unexpected error](#page-not-found-and-unexpected-error) state, in the new language.
-- **Languages checked:** not yet. To verify in M1-05: the button with "Oʻzbekcha" fits the 320 px header, and the open list fits without horizontal scrolling.
+- **Languages checked:** not yet. To verify in M1-05: the button fits the 320 px header, and the open list with "Oʻzbekcha" fits without horizontal scrolling.
+- **Decided (owner, 2026-10-10):**
+  - The switch is a button in the header that opens a list (2 steps).
+  - The button may show the code (UZ / RU / EN). The list always shows full names: "Oʻzbekcha", "Русский", "English". No flags.
+- **Note:** Uzbek Cyrillic is TBD ([LOCALIZATION.md](LOCALIZATION.md#languages)) and out of scope here. If it is approved later, the list gains a fourth entry.
 - **Open questions:**
-  1. Where does the switch live and what form does it take? Options: (a) a button in the header that opens the list (2 steps, recommended: it stays quiet and has room for full names); (b) three always-visible options in the header (1 step, but louder and tight at 320 px with full names); (c) a settings page (3+ steps, and no settings page exists yet).
-  2. How are languages labeled? Recommendation: full names in their own language ("Oʻzbekcha", "Русский", "English"), not codes (UZ / RU / EN) and not flags (a flag is a country, not a language). The Uzbek name could also be "Oʻzbek tili" or "Oʻzbek".
-  3. Uzbek Cyrillic is TBD ([LOCALIZATION.md](LOCALIZATION.md#languages)) and out of scope here. If it is approved later, the list gains a fourth entry.
-  4. No language prompt on first open: confirm.
+  1. No language prompt on first open: confirm.
 
 ### Page not found and unexpected error
 
@@ -127,7 +130,7 @@ Intent: progress carries across devices. How the session moves between devices i
 - **Step count:** 1 to recover.
 - **UX check:** 10-second rule: the heading says what happened and the only button says what to do. One primary action: only "Go to home page". The header's language switcher stays available.
 - **Unknown address without a language** (e.g. `/does-not-exist`): today the app redirects it to the detected language (saved choice, then browser language, then Uzbek), which then shows the localized not-found page. Proposed: keep this.
-- **Addresses the language redirect does not handle** (addresses with a file extension, e.g. `/old-page.html`, and addresses under `/api`): the language is unknown, so a localized page in the address's language is not possible. See open question 2.
+- **Addresses outside language routing** (decided): addresses under `/api` are not localized or redirected, and addresses with a file extension (e.g. `/old-page.html`) are not forced through language routing. They get the app's own root-level not-found page, never Next.js's default English page. Its language is the locale in the address when it is valid (e.g. `/ru/old-page.html` → Russian), otherwise Uzbek.
 - **Languages checked:** not yet. To verify in M1-06 at 320 px: the Uzbek and Russian heading and sentence wrap without truncation.
 
 #### Unexpected error
@@ -141,27 +144,33 @@ Intent: progress carries across devices. How the session moves between devices i
 - **Step count:** 1 to retry. 1 to leave (home).
 - **UX check:** 10-second rule: one heading, one sentence, one button. One primary action: "Try again" is the only button; "Go to home page" is a quieter link.
 - **Rules:** no error codes, stack traces, or technical messages on screen. Error reporting and monitoring are out of scope (M10). When they are added, they follow [INVARIANTS.md](../architecture/INVARIANTS.md) (no personal data in logs).
+- **Errors in the shell itself** (decided): a shell-level error boundary catches errors in the shell (the locale layout), where the header cannot render. It shows the same heading, sentence, and "Try again" without the header, and never Next.js's default page. Its language is the locale in the address when it is valid, otherwise Uzbek.
 - **Offline:** a failure because the connection dropped shows the same message. A dedicated offline message is out of scope (offline scope TBD).
 - **Languages checked:** not yet. To verify in M1-06 at 320 px: the Russian button "Попробовать снова" and the Uzbek sentence fit without truncation.
 
+#### Decided (owner, 2026-10-10)
+
+- Fallback language for pages outside the localized shell (root-level not-found and error pages, the shell-level error boundary): the locale in the address when it is valid, otherwise Uzbek.
+- `/api` is not localized or redirected. Addresses with a file extension are not forced through language routing. Both get the root-level fallback instead of Next.js's default English page.
+
 #### Open questions
 
-1. Unknown addresses without a language: keep today's redirect to the detected language followed by the localized not-found page (recommended), or answer 404 directly without a redirect?
-2. Addresses the language redirect does not handle (file extensions, `/api`), and errors in the shell itself (where the page's catalog may not be available): which language should the fallback page use? Recommendation: the language in the address if there is one, otherwise Uzbek (the default language, as in the redirect fallback). The alternative, all three languages on one page, makes the page longer and gives it three equal "home" links.
-3. Unexpected error: keep "Go to home page" as a quieter secondary link next to "Try again" (recommended, an exit when retrying keeps failing), or show "Try again" only?
+1. Unknown addresses without a language and without a file extension (e.g. `/does-not-exist`): keep today's redirect to the detected language followed by the localized not-found page (recommended), or answer 404 directly without a redirect?
+2. Unexpected error: keep "Go to home page" as a quieter secondary link next to "Try again" (recommended, an exit when retrying keeps failing), or show "Try again" only?
 
 ### Proposed interface copy (M1)
 
-**PROPOSED: awaiting owner approval.** Every string below is a proposal. The uz and ru translations need review by a fluent speaker before they ship ([LOCALIZATION.md](LOCALIZATION.md#rules-apply-once-ui-code-exists), rule 7). Uzbek is in Latin script with oʻ and gʻ written with U+02BB. None of these strings needs the tutuq belgisi (U+02BC). Catalog keys are suggestions for M1-04 to M1-06.
+**PROPOSED: awaiting owner approval.** Every string below is a proposal. The uz and ru translations need review by a fluent speaker before they ship ([LOCALIZATION.md](LOCALIZATION.md#rules-apply-once-ui-code-exists), rule 7). Uzbek is in Latin script with oʻ and gʻ written with U+02BB. None of these strings needs the tutuq belgisi (U+02BC). Catalog keys are suggestions for M1-04 to M1-06. Rows marked "decided" follow the owner's decisions of 2026-10-10. The root-level fallback pages reuse the `notFound`, `error`, and `common` strings of their language, so they need no new copy.
 
 | Key (suggested) | Used in | en | ru | uz |
 |---|---|---|---|---|
 | `shell.skipToContent` | Skip link | Skip to main content | Перейти к основному содержанию | Asosiy mazmunga oʻtish |
-| `languageSwitcher.label` | Accessible name of the switcher button. `{language}` is the current language's name. It starts with the button's visible text, as WCAG 2.5.3 requires. | {language}, change language | {language}, сменить язык | {language}, tilni oʻzgartirish |
+| `languageSwitcher.code` | Switcher button text: the current language's code (decided) | EN | RU | UZ |
+| `languageSwitcher.label` | Accessible name of the switcher button. `{code}` is the button's visible text and `{language}` the current language's full name. It starts with the visible text, as WCAG 2.5.3 requires. | {code} ({language}), change language | {code} ({language}), сменить язык | {code} ({language}), tilni oʻzgartirish |
 | `languageSwitcher.listLabel` | Accessible name of the language list | Choose a language | Выберите язык | Tilni tanlang |
-| `languageSwitcher.languages.uz` | Language name (same in all three catalogs, marked `lang="uz"`) | Oʻzbekcha | Oʻzbekcha | Oʻzbekcha |
-| `languageSwitcher.languages.ru` | Language name (same in all three catalogs, marked `lang="ru"`) | Русский | Русский | Русский |
-| `languageSwitcher.languages.en` | Language name (same in all three catalogs, marked `lang="en"`) | English | English | English |
+| `languageSwitcher.languages.uz` | Language name in the list (decided; same in all three catalogs, marked `lang="uz"`) | Oʻzbekcha | Oʻzbekcha | Oʻzbekcha |
+| `languageSwitcher.languages.ru` | Language name in the list (decided; same in all three catalogs, marked `lang="ru"`) | Русский | Русский | Русский |
+| `languageSwitcher.languages.en` | Language name in the list (decided; same in all three catalogs, marked `lang="en"`) | English | English | English |
 | `notFound.title` | Not-found heading and page title | Page not found | Страница не найдена | Sahifa topilmadi |
 | `notFound.body` | Not-found sentence | The link may be wrong, or the page may have moved. | Возможно, ссылка неверна или страница была перемещена. | Havola notoʻgʻri yoki sahifa koʻchirilgan boʻlishi mumkin. |
 | `common.goHome` | Not-found button; secondary link on the error state | Go to home page | Перейти на главную | Bosh sahifaga oʻtish |

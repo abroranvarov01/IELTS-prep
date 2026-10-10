@@ -707,6 +707,9 @@
         "A localized not-found page for unknown paths under a locale (today /uz/does-not-exist shows Next.js's default English 404), with the approved copy",
         "An error boundary for the locale segment with the approved copy and recovery action",
         "Unknown paths without a locale behave as the approved spec says (today the proxy redirects /xx to /uz/xx, which then 404s)",
+        "Root-level not-found and error fallbacks, so Next.js's default English page is never shown, also outside locale routing. /api is not localized or redirected, and paths with a file extension are not forced through locale routing (owner decision 2026-10-10)",
+        "A shell-level error boundary for errors in the locale layout itself",
+        "Fallback pages use the locale from the URL when it is valid, otherwise uz (owner decision 2026-10-10)",
         "e2e on both projects: unknown paths in /uz, /ru and /en return 404 with the matching html lang and localized text, and axe passes. Component test for the error boundary's rendering and recovery action"
       ],
       "outOfScope": [

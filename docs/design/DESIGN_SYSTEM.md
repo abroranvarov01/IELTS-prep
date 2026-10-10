@@ -8,7 +8,7 @@ Canonical owner of **design token values, the token policy, and component state 
 >
 > Once implementation starts, the token source in code becomes the single source of truth for values. This document then describes intent and usage and stops duplicating raw numbers.
 >
-> **Token source in code:** `apps/web/src/styles/tokens.css` (Tailwind v4 `@theme`). Tailwind's default colors, spacing, radii, font sizes, font weights, and shadows are reset there, so only these tokens produce utilities. Fonts are loaded in `apps/web/src/app/[locale]/layout.tsx` (`next/font`). `pnpm lint` runs `scripts/check-tokens.mjs`, which rejects raw colors outside the token file. Not yet in code (added when first needed, owner decision 2026-10-09): the raised shadow, motion durations, heading sizes, passage and meta text sizes.
+> **Token source in code:** `apps/web/src/styles/tokens.css` (Tailwind v4 `@theme`). Tailwind's default colors, spacing, radii, font sizes, font weights, and shadows are reset there, so only these tokens produce utilities. Fonts are loaded in `apps/web/src/app/[locale]/layout.tsx` (`next/font`). `pnpm lint` runs `scripts/check-tokens.mjs`, which rejects raw colors outside the token file. Not yet in code (added when first needed, owner decision 2026-10-09): the raised shadow, motion durations, heading sizes, passage and meta text sizes, breakpoints, the content max width.
 
 ## Token policy
 
@@ -172,3 +172,5 @@ Every interactive component defines: default, hover (pointer devices), focus-vis
 
 - Rationale: they match the documented range boundaries exactly. 320–599 px is one phone layout, so there is no breakpoint at 360 px. 360 px is a design target, not a layout change. Tailwind's default breakpoints would be reset like the other token namespaces, so only these two exist.
 - Today, Tailwind's default breakpoints still apply, because no approved values existed when the foundation was built (ADR-0001 did not decide them).
+
+**Content max width: APPROVED** (owner decision 2026-10-10). Page content on desktop sits in a centered column with a default maximum width of 1200 px. Feature-specific layouts, such as Reading Exam mode, may override it later.
