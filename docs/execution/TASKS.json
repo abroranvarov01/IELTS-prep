@@ -21,8 +21,8 @@
     {
       "id": "M2",
       "name": "Backend & Persistence Foundation",
-      "status": "planned",
-      "goal": "PostgreSQL + Prisma wired into apps/api (ADR-0001 §4a) with migrations, and an agreed approach for API contracts and input validation."
+      "status": "active",
+      "goal": "PostgreSQL + Prisma wired into apps/api (ADR-0001 §4a) with a validated DATABASE_URL, a database module, a migration workflow, a local and CI database workflow, and connectivity checks; plus the API contract and validation approach of ADR-0002 (DTOs, global ValidationPipe, one error format, OpenAPI). No product tables (owner decision 2026-10-10). Hosting and data residency stay TBD and do not block M2."
     },
     {
       "id": "M3",
@@ -733,6 +733,335 @@
         "docs/design/ACCESSIBILITY.md"
       ],
       "completedAt": "2026-10-10"
+    },
+    {
+      "id": "M2-01",
+      "title": "Owner accepts ADR-0002 (API contracts and validation)",
+      "milestone": "M2",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "An accepted contract and validation decision before any validation or OpenAPI code is written.",
+      "scope": [
+        "Review docs/architecture/decisions/0002-api-contracts-and-validation.md. The owner-decided sections restate the owner's 2026-10-10 decisions; check in particular the proposed parts: ValidationPipe options (§3), the error response shape and codes (§4), explicit Swagger decorators and docs served only outside production (§5)",
+        "Edit as needed, set Status to Accepted, and update the index in docs/architecture/decisions/README.md"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "ADR-0002 status is Accepted and the ADR index says so"
+      ],
+      "validation": [
+        "grep -n 'Status' docs/architecture/decisions/0002-api-contracts-and-validation.md",
+        "grep -n '0002' docs/architecture/decisions/README.md"
+      ],
+      "references": [
+        "docs/architecture/decisions/0002-api-contracts-and-validation.md"
+      ]
+    },
+    {
+      "id": "M2-02",
+      "title": "Owner makes Docker available for the local database",
+      "milestone": "M2",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "The development machine can run the PostgreSQL container that M2-04 defines. Installing OS packages is outside what a worker may do.",
+      "scope": [
+        "Install Docker Engine with the Compose v2 plugin on the development machine, usable by the account that runs the worker",
+        "Alternative: if you prefer a natively installed PostgreSQL instead of Docker, say so in PROGRESS.md and adjust M2-04 before setting it back to todo",
+        "Optional, after M2-03 is done: create apps/api/.env from apps/api/.env.example (workers may not create .env files) so that pnpm --filter api dev and pnpm test:e2e work without exporting DATABASE_URL"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "docker compose version and docker run --rm hello-world succeed for the worker's account"
+      ],
+      "validation": [
+        "docker --version",
+        "docker compose version",
+        "docker run --rm hello-world"
+      ],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
+      ]
+    },
+    {
+      "id": "M2-03",
+      "title": "Prisma client, DATABASE_URL config and database module in apps/api",
+      "milestone": "M2",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "apps/api has a Prisma client behind one NestJS database module, configured from a validated DATABASE_URL, without any product model and without needing a running database to build, typecheck or unit-test.",
+      "scope": [
+        "Add the current stable Prisma release: prisma (dev) and @prisma/client at the same version, plus the PostgreSQL driver adapter the current Prisma docs require (@prisma/adapter-pg). Never a pre-release: on 2026-10-10 the prisma package's npm 'latest' tag pointed to 8.0.0-rc.22 while the stable line was 7.10.0, so pin the exact stable version. Follow the official Prisma docs for this version (NestJS guide, ESM, prisma.config.ts) instead of memory",
+        "If pnpm blocks Prisma's install scripts, allow only the Prisma packages that need them in pnpm-workspace.yaml",
+        "apps/api/prisma/schema.prisma: PostgreSQL datasource and the generator the current docs recommend. NO models (owner decision 2026-10-10: no User, Reading, Attempt, Progress or other product models until a feature needs them)",
+        "The generated client is not committed: ignore its output in git, ESLint and Prettier. A postinstall script in apps/api runs prisma generate, plus a db:generate script, so that pnpm install --frozen-lockfile && pnpm check && pnpm build works on a clean checkout without DATABASE_URL and without a database",
+        "DATABASE_URL is read in one place: a small typed config function in apps/api that validates it when the app starts (missing, empty, or not a postgresql:// or postgres:// URL makes startup fail with an error that names DATABASE_URL). The value is never logged, echoed in errors, or sent to a client",
+        "Local .env loading for the app and the Prisma CLI uses Node's built-in env-file support (process.loadEnvFile or --env-file-if-exists). Do not add dotenv or @nestjs/config unless the current Prisma docs make it unavoidable; record the reason if so",
+        "apps/api/.env.example: add DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep, with a comment that these are local-development placeholder credentials for the database M2-04 defines, not a secret",
+        "A NestJS database module (e.g. src/database/) that provides one PrismaService built from the validated URL and the driver adapter, connects lazily (the API starts and GET /health answers when the database is down), and disconnects on shutdown. AppModule imports it",
+        "Unit tests (no database): the config rejects a missing, empty and non-PostgreSQL DATABASE_URL with a message naming the variable and not containing the value, and accepts a valid URL"
+      ],
+      "outOfScope": [
+        "any Prisma model, table or migration",
+        "migration scripts and the migration workflow (M2-05)",
+        "Docker Compose or any local database (M2-04)",
+        "CI changes (M2-06)",
+        "readiness endpoint and database connectivity tests (M2-05)",
+        "class-validator, @nestjs/swagger, error format (ADR-0002: M2-07, M2-08)",
+        "a separate test database, seed data",
+        "hosting, data residency or a production database (TBD)"
+      ],
+      "acceptanceCriteria": [
+        "prisma and @prisma/client are the same exact stable version, recorded in PROGRESS.md with the adapter version",
+        "schema.prisma contains no model",
+        "pnpm install --frozen-lockfile, pnpm check and pnpm build pass with DATABASE_URL unset",
+        "The built API exits non-zero without DATABASE_URL, with a message naming DATABASE_URL; with a placeholder DATABASE_URL and no database it starts and GET /health returns 200 (both verified and recorded)",
+        "No generated Prisma file is tracked by git"
+      ],
+      "validation": [
+        "pnpm install --frozen-lockfile",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api test:e2e",
+        "start the built API without DATABASE_URL (expect a non-zero exit naming DATABASE_URL), then with DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep and curl -s localhost:3001/health",
+        "test -z \"$(git ls-files apps/api | grep -i generated)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md",
+        ".claude/rules/security/security.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md (db:generate, and that api e2e needs DATABASE_URL)",
+        "docs/architecture/BOUNDARIES.md (Prisma is used only inside apps/api through the database module)"
+      ]
+    },
+    {
+      "id": "M2-04",
+      "title": "Local development database (Docker Compose)",
+      "milestone": "M2",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M2-02", "M2-03"],
+      "goal": "One command starts a local PostgreSQL that matches apps/api/.env.example.",
+      "scope": [
+        "compose.yaml at the repository root with one postgres service: official postgres image pinned to the current stable major and minor (record it; M2-06 uses the same image), user/password/database ielts_prep matching .env.example, a named volume, a pg_isready healthcheck, port 5432 published on 127.0.0.1 only",
+        "Root scripts: db:up (start and wait until healthy) and db:down (stop, keep the volume)",
+        "README.md: local database steps (pnpm db:up; create apps/api/.env from .env.example)"
+      ],
+      "outOfScope": [
+        "migrations and connectivity checks (M2-05)",
+        "CI (M2-06)",
+        "a separate test database, seed data, admin tools (pgAdmin etc.)",
+        "any production or hosted database (hosting and data residency are TBD)"
+      ],
+      "acceptanceCriteria": [
+        "pnpm db:up starts a healthy database reachable at the .env.example URL",
+        "pnpm db:down stops it and the data volume survives a restart",
+        "The port is bound to 127.0.0.1 only"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "docker compose ps",
+        "docker compose exec postgres psql -U ielts_prep -d ielts_prep -c 'select 1'",
+        "pnpm db:down",
+        "pnpm check"
+      ],
+      "references": [".claude/rules/security/security.md", "README.md"],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md (db:up, db:down)",
+        "README.md"
+      ]
+    },
+    {
+      "id": "M2-05",
+      "title": "Migration workflow and database connectivity checks",
+      "milestone": "M2",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M2-04"],
+      "goal": "Schema changes follow one documented migration workflow that a tool checks, and the API can report whether its database is reachable.",
+      "scope": [
+        "apps/api scripts per the current Prisma docs: db:migrate (prisma migrate dev, for authors), db:deploy (prisma migrate deploy, for CI and later deployments), db:status (prisma migrate status), db:check (fails when schema.prisma and the committed migrations disagree, e.g. prisma migrate diff from the migrations to the schema with --exit-code, using a shadow database if the current docs require one)",
+        "No models and therefore no migration files are created (owner decision 2026-10-10). Add only what Prisma needs so that db:deploy, db:status and db:check succeed on an empty migration history",
+        "GET /health/ready: runs SELECT 1 through PrismaService ($queryRaw tagged template) and returns 200 {\"status\":\"ok\"} when the database answers and 503 when it does not. GET /health stays a liveness check without database access. Connection errors are logged without the connection string",
+        "e2e (Vitest + supertest): /health/ready returns 200 against the local database and 503 when DATABASE_URL points to a port where nothing listens",
+        "Migration rules as a path-scoped rule .claude/rules/backend/database.md (paths: apps/api/prisma/**, apps/api/src/database/**): a schema change and its migration are committed together; applied migrations are never edited; deployments run migrate deploy only; no product model without a feature task that needs it; Prisma types never appear in API responses (ADR-0002). Add it to the CLAUDE.md rules table"
+      ],
+      "outOfScope": [
+        "any model, table or seed data",
+        "a separate test database (added with the first test that writes data)",
+        "CI (M2-06)",
+        "the ADR-0002 error format (M2-07 applies it to every error, including this 503)"
+      ],
+      "acceptanceCriteria": [
+        "db:deploy, db:status and db:check pass against the local database",
+        "Adding a model to schema.prisma without a migration makes db:check fail (verified once, then reverted)",
+        "/health/ready returns 200 with the database up and 503 with it unreachable; the connection string appears in no output",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:deploy",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:status",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:check",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/security/security.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/architecture/decisions/0002-api-contracts-and-validation.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md (db:migrate, db:deploy, db:status, db:check)",
+        "CLAUDE.md (rules table: backend/database.md)"
+      ]
+    },
+    {
+      "id": "M2-06",
+      "title": "CI database job",
+      "milestone": "M2",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M2-05"],
+      "goal": "CI applies the migrations to a real PostgreSQL, checks for schema drift, and runs the API e2e tests against it on every push and pull request.",
+      "scope": [
+        "In .github/workflows/ci.yml, a second job beside the existing check job: a postgres service container with the same image as compose.yaml and non-secret CI-only credentials, DATABASE_URL set in the job env, then install --frozen-lockfile, db:deploy, db:check, and pnpm --filter api test:e2e",
+        "The existing check job stays unchanged and needs no database",
+        "Do NOT push. CI runs when the owner pushes"
+      ],
+      "outOfScope": [
+        "web Playwright e2e in CI (separate follow-up)",
+        "repository secrets, deployment, branch protection"
+      ],
+      "acceptanceCriteria": [
+        "The job runs the same commands that pass locally against the compose database (run them in that order and record the result)",
+        "ci.yml is valid YAML and uses no secrets"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:deploy",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:check",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api test:e2e",
+        "pnpm check"
+      ],
+      "references": [
+        "docs/engineering/QUALITY_GATES.md",
+        ".github/workflows/ci.yml"
+      ],
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md (CI description)"]
+    },
+    {
+      "id": "M2-07",
+      "title": "Global input validation and the API error format (ADR-0002)",
+      "milestone": "M2",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M2-01", "M2-03"],
+      "goal": "Every endpoint validates its input in one place and every error leaves the API in the one format of ADR-0002.",
+      "scope": [
+        "Add class-validator and class-transformer (current stable)",
+        "Register one global ValidationPipe through APP_PIPE with the options in the accepted ADR-0002 §3",
+        "One global exception filter through APP_FILTER that produces the ADR-0002 §4 body for HttpExceptions, validation failures (field paths and constraint names, never the rejected values), unknown routes (404 not_found) and unexpected errors (500 internal_error, generic message, logged server-side without request bodies or personal data)",
+        "One error response class with the codes in use, so M2-08 can document it",
+        "Tests: unit tests for the filter's mapping. e2e with a test-only controller and DTO defined in the test file (nothing test-only in src/): an unknown property, a wrong type and a nested invalid value each give 400 validation_failed with the right field and constraint; a valid payload reaches the handler transformed; an unknown route gives 404 not_found; a thrown Error gives 500 internal_error without its message or stack; if /health/ready exists, its 503 uses the format"
+      ],
+      "outOfScope": [
+        "OpenAPI (M2-08)",
+        "product endpoints or DTOs",
+        "CORS, auth, rate limiting, URL prefix, versioning (ADR-0002 §7)",
+        "a shared contracts package (ADR-0002 §6)"
+      ],
+      "acceptanceCriteria": [
+        "The behavior matches the accepted ADR-0002 §3 and §4",
+        "Removing the global pipe makes the validation e2e tests fail (verified once, then reverted)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0002-api-contracts-and-validation.md",
+        ".claude/rules/security/security.md",
+        "docs/architecture/BOUNDARIES.md",
+        ".claude/rules/testing/test-code.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/ARCHITECTURE.md (API contracts and validation: from Open decisions to Confirmed, ADR-0002)",
+        "docs/architecture/BOUNDARIES.md (the contract approach replaces 'TBD')"
+      ]
+    },
+    {
+      "id": "M2-08",
+      "title": "OpenAPI document via @nestjs/swagger (ADR-0002)",
+      "milestone": "M2",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M2-05", "M2-07"],
+      "goal": "The API describes itself in an OpenAPI document generated from its classes, available during development.",
+      "scope": [
+        "Add @nestjs/swagger (current stable, compatible with the installed NestJS 12)",
+        "One function builds the document (title, version from apps/api/package.json) and is used by main.ts and by the tests",
+        "Swagger UI at /docs and the JSON at /docs-json only when NODE_ENV is not production (ADR-0002 §5), read through the config from M2-03",
+        "Explicit decorators, no CLI plugin: response classes for GET /health and GET /health/ready (200 and 503), and the M2-07 error response class",
+        "Tests: the generated document lists both health operations with their response schemas and the error schema; e2e: /docs-json is served by default and returns 404 with NODE_ENV=production"
+      ],
+      "outOfScope": [
+        "generating web types from the document or a contracts package (ADR-0002 §6)",
+        "publishing docs in production (decided with hosting)"
+      ],
+      "acceptanceCriteria": [
+        "The document matches the code (checked by the tests)",
+        "Docs are not served in production mode (verified with the built API and NODE_ENV=production)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0002-api-contracts-and-validation.md",
+        ".claude/rules/security/security.md"
+      ],
+      "docsToUpdate": [
+        "docs/engineering/QUALITY_GATES.md (where the API docs are served)",
+        "CLAUDE.md (Current state: M2 backend foundation)"
+      ]
+    },
+    {
+      "id": "M10-01",
+      "title": "Replace the placeholder PWA icons with the brand kit's",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "The installed app and browser tabs show the real brand icons instead of plain red squares.",
+      "scope": [
+        "Copy pwa/icon-192.png, icon-512.png, maskable-512.png, apple-touch-icon-180.png and favicon.ico from the owner's brand kit (kept outside the repository at /var/www/IELTS_Prep_Brand_Kit.zip) into apps/web; only these files are tracked",
+        "Remove apps/web/public/icons/placeholder-*.png and update the paths in apps/web/src/app/manifest.ts; add the apple-touch-icon and favicon the way the installed Next.js version documents",
+        "Update the manifest e2e test if it names the placeholder files"
+      ],
+      "outOfScope": ["editing the brand assets", "other PWA changes"],
+      "acceptanceCriteria": [
+        "No placeholder icon remains",
+        "The manifest references existing files with the right sizes and purposes",
+        "All gates pass"
+      ],
+      "validation": ["pnpm check", "pnpm build", "pnpm test:e2e"],
+      "references": [
+        "docs/architecture/decisions/0001-initial-application-foundation.md",
+        "docs/execution/PROGRESS.md"
+      ],
+      "notes": "Follow-up created at the owner's request on 2026-10-10. Kept out of M2; the owner may move it to the active milestone at any time."
     }
   ]
 }
