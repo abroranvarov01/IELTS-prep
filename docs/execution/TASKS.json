@@ -964,7 +964,7 @@
       "title": "Global input validation and the API error format (ADR-0002)",
       "milestone": "M2",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M2-01", "M2-03"],
       "goal": "Every endpoint validates its input in one place and every error leaves the API in the one format of ADR-0002.",
       "scope": [
@@ -999,7 +999,8 @@
       "docsToUpdate": [
         "docs/architecture/ARCHITECTURE.md (API contracts and validation: from Open decisions to Confirmed, ADR-0002)",
         "docs/architecture/BOUNDARIES.md (the contract approach replaces 'TBD')"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M2-08",

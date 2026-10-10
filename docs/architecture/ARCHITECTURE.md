@@ -17,15 +17,16 @@ Changing these requires owner approval and an ADR.
 | AI scores are always presented as estimates | [PRODUCT.md](../product/PRODUCT.md#honest-feedback-non-negotiable) |
 | Launch market is Uzbekistan. No multi-region architecture up front. | [PRODUCT.md](../product/PRODUCT.md) |
 | **Foundation:** pnpm-workspace monorepo (`apps/web`, `apps/api`, `packages/*` on demand), Node 24 LTS, Tailwind CSS v4 tokens, next-intl with locale-prefixed URLs (`uz` default), Vitest (web and api) and Playwright, ESLint and Prettier, a PWA shell (Serwist, app-shell caching only), GitHub Actions CI. Implemented. | [ADR-0001](decisions/0001-initial-application-foundation.md), Accepted 2026-10-09 (amended §5, §7) |
+| **API contracts and validation:** REST + JSON, NestJS DTO and response classes, class-validator with one global `ValidationPipe` that rejects unknown properties, one error format for every error, OpenAPI via `@nestjs/swagger` outside production, no shared contracts package yet. Validation and the error format are implemented (`apps/api/src/errors/`); OpenAPI follows in M2-08. | Owner, 2026-10-10 ([ADR-0002](decisions/0002-api-contracts-and-validation.md)) |
 
-Still TBD until a current requirement exists: database schema (M2 adds Prisma without product models, owner decision 2026-10-10), API contract and validation approach (ADR-0002, Accepted, not yet implemented).
+Still TBD until a current requirement exists: database schema (M2 adds Prisma without product models, owner decision 2026-10-10).
 
 ## Open decisions (TBD)
 
 Do not invent answers to these in code. Each one is a candidate ADR.
 
 - **Hosting and data residency.** Uzbekistan's personal-data law contains data-localization requirements for citizens' personal data. Check the legal requirements before choosing hosting or managed databases.
-- **API contracts and validation.** Proposed in [ADR-0002](decisions/0002-api-contracts-and-validation.md) from the owner's 2026-10-10 decisions (REST + JSON, DTO classes, class-validator with a global `ValidationPipe`, one error format, OpenAPI via `@nestjs/swagger`, no shared contracts package yet). Accepted 2026-10-10; implemented by TASKS.json M2-07 and M2-08. How the web app gets API types is decided with its first consumer of an endpoint.
+- **API types in the web app.** How `apps/web` gets the API's request and response types (generated from the OpenAPI document, a shared package, or something else). Decide with the first web consumer of an endpoint ([ADR-0002 §6](decisions/0002-api-contracts-and-validation.md)).
 - **Authentication.** Methods (phone/SMS, Telegram, Google, email) and when registration is offered. Practice before registration is already a product decision ([PRODUCT.md](../product/PRODUCT.md#approved-product-principles)).
 - **AI provider and evaluation pipeline** for Writing/Speaking. This includes how estimates are calibrated and how user content is handled.
 - **Audio.** Delivery of Listening audio on weak connections. Capture, upload, and processing of Speaking recordings.
