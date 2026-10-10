@@ -50,7 +50,11 @@
   "levelCheck": {
     "title": "Find your level",
     "body": "A short level check shows where you are now and what to practice first.",
-    "start": "Start the level check"
+    "start": "Start the level check",
+    "comingSoon": {
+      "title": "The level check is being prepared",
+      "body": "It will be available here soon. Your goal is saved on this device."
+    }
   },
   "home": {
     "title": "Your next step",

@@ -1392,7 +1392,7 @@
       "title": "The diagnostic CTA's destination, as approved",
       "milestone": "M3",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M3-08"],
       "goal": "The diagnostic CTA on the onboarding invitation and on home leads where the owner decided in M3-05, and never to a dead end the spec does not describe.",
       "scope": [
@@ -1422,7 +1422,8 @@
       "docsToUpdate": [
         "CLAUDE.md (Current state)",
         "docs/product/FEATURE_MAP.md (Diagnostic assessment, if its status changes)"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M10-01",

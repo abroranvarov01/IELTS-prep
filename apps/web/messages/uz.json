@@ -50,7 +50,11 @@
   "levelCheck": {
     "title": "Darajangizni aniqlang",
     "body": "Qisqa daraja tekshiruvi hozirgi darajangizni va avval nimani mashq qilish kerakligini koʻrsatadi.",
-    "start": "Daraja tekshiruvini boshlash"
+    "start": "Daraja tekshiruvini boshlash",
+    "comingSoon": {
+      "title": "Daraja tekshiruvi tayyorlanmoqda",
+      "body": "Tez orada shu yerda paydo boʻladi. Maqsadingiz shu qurilmada saqlangan."
+    }
   },
   "home": {
     "title": "Keyingi qadamingiz",
