@@ -82,7 +82,11 @@
     },
     "answer": {
       "clear": "Javobni tozalash",
-      "chosenCount": "{total} tadan {count} tasi tanlandi"
+      "chosenCount": "{total} tadan {count} tasi tanlandi",
+      "choose": "Javobni tanlang",
+      "chosenFor": "{question} uchun tanlangan",
+      "selected": "Tanlangan",
+      "label": "{number}-javob"
     },
     "storage": {
       "unavailable": "Javoblar bu qurilmada saqlanmaydi. Sahifani yopmang."
@@ -107,6 +111,9 @@
     "flag": {
       "add": "Tekshirish uchun belgilash",
       "remove": "Belgini olib tashlash"
+    },
+    "evidence": {
+      "paragraph": "{letter} xatboshi"
     }
   }
 }

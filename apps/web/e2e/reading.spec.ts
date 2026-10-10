@@ -497,3 +497,82 @@ test.describe("choice questions", () => {
     });
   }
 });
+
+test.describe("matching questions", () => {
+  const answerButton = (page: Page) =>
+    sheet(page).locator("#question-body button").first();
+
+  test("an answer button opens the option list, and choosing returns to the question", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await goToQuestion(page, 14);
+    await expect(sheet(page).getByText("Paragraph A")).toBeVisible();
+    await page.getByRole("button", { name: en.reading.answer.choose }).click();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Paragraph A" }),
+    ).toBeFocused();
+    const viewport = page.viewportSize()!.height;
+    await expect
+      .poll(async () => (await sheet(page).boundingBox())?.height)
+      .toBeGreaterThan(viewport - 60);
+
+    await page
+      .getByRole("button", { name: "ii Turning empty roofs into green space" })
+      .click();
+    await expect(answerButton(page)).toHaveText(
+      /ii Turning empty roofs into green space/,
+    );
+    await expect(answerButton(page)).toBeFocused();
+
+    await page.getByRole("button", { name: en.reading.question.next }).click();
+    await page.getByRole("button", { name: en.reading.answer.choose }).click();
+    await expect(
+      page.getByText(fill(en.reading.answer.chosenFor, { question: 14 })),
+    ).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(answerButton(page)).toBeFocused();
+  });
+
+  test("a word-box summary shows its gaps and fills them", async ({ page }) => {
+    await startPractice(page);
+    await goToQuestion(page, 38);
+    await expect(sheet(page).getByText("(38)")).toBeVisible();
+    await page.getByRole("button", { name: en.reading.answer.choose }).click();
+    await page.getByRole("button", { name: "A brief" }).click();
+    await expect(sheet(page).getByText("(38)").locator("..")).toContainText(
+      "brief",
+    );
+  });
+
+  test("works with the keyboard only", async ({ page }) => {
+    await startPractice(page);
+    await goToQuestion(page, 19);
+    await page.getByRole("button", { name: en.reading.answer.choose }).focus();
+    await page.keyboard.press("Enter");
+    const d = page.getByRole("button", { name: "D", exact: true });
+    for (
+      let i = 0;
+      i < 10 && !(await d.evaluate((e) => e === document.activeElement));
+      i++
+    ) {
+      await page.keyboard.press("Tab");
+    }
+    await page.keyboard.press("Enter");
+    await expect(answerButton(page)).toHaveText(/^D/);
+  });
+
+  test("a long option list fits 320 px and has no WCAG 2.2 AA violations", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await startPractice(page, "ru");
+    await goToQuestion(page, 14, "ru");
+    await page.getByRole("button", { name: ru.reading.answer.choose }).click();
+    await noOverflow(page);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+});

@@ -82,7 +82,11 @@
     },
     "answer": {
       "clear": "Clear answer",
-      "chosenCount": "{count} of {total} chosen"
+      "chosenCount": "{count} of {total} chosen",
+      "choose": "Choose an answer",
+      "chosenFor": "Chosen for {question}",
+      "selected": "Selected",
+      "label": "Answer {number}"
     },
     "storage": {
       "unavailable": "Your answers can't be saved on this device. Don't close this page."
@@ -107,6 +111,9 @@
     "flag": {
       "add": "Mark for review",
       "remove": "Remove mark"
+    },
+    "evidence": {
+      "paragraph": "Paragraph {letter}"
     }
   }
 }

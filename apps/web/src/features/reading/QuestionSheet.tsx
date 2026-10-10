@@ -4,9 +4,11 @@ import { useTranslations } from "next-intl";
 import { type PointerEvent, useEffect, useRef, useState } from "react";
 import { QUESTION_COUNT } from "@/domain/reading/content";
 import { type SheetState, answeredNumbers } from "@/domain/reading/session";
-import { unitOf } from "@/domain/reading/units";
+import { type QuestionUnit, unitOf } from "@/domain/reading/units";
 import { ChoiceQuestion } from "./ChoiceQuestion";
+import { MatchingQuestion } from "./MatchingQuestion";
 import { MultiChoiceQuestion } from "./MultiChoiceQuestion";
+import { OptionPicker } from "./OptionPicker";
 import { FlagIcon, QuestionNavigator } from "./QuestionNavigator";
 import { useReading } from "./reading-context";
 import { SecondaryButton } from "./SecondaryButton";
@@ -28,11 +30,15 @@ type Drag = {
   moved: boolean;
 };
 
+/** What the open sheet shows: the question, the navigator, or a question's option list. */
+type Panel = "question" | "navigator" | "options";
+type FocusTarget = "navigatorButton" | "answerButton";
+
 /**
  * The persistent, non-modal question sheet (READING_EXPERIENCE.md, Mobile
  * reading screen; ADR-0007): three states, each reachable by the handle button
- * as well as by dragging, docked above the phone keyboard while typing, with
- * the question navigator opening inside it.
+ * as well as by dragging, docked above the phone keyboard while typing. The
+ * navigator and option lists open inside it, expanded.
  */
 export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
   const t = useTranslations("reading");
@@ -46,14 +52,16 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
 
   const sheetRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const navigatorHeadingRef = useRef<HTMLHeadingElement>(null);
+  const panelHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatorButtonRef = useRef<HTMLButtonElement>(null);
+  const answerAreaRef = useRef<HTMLDivElement>(null);
   const wasDragged = useRef(false);
   const isFirstQuestion = useRef(true);
-  const returnFocusToNavigatorButton = useRef(false);
+  // Where focus goes when a panel closes, once that control is rendered again.
+  const returnFocusTo = useRef<FocusTarget | null>(null);
   const [drag, setDrag] = useState<Drag | null>(null);
   const [keyboard, setKeyboard] = useState({ inset: 0, viewport: 0 });
-  const [showNavigator, setShowNavigator] = useState(false);
+  const [panel, setPanel] = useState<Panel>("question");
 
   // Keep the sheet above the on-screen keyboard (VisualViewport, ADR-0007).
   useEffect(() => {
@@ -84,43 +92,50 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
     headingRef.current?.focus();
   }, [number]);
 
-  // Opening the navigator focuses its heading; closing it with Back or Escape
-  // returns focus to "All questions" once that button is rendered again.
+  // Opening a panel focuses its heading; closing one returns focus to the
+  // control that opened it.
   useEffect(() => {
-    if (showNavigator) navigatorHeadingRef.current?.focus();
-    else if (returnFocusToNavigatorButton.current) {
-      returnFocusToNavigatorButton.current = false;
-      navigatorButtonRef.current?.focus();
+    if (panel !== "question") {
+      panelHeadingRef.current?.focus();
+      return;
     }
-  }, [showNavigator]);
+    if (returnFocusTo.current === "navigatorButton")
+      navigatorButtonRef.current?.focus();
+    if (returnFocusTo.current === "answerButton")
+      answerAreaRef.current?.querySelector("button")?.focus();
+    returnFocusTo.current = null;
+  }, [panel]);
 
-  // Escape closes the navigator (a document listener: the sheet is not a control).
+  const setSheet = (sheet: SheetState) =>
+    send({ type: "setView", view: { sheet } });
+  const openPanel = (opened: Exclude<Panel, "question">) => {
+    setPanel(opened);
+    setSheet("expanded");
+  };
+  const closePanel = (focus: FocusTarget | null) => {
+    returnFocusTo.current = focus;
+    setPanel("question");
+    setSheet("partial");
+  };
+  const opener: FocusTarget =
+    panel === "navigator" ? "navigatorButton" : "answerButton";
+
+  // Escape closes a panel (a document listener: the sheet is not a control).
   useEffect(() => {
-    if (!showNavigator) return;
+    if (panel === "question") return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      returnFocusToNavigatorButton.current = true;
-      setShowNavigator(false);
+      returnFocusTo.current =
+        panel === "navigator" ? "navigatorButton" : "answerButton";
+      setPanel("question");
       send({ type: "setView", view: { sheet: "partial" } });
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [showNavigator, send]);
+  }, [panel, send]);
 
-  const setSheet = (sheet: SheetState) =>
-    send({ type: "setView", view: { sheet } });
-  const openNavigator = () => {
-    setShowNavigator(true);
-    setSheet("expanded");
-  };
-  const closeNavigator = () => {
-    returnFocusToNavigatorButton.current = true;
-    setShowNavigator(false);
-    setSheet("partial");
-  };
   const chooseFromNavigator = (target: number) => {
-    setShowNavigator(false);
-    setSheet("partial");
+    closePanel(null);
     if (target === number) headingRef.current?.focus();
     else goTo(target);
   };
@@ -152,7 +167,7 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
     wasDragged.current = drag.moved;
     if (drag.moved) {
       const target = nearestState(drag.height);
-      if (target === "collapsed") setShowNavigator(false);
+      if (target === "collapsed") setPanel("question");
       setSheet(target);
     }
     setDrag(null);
@@ -162,7 +177,7 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
       wasDragged.current = false;
       return;
     }
-    if (state !== "collapsed") setShowNavigator(false);
+    if (state !== "collapsed") setPanel("question");
     setSheet(state === "collapsed" ? "partial" : "collapsed");
   };
 
@@ -232,7 +247,7 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
         )}
       </div>
 
-      {isOpen && !showNavigator && (
+      {isOpen && panel === "question" && (
         <div className="flex shrink-0 flex-wrap gap-x-4 px-gutter">
           <button
             type="button"
@@ -246,7 +261,7 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
           <button
             ref={navigatorButtonRef}
             type="button"
-            onClick={openNavigator}
+            onClick={() => openPanel("navigator")}
             className="inline-flex min-h-12 items-center gap-2 font-medium underline"
           >
             <GridIcon />
@@ -255,34 +270,45 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
         </div>
       )}
 
-      {isOpen && showNavigator && (
+      {isOpen && panel !== "question" && unit && (
         <div
           id="question-body"
           className="min-h-0 flex-1 overflow-y-auto px-gutter pt-2 pb-4"
         >
-          <div className="flex items-center justify-between gap-4">
-            <h2
-              ref={navigatorHeadingRef}
-              tabIndex={-1}
-              className="text-heading-3 font-bold focus:outline-none"
-            >
-              {t("navigator.open")}
-            </h2>
-            <button
-              type="button"
-              onClick={closeNavigator}
-              className="inline-flex min-h-12 items-center font-medium underline"
-            >
-              {t("sheet.back")}
-            </button>
-          </div>
-          <div className="mt-4">
-            <QuestionNavigator onChoose={chooseFromNavigator} />
-          </div>
+          {panel === "navigator" ? (
+            <>
+              <div className="flex items-center justify-between gap-4">
+                <h2
+                  ref={panelHeadingRef}
+                  tabIndex={-1}
+                  className="text-heading-3 font-bold focus:outline-none"
+                >
+                  {t("navigator.open")}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => closePanel(opener)}
+                  className="inline-flex min-h-12 items-center font-medium underline"
+                >
+                  {t("sheet.back")}
+                </button>
+              </div>
+              <div className="mt-4">
+                <QuestionNavigator onChoose={chooseFromNavigator} />
+              </div>
+            </>
+          ) : (
+            <OptionPicker
+              unit={unit}
+              headingRef={panelHeadingRef}
+              onBack={() => closePanel(opener)}
+              onChosen={() => closePanel("answerButton")}
+            />
+          )}
         </div>
       )}
 
-      {isOpen && !showNavigator && unit && (
+      {isOpen && panel === "question" && unit && (
         <>
           {/* A new element per question, so each one starts at its top. */}
           <div
@@ -293,13 +319,8 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
             <p lang="en" className="text-text-secondary">
               {unit.group.instruction}
             </p>
-            <div className="mt-4">
-              {unit.kind === "single" && (
-                <ChoiceQuestion key={unit.key} unit={unit} />
-              )}
-              {unit.kind === "multi" && (
-                <MultiChoiceQuestion key={unit.key} unit={unit} />
-              )}
+            <div ref={answerAreaRef} className="mt-4">
+              <QuestionBody unit={unit} onChoose={() => openPanel("options")} />
             </div>
           </div>
           <div className="flex shrink-0 justify-between gap-4 border-t border-border-subtle px-gutter py-2">
@@ -320,6 +341,26 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
       )}
     </section>
   );
+}
+
+/** The question's own interaction, by how it is answered (READING_EXPERIENCE.md, Question types). */
+function QuestionBody({
+  unit,
+  onChoose,
+}: {
+  unit: QuestionUnit;
+  onChoose: () => void;
+}) {
+  switch (unit.kind) {
+    case "single":
+      return <ChoiceQuestion unit={unit} />;
+    case "multi":
+      return <MultiChoiceQuestion unit={unit} />;
+    case "select":
+      return <MatchingQuestion unit={unit} onChoose={onChoose} />;
+    case "text":
+      return null;
+  }
 }
 
 function nearestState(height: number): SheetState {

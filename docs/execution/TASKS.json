@@ -2047,7 +2047,7 @@
       "title": "Question renderers: matching types",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-15"],
       "goal": "The approved matching types (e.g. headings, information, features, sentence endings, summary from a word box) render and record answers as approved.",
       "scope": [
@@ -2074,7 +2074,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         "docs/architecture/decisions/0004-web-feature-structure.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-17",

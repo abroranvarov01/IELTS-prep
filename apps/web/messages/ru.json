@@ -82,7 +82,11 @@
     },
     "answer": {
       "clear": "Очистить ответ",
-      "chosenCount": "Выбрано {count} из {total}"
+      "chosenCount": "Выбрано {count} из {total}",
+      "choose": "Выберите ответ",
+      "chosenFor": "Выбрано для {question}",
+      "selected": "Выбрано",
+      "label": "Ответ {number}"
     },
     "storage": {
       "unavailable": "Ответы не сохраняются на этом устройстве. Не закрывайте страницу."
@@ -107,6 +111,9 @@
     "flag": {
       "add": "Отметить для проверки",
       "remove": "Снять отметку"
+    },
+    "evidence": {
+      "paragraph": "Абзац {letter}"
     }
   }
 }
