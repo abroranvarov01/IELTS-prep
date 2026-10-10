@@ -71,7 +71,8 @@
     "sheet": {
       "label": "Savollar",
       "show": "Savolni koʻrsatish",
-      "hide": "Savolni yashirish"
+      "hide": "Savolni yashirish",
+      "back": "Orqaga"
     },
     "question": {
       "of": "{total} tadan {number}-savol",
@@ -94,7 +95,17 @@
     },
     "start": "Boshlash",
     "navigator": {
-      "answered": "javob berilgan"
+      "answered": "javob berilgan",
+      "open": "Barcha savollar",
+      "passage": "{number}-matn",
+      "item": "{number}-savol, {states}",
+      "unanswered": "javob yoʻq",
+      "flagged": "tekshirish uchun belgilangan",
+      "current": "joriy"
+    },
+    "flag": {
+      "add": "Tekshirish uchun belgilash",
+      "remove": "Belgini olib tashlash"
     }
   }
 }

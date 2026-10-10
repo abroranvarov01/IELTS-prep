@@ -71,7 +71,8 @@
     "sheet": {
       "label": "Questions",
       "show": "Show question",
-      "hide": "Hide question"
+      "hide": "Hide question",
+      "back": "Back"
     },
     "question": {
       "of": "Question {number} of {total}",
@@ -94,7 +95,17 @@
     },
     "start": "Start",
     "navigator": {
-      "answered": "answered"
+      "answered": "answered",
+      "open": "All questions",
+      "passage": "Passage {number}",
+      "item": "Question {number}, {states}",
+      "unanswered": "no answer",
+      "flagged": "marked for review",
+      "current": "current"
+    },
+    "flag": {
+      "add": "Mark for review",
+      "remove": "Remove mark"
     }
   }
 }

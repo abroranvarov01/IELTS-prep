@@ -138,6 +138,20 @@ test("Next and Previous move between questions, focus the new question, and show
   ).toBeVisible();
 });
 
+test("each question starts at its top, even after scrolling the previous one", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await startPractice(page);
+  const body = page.locator("#question-body");
+  await body.evaluate((e) => e.scrollTo(0, e.scrollHeight));
+  expect(await body.evaluate((e) => e.scrollTop)).toBeGreaterThan(0);
+
+  await page.getByRole("button", { name: en.reading.question.next }).click();
+  await expect(questionHeading(page, "en", 2)).toBeFocused();
+  expect(await body.evaluate((e) => e.scrollTop)).toBe(0);
+});
+
 test("the handle button moves the sheet between collapsed and partial, also by keyboard", async ({
   page,
 }) => {
@@ -279,3 +293,117 @@ for (const locale of routing.locales) {
     }
   });
 }
+
+test.describe("question navigator", () => {
+  const navButton = (page: Page, name: string | RegExp) =>
+    sheet(page).getByRole("button", { name });
+
+  test("opens in the expanded sheet with all 40 questions, and jumps across passages", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await page.getByRole("button", { name: en.reading.navigator.open }).click();
+    await expect(
+      page.getByRole("heading", { name: en.reading.navigator.open }),
+    ).toBeFocused();
+    await expect(
+      sheet(page).getByRole("button", { name: /^Question \d+,/ }),
+    ).toHaveCount(40);
+    const viewport = page.viewportSize()!.height;
+    await expect
+      .poll(async () => (await sheet(page).boundingBox())?.height)
+      .toBeGreaterThan(viewport - 60);
+
+    await navButton(page, "Question 30, no answer").click();
+    await expect(questionHeading(page, "en", 30)).toBeFocused();
+    await expect(
+      page.getByText(fill(en.reading.passageOf, { number: 3, total: 3 })),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: "Should Homework Be Shorter?",
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: en.reading.navigator.open }),
+    ).toHaveCount(0);
+  });
+
+  test("shows answered, marked and current questions in words", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await choose(page, "TRUE");
+    await page.getByRole("button", { name: en.reading.question.next }).click();
+    await page.getByRole("button", { name: en.reading.flag.add }).click();
+    await expect(
+      page.getByRole("button", { name: en.reading.flag.remove }),
+    ).toHaveAttribute("aria-pressed", "true");
+
+    await page.getByRole("button", { name: en.reading.navigator.open }).click();
+    await expect(navButton(page, "Question 1, answered")).toBeVisible();
+    await expect(
+      navButton(page, "Question 2, no answer, marked for review, current"),
+    ).toBeVisible();
+  });
+
+  test("Back and Escape close it and return focus", async ({ page }) => {
+    await startPractice(page);
+    const open = page.getByRole("button", { name: en.reading.navigator.open });
+    await open.click();
+    await page.getByRole("button", { name: en.reading.sheet.back }).click();
+    await expect(open).toBeFocused();
+
+    await open.click();
+    await page.keyboard.press("Escape");
+    await expect(open).toBeFocused();
+    await expect(page.getByRole("radio", { name: "TRUE" })).toBeVisible();
+  });
+
+  test("works with the keyboard only", async ({ page }) => {
+    await startPractice(page);
+    await page.getByRole("button", { name: en.reading.navigator.open }).focus();
+    await page.keyboard.press("Enter");
+    const last = navButton(page, "Question 40, no answer");
+    for (
+      let i = 0;
+      i < 60 && !(await last.evaluate((e) => e === document.activeElement));
+      i++
+    ) {
+      await page.keyboard.press("Tab");
+    }
+    await expect(last).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(questionHeading(page, "en", 40)).toBeFocused();
+  });
+
+  test("fits 320 px with six questions per row", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await startPractice(page);
+    await page.getByRole("button", { name: en.reading.navigator.open }).click();
+    const tops = await sheet(page)
+      .getByRole("button", { name: /^Question ([1-7]),/ })
+      .evaluateAll((buttons) =>
+        buttons.map((b) => Math.round(b.getBoundingClientRect().top)),
+      );
+    expect(new Set(tops.slice(0, 6)).size).toBe(1);
+    expect(tops[6]).toBeGreaterThan(tops[0]!);
+    await noOverflow(page);
+  });
+
+  for (const locale of ["en", "ru"] as const) {
+    test(`has no WCAG 2.2 AA violations when open in /${locale}`, async ({
+      page,
+    }) => {
+      await startPractice(page, locale);
+      await page
+        .getByRole("button", { name: catalogs[locale].reading.navigator.open })
+        .click();
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+        .analyze();
+      expect(results.violations).toEqual([]);
+    });
+  }
+});

@@ -1974,7 +1974,7 @@
       "title": "Question navigator for the full test",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-13"],
       "goal": "The user sees every question's state and jumps to any question across all passages, as approved.",
       "scope": [
@@ -2004,7 +2004,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         "docs/architecture/decisions/0004-web-feature-structure.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-15",
