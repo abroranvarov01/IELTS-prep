@@ -1648,7 +1648,7 @@
       "title": "Propose the design values the Reading engine needs",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-04"],
       "goal": "Turn every visual decision in the M4 drafts that is not approved yet into one concrete proposal.",
       "scope": [
@@ -1672,7 +1672,8 @@
         "docs/design/UI_ANTI_PATTERNS.md",
         "docs/product/READING_EXPERIENCE.md"
       ],
-      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"]
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-06",

@@ -55,6 +55,8 @@ Red is the application's **unmistakable** primary action color. No other color (
 
 **Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02): `text.secondary` (the "You can change this later." line and the step indicator text), `border.control` (the answer option's boundary), and `border.subtle` (the progress track, decorative). `text.tertiary` remains a proposal until used.
 
+**PROPOSED for approval in M4** (task M4-05): `text.tertiary` (disabled option text in "choose several").
+
 ### Status colors
 
 Status colors (correct, incorrect, warning, info) are **TBD** and will be set at implementation. Constraints:
@@ -128,6 +130,8 @@ Soft, modern surfaces with moderately generous corners, applied **systematically
 Primary buttons use `radius.md`. They are not pills. Nested surfaces use a smaller radius than their container.
 
 **Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02): `radius.md` (14 px: the primary button and the answer option) and `radius.full` (the step indicator's progress track). The others remain proposals until used.
+
+**PROPOSED for approval in M4** (task M4-05): `radius.sm` (navigator cells, the selected-sentence background) and `radius.xl` (the question sheet's top corners).
 
 ## Shadows / elevation
 
@@ -258,4 +262,69 @@ This would be one new layout token (a container width) used by onboarding and ho
 ### Spacing used by these components
 
 4 (progress bar height), 8 (heading to sentence, indicator to bar), 12 (button vertical padding, gap between answers), 16 (gutter, answer horizontal padding), 24 (button horizontal padding, H1 to block, sentence to button, indicator to question), 32 (block to goal line), 48 (minimum heights). All are on the proposed 4 px scale.
+
+## M4 components (Reading)
+
+**PROPOSED: awaiting owner approval** (task M4-05, decided at the M4-09 gate). Visual values for the M4 Reading drafts ([READING_EXPERIENCE.md, M4 specifications](../product/READING_EXPERIENCE.md#m4-specifications-drafts)). Reused unchanged: the brand palette, the type scale (including the approved Heading 3 and passage sizes), the focus style, motion, the breakpoints, the M3 primary button, quiet link and answer option. Contrast computed with the WCAG 2.x formula. Status colors (correct/incorrect) stay TBD: M4 shows no correctness (M4-01 open question 2).
+
+### New color: passage highlight
+
+| Token | Proposed value | Use | Contrast |
+|---|---|---|---|
+| `highlight` | `#FFEFA3` (soft yellow) | Background of highlighted sentences (`<mark>`) | `ink` text on it 16.04:1. Against white 1.16:1. |
+
+- Yellow is what readers expect from a highlighter (computer-delivered IELTS uses it too), and it is clearly not the red of actions or the blush of selection (blush against it 1.30:1, plus selection has its own underline below).
+- The tint is light by design, so the text stays easy to read. A highlight is a reading aid the user made, not information needed to understand the page; screen readers get it from `<mark>`. If the owner wants highlights to stand out more, the option is a 2 px underline in `ink` as well.
+
+### Test bar
+- 48 px high, `surface.base`, a 1 px `border.subtle` line under it (decorative).
+- "Exit" in the quiet-link style with a 48 px tap area; "Passage 1 of 3" in body text, weight 500; the timer in body text, weight 700, with tabular figures so it does not jiggle, weight 800 from 5 minutes left.
+
+### Passage
+- The approved passage size (Literata 17 px, line height 1.6), `ink` (18.58:1). Paragraph spacing 16 px.
+- Width: the full width between the gutters on phones; from the tablet breakpoint a reading measure of **40rem** (about 70 characters of Literata at 17 px).
+- Passage title: Heading 2 (Onest). Paragraph letters: bold Onest in `text.secondary` (8.22:1) at the start of the paragraph, followed by a space; not a separate column, so phones lose no width.
+
+### Sentences: keyboard focus, selection, highlight, pin marker
+- **Keyboard focus** on a sentence: the approved focus ring.
+- **Selected** (action bar open): `brand.blush` background (`ink` 12.37:1) with a 2 px `ink` underline, `radius.sm` corners, so selection is not shown by color alone.
+- **Highlighted:** the `highlight` background above.
+- **Pin marker** (the current question's pins): an inline chip before the sentence, `radius.full`, 1 px `ink` border, a 14 px pin icon and the question number in bold meta text, `ink` on `surface.base` (18.58:1).
+
+### Sentence action bar
+- Floats 8 px above the sheet, the full width between the gutters on phones (at most 36rem), `surface.base`, `radius.md`, the approved raised shadow, 56 px high; its actions are quiet buttons with an icon and a label, each at least 48 px.
+
+### Question sheet (phone and tablet)
+- `surface.base`, `radius.xl` top corners, the approved raised shadow; 16 px side padding.
+- **Handle:** a 32 × 4 px bar in `border.control` (3.22:1 on white) centered in a 48 px-high button.
+- **Heights:** collapsed = its content (handle and header, about 96 px); partial = 45% of the visible viewport height, at least 240 px; expanded = the visible height below the test bar. State changes animate height with the approved "base" duration (200 ms) and easing, none with reduced motion.
+- **Header row:** "Question 5 of 40" in Heading 3 (18 px, 700), the flag toggle and "All questions" as icon-plus-label quiet buttons, 48 px high.
+- **Footer row:** Previous and Next as **secondary buttons** (new component, below); the red primary button only for "Finish test".
+
+### Secondary button (new)
+- For Previous / Next and similar navigation that must look like buttons but not compete with the red action: 48 px minimum height, 12/24 px padding, `radius.md`, 1 px `border.control` boundary (3.22:1), `ink` text weight 500 on `surface.base`; hover: `ink` boundary; pressed: `surface.warm` fill (`ink` 17.68:1); focus: the approved ring.
+
+### Choice controls in the sheet
+- **Option rows** reuse the approved M3 answer option (default, hover, pressed, focus, selected with `brand.blush`, the 2 px `ink` ring and the check mark), with a 20 px indicator at the start: a circle for "choose one" (radio) and a square with 4 px corners for "choose several" (checkbox; 4 px is a local dimension of this one indicator, since `radius.sm` would make a 20 px square look round, per the Token policy's "may stay local"), both with a 2 px `border.control` outline, filled `ink` with a white dot or check when chosen. The option letter is bold before the text.
+- **Disabled** (the limit of "choose several" reached): text in `text.tertiary` (6.24:1 on white), boundary `border.subtle`, no hover.
+- **Answer button** ("choose from a list"): the option-row look with a trailing chevron; "Choose an answer" in `text.secondary` (8.22:1) when empty, the chosen option's letter and text in `ink` when filled.
+- **Typed-answer field:** 48 px high, 1 px `border.control` boundary (3.22:1), `radius.md`, 12/16 px padding, body text; focus: the approved ring.
+- **Gaps in summaries and notes:** the number in bold followed by a 2 px `ink` underline as wide as about six characters; the **current gap** gets the selected look (`brand.blush` background, `radius.sm`).
+- **Word-limit warning** (Practice): body text in `ink` with a 20 px warning icon (a circle with "!"), not a status color.
+
+### "Your evidence" block
+- Each pinned sentence as a quote on `surface.warm` with `radius.md`, 12/16 px padding: the paragraph label in meta text `text.secondary` (7.83:1 on warm), the sentence in the approved passage typography (`ink`, 17.68:1 on warm), then "Show in passage" and "Remove from evidence" as quiet links.
+
+### Question navigator
+- Cells 44 × 44 px with 4 px gaps, `radius.sm`, the number in body text weight 700 with tabular figures.
+- **Unanswered:** `surface.base` with a 1 px `border.control` boundary (3.22:1). **Answered:** `ink` fill with a `surface.base` number (18.58:1). **Current:** a 3 px `ink` bar 4 px under the cell, in addition to its fill or outline. **Marked for review:** a 16 px badge in the top corner: a `surface.base` circle with a 1 px `ink` border and an `ink` flag. Each state is a shape, so none relies on color.
+- Group headings ("Passage 1") in Heading 3.
+
+### Desktop exam layout (from 64rem / 1024 px)
+- Columns: passage 55%, questions 45%, separated by a 1 px `border.subtle` line (decorative: the columns are also separated by space and scroll on their own); both on `surface.base`; the passage at the 40rem measure inside its column.
+- The current question in the question column: a 4 px `ink` bar along its start edge.
+- Navigator bar: 64 px high with a 1 px `border.subtle` line above it; the same 44 px cells; other passages as secondary buttons with their progress.
+
+### Tokens this would add
+`--color-highlight`, `--container-measure` (40rem), `--breakpoint-desktop` (the approved 64rem, first use), and the approved "base" duration (200 ms) for the sheet. Everything else uses existing or approved values.
 
