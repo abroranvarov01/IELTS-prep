@@ -1347,7 +1347,7 @@
       "title": "Home: the next action and the target band",
       "milestone": "M3",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M3-07"],
       "goal": "A returning user's home answers 'What should I do now to improve IELTS?' with one dominant next action, as the approved spec describes.",
       "scope": [
@@ -1382,7 +1382,10 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md"
       ],
-      "docsToUpdate": ["docs/product/FEATURE_MAP.md (Personalized next action)"]
+      "docsToUpdate": [
+        "docs/product/FEATURE_MAP.md (Personalized next action)"
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M3-09",

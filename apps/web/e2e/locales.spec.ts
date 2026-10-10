@@ -1,6 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { routing } from "../src/i18n/routing";
+import { saveGoal } from "./goal";
+
+// These tests visit home as a returning user (home sends a new one to onboarding).
+test.beforeEach(async ({ context, baseURL }) => {
+  await saveGoal(context, baseURL);
+});
 
 test.describe("visiting / with a supported browser language", () => {
   test.use({ locale: "ru-RU" });

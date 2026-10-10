@@ -51,5 +51,13 @@
     "title": "Darajangizni aniqlang",
     "body": "Qisqa daraja tekshiruvi hozirgi darajangizni va avval nimani mashq qilish kerakligini koʻrsatadi.",
     "start": "Daraja tekshiruvini boshlash"
+  },
+  "home": {
+    "title": "Keyingi qadamingiz",
+    "goal": {
+      "targetBand": "Maqsadli ball: <b>{band}</b>",
+      "targetBandNotSet": "Maqsadli ball: hali tanlanmagan",
+      "change": "Maqsadni oʻzgartirish"
+    }
   }
 }

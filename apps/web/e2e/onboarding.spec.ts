@@ -64,7 +64,7 @@ for (const locale of routing.locales) {
       ).toHaveAttribute("href", `/${locale}/level-check`);
       await expect(
         page.getByRole("link", { name: messages.onboarding.notNow }),
-      ).toHaveAttribute("href", `/${locale}`);
+      ).toHaveAttribute("href", `/${locale}?onboarding=later`);
 
       const cookie = await goalCookie(context);
       expect(cookie).toMatchObject({

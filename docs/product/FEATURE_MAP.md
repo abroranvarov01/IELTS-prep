@@ -7,7 +7,7 @@ Status values: `Not started` · `Designing` · `In progress` · `Shipped`. Seque
 | Area | Intent (one line) | Status |
 |---|---|---|
 | Diagnostic assessment | Find the user's starting level quickly, without a full mock test. | Not started |
-| Personalized next action | Returning users see the single most useful thing to do now. Personalization may use target band and exam date. | Not started |
+| Personalized next action | Returning users see the single most useful thing to do now. Personalization may use target band and exam date. | In progress (M3: home with one next action, the level check; guest goal on the device) |
 | Reading practice | Phone-first Reading with a passage-first layout, a question bottom sheet, Pin Evidence, and Practice/Exam modes. UX direction approved: [READING_EXPERIENCE.md](READING_EXPERIENCE.md). | Not started |
 | Listening practice | Audio plus questions, with realistic play-once behavior in exam mode. | Not started |
 | Writing practice | Task 1 / Task 2 practice with AI-estimated feedback. | Not started |

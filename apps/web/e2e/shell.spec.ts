@@ -3,6 +3,12 @@ import en from "../messages/en.json";
 import ru from "../messages/ru.json";
 import uz from "../messages/uz.json";
 import { routing } from "../src/i18n/routing";
+import { saveGoal } from "./goal";
+
+// These tests visit home as a returning user (home sends a new one to onboarding).
+test.beforeEach(async ({ context, baseURL }) => {
+  await saveGoal(context, baseURL);
+});
 
 const catalogs = { uz, ru, en };
 

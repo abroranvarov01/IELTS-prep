@@ -303,7 +303,7 @@ The questions as they were put to the owner, with the options considered:
 | `levelCheck.start` | The red button on step 3 and home | Start the level check | Начать проверку уровня | Daraja tekshiruvini boshlash |
 | `onboarding.notNow` | Quiet link under the step 3 button | Not now | Не сейчас | Hozir emas |
 | `home.title` | Home H1 and page title | Your next step | Ваш следующий шаг | Keyingi qadamingiz |
-| `home.goal.targetBand` | Goal line. `{band}` is the band in IELTS notation | Target band: {band} | Целевой балл: {band} | Maqsadli ball: {band} |
+| `home.goal.targetBand` | Goal line. `{band}` is the band in IELTS notation; `<b>` marks it bold (markup only, M3-08) | Target band: <b>{band}</b> | Целевой балл: <b>{band}</b> | Maqsadli ball: <b>{band}</b> |
 | `home.goal.targetBandNotSet` | Goal line when the band is "I don't know yet" | Target band: not set yet | Целевой балл: пока не выбран | Maqsadli ball: hali tanlanmagan |
 | `home.goal.change` | Link on the goal line | Change goal | Изменить цель | Maqsadni oʻzgartirish |
 | `levelCheck.comingSoon.title` | The interim level-check page's H1 and page title (open question 1, decided: a) | The level check is being prepared | Проверка уровня готовится | Daraja tekshiruvi tayyorlanmoqda |

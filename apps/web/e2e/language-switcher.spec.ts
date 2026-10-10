@@ -4,6 +4,7 @@ import en from "../messages/en.json";
 import ru from "../messages/ru.json";
 import uz from "../messages/uz.json";
 import { routing } from "../src/i18n/routing";
+import { saveGoal } from "./goal";
 
 type Locale = (typeof routing.locales)[number];
 
@@ -24,6 +25,11 @@ function languageLink(page: Page, from: Locale, to: Locale) {
     .getByRole("list", { name: catalogs[from].languageSwitcher.listLabel })
     .getByRole("link", { name: catalogs[from].languageSwitcher.languages[to] });
 }
+
+// These tests visit home as a returning user (home sends a new one to onboarding).
+test.beforeEach(async ({ context, baseURL }) => {
+  await saveGoal(context, baseURL);
+});
 
 // A browser language that matches none of the targets, so a redirect from /
 // can only come from the saved choice.

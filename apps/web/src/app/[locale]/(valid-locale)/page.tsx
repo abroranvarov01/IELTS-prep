@@ -1,7 +1,12 @@
-import { useTranslations } from "next-intl";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { Home } from "@/features/home/Home";
 
-export default function Home() {
-  const t = useTranslations("app");
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("home");
+  return { title: t("title") };
+}
 
-  return <h1>{t("name")}</h1>;
+export default function HomePage() {
+  return <Home />;
 }

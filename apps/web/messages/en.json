@@ -51,5 +51,13 @@
     "title": "Find your level",
     "body": "A short level check shows where you are now and what to practice first.",
     "start": "Start the level check"
+  },
+  "home": {
+    "title": "Your next step",
+    "goal": {
+      "targetBand": "Target band: <b>{band}</b>",
+      "targetBandNotSet": "Target band: not set yet",
+      "change": "Change goal"
+    }
   }
 }
