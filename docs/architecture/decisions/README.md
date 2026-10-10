@@ -42,5 +42,6 @@ Split a choice into its own ADR only when it independently meets the criteria ab
 | [0004](0004-web-feature-structure.md) | Feature Structure and Domain Code in apps/web | Accepted |
 | [0005](0005-reading-content-contract.md) | Reading Content Contract | Proposed |
 | [0006](0006-reading-session-state.md) | Reading Session State and Persistence | Proposed |
+| [0007](0007-reading-ui-primitives.md) | Building Blocks for the Question Sheet and Passage Selection | Proposed |
 
 Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).

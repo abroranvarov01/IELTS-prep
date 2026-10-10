@@ -1762,7 +1762,7 @@
       "title": "Draft ADR-0007: building blocks for the bottom sheet and text selection",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-02", "M4-03"],
       "goal": "Decide how the persistent bottom sheet, its gestures, and passage selection are built (ROADMAP: 'UI primitives approach, shadcn/Radix or not').",
       "scope": [
@@ -1786,7 +1786,8 @@
         "docs/engineering/CODE_QUALITY.md",
         "docs/product/READING_EXPERIENCE.md"
       ],
-      "docsToUpdate": ["docs/architecture/decisions/README.md"]
+      "docsToUpdate": ["docs/architecture/decisions/README.md"],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-09",
