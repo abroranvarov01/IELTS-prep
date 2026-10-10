@@ -1868,7 +1868,7 @@
       "title": "Original demo Reading test",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-10"],
       "goal": "An original demo test exercises every approved question type and the full-test navigator, without any published IELTS material.",
       "scope": [
@@ -1895,7 +1895,8 @@
         "docs/architecture/decisions/0005-reading-content-contract.md",
         "docs/architecture/INVARIANTS.md",
         "docs/product/PRODUCT.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     },
     {
       "id": "M4-12",

@@ -1,0 +1,757 @@
+{
+  "id": "demo-academic-1",
+  "version": 1,
+  "title": "Demo Reading Test 1",
+  "examType": "academic",
+  "durationMinutes": 60,
+  "origin": {
+    "kind": "original",
+    "author": "IELTS Prep project",
+    "note": "Demo content written for this project to exercise the Reading engine. Not taken or adapted from any published IELTS material; the facts are simplified for practice."
+  },
+  "passages": [
+    {
+      "id": "p1",
+      "number": 1,
+      "title": "Bicycles in the Small City",
+      "paragraphs": [
+        {
+          "id": "p1-1",
+          "sentences": [
+            {
+              "id": "p1-1-s1",
+              "text": "For much of the twentieth century, the bicycle was the most common way to cross a small city."
+            },
+            {
+              "id": "p1-1-s2",
+              "text": "Workers rode to factories, children rode to school, and traders carried goods in baskets fixed to the front wheel."
+            },
+            {
+              "id": "p1-1-s3",
+              "text": "As cars became cheaper, however, many towns widened their roads and removed the narrow lanes that cyclists had used."
+            }
+          ]
+        },
+        {
+          "id": "p1-2",
+          "sentences": [
+            {
+              "id": "p1-2-s1",
+              "text": "In recent years, some councils have tried to reverse this trend by introducing shared bicycles."
+            },
+            {
+              "id": "p1-2-s2",
+              "text": "A rider unlocks a bicycle with a phone, uses it for a short trip, and leaves it at any marked station."
+            },
+            {
+              "id": "p1-2-s3",
+              "text": "The first schemes were often criticised because bicycles were left in the wrong places or damaged."
+            },
+            {
+              "id": "p1-2-s4",
+              "text": "Later schemes placed stations closer together and charged a small fee for each trip, which reduced these problems."
+            }
+          ]
+        },
+        {
+          "id": "p1-3",
+          "sentences": [
+            {
+              "id": "p1-3-s1",
+              "text": "Supporters of shared bicycles point to several benefits."
+            },
+            {
+              "id": "p1-3-s2",
+              "text": "Short car journeys are replaced, so streets become quieter and the air in the centre becomes cleaner."
+            },
+            {
+              "id": "p1-3-s3",
+              "text": "Local shops may also gain, because people on bicycles tend to stop more often than drivers do."
+            },
+            {
+              "id": "p1-3-s4",
+              "text": "Critics reply that the schemes are expensive to run and that winter weather keeps many riders at home."
+            }
+          ]
+        },
+        {
+          "id": "p1-4",
+          "sentences": [
+            {
+              "id": "p1-4-s1",
+              "text": "Planners agree that bicycles alone cannot solve a city's transport needs."
+            },
+            {
+              "id": "p1-4-s2",
+              "text": "The most successful towns combine cycle lanes with buses and safe pavements, so that people can choose the best option for each journey."
+            },
+            {
+              "id": "p1-4-s3",
+              "text": "In these places, the bicycle is no longer seen as old-fashioned but as one part of a modern network."
+            }
+          ]
+        }
+      ],
+      "questionGroups": [
+        {
+          "id": "p1-g1",
+          "type": "trueFalseNotGiven",
+          "instruction": "Do the following statements agree with the information given in Reading Passage 1? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, NOT GIVEN if there is no information on this.",
+          "questions": [
+            {
+              "number": 1,
+              "statement": "In the twentieth century, children commonly travelled to school by bicycle."
+            },
+            {
+              "number": 2,
+              "statement": "The first shared bicycle schemes had no problems with damaged bicycles."
+            },
+            {
+              "number": 3,
+              "statement": "Most people who use shared bicycles are students."
+            },
+            {
+              "number": 4,
+              "statement": "Later schemes made every trip free of charge."
+            }
+          ]
+        },
+        {
+          "id": "p1-g2",
+          "type": "multipleChoice",
+          "instruction": "Choose the correct letter, A, B, C or D.",
+          "questions": [
+            {
+              "number": 5,
+              "stem": "Why may local shops benefit from cycling, according to the passage?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "Cyclists spend more money than drivers."
+                },
+                {
+                  "id": "B",
+                  "text": "Cyclists stop more often than drivers."
+                },
+                {
+                  "id": "C",
+                  "text": "Shops are usually close to the stations."
+                },
+                {
+                  "id": "D",
+                  "text": "Drivers avoid the town centre."
+                }
+              ]
+            },
+            {
+              "number": 6,
+              "stem": "What do critics say about shared bicycle schemes?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "They are dangerous for riders."
+                },
+                {
+                  "id": "B",
+                  "text": "They are expensive to run."
+                },
+                {
+                  "id": "C",
+                  "text": "They make the streets noisier."
+                },
+                {
+                  "id": "D",
+                  "text": "They are used only in summer."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p1-g3",
+          "type": "noteCompletion",
+          "instruction": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer.",
+          "wordLimit": {
+            "words": 1,
+            "numbers": false
+          },
+          "title": "Shared bicycles",
+          "lines": [
+            [
+              {
+                "text": "To start a trip, unlock the bicycle with a "
+              },
+              {
+                "gap": 7
+              }
+            ],
+            [
+              {
+                "text": "At the end, leave it at any marked "
+              },
+              {
+                "gap": 8
+              }
+            ],
+            [
+              {
+                "text": "One benefit: cleaner "
+              },
+              {
+                "gap": 9
+              },
+              {
+                "text": " in the centre"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "p1-g4",
+          "type": "sentenceCompletion",
+          "instruction": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+          "wordLimit": {
+            "words": 2,
+            "numbers": false
+          },
+          "sentences": [
+            [
+              {
+                "text": "To make room for cars, many towns removed the narrow "
+              },
+              {
+                "gap": 10
+              },
+              {
+                "text": " used by cyclists."
+              }
+            ],
+            [
+              {
+                "text": "Successful towns combine cycle lanes with buses and safe "
+              },
+              {
+                "gap": 11
+              },
+              {
+                "text": "."
+              }
+            ]
+          ]
+        },
+        {
+          "id": "p1-g5",
+          "type": "shortAnswer",
+          "instruction": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+          "wordLimit": {
+            "words": 3,
+            "numbers": false
+          },
+          "questions": [
+            {
+              "number": 12,
+              "question": "What did traders use to carry goods on their bicycles?"
+            },
+            {
+              "number": 13,
+              "question": "According to critics, what keeps many riders at home?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "number": 2,
+      "title": "How Rooftop Gardens Change a Building",
+      "paragraphs": [
+        {
+          "id": "p2-a",
+          "letter": "A",
+          "sentences": [
+            {
+              "id": "p2-a-s1",
+              "text": "Across many crowded cities, flat roofs are among the largest unused spaces."
+            },
+            {
+              "id": "p2-a-s2",
+              "text": "A growing number of building owners are now covering them with soil and plants."
+            },
+            {
+              "id": "p2-a-s3",
+              "text": "What was once a grey surface becomes a small field of grasses, herbs or vegetables."
+            }
+          ]
+        },
+        {
+          "id": "p2-b",
+          "letter": "B",
+          "sentences": [
+            {
+              "id": "p2-b-s1",
+              "text": "The most immediate effect is on temperature."
+            },
+            {
+              "id": "p2-b-s2",
+              "text": "A bare roof absorbs the summer sun and passes the heat into the rooms below."
+            },
+            {
+              "id": "p2-b-s3",
+              "text": "A planted roof shades the building, and the water in the soil cools the air as it evaporates."
+            },
+            {
+              "id": "p2-b-s4",
+              "text": "Residents of top-floor flats often notice that their rooms stay cooler without extra air conditioning."
+            }
+          ]
+        },
+        {
+          "id": "p2-c",
+          "letter": "C",
+          "sentences": [
+            {
+              "id": "p2-c-s1",
+              "text": "Rooftop gardens also help with heavy rain."
+            },
+            {
+              "id": "p2-c-s2",
+              "text": "On an ordinary roof, rainwater runs straight into the drains, which can overflow during a storm."
+            },
+            {
+              "id": "p2-c-s3",
+              "text": "Soil holds much of this water and releases it slowly, so the drains have time to cope."
+            }
+          ]
+        },
+        {
+          "id": "p2-d",
+          "letter": "D",
+          "sentences": [
+            {
+              "id": "p2-d-s1",
+              "text": "Building a garden on a roof is not simple, however."
+            },
+            {
+              "id": "p2-d-s2",
+              "text": "Wet soil is heavy, and older roofs may need to be strengthened before any planting begins."
+            },
+            {
+              "id": "p2-d-s3",
+              "text": "A waterproof layer must be laid beneath the soil to protect the building, and it has to be checked regularly."
+            },
+            {
+              "id": "p2-d-s4",
+              "text": "These costs mean that rooftop gardens are more common on new buildings than on old ones."
+            }
+          ]
+        },
+        {
+          "id": "p2-e",
+          "letter": "E",
+          "sentences": [
+            {
+              "id": "p2-e-s1",
+              "text": "For many residents, the greatest value of a rooftop garden is social."
+            },
+            {
+              "id": "p2-e-s2",
+              "text": "Neighbours who rarely met in the stairwell now share tools, swap seeds and eat together on summer evenings."
+            },
+            {
+              "id": "p2-e-s3",
+              "text": "Some gardens grow enough vegetables to supply a local café, giving the project a small income."
+            }
+          ]
+        }
+      ],
+      "questionGroups": [
+        {
+          "id": "p2-g1",
+          "type": "matchingHeadings",
+          "instruction": "Reading Passage 2 has five paragraphs, A–E. Choose the correct heading for each paragraph from the list of headings below.",
+          "options": [
+            {
+              "id": "i",
+              "text": "A cooler building in summer"
+            },
+            {
+              "id": "ii",
+              "text": "Turning empty roofs into green space"
+            },
+            {
+              "id": "iii",
+              "text": "Why growing vegetables is difficult"
+            },
+            {
+              "id": "iv",
+              "text": "Practical and financial obstacles"
+            },
+            {
+              "id": "v",
+              "text": "Protecting the drains in a storm"
+            },
+            {
+              "id": "vi",
+              "text": "A place that brings people together"
+            },
+            {
+              "id": "vii",
+              "text": "The history of city gardens"
+            },
+            {
+              "id": "viii",
+              "text": "Choosing the right plants"
+            }
+          ],
+          "questions": [
+            {
+              "number": 14,
+              "paragraphId": "p2-a"
+            },
+            {
+              "number": 15,
+              "paragraphId": "p2-b"
+            },
+            {
+              "number": 16,
+              "paragraphId": "p2-c"
+            },
+            {
+              "number": 17,
+              "paragraphId": "p2-d"
+            },
+            {
+              "number": 18,
+              "paragraphId": "p2-e"
+            }
+          ]
+        },
+        {
+          "id": "p2-g2",
+          "type": "matchingInformation",
+          "instruction": "Reading Passage 2 has five paragraphs, A–E. Which paragraph contains the following information? NB You may use any letter more than once.",
+          "allowRepeat": true,
+          "questions": [
+            {
+              "number": 19,
+              "statement": "a reason why some buildings need extra work before a garden is added"
+            },
+            {
+              "number": 20,
+              "statement": "a way in which a garden can earn money"
+            },
+            {
+              "number": 21,
+              "statement": "a description of what happens to rain on an ordinary roof"
+            }
+          ]
+        },
+        {
+          "id": "p2-g3",
+          "type": "multipleChoiceMulti",
+          "instruction": "Choose TWO letters, A–E.",
+          "items": [
+            {
+              "numbers": [22, 23],
+              "stem": "Which TWO effects of rooftop gardens are mentioned in the passage?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "Rooms on the top floor stay cooler."
+                },
+                {
+                  "id": "B",
+                  "text": "Buildings become easier to sell."
+                },
+                {
+                  "id": "C",
+                  "text": "Drains are less likely to overflow."
+                },
+                {
+                  "id": "D",
+                  "text": "Birds return to the city centre."
+                },
+                {
+                  "id": "E",
+                  "text": "Electricity becomes cheaper for the whole street."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p2-g4",
+          "type": "summaryCompletion",
+          "instruction": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.",
+          "wordLimit": {
+            "words": 1,
+            "numbers": false
+          },
+          "title": "Building a rooftop garden",
+          "text": [
+            {
+              "text": "Older roofs may need to be "
+            },
+            {
+              "gap": 24
+            },
+            {
+              "text": " before planting begins, because wet soil is heavy. A "
+            },
+            {
+              "gap": 25
+            },
+            {
+              "text": " layer is laid under the soil and checked regularly. Because of these "
+            },
+            {
+              "gap": 26
+            },
+            {
+              "text": ", rooftop gardens are more common on "
+            },
+            {
+              "gap": 27
+            },
+            {
+              "text": " buildings than on old ones."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "number": 3,
+      "title": "Should Homework Be Shorter?",
+      "paragraphs": [
+        {
+          "id": "p3-1",
+          "sentences": [
+            {
+              "id": "p3-1-s1",
+              "text": "Few topics divide parents and teachers as sharply as homework."
+            },
+            {
+              "id": "p3-1-s2",
+              "text": "Some see it as essential practice, while others believe it takes time that children need for rest and play."
+            },
+            {
+              "id": "p3-1-s3",
+              "text": "In my view, the question is not whether homework should exist, but how much of it is useful."
+            }
+          ]
+        },
+        {
+          "id": "p3-2",
+          "sentences": [
+            {
+              "id": "p3-2-s1",
+              "text": "A secondary school teacher I spoke to argued that short daily tasks help students remember what they learned in class."
+            },
+            {
+              "id": "p3-2-s2",
+              "text": "She added that long assignments often end up being completed by parents rather than by the students themselves."
+            },
+            {
+              "id": "p3-2-s3",
+              "text": "A university researcher who studies sleep pointed to a different problem."
+            },
+            {
+              "id": "p3-2-s4",
+              "text": "According to him, teenagers who work late into the evening sleep less and concentrate poorly the next day."
+            }
+          ]
+        },
+        {
+          "id": "p3-3",
+          "sentences": [
+            {
+              "id": "p3-3-s1",
+              "text": "A parents' group I visited had collected its own evidence."
+            },
+            {
+              "id": "p3-3-s2",
+              "text": "Its members kept diaries for a month and found that homework often caused arguments at home."
+            },
+            {
+              "id": "p3-3-s3",
+              "text": "They did not want homework removed; they wanted it to be clearer and shorter."
+            }
+          ]
+        },
+        {
+          "id": "p3-4",
+          "sentences": [
+            {
+              "id": "p3-4-s1",
+              "text": "I believe these voices point to the same conclusion."
+            },
+            {
+              "id": "p3-4-s2",
+              "text": "Homework works best when it is brief, closely linked to the lesson, and possible to finish without help."
+            },
+            {
+              "id": "p3-4-s3",
+              "text": "Schools that set less but better homework may find that their students learn more, not less."
+            }
+          ]
+        }
+      ],
+      "questionGroups": [
+        {
+          "id": "p3-g1",
+          "type": "yesNoNotGiven",
+          "instruction": "Do the following statements agree with the views of the writer in Reading Passage 3? Write YES if the statement agrees with the views of the writer, NO if the statement contradicts the views of the writer, NOT GIVEN if it is impossible to say what the writer thinks about this.",
+          "questions": [
+            {
+              "number": 28,
+              "statement": "Homework should be abolished in all schools."
+            },
+            {
+              "number": 29,
+              "statement": "Short homework that is closely linked to lessons is the most useful kind."
+            },
+            {
+              "number": 30,
+              "statement": "Teachers should be paid extra for marking homework."
+            },
+            {
+              "number": 31,
+              "statement": "Setting less homework may help students learn more."
+            }
+          ]
+        },
+        {
+          "id": "p3-g2",
+          "type": "matchingFeatures",
+          "instruction": "Look at the following statements and the list of people below. Match each statement with the correct person, A, B or C. NB You may use any letter more than once.",
+          "options": [
+            {
+              "id": "A",
+              "text": "a secondary school teacher"
+            },
+            {
+              "id": "B",
+              "text": "a university researcher"
+            },
+            {
+              "id": "C",
+              "text": "a parents' group"
+            }
+          ],
+          "allowRepeat": true,
+          "questions": [
+            {
+              "number": 32,
+              "statement": "Students who work late at night find it hard to concentrate."
+            },
+            {
+              "number": 33,
+              "statement": "Homework often leads to disagreements in the family."
+            },
+            {
+              "number": 34,
+              "statement": "Parents sometimes complete long assignments for their children."
+            }
+          ]
+        },
+        {
+          "id": "p3-g3",
+          "type": "matchingSentenceEndings",
+          "instruction": "Complete each sentence with the correct ending, A–E, below.",
+          "options": [
+            {
+              "id": "A",
+              "text": "it is short and clearly explained."
+            },
+            {
+              "id": "B",
+              "text": "children have no time to rest."
+            },
+            {
+              "id": "C",
+              "text": "students forget what they learned in class."
+            },
+            {
+              "id": "D",
+              "text": "teachers give no homework at all."
+            },
+            {
+              "id": "E",
+              "text": "families keep diaries."
+            }
+          ],
+          "questions": [
+            {
+              "number": 35,
+              "start": "According to the teacher, without short daily tasks"
+            },
+            {
+              "number": 36,
+              "start": "The parents' group would accept homework if"
+            },
+            {
+              "number": 37,
+              "start": "Some people oppose homework because they believe"
+            }
+          ]
+        },
+        {
+          "id": "p3-g4",
+          "type": "summaryWordBox",
+          "instruction": "Complete the summary using the list of words, A–F, below.",
+          "options": [
+            {
+              "id": "A",
+              "text": "brief"
+            },
+            {
+              "id": "B",
+              "text": "difficult"
+            },
+            {
+              "id": "C",
+              "text": "sleep"
+            },
+            {
+              "id": "D",
+              "text": "money"
+            },
+            {
+              "id": "E",
+              "text": "help"
+            },
+            {
+              "id": "F",
+              "text": "arguments"
+            }
+          ],
+          "text": [
+            {
+              "text": "The writer concludes that homework is most useful when it is "
+            },
+            {
+              "gap": 38
+            },
+            {
+              "text": ", closely connected to the lesson, and possible to finish without "
+            },
+            {
+              "gap": 39
+            },
+            {
+              "text": ". Too much work late in the evening can reduce students' "
+            },
+            {
+              "gap": 40
+            },
+            {
+              "text": "."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
