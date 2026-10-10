@@ -704,7 +704,7 @@
       "title": "Localized not-found and error states",
       "milestone": "M1",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M1-04"],
       "goal": "Missing pages and unexpected errors show plain-language messages in the user's language, never the framework's default English page.",
       "scope": [
@@ -730,7 +730,8 @@
         "docs/product/LOCALIZATION.md",
         "docs/product/UX_PRINCIPLES.md",
         "docs/design/ACCESSIBILITY.md"
-      ]
+      ],
+      "completedAt": "2026-10-10"
     }
   ]
 }

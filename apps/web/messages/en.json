@@ -14,5 +14,17 @@
       "ru": "Русский",
       "en": "English"
     }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The link may be wrong, or the page may have moved."
+  },
+  "common": {
+    "goHome": "Go to home page"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "body": "Please try again. If it keeps happening, come back later.",
+    "retry": "Try again"
   }
 }

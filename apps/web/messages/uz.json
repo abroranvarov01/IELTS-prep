@@ -14,5 +14,17 @@
       "ru": "Русский",
       "en": "English"
     }
+  },
+  "notFound": {
+    "title": "Sahifa topilmadi",
+    "body": "Havola notoʻgʻri yoki sahifa koʻchirilgan boʻlishi mumkin."
+  },
+  "common": {
+    "goHome": "Bosh sahifaga oʻtish"
+  },
+  "error": {
+    "title": "Xatolik yuz berdi",
+    "body": "Qaytadan urinib koʻring. Xatolik takrorlansa, keyinroq qayting.",
+    "retry": "Qayta urinish"
   }
 }
