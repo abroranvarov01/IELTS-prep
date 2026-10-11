@@ -218,6 +218,50 @@ test("an M4 finished session on the device shows its results, with the note that
   });
 });
 
+test("a finished session left uncommitted on the device is committed when the test opens, and its results replace the test screen", async ({
+  page,
+}) => {
+  const sessionId = "s-00000000-0000-4000-8000-000000000001";
+  await page.goto("/en");
+  await page.evaluate(
+    ([test, t0, id]) =>
+      localStorage.setItem(
+        `reading:${test}`,
+        JSON.stringify({
+          schema: 1,
+          session: {
+            sessionId: id,
+            testId: test,
+            testVersion: 1,
+            mode: "practice",
+            status: "finished",
+            finishReason: "user",
+            startedAt: t0,
+            finishedAt: t0 + 600_000,
+            currentQuestion: 1,
+            answers: { "1": "TRUE" },
+            flagged: [],
+            highlights: [],
+            pins: {},
+            view: { sheet: "partial", passage: 1, scroll: {} },
+          },
+        }),
+      ),
+    [TEST, T0, sessionId] as const,
+  );
+  await openTest(page);
+  await expect(page).toHaveURL(new RegExp(`/results\\?attempt=${sessionId}$`));
+  await expect(page.getByText(scoreText(1))).toBeVisible();
+  await expect
+    .poll(() =>
+      page.evaluate((key) => localStorage.getItem(key), `reading:${TEST}`),
+    )
+    .toBeNull();
+  expect(await storedRecords(page, "attempts")).toEqual([
+    expect.objectContaining({ id: sessionId, answers: { "1": "TRUE" } }),
+  ]);
+});
+
 test("without IndexedDB the results are shown with the notice, and the finished session stays on the device", async ({
   page,
 }) => {

@@ -1,4 +1,5 @@
 import { useLocale, useTranslations } from "next-intl";
+import type { Ref } from "react";
 import type { Passage } from "@/entities/reading";
 import { PinIcon } from "./SentenceActions";
 
@@ -10,6 +11,7 @@ import { PinIcon } from "./SentenceActions";
  * the current question carry a marker with its number.
  */
 export function PassageView({
+  ref,
   passage,
   bottomSpace,
   highlights,
@@ -17,6 +19,8 @@ export function PassageView({
   focusable,
   pins,
 }: {
+  /** The passage element, which hears the taps and keys on its sentences. */
+  ref?: Ref<HTMLElement>;
   passage: Passage;
   /** Room under the text, so its last line can be scrolled above the sheet. */
   bottomSpace: string;
@@ -33,6 +37,7 @@ export function PassageView({
 
   return (
     <article
+      ref={ref}
       lang="en"
       className="mx-auto max-w-measure pt-6 font-passage text-passage"
       style={{ paddingBottom: bottomSpace }}

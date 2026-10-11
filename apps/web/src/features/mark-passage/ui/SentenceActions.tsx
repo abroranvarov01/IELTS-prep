@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import type { RefObject } from "react";
+import type { Ref } from "react";
 
 /**
  * The bar of actions for the selected sentence, just above the sheet
@@ -24,7 +24,7 @@ export function SentenceActions({
   pin?: { number: number; isPinned: boolean; onToggle: () => void };
   /** Why the last action was refused. */
   message?: string;
-  firstActionRef: RefObject<HTMLButtonElement | null>;
+  firstActionRef: Ref<HTMLButtonElement>;
   onToggleHighlight: () => void;
   onCancel: () => void;
 }) {

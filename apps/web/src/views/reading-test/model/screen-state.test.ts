@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { startSession } from "@/entities/reading";
 import { demoTest as test, testSessionId } from "@/entities/reading/testing";
-import { screenReducer } from "./screen-state";
+import { type ScreenState, screenReducer } from "./screen-state";
 
 const T0 = Date.UTC(2026, 9, 10, 9, 0);
+const initial: ScreenState = {};
 
 describe("the Reading screen state", () => {
   it("starts a session on top of what the device already had", () => {
@@ -13,17 +14,14 @@ describe("the Reading screen state", () => {
       finishReason: "user" as const,
       finishedAt: T0 - 500,
     };
-    const state = screenReducer(
-      { now: 0 },
-      {
-        type: "start",
-        test,
-        mode: "practice",
-        now: T0,
-        sessionId: testSessionId(2),
-        stored: { finished },
-      },
-    );
+    const state = screenReducer(initial, {
+      type: "start",
+      test,
+      mode: "practice",
+      now: T0,
+      sessionId: testSessionId(2),
+      stored: { finished },
+    });
     expect(state.local?.current?.mode).toBe("practice");
     expect(state.local?.current?.sessionId).toBe(testSessionId(2));
     expect(state.local?.finished).toBe(finished);
@@ -33,16 +31,13 @@ describe("the Reading screen state", () => {
     const stored = {
       current: startSession(test, "practice", T0, testSessionId()),
     };
-    const first = screenReducer(
-      { now: 0 },
-      {
-        type: "event",
-        test,
-        event: { type: "goTo", number: 3 },
-        now: T0 + 1,
-        stored,
-      },
-    );
+    const first = screenReducer(initial, {
+      type: "event",
+      test,
+      event: { type: "goTo", number: 3 },
+      now: T0 + 1,
+      stored,
+    });
     expect(first.local?.current?.currentQuestion).toBe(3);
 
     const second = screenReducer(first, {
@@ -55,31 +50,55 @@ describe("the Reading screen state", () => {
     expect(second.local?.current?.currentQuestion).toBe(4);
   });
 
-  it("keeps a refused event from changing anything but the time", () => {
+  it("keeps the same state for a refused event and for the Exam clock's tick before 0:00", () => {
     const stored = {
-      current: startSession(test, "practice", T0, testSessionId()),
+      current: startSession(test, "exam", T0, testSessionId()),
     };
-    const state = screenReducer(
-      { now: 0 },
-      {
-        type: "event",
-        test,
-        event: { type: "goTo", number: 99 },
-        now: T0 + 5,
-        stored,
-      },
-    );
-    expect(state).toEqual({ now: T0 + 5 });
+    const refused = screenReducer(initial, {
+      type: "event",
+      test,
+      event: { type: "goTo", number: 99 },
+      now: T0 + 5,
+      stored,
+    });
+    expect(refused).toBe(initial);
+    const ticked = screenReducer(initial, {
+      type: "event",
+      test,
+      event: { type: "tick" },
+      now: T0 + 59 * 60_000,
+      stored,
+    });
+    expect(ticked).toBe(initial);
+  });
+
+  it("finishes an Exam with the time up at the clock's tick at 0:00", () => {
+    const stored = { current: startSession(test, "exam", T0, testSessionId()) };
+    const state = screenReducer(initial, {
+      type: "event",
+      test,
+      event: { type: "tick" },
+      now: T0 + test.durationMinutes * 60_000,
+      stored,
+    });
+    expect(state.local?.current).toBeUndefined();
+    expect(state.local?.finished).toMatchObject({
+      status: "finished",
+      finishReason: "timeUp",
+    });
   });
 
   it("moves a session that finishes out of the current slot", () => {
     const stored = {
       current: startSession(test, "practice", T0, testSessionId()),
     };
-    const state = screenReducer(
-      { now: 0 },
-      { type: "event", test, event: { type: "finish" }, now: T0 + 9, stored },
-    );
+    const state = screenReducer(initial, {
+      type: "event",
+      test,
+      event: { type: "finish" },
+      now: T0 + 9,
+      stored,
+    });
     expect(state.local?.current).toBeUndefined();
     expect(state.local?.finished?.status).toBe("finished");
   });

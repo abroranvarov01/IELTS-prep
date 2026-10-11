@@ -83,6 +83,22 @@ test("from 1024 px the passage and the questions sit side by side and scroll on 
   ).toBeVisible();
 });
 
+test("after the layout changes between phone and desktop, the passage still answers taps and arrow keys", async ({
+  page,
+}) => {
+  await start(page);
+  for (const width of [1023, 1280]) {
+    await page.setViewportSize({ width, height: 800 });
+    await sentence(page, "p1-1-s1").click();
+    await expect(actions(page)).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(actions(page)).toHaveCount(0);
+    await expect(sentence(page, "p1-1-s1")).toBeFocused();
+    await page.keyboard.press("ArrowDown");
+    await expect(sentence(page, "p1-1-s2")).toBeFocused();
+  }
+});
+
 test("the column shows the passage's questions; Next, the cells and another passage move the current question into view", async ({
   page,
 }) => {

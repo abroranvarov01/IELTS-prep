@@ -14,9 +14,8 @@ export type Sessions = { current?: ReadingSession; finished?: ReadingSession };
  * The screen's state. `local` is empty until the user acts; until then the
  * sessions come from the device's storage snapshot, which every action
  * carries (ADR-0006: storage is read without setting state in an effect).
- * `now` is the time of the latest action, for anything that shows time.
  */
-export type ScreenState = { local?: Sessions; now: number };
+export type ScreenState = { local?: Sessions };
 
 export type ScreenAction =
   | {
@@ -36,6 +35,11 @@ export type ScreenAction =
       stored: Sessions;
     };
 
+/**
+ * An event that changes nothing (a refused one, or the Exam clock's tick
+ * before 0:00) returns the same state, so nothing below the screen renders
+ * again.
+ */
 export function screenReducer(
   state: ScreenState,
   action: ScreenAction,
@@ -44,7 +48,6 @@ export function screenReducer(
   switch (action.type) {
     case "start":
       return {
-        now: action.now,
         local: {
           ...sessions,
           current: startSession(
@@ -57,11 +60,10 @@ export function screenReducer(
       };
     case "event": {
       const current = sessions.current;
-      if (!current) return { ...state, now: action.now };
+      if (!current) return state;
       const next = apply(current, action.test, action.event, action.now);
-      if (next === current) return { ...state, now: action.now };
+      if (next === current) return state;
       return {
-        now: action.now,
         local:
           next.status === "finished"
             ? { finished: next }
