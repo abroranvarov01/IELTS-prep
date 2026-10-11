@@ -4,7 +4,10 @@ import { type ReactNode, useState } from "react";
 import en from "../../../../messages/en.json";
 import ru from "../../../../messages/ru.json";
 import uz from "../../../../messages/uz.json";
-import { demoTest as test } from "@/domain/reading/demo-test.fixture";
+import {
+  demoTest as test,
+  testSessionId,
+} from "@/domain/reading/demo-test.fixture";
 import {
   type Mode,
   type ReadingEvent,
@@ -38,7 +41,12 @@ export function renderQuestion(
 
   function Harness() {
     const [session, setSession] = useState(() =>
-      apply(startSession(test, mode, 1), test, { type: "goTo", number }, 1),
+      apply(
+        startSession(test, mode, 1, testSessionId()),
+        test,
+        { type: "goTo", number },
+        1,
+      ),
     );
     latest.session = session;
     const send = (event: ReadingEvent) =>

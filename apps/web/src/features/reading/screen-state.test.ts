@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { demoTest as test } from "@/domain/reading/demo-test.fixture";
+import {
+  demoTest as test,
+  testSessionId,
+} from "@/domain/reading/demo-test.fixture";
 import { startSession } from "@/domain/reading/session";
 import { screenReducer } from "./screen-state";
 
@@ -8,21 +11,31 @@ const T0 = Date.UTC(2026, 9, 10, 9, 0);
 describe("the Reading screen state", () => {
   it("starts a session on top of what the device already had", () => {
     const finished = {
-      ...startSession(test, "exam", T0 - 1000),
+      ...startSession(test, "exam", T0 - 1000, testSessionId()),
       status: "finished" as const,
       finishReason: "user" as const,
       finishedAt: T0 - 500,
     };
     const state = screenReducer(
       { now: 0 },
-      { type: "start", test, mode: "practice", now: T0, stored: { finished } },
+      {
+        type: "start",
+        test,
+        mode: "practice",
+        now: T0,
+        sessionId: testSessionId(2),
+        stored: { finished },
+      },
     );
     expect(state.local?.current?.mode).toBe("practice");
+    expect(state.local?.current?.sessionId).toBe(testSessionId(2));
     expect(state.local?.finished).toBe(finished);
   });
 
   it("applies events to the stored session until the user has acted, then to its own", () => {
-    const stored = { current: startSession(test, "practice", T0) };
+    const stored = {
+      current: startSession(test, "practice", T0, testSessionId()),
+    };
     const first = screenReducer(
       { now: 0 },
       {
@@ -46,7 +59,9 @@ describe("the Reading screen state", () => {
   });
 
   it("keeps a refused event from changing anything but the time", () => {
-    const stored = { current: startSession(test, "practice", T0) };
+    const stored = {
+      current: startSession(test, "practice", T0, testSessionId()),
+    };
     const state = screenReducer(
       { now: 0 },
       {
@@ -61,7 +76,9 @@ describe("the Reading screen state", () => {
   });
 
   it("moves a session that finishes out of the current slot", () => {
-    const stored = { current: startSession(test, "practice", T0) };
+    const stored = {
+      current: startSession(test, "practice", T0, testSessionId()),
+    };
     const state = screenReducer(
       { now: 0 },
       { type: "event", test, event: { type: "finish" }, now: T0 + 9, stored },

@@ -17,6 +17,11 @@ export type SessionView = {
 
 /** A Reading session (ADR-0006). Change it only through `apply`. */
 export type ReadingSession = {
+  /**
+   * Unique per session (ADR-0009 §3): random for a new session; for a session
+   * M4 stored without one, derived from its slot and start time.
+   */
+  sessionId: string;
   testId: string;
   testVersion: number;
   mode: Mode;
@@ -32,6 +37,8 @@ export type ReadingSession = {
   /** Pinned evidence sentence ids, by question number. Practice only. */
   pins: Record<string, string[]>;
   view: SessionView;
+  /** A retry of whole answer units of a committed test attempt (ADR-0009 §8). */
+  retry?: { of: string; questions: number[] };
 };
 
 export type ReadingEvent =
@@ -52,8 +59,10 @@ export function startSession(
   test: ReadingTest,
   mode: Mode,
   now: number,
+  sessionId: string,
 ): ReadingSession {
   return {
+    sessionId,
     testId: test.id,
     testVersion: test.version,
     mode,
@@ -201,7 +210,7 @@ function applyTimeOut(
 
 /** The question numbers that count as answered (a "choose several" item answers one number per choice). */
 export function answeredNumbers(
-  session: ReadingSession,
+  session: Pick<ReadingSession, "answers">,
   test: ReadingTest,
 ): Set<number> {
   const answered = new Set<number>();

@@ -22,7 +22,7 @@ Decided in [ADR-0004](decisions/0004-web-feature-structure.md). Folders under `a
 | Folder | Holds | May import | Must not import | Lint enforcement |
 |---|---|---|---|---|
 | `domain/` | Pure product and IELTS rules (the guest's goal; the Reading content contract and session) | other `domain/` files | React, Next.js, next-intl, `node:*`, and every other `src/` folder | Yes: `import/no-restricted-paths` zone and `no-restricted-imports` |
-| `data/` | Data access: the goal cookie on the server (ADR-0003) and Reading sessions in the browser's `localStorage` (ADR-0006) | `domain/`, Next.js server APIs | `app/`, `features/`, `components/` | Yes: `import/no-restricted-paths` zone |
+| `data/` | Data access: the goal cookie on the server (ADR-0003), Reading sessions in the browser's `localStorage` (ADR-0006) and the Reading attempt history in IndexedDB (ADR-0009) | `domain/`, Next.js server APIs | `app/`, `features/`, `components/` | Yes: `import/no-restricted-paths` zone |
 | `components/` | UI used by two or more features | other `components/`, `i18n/` | `features/`, `data/`, `app/` | Added when the folder is created (M3-07) |
 | `features/<f>/` | A feature's screens and Server Actions | its own folder, `domain/`, `data/`, `components/`, `i18n/` | another feature, `app/` | Added when the folder is created (M3-07) |
 | `app/` | Routes, layouts, the shell; thin pages | everything above | | |

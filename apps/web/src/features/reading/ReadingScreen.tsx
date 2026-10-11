@@ -10,10 +10,18 @@ import {
   useSyncExternalStore,
 } from "react";
 import {
+  commitFinishedSession,
+  deviceHistory,
+  settleStoredSessions,
+} from "@/data/reading-history";
+import {
+  type StorageSnapshot,
   deviceStorage,
+  newSessionId,
   saveSession,
   storageSnapshot,
 } from "@/data/reading-session-storage";
+import type { ReadingAttempt } from "@/domain/reading/attempts";
 import type { ReadingTest } from "@/domain/reading/content";
 import {
   MAX_PINS,
@@ -29,7 +37,7 @@ import { QuestionColumn } from "./QuestionColumn";
 import { QuestionSheet, SHEET_HEIGHT } from "./QuestionSheet";
 import { ReadingContext, useReading } from "./reading-context";
 import { SentenceActions } from "./SentenceActions";
-import { screenReducer } from "./screen-state";
+import { type Sessions, screenReducer } from "./screen-state";
 import { StartScreen } from "./StartScreen";
 import { TestBar } from "./TestBar";
 
@@ -45,25 +53,88 @@ const subscribeToDesktop = (onChange: () => void) => {
   return () => query.removeEventListener("change", onChange);
 };
 
+/**
+ * The stored test session as the screen uses it: one in progress is the
+ * current session; a finished one not yet committed is shown as finished.
+ */
+function storedSessions(snapshot: StorageSnapshot): Sessions {
+  const session = snapshot.current;
+  if (!session) return {};
+  return session.status === "inProgress"
+    ? { current: session }
+    : { finished: session };
+}
+
 /** The Reading test screen: start, reading and answering, finished (ADR-0006, ADR-0007). */
 export function ReadingScreen({ test }: { test: ReadingTest }) {
-  const stored = useSyncExternalStore(
+  const snapshot = useSyncExternalStore(
     noSubscription,
     () => storageSnapshot(test),
     () => null,
   );
+  const stored = useMemo(
+    () => snapshot && storedSessions(snapshot),
+    [snapshot],
+  );
   const [state, dispatch] = useReducer(screenReducer, { now: 0 });
   // "Start again" shows the start screen until a new session starts.
   const [restarting, setRestarting] = useState(false);
+  // The latest committed test attempt (null: none), read after mounting
+  // (ADR-0009 §9); the finished page shows it.
+  const [latest, setLatest] = useState<ReadingAttempt | null>();
   const units = useMemo(() => questionUnits(test), [test]);
   const sessions = stored && (state.local ?? stored);
   const isExamRunning = sessions?.current?.mode === "exam";
 
-  // Keep every change on the device (ADR-0006).
+  // Settle what this load finds on the device, then read the history
+  // (ADR-0009 §4, §6): import M4's finished session, commit a finished
+  // session left uncommitted, remove a stale copy of a committed one.
+  useEffect(() => {
+    let active = true;
+    deviceHistory()
+      .then(async (history) => {
+        await settleStoredSessions(deviceStorage(), history, test, Date.now());
+        const { attempts } = await history.read(test);
+        const tests = attempts.filter((a) => a.kind === "test");
+        if (active) setLatest(tests[tests.length - 1] ?? null);
+      })
+      .catch(() => {
+        // The history cannot be read: the localStorage sources stay as they are.
+        if (active) setLatest(null);
+      });
+    return () => {
+      active = false;
+    };
+  }, [test]);
+
+  // Keep every change on the device (ADR-0006) and commit a finished session
+  // to the history, removing its localStorage copy only afterwards (ADR-0009 §4).
   useEffect(() => {
     const changed = state.local?.current ?? state.local?.finished;
-    if (changed) saveSession(deviceStorage(), changed);
-  }, [state.local]);
+    if (!changed) return;
+    saveSession(deviceStorage(), changed);
+    if (changed.status !== "finished") return;
+    let active = true;
+    deviceHistory()
+      .then((history) =>
+        commitFinishedSession(
+          deviceStorage(),
+          history,
+          test,
+          changed,
+          Date.now(),
+        ),
+      )
+      .then((committed) => {
+        if (active && committed) setLatest(committed);
+      })
+      .catch(() => {
+        // Not committed: the finished session stays in localStorage for the next load.
+      });
+    return () => {
+      active = false;
+    };
+  }, [state.local, test]);
 
   // The Exam clock: a tick at once and every second moves the timer and
   // finishes the test at 0:00, also when it ran out while the user was away.
@@ -85,11 +156,17 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
   if (!stored || !sessions) return <TestBar />;
   const { current, finished } = sessions;
   if (!current) {
-    if (finished && !restarting) {
+    // Until the history is read, nothing is known about earlier attempts.
+    if (!finished && latest === undefined) return <TestBar />;
+    // The committed attempt wins: another tab may have committed this session
+    // first (ADR-0009 §4).
+    const shown =
+      finished && latest?.id !== finished.sessionId ? finished : latest;
+    if (shown && !restarting) {
       return (
         <FinishedScreen
           test={test}
-          session={finished}
+          session={shown}
           onStartAgain={() => setRestarting(true)}
         />
       );
@@ -99,7 +176,14 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
         test={test}
         onStart={(mode) => {
           setRestarting(false);
-          dispatch({ type: "start", test, mode, now: Date.now(), stored });
+          dispatch({
+            type: "start",
+            test,
+            mode,
+            now: Date.now(),
+            sessionId: newSessionId(),
+            stored,
+          });
         }}
       />
     );
@@ -109,7 +193,7 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
     dispatch({ type: "event", test, event, now: Date.now(), stored });
   return (
     <ReadingContext.Provider value={{ test, units, session: current, send }}>
-      <ReadingView canSave={stored.canSave} now={state.now} />
+      <ReadingView canSave={snapshot?.canSave ?? false} now={state.now} />
     </ReadingContext.Provider>
   );
 }

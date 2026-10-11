@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { demoTest as test } from "./demo-test.fixture";
+import { demoTest as test, testSessionId } from "./demo-test.fixture";
 import {
   type ReadingEvent,
   type ReadingSession,
@@ -19,8 +19,8 @@ function run(session: ReadingSession, ...events: ReadingEvent[]) {
     session,
   );
 }
-const practice = () => startSession(test, "practice", T0);
-const exam = () => startSession(test, "exam", T0);
+const practice = () => startSession(test, "practice", T0, testSessionId());
+const exam = () => startSession(test, "exam", T0, testSessionId());
 
 describe("a Reading session", () => {
   it("starts at question 1 of passage 1, in the partial sheet, with nothing answered", () => {

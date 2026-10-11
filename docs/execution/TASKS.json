@@ -2510,7 +2510,7 @@
       "title": "Attempt history on the device",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M5-03"],
       "goal": "Finished sessions become immutable attempts with answers, pins, highlights and timestamps, committed atomically to IndexedDB so that the first committed attempt, the first-try marker and one result record per pair hold across tabs, with unique session ids and compatibility with M4 data.",
       "scope": [
@@ -2554,7 +2554,8 @@
       ],
       "docsToUpdate": [
         "docs/architecture/BOUNDARIES.md (if the storage module gains a rule)"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M5-05",

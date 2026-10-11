@@ -8,7 +8,10 @@ import {
 import { NextIntlClientProvider } from "next-intl";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import ru from "../../../messages/ru.json";
-import { demoTest as test } from "@/domain/reading/demo-test.fixture";
+import {
+  demoTest as test,
+  testSessionId,
+} from "@/domain/reading/demo-test.fixture";
 import {
   type ReadingEvent,
   apply,
@@ -23,7 +26,7 @@ afterEach(cleanup);
 function renderNavigator(events: ReadingEvent[]) {
   const session = events.reduce(
     (s, event) => apply(s, test, event, 1),
-    startSession(test, "practice", 1),
+    startSession(test, "practice", 1, testSessionId()),
   );
   const onChoose = vi.fn();
   render(

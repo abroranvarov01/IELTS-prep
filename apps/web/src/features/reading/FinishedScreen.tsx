@@ -17,7 +17,8 @@ export function FinishedScreen({
   onStartAgain,
 }: {
   test: ReadingTest;
-  session: ReadingSession;
+  /** The finished session, or the attempt committed for it (ADR-0009). */
+  session: Pick<ReadingSession, "answers" | "finishReason">;
   onStartAgain: () => void;
 }) {
   const t = useTranslations();

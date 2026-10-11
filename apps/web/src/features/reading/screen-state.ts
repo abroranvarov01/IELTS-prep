@@ -24,6 +24,8 @@ export type ScreenAction =
       test: ReadingTest;
       mode: Mode;
       now: number;
+      /** A new random id (ADR-0009 §3); made outside the reducer, which stays pure. */
+      sessionId: string;
       stored: Sessions;
     }
   | {
@@ -45,7 +47,12 @@ export function screenReducer(
         now: action.now,
         local: {
           ...sessions,
-          current: startSession(action.test, action.mode, action.now),
+          current: startSession(
+            action.test,
+            action.mode,
+            action.now,
+            action.sessionId,
+          ),
         },
       };
     case "event": {

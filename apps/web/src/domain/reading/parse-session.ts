@@ -7,19 +7,35 @@ import {
   isValidAnswer,
   sentenceIds,
 } from "./session";
-import { questionUnits, unitOf } from "./units";
+import { type QuestionUnit, questionUnits, unitOf } from "./units";
 
 /** The version of the stored envelope `{ schema, session }` (ADR-0006). */
 export const SESSION_SCHEMA = 1;
 
 /**
+ * A session id (ADR-0009 §3): "s-" and a random version 4 UUID, or the
+ * deterministic id of a session M4 stored without one.
+ */
+export function isSessionId(value: unknown): value is string {
+  return (
+    typeof value === "string" &&
+    /^(s-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|m4-(current|finished)-\d+)$/.test(
+      value,
+    )
+  );
+}
+
+/**
  * Reads a stored session for `test`. Stored data is untrusted: a wrong schema,
  * another test or content version, or any invalid field means "no session".
  * Builds a fresh object field by field, so nothing unexpected is carried over.
+ * A session M4 stored without an id gets `m4-<slot>-<startedAt>`, where the
+ * slot is the entry it was read from, so every tab derives the same id.
  */
 export function parseStoredSession(
   test: ReadingTest,
   input: unknown,
+  slot: "current" | "finished" = "current",
 ): ReadingSession | undefined {
   if (!isRecord(input) || input.schema !== SESSION_SCHEMA) return undefined;
   const s = input.session;
@@ -28,7 +44,6 @@ export function parseStoredSession(
 
   const units = questionUnits(test);
   const numbers = new Set(units.flatMap((u) => u.numbers));
-  const allSentences = sentenceIds(test);
 
   if (s.mode !== "practice" && s.mode !== "exam") return undefined;
   if (s.status !== "inProgress" && s.status !== "finished") return undefined;
@@ -41,52 +56,30 @@ export function parseStoredSession(
   )
     return undefined;
   if (!numbers.has(s.currentQuestion as number)) return undefined;
+  if (s.sessionId !== undefined && !isSessionId(s.sessionId)) return undefined;
+  const sessionId =
+    s.sessionId ?? `m4-${slot}-${String(s.startedAt as number)}`;
+  const retry = parseRetry(s.retry, units);
+  if (
+    retry === null ||
+    (retry && (s.sessionId === undefined || s.mode !== "practice"))
+  )
+    return undefined;
 
-  if (!isRecord(s.answers)) return undefined;
-  const answers: Record<string, Answer> = {};
-  for (const [key, value] of Object.entries(s.answers)) {
-    const unit = unitOf(units, Number(key));
-    if (!unit || unit.key !== key) return undefined;
-    if (!(typeof value === "string" || isStringList(value))) return undefined;
-    if (!isValidAnswer(unit, value)) return undefined;
-    answers[key] = Array.isArray(value) ? [...value] : value;
-  }
-
+  const answers = parseAnswers(test, s.answers);
+  if (!answers) return undefined;
   if (!isUniqueList(s.flagged, (n) => typeof n === "number" && numbers.has(n)))
     return undefined;
-  if (
-    !isUniqueList(
-      s.highlights,
-      (id) => typeof id === "string" && allSentences.has(id),
-    )
-  )
-    return undefined;
-
-  if (
-    !isRecord(s.pins) ||
-    (s.mode === "exam" && Object.keys(s.pins).length > 0)
-  )
-    return undefined;
-  const pins: Record<string, string[]> = {};
-  for (const [key, value] of Object.entries(s.pins)) {
-    const unit = unitOf(units, Number(key));
-    if (!unit || String(Number(key)) !== key || !isStringList(value))
-      return undefined;
-    const passageSentences = sentenceIds(test, unit.passageNumber);
-    if (
-      value.length === 0 ||
-      value.length > MAX_PINS ||
-      new Set(value).size !== value.length
-    )
-      return undefined;
-    if (!value.every((id) => passageSentences.has(id))) return undefined;
-    pins[key] = [...value];
-  }
+  const highlights = parseHighlights(test, s.highlights);
+  if (!highlights) return undefined;
+  const pins = parsePins(test, s.pins, s.mode);
+  if (!pins) return undefined;
 
   const view = parseView(test, s.view);
   if (!view) return undefined;
 
   return {
+    sessionId,
     testId: test.id,
     testVersion: test.version,
     mode: s.mode,
@@ -99,10 +92,91 @@ export function parseStoredSession(
     currentQuestion: s.currentQuestion as number,
     answers,
     flagged: [...(s.flagged as number[])],
-    highlights: [...(s.highlights as string[])],
+    highlights,
     pins,
     view,
+    ...(retry && { retry }),
   };
+}
+
+/**
+ * Stored answers, as untrusted input: each under its unit's key, in the shape
+ * its unit allows (ADR-0006). Shared by sessions and committed attempts.
+ */
+export function parseAnswers(
+  test: ReadingTest,
+  value: unknown,
+): Record<string, Answer> | undefined {
+  if (!isRecord(value)) return undefined;
+  const units = questionUnits(test);
+  const answers: Record<string, Answer> = {};
+  for (const [key, answer] of Object.entries(value)) {
+    const unit = unitOf(units, Number(key));
+    if (!unit || unit.key !== key) return undefined;
+    if (!(typeof answer === "string" || isStringList(answer))) return undefined;
+    if (!isValidAnswer(unit, answer)) return undefined;
+    answers[key] = Array.isArray(answer) ? [...answer] : answer;
+  }
+  return answers;
+}
+
+/** Highlighted sentence ids, each once, all of the test. */
+export function parseHighlights(
+  test: ReadingTest,
+  value: unknown,
+): string[] | undefined {
+  const all = sentenceIds(test);
+  return isUniqueList(value, (id) => typeof id === "string" && all.has(id))
+    ? [...(value as string[])]
+    : undefined;
+}
+
+/** Pins by question number: at most three sentences of its passage; none in Exam Mode. */
+export function parsePins(
+  test: ReadingTest,
+  value: unknown,
+  mode: unknown,
+): Record<string, string[]> | undefined {
+  if (!isRecord(value) || (mode === "exam" && Object.keys(value).length > 0))
+    return undefined;
+  const units = questionUnits(test);
+  const pins: Record<string, string[]> = {};
+  for (const [key, ids] of Object.entries(value)) {
+    const unit = unitOf(units, Number(key));
+    if (!unit || String(Number(key)) !== key || !isStringList(ids))
+      return undefined;
+    const passageSentences = sentenceIds(test, unit.passageNumber);
+    if (
+      ids.length === 0 ||
+      ids.length > MAX_PINS ||
+      new Set(ids).size !== ids.length ||
+      !ids.every((id) => passageSentences.has(id))
+    )
+      return undefined;
+    pins[key] = [...ids];
+  }
+  return pins;
+}
+
+/** Undefined when absent, null when present but invalid. */
+export function parseRetry(
+  value: unknown,
+  units: QuestionUnit[],
+): ReadingSession["retry"] | null {
+  if (value === undefined) return undefined;
+  if (!isRecord(value) || !isSessionId(value.of)) return null;
+  const questions = value.questions;
+  if (!isUniqueList(questions, (n) => typeof n === "number")) return null;
+  const chosen = new Set(questions as number[]);
+  // Whole answer units only: both numbers of a "choose several" item or neither.
+  const covered = units.filter((u) => u.numbers.some((n) => chosen.has(n)));
+  if (
+    chosen.size === 0 ||
+    covered.some((u) => !u.numbers.every((n) => chosen.has(n))) ||
+    covered.reduce((count, u) => count + u.numbers.length, 0) !== chosen.size
+  )
+    return null;
+  return { of: value.of, questions: [...(questions as number[])] };
 }
 
 function parseView(test: ReadingTest, value: unknown): SessionView | undefined {

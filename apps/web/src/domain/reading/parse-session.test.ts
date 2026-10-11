@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { demoTest as test } from "./demo-test.fixture";
+import { demoTest as test, testSessionId } from "./demo-test.fixture";
 import { SESSION_SCHEMA, parseStoredSession } from "./parse-session";
 import {
   type ReadingEvent,
@@ -12,7 +12,7 @@ import {
 const T0 = Date.UTC(2026, 9, 10, 9, 0);
 
 function richSession(): ReadingSession {
-  let s = startSession(test, "practice", T0);
+  let s = startSession(test, "practice", T0, testSessionId());
   const events: ReadingEvent[] = [
     { type: "answer", number: 1, answer: "TRUE" },
     { type: "answer", number: 22, answer: ["A", "C"] },
@@ -73,10 +73,15 @@ describe("parseStoredSession", () => {
       },
     };
 
-    expect(parseStoredSession(test, m4InProgress)).toEqual(
-      m4InProgress.session,
-    );
-    expect(parseStoredSession(test, m4Finished)).toEqual(m4Finished.session);
+    // M4 stored no id: each slot derives a deterministic one (ADR-0009 §3).
+    expect(parseStoredSession(test, m4InProgress)).toEqual({
+      ...m4InProgress.session,
+      sessionId: `m4-current-${T0}`,
+    });
+    expect(parseStoredSession(test, m4Finished, "finished")).toEqual({
+      ...m4Finished.session,
+      sessionId: `m4-finished-${T0}`,
+    });
   });
 
   it("reads back what was stored, in Practice and after finishing", () => {
@@ -89,7 +94,7 @@ describe("parseStoredSession", () => {
 
   it("keeps an Exam session's clock across a reload", () => {
     const s = apply(
-      startSession(test, "exam", T0),
+      startSession(test, "exam", T0, testSessionId()),
       test,
       { type: "answer", number: 1, answer: "TRUE" },
       T0 + 1000,
