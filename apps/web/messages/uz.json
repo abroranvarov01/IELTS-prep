@@ -131,6 +131,31 @@
       "cancel": "Bekor qilish",
       "highlighted": "Ajratib koʻrsatildi",
       "pinned": "{number}-savolga biriktirildi"
+    },
+    "finish": {
+      "button": "Testni yakunlash",
+      "title": "Test yakunlansinmi?",
+      "unanswered": "{count} ta savolga javob berilmagan.",
+      "confirm": "Yakunlash",
+      "cancel": "Davom etish"
+    },
+    "timer": {
+      "label": "Qolgan vaqt: {time}",
+      "warning": "{minutes} daqiqa qoldi"
+    },
+    "exitExam": {
+      "title": "Testdan chiqasizmi?",
+      "body": "Siz yoʻqligingizda vaqt davom etadi.",
+      "leave": "Chiqish",
+      "stay": "Qolish"
+    },
+    "wordLimit": "Bu javobda {max} tadan ortiq soʻz bor.",
+    "finished": {
+      "title": "Test yakunlandi",
+      "timeUp": "Vaqt tugadi.",
+      "answered": "{total} ta savoldan {answered} tasiga javob berdingiz.",
+      "notChecked": "Javoblarni tekshirish va izohlar keyingi versiyada paydo boʻladi.",
+      "again": "Qaytadan boshlash"
     }
   }
 }

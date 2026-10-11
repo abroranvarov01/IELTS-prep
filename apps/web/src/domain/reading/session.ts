@@ -78,6 +78,21 @@ export function remainingMs(
   return Math.max(0, session.startedAt + test.durationMinutes * 60_000 - now);
 }
 
+/** Exam Mode warns when this many minutes are left (READING_EXPERIENCE.md, M4). */
+const WARNING_MINUTES = [10, 5];
+
+/**
+ * The warning due with this much time left, in minutes: during the minute
+ * after the time left passes 10 or 5 minutes, and none otherwise, so a user
+ * who comes back later is not told an outdated time.
+ */
+export function dueWarning(remaining: number): number | undefined {
+  return WARNING_MINUTES.find(
+    (minutes) =>
+      remaining <= minutes * 60_000 && remaining > (minutes - 1) * 60_000,
+  );
+}
+
 /**
  * The only way a session changes. It first applies an Exam time-out (time is
  * derived from the stored start, so it holds across reloads), then the event.

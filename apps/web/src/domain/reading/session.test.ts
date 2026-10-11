@@ -5,6 +5,7 @@ import {
   type ReadingSession,
   answeredNumbers,
   apply,
+  dueWarning,
   remainingMs,
   startSession,
 } from "./session";
@@ -144,6 +145,16 @@ describe("a Reading session", () => {
     expect(run(exam(), pin("p2-b-s2")).pins).toEqual({});
   });
 
+  it("lets Exam Mode highlight and mark for review, as computer-delivered IELTS does", () => {
+    const s = run(
+      exam(),
+      { type: "toggleHighlight", sentenceId: "p1-1-s1" },
+      { type: "toggleFlag", number: 3 },
+    );
+    expect(s.highlights).toEqual(["p1-1-s1"]);
+    expect(s.flagged).toEqual([3]);
+  });
+
   it("is final once finished", () => {
     const s = run(
       practice(),
@@ -186,6 +197,51 @@ describe("the Exam clock", () => {
     );
     expect(late.answers).toEqual({});
     expect(late.finishedAt).toBe(T0 + 60 * MINUTE);
+  });
+
+  it("keeps running while the user is away, and they continue where they were before the end", () => {
+    const left = apply(
+      exam(),
+      test,
+      { type: "answer", number: 1, answer: "TRUE" },
+      T0 + MINUTE,
+    );
+    const back = apply(
+      left,
+      test,
+      { type: "answer", number: 2, answer: "FALSE" },
+      T0 + 50 * MINUTE,
+    );
+    expect(back.status).toBe("inProgress");
+    expect(back.answers).toEqual({ "1": "TRUE", "2": "FALSE" });
+    expect(remainingMs(back, test, T0 + 50 * MINUTE)).toBe(10 * MINUTE);
+  });
+
+  it("is still running one millisecond before the end", () => {
+    const s = apply(exam(), test, { type: "tick" }, T0 + 60 * MINUTE - 1);
+    expect(s.status).toBe("inProgress");
+    expect(remainingMs(s, test, T0 + 60 * MINUTE - 1)).toBe(1);
+  });
+
+  it("keeps a finish by the user, which the clock does not change later", () => {
+    const s = apply(exam(), test, { type: "finish" }, T0 + 30 * MINUTE);
+    expect(s).toMatchObject({
+      finishReason: "user",
+      finishedAt: T0 + 30 * MINUTE,
+    });
+    expect(apply(s, test, { type: "tick" }, T0 + 90 * MINUTE)).toBe(s);
+  });
+
+  it("warns during the minute after 10 and after 5 minutes are left", () => {
+    expect(dueWarning(11 * MINUTE)).toBeUndefined();
+    expect(dueWarning(10 * MINUTE + 1)).toBeUndefined();
+    expect(dueWarning(10 * MINUTE)).toBe(10);
+    expect(dueWarning(9 * MINUTE + 1)).toBe(10);
+    expect(dueWarning(9 * MINUTE)).toBeUndefined();
+    expect(dueWarning(5 * MINUTE)).toBe(5);
+    expect(dueWarning(4 * MINUTE + 1)).toBe(5);
+    expect(dueWarning(4 * MINUTE)).toBeUndefined();
+    expect(dueWarning(0)).toBeUndefined();
   });
 
   it("does not exist in Practice", () => {

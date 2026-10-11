@@ -15,8 +15,14 @@ import {
   storageSnapshot,
 } from "@/data/reading-session-storage";
 import type { ReadingTest } from "@/domain/reading/content";
-import { MAX_PINS, type ReadingEvent } from "@/domain/reading/session";
+import {
+  MAX_PINS,
+  type ReadingEvent,
+  remainingMs,
+} from "@/domain/reading/session";
 import { questionUnits, unitOf } from "@/domain/reading/units";
+import { ExamTimer } from "./ExamTimer";
+import { FinishedScreen } from "./FinishedScreen";
 import { PassageView } from "./PassageView";
 import { QuestionSheet, SHEET_HEIGHT } from "./QuestionSheet";
 import { ReadingContext, useReading } from "./reading-context";
@@ -28,7 +34,7 @@ import { TestBar } from "./TestBar";
 // Storage is read on the client only; the server renders the loading frame.
 const noSubscription = () => () => {};
 
-/** The Reading test screen: start, reading and answering (ADR-0006, ADR-0007). */
+/** The Reading test screen: start, reading and answering, finished (ADR-0006, ADR-0007). */
 export function ReadingScreen({ test }: { test: ReadingTest }) {
   const stored = useSyncExternalStore(
     noSubscription,
@@ -36,7 +42,11 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
     () => null,
   );
   const [state, dispatch] = useReducer(screenReducer, { now: 0 });
+  // "Start again" shows the start screen until a new session starts.
+  const [restarting, setRestarting] = useState(false);
   const units = useMemo(() => questionUnits(test), [test]);
+  const sessions = stored && (state.local ?? stored);
+  const isExamRunning = sessions?.current?.mode === "exam";
 
   // Keep every change on the device (ADR-0006).
   useEffect(() => {
@@ -44,15 +54,42 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
     if (changed) saveSession(deviceStorage(), changed);
   }, [state.local]);
 
-  if (!stored) return <TestBar />;
-  const current = (state.local ?? stored).current;
+  // The Exam clock: a tick at once and every second moves the timer and
+  // finishes the test at 0:00, also when it ran out while the user was away.
+  useEffect(() => {
+    if (!isExamRunning || !stored) return;
+    const tick = () =>
+      dispatch({
+        type: "event",
+        test,
+        event: { type: "tick" },
+        now: Date.now(),
+        stored,
+      });
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  }, [isExamRunning, test, stored]);
+
+  if (!stored || !sessions) return <TestBar />;
+  const { current, finished } = sessions;
   if (!current) {
+    if (finished && !restarting) {
+      return (
+        <FinishedScreen
+          test={test}
+          session={finished}
+          onStartAgain={() => setRestarting(true)}
+        />
+      );
+    }
     return (
       <StartScreen
         test={test}
-        onStart={(mode) =>
-          dispatch({ type: "start", test, mode, now: Date.now(), stored })
-        }
+        onStart={(mode) => {
+          setRestarting(false);
+          dispatch({ type: "start", test, mode, now: Date.now(), stored });
+        }}
       />
     );
   }
@@ -61,7 +98,7 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
     dispatch({ type: "event", test, event, now: Date.now(), stored });
   return (
     <ReadingContext.Provider value={{ test, units, session: current, send }}>
-      <ReadingView canSave={stored.canSave} />
+      <ReadingView canSave={stored.canSave} now={state.now} />
     </ReadingContext.Provider>
   );
 }
@@ -70,7 +107,7 @@ function sentenceElement(id: string) {
   return document.querySelector<HTMLElement>(`main [data-sentence="${id}"]`);
 }
 
-function ReadingView({ canSave }: { canSave: boolean }) {
+function ReadingView({ canSave, now }: { canSave: boolean; now: number }) {
   const t = useTranslations("reading");
   const { test, units, session, send } = useReading();
   const passage = test.passages[session.view.passage - 1] ?? test.passages[0];
@@ -201,6 +238,8 @@ function ReadingView({ canSave }: { canSave: boolean }) {
   };
 
   if (!passage) return null;
+  // The Exam clock is known from its first tick (ReadingScreen).
+  const remaining = now === 0 ? undefined : remainingMs(session, test, now);
   const isHighlighted =
     selected !== null && session.highlights.includes(selected);
   // Pin Evidence (Practice only) goes to the current question; a "choose
@@ -232,13 +271,14 @@ function ReadingView({ canSave }: { canSave: boolean }) {
       >
         {t("skipToQuestion")}
       </a>
-      <TestBar>
+      <TestBar confirmExit={session.mode === "exam"}>
         <span className="font-medium">
           {t("passageOf", {
             number: passage.number,
             total: test.passages.length,
           })}
         </span>
+        {remaining !== undefined && <ExamTimer remaining={remaining} />}
       </TestBar>
       <main id="main" className="px-gutter">
         {!canSave && (

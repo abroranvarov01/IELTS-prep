@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
+import { createTranslator } from "next-intl";
 import en from "../messages/en.json";
 import ru from "../messages/ru.json";
 import uz from "../messages/uz.json";
@@ -1003,4 +1004,325 @@ test.describe("Pin Evidence", () => {
       .analyze();
     expect(results.violations).toEqual([]);
   });
+});
+
+test.describe("Practice and Exam Modes", () => {
+  // The clock is fixed and moved by the test; the app's timers keep running.
+  const T0 = Date.UTC(2026, 9, 11, 9, 0);
+  const MINUTE = 60_000;
+  const translate = (locale: Locale) =>
+    createTranslator({ locale, messages: catalogs[locale] });
+  const timer = (page: Page) => page.getByRole("timer");
+  const exit = (page: Page, locale: Locale = "en") =>
+    page.getByRole("link", { name: catalogs[locale].reading.exit });
+  const exitDialog = (page: Page, locale: Locale = "en") =>
+    page.getByRole("dialog", {
+      name: catalogs[locale].reading.exitExam.title,
+    });
+  const finishButton = (page: Page, locale: Locale = "en") =>
+    sheet(page, locale).getByRole("button", {
+      name: catalogs[locale].reading.finish.button,
+    });
+  const finishedHeading = (page: Page) =>
+    page.getByRole("heading", { level: 1 });
+
+  async function startExam(page: Page, locale: Locale = "en") {
+    await page.goto(`/${locale}/reading/${TEST}?mode=exam`);
+    await page
+      .getByRole("button", { name: catalogs[locale].reading.start })
+      .click();
+    await expect(questionHeading(page, locale, 1)).toBeVisible();
+  }
+
+  test("a link can preselect Exam; the test starts only with Start", async ({
+    page,
+  }) => {
+    await page.goto(`/en/reading/${TEST}?mode=exam`);
+    await expect(
+      page.getByRole("radio", { name: new RegExp(en.reading.mode.exam) }),
+    ).toBeChecked();
+    await expect(timer(page)).toHaveCount(0);
+    await page.getByRole("button", { name: en.reading.start }).click();
+    await expect(timer(page)).toBeVisible();
+  });
+
+  test("Practice has no timer, and Exit goes straight home", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await expect(timer(page)).toHaveCount(0);
+    await exit(page).click();
+    await expect(page).not.toHaveURL(/\/reading\//);
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+  });
+
+  test("Exam counts down from 60:00 and keeps running across a reload and while the user is away", async ({
+    page,
+  }) => {
+    await page.clock.setFixedTime(T0);
+    await startExam(page);
+    await expect(timer(page)).toHaveText("60:00");
+    await expect(timer(page)).toHaveAccessibleName(
+      fill(en.reading.timer.label, { time: "60:00" }),
+    );
+
+    await page.clock.setFixedTime(T0 + MINUTE + 1000);
+    await expect(timer(page)).toHaveText("58:59");
+    await page.reload();
+    await expect(timer(page)).toHaveText("58:59");
+
+    await exit(page).click();
+    await expect(exitDialog(page)).toContainText(en.reading.exitExam.body);
+    await exitDialog(page)
+      .getByRole("link", { name: en.reading.exitExam.leave })
+      .click();
+    await expect(page).not.toHaveURL(/\/reading\//);
+    await page.clock.setFixedTime(T0 + 11 * MINUTE);
+    await page.goto(`/en/reading/${TEST}`);
+    await expect(timer(page)).toHaveText("49:00");
+  });
+
+  test("Exit in Exam Mode asks first; Stay and Escape keep the user in the test", async ({
+    page,
+  }) => {
+    await startExam(page);
+    await exit(page).click();
+    await expect(
+      exitDialog(page).getByRole("button", { name: en.reading.exitExam.stay }),
+    ).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(exitDialog(page)).toBeHidden();
+    await expect(exit(page)).toBeFocused();
+
+    await exit(page).click();
+    await exitDialog(page)
+      .getByRole("button", { name: en.reading.exitExam.stay })
+      .click();
+    await expect(exitDialog(page)).toBeHidden();
+    await expect(exit(page)).toBeFocused();
+    await expect(questionHeading(page, "en", 1)).toBeVisible();
+  });
+
+  test("warns at 10 and 5 minutes left, shows the time bolder from 5 minutes, and finishes the test at 0:00", async ({
+    page,
+  }) => {
+    const t = translate("en");
+    await page.clock.setFixedTime(T0);
+    await startExam(page);
+    await choose(page, "TRUE");
+    await expect(timer(page)).toHaveCSS("font-weight", "700");
+
+    await page.clock.setFixedTime(T0 + 50 * MINUTE);
+    await expect(timer(page)).toHaveText("10:00");
+    await expect(
+      page.getByText(t("reading.timer.warning", { minutes: 10 })),
+    ).toBeAttached();
+    await page.clock.setFixedTime(T0 + 55 * MINUTE);
+    await expect(timer(page)).toHaveText("05:00");
+    await expect(
+      page.getByText(t("reading.timer.warning", { minutes: 5 })),
+    ).toBeAttached();
+    await expect(timer(page)).toHaveCSS("font-weight", "800");
+
+    await page.clock.setFixedTime(T0 + 60 * MINUTE);
+    await expect(finishedHeading(page)).toContainText(
+      en.reading.finished.timeUp,
+    );
+    await expect(finishedHeading(page)).toContainText(
+      en.reading.finished.title,
+    );
+    await expect(finishedHeading(page)).toBeFocused();
+    await expect(
+      page.getByText(
+        fill(en.reading.finished.answered, { answered: 1, total: 40 }),
+      ),
+    ).toBeVisible();
+    await expect(page.getByText(en.reading.finished.notChecked)).toBeVisible();
+    await expect(timer(page)).toHaveCount(0);
+
+    // Opening the test again shows the finished page.
+    await page.reload();
+    await expect(finishedHeading(page)).toContainText(
+      en.reading.finished.timeUp,
+    );
+  });
+
+  test("an Exam whose time ran out while the user was away opens finished", async ({
+    page,
+  }) => {
+    await page.clock.setFixedTime(T0);
+    await startExam(page);
+    await exit(page).click();
+    await exitDialog(page)
+      .getByRole("link", { name: en.reading.exitExam.leave })
+      .click();
+    await expect(page).not.toHaveURL(/\/reading\//);
+
+    await page.clock.setFixedTime(T0 + 75 * MINUTE);
+    await page.goto(`/en/reading/${TEST}`);
+    await expect(finishedHeading(page)).toContainText(
+      en.reading.finished.timeUp,
+    );
+    await expect(
+      page.getByText(
+        fill(en.reading.finished.answered, { answered: 0, total: 40 }),
+      ),
+    ).toBeVisible();
+  });
+
+  test("Finish test on question 40 asks first, shows the finished page, and Start again begins a new session", async ({
+    page,
+  }) => {
+    const t = translate("en");
+    await startPractice(page);
+    await choose(page, "TRUE");
+    await goToQuestion(page, 40);
+    await expect(
+      sheet(page).getByRole("button", { name: en.reading.question.next }),
+    ).toHaveCount(0);
+
+    await finishButton(page).click();
+    await expect(
+      sheet(page).getByRole("heading", { name: en.reading.finish.title }),
+    ).toBeFocused();
+    await expect(sheet(page)).toContainText(
+      t("reading.finish.unanswered", { count: 39 }),
+    );
+    await sheet(page)
+      .getByRole("button", { name: en.reading.finish.cancel })
+      .click();
+    await expect(finishButton(page)).toBeFocused();
+
+    await finishButton(page).click();
+    await sheet(page)
+      .getByRole("button", { name: en.reading.finish.confirm, exact: true })
+      .click();
+    await expect(finishedHeading(page)).toHaveText(en.reading.finished.title);
+    await expect(finishedHeading(page)).toBeFocused();
+    await expect(
+      page.getByText(
+        fill(en.reading.finished.answered, { answered: 1, total: 40 }),
+      ),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: en.common.goHome }),
+    ).toBeVisible();
+    await page.reload();
+    await expect(finishedHeading(page)).toHaveText(en.reading.finished.title);
+
+    await page.getByRole("button", { name: en.reading.finished.again }).click();
+    await expect(
+      page.getByRole("radio", { name: new RegExp(en.reading.mode.practice) }),
+    ).toBeChecked();
+    await page.getByRole("button", { name: en.reading.start }).click();
+    await expect(questionHeading(page, "en", 1)).toBeVisible();
+    await expect(page.getByRole("radio", { name: "TRUE" })).not.toBeChecked();
+  });
+
+  test("Finish test also ends the navigator; Keep working and Escape return to All questions", async ({
+    page,
+  }) => {
+    const t = translate("en");
+    const allQuestions = page.getByRole("button", {
+      name: en.reading.navigator.open,
+    });
+    await startPractice(page);
+    await allQuestions.click();
+    await finishButton(page).click();
+    await expect(sheet(page)).toContainText(
+      t("reading.finish.unanswered", { count: 40 }),
+    );
+    await page.keyboard.press("Escape");
+    await expect(allQuestions).toBeFocused();
+
+    await allQuestions.click();
+    await finishButton(page).click();
+    await sheet(page)
+      .getByRole("button", { name: en.reading.finish.cancel })
+      .click();
+    await expect(allQuestions).toBeFocused();
+  });
+
+  test("Practice warns when a typed answer has more words than the instruction allows", async ({
+    page,
+  }) => {
+    const warning = translate("en")("reading.wordLimit", { max: 2 });
+    const field = page.getByRole("textbox", {
+      name: fill(en.reading.answer.label, { number: 10 }),
+    });
+    await startPractice(page);
+    await goToQuestion(page, 10);
+    await field.fill("narrow lanes");
+    await expect(sheet(page).getByText(warning)).toHaveCount(0);
+    await field.fill("the narrow lanes");
+    await expect(sheet(page).getByText(warning)).toBeVisible();
+    await expect(field).toHaveAccessibleDescription(warning);
+  });
+
+  test("Exam Mode gives no word-limit warning", async ({ page }) => {
+    await startExam(page);
+    await goToQuestion(page, 10);
+    await page
+      .getByRole("textbox", {
+        name: fill(en.reading.answer.label, { number: 10 }),
+      })
+      .fill("the narrow lanes");
+    await expect(
+      sheet(page).getByText(translate("en")("reading.wordLimit", { max: 2 })),
+    ).toHaveCount(0);
+  });
+
+  for (const locale of ["ru", "uz"] as const) {
+    test(`the timer, the exit dialog, the finish confirmation and the finished page fit 320 px in /${locale} without WCAG 2.2 AA violations`, async ({
+      page,
+    }) => {
+      const axe = async () =>
+        expect(
+          (
+            await new AxeBuilder({ page })
+              .withTags([
+                "wcag2a",
+                "wcag2aa",
+                "wcag21a",
+                "wcag21aa",
+                "wcag22aa",
+              ])
+              .analyze()
+          ).violations,
+        ).toEqual([]);
+      await page.setViewportSize({ width: 320, height: 640 });
+      await page.clock.setFixedTime(T0);
+      await startExam(page, locale);
+      await expect(timer(page)).toHaveText("60:00");
+      await noOverflow(page);
+
+      await exit(page, locale).click();
+      await expect(exitDialog(page, locale)).toBeVisible();
+      await noOverflow(page);
+      await axe();
+      await page.keyboard.press("Escape");
+
+      await goToQuestion(page, 40, locale);
+      await finishButton(page, locale).click();
+      await expect(
+        sheet(page, locale).getByRole("heading", {
+          name: catalogs[locale].reading.finish.title,
+        }),
+      ).toBeFocused();
+      await noOverflow(page);
+      await axe();
+
+      await sheet(page, locale)
+        .getByRole("button", {
+          name: catalogs[locale].reading.finish.confirm,
+          exact: true,
+        })
+        .click();
+      await expect(finishedHeading(page)).toHaveText(
+        catalogs[locale].reading.finished.title,
+      );
+      await noOverflow(page);
+      await axe();
+    });
+  }
 });

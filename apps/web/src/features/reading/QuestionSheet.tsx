@@ -2,11 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { type PointerEvent, useEffect, useRef, useState } from "react";
+import { PrimaryButton } from "@/components/PrimaryButton";
 import { QUESTION_COUNT } from "@/domain/reading/content";
 import { type SheetState, answeredNumbers } from "@/domain/reading/session";
 import { type QuestionUnit, unitOf } from "@/domain/reading/units";
 import { ChoiceQuestion } from "./ChoiceQuestion";
 import { EvidenceList } from "./EvidenceList";
+import { FinishConfirmation } from "./FinishConfirmation";
 import { MatchingQuestion } from "./MatchingQuestion";
 import { MultiChoiceQuestion } from "./MultiChoiceQuestion";
 import { OptionPicker } from "./OptionPicker";
@@ -32,15 +34,16 @@ type Drag = {
   moved: boolean;
 };
 
-/** What the open sheet shows: the question, the navigator, or a question's option list. */
-type Panel = "question" | "navigator" | "options";
-type FocusTarget = "navigatorButton" | "answerButton";
+/** What the open sheet shows: the question, the navigator, a question's option list, or the finish confirmation. */
+type Panel = "question" | "navigator" | "options" | "finish";
+type FocusTarget = "navigatorButton" | "answerButton" | "finishButton";
 
 /**
  * The persistent, non-modal question sheet (READING_EXPERIENCE.md, Mobile
  * reading screen; ADR-0007): three states, each reachable by the handle button
  * as well as by dragging, docked above the phone keyboard while typing. The
- * navigator and option lists open inside it, expanded.
+ * navigator, option lists and the finish confirmation open inside it,
+ * expanded.
  */
 export function QuestionSheet({
   goTo,
@@ -63,6 +66,7 @@ export function QuestionSheet({
   const panelHeadingRef = useRef<HTMLHeadingElement>(null);
   const navigatorButtonRef = useRef<HTMLButtonElement>(null);
   const answerAreaRef = useRef<HTMLDivElement>(null);
+  const finishButtonRef = useRef<HTMLButtonElement>(null);
   const wasDragged = useRef(false);
   const isFirstQuestion = useRef(true);
   // Where focus goes when a panel closes, once that control is rendered again.
@@ -70,6 +74,8 @@ export function QuestionSheet({
   const [drag, setDrag] = useState<Drag | null>(null);
   const [keyboard, setKeyboard] = useState({ inset: 0, viewport: 0 });
   const [panel, setPanel] = useState<Panel>("question");
+  // "Finish test" is in the footer and at the end of the navigator.
+  const [finishFrom, setFinishFrom] = useState<FocusTarget>("finishButton");
 
   // Keep the sheet above the on-screen keyboard (VisualViewport, ADR-0007).
   useEffect(() => {
@@ -111,6 +117,8 @@ export function QuestionSheet({
       navigatorButtonRef.current?.focus();
     if (returnFocusTo.current === "answerButton")
       answerAreaRef.current?.querySelector("button")?.focus();
+    if (returnFocusTo.current === "finishButton")
+      finishButtonRef.current?.focus();
     returnFocusTo.current = null;
   }, [panel]);
 
@@ -125,22 +133,29 @@ export function QuestionSheet({
     setPanel("question");
     setSheet("partial");
   };
+  const openFinish = (from: FocusTarget) => {
+    setFinishFrom(from);
+    openPanel("finish");
+  };
   const opener: FocusTarget =
-    panel === "navigator" ? "navigatorButton" : "answerButton";
+    panel === "navigator"
+      ? "navigatorButton"
+      : panel === "finish"
+        ? finishFrom
+        : "answerButton";
 
   // Escape closes a panel (a document listener: the sheet is not a control).
   useEffect(() => {
     if (panel === "question") return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      returnFocusTo.current =
-        panel === "navigator" ? "navigatorButton" : "answerButton";
+      returnFocusTo.current = opener;
       setPanel("question");
       send({ type: "setView", view: { sheet: "partial" } });
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [panel, send]);
+  }, [panel, opener, send]);
 
   const chooseFromNavigator = (target: number) => {
     closePanel(null);
@@ -304,7 +319,18 @@ export function QuestionSheet({
               <div className="mt-4">
                 <QuestionNavigator onChoose={chooseFromNavigator} />
               </div>
+              <div className="mt-6">
+                <PrimaryButton onClick={() => openFinish("navigatorButton")}>
+                  {t("finish.button")}
+                </PrimaryButton>
+              </div>
             </>
+          ) : panel === "finish" ? (
+            <FinishConfirmation
+              headingRef={panelHeadingRef}
+              onFinish={() => send({ type: "finish" })}
+              onCancel={() => closePanel(opener)}
+            />
           ) : (
             <OptionPicker
               unit={unit}
@@ -337,7 +363,7 @@ export function QuestionSheet({
               />
             )}
           </div>
-          <div className="flex shrink-0 justify-between gap-4 border-t border-border-subtle px-gutter py-2">
+          <div className="flex shrink-0 flex-wrap justify-between gap-x-4 gap-y-2 border-t border-border-subtle px-gutter py-2">
             {previous ? (
               <SecondaryButton onClick={() => goTo(previous.numbers[0] ?? 1)}>
                 {t("question.previous")}
@@ -345,10 +371,17 @@ export function QuestionSheet({
             ) : (
               <span />
             )}
-            {next && (
+            {next ? (
               <SecondaryButton onClick={() => goTo(next.numbers[0] ?? 1)}>
                 {t("question.next")}
               </SecondaryButton>
+            ) : (
+              <PrimaryButton
+                ref={finishButtonRef}
+                onClick={() => openFinish("finishButton")}
+              >
+                {t("finish.button")}
+              </PrimaryButton>
             )}
           </div>
         </>

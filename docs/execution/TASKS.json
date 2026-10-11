@@ -2191,7 +2191,7 @@
       "title": "Practice and Exam Modes with the timer",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-19"],
       "goal": "Choosing a mode changes scope, timing and assistance exactly as approved, and the timer is correct across reloads.",
       "scope": [
@@ -2216,7 +2216,8 @@
         ".claude/rules/styling/visual-implementation.md",
         "docs/architecture/decisions/0004-web-feature-structure.md",
         "docs/architecture/decisions/0006-reading-session-state.md"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M4-21",

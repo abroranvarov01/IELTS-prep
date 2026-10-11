@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PrimaryButton } from "@/components/PrimaryButton";
@@ -8,7 +9,11 @@ import type { Mode } from "@/domain/reading/session";
 import { OptionRow } from "./OptionRow";
 import { TestBar } from "./TestBar";
 
-/** The test's start screen: its title, the two modes, and Start (READING_EXPERIENCE.md, Practice and Exam Mode). */
+/**
+ * The test's start screen: its title, the two modes, and Start
+ * (READING_EXPERIENCE.md, Practice and Exam Mode). A link can preselect a
+ * mode (`?mode=exam`); the user still taps Start.
+ */
 export function StartScreen({
   test,
   onStart,
@@ -17,7 +22,8 @@ export function StartScreen({
   onStart: (mode: Mode) => void;
 }) {
   const t = useTranslations("reading");
-  const [mode, setMode] = useState<Mode>("practice");
+  const preselected = useSearchParams().get("mode") === "exam";
+  const [mode, setMode] = useState<Mode>(preselected ? "exam" : "practice");
 
   return (
     <>

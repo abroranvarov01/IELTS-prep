@@ -131,6 +131,31 @@
       "cancel": "Cancel",
       "highlighted": "Highlighted",
       "pinned": "Pinned to question {number}"
+    },
+    "finish": {
+      "button": "Finish test",
+      "title": "Finish the test?",
+      "unanswered": "{count, plural, one {# question has no answer.} other {# questions have no answer.}}",
+      "confirm": "Finish",
+      "cancel": "Keep working"
+    },
+    "timer": {
+      "label": "Time left: {time}",
+      "warning": "{minutes, plural, one {# minute left} other {# minutes left}}"
+    },
+    "exitExam": {
+      "title": "Leave the test?",
+      "body": "The time keeps running while you are away.",
+      "leave": "Leave",
+      "stay": "Stay"
+    },
+    "wordLimit": "{max, plural, one {This answer has more than # word.} other {This answer has more than # words.}}",
+    "finished": {
+      "title": "Test finished",
+      "timeUp": "Time is up.",
+      "answered": "You answered {answered} of {total} questions.",
+      "notChecked": "Checking answers and explanations will come in a later version.",
+      "again": "Start again"
     }
   }
 }

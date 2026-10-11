@@ -5,6 +5,7 @@ import {
   type ReadingEvent,
   type ReadingSession,
   apply,
+  remainingMs,
   startSession,
 } from "./session";
 
@@ -47,6 +48,20 @@ describe("parseStoredSession", () => {
 
     const finished = apply(s, test, { type: "finish" }, T0 + 2000);
     expect(parseStoredSession(test, stored(finished))).toEqual(finished);
+  });
+
+  it("keeps an Exam session's clock across a reload", () => {
+    const s = apply(
+      startSession(test, "exam", T0),
+      test,
+      { type: "answer", number: 1, answer: "TRUE" },
+      T0 + 1000,
+    );
+    const reloaded = parseStoredSession(test, stored(s));
+    expect(reloaded).toEqual(s);
+    expect(reloaded && remainingMs(reloaded, test, T0 + 20 * 60_000)).toBe(
+      40 * 60_000,
+    );
   });
 
   it("ignores fields it does not know", () => {
