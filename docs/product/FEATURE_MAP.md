@@ -8,7 +8,7 @@ Status values: `Not started` · `Designing` · `In progress` · `Shipped`. Seque
 |---|---|---|
 | Diagnostic assessment | Find the user's starting level quickly, without a full mock test. | Not started |
 | Personalized next action | Returning users see the single most useful thing to do now. Personalization may use target band and exam date. | In progress (M3: home with one next action, the level check; guest goal on the device) |
-| Reading practice | Phone-first Reading with a passage-first layout, a question bottom sheet, Pin Evidence, and Practice/Exam modes. UX direction approved: [READING_EXPERIENCE.md](READING_EXPERIENCE.md). Table, flow-chart and diagram label completion are required before beta (TASKS.json M11-01 to M11-03). | Designing (M4 specs approved) |
+| Reading practice | Phone-first Reading with a passage-first layout, a question bottom sheet, Pin Evidence, and Practice/Exam modes. UX direction approved: [READING_EXPERIENCE.md](READING_EXPERIENCE.md). Table, flow-chart and diagram label completion are required before beta (TASKS.json M11-01 to M11-03). | In progress (M4: the Reading engine on phone and desktop with the 13 M4 question types, highlighting, Pin Evidence, and Practice and Exam with the timer, reached by direct link; answer checking and review are M5) |
 | Listening practice | Audio plus questions, with realistic play-once behavior in exam mode. | Not started |
 | Writing practice | Task 1 / Task 2 practice with AI-estimated feedback. | Not started |
 | Speaking practice | Recorded answers with AI-estimated feedback. | Not started |

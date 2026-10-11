@@ -2329,7 +2329,7 @@
       "title": "Reading engine end to end, accessibility pass and docs",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-21", "M4-23", "M4-24"],
       "goal": "The whole engine works as one flow on phone and desktop, and the docs describe what exists.",
       "scope": [
@@ -2365,7 +2365,8 @@
         "docs/product/FEATURE_MAP.md",
         "CLAUDE.md (Current state)",
         "docs/product/READING_EXPERIENCE.md"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M10-01",

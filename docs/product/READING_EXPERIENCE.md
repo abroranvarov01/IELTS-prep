@@ -2,7 +2,7 @@
 
 Canonical owner of the **Reading interaction model**, the product's signature experience.
 
-> **STATUS: APPROVED PRODUCT/UX DIRECTION.** The interaction model below is decided. Exact visual measurements, gestures, component structure, and implementation are **not** decided. Nothing here is implemented.
+> **STATUS: APPROVED PRODUCT/UX DIRECTION.** The interaction model below is decided. The [M4 specifications](#m4-specifications-drafts) are **implemented** (M4 Reading engine, 2026-10-11): the phone and desktop layouts, the question types of the M4 scope, highlighting, Pin Evidence, and Practice and Exam Mode. Review (Practice Mode), answer checking and Error Intelligence are not implemented yet (M5).
 
 General UX rules still apply ([UX_PRINCIPLES.md](UX_PRINCIPLES.md)), as do accessibility requirements ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)) and the visual system ([DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md)).
 
