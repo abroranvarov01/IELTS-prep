@@ -632,6 +632,11 @@ test.describe("typed answers", () => {
         return box && Math.round(box.y + box.height);
       })
       .toBe(viewport - 300);
+    // Measured once the sheet has settled (its height animation has ended),
+    // which is what the user then sees.
+    await sheet(page).evaluate((element) =>
+      Promise.all(element.getAnimations().map((a) => a.finished)),
+    );
     const fieldBox = await field(page, 12).boundingBox();
     expect(fieldBox!.y + fieldBox!.height).toBeLessThanOrEqual(viewport - 300);
   });

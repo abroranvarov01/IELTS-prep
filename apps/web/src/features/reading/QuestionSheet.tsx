@@ -122,6 +122,20 @@ export function QuestionSheet({
     returnFocusTo.current = null;
   }, [panel]);
 
+  // When the sheet's height settles (a state change, or the keyboard taking
+  // room), a control focused while it was moving may now be below the body's
+  // visible part. Scroll only the body back to it; the passage never moves.
+  const keepFocusInView = () => {
+    const body = sheetRef.current?.querySelector("#question-body");
+    const focused = document.activeElement;
+    if (!body || !(focused instanceof HTMLElement) || !body.contains(focused))
+      return;
+    const room = body.getBoundingClientRect();
+    const box = focused.getBoundingClientRect();
+    if (box.bottom > room.bottom) body.scrollTop += box.bottom - room.bottom;
+    else if (box.top < room.top) body.scrollTop -= room.top - box.top;
+  };
+
   const setSheet = (sheet: SheetState) =>
     send({ type: "setView", view: { sheet } });
   const openPanel = (opened: Exclude<Panel, "question">) => {
@@ -228,6 +242,13 @@ export function QuestionSheet({
         drag ? "" : "transition-[height] duration-(--duration-base)"
       }`}
       style={{ height, bottom: keyboard.inset }}
+      onTransitionEnd={(event) => {
+        if (
+          event.target === event.currentTarget &&
+          event.propertyName === "height"
+        )
+          keepFocusInView();
+      }}
     >
       <button
         type="button"

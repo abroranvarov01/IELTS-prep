@@ -2259,7 +2259,7 @@
       "title": "Fix the flaky keyboard-docking test at its cause",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-17"],
       "goal": "The e2e test \"the sheet stays docked above the on-screen keyboard while typing\" (M4-17) passes reliably, because the race behind its intermittent failure is found and fixed at its cause (owner, 2026-10-11).",
       "scope": [
@@ -2286,7 +2286,8 @@
         ".claude/rules/testing/test-code.md",
         "docs/product/READING_EXPERIENCE.md",
         "docs/architecture/decisions/0007-reading-ui-primitives.md"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M4-24",
