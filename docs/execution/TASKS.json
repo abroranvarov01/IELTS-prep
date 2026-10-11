@@ -2294,7 +2294,7 @@
       "title": "Compact sentence action bar on phones",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-19"],
       "goal": "The sentence action bar follows the owner's rule of 2026-10-11 (DESIGN_SYSTEM.md, Sentence action bar): compact on phones, at most two rows, height from its content, no horizontal clipping, no hidden critical action, understandable in uz, ru and en.",
       "scope": [
@@ -2321,7 +2321,8 @@
         "docs/product/LOCALIZATION.md",
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M4-22",

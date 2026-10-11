@@ -931,6 +931,10 @@ test.describe("Pin Evidence", () => {
     await page.keyboard.press("ArrowDown");
     await page.keyboard.press("Enter");
     await page.keyboard.press("Tab");
+    await expect(
+      page.getByRole("button", { name: en.reading.mark.cancel }),
+    ).toBeFocused();
+    await page.keyboard.press("Tab");
     await expect(pinTo(page, 1)).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(sentence(page, "p1-1-s2")).toBeFocused();
@@ -959,11 +963,71 @@ test.describe("Pin Evidence", () => {
     await page.getByRole("button", { name: en.reading.start }).click();
     await sentence(page, "p1-1-s1").tap();
     await expect(actions(page)).toBeVisible();
-    await expect(actions(page).getByRole("button")).toHaveText([
+    const buttons = actions(page).getByRole("button");
+    await expect(buttons).toHaveCount(2);
+    await expect(buttons.nth(0)).toHaveAccessibleName(
       en.reading.mark.highlight,
-      en.reading.mark.cancel,
-    ]);
+    );
+    await expect(buttons.nth(1)).toHaveAccessibleName(en.reading.mark.cancel);
   });
+
+  for (const locale of routing.locales) {
+    test(`the action bar keeps its actions to two rows at 320 and 360 px in /${locale}, in every state`, async ({
+      page,
+    }) => {
+      const m = catalogs[locale].reading;
+      const pinTo1 = page.getByRole("button", {
+        name: fill(m.mark.pin, { number: 1 }),
+      });
+      const rows = () =>
+        actions(page, locale)
+          .getByRole("button")
+          .evaluateAll(
+            (buttons) =>
+              new Set(
+                buttons.map((b) => Math.round(b.getBoundingClientRect().top)),
+              ).size,
+          );
+      const atBothWidths = async () => {
+        for (const width of [320, 360]) {
+          await page.setViewportSize({ width, height: 640 });
+          expect(await rows()).toBeLessThanOrEqual(2);
+          await noOverflow(page);
+        }
+        await page.setViewportSize({ width: 320, height: 640 });
+      };
+
+      await page.setViewportSize({ width: 320, height: 640 });
+      await startPractice(page, locale);
+      await sentence(page, "p1-1-s1").tap();
+      await atBothWidths(); // Highlight, Cancel, Pin
+
+      await page.getByRole("button", { name: m.mark.highlight }).tap();
+      await sentence(page, "p1-1-s1").tap();
+      await pinTo1.tap();
+      await sentence(page, "p1-1-s1").tap();
+      await expect(
+        page.getByRole("button", { name: m.mark.removeHighlight }),
+      ).toBeVisible();
+      await atBothWidths(); // Remove highlight, Cancel, Unpin
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+        .analyze();
+      expect(results.violations).toEqual([]);
+
+      await page.getByRole("button", { name: m.mark.cancel }).tap();
+      for (const id of ["p1-1-s2", "p1-1-s3"]) {
+        await sentence(page, id).tap();
+        await pinTo1.tap();
+      }
+      await sentence(page, "p1-2-s1").tap();
+      await pinTo1.tap();
+      await expect(actions(page, locale)).toContainText(
+        fill(m.evidence.limit, { max: 3 }),
+      );
+      await atBothWidths(); // the refused pin's message above the actions
+    });
+  }
 
   test("the evidence and the action bar fit 320 px and have no WCAG 2.2 AA violations", async ({
     page,

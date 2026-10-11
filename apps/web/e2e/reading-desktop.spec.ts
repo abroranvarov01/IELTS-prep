@@ -277,10 +277,10 @@ test("Exam Mode shows the timer in the test bar and offers no Pin Evidence", asy
   await start(page, "en", "exam");
   await expect(page.getByRole("timer")).toBeVisible();
   await sentence(page, "p1-1-s1").click();
-  await expect(actions(page).getByRole("button")).toHaveText([
-    en.reading.mark.highlight,
-    en.reading.mark.cancel,
-  ]);
+  const buttons = actions(page).getByRole("button");
+  await expect(buttons).toHaveCount(2);
+  await expect(buttons.nth(0)).toHaveAccessibleName(en.reading.mark.highlight);
+  await expect(buttons.nth(1)).toHaveAccessibleName(en.reading.mark.cancel);
   await expect(
     column(page).getByRole("heading", { name: en.reading.evidence.title }),
   ).toHaveCount(0);
