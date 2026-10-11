@@ -1,6 +1,6 @@
 # ADR-0005: Reading Content Contract
 
-- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-06).
+- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-06). §2 amended by [ADR-0008](0008-reading-answer-checking-and-explanations.md) (the key is loaded by the results and review pages); §1 extended by ADR-0008 §3 (any change to a test file whose results may exist increases its version).
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

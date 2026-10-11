@@ -1,6 +1,6 @@
 # ADR-0008: Reading Answer Checking, Explanations and Review Content
 
-- **Status:** Proposed (2026-10-11, M5 planning; revised the same day for the owner review packet and again to apply the owner's M5-01 decision and amendments). If accepted, it amends [ADR-0005](0005-reading-content-contract.md) §2 (the answer key is loaded by the results and review pages) and §1 (what increases a test's version), extends the key file and adds per-locale explanation files (§3 to §5 below).
+- **Status:** Accepted (2026-10-11, owner, task M5-01, with the owner's amendments applied; drafted in M5 planning). Approval source: the owner instruction of 2026-10-11 on the review packet at commit 069877e. It amends [ADR-0005](0005-reading-content-contract.md) §2 (the answer key is loaded by the results and review pages) and §1 (what increases a test's version), extends the key file and adds per-locale explanation files (§3 to §5 below).
 - **Date:** 2026-10-11
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

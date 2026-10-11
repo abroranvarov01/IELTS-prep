@@ -42,8 +42,8 @@
     {
       "id": "M5",
       "name": "Reading Review + Error Intelligence",
-      "status": "planned",
-      "goal": "Answer checking against the answer key (moved from M4 by the owner, 2026-10-10) and results, evidence-first review of every Reading mistake with 'Explain simpler' in uz/ru/en, and detection of recurring error patterns that lead to targeted practice."
+      "status": "active",
+      "goal": "As approved at M5-01 (owner, 2026-10-11): answer checking for every M4 question type with a raw practice score (no band for the uncalibrated demo test); immutable attempts with answers, pins and highlights kept on the device in write-once entries that are safe across tabs and compatible with M4 data, with result records traceable to their key revision and rules version; evidence-first review of every answer unit with pre-written explanations and 'Explain simpler' in uz/ru/en (AI drafts, reviewed by people before beta); conservatively worded repeated-mistake detection on the first attempt at a test; and retries of questions not fully correct or unanswered. Home unchanged; no runtime AI."
     },
     {
       "id": "M6",
@@ -2374,7 +2374,7 @@
       "title": "Owner approves the M5 specs, copy, design values and ADRs",
       "milestone": "M5",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
       "dependsOn": [],
       "goal": "One approval gate before any M5 product code: answer checking and results, evidence-first review, Error Intelligence, targeted practice, explanations (pre-written or runtime AI), routes and Home, status colors, and how attempts are kept on the device.",
       "scope": [
@@ -2415,7 +2415,8 @@
         "docs/execution/ROADMAP.md",
         "docs/execution/PROGRESS.md"
       ],
-      "notes": "Owner decision 2026-10-11 on the packet at commit 069877e: D1 and D3–D25 approved as recommended, D2 amended (only one trailing full stop ignored), seven amendments (highlights kept; 'choose several' as one answer unit; concrete cross-tab storage guarantees; coherent result records; claims within the evidence; copy corrections; executable explanation sequence with M11 review tasks). Recorded in READING_EXPERIENCE.md 'Decided at the M5-01 gate'."
+      "notes": "Owner decision 2026-10-11 on the packet at commit 069877e: D1 and D3–D25 approved as recommended, D2 amended (only one trailing full stop ignored), seven amendments (highlights kept; 'choose several' as one answer unit; concrete cross-tab storage guarantees; coherent result records; claims within the evidence; copy corrections; executable explanation sequence with M11 review tasks). Recorded in READING_EXPERIENCE.md 'Decided at the M5-01 gate'.",
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M5-02",

@@ -412,7 +412,7 @@ The questions as they were put to the owner, with the options considered:
 
 ## Reading results and review flows (M5)
 
-**DRAFT, revised to the owner's M5-01 decision of 2026-10-11** (approval recorded with task M5-01). The screens are specified in [READING_EXPERIENCE.md, M5 specifications](READING_EXPERIENCE.md#m5-specifications-drafts), the visual values in [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review), the data in ADR-0008 and ADR-0009. The copy is in [Interface copy (M5)](#interface-copy-m5). Steps count from the M4 reading screen; Reading is still reached by its direct link (M4), and home is unchanged (D18).
+**Approved with amendments** (owner, 2026-10-11, task M5-01). The screens are specified in [READING_EXPERIENCE.md, M5 specifications](READING_EXPERIENCE.md#m5-specifications-drafts), the visual values in [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review), the data in ADR-0008 and ADR-0009. The copy is in [Interface copy (M5)](#interface-copy-m5). Steps count from the M4 reading screen; Reading is still reached by its direct link (M4), and home is unchanged (D18).
 
 ### Finish → results
 - **Goal:** right after finishing, the learner sees how many answers were correct and what to do next.
@@ -452,7 +452,7 @@ The questions as they were put to the owner, with the options considered:
 
 ## Interface copy (M5)
 
-**PROPOSED, revised to the owner's M5-01 decision of 2026-10-11** (approval recorded with task M5-01). Interface strings only. Test content (passages, questions, options, TRUE/FALSE/NOT GIVEN, typed and accepted answers) stays in English from the content. Explanations and their simpler versions are per-test content files, not catalog strings (ADR-0008). `<en>…</en>` marks English answer words inside a localized string, rendered with `lang="en"`. Uzbek uses U+02BB for oʻ and gʻ and U+02BC for the tutuq belgisi. A fluent-speaker review of uz and ru is required before beta, as for M1 to M4. Keys are suggestions.
+**Approved for implementation** (owner, 2026-10-11, task M5-01). Interface strings only. Test content (passages, questions, options, TRUE/FALSE/NOT GIVEN, typed and accepted answers) stays in English from the content. Explanations and their simpler versions are per-test content files, not catalog strings (ADR-0008). `<en>…</en>` marks English answer words inside a localized string, rendered with `lang="en"`. Uzbek uses U+02BB for oʻ and gʻ and U+02BC for the tutuq belgisi. A fluent-speaker review of uz and ru is required before beta, as for M1 to M4. Keys are suggestions.
 
 | Key (suggested) | Used in | en | ru | uz |
 |---|---|---|---|---|

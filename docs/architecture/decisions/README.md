@@ -43,7 +43,7 @@ Split a choice into its own ADR only when it independently meets the criteria ab
 | [0005](0005-reading-content-contract.md) | Reading Content Contract | Accepted |
 | [0006](0006-reading-session-state.md) | Reading Session State and Persistence | Accepted |
 | [0007](0007-reading-ui-primitives.md) | Building Blocks for the Question Sheet and Passage Selection | Accepted |
-| [0008](0008-reading-answer-checking-and-explanations.md) | Reading Answer Checking, Explanations and Review Content | Proposed |
-| [0009](0009-reading-attempts-on-the-device.md) | Reading Attempts and Results on the Device | Proposed |
+| [0008](0008-reading-answer-checking-and-explanations.md) | Reading Answer Checking, Explanations and Review Content | Accepted |
+| [0009](0009-reading-attempts-on-the-device.md) | Reading Attempts and Results on the Device | Accepted |
 
 Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).

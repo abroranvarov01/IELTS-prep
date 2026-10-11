@@ -1,6 +1,6 @@
 # ADR-0006: Reading Session State and Persistence
 
-- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-07).
+- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-07). §2 amended by [ADR-0009](0009-reading-attempts-on-the-device.md) (the `:finished` entry is replaced by the attempt history).
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

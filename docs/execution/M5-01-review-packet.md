@@ -75,7 +75,7 @@ From READING_EXPERIENCE.md; the decisions subsection is in Part 1.
 
 ### M5 specifications (drafts)
 
-**DRAFT, revised to the owner's M5-01 decision of 2026-10-11.** Prepared during M5 planning and revised after the owner's first review and after the owner's decision (approve the recommendations of D1 and D3 to D25, D2 amended, plus the amendments in [Decided at the M5-01 gate](../product/READING_EXPERIENCE.md#decided-at-the-m5-01-gate)). The approval itself is recorded with task M5-01. Flows and step counts: [USER_FLOWS.md, Reading results and review flows (M5)](../product/USER_FLOWS.md#reading-results-and-review-flows-m5); copy: [Interface copy (M5)](../product/USER_FLOWS.md#interface-copy-m5); visual values: [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review); data: [ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) and [ADR-0009](../architecture/decisions/0009-reading-attempts-on-the-device.md). A review snapshot is [docs/execution/M5-01-review-packet.md](M5-01-review-packet.md); these sections stay the canonical text.
+**Approved with amendments** (owner, 2026-10-11, task M5-01; drafted during M5 planning and revised after the owner's first review). The owner approved the recommendations of D1 and D3 to D25, amended D2, and added the amendments in [Decided at the M5-01 gate](../product/READING_EXPERIENCE.md#decided-at-the-m5-01-gate), which are applied below. Flows and step counts: [USER_FLOWS.md, Reading results and review flows (M5)](../product/USER_FLOWS.md#reading-results-and-review-flows-m5); copy: [Interface copy (M5)](../product/USER_FLOWS.md#interface-copy-m5); visual values: [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review); data: [ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) and [ADR-0009](../architecture/decisions/0009-reading-attempts-on-the-device.md). A review snapshot is [docs/execution/M5-01-review-packet.md](M5-01-review-packet.md); these sections stay the canonical text.
 
 **Kept from M4, not reopened:** the desktop navigator bar's content-driven height (two rows at 1280 px and up to three at 1024 px are acceptable); Previous, Next and "Mark for review" keep their text labels; the passage on screen comes first in the bar; the refused-pin message is contextual feedback above the action bar's two rows. M5 screens reuse these.
 
@@ -428,7 +428,7 @@ From USER_FLOWS.md.
 
 ### Reading results and review flows (M5)
 
-**DRAFT, revised to the owner's M5-01 decision of 2026-10-11** (approval recorded with task M5-01). The screens are specified in [READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts), the visual values in [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review), the data in ADR-0008 and ADR-0009. The copy is in [Interface copy (M5)](../product/USER_FLOWS.md#interface-copy-m5). Steps count from the M4 reading screen; Reading is still reached by its direct link (M4), and home is unchanged (D18).
+**Approved with amendments** (owner, 2026-10-11, task M5-01). The screens are specified in [READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts), the visual values in [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review), the data in ADR-0008 and ADR-0009. The copy is in [Interface copy (M5)](../product/USER_FLOWS.md#interface-copy-m5). Steps count from the M4 reading screen; Reading is still reached by its direct link (M4), and home is unchanged (D18).
 
 #### Finish → results
 - **Goal:** right after finishing, the learner sees how many answers were correct and what to do next.
@@ -468,7 +468,7 @@ From USER_FLOWS.md.
 
 ### Interface copy (M5)
 
-**PROPOSED, revised to the owner's M5-01 decision of 2026-10-11** (approval recorded with task M5-01). Interface strings only. Test content (passages, questions, options, TRUE/FALSE/NOT GIVEN, typed and accepted answers) stays in English from the content. Explanations and their simpler versions are per-test content files, not catalog strings (ADR-0008). `<en>…</en>` marks English answer words inside a localized string, rendered with `lang="en"`. Uzbek uses U+02BB for oʻ and gʻ and U+02BC for the tutuq belgisi. A fluent-speaker review of uz and ru is required before beta, as for M1 to M4. Keys are suggestions.
+**Approved for implementation** (owner, 2026-10-11, task M5-01). Interface strings only. Test content (passages, questions, options, TRUE/FALSE/NOT GIVEN, typed and accepted answers) stays in English from the content. Explanations and their simpler versions are per-test content files, not catalog strings (ADR-0008). `<en>…</en>` marks English answer words inside a localized string, rendered with `lang="en"`. Uzbek uses U+02BB for oʻ and gʻ and U+02BC for the tutuq belgisi. A fluent-speaker review of uz and ru is required before beta, as for M1 to M4. Keys are suggestions.
 
 | Key (suggested) | Used in | en | ru | uz |
 |---|---|---|---|---|
@@ -580,7 +580,7 @@ From DESIGN_SYSTEM.md.
 
 ### M5 components (Reading results and review)
 
-**DRAFT, revised to the owner's M5-01 decision of 2026-10-11** (approval recorded with task M5-01). Visual values for the M5 drafts ([READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts)). Reused unchanged: the brand palette, the type scale, the focus style, motion, the breakpoints, the M3 primary button and quiet link, the M4 secondary button, option rows, test bar, sheet, navigator cells, "Your evidence" quote style and desktop columns, including the approved desktop navigator bar (content-driven height: two rows at 1280 px and up to three at 1024 px acceptable; Previous, Next and "Mark for review" keep their text labels). Contrast computed with the WCAG 2.x formula.
+**Approved with amendments** (owner, 2026-10-11, task M5-01). Visual values for the M5 drafts ([READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts)). Reused unchanged: the brand palette, the type scale, the focus style, motion, the breakpoints, the M3 primary button and quiet link, the M4 secondary button, option rows, test bar, sheet, navigator cells, "Your evidence" quote style and desktop columns, including the approved desktop navigator bar (content-driven height: two rows at 1280 px and up to three at 1024 px acceptable; Previous, Next and "Mark for review" keep their text labels). Contrast computed with the WCAG 2.x formula.
 
 #### Status: correct, not correct, no answer
 The [Status colors](../design/DESIGN_SYSTEM.md#status-colors) are TBD and M5 is the first milestone that shows correctness. **Every outcome is an icon plus a word** ("Correct", "Not correct", "No answer", and for a "choose several" item "1 of 2 correct"), never color alone (I-8); color only supports "correct". "No answer" is its own state, never drawn as "not correct".
@@ -681,7 +681,7 @@ The [Status colors](../design/DESIGN_SYSTEM.md#status-colors) are TBD and M5 is 
 
 ### ADR-0008: Reading Answer Checking, Explanations and Review Content
 
-- **Status:** Proposed (2026-10-11, M5 planning; revised the same day for the owner review packet and again to apply the owner's M5-01 decision and amendments). If accepted, it amends [ADR-0005](../architecture/decisions/0005-reading-content-contract.md) §2 (the answer key is loaded by the results and review pages) and §1 (what increases a test's version), extends the key file and adds per-locale explanation files (§3 to §5 below).
+- **Status:** Accepted (2026-10-11, owner, task M5-01, with the owner's amendments applied; drafted in M5 planning). Approval source: the owner instruction of 2026-10-11 on the review packet at commit 069877e. It amends [ADR-0005](../architecture/decisions/0005-reading-content-contract.md) §2 (the answer key is loaded by the results and review pages) and §1 (what increases a test's version), extends the key file and adds per-locale explanation files (§3 to §5 below).
 - **Date:** 2026-10-11
 - **Deciders:** Project owner (acceptance), Claude (draft)
 
@@ -790,7 +790,7 @@ Band conversion and calibration; AI; authoring tools and the review workflow bey
 
 ### ADR-0009: Reading Attempts and Results on the Device
 
-- **Status:** Proposed (2026-10-11, M5 planning; revised the same day for the owner review packet and again to apply the owner's M5-01 decision and amendments). If accepted, it amends [ADR-0006](../architecture/decisions/0006-reading-session-state.md) §2: the `reading:<testId>:finished` entry is replaced by the attempt history below.
+- **Status:** Accepted (2026-10-11, owner, task M5-01, with the owner's amendments applied; drafted in M5 planning). Approval source: the owner instruction of 2026-10-11 on the review packet at commit 069877e. It amends [ADR-0006](../architecture/decisions/0006-reading-session-state.md) §2: the `reading:<testId>:finished` entry is replaced by the attempt history below.
 - **Date:** 2026-10-11
 - **Deciders:** Project owner (acceptance), Claude (draft)
 
@@ -954,7 +954,7 @@ Rendered from TASKS.json. Every M5 implementation task depends on M5-01 directly
 
 #### M5-01: Owner approves the M5 specs, copy, design values and ADRs
 
-- **Owner:** human · **Status:** `todo` · **Depends on:** none
+- **Owner:** human · **Status:** `done` · **Depends on:** none
 - **Goal:** One approval gate before any M5 product code: answer checking and results, evidence-first review, Error Intelligence, targeted practice, explanations (pre-written or runtime AI), routes and Home, status colors, and how attempts are kept on the device.
 - **Scope:**
   - Review the drafts prepared during M5 planning (2026-10-11, not a task): READING_EXPERIENCE.md 'M5 specifications (drafts)', USER_FLOWS.md 'Reading results and review flows (M5)' and 'Interface copy (M5)', DESIGN_SYSTEM.md 'M5 components (Reading results and review)'; mark what is approved as Approved; the review snapshot docs/execution/M5-01-review-packet.md collects all of it, and the canonical sections win where they differ
