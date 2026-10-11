@@ -1,0 +1,1282 @@
+{
+  "testId": "demo-academic-1",
+  "version": 1,
+  "locale": "en",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "The passage says that when the bicycle was the most common way to cross a small city, "
+        },
+        {
+          "en": "children rode to school"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "Rode"
+        },
+        {
+          "text": " is the same idea as "
+        },
+        {
+          "en": "travelled to school by bicycle"
+        },
+        {
+          "text": ", so the passage agrees with the statement: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says children rode bikes to school then. That matches the statement, so the answer is "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "text": "The passage says the first schemes "
+        },
+        {
+          "en": "were often criticised"
+        },
+        {
+          "text": " because bicycles were "
+        },
+        {
+          "en": "left in the wrong places or damaged"
+        },
+        {
+          "text": ". So they did have problems with damaged bicycles. The statement says "
+        },
+        {
+          "en": "no problems"
+        },
+        {
+          "text": ", which contradicts the passage: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says bikes in the first schemes were often damaged. The statement says there were no such problems. That is the opposite, so "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "The passage explains how a rider uses a shared bicycle: unlock it with a phone, take a short trip, leave it at a station. It never says who the riders are or which group uses them most. So it neither agrees with nor contradicts the statement about "
+        },
+        {
+          "en": "students"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": ". If it said most riders were workers, the answer would be "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says how people use the bikes, not who uses them. Nothing agrees or disagrees with "
+        },
+        {
+          "en": "students"
+        },
+        {
+          "text": ", so "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "text": "The passage says later schemes "
+        },
+        {
+          "en": "charged a small fee for each trip"
+        },
+        {
+          "text": ". A fee for each trip means the trips were not free, so the passage contradicts the statement that "
+        },
+        {
+          "en": "every trip"
+        },
+        {
+          "text": " was free: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Later schemes made people pay a small fee for each trip. So trips were not free, and the answer is "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "The passage says shops may gain because "
+        },
+        {
+          "en": "people on bicycles"
+        },
+        {
+          "text": " tend to "
+        },
+        {
+          "en": "stop more often than drivers do"
+        },
+        {
+          "text": ". Option B says the same, with "
+        },
+        {
+          "en": "cyclists"
+        },
+        {
+          "text": " for "
+        },
+        {
+          "en": "people on bicycles"
+        },
+        {
+          "text": ". Nothing is said about spending more money (A), where shops are (C) or drivers avoiding the centre (D)."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage gives the reason: people on bikes stop more often than drivers. That is option B."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "According to the passage, critics say "
+        },
+        {
+          "en": "the schemes are expensive to run"
+        },
+        {
+          "text": ", which is option B. They also say winter weather keeps many riders at home, but that does not mean the bicycles are used only in summer (D). Danger (A) is not mentioned, and quieter streets are a benefit, the opposite of C."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Critics say the schemes cost a lot to run. That is option B."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "The passage says "
+        },
+        {
+          "en": "A rider unlocks a bicycle with a phone"
+        },
+        {
+          "text": ". The note uses the same words, "
+        },
+        {
+          "en": "unlock the bicycle with a"
+        },
+        {
+          "text": ", so the missing word is "
+        },
+        {
+          "en": "phone"
+        },
+        {
+          "text": ": one word from the passage, as the instruction asks."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says riders unlock the bike with a phone. So the answer is "
+        },
+        {
+          "en": "phone"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "The same sentence ends: the rider "
+        },
+        {
+          "en": "leaves it at any marked station"
+        },
+        {
+          "text": ". The note copies "
+        },
+        {
+          "en": "any marked"
+        },
+        {
+          "text": ", so the missing word is "
+        },
+        {
+          "en": "station"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Riders leave the bike at any marked station. The answer is "
+        },
+        {
+          "en": "station"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "Supporters say that when short car journeys are replaced, "
+        },
+        {
+          "en": "the air in the centre becomes cleaner"
+        },
+        {
+          "text": ". The note turns this around: "
+        },
+        {
+          "en": "cleaner ___ in the centre"
+        },
+        {
+          "text": ". The word is "
+        },
+        {
+          "en": "air"
+        },
+        {
+          "text": "; "
+        },
+        {
+          "en": "cleaner air"
+        },
+        {
+          "text": " would be two words, over the limit of "
+        },
+        {
+          "en": "ONE WORD ONLY"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says the air in the centre becomes cleaner. One word fits the gap: "
+        },
+        {
+          "en": "air"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "The passage says that as cars became cheaper, towns "
+        },
+        {
+          "en": "widened their roads and removed the narrow lanes"
+        },
+        {
+          "text": ". Widening roads is the "
+        },
+        {
+          "en": "room for cars"
+        },
+        {
+          "text": " in the sentence, so the missing word is "
+        },
+        {
+          "en": "lanes"
+        },
+        {
+          "text": "; "
+        },
+        {
+          "en": "narrow"
+        },
+        {
+          "text": " is already printed before the gap."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Towns removed the narrow lanes that cyclists used. The answer is "
+        },
+        {
+          "en": "lanes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "The passage says the most successful towns combine cycle lanes "
+        },
+        {
+          "en": "with buses and safe pavements"
+        },
+        {
+          "text": ". The sentence repeats this, so the gap is "
+        },
+        {
+          "en": "pavements"
+        },
+        {
+          "text": ", spelt as in the passage."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage lists cycle lanes, buses and safe pavements. The answer is "
+        },
+        {
+          "en": "pavements"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "The first paragraph says "
+        },
+        {
+          "en": "traders carried goods in baskets"
+        },
+        {
+          "text": " fixed to the front wheel. The question asks what they used to carry goods, so the answer is "
+        },
+        {
+          "en": "baskets"
+        },
+        {
+          "text": ", well within "
+        },
+        {
+          "en": "NO MORE THAN THREE WORDS"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Traders carried goods in baskets on their bikes. The answer is "
+        },
+        {
+          "en": "baskets"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "text": "Critics say "
+        },
+        {
+          "en": "winter weather keeps many riders at home"
+        },
+        {
+          "text": ". The question uses the same words, so the answer is "
+        },
+        {
+          "en": "winter weather"
+        },
+        {
+          "text": ": two words, within the limit of three."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Critics say winter weather keeps riders at home. The answer is "
+        },
+        {
+          "en": "winter weather"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "Paragraph A says flat roofs are "
+        },
+        {
+          "en": "among the largest unused spaces"
+        },
+        {
+          "text": " and owners are "
+        },
+        {
+          "en": "covering them with soil and plants"
+        },
+        {
+          "text": ". Heading ii says the same in other words: "
+        },
+        {
+          "en": "empty roofs"
+        },
+        {
+          "text": " for unused roofs, and "
+        },
+        {
+          "en": "green space"
+        },
+        {
+          "text": " for soil and plants."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph A is about putting plants on empty roofs. Heading ii says that."
+        }
+      ]
+    },
+    "15": {
+      "explanation": [
+        {
+          "text": "Paragraph B begins "
+        },
+        {
+          "en": "The most immediate effect is on temperature"
+        },
+        {
+          "text": " and explains how a planted roof keeps rooms cooler in the summer sun. Heading i, "
+        },
+        {
+          "en": "A cooler building in summer"
+        },
+        {
+          "text": ", gives that main idea."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph B is about planted roofs keeping buildings cool in summer. Heading i says that."
+        }
+      ]
+    },
+    "16": {
+      "explanation": [
+        {
+          "text": "Paragraph C explains that rainwater can make drains "
+        },
+        {
+          "en": "overflow during a storm"
+        },
+        {
+          "text": " and that soil releases it slowly, "
+        },
+        {
+          "en": "so the drains have time to cope"
+        },
+        {
+          "text": ". Heading v, "
+        },
+        {
+          "en": "Protecting the drains in a storm"
+        },
+        {
+          "text": ", is the main idea."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph C is about soil helping drains in heavy rain. Heading v says that."
+        }
+      ]
+    },
+    "17": {
+      "explanation": [
+        {
+          "text": "Paragraph D says a roof garden "
+        },
+        {
+          "en": "is not simple"
+        },
+        {
+          "text": ": older roofs may need strengthening, a waterproof layer must be checked, and "
+        },
+        {
+          "en": "These costs"
+        },
+        {
+          "text": " make gardens rarer on old buildings. Heading iv, "
+        },
+        {
+          "en": "Practical and financial obstacles"
+        },
+        {
+          "text": ", covers both the work and the cost. Growing vegetables (heading iii) is not discussed."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph D lists problems: heavy soil, extra work and costs. Heading iv means problems of work and money."
+        }
+      ]
+    },
+    "18": {
+      "explanation": [
+        {
+          "text": "Paragraph E says the greatest value of a roof garden "
+        },
+        {
+          "en": "is social"
+        },
+        {
+          "text": ": neighbours "
+        },
+        {
+          "en": "share tools, swap seeds and eat together"
+        },
+        {
+          "text": ". Heading vi, "
+        },
+        {
+          "en": "A place that brings people together"
+        },
+        {
+          "text": ", says this in other words."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph E is about neighbours meeting and sharing in the garden. Heading vi says that."
+        }
+      ]
+    },
+    "19": {
+      "explanation": [
+        {
+          "text": "Paragraph D says "
+        },
+        {
+          "en": "older roofs may need to be strengthened"
+        },
+        {
+          "text": " before any planting begins. Strengthening is the "
+        },
+        {
+          "en": "extra work"
+        },
+        {
+          "text": ", and "
+        },
+        {
+          "en": "before any planting"
+        },
+        {
+          "text": " matches "
+        },
+        {
+          "en": "before a garden is added"
+        },
+        {
+          "text": ", so the answer is D."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph D says old roofs may need to be made stronger first. So the answer is D."
+        }
+      ]
+    },
+    "20": {
+      "explanation": [
+        {
+          "text": "Paragraph E says some gardens supply a local café, "
+        },
+        {
+          "en": "giving the project a small income"
+        },
+        {
+          "text": ". An income is money earned, so the answer is E."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "In paragraph E, a garden sells vegetables to a café and earns money. So the answer is E."
+        }
+      ]
+    },
+    "21": {
+      "explanation": [
+        {
+          "text": "Paragraph C says that "
+        },
+        {
+          "en": "on an ordinary roof"
+        },
+        {
+          "text": ", rainwater "
+        },
+        {
+          "en": "runs straight into the drains"
+        },
+        {
+          "text": ". That describes what happens to rain, so the answer is C."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph C tells what rain does on a normal roof. So the answer is C."
+        }
+      ]
+    },
+    "22": {
+      "explanation": [
+        {
+          "text": "Two effects are in the passage. Residents of top-floor flats notice that "
+        },
+        {
+          "en": "their rooms stay cooler"
+        },
+        {
+          "text": " (A). Soil releases rain slowly, "
+        },
+        {
+          "en": "so the drains have time to cope"
+        },
+        {
+          "text": ", which means they are less likely to overflow (C). Selling buildings (B), birds (D) and cheaper electricity (E) are not mentioned."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says top-floor rooms stay cooler and drains cope better with rain. That is A and C."
+        }
+      ]
+    },
+    "24": {
+      "explanation": [
+        {
+          "text": "Paragraph D says "
+        },
+        {
+          "en": "older roofs may need to be strengthened"
+        },
+        {
+          "text": ". The summary uses the same words, so the gap is "
+        },
+        {
+          "en": "strengthened"
+        },
+        {
+          "text": "; "
+        },
+        {
+          "en": "strengthen"
+        },
+        {
+          "text": " would be the wrong form after "
+        },
+        {
+          "en": "need to be"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says old roofs may need to be strengthened. The answer is "
+        },
+        {
+          "en": "strengthened"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "25": {
+      "explanation": [
+        {
+          "text": "The passage says a "
+        },
+        {
+          "en": "waterproof layer must be laid beneath the soil"
+        },
+        {
+          "text": ". The summary says "
+        },
+        {
+          "en": "under"
+        },
+        {
+          "text": " for "
+        },
+        {
+          "en": "beneath"
+        },
+        {
+          "text": ", and the missing word is "
+        },
+        {
+          "en": "waterproof"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage talks about a waterproof layer under the soil. The answer is "
+        },
+        {
+          "en": "waterproof"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "26": {
+      "explanation": [
+        {
+          "text": "After describing the strengthening and the waterproof layer, the passage says "
+        },
+        {
+          "en": "These costs mean"
+        },
+        {
+          "text": " rooftop gardens are more common on new buildings. The summary says "
+        },
+        {
+          "en": "Because of these"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "costs"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says these costs make roof gardens more common on new buildings. The answer is "
+        },
+        {
+          "en": "costs"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "27": {
+      "explanation": [
+        {
+          "text": "The same sentence says rooftop gardens are "
+        },
+        {
+          "en": "more common on new buildings"
+        },
+        {
+          "text": " than on old ones. So the gap is "
+        },
+        {
+          "en": "new"
+        },
+        {
+          "text": ", the opposite of "
+        },
+        {
+          "en": "old"
+        },
+        {
+          "text": " later in the sentence."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Roof gardens are more common on new buildings. The answer is "
+        },
+        {
+          "en": "new"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "28": {
+      "explanation": [
+        {
+          "text": "The writer says "
+        },
+        {
+          "en": "the question is not whether homework should exist"
+        },
+        {
+          "text": ", but how much of it is useful. So the writer thinks homework should exist, which contradicts the claim that it should be abolished: "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer wants useful homework, not no homework. That disagrees with the statement, so "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "29": {
+      "explanation": [
+        {
+          "text": "The writer believes "
+        },
+        {
+          "en": "Homework works best when it is brief"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "closely linked to the lesson"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "Works best"
+        },
+        {
+          "text": " matches "
+        },
+        {
+          "en": "most useful"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "brief"
+        },
+        {
+          "text": " matches "
+        },
+        {
+          "en": "short"
+        },
+        {
+          "text": ", so the statement agrees with the writer's view: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer says short homework linked to the lesson works best. That agrees, so "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "30": {
+      "explanation": [
+        {
+          "text": "The writer gives views on how long homework should be and how it should link to the lesson, but says nothing about teachers' pay or marking. It is impossible to say what the writer thinks about paying teachers extra, so the answer is "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": ". If the writer argued against extra pay, the answer would be "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer never talks about paying teachers. We cannot know the writer's view, so "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "31": {
+      "explanation": [
+        {
+          "text": "The writer says schools "
+        },
+        {
+          "en": "that set less but better homework"
+        },
+        {
+          "text": " may find that "
+        },
+        {
+          "en": "their students learn more, not less"
+        },
+        {
+          "text": ". This agrees with the statement: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer says less, better homework may help students learn more. That agrees, so "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "32": {
+      "explanation": [
+        {
+          "text": "The university researcher says teenagers "
+        },
+        {
+          "en": "who work late into the evening"
+        },
+        {
+          "text": " sleep less and "
+        },
+        {
+          "en": "concentrate poorly the next day"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "Concentrate poorly"
+        },
+        {
+          "text": " means "
+        },
+        {
+          "en": "find it hard to concentrate"
+        },
+        {
+          "text": ", so the answer is B."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The researcher says students who work late cannot focus well the next day. So the answer is B."
+        }
+      ]
+    },
+    "33": {
+      "explanation": [
+        {
+          "text": "The parents' group found that "
+        },
+        {
+          "en": "homework often caused arguments at home"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "Arguments at home"
+        },
+        {
+          "text": " are "
+        },
+        {
+          "en": "disagreements in the family"
+        },
+        {
+          "text": ", so the answer is C."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The parents' group found homework caused arguments at home. So the answer is C."
+        }
+      ]
+    },
+    "34": {
+      "explanation": [
+        {
+          "text": "The teacher added that "
+        },
+        {
+          "en": "long assignments often end up being completed"
+        },
+        {
+          "text": " by parents rather than by the students. So the statement comes from the secondary school teacher: A."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The teacher says parents often finish long homework for children. So the answer is A."
+        }
+      ]
+    },
+    "35": {
+      "explanation": [
+        {
+          "text": "The teacher argued that "
+        },
+        {
+          "en": "short daily tasks help students remember"
+        },
+        {
+          "text": " what they learned in class. So without them, students forget it: ending C says this the other way round."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The teacher says short daily tasks help students remember. Without them, they forget. So the answer is C."
+        }
+      ]
+    },
+    "36": {
+      "explanation": [
+        {
+          "text": "The parents' group "
+        },
+        {
+          "en": "did not want homework removed"
+        },
+        {
+          "text": "; they wanted it "
+        },
+        {
+          "en": "to be clearer and shorter"
+        },
+        {
+          "text": ". Ending A, short and clearly explained, matches this."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The parents wanted homework to be shorter and clearer, not removed. So the answer is A."
+        }
+      ]
+    },
+    "37": {
+      "explanation": [
+        {
+          "text": "The passage says some people believe homework "
+        },
+        {
+          "en": "takes time that children need for rest"
+        },
+        {
+          "text": " and play. Ending B, "
+        },
+        {
+          "en": "children have no time to rest"
+        },
+        {
+          "text": ", says the same."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Some people think homework takes children's rest time. So the answer is B."
+        }
+      ]
+    },
+    "38": {
+      "explanation": [
+        {
+          "text": "The writer says "
+        },
+        {
+          "en": "Homework works best when it is brief"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "Works best"
+        },
+        {
+          "text": " matches "
+        },
+        {
+          "en": "most useful"
+        },
+        {
+          "text": " in the summary, so the word is A, "
+        },
+        {
+          "en": "brief"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer says homework works best when it is brief. So the answer is A."
+        }
+      ]
+    },
+    "39": {
+      "explanation": [
+        {
+          "text": "The same sentence says homework should be "
+        },
+        {
+          "en": "possible to finish without help"
+        },
+        {
+          "text": ". So the word is E, "
+        },
+        {
+          "en": "help"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Homework should be possible to finish without help. So the answer is E."
+        }
+      ]
+    },
+    "40": {
+      "explanation": [
+        {
+          "text": "The researcher says teenagers who work late "
+        },
+        {
+          "en": "sleep less"
+        },
+        {
+          "text": ". Sleeping less means their sleep is reduced, so the word is C, "
+        },
+        {
+          "en": "sleep"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Working late means students sleep less. So the answer is C."
+        }
+      ]
+    }
+  }
+}

@@ -48,7 +48,7 @@ export type AnswerKeyEntry = {
 };
 
 /** Who has checked a key or explanation file (ADR-0008 §6). */
-const REVIEW_STATUSES = ["aiDraft", "reviewed", "approved"] as const;
+export const REVIEW_STATUSES = ["aiDraft", "reviewed", "approved"] as const;
 export type ReviewStatus = (typeof REVIEW_STATUSES)[number];
 
 /** Accepted answers and evidence sentences per question number (ADR-0005 §2, ADR-0008 §3). */

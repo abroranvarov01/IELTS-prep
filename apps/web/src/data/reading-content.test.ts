@@ -7,15 +7,21 @@ import {
   parseAnswerKey,
   parseReadingTest,
 } from "@/domain/reading/parse-content";
+import { parseExplanations } from "@/domain/reading/explanations";
 import { checkAttempt } from "@/domain/reading/scoring";
 import type { Answer } from "@/domain/reading/session";
 import { questionUnits } from "@/domain/reading/units";
+import { routing } from "@/i18n/routing";
+import { readingExplanations } from "./reading-explanations";
 
 // Every Reading test in the repository must validate with its answer key
 // (ADR-0005 §3), so broken content cannot be merged.
 const CONTENT_DIR = path.join(import.meta.dirname, "../../content/reading");
 const testFiles = readdirSync(CONTENT_DIR).filter(
-  (file) => file.endsWith(".json") && !file.endsWith(".key.json"),
+  (file) =>
+    file.endsWith(".json") &&
+    !file.endsWith(".key.json") &&
+    !file.includes(".explanations."),
 );
 const readJson = (file: string): unknown =>
   JSON.parse(readFileSync(path.join(CONTENT_DIR, file), "utf8"));
@@ -51,6 +57,21 @@ describe("Reading content files", () => {
             if (entry?.accept.join() === "NOT GIVEN") continue;
             expect(entry?.evidence.length).toBeGreaterThan(0);
           }
+        }
+      });
+
+      it("has valid explanations in every interface language", () => {
+        if (!parsed.ok) throw new Error("the test itself is invalid");
+        for (const locale of routing.locales) {
+          const explanations = parseExplanations(
+            parsed.value,
+            readJson(file.replace(/\.json$/, `.explanations.${locale}.json`)),
+            locale,
+          );
+          expect(explanations.ok ? [] : explanations.errors).toEqual([]);
+          expect(readingExplanations(parsed.value.id, locale)?.locale).toBe(
+            locale,
+          );
         }
       });
 

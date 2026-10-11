@@ -2562,7 +2562,7 @@
       "title": "AI-drafted explanations for the demo test in uz, ru and en",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M5-02"],
       "goal": "Every question unit of the demo test has an explanation and a simpler version in each interface language, drafted by Claude (AI), marked as AI drafts, and validated like content.",
       "scope": [
@@ -2593,7 +2593,8 @@
       ],
       "docsToUpdate": [
         "docs/product/LOCALIZATION.md (explanations are localized content files, not catalog strings)"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M5-06",

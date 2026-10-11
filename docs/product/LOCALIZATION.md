@@ -12,6 +12,7 @@ Canonical owner of **interface language rules**. The technical architecture is d
 
 - **IELTS test content stays in English** (passages, audio, questions, model answers), because the practice must be realistic.
 - The surrounding text (instructions, explanations, feedback, navigation) is in the user's interface language. Explanations are available in all three interface languages, including "Explain simpler" ([PRODUCT.md](PRODUCT.md#approved-product-principles)).
+- **Reading explanations are content, not interface strings:** each test has one explanation file per interface language (`apps/web/content/reading/<testId>.explanations.<locale>.json`, [ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) §5), validated like the test. English words and quotes inside them are marked as English segments and rendered with `lang="en"`. Their review status (AI draft, reviewed, approved) is recorded in each file; the uz and ru drafts need the fluent-speaker review of rule 7 before beta.
 
 ## Rules (apply once UI code exists)
 

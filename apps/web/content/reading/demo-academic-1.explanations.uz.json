@@ -1,0 +1,1282 @@
+{
+  "testId": "demo-academic-1",
+  "version": 1,
+  "locale": "uz",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "Matnda velosiped kichik shaharda eng koʻp ishlatiladigan transport boʻlgan davrda "
+        },
+        {
+          "en": "children rode to school"
+        },
+        {
+          "text": " deyilgan. "
+        },
+        {
+          "en": "Rode"
+        },
+        {
+          "text": " soʻzi "
+        },
+        {
+          "en": "travelled to school by bicycle"
+        },
+        {
+          "text": " bilan bir xil fikr, shuning uchun matn bu fikrni tasdiqlaydi: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda bolalar oʻshanda maktabga velosipedda borgani aytilgan. Bu fikrga mos, shuning uchun javob "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "text": "Matnda birinchi tizimlar "
+        },
+        {
+          "en": "were often criticised"
+        },
+        {
+          "text": " deyilgan, chunki velosipedlar "
+        },
+        {
+          "en": "left in the wrong places or damaged"
+        },
+        {
+          "text": ". Demak, shikastlangan velosipedlar bilan muammolar boʻlgan. Fikrda esa "
+        },
+        {
+          "en": "no problems"
+        },
+        {
+          "text": " deyilgan, bu matnga zid: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda birinchi tizimlarda velosipedlar koʻp shikastlangani aytilgan. Fikrda muammo boʻlmagan deyilgan. Bu teskari, shuning uchun "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "Matnda umumiy velosipeddan qanday foydalanish tushuntirilgan: telefon bilan ochish, qisqa yurish, bekatda qoldirish. Lekin kimlar va qaysi guruh eng koʻp foydalanishi aytilmagan. Matn "
+        },
+        {
+          "en": "students"
+        },
+        {
+          "text": " haqidagi fikrni tasdiqlamaydi ham, rad etmaydi ham: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": ". Agar asosan ishchilar foydalanadi deyilganda, javob "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": " boʻlardi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda velosipeddan qanday foydalanish aytilgan, kimlar foydalanishi emas. "
+        },
+        {
+          "en": "students"
+        },
+        {
+          "text": " haqida hech narsa yoʻq, shuning uchun "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "text": "Matnda keyingi tizimlar "
+        },
+        {
+          "en": "charged a small fee for each trip"
+        },
+        {
+          "text": " deyilgan. Har bir safar uchun toʻlov olinsa, safarlar bepul boʻlmagan, shuning uchun matn "
+        },
+        {
+          "en": "every trip"
+        },
+        {
+          "text": " bepul degan fikrga zid: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Keyingi tizimlarda har bir safar uchun kichik toʻlov olingan. Demak, safarlar bepul emas: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "Matnda doʻkonlar foyda koʻrishi mumkin, chunki velosipeddagilar ("
+        },
+        {
+          "en": "people on bicycles"
+        },
+        {
+          "text": ") "
+        },
+        {
+          "en": "stop more often than drivers do"
+        },
+        {
+          "text": " deyilgan. B variant xuddi shuni aytadi: "
+        },
+        {
+          "en": "people on bicycles"
+        },
+        {
+          "text": " oʻrniga "
+        },
+        {
+          "en": "cyclists"
+        },
+        {
+          "text": ". Koʻproq pul sarflash (A), doʻkonlar qayerdaligi (C) yoki haydovchilar markazdan qochishi (D) haqida hech narsa yoʻq."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda sabab bor: velosipeddagilar haydovchilardan koʻra koʻproq toʻxtaydi. Bu B variant."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "Matnga koʻra, tanqidchilar "
+        },
+        {
+          "en": "the schemes are expensive to run"
+        },
+        {
+          "text": " deydi, bu B variant. Ular qishki ob-havo koʻp odamni uyda ushlab qolishini ham aytadi, lekin bu velosipedlar faqat yozda ishlatiladi degani emas (D). Xavf (A) haqida aytilmagan, tinchroq koʻchalar esa afzallik, C ga teskari."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Tanqidchilar tizimlarni yuritish qimmat deydi. Bu B variant."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "Matnda "
+        },
+        {
+          "en": "A rider unlocks a bicycle with a phone"
+        },
+        {
+          "text": " deyilgan. Qaydda xuddi shu soʻzlar bor: "
+        },
+        {
+          "en": "unlock the bicycle with a"
+        },
+        {
+          "text": ", shuning uchun tushib qolgan soʻz "
+        },
+        {
+          "en": "phone"
+        },
+        {
+          "text": ": topshiriq talab qilgandek, matndan bitta soʻz."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda velosiped telefon bilan ochilishi aytilgan. Javob: "
+        },
+        {
+          "en": "phone"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "Oʻsha gap shunday tugaydi: "
+        },
+        {
+          "en": "leaves it at any marked station"
+        },
+        {
+          "text": ". Qaydda "
+        },
+        {
+          "en": "any marked"
+        },
+        {
+          "text": " takrorlangan, shuning uchun tushib qolgan soʻz "
+        },
+        {
+          "en": "station"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Velosiped istalgan belgilangan bekatda qoldiriladi. Javob: "
+        },
+        {
+          "en": "station"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "Tarafdorlar qisqa avtomobil safarlari almashtirilsa, "
+        },
+        {
+          "en": "the air in the centre becomes cleaner"
+        },
+        {
+          "text": " deydi. Qaydda tartib boshqacha: "
+        },
+        {
+          "en": "cleaner ___ in the centre"
+        },
+        {
+          "text": ". Kerakli soʻz "
+        },
+        {
+          "en": "air"
+        },
+        {
+          "text": "; "
+        },
+        {
+          "en": "cleaner air"
+        },
+        {
+          "text": " ikki soʻz boʻladi, bu "
+        },
+        {
+          "en": "ONE WORD ONLY"
+        },
+        {
+          "text": " chegarasidan koʻp."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda markazda havo tozaroq boʻlishi aytilgan. Boʻshliqqa bitta soʻz mos: "
+        },
+        {
+          "en": "air"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "Matnda mashinalar arzonlashgach, shaharlar "
+        },
+        {
+          "en": "widened their roads and removed the narrow lanes"
+        },
+        {
+          "text": " deyilgan. Yoʻllarni kengaytirish gapdagi "
+        },
+        {
+          "en": "room for cars"
+        },
+        {
+          "text": " demakdir, shuning uchun tushib qolgan soʻz "
+        },
+        {
+          "en": "lanes"
+        },
+        {
+          "text": "; "
+        },
+        {
+          "en": "narrow"
+        },
+        {
+          "text": " boʻshliqdan oldin yozilgan."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Shaharlar velosipedchilarning tor yoʻlaklarini olib tashlagan. Javob: "
+        },
+        {
+          "en": "lanes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "Matnda eng muvaffaqiyatli shaharlar velosiped yoʻlaklarini "
+        },
+        {
+          "en": "with buses and safe pavements"
+        },
+        {
+          "text": " birlashtiradi deyilgan. Gap buni takrorlaydi, shuning uchun boʻshliqda matndagidek yozilgan "
+        },
+        {
+          "en": "pavements"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda velosiped yoʻlaklari, avtobuslar va xavfsiz piyodalar yoʻlagi sanalgan. Javob: "
+        },
+        {
+          "en": "pavements"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "Birinchi xatboshida "
+        },
+        {
+          "en": "traders carried goods in baskets"
+        },
+        {
+          "text": " deyilgan, ular old gʻildirakka mahkamlangan. Savol mollarni nimada tashiganlari haqida, shuning uchun javob "
+        },
+        {
+          "en": "baskets"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "NO MORE THAN THREE WORDS"
+        },
+        {
+          "text": " chegarasida."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Savdogarlar mollarni velosipeddagi savatlarda tashigan. Javob: "
+        },
+        {
+          "en": "baskets"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "text": "Tanqidchilar "
+        },
+        {
+          "en": "winter weather keeps many riders at home"
+        },
+        {
+          "text": " deydi. Savolda xuddi shu soʻzlar bor, shuning uchun javob "
+        },
+        {
+          "en": "winter weather"
+        },
+        {
+          "text": ": ikki soʻz, uch soʻz chegarasida."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Tanqidchilar qishki ob-havo odamlarni uyda ushlab qoladi deydi. Javob: "
+        },
+        {
+          "en": "winter weather"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "A xatboshida tekis tomlar "
+        },
+        {
+          "en": "among the largest unused spaces"
+        },
+        {
+          "text": " va egalari "
+        },
+        {
+          "en": "covering them with soil and plants"
+        },
+        {
+          "text": " deyilgan. ii sarlavha buni boshqa soʻzlar bilan aytadi: foydalanilmagan tomlar oʻrniga "
+        },
+        {
+          "en": "empty roofs"
+        },
+        {
+          "text": ", tuproq va oʻsimliklar oʻrniga "
+        },
+        {
+          "en": "green space"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "A xatboshi boʻsh tomlarga oʻsimlik ekish haqida. ii sarlavha shuni aytadi."
+        }
+      ]
+    },
+    "15": {
+      "explanation": [
+        {
+          "text": "B xatboshi "
+        },
+        {
+          "en": "The most immediate effect is on temperature"
+        },
+        {
+          "text": " bilan boshlanadi va oʻsimlikli tom yozda xonalarni qanday salqin saqlashini tushuntiradi. i sarlavha, "
+        },
+        {
+          "en": "A cooler building in summer"
+        },
+        {
+          "text": ", shu asosiy fikrni beradi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "B xatboshi oʻsimlikli tom yozda binoni salqin saqlashi haqida. i sarlavha shuni aytadi."
+        }
+      ]
+    },
+    "16": {
+      "explanation": [
+        {
+          "text": "C xatboshida yomgʻir suvi oqovalarni "
+        },
+        {
+          "en": "overflow during a storm"
+        },
+        {
+          "text": " qilishi mumkinligi va tuproq uni sekin chiqarishi, "
+        },
+        {
+          "en": "so the drains have time to cope"
+        },
+        {
+          "text": " tushuntirilgan. Asosiy fikr: v sarlavha, "
+        },
+        {
+          "en": "Protecting the drains in a storm"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "C xatboshi kuchli yomgʻirda tuproq oqovalarga yordam berishi haqida. v sarlavha shuni aytadi."
+        }
+      ]
+    },
+    "17": {
+      "explanation": [
+        {
+          "text": "D xatboshida tomdagi bogʻ "
+        },
+        {
+          "en": "is not simple"
+        },
+        {
+          "text": " deyilgan: eski tomlarni mustahkamlash, suv oʻtkazmaydigan qatlamni tekshirish kerak va "
+        },
+        {
+          "en": "These costs"
+        },
+        {
+          "text": " bunday bogʻlarni eski binolarda kamroq qiladi. iv sarlavha, "
+        },
+        {
+          "en": "Practical and financial obstacles"
+        },
+        {
+          "text": ", ish va xarajatni qamraydi. Sabzavot yetishtirish (iii) muhokama qilinmagan."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "D xatboshi qiyinchiliklarni sanaydi: ogʻir tuproq, qoʻshimcha ish va xarajat. iv sarlavha ish va pul qiyinchiliklari haqida."
+        }
+      ]
+    },
+    "18": {
+      "explanation": [
+        {
+          "text": "E xatboshida tomdagi bogʻning eng katta qiymati "
+        },
+        {
+          "en": "is social"
+        },
+        {
+          "text": " deyilgan: qoʻshnilar "
+        },
+        {
+          "en": "share tools, swap seeds and eat together"
+        },
+        {
+          "text": ". vi sarlavha, "
+        },
+        {
+          "en": "A place that brings people together"
+        },
+        {
+          "text": ", buni boshqa soʻzlar bilan aytadi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "E xatboshi qoʻshnilar bogʻda uchrashib, boʻlishishi haqida. vi sarlavha shuni aytadi."
+        }
+      ]
+    },
+    "19": {
+      "explanation": [
+        {
+          "text": "D xatboshida "
+        },
+        {
+          "en": "older roofs may need to be strengthened"
+        },
+        {
+          "text": " deyilgan, ekishdan oldin. Mustahkamlash "
+        },
+        {
+          "en": "extra work"
+        },
+        {
+          "text": " boʻladi, "
+        },
+        {
+          "en": "before any planting"
+        },
+        {
+          "text": " esa "
+        },
+        {
+          "en": "before a garden is added"
+        },
+        {
+          "text": " ga mos, shuning uchun javob D."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "D xatboshida eski tomlarni avval mustahkamlash kerak boʻlishi mumkinligi aytilgan. Javob D."
+        }
+      ]
+    },
+    "20": {
+      "explanation": [
+        {
+          "text": "E xatboshida baʼzi bogʻlar mahalliy kafeni taʼminlab, "
+        },
+        {
+          "en": "giving the project a small income"
+        },
+        {
+          "text": " deyilgan. Daromad topilgan pul demakdir, shuning uchun javob E."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "E xatboshida bogʻ kafega sabzavot sotib, pul topadi. Javob E."
+        }
+      ]
+    },
+    "21": {
+      "explanation": [
+        {
+          "text": "C xatboshida "
+        },
+        {
+          "en": "on an ordinary roof"
+        },
+        {
+          "text": " yomgʻir suvi "
+        },
+        {
+          "en": "runs straight into the drains"
+        },
+        {
+          "text": " deyilgan. Bu yomgʻir bilan nima boʻlishini tasvirlaydi, shuning uchun javob C."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "C xatboshi oddiy tomda yomgʻir nima boʻlishini aytadi. Javob C."
+        }
+      ]
+    },
+    "22": {
+      "explanation": [
+        {
+          "text": "Matnda ikkita taʼsir bor. Yuqori qavat aholisi "
+        },
+        {
+          "en": "their rooms stay cooler"
+        },
+        {
+          "text": " ekanini sezadi (A). Tuproq yomgʻir suvini sekin chiqaradi, "
+        },
+        {
+          "en": "so the drains have time to cope"
+        },
+        {
+          "text": ", yaʼni oqovalar kamroq toshadi (C). Binolarni sotish (B), qushlar (D) va arzonroq elektr (E) tilga olinmagan."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda yuqori qavat xonalari salqinroq va oqovalar yomgʻirga yaxshiroq bardosh berishi aytilgan. Bu A va C."
+        }
+      ]
+    },
+    "24": {
+      "explanation": [
+        {
+          "text": "D xatboshida "
+        },
+        {
+          "en": "older roofs may need to be strengthened"
+        },
+        {
+          "text": " deyilgan. Qisqacha mazmunda xuddi shu soʻzlar bor, shuning uchun boʻshliqda "
+        },
+        {
+          "en": "strengthened"
+        },
+        {
+          "text": "; "
+        },
+        {
+          "en": "need to be"
+        },
+        {
+          "text": " dan keyin "
+        },
+        {
+          "en": "strengthen"
+        },
+        {
+          "text": " shakli notoʻgʻri boʻlardi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda eski tomlarni mustahkamlash kerak boʻlishi mumkinligi aytilgan. Javob: "
+        },
+        {
+          "en": "strengthened"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "25": {
+      "explanation": [
+        {
+          "text": "Matnda "
+        },
+        {
+          "en": "waterproof layer must be laid beneath the soil"
+        },
+        {
+          "text": " deyilgan. Qisqacha mazmunda "
+        },
+        {
+          "en": "beneath"
+        },
+        {
+          "text": " oʻrniga "
+        },
+        {
+          "en": "under"
+        },
+        {
+          "text": " ishlatilgan, tushib qolgan soʻz esa "
+        },
+        {
+          "en": "waterproof"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda tuproq ostidagi suv oʻtkazmaydigan qatlam haqida gap boradi. Javob: "
+        },
+        {
+          "en": "waterproof"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "26": {
+      "explanation": [
+        {
+          "text": "Mustahkamlash va suv oʻtkazmaydigan qatlamni tasvirlagach, matnda "
+        },
+        {
+          "en": "These costs mean"
+        },
+        {
+          "text": " tomdagi bogʻlar yangi binolarda koʻproq uchraydi deyilgan. Qisqacha mazmunda "
+        },
+        {
+          "en": "Because of these"
+        },
+        {
+          "text": " bor, shuning uchun boʻshliqda "
+        },
+        {
+          "en": "costs"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda shu xarajatlar sabab tomdagi bogʻlar yangi binolarda koʻproq ekani aytilgan. Javob: "
+        },
+        {
+          "en": "costs"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "27": {
+      "explanation": [
+        {
+          "text": "Oʻsha gapda tomdagi bogʻlar eskilariga qaraganda "
+        },
+        {
+          "en": "more common on new buildings"
+        },
+        {
+          "text": " deyilgan. Shuning uchun boʻshliqda "
+        },
+        {
+          "en": "new"
+        },
+        {
+          "text": ", gap oxiridagi "
+        },
+        {
+          "en": "old"
+        },
+        {
+          "text": " ga teskari."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Tomdagi bogʻlar yangi binolarda koʻproq uchraydi. Javob: "
+        },
+        {
+          "en": "new"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "28": {
+      "explanation": [
+        {
+          "text": "Muallif "
+        },
+        {
+          "en": "the question is not whether homework should exist"
+        },
+        {
+          "text": " deydi, savol uning qanchasi foydali ekanida. Demak, muallif uy vazifasi boʻlishi kerak deb hisoblaydi, bu esa uni bekor qilish kerak degan fikrga zid: "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif uy vazifasini bekor qilishni emas, foydali boʻlishini xohlaydi. Bu fikrga zid, shuning uchun "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "29": {
+      "explanation": [
+        {
+          "text": "Muallif "
+        },
+        {
+          "en": "Homework works best when it is brief"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "closely linked to the lesson"
+        },
+        {
+          "text": " deb hisoblaydi. "
+        },
+        {
+          "en": "Works best"
+        },
+        {
+          "text": " soʻzi "
+        },
+        {
+          "en": "most useful"
+        },
+        {
+          "text": " ga, "
+        },
+        {
+          "en": "brief"
+        },
+        {
+          "text": " esa "
+        },
+        {
+          "en": "short"
+        },
+        {
+          "text": " ga mos, shuning uchun fikr muallif qarashiga mos: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif darsga bogʻliq qisqa uy vazifasi eng yaxshi deydi. Bu mos, shuning uchun "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "30": {
+      "explanation": [
+        {
+          "text": "Muallif uy vazifasi qancha boʻlishi va darsga qanday bogʻlanishi haqida fikr bildiradi, lekin oʻqituvchilar maoshi yoki tekshirish haqida hech narsa demaydi. Muallif oʻqituvchilarga qoʻshimcha toʻlash haqida nima deb oʻylashini aytib boʻlmaydi, shuning uchun javob "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": ". Agar muallif bunga qarshi chiqsa, javob "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": " boʻlardi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif oʻqituvchilar maoshi haqida gapirmaydi. Uning fikrini bilib boʻlmaydi, shuning uchun "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "31": {
+      "explanation": [
+        {
+          "text": "Muallif "
+        },
+        {
+          "en": "that set less but better homework"
+        },
+        {
+          "text": " maktablar "
+        },
+        {
+          "en": "their students learn more, not less"
+        },
+        {
+          "text": " ekanini koʻrishi mumkin deydi. Bu fikrga mos: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif kamroq, lekin yaxshiroq uy vazifasi koʻproq oʻrganishga yordam berishi mumkin deydi. Bu mos, shuning uchun "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "32": {
+      "explanation": [
+        {
+          "text": "Universitet tadqiqotchisi "
+        },
+        {
+          "en": "who work late into the evening"
+        },
+        {
+          "text": " oʻsmirlar "
+        },
+        {
+          "en": "concentrate poorly the next day"
+        },
+        {
+          "text": " deydi. "
+        },
+        {
+          "en": "Concentrate poorly"
+        },
+        {
+          "text": " soʻzi "
+        },
+        {
+          "en": "find it hard to concentrate"
+        },
+        {
+          "text": " degani, shuning uchun javob B."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Tadqiqotchi kechgacha ishlaganlar ertasi kuni yaxshi diqqat qilolmaydi deydi. Javob B."
+        }
+      ]
+    },
+    "33": {
+      "explanation": [
+        {
+          "text": "Ota-onalar guruhi "
+        },
+        {
+          "en": "homework often caused arguments at home"
+        },
+        {
+          "text": " ekanini aniqladi. "
+        },
+        {
+          "en": "Arguments at home"
+        },
+        {
+          "text": " bu "
+        },
+        {
+          "en": "disagreements in the family"
+        },
+        {
+          "text": ", shuning uchun javob C."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ota-onalar guruhi uy vazifasi uyda janjalga sabab boʻlganini aniqladi. Javob C."
+        }
+      ]
+    },
+    "34": {
+      "explanation": [
+        {
+          "text": "Oʻqituvchi "
+        },
+        {
+          "en": "long assignments often end up being completed"
+        },
+        {
+          "text": " ota-onalar tomonidan, oʻquvchilar emas, deb qoʻshimcha qildi. Demak, bu fikr oʻrta maktab oʻqituvchisiniki: A."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Oʻqituvchi uzun vazifalarni koʻpincha ota-onalar bajaradi deydi. Javob A."
+        }
+      ]
+    },
+    "35": {
+      "explanation": [
+        {
+          "text": "Oʻqituvchi "
+        },
+        {
+          "en": "short daily tasks help students remember"
+        },
+        {
+          "text": " darsda oʻrganganlarini deb taʼkidladi. Demak, ularsiz oʻquvchilar unutadi: C tugallanma buni teskarisidan aytadi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Oʻqituvchi qisqa kundalik vazifalar eslab qolishga yordam beradi deydi. Ularsiz unutiladi. Javob C."
+        }
+      ]
+    },
+    "36": {
+      "explanation": [
+        {
+          "text": "Ota-onalar guruhi "
+        },
+        {
+          "en": "did not want homework removed"
+        },
+        {
+          "text": "; ular uning "
+        },
+        {
+          "en": "to be clearer and shorter"
+        },
+        {
+          "text": " boʻlishini xohlashdi. A tugallanma, qisqa va aniq tushuntirilgan, shunga mos."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ota-onalar uy vazifasi bekor emas, qisqaroq va aniqroq boʻlishini xohlashdi. Javob A."
+        }
+      ]
+    },
+    "37": {
+      "explanation": [
+        {
+          "text": "Matnda baʼzilar uy vazifasi "
+        },
+        {
+          "en": "takes time that children need for rest"
+        },
+        {
+          "text": " va oʻyin uchun deb hisoblashi aytilgan. B tugallanma, "
+        },
+        {
+          "en": "children have no time to rest"
+        },
+        {
+          "text": ", xuddi shuni aytadi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Baʼzilar uy vazifasi bolalarning dam olish vaqtini oladi deb oʻylaydi. Javob B."
+        }
+      ]
+    },
+    "38": {
+      "explanation": [
+        {
+          "text": "Muallif "
+        },
+        {
+          "en": "Homework works best when it is brief"
+        },
+        {
+          "text": " deydi. "
+        },
+        {
+          "en": "Works best"
+        },
+        {
+          "text": " qisqacha mazmundagi "
+        },
+        {
+          "en": "most useful"
+        },
+        {
+          "text": " ga mos, shuning uchun soʻz A, "
+        },
+        {
+          "en": "brief"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif uy vazifasi qisqa boʻlganda eng yaxshi deydi. Javob A."
+        }
+      ]
+    },
+    "39": {
+      "explanation": [
+        {
+          "text": "Oʻsha gapda uy vazifasi "
+        },
+        {
+          "en": "possible to finish without help"
+        },
+        {
+          "text": " boʻlishi kerak deyilgan. Shuning uchun soʻz E, "
+        },
+        {
+          "en": "help"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Uy vazifasini yordamsiz bajarish mumkin boʻlishi kerak. Javob E."
+        }
+      ]
+    },
+    "40": {
+      "explanation": [
+        {
+          "text": "Tadqiqotchi kechgacha ishlaydigan oʻsmirlar "
+        },
+        {
+          "en": "sleep less"
+        },
+        {
+          "text": " deydi. Kamroq uxlash uyqu qisqarishini bildiradi, shuning uchun soʻz C, "
+        },
+        {
+          "en": "sleep"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kechgacha ishlash kamroq uxlashni bildiradi. Javob C."
+        }
+      ]
+    }
+  }
+}
