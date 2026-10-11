@@ -257,6 +257,7 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 - **"Mark for review":** one toggle for the current question, in the navigator bar.
 - **"Finish test"** asks in a confirmation dialog, like "Exit" in Exam Mode, with the same content as the phone's confirmation.
 - **The sentence action bar** floats inside the passage column, above the navigator bar.
+- **The navigator bar shows the passage on screen first**, so its question numbers get the first row; the other passages follow in order (owner, 2026-10-11). Strict passage order is not used where it would make the bar taller.
 - **The current question** is the one whose controls the user is focused on or working with, or the one chosen in the navigator bar or with Previous / Next. It is what Previous / Next, "Mark for review", pins and the navigator bar's state refer to.
 
 **Open questions (M4-04):**

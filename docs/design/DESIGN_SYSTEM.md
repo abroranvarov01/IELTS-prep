@@ -294,7 +294,7 @@ This would be one new layout token (a container width) used by onboarding and ho
 ### Sentence action bar
 - Floats 8 px above the sheet, the full width between the gutters on phones (at most 36rem), `surface.base`, `radius.md`, the approved raised shadow; its actions are quiet buttons with an icon and a label, each at least 48 px.
 - **Height follows the content** (owner, 2026-10-11, replacing the earlier 56 px): compact on phones, **at most two rows**, no horizontal clipping, no critical action hidden, and understandable in uz, ru and en. Where the labels would need a third row, shorter approved labels or icons are used, with the full label kept as the accessible name.
-- **Arrangement** (M4-24): Highlight (or Remove highlight) and Cancel share the first row, Cancel as a 48 px × icon button named "Cancel"; Pin (or Unpin), where offered, takes the second row. A label too long for its row wraps inside its own button rather than adding a row. The refused-pin message is a line of text above the actions, shown only after a refused pin.
+- **Arrangement** (M4-24): Highlight (or Remove highlight) and Cancel share the first row, Cancel as a 48 px × icon button named "Cancel"; Pin (or Unpin), where offered, takes the second row. A label too long for its row wraps inside its own button rather than adding a row. The refused-pin message is contextual feedback above the actions, shown only after a refused pin; it does not count as one of the two rows (owner, 2026-10-11).
 
 ### Question sheet (phone and tablet)
 - `surface.base`, `radius.xl` top corners, the approved raised shadow; 16 px side padding.
@@ -325,7 +325,7 @@ This would be one new layout token (a container width) used by onboarding and ho
 ### Desktop exam layout (from 64rem / 1024 px)
 - Columns: passage 55%, questions 45%, separated by a 1 px `border.subtle` line (decorative: the columns are also separated by space and scroll on their own); both on `surface.base`; the passage at the 40rem measure inside its column.
 - The current question in the question column: a 4 px `ink` bar along its start edge.
-- Navigator bar: 64 px high with a 1 px `border.subtle` line above it; the same 44 px cells; other passages as secondary buttons with their progress.
+- Navigator bar: a 1 px `border.subtle` line above it; the same 44 px cells; other passages as secondary buttons with their progress. **Its height follows its content** (owner, 2026-10-11, replacing the fixed 64 px): 64 px is the preferred compact height when everything fits one row; two rows at 1280 px and up to three rows at 1024 px are acceptable. Previous, Next and "Mark for review" keep their text labels; they are not made icon-only to save space.
 
 ### Tokens this would add
 `--color-highlight`, `--container-measure` (40rem), `--breakpoint-desktop` (the approved 64rem, first use), and the approved "base" duration (200 ms) for the sheet. Everything else uses existing or approved values.
