@@ -35,8 +35,9 @@
     {
       "id": "M4",
       "name": "Reading Engine",
-      "status": "active",
-      "goal": "The Reading engine as approved in READING_EXPERIENCE.md: a Reading domain model and content contract, session state with answers kept on the device, the passage-first mobile screen with the question bottom sheet and a full-test navigator, renderers for the approved IELTS question types, highlighting, Pin Evidence, Practice and Exam Modes with timing, and the desktop exam layout, all accessible and tested, with original demo content only. Review, explanations and Error Intelligence are M5. Answer checking and band conversion are M5 (owner, M4-09). Demo content is Academic only; Reading is reached by direct route only, home unchanged."
+      "status": "done",
+      "goal": "The Reading engine as approved in READING_EXPERIENCE.md: a Reading domain model and content contract, session state with answers kept on the device, the passage-first mobile screen with the question bottom sheet and a full-test navigator, renderers for the approved IELTS question types, highlighting, Pin Evidence, Practice and Exam Modes with timing, and the desktop exam layout, all accessible and tested, with original demo content only. Review, explanations and Error Intelligence are M5. Answer checking and band conversion are M5 (owner, M4-09). Demo content is Academic only; Reading is reached by direct route only, home unchanged.",
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M5",

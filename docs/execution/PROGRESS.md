@@ -4,8 +4,8 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 ## Current state
 
-- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). M3 Onboarding + Home is done (2026-10-10). **M4 Reading Engine is active** (owner, 2026-10-10). M5–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
-- **Next:** M4-21 (desktop exam layout, with the owner's decisions of 2026-10-11), then M4-23 (the flaky keyboard-docking test, fixed at its cause) and M4-24 (the compact sentence action bar), then M4-22 (the final M4 journeys, accessibility pass and docs) once those are done. When M4 is done, M5 is not activated by a worker. CI activates when the owner pushes.
+- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). M3 Onboarding + Home is done (2026-10-10). M4 Reading Engine is done (2026-10-11). **No milestone is active.** M5–M11 are planned. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
+- **Next:** the owner activates M5 (Reading Review + Error Intelligence) after its tasks are written in TASKS.json; its blocking decisions are in [ROADMAP.md](ROADMAP.md). A worker does not activate milestones. One owner question is open (the desktop navigator bar's height, below). CI activates when the owner pushes.
 
 ## Open questions for the owner
 
@@ -526,3 +526,9 @@ Entry format:
   - **Time:** Practice has no timer; the Exam start option says "60 minutes, like the real test… The time keeps running if you leave."
   - Finding (recorded): on desktop an open option list's heading is an `h2` inside a question's `h3` in the column; heading order is not an AA requirement, so it is left as is.
 - Notes: The open question on the desktop navigator bar's height (two rows from 1280 px, three at 1024 px) stays with the owner; it does not block M4.
+
+### 2026-10-11: Milestone M4 Reading Engine complete
+- Result: done
+- Changes: M4 marked `done` with `completedAt` in TASKS.json. All 25 tasks are done: M4-00 (the flaky M1 switcher test), the drafts M4-01 to M4-08, the owner gate M4-09, the build M4-10 to M4-21, M4-23 (the flaky docking test, fixed at its cause), M4-24 (the compact action bar) and M4-22 (journeys, accessibility pass, docs). CLAUDE.md "Current state" was updated in M4-22. **M5 was not activated.**
+- Verification: the full gate suite passed on the M4-22 commit: `pnpm check`, `pnpm build`, `DATABASE_URL=<local> pnpm test:e2e` (api 16, web 411), with the local database up. No known flaky test remains (M4-23: 100/100 under load).
+- Notes: Follow-ups collected from the M4 entries, none started: (1) **owner question:** the desktop navigator bar's height (two rows from 1280 px, three at 1024 px; options in "Open questions"); (2) before beta: a TalkBack spot check, a check on a real phone keyboard (the docking tests use a stand-in viewport), and a fluent-speaker review of the uz and ru strings; (3) required before beta: table, flow-chart and diagram label completion (M11-01 to M11-03); (4) for M5 answer checking: the official word-counting rules (the Practice warning is advisory and conservative), and accepted answer variants; (5) a possible later improvement: answer fields inside the gaps on desktop (owner, 2026-10-11); (6) the test bar's "Exit" focus ring is cut at the top edge of the screen; programmatically focused headings have no outline (an existing pattern); on desktop an open option list's `h2` sits inside a question's `h3`; (7) storage failures in mid-test (a full quota) are not announced; Escape closes both the action bar and an option list when both are open; (8) tooling: spacing-zero utilities such as `min-h-0` and `inset-x-0` generate no CSS because the spacing scale is reset (found in M4-13 and M4-21); a lint or token check could catch them.
