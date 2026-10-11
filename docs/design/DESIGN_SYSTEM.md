@@ -292,14 +292,15 @@ This would be one new layout token (a container width) used by onboarding and ho
 - **Pin marker** (the current question's pins): an inline chip before the sentence, `radius.full`, 1 px `ink` border, a 14 px pin icon and the question number in bold meta text, `ink` on `surface.base` (18.58:1).
 
 ### Sentence action bar
-- Floats 8 px above the sheet, the full width between the gutters on phones (at most 36rem), `surface.base`, `radius.md`, the approved raised shadow, 56 px high; its actions are quiet buttons with an icon and a label, each at least 48 px.
+- Floats 8 px above the sheet, the full width between the gutters on phones (at most 36rem), `surface.base`, `radius.md`, the approved raised shadow; its actions are quiet buttons with an icon and a label, each at least 48 px.
+- **Height follows the content** (owner, 2026-10-11, replacing the earlier 56 px): compact on phones, **at most two rows**, no horizontal clipping, no critical action hidden, and understandable in uz, ru and en. Where the labels would need a third row, shorter approved labels or icons are used, with the full label kept as the accessible name.
 
 ### Question sheet (phone and tablet)
 - `surface.base`, `radius.xl` top corners, the approved raised shadow; 16 px side padding.
 - **Handle:** a 32 × 4 px bar in `border.control` (3.22:1 on white) centered in a 48 px-high button.
 - **Heights:** collapsed = its content (handle and header, about 96 px); partial = 45% of the visible viewport height, at least 240 px; expanded = the visible height below the test bar. State changes animate height with the approved "base" duration (200 ms) and easing, none with reduced motion.
 - **Header row:** "Question 5 of 40" in Heading 3 (18 px, 700), the flag toggle and "All questions" as icon-plus-label quiet buttons, 48 px high.
-- **Footer row:** Previous and Next as **secondary buttons** (new component, below); the red primary button only for "Finish test".
+- **Footer row:** Previous and Next as **secondary buttons** (new component, below); the red primary button only for "Finish test". On phones "Finish test" is full width, as the primary button is there, on its own row under Previous (owner, 2026-10-11).
 
 ### Secondary button (new)
 - For Previous / Next and similar navigation that must look like buttons but not compete with the red action: 48 px minimum height, 12/24 px padding, `radius.md`, 1 px `border.control` boundary (3.22:1), `ink` text weight 500 on `surface.base`; hover: `ink` boundary; pressed: `surface.warm` fill (`ink` 17.68:1); focus: the approved ring.

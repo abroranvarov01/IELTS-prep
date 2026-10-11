@@ -240,7 +240,9 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 | "Exit" | Back to home; everything is kept | Asks first: "Leave the test? The time keeps running while you are away." ("Leave" / "Stay") |
 | After finishing | The finished page (below) | The finished page |
 
-**The finished page in M4** (both modes): the heading "Test finished" (or "Time is up." above it after a time-out), "You answered 37 of 40 questions.", and one honest line: "Checking answers and explanations will come in a later version." Then the red "Go to home page" and a quiet "Start again" (a new session; the finished one stays stored for M5 review, ADR-0006). No score, no estimate: nothing in M4 computes one (honest feedback, [PRODUCT.md](PRODUCT.md#honest-feedback-non-negotiable)). Opening a finished test's link again shows this page.
+**The word-limit warning is advisory** (owner, 2026-10-11): it counts conservatively (a word is a space-separated part with a letter in it; numbers never count), so it never warns about an answer that fits the limit. The official IELTS counting and checking rules belong to answer checking in M5.
+
+**The finished page in M4** (both modes): the heading "Test finished" (or "Time is up." above it after a time-out), "You answered 37 of 40 questions.", and one honest line: "Checking answers and explanations will come in a later version." Then the red "Go to home page" and a quiet "Start again" (a new session; the finished one stays stored for M5 review, ADR-0006). "Start again" returns to the start screen, where the mode is chosen again (owner, 2026-10-11). No score, no estimate: nothing in M4 computes one (honest feedback, [PRODUCT.md](PRODUCT.md#honest-feedback-non-negotiable)). Opening a finished test's link again shows this page.
 
 **Desktop layout (from the approved desktop breakpoint, 1024 px):**
 - **Test bar** across the top (Exit, "Passage 1 of 3", timer).
@@ -249,6 +251,13 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 - **Keyboard:** Tab moves test bar → passage (one stop, arrow keys inside, M4-03) → question column → navigator bar. Option lists open in place in the question column.
 - **Same layout in both modes** on desktop (open question 5): Practice adds Pin Evidence and its "Your evidence" blocks in the question column.
 - **Tablet (600–1023 px):** the phone layout with the bottom sheet, the passage centered at a comfortable measure and the sheet as wide as the passage column.
+
+**Decided for the desktop layout (owner, 2026-10-11, at M4-21):**
+- **Completion groups** (sentence, summary and note completion; summary from a word box): the group's text is shown once in the question column with its gaps numbered, followed by one clearly labeled control per question ("Answer 24": the typed field, or the answer button for a word box). No fields inside the gaps in M4; fields in the text, as computer-delivered IELTS has them, are a possible later improvement for realism.
+- **"Mark for review":** one toggle for the current question, in the navigator bar.
+- **"Finish test"** asks in a confirmation dialog, like "Exit" in Exam Mode, with the same content as the phone's confirmation.
+- **The sentence action bar** floats inside the passage column, above the navigator bar.
+- **The current question** is the one whose controls the user is focused on or working with, or the one chosen in the navigator bar or with Previous / Next. It is what Previous / Next, "Mark for review", pins and the navigator bar's state refer to.
 
 **Open questions (M4-04):**
 1. **Mode choice:** options: (a) a start screen with both modes and "Start"; (b) the mode only from the link. **Recommendation: (a)**, with optional preselection by link.
