@@ -12,10 +12,10 @@ Status values: `Not started` · `Designing` · `In progress` · `Shipped`. Seque
 | Listening practice | Audio plus questions, with realistic play-once behavior in exam mode. | Not started |
 | Writing practice | Task 1 / Task 2 practice with AI-estimated feedback. | Not started |
 | Speaking practice | Recorded answers with AI-estimated feedback. | Not started |
-| Targeted practice | Short drills aimed at specific question types and weaknesses. | Not started |
+| Targeted practice | Short drills aimed at specific question types and weaknesses. | Designing (M5 drafts awaiting owner approval, M5-01) |
 | Full mock tests | Realistic timed simulation. Desktop-friendly for computer-delivered IELTS realism. | Not started |
-| Error review | Evidence-first explanations of every mistake, with "Explain simpler" in uz/ru/en. | Not started |
-| Error Intelligence | Detect recurring error patterns (not only right/wrong) and turn them into targeted practice. | Not started |
+| Error review | Evidence-first explanations of every mistake, with "Explain simpler" in uz/ru/en. | Designing (M5 drafts awaiting owner approval, M5-01) |
+| Error Intelligence | Detect recurring error patterns (not only right/wrong) and turn them into targeted practice. | Designing (M5 drafts awaiting owner approval, M5-01) |
 | Progress tracking | "Your progress": trend and current estimate, without a dashboard overload. | Not started |
 | Vocabulary | Vocabulary practice tied to the user's own mistakes and passages. | Not started |
 | Offline / PWA | Installable app. The offline scope is TBD (see ARCHITECTURE.md). | Not started |

@@ -2370,6 +2370,485 @@
       "completedAt": "2026-10-11"
     },
     {
+      "id": "M5-01",
+      "title": "Owner approves the M5 specs, copy, design values and ADRs",
+      "milestone": "M5",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "One approval gate before any M5 product code: answer checking and results, evidence-first review, Error Intelligence, targeted practice, explanations (authored or AI), routes and Home, status colors, and how attempts are kept on the device.",
+      "scope": [
+        "Review the drafts prepared during M5 planning (2026-10-11, not a task): READING_EXPERIENCE.md 'M5 specifications (drafts)', USER_FLOWS.md 'Reading results and review flows (M5)' and 'Interface copy (M5)', DESIGN_SYSTEM.md 'M5 components (Reading results and review)'; mark what is approved as Approved",
+        "Answer decisions D1–D21 in READING_EXPERIENCE.md 'Decisions for M5-01', including the three IELTS rules with no official source (articles and the word limit, date formats, a trailing full stop) and, separately, the routes and navigation (D21) and Home (D18)",
+        "Review ADR-0008 (answer checking, explanations, review content) and ADR-0009 (attempts and results on the device) and set them to Accepted or ask for changes; on acceptance the status lines of ADR-0005 and ADR-0006 note the amended sections, and the ADR index and ARCHITECTURE.md are updated",
+        "If AI is chosen for explanations (D12 b): an AI provider ADR becomes a new draft task, and no AI work starts before it is accepted; M5-05 and M5-07 are adjusted",
+        "If an answer changes M5's scope (for example no retries, a drill set, Home changes, checking during a test, a band estimate), say so; M5-02 to M5-11 are adjusted before work continues",
+        "Activating M5 (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The M5 specs, copy and design values are Approved, and ADR-0008 and ADR-0009 are Accepted (or the drafts are revised and this gate repeated)",
+        "Every decision D1–D21 has a recorded answer",
+        "No open question blocks M5-02 to M5-11"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/READING_EXPERIENCE.md docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md",
+        "grep -n 'Status' docs/architecture/decisions/0008-*.md docs/architecture/decisions/0009-*.md"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        "docs/architecture/decisions/README.md",
+        "docs/execution/ROADMAP.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/ (0005, 0006 status lines; 0008, 0009; README.md index)",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/execution/ROADMAP.md",
+        "docs/execution/PROGRESS.md"
+      ]
+    },
+    {
+      "id": "M5-02",
+      "title": "Answer key and content additions for checking",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-01"],
+      "goal": "The answer key and the content contract carry everything checking and Error Intelligence need, validated, without changing the demo test's version.",
+      "scope": [
+        "Per ADR-0008 §3 and §4 as accepted, validator rules: typed variants are non-empty, distinct after normalization and within the word limit by the validator's count (every space-separated part is a word, a hyphenated part is one word, one numeric part is free when the limit allows a number, articles count unless D4 decided otherwise); every number of a 'choose several' item has the same set with exactly `choose` options; NOT GIVEN evidence may be empty; the optional `trap` tag (`paraphrase` | `qualifier`); the optional `fromPassage` flag, on typed groups only",
+        "The validator's word count as one domain function, its tests citing the ielts.org hyphenation rule and stating that the article rule has no official source",
+        "Demo content: `fromPassage: true` on its typed groups. Demo key: reviewed against the passage; authored variants only where the passage supports them (optional words, British and American spellings, figures and words); `trap` tags where they apply. Record each authoring choice in PROGRESS.md",
+        "The demo test keeps `version: 1` (ADR-0009 §5), asserted by a test",
+        "Unit tests for every new validator rule with small original fixtures; every content file still validated by the content test"
+      ],
+      "outOfScope": [
+        "checking answers (M5-03)",
+        "explanations (M5-05)",
+        "UI",
+        "new tests or passages; changing question numbers, options or sentence ids"
+      ],
+      "acceptanceCriteria": [
+        "Every rule of ADR-0008 §3 and §4 is enforced and tested",
+        "The demo test and key validate; the demo test's version is still 1; the existing M4 session tests pass unchanged",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        "docs/product/READING_EXPERIENCE.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/product/PRODUCT.md"
+      ]
+    },
+    {
+      "id": "M5-03",
+      "title": "Answer checking and the raw score in the domain",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-02"],
+      "goal": "Every M4 question type is checked against the key with the approved normalization, marks, outcomes, denominators and observable signals, as tested domain code.",
+      "scope": [
+        "`apps/web/src/domain/reading/scoring.ts` (under .claude/rules/domain/ielts-scoring.md) per READING_EXPERIENCE.md 'M5 specifications', 'Answer checking (M5)' as approved: normalization (NFC, case, spaces, typographic apostrophes, phone hyphens, the D2 decision on trailing punctuation); outcomes for all 13 M4 types; 'choose several' marks in either order, given to the item's numbers in order; unanswered distinct from incorrect; the raw score out of 40 for a test attempt and out of the retried questions for a retry",
+        "The observable signals of 'Error Intelligence (M5)': ngInsteadOfFalse, falseInsteadOfNg, ngInsteadOfTrue, trueInsteadOfNg, spelling (exactly one letter added, missing or changed from an accepted variant of at least 4 letters), wordLimit, notFromPassage, timeUp, pinnedElsewhere",
+        "Result types that keep a practice raw score distinct from any band or estimate; no band conversion anywhere",
+        "Unit tests for every rule and edge case, each IELTS rule citing its official source (or stating that none exists): case; spaces; smart apostrophes; phone hyphens; trailing punctuation; a misspelling is incorrect; British and American spellings only when authored; over the limit never correct; 'choose two' in either order with partial marks; unanswered vs incorrect; each signal's positive and negative cases, using the demo test and small fixtures"
+      ],
+      "outOfScope": [
+        "storage of attempts and results (M5-04)",
+        "UI",
+        "repeated mistakes across attempts (M5-10)",
+        "band conversion"
+      ],
+      "acceptanceCriteria": [
+        "Checking matches the approved rules for every M4 question type, proven by tests",
+        "No UI code decides correctness (INVARIANTS I-3)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/architecture/INVARIANTS.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/product/PRODUCT.md"
+      ]
+    },
+    {
+      "id": "M5-04",
+      "title": "Attempt history on the device",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-03"],
+      "goal": "Finished sessions become immutable attempts kept on the device, recorded once and compatible with M4 data.",
+      "scope": [
+        "Per ADR-0009 as accepted: the attempt model and a domain parser that validates entry by entry; recording on finish (append unless the id exists, then remove the current session); removing a current session that is already recorded; storing `result` once (an adapter function the results page calls); retention (20 per test, keeping each content version's first test attempt); importing M4's `reading:<testId>:finished` entry once and removing it; the retry entry `reading:<testId>:retry` and the session's optional `retry` field, never on the main entry; an in-memory fallback when storage is blocked or full",
+        "The test screen's finish (by the user, by time-out, and a time-out noticed on load) records the attempt instead of writing `:finished`. The M4 finished page stays until M5-06 replaces it",
+        "Tests with stored values in the exact M4 format (schema 1, in progress and finished): resumed unchanged; a finished entry imported once; no duplicate after a reload, a second tab, or a time-out noticed on load; a bad entry dropped alone; an unknown schema read as empty; retention; result written once and never overwritten"
+      ],
+      "outOfScope": [
+        "the results and review UI (M5-06, M5-07)",
+        "retry screens (M5-09)",
+        "server storage, accounts (M7)"
+      ],
+      "acceptanceCriteria": [
+        "Behavior matches ADR-0009, proven by tests that include M4-format data",
+        "The M4 Reading e2e journeys still pass",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        ".claude/rules/security/security.md",
+        ".claude/rules/testing/test-code.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/BOUNDARIES.md (if the storage module gains a rule)"
+      ]
+    },
+    {
+      "id": "M5-05",
+      "title": "Explanations for the demo test in uz, ru and en",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-02"],
+      "goal": "Every question unit of the demo test has a grounded explanation and a simpler version in each interface language, validated like content.",
+      "scope": [
+        "Per ADR-0008 §5: the explanation file type, its domain validator (test and version match, one item per question unit, both texts in every locale, no empty text, the approved length limits, simpler shorter than the explanation, `en` segments) and a server-side loader in `data/` that returns one locale's file; a content test validating every file",
+        "Write `demo-academic-1.explanations.{en,ru,uz}.json` by the approved authoring rules: grounded only in the passage, question and key; the paraphrase named; NOT GIVEN explanations say what the passage covers and what it does not, never an invented sentence; English quotes as `en` segments of at most 8 words",
+        "Original text for this project, English first, then ru and uz; record in PROGRESS.md that uz and ru need a fluent-speaker review before beta (M11)"
+      ],
+      "outOfScope": ["UI (M5-07)", "runtime AI", "other tests"],
+      "acceptanceCriteria": [
+        "All 39 question units (40 questions, 22–23 as one item) have both texts in en, ru and uz, and the files validate",
+        "The validator rejects a missing unit, an unknown unit, an empty or too long text, a simpler text not shorter than its explanation, and a wrong test or version (tests)",
+        "Each explanation refers only to its question's evidence and passage",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/product/PRODUCT.md",
+        ".claude/rules/testing/test-code.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/LOCALIZATION.md (explanations are localized content files, not catalog strings)"
+      ]
+    },
+    {
+      "id": "M5-06",
+      "title": "Results after finishing",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-04"],
+      "goal": "Finishing a test in either mode, or running out of time, leads to an honest results page whose result never changes once shown.",
+      "scope": [
+        "The results address as approved (D21), inside the shell: the key loaded on the server for the results and review pages only (ADR-0008 §2), the result computed on first view and stored once (ADR-0009 §3); 'Time is up.', 'Your results', the score out of 40, the honest line, the breakdown, the red 'Review mistakes' or 'Review answers' (linking to the review address that M5-07 builds), 'Start again'",
+        "Finishing and time-out replace the test screen with the results page; the test link shows the start screen with 'See your last results' (D6); the M4 finished page and its now unused copy are removed",
+        "States: no attempt, unknown attempt, an earlier content version (score kept, or cannot be checked), storage blocked (notice, in memory)",
+        "The `status.correct` token and outcome icons as approved (DESIGN_SYSTEM.md M5); uz/ru/en copy as approved",
+        "Tests: component tests; e2e on phone and desktop: Practice finish, Exam finish, Exam time-out on screen and while away (controlled clock), reload shows the same result, an M4-format finished session seeded in storage shows results, storage blocked, 320 px in uz/ru/en, axe"
+      ],
+      "outOfScope": [
+        "review (M5-07, M5-08)",
+        "repeated mistakes (M5-10)",
+        "retries (M5-09)",
+        "band conversion",
+        "Home (unless D18 decided otherwise)"
+      ],
+      "acceptanceCriteria": [
+        "Results appear exactly as approved in every situation of 'When results are available (M5)'",
+        "The test route does not import the key or explanations",
+        "No band or estimate is shown anywhere",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        "docs/product/PRODUCT.md"
+      ],
+      "docsToUpdate": [
+        "docs/design/DESIGN_SYSTEM.md (the status token in code)"
+      ]
+    },
+    {
+      "id": "M5-07",
+      "title": "Evidence-first review on phones",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-05", "M5-06"],
+      "goal": "From the results, a learner reviews every question (mistakes first, correct and unanswered too) with their answer, the accepted answer, the evidence in the passage, the explanation and 'Explain simpler', on a phone.",
+      "scope": [
+        "The review address as approved, in the test-screen layout: the test bar with 'Results'; the read-only passage with evidence and related chips and underlines, the learner's highlights and the current question's pins; the review sheet card in the approved order (outcome, answers, evidence, why, 'Explain simpler', 'Your evidence' comparison, notes); the navigator with outcome badges",
+        "Sequences (D8) with the address replaced on question change; the passage scrolls to the evidence (D9), instantly with reduced motion; NOT GIVEN as 'Where the passage talks about this', never proof; focus and keyboard behavior as specified; the empty and error states",
+        "Explanations of the active locale only; test content and `en` segments marked lang=en; uz/ru/en copy as approved",
+        "Tests: component tests of the card for each interaction family; e2e on phone: results to the first mistake, Next through mistakes, a correct and an unanswered question through the navigator, a NOT GIVEN question, 'Explain simpler', 'Show in passage', the keyboard path, 320 px in uz/ru/en, 200% zoom, reduced motion, axe"
+      ],
+      "outOfScope": [
+        "the desktop layout (M5-08)",
+        "repeated mistakes (M5-10)",
+        "retries (M5-09)",
+        "runtime AI"
+      ],
+      "acceptanceCriteria": [
+        "Every M4 question type can be reviewed as approved on a phone, in both modes' attempts",
+        "Nothing is shown by color alone (I-8); English test content is lang=en",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0007-reading-ui-primitives.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ]
+    },
+    {
+      "id": "M5-08",
+      "title": "Review on desktop",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-07"],
+      "goal": "Review uses the desktop two-column layout from 1024 px, as approved.",
+      "scope": [
+        "The passage column with the review marks, the question column with the current question's review card, the M4 navigator bar with outcome badges and Previous / Next, keeping the approved content-driven height (two rows at 1280 px, up to three at 1024 px) and text labels; tablet keeps the phone layout",
+        "Keyboard order test bar → passage → card → navigator bar; e2e on desktop at 1024 and 1280 px in uz/ru/en, axe"
+      ],
+      "outOfScope": [
+        "changes to the approved M4 desktop decisions",
+        "repeated mistakes, retries"
+      ],
+      "acceptanceCriteria": [
+        "Desktop review behaves as approved",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md"
+      ]
+    },
+    {
+      "id": "M5-09",
+      "title": "Practise known mistakes again (retry)",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-08"],
+      "goal": "A learner can answer an attempt's mistakes again without seeing the answers, and sees an honestly labeled result that never changes the original attempt.",
+      "scope": [
+        "The retry address as approved: a Practice session limited to the given questions (the session's `retry` field, ADR-0009 §5), enforced in the domain transitions (moving, answering and pinning only within the subset; the answered count and the finish confirmation over the subset); the navigator, Previous / Next and the desktop column show only those questions; 'n of m to practise'",
+        "One retry in progress per test: the same retry resumes, a different one replaces it; finishing records a `retry` attempt",
+        "The retry's results ('Your second try', the score out of the retried questions, the honest retry line, 'Review mistakes', 'Back to your test results') and review of the retry; 'Practise your mistakes again' on a test attempt's results (hidden without mistakes)",
+        "Tests: domain tests for subset transitions; e2e on phone and desktop; the original attempt and its result are unchanged after a retry (stored data and its results page)"
+      ],
+      "outOfScope": [
+        "unseen or new practice content (M9)",
+        "repeated-mistake cards (M5-10)",
+        "Exam-mode retries"
+      ],
+      "acceptanceCriteria": [
+        "Retries behave as approved and are never shown out of 40 or combined with the original",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ]
+    },
+    {
+      "id": "M5-10",
+      "title": "Error Intelligence: repeated mistakes",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-09"],
+      "goal": "The results page shows repeated mistakes only when the first-try evidence meets the approved threshold, describes what happened without guessing why, and links to practising those questions again.",
+      "scope": [
+        "Domain code per READING_EXPERIENCE.md 'M5 specifications', 'Error Intelligence (M5)' as approved: first-try selection per test; the categories from signals and authored tags with their opportunities; the threshold (D15); ordering and the limit of two; unanswered questions excluded",
+        "'What to work on' on a test attempt's results: the cards (title, count of opportunities with question numbers, tip, 'Practise these questions again' as a retry of those questions), the 'no repeated mistakes' text, the first-try sentence on later attempts, nothing on a retry's results; the per-question notes in review use the same signals",
+        "uz/ru/en copy as approved, with English answer words lang=en",
+        "Tests: domain tests at every boundary (2 vs 3 questions, 1 vs 2 groups, first try only, later attempts and retries ignored, an imported M4 attempt, unanswered excluded, authored tags, ties); e2e with seeded attempts for a card, the none state and a later attempt"
+      ],
+      "outOfScope": [
+        "learner-confirmed causes (D14)",
+        "rates across many tests (M8)",
+        "any band, level or improvement claim"
+      ],
+      "acceptanceCriteria": [
+        "Repeated mistakes appear exactly when the approved rule says so, proven by tests",
+        "No text states a cause the learner did not give",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/product/PRODUCT.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ]
+    },
+    {
+      "id": "M5-11",
+      "title": "Reading review end to end, accessibility pass and docs",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M5-10"],
+      "goal": "The product loop for Reading (practice, understand mistakes, practise again) works as one flow on phone and desktop, and the docs describe what exists.",
+      "scope": [
+        "e2e journeys on both projects in uz/ru/en with English test content marked lang=en: a Practice test → finish → results → review mistakes (each interaction family, a NOT GIVEN question, 'Explain simpler') → practise mistakes → the retry's results → back; an Exam with a time-out → results → review; a reload at each step; M4-format data already on the device",
+        "Accessibility pass per ACCESSIBILITY.md on the production build (keyboard, screen-reader order, announcements, 200% zoom, 320 px, reduced motion, not by color alone), with findings fixed or recorded; a TalkBack check recorded as before-beta if no device is available",
+        "Docs: FEATURE_MAP (Error review, Error Intelligence, Targeted practice), CLAUDE.md Current state, READING_EXPERIENCE.md status line"
+      ],
+      "outOfScope": ["new features"],
+      "acceptanceCriteria": [
+        "The journeys pass on both projects",
+        "The accessibility pass is recorded",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md (Current state)",
+        "docs/product/READING_EXPERIENCE.md"
+      ]
+    },
+    {
       "id": "M10-01",
       "title": "Replace the placeholder PWA icons with the brand kit's",
       "milestone": "M10",

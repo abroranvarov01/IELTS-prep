@@ -409,3 +409,129 @@ The questions as they were put to the owner, with the options considered:
 | `reading.finished.notChecked` | Finished page, honest note (M4-04) | Checking answers and explanations will come in a later version. | Проверка ответов и разборы появятся в следующей версии. | Javoblarni tekshirish va izohlar keyingi versiyada paydo boʻladi. |
 | `reading.finished.again` | Finished page, quiet (M4-04) | Start again | Начать заново | Qaytadan boshlash |
 | `reading.navigator.passageProgress` | Desktop navigator button for another passage (M4-04) | Passage {number}: {answered} of {total} answered | Текст {number}: отвечено {answered} из {total} | {number}-matn: {total} tadan {answered} tasiga javob berilgan |
+
+## Reading results and review flows (M5)
+
+**DRAFT: awaiting owner approval (task M5-01).** Prepared 2026-10-11 during M5 planning. The screens are specified in [READING_EXPERIENCE.md, M5 specifications](READING_EXPERIENCE.md#m5-specifications-drafts), the visual values in [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review), the data in ADR-0008 and ADR-0009 (Proposed). The copy is in [Interface copy (M5)](#interface-copy-m5). Steps count from the M4 reading screen; Reading is still reached by its direct link (M4), and home is unchanged unless the owner decides otherwise (READING_EXPERIENCE.md, Home in M5).
+
+### Finish → results
+- **Goal:** right after finishing, the learner sees how many answers were correct and what to do next.
+- **Entry point:** "Finish test" in Practice or Exam (M4), or the Exam time-out.
+- **Primary action:** on the results page, "Review mistakes".
+- **Steps:** 1. "Finish test" → the confirmation (M4). 2. "Finish" → the results page (`/{locale}/reading/{testId}/results`): "27 of 40 correct", the honest line, the counts of not correct and no answer, the red "Review mistakes", "What to work on", and the quiet "Practise your mistakes again" and "Start again".
+- **Step count:** 2, as in M4. An Exam time-out shows the results page with "Time is up." without any step.
+- **Empty / error states:** no finished attempt on this device (for example a shared results link) → "No results on this device yet" with the red "Start the test". Results cannot be saved → the notice, results still shown. An attempt from an earlier content version → its stored score and "This test has changed since you took it…". Unknown test → not-found. Offline after loading → works; opening offline → the M1 error state.
+- **Languages checked:** not yet (M5-06: the Russian score line and honest line at 320 px).
+
+### Results → understand a mistake
+- **Goal:** for each mistake, see the answer, where it comes from in the passage, and why.
+- **Entry point:** "Review mistakes" on the results page.
+- **Primary action:** reading the review card; moving on with "Next".
+- **Steps:** 1. "Review mistakes" → the review screen at the first question that is not correct or has no answer: the passage with that question's evidence marked and in view, and the review card (outcome, your answer, correct answer, evidence, why). 2. "Next" → the next mistake. Optional: "Explain simpler" (1), "Show in passage" (1), "All questions" then a number (2) to see any question, including correct ones.
+- **Step count:** 1 from results to the first explanation; 3 from the last test question (finish, confirm, review).
+- **Empty / error states:** all answers correct → the button reads "Review answers" and opens question 1. A question number or attempt not on this device → as above. Review of an attempt from an earlier content version → not available, with the score kept.
+- **Languages checked:** not yet (M5-07: the longest outcome, the Russian evidence heading and "Explain simpler" at 320 px; M5-08 at 1024 px).
+
+### Explain simpler
+- **Steps:** 1. "Explain simpler" under the explanation → the simpler version appears right after the button, in the interface language; the button becomes "Hide the simpler explanation".
+- **Step count:** 1. Available for every question in Practice and Exam attempts (review happens after the test, so Exam's "no help" rule is kept).
+
+### Practise your mistakes again
+- **Goal:** answer the questions you got wrong once more, without seeing the answers, and see how many you now get right.
+- **Entry point:** "Practise your mistakes again" on the results page, or "Practise these questions again" on a repeated-mistake card.
+- **Primary action:** answering, then "Finish".
+- **Steps:** 1. Tap the link → the reading screen in Practice with only those questions, answers empty (no start screen: the mode is fixed). 2. Answer and move as in M4. 3. "Finish test", "Finish" → the retry's results: "9 of 13 now correct", the honest retry line, "Review mistakes", "Back to your test results".
+- **Step count:** 1 to start.
+- **Empty / error states:** no mistakes → the link is not shown. An unfinished retry of the same questions → resumed. Starting a different retry replaces an unfinished one.
+- **Languages checked:** not yet (M5-09).
+
+### Come back to results later
+- **Steps:** 1. Open the test link → the start screen (M4) with a quiet "See your last results" under "Start", when this device has a finished attempt. 2. Tap it → the results page of the latest test attempt.
+- **Step count:** 2. (In M4 the test link showed the finished page instead; see READING_EXPERIENCE.md, Routes and navigation (M5).)
+
+## Interface copy (M5)
+
+**PROPOSED, awaiting owner approval (task M5-01).** Interface strings only. Test content (passages, questions, options, TRUE/FALSE/NOT GIVEN, typed and accepted answers) stays in English from the content. Explanations and their simpler versions are per-test content files, not catalog strings (ADR-0008). `<en>…</en>` marks English answer words inside a localized string, rendered with `lang="en"`. Uzbek uses U+02BB for oʻ and gʻ and U+02BC for the tutuq belgisi. A fluent-speaker review of uz and ru is required before beta, as for M1 to M4. Keys are suggestions.
+
+| Key (suggested) | Used in | en | ru | uz |
+|---|---|---|---|---|
+| `reading.results.title` | Results H1 and page title | Your results | Ваши результаты | Natijalaringiz |
+| `reading.results.score` | Score line | {score} of {total} correct | Верно: {score} из {total} | {total} tadan {score} tasi toʻgʻri |
+| `reading.results.honest` | Under the score | A practice score on our own practice test. It is not an IELTS band score. | Это результат практики на нашем собственном тесте, а не балл IELTS. | Bu oʻz mashq testimizdagi natija, IELTS bali emas. |
+| `reading.results.breakdown` | Under the honest line | Not correct: {incorrect} · No answer: {unanswered} | Неверно: {incorrect} · Без ответа: {unanswered} | Notoʻgʻri: {incorrect} · Javobsiz: {unanswered} |
+| `reading.results.reviewMistakes` | Results, red | Review mistakes | Разобрать ошибки | Xatolarni koʻrib chiqish |
+| `reading.results.reviewAll` | Results, red, when everything is correct | Review answers | Посмотреть ответы | Javoblarni koʻrib chiqish |
+| `reading.results.practiseMistakes` | Results, quiet | Practise your mistakes again | Повторить вопросы с ошибками | Xato qilingan savollarni qayta ishlash |
+| `reading.results.storageUnavailable` | Notice on results and review | Your results can't be saved on this device. They will be lost if you close or reload this page. | Результаты не сохраняются на этом устройстве. Они пропадут, если закрыть или обновить страницу. | Natijalar bu qurilmada saqlanmaydi. Sahifani yopsangiz yoki yangilasangiz, ular yoʻqoladi. |
+| `reading.results.none.title` | No attempt on this device | No results on this device yet | На этом устройстве пока нет результатов | Bu qurilmada hali natijalar yoʻq |
+| `reading.results.none.body` | No attempt on this device | Results appear here after you finish the test on this device. | Результаты появятся здесь, когда вы завершите тест на этом устройстве. | Testni shu qurilmada yakunlaganingizdan soʻng natijalar shu yerda chiqadi. |
+| `reading.results.none.start` | No attempt, red | Start the test | Начать тест | Testni boshlash |
+| `reading.results.oldVersion` | Attempt from an earlier content version | This test has changed since you took it, so a detailed review is not available. | Тест изменился после вашей попытки, поэтому подробный разбор недоступен. | Siz topshirganingizdan keyin test oʻzgargan, shuning uchun batafsil tahlil mavjud emas. |
+| `reading.results.cannotCheck` | Unchecked attempt from an earlier version | This test has changed since you took it, so your answers can't be checked. | Тест изменился после вашей попытки, поэтому ответы нельзя проверить. | Siz topshirganingizdan keyin test oʻzgargan, shuning uchun javoblarni tekshirib boʻlmaydi. |
+| `reading.lastResults` | Start screen, quiet, when an attempt exists | See your last results | Посмотреть последние результаты | Oxirgi natijalarni koʻrish |
+| `reading.review.toResults` | Review test bar (start side) | Results | Результаты | Natijalar |
+| `reading.review.correct` | Outcome | Correct | Верно | Toʻgʻri |
+| `reading.review.incorrect` | Outcome | Not correct | Неверно | Notoʻgʻri |
+| `reading.review.unanswered` | Outcome | No answer | Нет ответа | Javob yoʻq |
+| `reading.review.partly` | Outcome of a "choose several" item | {correct} of {total} correct | Верно {correct} из {total} | {total} tadan {correct} tasi toʻgʻri |
+| `reading.review.yourAnswer` | Answer label | Your answer | Ваш ответ | Sizning javobingiz |
+| `reading.review.correctAnswer` | Answer label | Correct answer | Правильный ответ | Toʻgʻri javob |
+| `reading.review.alsoAccepted` | Answer label | Also accepted | Также засчитывается | Bu ham qabul qilinadi |
+| `reading.review.noAnswerGiven` | Typed answer left empty | You did not answer this question. | Вы не ответили на этот вопрос. | Bu savolga javob bermagansiz. |
+| `reading.review.evidenceTitle` | Evidence block | Evidence in the passage | Подтверждение в тексте | Matndagi dalil |
+| `reading.review.relatedTitle` | Evidence block for NOT GIVEN | Where the passage talks about this | Где в тексте говорится об этом | Matnda bu haqda soʻz boradigan joy |
+| `reading.review.why` | Explanation heading | Why | Почему | Nima uchun |
+| `reading.review.simpler` | Disclosure button | Explain simpler | Объяснить проще | Soddaroq tushuntirish |
+| `reading.review.simplerHide` | Disclosure button, open | Hide the simpler explanation | Скрыть простое объяснение | Sodda tushuntirishni yashirish |
+| `reading.review.simplerTitle` | Before the simpler text | In simple words | Простыми словами | Oddiy soʻzlar bilan |
+| `reading.review.pinMatch` | Under "Your evidence" | You pinned the evidence sentence. | Вы закрепили предложение с подтверждением. | Siz dalil boʻlgan gapni biriktirgansiz. |
+| `reading.review.pinMiss` | Under "Your evidence" | The evidence is in a different sentence from the one you pinned. | Подтверждение в другом предложении, не в том, что вы закрепили. | Dalil siz biriktirgan gapda emas, boshqa gapda. |
+| `reading.review.pinNotGiven` | Under "Your evidence", NOT GIVEN | The answer is <en>NOT GIVEN</en>, so no sentence proves it. | Ответ: <en>NOT GIVEN</en>, поэтому ни одно предложение его не доказывает. | Javob: <en>NOT GIVEN</en>, shuning uchun uni hech bir gap isbotlamaydi. |
+| `reading.review.toReview` | Under the review heading in the mistakes sequence | To review: {current} of {total} | Разбор: {current} из {total} | Tahlil: {total} tadan {current} |
+| `reading.review.evidenceMarker` | Accessible name of an evidence chip | Evidence for question {number} | Подтверждение к вопросу {number} | {number}-savol uchun dalil |
+| `reading.review.relatedMarker` | Accessible name of a "related" chip | Related to question {number} | Относится к вопросу {number} | {number}-savolga tegishli |
+| `reading.navigator.correct` | Navigator state word in review | correct | верно | toʻgʻri |
+| `reading.navigator.incorrect` | Navigator state word in review | not correct | неверно | notoʻgʻri |
+| `reading.signals.ngInsteadOfFalse` | Note; `{answer}` is FALSE or NO | You chose <en>NOT GIVEN</en>. The passage says the opposite of the statement, so the answer is <en>{answer}</en>. | Вы выбрали <en>NOT GIVEN</en>. В тексте сказано противоположное, поэтому ответ: <en>{answer}</en>. | Siz <en>NOT GIVEN</en> ni tanladingiz. Matnda buning aksi aytilgan, shuning uchun javob: <en>{answer}</en>. |
+| `reading.signals.falseInsteadOfNg` | Note; `{answer}` is FALSE or NO | You chose <en>{answer}</en>. The passage does not say whether this is so, so the answer is <en>NOT GIVEN</en>. | Вы выбрали <en>{answer}</en>. В тексте не сказано, так это или нет, поэтому ответ: <en>NOT GIVEN</en>. | Siz <en>{answer}</en> ni tanladingiz. Matnda bu shundaymi yoki yoʻqmi aytilmagan, shuning uchun javob: <en>NOT GIVEN</en>. |
+| `reading.signals.ngInsteadOfTrue` | Note; `{answer}` is TRUE or YES | You chose <en>NOT GIVEN</en>. The passage does say this, so the answer is <en>{answer}</en>. | Вы выбрали <en>NOT GIVEN</en>. В тексте это сказано, поэтому ответ: <en>{answer}</en>. | Siz <en>NOT GIVEN</en> ni tanladingiz. Matnda bu aytilgan, shuning uchun javob: <en>{answer}</en>. |
+| `reading.signals.trueInsteadOfNg` | Note; `{answer}` is TRUE or YES | You chose <en>{answer}</en>. The passage does not say this, so the answer is <en>NOT GIVEN</en>. | Вы выбрали <en>{answer}</en>. В тексте этого не сказано, поэтому ответ: <en>NOT GIVEN</en>. | Siz <en>{answer}</en> ni tanladingiz. Matnda bu aytilmagan, shuning uchun javob: <en>NOT GIVEN</en>. |
+| `reading.signals.spelling` | Note | Your answer differs from the correct answer by one letter. | Ваш ответ отличается от правильного одной буквой. | Javobingiz toʻgʻri javobdan bitta harf bilan farq qiladi. |
+| `reading.signals.wordLimit` | Note | Your answer has more words than the instruction allows. | В вашем ответе больше слов, чем разрешает задание. | Javobingizda topshiriq ruxsat berganidan koʻproq soʻz bor. |
+| `reading.signals.notFromPassage` | Note | Your answer uses a word that is not in the passage. This task asks for words from the passage. | В ответе есть слово, которого нет в тексте. В этом задании нужны слова из текста. | Javobingizda matnda yoʻq soʻz bor. Bu topshiriqda matndagi soʻzlar kerak. |
+| `reading.signals.timeUp` | Note on unanswered questions of a timed-out Exam | This question had no answer when the time ran out. | Когда время закончилось, на этот вопрос не было ответа. | Vaqt tugaganda bu savolga javob berilmagan edi. |
+| `reading.patterns.title` | Results section heading | What to work on | Над чем поработать | Nima ustida ishlash kerak |
+| `reading.patterns.none` | No repeated mistake | No repeated mistakes found. We show one when the same kind of mistake happens on at least 3 questions. | Повторяющихся ошибок не найдено. Мы показываем их, когда одна и та же ошибка встречается хотя бы в 3 вопросах. | Takrorlanadigan xatolar topilmadi. Bir xil xato kamida 3 ta savolda uchrasa, uni koʻrsatamiz. |
+| `reading.patterns.firstTryOnly` | Results of a later attempt | We look for repeated mistakes in your first try at each test only, because after that you have seen the answers. | Мы ищем повторяющиеся ошибки только в первой попытке каждого теста: после неё вы уже видели ответы. | Takrorlanadigan xatolarni faqat har bir testdagi birinchi urinishingizdan qidiramiz, chunki undan keyin javoblarni koʻrgansiz. |
+| `reading.patterns.practise` | Pattern card, quiet | Practise these questions again | Повторить эти вопросы | Bu savollarni qayta ishlash |
+| `reading.patterns.ngFalse.title` | Pattern card | <en>NOT GIVEN</en> mixed up with <en>FALSE</en> or <en>NO</en> | <en>NOT GIVEN</en> путается с <en>FALSE</en> или <en>NO</en> | <en>NOT GIVEN</en> bilan <en>FALSE</en> yoki <en>NO</en> adashtirilgan |
+| `reading.patterns.ngFalse.count` | Pattern card | {count} of {total} questions whose answer was <en>NOT GIVEN</en>, <en>FALSE</en> or <en>NO</en> (questions {numbers}) | {count} из {total, plural, one {# вопроса} other {# вопросов}} с ответом <en>NOT GIVEN</en>, <en>FALSE</en> или <en>NO</en> (вопросы {numbers}) | Javobi <en>NOT GIVEN</en>, <en>FALSE</en> yoki <en>NO</en> boʻlgan {total} ta savoldan {count} tasi ({numbers}-savollar) |
+| `reading.patterns.ngFalse.tip` | Pattern card | <en>FALSE</en> means the passage says the opposite. <en>NOT GIVEN</en> means the passage does not say. Before you choose <en>FALSE</en>, find the sentence that contradicts the statement. | <en>FALSE</en>: в тексте сказано противоположное. <en>NOT GIVEN</en>: в тексте об этом не сказано. Прежде чем выбрать <en>FALSE</en>, найдите предложение, которое противоречит утверждению. | <en>FALSE</en>: matnda buning aksi aytilgan. <en>NOT GIVEN</en>: matnda bu haqda aytilmagan. <en>FALSE</en> ni tanlashdan oldin fikrga zid gapni toping. |
+| `reading.patterns.ngTrue.title` | Pattern card | <en>NOT GIVEN</en> mixed up with <en>TRUE</en> or <en>YES</en> | <en>NOT GIVEN</en> путается с <en>TRUE</en> или <en>YES</en> | <en>NOT GIVEN</en> bilan <en>TRUE</en> yoki <en>YES</en> adashtirilgan |
+| `reading.patterns.ngTrue.count` | Pattern card | {count} of {total} questions whose answer was <en>NOT GIVEN</en>, <en>TRUE</en> or <en>YES</en> (questions {numbers}) | {count} из {total, plural, one {# вопроса} other {# вопросов}} с ответом <en>NOT GIVEN</en>, <en>TRUE</en> или <en>YES</en> (вопросы {numbers}) | Javobi <en>NOT GIVEN</en>, <en>TRUE</en> yoki <en>YES</en> boʻlgan {total} ta savoldan {count} tasi ({numbers}-savollar) |
+| `reading.patterns.ngTrue.tip` | Pattern card | <en>TRUE</en> needs a sentence that says the same thing, often in other words. If there is none, and nothing contradicts the statement, the answer is <en>NOT GIVEN</en>. | Для <en>TRUE</en> нужно предложение, где сказано то же самое, часто другими словами. Если такого нет и ничто не противоречит утверждению, ответ: <en>NOT GIVEN</en>. | <en>TRUE</en> uchun xuddi shu fikr, koʻpincha boshqa soʻzlar bilan aytilgan gap kerak. Bunday gap boʻlmasa va fikrga hech narsa zid boʻlmasa, javob: <en>NOT GIVEN</en>. |
+| `reading.patterns.spelling.title` | Pattern card | Spelling | Написание слов | Imlo |
+| `reading.patterns.spelling.count` | Pattern card | {count} of {total} typed answers were one letter away from the correct answer (questions {numbers}) | {count} из {total, plural, one {# письменного ответа} other {# письменных ответов}} отличались от правильного одной буквой (вопросы {numbers}) | Yozilgan {total} ta javobdan {count} tasi toʻgʻri javobdan bitta harf bilan farq qildi ({numbers}-savollar) |
+| `reading.patterns.spelling.tip` | Pattern card (rule: Cambridge IELTS FAQs, see READING_EXPERIENCE.md, Answer checking) | In the test, a misspelt answer loses the mark. Copy the word from the passage letter by letter. | На экзамене ответ с ошибкой в написании не засчитывается. Переписывайте слово из текста буква за буквой. | Imtihonda xato yozilgan javob uchun ball berilmaydi. Soʻzni matndan harfma-harf koʻchiring. |
+| `reading.patterns.wordLimit.title` | Pattern card | Too many words | Слишком много слов | Soʻzlar juda koʻp |
+| `reading.patterns.wordLimit.count` | Pattern card | {count} of {total} typed answers had more words than allowed (questions {numbers}) | {count} из {total, plural, one {# письменного ответа} other {# письменных ответов}} содержали больше слов, чем разрешено (вопросы {numbers}) | Yozilgan {total} ta javobdan {count} tasida ruxsat etilganidan koʻp soʻz bor edi ({numbers}-savollar) |
+| `reading.patterns.wordLimit.tip` | Pattern card (rule: ielts.org Reading format pages) | In the test, an answer with more words than allowed loses the mark. Check the limit in the instruction, for example <en>NO MORE THAN TWO WORDS</en>, and write only the words that answer the question. | На экзамене ответ, в котором больше слов, чем разрешено, не засчитывается. Проверяйте ограничение в задании, например <en>NO MORE THAN TWO WORDS</en>, и пишите только слова, которые отвечают на вопрос. | Imtihonda ruxsat etilganidan koʻp soʻzli javob uchun ball berilmaydi. Topshiriqdagi cheklovni tekshiring, masalan <en>NO MORE THAN TWO WORDS</en>, va faqat savolga javob boʻladigan soʻzlarni yozing. |
+| `reading.patterns.notFromPassage.title` | Pattern card | Words not from the passage | Слова не из текста | Matnda yoʻq soʻzlar |
+| `reading.patterns.notFromPassage.count` | Pattern card | {count} of {total} typed answers used a word that is not in the passage (questions {numbers}) | В {count} из {total, plural, one {# письменного ответа} other {# письменных ответов}} есть слово, которого нет в тексте (вопросы {numbers}) | Yozilgan {total} ta javobdan {count} tasida matnda yoʻq soʻz bor edi ({numbers}-savollar) |
+| `reading.patterns.notFromPassage.tip` | Pattern card | When the instruction says <en>from the passage</en>, write the passage's own words, even if you know a synonym. | Если в задании сказано <en>from the passage</en>, пишите слова из текста, даже если знаете синоним. | Topshiriqda <en>from the passage</en> deyilgan boʻlsa, sinonimni bilsangiz ham, matndagi soʻzlarni yozing. |
+| `reading.patterns.evidence.title` | Pattern card | The evidence was in another sentence | Подтверждение было в другом предложении | Dalil boshqa gapda edi |
+| `reading.patterns.evidence.count` | Pattern card | {count} of {total} questions you pinned evidence for (questions {numbers}) | {count} из {total, plural, one {# вопроса} other {# вопросов}}, к которым вы закрепили предложения (вопросы {numbers}) | Dalil biriktirgan {total} ta savoldan {count} tasi ({numbers}-savollar) |
+| `reading.patterns.evidence.tip` | Pattern card | Find the key words of the question, then look for the same idea in the passage, not only the same words. The review shows where the evidence was. | Найдите ключевые слова вопроса и ищите в тексте ту же мысль, а не только те же слова. В разборе видно, где было подтверждение. | Savoldagi kalit soʻzlarni toping va matndan faqat oʻsha soʻzlarni emas, oʻsha fikrni qidiring. Tahlilda dalil qayerda ekani koʻrsatilgan. |
+| `reading.patterns.paraphrase.title` | Pattern card (authored tag) | The same idea in other words | Та же мысль другими словами | Boshqa soʻzlar bilan aytilgan fikr |
+| `reading.patterns.paraphrase.count` | Pattern card | {count} of {total} questions where the passage says it in other words were not correct (questions {numbers}) | Неверно {count} из {total, plural, one {# вопроса} other {# вопросов}}, где в тексте это сказано другими словами (вопросы {numbers}) | Matnda boshqa soʻzlar bilan aytilgan {total} ta savoldan {count} tasi notoʻgʻri ({numbers}-savollar) |
+| `reading.patterns.paraphrase.tip` | Pattern card | Look for the same idea, not the same words. In the review, compare the question's words with the evidence. | Ищите ту же мысль, а не те же слова. В разборе сравните слова вопроса с подтверждением. | Bir xil soʻzlarni emas, bir xil fikrni qidiring. Tahlilda savoldagi soʻzlarni dalil bilan solishtiring. |
+| `reading.patterns.qualifier.title` | Pattern card (authored tag) | Small words that change the meaning | Маленькие слова, которые меняют смысл | Maʼnoni oʻzgartiradigan kichik soʻzlar |
+| `reading.patterns.qualifier.count` | Pattern card | {count} of {total} questions that depend on a word like <en>all</en>, <en>most</en> or <en>only</en> were not correct (questions {numbers}) | Неверно {count} из {total, plural, one {# вопроса} other {# вопросов}}, где всё решает слово вроде <en>all</en>, <en>most</en> или <en>only</en> (вопросы {numbers}) | <en>all</en>, <en>most</en> yoki <en>only</en> kabi soʻzga bogʻliq {total} ta savoldan {count} tasi notoʻgʻri ({numbers}-savollar) |
+| `reading.patterns.qualifier.tip` | Pattern card | Check words such as <en>all</en>, <en>most</en>, <en>some</en>, <en>only</en>, <en>always</en> and <en>never</en> in both the question and the passage. | Сверяйте слова вроде <en>all</en>, <en>most</en>, <en>some</en>, <en>only</en>, <en>always</en> и <en>never</en> в вопросе и в тексте. | Savolda ham, matnda ham <en>all</en>, <en>most</en>, <en>some</en>, <en>only</en>, <en>always</en> va <en>never</en> kabi soʻzlarni tekshiring. |
+| `reading.retry.progress` | Retry sheet header, under the question number | {current} of {total} to practise | {current} из {total} для повторения | Takrorlash uchun {total} tadan {current} |
+| `reading.retry.title` | Retry results H1 | Your second try | Ваша повторная попытка | Takroriy urinishingiz |
+| `reading.retry.score` | Retry results | {score} of {total} now correct | Теперь верно: {score} из {total} | Endi {total} tadan {score} tasi toʻgʻri |
+| `reading.retry.honest` | Retry results | You had already seen these questions and their answers, so this shows what you remember from the review. It does not measure your level. | Вы уже видели эти вопросы и ответы на них, поэтому результат показывает, что вы запомнили после разбора. Он не измеряет ваш уровень. | Bu savollar va javoblarini oldin koʻrgansiz, shuning uchun natija tahlildan nimani eslab qolganingizni koʻrsatadi. U darajangizni oʻlchamaydi. |
+| `reading.retry.backToResults` | Retry results, quiet | Back to your test results | Вернуться к результатам теста | Test natijalariga qaytish |
+
+Reused without change: "Time is up.", "Start again", "Show in passage", "Your evidence", "Paragraph {letter}", "All questions", "Previous", "Next", "Finish test" and the finish confirmation, the navigator's "no answer" and "current", and "Practice" / "Exam".
