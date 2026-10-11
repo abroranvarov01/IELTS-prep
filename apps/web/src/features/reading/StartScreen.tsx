@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PrimaryButton } from "@/components/PrimaryButton";
+import { QuietLink } from "@/components/QuietLink";
 import type { ReadingTest } from "@/domain/reading/content";
 import type { Mode } from "@/domain/reading/session";
 import { OptionRow } from "./OptionRow";
@@ -12,13 +13,16 @@ import { TestBar } from "./TestBar";
 /**
  * The test's start screen: its title, the two modes, and Start
  * (READING_EXPERIENCE.md, Practice and Exam Mode). A link can preselect a
- * mode (`?mode=exam`); the user still taps Start.
+ * mode (`?mode=exam`); the user still taps Start. After a finished attempt
+ * it also offers the last results (D6).
  */
 export function StartScreen({
   test,
+  lastResultsHref,
   onStart,
 }: {
   test: ReadingTest;
+  lastResultsHref?: string;
   onStart: (mode: Mode) => void;
 }) {
   const t = useTranslations("reading");
@@ -58,6 +62,11 @@ export function StartScreen({
               {t("start")}
             </PrimaryButton>
           </div>
+          {lastResultsHref && (
+            <div className="mt-2">
+              <QuietLink href={lastResultsHref}>{t("lastResults")}</QuietLink>
+            </div>
+          )}
         </div>
       </main>
     </>

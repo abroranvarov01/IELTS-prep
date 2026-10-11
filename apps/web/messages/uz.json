@@ -152,11 +152,30 @@
     },
     "wordLimit": "Bu javobda {max} tadan ortiq soʻz bor.",
     "finished": {
-      "title": "Test yakunlandi",
       "timeUp": "Vaqt tugadi.",
-      "answered": "{total} ta savoldan {answered} tasiga javob berdingiz.",
-      "notChecked": "Javoblarni tekshirish va izohlar keyingi versiyada paydo boʻladi.",
       "again": "Qaytadan boshlash"
-    }
+    },
+    "results": {
+      "title": "Natijalaringiz",
+      "score": "{total} tadan {score} tasi toʻgʻri",
+      "honest": "Bu oʻz mashq testimizdagi natija, IELTS bali emas.",
+      "breakdown": "<notCorrect>Notoʻgʻri: {incorrect}</notCorrect> · <noAnswer>Javobsiz: {unanswered}</noAnswer>",
+      "reviewMistakesAndUnanswered": "Xatolar va javobsiz savollarni koʻrib chiqish",
+      "reviewMistakes": "Xatolarni koʻrib chiqish",
+      "reviewUnanswered": "Javobsiz savollarni koʻrib chiqish",
+      "reviewAll": "Javoblarni koʻrib chiqish",
+      "rechecked": "Javoblar kaliti yoki tekshirish qoidalari tuzatilgandan keyin qayta tekshirildi. Oldingi natija: {total} tadan {score}.",
+      "recheckedSameScore": "Javoblar kaliti yoki tekshirish qoidalari tuzatilgandan keyin qayta tekshirildi. Natija oʻzgarmadi, lekin baʼzi javoblar yoki izohlar oʻzgardi.",
+      "importedFromM4": "Siz bu testni ilova javoblarni tekshirmagan paytda yakunlagansiz. U natijalarni birinchi marta ochganingizda tekshirildi.",
+      "storageUnavailable": "Natijalar bu qurilmada saqlanmaydi. Sahifani yopsangiz yoki yangilasangiz, ular yoʻqoladi.",
+      "none": {
+        "title": "Bu qurilmada hali natijalar yoʻq",
+        "body": "Testni shu qurilmada yakunlaganingizdan soʻng natijalar shu yerda chiqadi.",
+        "start": "Testni boshlash"
+      },
+      "oldVersion": "Siz topshirganingizdan keyin test oʻzgargan, shuning uchun batafsil tahlil mavjud emas.",
+      "cannotCheck": "Siz topshirganingizdan keyin test oʻzgargan, shuning uchun javoblarni tekshirib boʻlmaydi."
+    },
+    "lastResults": "Oxirgi natijalarni koʻrish"
   }
 }

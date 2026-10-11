@@ -1,5 +1,16 @@
 import { expect, type Page, test } from "@playwright/test";
-import { TEST, catalogs, choose, fill } from "./reading";
+import {
+  TEST,
+  askToFinish,
+  catalogs,
+  choose,
+  fill,
+  openTest,
+  questionHeading,
+  sheet,
+  startTest,
+  storedRecords,
+} from "./reading";
 
 const en = catalogs.en;
 
@@ -21,66 +32,15 @@ async function newTab(page: Page) {
   return tab;
 }
 
-const sheet = (page: Page) =>
-  page.getByRole("region", { name: en.reading.sheet.label });
-
-const questionHeading = (page: Page, number: number) =>
-  sheet(page).getByRole("heading", {
-    name: fill(en.reading.question.of, { number, total: 40 }),
-  });
-
-const answeredText = (answered: number) =>
-  fill(en.reading.finished.answered, { answered, total: 40 });
-
-async function openTest(page: Page) {
-  await page.goto(`/en/reading/${TEST}`);
-}
-
-async function startPractice(page: Page) {
-  await openTest(page);
-  await page.getByRole("button", { name: en.reading.start }).click();
-  await expect(questionHeading(page, 1)).toBeVisible();
-}
-
-/** Opens the finish confirmation from the navigator. */
-async function askToFinish(page: Page) {
-  await page.getByRole("button", { name: en.reading.navigator.open }).click();
-  await sheet(page)
-    .getByRole("button", { name: en.reading.finish.button })
-    .click();
-  return sheet(page).getByRole("button", {
-    name: en.reading.finish.confirm,
-    exact: true,
-  });
-}
-
-/** The records of one store of the attempt history, as committed. */
-function storedRecords(page: Page, store: "attempts" | "firstTry") {
-  return page.evaluate(
-    (name) =>
-      new Promise<Record<string, unknown>[]>((resolve, reject) => {
-        const open = indexedDB.open("ielts-prep-reading");
-        open.onsuccess = () => {
-          const request = open.result
-            .transaction(name, "readonly")
-            .objectStore(name)
-            .getAll();
-          request.onsuccess = () => {
-            open.result.close();
-            resolve(request.result as Record<string, unknown>[]);
-          };
-          request.onerror = () => reject(request.error);
-        };
-        open.onerror = () => reject(open.error);
-      }),
-    store,
-  );
-}
+// Questions 1 (TRUE) and 2 (FALSE) are both answered correctly here, so the
+// score tells which tab's answers were committed.
+const scoreText = (score: number) =>
+  fill(en.reading.results.score, { score, total: 40 });
 
 test("a session finished in two tabs keeps the attempt committed first", async ({
   page: tabA,
 }) => {
-  await startPractice(tabA);
+  await startTest(tabA);
   await choose(tabA, "TRUE");
   const tabB = await newTab(tabA);
   await openTest(tabB);
@@ -94,11 +54,11 @@ test("a session finished in two tabs keeps the attempt committed first", async (
   await choose(tabB, "FALSE");
 
   await (await askToFinish(tabA)).click();
-  await expect(tabA.getByText(answeredText(1))).toBeVisible();
+  await expect(tabA.getByText(scoreText(1))).toBeVisible();
 
   // The stale tab finishes later: it is shown the attempt tab A committed.
   await (await askToFinish(tabB)).click();
-  await expect(tabB.getByText(answeredText(1))).toBeVisible();
+  await expect(tabB.getByText(scoreText(1))).toBeVisible();
 
   const attempts = await storedRecords(tabA, "attempts");
   expect(attempts).toHaveLength(1);
@@ -109,7 +69,7 @@ test("a session finished in two tabs keeps the attempt committed first", async (
 test("finishing the same session in two tabs at once commits one attempt, shown in both", async ({
   page: tabA,
 }) => {
-  await startPractice(tabA);
+  await startTest(tabA);
   await choose(tabA, "TRUE");
   const tabB = await newTab(tabA);
   await openTest(tabB);
@@ -129,8 +89,8 @@ test("finishing the same session in two tabs at once commits one attempt, shown 
   const answered = Object.keys(
     (attempt?.answers as Record<string, unknown>) ?? {},
   ).length;
-  await expect(tabA.getByText(answeredText(answered))).toBeVisible();
-  await expect(tabB.getByText(answeredText(answered))).toBeVisible();
+  await expect(tabA.getByText(scoreText(answered))).toBeVisible();
+  await expect(tabB.getByText(scoreText(answered))).toBeVisible();
   expect(await storedRecords(tabA, "firstTry")).toEqual([
     { schema: 1, testId: TEST, firstTry: attempt?.id },
   ]);
@@ -139,14 +99,14 @@ test("finishing the same session in two tabs at once commits one attempt, shown 
 test("a stale tab's copy of a committed session is removed when it reloads", async ({
   page: tabA,
 }) => {
-  await startPractice(tabA);
+  await startTest(tabA);
   await choose(tabA, "TRUE");
   const tabB = await newTab(tabA);
   await openTest(tabB);
   await expect(questionHeading(tabB, 1)).toBeVisible();
 
   await (await askToFinish(tabA)).click();
-  await expect(tabA.getByText(answeredText(1))).toBeVisible();
+  await expect(tabA.getByText(scoreText(1))).toBeVisible();
 
   // Tab B keeps answering its in-progress copy after the commit.
   await sheet(tabB)
@@ -154,7 +114,10 @@ test("a stale tab's copy of a committed session is removed when it reloads", asy
     .click();
   await choose(tabB, "FALSE");
   await tabB.reload();
-  await expect(tabB.getByText(answeredText(1))).toBeVisible();
+  // The stale copy is gone: the test link offers the committed results (D6).
+  await expect(
+    tabB.getByRole("link", { name: en.reading.lastResults }),
+  ).toBeVisible();
   await expect
     .poll(() =>
       tabB.evaluate((key) => localStorage.getItem(key), `reading:${TEST}`),

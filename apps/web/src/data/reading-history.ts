@@ -14,6 +14,8 @@ import {
   parseResultRecord,
 } from "@/domain/reading/attempts";
 import type { ReadingTest } from "@/domain/reading/content";
+import type { AnswerKey } from "@/domain/reading/parse-content";
+import { SCORING_RULES_VERSION, checkAttempt } from "@/domain/reading/scoring";
 import type { ReadingSession } from "@/domain/reading/session";
 import {
   type KeyValueStore,
@@ -442,4 +444,39 @@ export async function settleStoredSessions(
     else if (committedIds.has(session.sessionId) && history.persistent)
       removeSession(storage, session);
   }
+}
+
+/**
+ * The attempt's result records, with one for the current key revision and
+ * checking-rules version (ADR-0009 §7): checked from its unchanged answers
+ * and added even when nothing differs, unless one exists (another tab may
+ * have added it; the transaction keeps exactly one). Earlier records stay.
+ */
+export async function recordResult(
+  history: History,
+  test: ReadingTest,
+  key: AnswerKey,
+  attempt: ReadingAttempt,
+  now: number,
+): Promise<ResultRecord[]> {
+  const pair = {
+    keyRevision: key.revision,
+    rulesVersion: SCORING_RULES_VERSION,
+  };
+  const records = await history.results(attempt);
+  if (
+    records.some(
+      (r) =>
+        r.keyRevision === pair.keyRevision &&
+        r.rulesVersion === pair.rulesVersion,
+    )
+  )
+    return records;
+  const stored = await history.addResult(attempt, {
+    attemptId: attempt.id,
+    ...pair,
+    checkedAt: now,
+    ...checkAttempt(test, key, attempt),
+  });
+  return [...records, stored];
 }

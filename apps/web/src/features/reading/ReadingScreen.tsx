@@ -17,6 +17,7 @@ import {
 import {
   type StorageSnapshot,
   deviceStorage,
+  loadSessions,
   newSessionId,
   saveSession,
   storageSnapshot,
@@ -29,8 +30,8 @@ import {
   remainingMs,
 } from "@/domain/reading/session";
 import { questionUnits, unitOf } from "@/domain/reading/units";
+import { useRouter } from "@/i18n/navigation";
 import { ExamTimer } from "./ExamTimer";
-import { FinishedScreen } from "./FinishedScreen";
 import { PassageView } from "./PassageView";
 import { QuestionBar } from "./QuestionBar";
 import { QuestionColumn } from "./QuestionColumn";
@@ -65,7 +66,11 @@ function storedSessions(snapshot: StorageSnapshot): Sessions {
     : { finished: session };
 }
 
-/** The Reading test screen: start, reading and answering, finished (ADR-0006, ADR-0007). */
+/**
+ * The Reading test screen: start, then reading and answering (ADR-0006,
+ * ADR-0007). A finished session is committed to the attempt history and the
+ * screen replaces itself with its results (READING_EXPERIENCE.md, M5).
+ */
 export function ReadingScreen({ test }: { test: ReadingTest }) {
   const snapshot = useSyncExternalStore(
     noSubscription,
@@ -77,11 +82,10 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
     [snapshot],
   );
   const [state, dispatch] = useReducer(screenReducer, { now: 0 });
-  // "Start again" shows the start screen until a new session starts.
-  const [restarting, setRestarting] = useState(false);
   // The latest committed test attempt (null: none), read after mounting
-  // (ADR-0009 §9); the finished page shows it.
+  // (ADR-0009 §9), for "See your last results".
   const [latest, setLatest] = useState<ReadingAttempt | null>();
+  const router = useRouter();
   const units = useMemo(() => questionUnits(test), [test]);
   const sessions = stored && (state.local ?? stored);
   const isExamRunning = sessions?.current?.mode === "exam";
@@ -91,21 +95,30 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
   // session left uncommitted, remove a stale copy of a committed one.
   useEffect(() => {
     let active = true;
+    const left = loadSessions(deviceStorage(), test).current;
     deviceHistory()
       .then(async (history) => {
         await settleStoredSessions(deviceStorage(), history, test, Date.now());
+        // A session that finished while the page was closed has results now.
+        if (left?.status === "finished") {
+          if (active) router.replace(resultsHref(test.id, left.sessionId));
+          return;
+        }
         const { attempts } = await history.read(test);
         const tests = attempts.filter((a) => a.kind === "test");
         if (active) setLatest(tests[tests.length - 1] ?? null);
       })
       .catch(() => {
-        // The history cannot be read: the localStorage sources stay as they are.
-        if (active) setLatest(null);
+        // The history cannot be read: the localStorage sources stay as they
+        // are, and the results page shows a finished one from there.
+        if (left?.status === "finished" && active)
+          router.replace(resultsHref(test.id, left.sessionId));
+        else if (active) setLatest(null);
       });
     return () => {
       active = false;
     };
-  }, [test]);
+  }, [test, router]);
 
   // Keep every change on the device (ADR-0006) and commit a finished session
   // to the history, removing its localStorage copy only afterwards (ADR-0009 §4).
@@ -125,16 +138,17 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
           Date.now(),
         ),
       )
-      .then((committed) => {
-        if (active && committed) setLatest(committed);
-      })
       .catch(() => {
-        // Not committed: the finished session stays in localStorage for the next load.
+        // Not committed: the finished session stays in localStorage, and the
+        // results page shows it from there and commits it later.
+      })
+      .then(() => {
+        if (active) router.replace(resultsHref(test.id, changed.sessionId));
       });
     return () => {
       active = false;
     };
-  }, [state.local, test]);
+  }, [state.local, test, router]);
 
   // The Exam clock: a tick at once and every second moves the timer and
   // finishes the test at 0:00, also when it ran out while the user was away.
@@ -153,29 +167,15 @@ export function ReadingScreen({ test }: { test: ReadingTest }) {
     return () => clearInterval(timer);
   }, [isExamRunning, test, stored]);
 
-  if (!stored || !sessions) return <TestBar />;
-  const { current, finished } = sessions;
+  // A finished session is on its way to its results page.
+  if (!stored || !sessions || sessions.finished) return <TestBar />;
+  const { current } = sessions;
   if (!current) {
-    // Until the history is read, nothing is known about earlier attempts.
-    if (!finished && latest === undefined) return <TestBar />;
-    // The committed attempt wins: another tab may have committed this session
-    // first (ADR-0009 §4).
-    const shown =
-      finished && latest?.id !== finished.sessionId ? finished : latest;
-    if (shown && !restarting) {
-      return (
-        <FinishedScreen
-          test={test}
-          session={shown}
-          onStartAgain={() => setRestarting(true)}
-        />
-      );
-    }
     return (
       <StartScreen
         test={test}
+        lastResultsHref={latest ? `/reading/${test.id}/results` : undefined}
         onStart={(mode) => {
-          setRestarting(false);
           dispatch({
             type: "start",
             test,
@@ -486,4 +486,8 @@ function ReadingView({ canSave, now }: { canSave: boolean; now: number }) {
       <QuestionSheet goTo={goTo} showSentence={showSentence} />
     </>
   );
+}
+
+function resultsHref(testId: string, attemptId: string) {
+  return `/reading/${testId}/results?attempt=${encodeURIComponent(attemptId)}`;
 }

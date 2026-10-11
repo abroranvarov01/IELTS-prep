@@ -20,6 +20,7 @@ import {
 import {
   commitFinishedSession,
   openHistory,
+  recordResult,
   settleStoredSessions,
 } from "./reading-history";
 import { loadSessions, saveSession } from "./reading-session-storage";
@@ -260,6 +261,49 @@ describe("result records across tabs", () => {
     const first = await tabA.addResult(attempt, record(attempt, T0 + 100));
     const second = await tabA.addResult(attempt, record(attempt, T0 + 200, 2));
     expect(await tabA.results(attempt)).toEqual([first, second]);
+  });
+});
+
+describe("recording the result of an attempt", () => {
+  it("adds one record for the current pair, once, even when two tabs show the results at once", async () => {
+    const { tabA, tabB } = await twoTabs();
+    const attempt = await tabA.commit(
+      test,
+      finishedSession(1, "TRUE", T0 + 60_000),
+      T0 + 61_000,
+    );
+    if (!attempt) throw new Error("not committed");
+    const [a, b] = await Promise.all([
+      recordResult(tabA, test, demoKey, attempt, T0 + 100),
+      recordResult(tabB, test, demoKey, attempt, T0 + 200),
+    ]);
+    expect(b).toEqual(a);
+    expect(a).toHaveLength(1);
+    expect(a[0]).toMatchObject({ keyRevision: 1, rulesVersion: 1 });
+    expect(await recordResult(tabA, test, demoKey, attempt, T0 + 300)).toEqual(
+      a,
+    );
+  });
+
+  it("adds a record for a new key revision even when nothing changes, keeping the earlier one", async () => {
+    const { tabA } = await twoTabs();
+    const attempt = await tabA.commit(
+      test,
+      finishedSession(1, "TRUE", T0 + 60_000),
+      T0 + 61_000,
+    );
+    if (!attempt) throw new Error("not committed");
+    const [first] = await recordResult(tabA, test, demoKey, attempt, T0 + 100);
+    const records = await recordResult(
+      tabA,
+      test,
+      { ...demoKey, revision: 2 },
+      attempt,
+      T0 + 200,
+    );
+    expect(records.map((r) => r.keyRevision)).toEqual([1, 2]);
+    expect(records[0]).toEqual(first);
+    expect(records[1]?.score).toEqual(first?.score);
   });
 });
 

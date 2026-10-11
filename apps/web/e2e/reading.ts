@@ -51,3 +51,68 @@ export async function noOverflow(page: Page) {
     );
   expect(clipped).toEqual([]);
 }
+
+// Helpers for the M5 specs (results, review, tabs), in English, on the
+// phone layout with the question sheet.
+
+export const sheet = (page: Page) =>
+  page.getByRole("region", { name: catalogs.en.reading.sheet.label });
+
+export const questionHeading = (page: Page, number: number) =>
+  sheet(page).getByRole("heading", {
+    name: fill(catalogs.en.reading.question.of, { number, total: 40 }),
+  });
+
+export async function openTest(page: Page) {
+  await page.goto(`/en/reading/${TEST}`);
+}
+
+/** Starts a new session of the demo test in the given mode. */
+export async function startTest(
+  page: Page,
+  mode: "practice" | "exam" = "practice",
+) {
+  await page.goto(`/en/reading/${TEST}${mode === "exam" ? "?mode=exam" : ""}`);
+  await page.getByRole("button", { name: catalogs.en.reading.start }).click();
+  await expect(questionHeading(page, 1)).toBeVisible();
+}
+
+/** Opens the finish confirmation from the navigator; returns its "Finish" button. */
+export async function askToFinish(page: Page) {
+  await page
+    .getByRole("button", { name: catalogs.en.reading.navigator.open })
+    .click();
+  await sheet(page)
+    .getByRole("button", { name: catalogs.en.reading.finish.button })
+    .click();
+  return sheet(page).getByRole("button", {
+    name: catalogs.en.reading.finish.confirm,
+    exact: true,
+  });
+}
+
+/** The records of one store of the attempt history (ADR-0009 §2), as stored. */
+export function storedRecords(
+  page: Page,
+  store: "attempts" | "results" | "firstTry",
+) {
+  return page.evaluate(
+    (name) =>
+      new Promise<Record<string, unknown>[]>((resolve, reject) => {
+        const open = indexedDB.open("ielts-prep-reading");
+        open.onsuccess = () => {
+          const request = open.result
+            .transaction(name, "readonly")
+            .objectStore(name)
+            .getAll();
+          request.onsuccess = () => {
+            open.result.close();
+            resolve(request.result as Record<string, unknown>[]);
+          };
+          request.onerror = () => reject(request.error);
+        };
+        open.onerror = () => reject(open.error);
+      }),
+    store,
+  );
+}

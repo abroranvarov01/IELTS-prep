@@ -2601,7 +2601,7 @@
       "title": "Results after finishing",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M5-04"],
       "goal": "Finishing a test in either mode, or running out of time, leads to an honest results page whose results are traceable to their key and rules and never silently overwritten.",
       "scope": [
@@ -2648,7 +2648,8 @@
       ],
       "docsToUpdate": [
         "docs/design/DESIGN_SYSTEM.md (the status token in code)"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M5-07",

@@ -240,7 +240,7 @@ test("Finish test asks in a dialog; Escape and Keep working return to it; Finish
     .getByRole("button", { name: en.reading.finish.confirm, exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { level: 1, name: en.reading.finished.title }),
+    page.getByRole("heading", { level: 1, name: en.reading.results.title }),
   ).toBeFocused();
 });
 

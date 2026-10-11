@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { type Locale, TEST, catalogs, fill, sentence } from "./reading";
 import { routing } from "../src/i18n/routing";
 
-// Whole Reading sessions, from the start screen to the finished page, on the
+// Whole Reading sessions, from the start screen to the results page, on the
 // phone layout (mobile project) and the desktop layout (desktop project), in
 // every interface language (M4-22).
 
@@ -185,13 +185,26 @@ for (const mode of ["practice", "exam"] as const) {
       expect(await ui.isAnswered(38)).toBe(true);
 
       await ui.finish();
+      await expect(page).toHaveURL(/\/results\?attempt=/);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-        m.finished.title,
+        m.results.title,
       );
+      // The score of the answers given, out of 40 (never a band), and the
+      // questions left without an answer.
       await expect(
         page.getByText(
-          fill(m.finished.answered, { answered: ANSWERED, total: 40 }),
+          new RegExp(fill(m.results.score, { score: "\\d+", total: 40 })),
         ),
+      ).toBeVisible();
+      await expect(page.getByText(m.results.honest)).toBeVisible();
+      const noAnswer = /<noAnswer>(.*)<\/noAnswer>/.exec(
+        m.results.breakdown,
+      )?.[1];
+      if (!noAnswer) throw new Error("breakdown needs a <noAnswer> part");
+      await expect(
+        page.getByText(fill(noAnswer, { unanswered: 40 - ANSWERED }), {
+          exact: true,
+        }),
       ).toBeVisible();
     });
   }

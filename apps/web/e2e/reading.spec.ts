@@ -1068,7 +1068,7 @@ test.describe("Practice and Exam Modes", () => {
     sheet(page, locale).getByRole("button", {
       name: catalogs[locale].reading.finish.button,
     });
-  const finishedHeading = (page: Page) =>
+  const resultsHeading = (page: Page) =>
     page.getByRole("heading", { level: 1 });
 
   async function startExam(page: Page, locale: Locale = "en") {
@@ -1170,29 +1170,30 @@ test.describe("Practice and Exam Modes", () => {
     await expect(timer(page)).toHaveCSS("font-weight", "800");
 
     await page.clock.setFixedTime(T0 + 60 * MINUTE);
-    await expect(finishedHeading(page)).toContainText(
+    await expect(page).toHaveURL(/\/results\?attempt=/);
+    await expect(resultsHeading(page)).toContainText(
       en.reading.finished.timeUp,
     );
-    await expect(finishedHeading(page)).toContainText(
-      en.reading.finished.title,
-    );
-    await expect(finishedHeading(page)).toBeFocused();
+    await expect(resultsHeading(page)).toContainText(en.reading.results.title);
+    await expect(resultsHeading(page)).toBeFocused();
     await expect(
-      page.getByText(
-        fill(en.reading.finished.answered, { answered: 1, total: 40 }),
-      ),
+      page.getByText(fill(en.reading.results.score, { score: 1, total: 40 })),
     ).toBeVisible();
-    await expect(page.getByText(en.reading.finished.notChecked)).toBeVisible();
+    await expect(page.getByText(en.reading.results.honest)).toBeVisible();
     await expect(timer(page)).toHaveCount(0);
 
-    // Opening the test again shows the finished page.
+    // Reloading shows the same result; the test link offers it again (D6).
     await page.reload();
-    await expect(finishedHeading(page)).toContainText(
+    await expect(resultsHeading(page)).toContainText(
       en.reading.finished.timeUp,
     );
+    await page.goto(`/en/reading/${TEST}`);
+    await expect(
+      page.getByRole("link", { name: en.reading.lastResults }),
+    ).toBeVisible();
   });
 
-  test("an Exam whose time ran out while the user was away opens finished", async ({
+  test("an Exam whose time ran out while the user was away opens its results", async ({
     page,
   }) => {
     await page.clock.setFixedTime(T0);
@@ -1205,17 +1206,16 @@ test.describe("Practice and Exam Modes", () => {
 
     await page.clock.setFixedTime(T0 + 75 * MINUTE);
     await page.goto(`/en/reading/${TEST}`);
-    await expect(finishedHeading(page)).toContainText(
+    await expect(page).toHaveURL(/\/results\?attempt=/);
+    await expect(resultsHeading(page)).toContainText(
       en.reading.finished.timeUp,
     );
     await expect(
-      page.getByText(
-        fill(en.reading.finished.answered, { answered: 0, total: 40 }),
-      ),
+      page.getByText(fill(en.reading.results.score, { score: 0, total: 40 })),
     ).toBeVisible();
   });
 
-  test("Finish test on question 40 asks first, shows the finished page, and Start again begins a new session", async ({
+  test("Finish test on question 40 asks first, shows the results, and Start again begins a new session", async ({
     page,
   }) => {
     const t = translate("en");
@@ -1242,20 +1242,15 @@ test.describe("Practice and Exam Modes", () => {
     await sheet(page)
       .getByRole("button", { name: en.reading.finish.confirm, exact: true })
       .click();
-    await expect(finishedHeading(page)).toHaveText(en.reading.finished.title);
-    await expect(finishedHeading(page)).toBeFocused();
+    await expect(resultsHeading(page)).toHaveText(en.reading.results.title);
+    await expect(resultsHeading(page)).toBeFocused();
     await expect(
-      page.getByText(
-        fill(en.reading.finished.answered, { answered: 1, total: 40 }),
-      ),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: en.common.goHome }),
+      page.getByText(fill(en.reading.results.score, { score: 1, total: 40 })),
     ).toBeVisible();
     await page.reload();
-    await expect(finishedHeading(page)).toHaveText(en.reading.finished.title);
+    await expect(resultsHeading(page)).toHaveText(en.reading.results.title);
 
-    await page.getByRole("button", { name: en.reading.finished.again }).click();
+    await page.getByRole("link", { name: en.reading.finished.again }).click();
     await expect(
       page.getByRole("radio", { name: new RegExp(en.reading.mode.practice) }),
     ).toBeChecked();
@@ -1363,8 +1358,8 @@ test.describe("Practice and Exam Modes", () => {
           exact: true,
         })
         .click();
-      await expect(finishedHeading(page)).toHaveText(
-        catalogs[locale].reading.finished.title,
+      await expect(resultsHeading(page)).toHaveText(
+        catalogs[locale].reading.results.title,
       );
       await noOverflow(page);
       await axe();

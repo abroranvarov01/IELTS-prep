@@ -3,8 +3,8 @@ import type { ReadingTest } from "@/domain/reading/content";
 import { parseReadingTest } from "@/domain/reading/parse-content";
 
 // The Reading tests shipped with the app (ADR-0005 §3), validated when this
-// module loads, so an invalid file fails the build. Answer keys are never
-// imported here: they are not sent to the browser in M4 (ADR-0005 §2).
+// module loads, so an invalid file fails the build. Answer keys are loaded
+// apart, in reading-keys.ts, by the results and review pages only (ADR-0008 §2).
 const FILES: Record<string, unknown> = {
   "demo-academic-1": demoAcademic1,
 };

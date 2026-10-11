@@ -152,11 +152,30 @@
     },
     "wordLimit": "{max, plural, one {This answer has more than # word.} other {This answer has more than # words.}}",
     "finished": {
-      "title": "Test finished",
       "timeUp": "Time is up.",
-      "answered": "You answered {answered} of {total} questions.",
-      "notChecked": "Checking answers and explanations will come in a later version.",
       "again": "Start again"
-    }
+    },
+    "results": {
+      "title": "Your results",
+      "score": "{score} of {total} correct",
+      "honest": "A practice score on our own practice test. It is not an IELTS band score.",
+      "breakdown": "<notCorrect>Not correct: {incorrect}</notCorrect> · <noAnswer>No answer: {unanswered}</noAnswer>",
+      "reviewMistakesAndUnanswered": "Review mistakes and unanswered questions",
+      "reviewMistakes": "Review mistakes",
+      "reviewUnanswered": "Review unanswered questions",
+      "reviewAll": "Review answers",
+      "rechecked": "Rechecked after a correction to the answer key or to how answers are checked. Your earlier result was {score} of {total}.",
+      "recheckedSameScore": "Rechecked after a correction to the answer key or to how answers are checked. Your score is the same; some answers or notes changed.",
+      "importedFromM4": "You finished this test before the app checked answers. It was checked when you first opened these results.",
+      "storageUnavailable": "Your results can't be saved on this device. They will be lost if you close or reload this page.",
+      "none": {
+        "title": "No results on this device yet",
+        "body": "Results appear here after you finish the test on this device.",
+        "start": "Start the test"
+      },
+      "oldVersion": "This test has changed since you took it, so a detailed review is not available.",
+      "cannotCheck": "This test has changed since you took it, so your answers can't be checked."
+    },
+    "lastResults": "See your last results"
   }
 }

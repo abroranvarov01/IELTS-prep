@@ -26,6 +26,9 @@
   /* Reading: highlighted sentences (approved M4) */
   --color-highlight: #ffefa3;
 
+  /* Status: "correct" only, always with a check and the word (approved M5) */
+  --color-status-correct: #157a3c;
+
   /* Skill recognition: strong (icons, markers) and tint (backgrounds) */
   --color-skill-reading: var(--color-brand-primary-deep);
   --color-skill-reading-tint: #fde8ea;
