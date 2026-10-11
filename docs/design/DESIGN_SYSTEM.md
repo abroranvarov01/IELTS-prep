@@ -333,10 +333,10 @@ This would be one new layout token (a container width) used by onboarding and ho
 
 ## M5 components (Reading results and review)
 
-**DRAFT: awaiting owner approval (task M5-01).** Proposed 2026-10-11 during M5 planning. Visual values for the M5 drafts ([READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts)). Reused unchanged: the brand palette, the type scale, the focus style, motion, the breakpoints, the M3 primary button and quiet link, the M4 secondary button, option rows, test bar, sheet, navigator cells, "Your evidence" quote style and desktop columns, including the approved desktop navigator bar (content-driven height: two rows at 1280 px and up to three at 1024 px acceptable; Previous, Next and "Mark for review" keep their text labels). Contrast computed with the WCAG 2.x formula.
+**DRAFT: awaiting owner approval (task M5-01).** Proposed 2026-10-11 during M5 planning, revised the same day after the owner's first review; not approved. Visual values for the M5 drafts ([READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts)). Reused unchanged: the brand palette, the type scale, the focus style, motion, the breakpoints, the M3 primary button and quiet link, the M4 secondary button, option rows, test bar, sheet, navigator cells, "Your evidence" quote style and desktop columns, including the approved desktop navigator bar (content-driven height: two rows at 1280 px and up to three at 1024 px acceptable; Previous, Next and "Mark for review" keep their text labels). Contrast computed with the WCAG 2.x formula.
 
 ### Status: correct, not correct, no answer
-The [Status colors](#status-colors) are TBD and M5 is the first milestone that shows correctness. **Every outcome is an icon plus a word** ("Correct", "Not correct", "No answer"), never color alone (I-8); color only supports "correct".
+The [Status colors](#status-colors) are TBD and M5 is the first milestone that shows correctness. **Every outcome is an icon plus a word** ("Correct", "Not correct", "No answer"), never color alone (I-8); color only supports "correct". "No answer" is its own state, never drawn as "not correct".
 
 | Outcome | Icon (20 px; 16 px in navigator badges) | Color | Contrast |
 |---|---|---|---|
@@ -344,7 +344,7 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 | Not correct | A cross in an outlined circle | `ink` (no new color) | 18.58:1 |
 | No answer | A dash in a dashed-outline circle | `text.secondary` | 8.22:1 |
 
-- **Why "not correct" gets no color (recommended, option a):** red is the brand's action color and DESIGN_SYSTEM requires "incorrect" to stay distinct from it and from Reading's red family; a second hue (orange, amber, purple) would collide with a skill color or read as a warning. The cross and the word carry the meaning; the screen stays calm, as review should.
+- **Why "not correct" gets no color (recommended, option a; decision D11):** red is the brand's action color and this document requires "incorrect" to stay distinct from it and from Reading's red family; a second hue (orange, amber, purple) would collide with a skill color or read as a warning. The cross and the word carry the meaning; the screen stays calm, as review should.
 - **Option b:** a dedicated "incorrect" hue outside the red family (for example a dark amber `#9A5B00`, 5.43:1 on white). Not recommended: amber reads as "warning", and Writing's orange is close.
 - `status.correct` is a yellower green than Speaking's teal (`#0F7A5A`); the two never appear together without their labels.
 
@@ -353,12 +353,31 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 - "Time is up." (when the Exam timed out) in Heading 3 above the H1, as on the M4 finished page.
 - **Score:** "27 of 40 correct" as one line in Heading 1 size, weight 800, the score in tabular figures. No ring, gauge, chart, percentage, confetti or color fill ([UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md)).
 - The honest line in body text `ink` directly under the score; the breakdown ("Not correct: 9 · No answer: 4") in body text `text.secondary`, each count with its outcome icon.
-- The primary button "Review mistakes" 24 px below; the "What to work on" section 32 px below it; the quiet links ("Practise your mistakes again", "Start again") last, 8 px apart.
+- Notes (rechecked, imported, older version, storage) in body text `ink` with the 20 px info icon, 16 px under the breakdown, before the button.
+- The red review button 24 px below (its text names what it opens); "Mistakes that repeated" 32 px below it; the quiet links ("Try 13 questions again: not correct or no answer", "Start again") last, 8 px apart. Long Russian and Uzbek link texts wrap.
 
-### Pattern card ("What to work on")
+**Result states** (each is the same page; only the listed parts change):
+
+| State | Score line | Note | Red button | Repeated mistakes | Quiet links |
+|---|---|---|---|---|---|
+| Finished, mistakes and unanswered | "27 of 40 correct" | none | "Review mistakes and unanswered questions" | Cards, or the "none" text, with the scope line | Try again, Start again |
+| Finished, mistakes only | as above | none | "Review mistakes" | as above | as above |
+| Finished, unanswered only | as above | none | "Review unanswered questions" | as above | as above |
+| Everything correct | "40 of 40 correct" | none | "Review answers" | the "none" text | Start again |
+| Exam time-out | as above, "Time is up." above the H1 | none | as above | as above | as above |
+| Rechecked after a correction | the new score | "Rechecked… Your earlier result was 27 of 40." | as above | from the first try's latest result | as above |
+| Imported from M4 | as above | "You finished this test before the app checked answers…" | as above | "We can't tell which was your first try…" | as above |
+| Earlier content version, result stored | the stored score | "This test has changed since you took it, so a detailed review is not available." | none; "Start the test" becomes the red button | none | none |
+| Earlier content version, no result | none | "…so your answers can't be checked." | "Start the test" | none | none |
+| No attempt on this device | none; H1 "No results on this device yet" and its sentence | none | "Start the test" | none | none |
+| Storage blocked or full | as in the matching state | the storage notice | as above | as above | as above |
+| A retry's results | H1 "Your second try", "9 of 13 now correct" and the honest retry line | none | the review button for the retry | never | "Back to your test results" |
+
+### Pattern card ("Mistakes that repeated")
 - At most two cards. A card is allowed here because each is one distinct unit with its own action ([UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md)): `surface.warm`, `radius.lg`, 16 px padding, no shadow, no border.
+- The scope line ("In this try at this test…" or "From your first try…") in body text `text.secondary` under the section heading, before the cards.
 - Title in Heading 3; the count line in body text; the tip in body text `text.secondary` (7.83:1 on warm); the action "Practise these questions again" as a quiet link (48 px tap area). English answer words (TRUE, NOT GIVEN) inside are `lang="en"`, not styled differently.
-- The "no repeated mistakes" and "first try only" texts are plain body text, not cards.
+- The "none" and "first try unknown" texts are plain body text, not cards.
 
 ### Review: passage marks
 - **Evidence of the current question:** an inline chip before the sentence, like the M4 pin marker (`radius.full`, 1 px `ink` border, `surface.base`), with a 14 px quote-mark icon and the question number in bold meta text, plus a 2 px **dotted** `ink` underline under the sentence (18.58:1). Accessible name: "Evidence for question 5".
@@ -367,10 +386,10 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 - Selection (blush) is not used in review: sentences are not selectable there.
 
 ### Review card (phone sheet and desktop column)
-- **Header row:** "Question 5 of 40" in Heading 3, then the outcome (icon and word, body weight 700) on its own line; on phones, "All questions" stays in the header as in M4. In the mistakes sequence, "To review: 3 of 13" in meta text `text.secondary` under the heading.
+- **Header row:** "Question 5 of 40" in Heading 3, then the outcome (icon and word, body weight 700) on its own line; on phones, "All questions" stays in the header as in M4. In the review sequence, "To review: 3 of 13" in meta text `text.secondary` under the heading.
 - **Answers:**
-  - Choice and list types: the question's option rows, read-only (no hover, no pressed state; `aria-disabled` is not used because nothing is interactive: they are a list). The user's option gets a trailing label "Your answer" with the outcome icon; the accepted option gets "Correct answer" with the correct icon and a 2 px `status.correct` boundary. The user's wrong option keeps a 2 px `ink` dashed boundary. Labels are text, so nothing depends on the boundary color.
-  - Typed types: two label-value rows, "Your answer" and "Correct answer" (and "Also accepted"), the values in passage typography with `lang="en"`. An empty answer shows "You did not answer this question."
+  - Choice and list types: the question's option rows, read-only (no hover, no pressed state; they are a list, not controls). The user's option gets a trailing label "Your answer" with the outcome icon; the accepted option gets "Correct answer" with the correct icon and a 2 px `status.correct` boundary. The user's wrong option keeps a 2 px `ink` dashed boundary. Labels are text, so nothing depends on the boundary color.
+  - Typed types: two label-value rows, "Your answer" and "Correct answer" (and "Also accepted"), the values in passage typography with `lang="en"`. An unanswered question shows "You did not answer this question." in place of the value, with the "No answer" icon.
 - **Evidence block:** the M4 "Your evidence" quote style (`surface.warm`, `radius.md`, 12/16 px padding, the paragraph label in meta text, the sentence in passage typography) under the heading "Evidence in the passage" (or "Where the passage talks about this"), each with "Show in passage" as a quiet link.
 - **Explanation:** heading "Why" in Heading 3, body text in the interface language; `lang="en"` spans in the same style.
 - **"Explain simpler":** a secondary button (the M4 secondary button) with `aria-expanded`; the simpler text appears right after it, introduced by "In simple words" in bold, with a 4 px `ink` bar along its start edge (the approved current-question bar), so it is visibly a second version and not a new section.
@@ -379,8 +398,28 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 - Spacing between blocks 24 px; inside a block 8 px. Previous / Next as in M4.
 
 ### Review: navigator outcome badges
-- The M4 cells (44 × 44 px, number in the cell). In review: a correct question's cell gets the 16 px correct badge in the top corner (where M4 shows the flag); a not-correct question's cell the ✕ badge; a question without an answer keeps the M4 "unanswered" outline style plus the dash badge. Fills: none (all cells are outlined), so the badge shapes carry the outcome. The current cell keeps the M4 3 px `ink` bar. Flags are not shown in review.
-- Accessible names: "Question 5, not correct, current".
+- The M4 cells (44 × 44 px, number in the cell). In review: a correct question's cell gets the 16 px correct badge in the top corner (where M4 shows the flag); a not-correct question's cell the cross badge; an unanswered question keeps the M4 "unanswered" outline style plus the dash badge. Fills: none (all cells are outlined), so the badge shapes carry the outcome. The current cell keeps the M4 3 px `ink` bar. Flags are not shown in review.
+- Accessible names: "Question 5, not correct, current"; "Question 38, no answer".
+
+### Review on phone, tablet and desktop
+
+| | Phone (320–599 px) | Tablet (600–1023 px) | Desktop (from 1024 px) |
+|---|---|---|---|
+| Frame | Test bar ("Results", passage, no timer) | Same | Same |
+| Passage | Full width between the gutters, read-only, marks as above | Centered at the 40rem measure | Start column, 55%, at the 40rem measure |
+| Review card | In the M4 sheet: partial by default, expanded for long cards and the navigator, collapsed to read; the card scrolls inside the sheet | The phone sheet, as wide as the passage | End column, 45%: the current question's card only, scrolling on its own |
+| Navigator | "All questions" opens it in the expanded sheet | Same | The M4 bottom bar with outcome badges, Previous and Next, content-driven height, text labels |
+| Question change | The passage scrolls so the first evidence sentence sits above the sheet; focus to the card heading | Same | The passage column scrolls the evidence into view; focus to the card heading |
+
+### Accessibility treatment (M5 screens)
+- **Not by color alone (I-8):** outcomes are icon plus word; answer rows carry text labels; evidence and related marks differ by icon and underline style; navigator badges differ by shape and are named in words.
+- **Focus:** results H1 on arrival from the test; the review card's heading on opening and on every question change; "Show in passage" moves focus to the sentence; the navigator returns focus to "All questions" on Escape. The approved focus ring everywhere.
+- **Announcements:** the focused headings announce the outcome; nothing else uses a live region except the storage notice (polite, once).
+- **Disclosure:** "Explain simpler" is a button with `aria-expanded`; the simpler text follows it in reading order.
+- **Language:** English test content, typed and accepted answers, and `en` spans in explanations and copy carry `lang="en"`.
+- **Targets:** every control at least 44 × 44 px (48 px for buttons and quiet links), including at 320 px.
+- **320 px and 200% zoom:** no horizontal scroll; long uz and ru labels wrap and are never truncated; at 200% the partial sheet may show only the card header, with the rest scrolling inside it, as in M4.
+- **Reduced motion:** the passage jumps to the evidence instead of scrolling smoothly; the sheet does not animate.
 
 ### Tokens this would add
 `--color-status-correct` (`#157A3C`) only. Everything else uses existing or approved values. If the owner chooses option b for "not correct", one more color token (`--color-status-incorrect`).

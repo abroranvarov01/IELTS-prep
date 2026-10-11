@@ -271,11 +271,50 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 
 ## M5 specifications (drafts)
 
-**DRAFT: awaiting owner approval (task M5-01).** Prepared 2026-10-11 during M5 planning, before M5 is activated. Nothing here is implemented or approved. The roadmap's draft M5 goal is not treated as a specification. Flows and step counts: [USER_FLOWS.md, Reading results and review flows (M5)](USER_FLOWS.md#reading-results-and-review-flows-m5); copy: [Interface copy (M5)](USER_FLOWS.md#interface-copy-m5); visual values: [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review); data: [ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) and [ADR-0009](../architecture/decisions/0009-reading-attempts-on-the-device.md) (Proposed). The decisions the owner is asked to make are collected in [Decisions for M5-01](#decisions-for-m5-01).
+**DRAFT: awaiting owner approval (task M5-01).** Prepared 2026-10-11 during M5 planning and revised the same day after the owner's first review. Nothing here is implemented or approved; earlier discussion of the proposal is not approval of any part of it. The roadmap's draft M5 goal is not treated as a specification. Flows and step counts: [USER_FLOWS.md, Reading results and review flows (M5)](USER_FLOWS.md#reading-results-and-review-flows-m5); copy: [Interface copy (M5)](USER_FLOWS.md#interface-copy-m5); visual values: [DESIGN_SYSTEM.md, M5 components](../design/DESIGN_SYSTEM.md#m5-components-reading-results-and-review); data: [ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) and [ADR-0009](../architecture/decisions/0009-reading-attempts-on-the-device.md) (Proposed). Every decision the owner is asked to make is in [Decisions for M5-01](#decisions-for-m5-01). A review snapshot of all of this is [docs/execution/M5-01-review-packet.md](../execution/M5-01-review-packet.md); these sections stay the canonical text.
 
 **Kept from M4, not reopened:** the desktop navigator bar's content-driven height (two rows at 1280 px and up to three at 1024 px are acceptable); Previous, Next and "Mark for review" keep their text labels; the passage on screen comes first in the bar; the refused-pin message is contextual feedback above the action bar's two rows. M5 screens reuse these.
 
-**What M4 actually does today** (inspected 2026-10-11): the answer key (`content/reading/<testId>.key.json`) has `accept` and `evidence` per question number and is validated but never loaded by the app; "choose two" items repeat the same `accept` set under both numbers (22 and 23: A, C); the NOT GIVEN entries (3, 30) point at the sentence where the passage discusses the topic; the demo's typed answers have one accepted form each. Finishing stores the session under `reading:<testId>:finished`, and a later finish **replaces** it. Typed answers are stored as typed and trimmed when the field loses focus.
+**What M4 actually does today** (inspected 2026-10-11): the answer key (`content/reading/<testId>.key.json`) has `accept` and `evidence` per question number and is validated but never loaded by the app; "choose two" items repeat the same `accept` set under both numbers (22 and 23: A, C); the NOT GIVEN entries (3, 30) point at the sentence where the passage discusses the topic, because the key validator requires at least one evidence sentence; the demo's typed answers have one accepted form each. Finishing stores the session under `reading:<testId>:finished`, and a later finish **replaces** it. Typed answers are stored as typed and trimmed when the field loses focus. The demo test, its key and its passages were drafted by Claude (AI) in M4 and have not been reviewed by a person.
+
+**Words used here:** *pre-written* means written into the content files ahead of time (in M5 drafted by Claude and marked `aiDraft` until people review them; ADR-0008 §6), as opposed to generated when a learner asks. *First try* is defined in [Error Intelligence (M5)](#error-intelligence-m5).
+
+### Content versions and M4 data (M5)
+
+**Four numbers, each guarding one thing** ([ADR-0009](../architecture/decisions/0009-reading-attempts-on-the-device.md) §1): the **content version** (`ReadingTest.version`) guards what stored answers and marks point at; the **storage schema** (`schema` in each stored envelope) guards the stored shape; the **answer-key revision** (`revision`, new in the key) guards accepted answers, evidence and tags; the **checking-rules version** (`SCORING_RULES_VERSION`, new in the checking module) guards normalization, marks and signals. Nothing else is versioned.
+
+**Is M5 backward-compatible with M4 data?** What an M4 session depends on, checked against the M4 code (`session.ts`, `parse-session.ts`, `units.ts`, `parse-content.ts`), and what M5 changes:
+
+| An M4 session depends on | Changed by M5? |
+|---|---|
+| Test id and content version (`testId`, `testVersion`) | No |
+| Question numbers 1–40 and the unit keys answers are stored under ("22" for 22–23) | No |
+| Option ids of every question and list (A–D, i–viii, paragraph letters A–E, TRUE/FALSE/NOT GIVEN) | No |
+| Passage ids and numbers (scroll positions, the passage on screen) | No |
+| Sentence ids (highlights, pins) | No |
+| The session envelope `{ "schema": 1, "session" }` | No: M5 keeps it; the new `retry` field only appears in the new retry entry |
+| The test file's fields | Adds optional `fromPassage` on typed groups; the M4 parser ignores unknown fields and the stored session does not refer to groups |
+| The key file | Adds `revision`, `review`, optional `trap`, variants; sessions never store anything from the key |
+
+**Recommendation (D23): keep the demo test at `version: 1`, because nothing the version guards changes**, not to avoid a migration. M5-02 checks this: if authoring the key or `fromPassage` requires changing any guarded part, the version becomes 2, and M4 sessions of that test then read as absent (ADR-0006). On devices with M4 data that means losing an unfinished session and the M4 finished entry; there are no real users before beta, so the cost is small either way.
+
+**How a completed attempt stays tied to what judged it** (ADR-0009 §2 to §4): the attempt keeps `testVersion` and its unchanged answers; each result records `keyRevision` and `rulesVersion`. A result is shown as stored while both are current.
+
+| Event | What happens |
+|---|---|
+| **Key correction** (revision increases) or a **rules change** | On the next view, the attempt is checked again from its unchanged answers. If anything differs, the new result is appended and shown with "Rechecked after a correction to the answer key or to how answers are checked. Your earlier result was 27 of 40." The earlier result is kept. If nothing differs, nothing changes (D24) |
+| **Content version changed** (the attempt's content is no longer shipped) | No new check is possible: the latest stored result is shown with "This test has changed since you took it, so a detailed review is not available"; without one, "…so your answers can't be checked" |
+| **Test no longer shipped** | Its attempts stay in storage, shown nowhere, not deleted by M5 |
+| **Invalid stored data** | A bad attempt or result entry is ignored and removed on the next write; unreadable JSON reads as an empty history and is replaced (first try then "unknown"); a well-formed envelope with an unknown schema is never overwritten (attempts kept in memory with the notice). Never a crash (ADR-0009 §7) |
+
+**Import of a completed M4 session** (ADR-0009 §5, D25), step by step, on the first load of any Reading page of that test:
+1. Read `reading:<testId>:finished`. If it does not parse with the ADR-0006 rules or its `testVersion` is not the current one, leave it untouched and stop.
+2. If an attempt with id `String(startedAt)` exists, remove the entry and stop.
+3. Otherwise write, in one write: the attempt (`kind: "test"`, `importedFromM4: true`, its `mode`, `startedAt`, `finishedAt`, `finishReason`, `answers` and `pins` exactly as stored, **`results: []`**) and `firstTry: "unknown"` for the test. Then remove the entry.
+4. Nothing else is created: no score, outcome, check date or first-try claim. The attempt is checked the first time its results are shown, with the then-current key and rules, and its results page says "You finished this test before the app checked answers. It was checked when you first opened these results."
+5. Earlier M4 finished sessions that M4 overwrote are gone; nothing pretends otherwise. Because of them, that test's first try on the device is "unknown" ([Error Intelligence](#error-intelligence-m5)).
+
+An **unfinished** M4 session is resumed unchanged and, when finished, recorded like any M5 attempt.
 
 ### Answer checking (M5)
 
@@ -296,39 +335,62 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 | "Choose TWO" letters: each letter has its own question number and the key says "IN EITHER ORDER" | Verified | official sample and computer-delivered answer keys |
 | TRUE / FALSE / NOT GIVEN and YES / NO / NOT GIVEN definitions ("contradicts", "no information on this", "impossible to say what the writer thinks") | Verified | official sample tasks; ielts.org format pages |
 | Writing more than one answer where one is required gets no mark | Verified | Cambridge FAQs |
-| **Whether articles ("a", "the") count toward the word limit** | **Not found** | Official keys mark them optional with brackets, e.g. "(the) Retailing Manager", which says nothing about counting |
-| **Date formats** | **Not found** (IDP Listening articles only) | n/a |
-| **Surrounding punctuation** (a trailing full stop) | **Not found** | n/a |
+| **Whether articles ("a", "the") count toward the word limit** | **Not found** (D4) | Official keys mark them optional with brackets, e.g. "(the) Retailing Manager", which says nothing about counting |
+| **Date formats** | **Not found** for Reading (D22); IDP articles about Listening only | n/a |
+| **Surrounding punctuation** (a trailing full stop) | **Not found** (D2) | n/a |
 | Changed word forms (plural, tense) are wrong | Not a blanket rule: official keys accept both forms for some items, e.g. "robot(s)" | official sample keys |
 | No negative marking | Not stated on ielts.org; follows from "each correct answer receives 1 mark"; IDP: "a blank answer will get no marks" | n/a |
 
-**Per type** (every M4 type; outcome per question number: `correct`, `incorrect` or `unanswered`):
+**Per type** (every M4 type; each question number is one scoring position worth one mark; outcome per number: `correct`, `incorrect` or `unanswered`):
 
 | Interaction | M4 types | Correct when | Unanswered when |
 |---|---|---|---|
 | Choose one | TRUE/FALSE/NOT GIVEN, YES/NO/NOT GIVEN, multiple choice (one answer) | The chosen option equals the key's accepted option | Nothing chosen |
-| Choose several | Multiple choice with more than one answer | Per item: each chosen option that is in the key's set earns 1 mark, in any order, at most `choose` marks. The item's numbers get the marks in order: with A, B chosen and A, C accepted, question 22 is correct and 23 incorrect; with only A chosen, 22 is correct and 23 unanswered | The item's numbers beyond the number of chosen options |
-| Choose from a list | Matching headings, information, features, sentence endings; summary from a word box | The chosen option is one of the key's accepted options (one, unless the author accepts more) | Nothing chosen |
+| Choose several | Multiple choice with more than one answer | See the worked example below | See below |
+| Choose from a list | Matching headings, information, features, sentence endings; summary from a word box | The chosen option is one of the key's accepted options (one, unless the key accepts more) | Nothing chosen |
 | Type words | Sentence, summary and note completion; short answers | The normalized answer equals one normalized accepted variant | Empty or only spaces |
 
-**Normalization of typed answers** (mechanical only; everything else is decided by authored variants):
+**"Choose TWO", worked on the M4 data model.** Demo questions 22–23 (group `p2-g3`, `multipleChoiceMulti`, "Choose TWO letters, A–E", options A–E). In M4, `questionUnits` makes it one unit with key `"22"`, numbers `[22, 23]` and `choose` 2 (the number of its numbers; the content has no separate `choose` field). The session stores one answer under `answers["22"]`: a list of at most 2 distinct option ids; nothing is ever stored under `"23"` (the M4 session parser rejects it). The key has `"22": { "accept": ["A", "C"], … }` and the same set under `"23"`.
+
+Rule (D5): **marks** = the number of distinct chosen options that are in the accepted set, at most `choose`. The item's numbers take the marks in order: number *i* (counting from 0) is `correct` if *i* < marks, otherwise `incorrect` if *i* < the number of chosen options, otherwise `unanswered`. The outcome is positional ("22 correct" means "the first mark was earned"), because official keys accept the letters "IN EITHER ORDER".
+
+| Case | `answers["22"]` | Correct letters | 22 | 23 | Marks |
+|---|---|---|---|---|---|
+| Both correct | `["A", "C"]` | 2 | correct | correct | 2 |
+| Reversed order | `["C", "A"]` | 2 | correct | correct | 2 |
+| One correct, one wrong | `["A", "B"]` or `["B", "A"]` | 1 | correct | incorrect | 1 |
+| No correct | `["B", "D"]` | 0 | incorrect | incorrect | 0 |
+| Partial: one chosen, correct | `["C"]` | 1 | correct | unanswered | 1 |
+| Partial: one chosen, wrong | `["E"]` | 0 | incorrect | unanswered | 0 |
+| Nothing chosen | absent | 0 | unanswered | unanswered | 0 |
+| Duplicate `["A", "A"]`, an unknown id `["A", "Z"]`, or three ids | Never stored: M4's `apply` refuses them (`isValidAnswer`), the M4 session parser reads a stored session containing them as no session, and the attempt parser (M5-04) rejects such an attempt | – | – | – | – |
+
+Checking is also defensive: it counts each accepted option once and never gives an item more than `choose` marks, whatever it receives.
+
+**40 positions, at most 40 marks, nothing counted twice.** The M4 validator already requires question numbers 1–40, each exactly once, in order. The demo test has 39 answer units: 38 with one number and the 22–23 item with two, so 40 scoring positions; the maximum is 38 × 1 + 1 × 2 = 40 marks (checked against the demo files on 2026-10-11). Checking walks units, not key entries, and reads an item's accepted set once, so the duplicated key entry for 23 cannot add a mark. A unit test in M5-03 asserts 40 positions and a maximum of 40 for every shipped test.
+
+**Contract changes this needs:** one new validator rule (ADR-0008 §3): every number of a "choose several" item has the same `accept` set, with exactly `choose` distinct options. The content, the key format and the stored answer shape stay as in M4.
+
+**Normalization of typed answers** (D2; mechanical only, everything else is decided by the accepted variants):
 1. Unicode NFC.
 2. Letter case is ignored (IDP, above).
 3. Leading and trailing spaces removed; runs of spaces become one.
 4. Typographic apostrophes and quotes (’ ‘ ʼ) become `'`; the Unicode hyphens U+2010 and U+2011 become `-` (phones insert them).
-5. **Proposed, no official source (decision D2):** one trailing `.`, `,`, `;` or `:` is ignored, because phone keyboards add a full stop after a double space.
+5. **No official source:** one trailing `.`, `,`, `;` or `:` is ignored, because phone keyboards add a full stop after a double space.
 6. **Never** ignored or corrected: spelling (no fuzzy matching: a misspelt answer is incorrect, as in IELTS), word form, word order, missing or extra words, articles.
 
-**Accepted variants are authored, in full** (ADR-0008 §3). The key's `accept` list holds every accepted answer as a complete string. Authors add, where the passage allows them: both British and American spellings; a number in figures and in words; optional words written out as separate variants ("winter weather", "the winter weather") where the author decides the shorter and longer forms are both right; singular and plural only when both answer the question. Nothing is generated from patterns. The validator rejects a variant that is empty, a duplicate after normalization, or over the word limit.
+**Accepted variants are pre-written, in full** (D3; ADR-0008 §3). The key's `accept` list holds every accepted answer as a complete string. Where the passage allows them, the key lists: both British and American spellings; a number in figures and in words; optional words as separate full variants ("winter weather", "the winter weather") when both are right; singular and plural only when both answer the question. **Dates** (D22, no official Reading source): no date parsing; each accepted form ("24 April", "April 24", "24th April") is its own variant; the demo test has no date answers. Nothing is generated when checking. The validator rejects a variant that is empty, a duplicate after normalization, or over the word limit. Variants are reviewed with the key before beta (D20).
 
-**Word limits.** An answer is correct only when it matches a variant, and every variant fits the limit, so an over-limit answer is never correct (as in IELTS). The validator counts words as: every space-separated part is a word, a hyphenated part is one word (verified), and when the instruction allows "AND/OR A NUMBER", one part made of digits is the number. **Articles are counted as words** (no official rule found, decision D4): a variant with an article must still fit the limit. The Practice warning keeps its separate, conservative count (M4).
+**Word limits.** An answer is correct only when it matches a variant, and every variant fits the limit, so an over-limit answer is never correct (as in IELTS). The validator counts words as: every space-separated part is a word, a hyphenated part is one word (verified), and where the instruction allows "AND/OR A NUMBER", one part made of digits is the number. **Articles are counted as words** (D4, no official source): a variant with an article must still fit the limit. The Practice warning keeps its separate, more lenient count (M4).
+
+**Unanswered questions.** "No answer" is a display status of its own, never shown as "Not correct"; it earns **0 marks** and **stays in the denominator**. Unanswered questions are part of the learning flow: they are in the results breakdown, in the review sequence started from the results ([Evidence-first review](#evidence-first-review-m5)), and in "Try again" ([Targeted practice](#targeted-practice-m5)), and every one of those names them. After an Exam time-out each of them carries the note "This question had no answer when the time ran out." Only repeated-mistake detection leaves them out, because a blank says nothing about how an answer was formed.
 
 **Score and denominators.**
-- A test attempt: the raw score is the number of marks, **out of 40** whatever was answered: "27 of 40 correct". The counts of "not correct" and "no answer" are shown next to it. No percentage.
-- A retry: "9 of 13 now correct", out of the retried questions only; never shown out of 40 and never combined with the original score.
+- A test attempt: the raw score is the number of marks **out of 40**, whatever was answered: "27 of 40 correct", with "Not correct: 9 · No answer: 4" next to it. No percentage.
+- A retry: "9 of 13 now correct", out of the retried questions (not-correct and unanswered ones alike); never shown out of 40 and never combined with the original score.
 - Both are counts of correct answers on our own content, labeled as a practice score.
 
-**Raw score is not a band.** ielts.org publishes the average marks per band for official test versions and says they vary between versions; standards are fixed per version. Our demo test is original and has never been calibrated, so a band read from those averages would claim a precision we do not have. **Recommendation (D1): no band and no "Estimated band" in M5**, for Academic or General Training; the results page says "A practice score on our own practice test. It is not an IELTS band score." Band conversion returns only with calibrated content (content sourcing, M9) and the Academic / General Training decision ([PRODUCT.md](PRODUCT.md#open-questions)). INVARIANTS I-2 stays without an implementation until then.
+**Raw score is not a band** (D1). ielts.org publishes the average marks per band for official test versions and says they vary between versions; standards are fixed per version. Our demo test is original and has never been calibrated, so a band read from those averages would claim a precision we do not have. **Recommendation: no band and no "Estimated band" in M5**, for Academic or General Training; the results page says "A practice score on our own practice test. It is not an IELTS band score." Band conversion returns only with calibrated content (content sourcing, M9) and the Academic / General Training decision ([PRODUCT.md](PRODUCT.md#open-questions)). INVARIANTS I-2 stays without an implementation until then.
 
 ### When results are available (M5)
 
@@ -338,44 +400,46 @@ Checking these against an answer key (case, spelling variants, word limits, acce
 | Exam, "Finish test" → "Finish" | The same. "Feedback after the test only" holds: nothing is checked before finishing |
 | Exam, time-out with the screen open | Finishes by itself (M4) and opens the results page with "Time is up." |
 | Exam, time-out while away | On the next visit the session is found finished (ADR-0006); the attempt is recorded once and the results page opens with "Time is up." |
-| Reload of results or review | The same attempt and the same result: the result is computed the first time and then stored (ADR-0009 §3) |
-| An M4 finished session on the device | Imported as an attempt on the first visit, checked the first time its results are shown (content version 1 is unchanged) |
+| Reload of results or review | The same attempt and the same result (ADR-0009 §3, §4) |
+| The key or the checking rules corrected since the result | Checked again; a changed result is shown with the "Rechecked…" note and the earlier score (D24) |
+| An M4 finished session on the device | Imported without a result, checked when its results are first shown, with the note that it was checked later (D25) |
 | Opening the test link after finishing | The start screen, with a quiet "See your last results" (D6). M4 showed the finished page there |
 | Storage blocked or full | Results are computed and shown, kept in memory for the tab, with the notice |
-| During a test, either mode | No checking and no explanations (D17: no "check this answer" in Practice in M5) |
+| During a test, either mode | No checking and no explanations (D17) |
 
-Completed attempts never change: "Start again" and retries create new attempts (ADR-0009 §4).
+Completed attempts never change: "Start again" and retries create new attempts, and a recheck appends a result instead of replacing one (ADR-0009 §4).
 
 ### Results page (M5)
 - Address: `/{locale}/reading/{testId}/results` (the latest test attempt) or `?attempt={id}` (a specific one); inside the shell, so the header's language switcher is there.
-- At 360 px, top to bottom: "Time is up." when the Exam timed out; the H1 "Your results"; the test title (English) and the mode in meta text; "27 of 40 correct" large; the honest line; "Not correct: 9 · No answer: 4"; the red "Review mistakes" ("Review answers" when everything is correct); "What to work on" ([Error Intelligence](#error-intelligence-m5)); the quiet "Practise your mistakes again" (when there are mistakes) and "Start again".
+- At 360 px, top to bottom: "Time is up." when the Exam timed out; the H1 "Your results"; the test title (English) and the mode in meta text; "27 of 40 correct" large; the honest line; "Not correct: 9 · No answer: 4"; when applicable, the "Rechecked…" or "checked later" note; the red review button; "Mistakes that repeated" ([Error Intelligence](#error-intelligence-m5)); the quiet "Try again" link (when anything was not correct or unanswered) and "Start again".
+- **The red button names what it opens** (D8): "Review mistakes and unanswered questions" (both exist), "Review mistakes" (no unanswered), "Review unanswered questions" (no mistakes), "Review answers" (everything correct).
 - One primary action. No band, no gauge, no chart, no celebration (honest feedback; UI_ANTI_PATTERNS.md).
 - Focus moves to the H1 when the page replaces the test screen, so finishing is announced (as on the M4 finished page).
 
 ### Evidence-first review (M5)
 
-**Purpose:** for each question, what you answered, what was accepted, where the passage says it, and why. It covers correct answers and questions without an answer as well as mistakes.
+**Purpose:** for each question, what you answered, what was accepted, where the passage says it, and why. It covers correct answers and unanswered questions as well as mistakes.
 
 **Phone** (`/{locale}/reading/{testId}/review`, the test-screen layout with the test bar instead of the shell header):
 - **Test bar:** "Results" on the start side (back to this attempt's results), "Passage 2 of 3", no timer.
 - **Passage** (`main`): read-only. The current question's evidence sentences carry an evidence chip and a dotted underline; for NOT GIVEN, "related" sentences a different chip and a dashed underline. The user's highlights and the current question's pins are shown as in the test. Sentences are not selectable (no action bar).
 - **Review sheet** (the M4 sheet: collapsed, partial, expanded, the same controls to move between them). The card, in this order:
-  1. "Question 5 of 40" (or "Questions 22–23") and the outcome as icon and word: "Correct", "Not correct", "No answer" (an item: "1 of 2 correct"). In the mistakes sequence, "To review: 3 of 13".
-  2. The question as in the test (English). Choice and list types: the options, read-only, with "Your answer" and "Correct answer" labels. Typed types: "Your answer" (as typed) and "Correct answer" (the first variant), plus "Also accepted" (the others). An empty answer: "You did not answer this question."
+  1. "Question 5 of 40" (or "Questions 22–23") and the outcome as icon and word: "Correct", "Not correct", "No answer" (an item: "1 of 2 correct"). In the review sequence, "To review: 3 of 13".
+  2. The question as in the test (English). Choice and list types: the options, read-only, with "Your answer" and "Correct answer" labels. Typed types: "Your answer" (as typed) and "Correct answer" (the first variant), plus "Also accepted" (the others). An unanswered question: "You did not answer this question." (and the time-out note when it applies).
   3. **Evidence:** "Evidence in the passage" with the evidence sentences as quotes ("Paragraph C", "Show in passage"). NOT GIVEN: "Where the passage talks about this" (see below).
   4. **Why:** the explanation in the interface language, then "Explain simpler" (a disclosure: the simpler text follows the button).
   5. **Your evidence** (Practice attempts with pins): the pinned quotes and one sentence comparing them with the evidence.
   6. **Notes:** the question's observable signals, one sentence each ([Error Intelligence](#error-intelligence-m5)).
   7. Footer: Previous and Next (within the sequence); "All questions" in the header opens the navigator with outcome badges.
 - **The passage follows the review** (D9): changing question scrolls the passage so the first evidence (or related) sentence is in view above the sheet, instantly with reduced motion. This differs on purpose from the test, where the passage never moves (M4: it would reveal where answers are).
-- **Sequences** (D8): "Review mistakes" opens the first question that is not correct or has no answer, and Previous / Next move through those questions only, in number order. Choosing any number in the navigator (including a correct one) switches to all 40 in order. "Review answers" (everything correct) uses all 40.
+- **Sequences** (D8): the red button on the results page opens the first question that is not correct **or unanswered**, and Previous / Next move through exactly those questions, in number order; "To review: 3 of 13" counts them all. Choosing any number in the navigator (including a correct one) switches to all 40 in order. "Review answers" (everything correct) uses all 40.
 
-**Desktop** (from 1024 px): the test bar; the passage column (55%) with the same marks; the question column (45%) with the review card of the current question only (review cards are long, unlike the test's answer controls); the M4 navigator bar with outcome badges, Previous and Next, keeping its approved content-driven height and text labels.
+**Desktop** (from 1024 px): the test bar; the passage column (55%) with the same marks; the question column (45%) with the review card of the current question only (review cards are long, unlike the test's answer controls); the M4 navigator bar with outcome badges, Previous and Next, keeping its approved content-driven height and text labels. Tablet (600–1023 px) keeps the phone layout.
 
 **Exam attempts** are reviewed the same way; they have no pins, so "Your evidence" is absent.
 
-**NOT GIVEN without fabricated proof:**
-- The key's evidence for a NOT GIVEN answer marks where the passage deals with the statement's topic, presented as "Where the passage talks about this", never as proof. It may be empty.
+**NOT GIVEN without fabricated proof** (D10):
+- The key's evidence for a NOT GIVEN answer marks where the passage deals with the statement's topic, presented as "Where the passage talks about this", never as proof. It may be empty (a contract change: M4's validator requires at least one sentence).
 - The explanation says what the passage does say about the topic and which part of the statement it does not cover (for question 3: the passage describes how people use shared bicycles but never says who most of the users are). It never invents or paraphrases a sentence as if the passage contained it.
 - With pins: "The answer is NOT GIVEN, so no sentence proves it."
 
@@ -393,7 +457,7 @@ Proposed for approval separately (D21). All pages are prerendered per test and l
 |---|---|---|
 | `/{locale}/reading/{testId}` | The start screen (with "See your last results" when an attempt exists) or the session in progress, as in M4. After finishing it **replaces** itself with the results page, so Back does not return to a finished test | Test bar |
 | `/{locale}/reading/{testId}/results[?attempt={id}]` | Results of the latest test attempt, or of the given attempt (a retry, an earlier attempt) | Shell |
-| `/{locale}/reading/{testId}/review?attempt={id}&q={n}&set={mistakes\|all}` | The review. Moving between questions replaces the address, so Back leaves the review instead of stepping through 40 questions | Test bar |
+| `/{locale}/reading/{testId}/review?attempt={id}&q={n}&set={mistakes\|all}` | The review (`mistakes` = not correct and unanswered). Moving between questions replaces the address, so Back leaves the review instead of stepping through 40 questions | Test bar |
 | `/{locale}/reading/{testId}/retry?of={id}&q={numbers}` | A retry of the given questions of that attempt (Practice) | Test bar |
 
 - Attempt ids are the attempt's start time (ADR-0009); invalid parameters fall back as in the empty states.
@@ -408,13 +472,13 @@ Proposed for approval separately (D18). Options:
 
 ### Error Intelligence (M5)
 
-**Three layers, never mixed:**
+**Three layers, never mixed** (D14):
 
 | Layer | Who decides it | May say | Example |
 |---|---|---|---|
 | **Observable signals** | Computed from the answer, the key, the test and the learner's own pins | What happened | "You chose NOT GIVEN. The passage says the opposite of the statement, so the answer is FALSE." |
-| **Content-authored tags** (`trap` in the key) | The content author, per question | What the question tests | Question 4 is tagged `qualifier` ("every trip" against "a small fee") |
-| **Learner-confirmed causes** | Only the learner | Why it happened, in the learner's words | Not in M5 (D14): nothing in M5 states a cause |
+| **Content tags** (`trap` in the key) | Pre-written with the key (in M5 drafted by Claude, reviewed before beta) | What the question tests | Question 4 is tagged `qualifier` ("every trip" against "a small fee") |
+| **Learner-confirmed causes** | Only the learner | Why it happened, in the learner's words | Not in M5: nothing in M5 states a cause |
 
 Nothing infers the learner's reasoning from an incorrect answer alone. Never: "You don't understand NOT GIVEN", "You read too fast", "Your vocabulary is weak", "You guessed".
 
@@ -432,7 +496,7 @@ Nothing infers the learner's reasoning from an incorrect answer alone. Never: "Y
 | `timeUp` | Unanswered, in an Exam attempt finished by time-out | Questions 38–40 empty when the time ran out |
 | `pinnedElsewhere` | Practice; incorrect; the question has pins; its key is not NOT GIVEN and has evidence; no pin is an evidence sentence | Question 5: pinned "Short car journeys are replaced…", answered A; the evidence is the next sentence |
 
-**Repeated-mistake categories** (what can become "recurring"; at most 8):
+**Repeated-mistake categories** (at most 8):
 
 | Category | Counts | Out of ("of N") |
 |---|---|---|
@@ -442,76 +506,118 @@ Nothing infers the learner's reasoning from an incorrect answer alone. Never: "Y
 | Too many words | `wordLimit` | Answered typed questions |
 | Words not from the passage | `notFromPassage` | Answered typed questions in `fromPassage` groups |
 | The evidence was in another sentence | `pinnedElsewhere` | Practice questions with pins whose key has evidence and is not NOT GIVEN |
-| The same idea in other words (authored) | Incorrect on questions tagged `paraphrase` | Answered questions tagged `paraphrase` |
-| Small words that change the meaning (authored) | Incorrect on questions tagged `qualifier` | Answered questions tagged `qualifier` |
+| The same idea in other words (content tag) | Incorrect on questions tagged `paraphrase` | Answered questions tagged `paraphrase` |
+| Small words that change the meaning (content tag) | Incorrect on questions tagged `qualifier` | Answered questions tagged `qualifier` |
 
-Unanswered questions belong to no category: they say nothing about form or reasoning. They are counted on the results page, and a time-out is stated as such.
+Unanswered questions belong to no category (see [Answer checking](#answer-checking-m5), Unanswered questions).
 
-**Authored tags** (optional, one per question, only where true): `paraphrase` (the question expresses the passage's idea in different words) and `qualifier` (the answer turns on a limiting word such as all, most, only, every, never). The demo key gets them where they apply (M5-02); a category that has fewer than 3 tagged questions in the content simply cannot appear.
+**Content tags** (optional, one per question, only where true): `paraphrase` (the question expresses the passage's idea in different words) and `qualifier` (the answer turns on a limiting word such as all, most, only, every, never). The demo key gets them where they apply (M5-02); a category with fewer than 3 tagged questions in a test simply cannot appear.
 
-**When something is "recurring"** (D15):
-- **Evidence:** only each test's **first try** (the earliest `test` attempt with a result, ADR-0009). Later attempts and retries never count: after the first review the learner has seen every answer, so a repeat is not independent evidence. Each question therefore counts at most once.
-- **Threshold:** a category is recurring when it occurs on **at least 3 different questions** from **at least 2 different question groups** (one group shares one instruction, so a single group could reflect one misread instruction).
-- **Shown:** at most two recurring categories on the results page, most occurrences first (ties in table order), each with its count out of its opportunities and the question numbers ("3 of 5 questions whose answer was NOT GIVEN, FALSE or NO (questions 2, 3, 30)"), one tip, and "Practise these questions again".
-- **Not enough evidence:** with no recurring category, "No repeated mistakes found. We show one when the same kind of mistake happens on at least 3 questions." Single occurrences stay as notes on their questions in review. On a later attempt's results, the first-try sentence ("We look for repeated mistakes in your first try at each test only…") comes first. A retry's results have no such section.
-- With one demo test, repeated mistakes can only come from the first try at it. Rates across many tests (for example "at least a third of the opportunities") are left to M8, when history exists.
+**The first try, precisely** (D15, ADR-0009 §6). Repeated mistakes use only the first try at a test, because after the first review the learner has seen every answer. The first try is stored, never guessed:
 
-**Feedback the content can support:** the per-question explanation (authored), the observable note, and per category one fixed tip (catalog copy) that restates the test's own instruction or a verified rule: what FALSE and NOT GIVEN mean (the instruction's wording), that misspelt answers and answers over the limit lose the mark (verified above), that "from the passage" means the passage's words, where the evidence was (review), and to compare the question's words with the evidence (paraphrase) or check limiting words (qualifier). The only action offered is to practise those same questions again, labeled as seen before. No band, no level, no "improved", no promise of new questions.
+| Situation | First try for that test |
+|---|---|
+| The first test attempt recorded on a device with no history for that test | That attempt |
+| An unfinished M4 session finished under M5, with no M4 finished entry on the device | That attempt (no finished session ever existed there, or the data was cleared) |
+| An M4 finished session imported | **Unknown** (M4 kept only the latest finished session) |
+| "Start again", any later test attempt | Not the first try |
+| A retry | Never |
+| Practice or Exam | Either can be the first try |
+| A reload, a second tab, a time-out noticed on load | The same attempt (one id), counted once |
+| A new content version of the test | Still the same test; the first try does not change |
+| The history unreadable and rewritten, or the named attempt missing | **Unknown** |
+| Another browser or device, or site data cleared | Cannot be known; the copy says "on this device" |
+
+**Repeated exposure is excluded** by construction: only the first try's latest result is evidence, so each question counts at most once; later attempts and retries are never evidence; duplicates cannot arise (one attempt per session id).
+
+**When the first try is unknown:** no repeated-mistake detection for that test, and the results page says "We can't tell which was your first try at this test on this device, so we don't look for repeated mistakes in it." Each question's own notes still appear in review, because they describe only that attempt.
+
+**When a mistake counts as repeated** (D15; a **proposed product heuristic, not a validated diagnosis**): the same category on **at least 3 different questions** from **at least 2 different question groups** of the first try (one group shares one instruction, so a single group could reflect one misread instruction). The numbers are a starting point to be checked against real use (M8); the copy never calls the result a diagnosis or a weakness.
+
+**What the learner sees** (only on a test attempt's results, never on a retry's):
+- Up to two categories, most occurrences first (ties in table order), each with its count out of its opportunities and the question numbers ("3 of 5 questions whose answer was NOT GIVEN, FALSE or NO (questions 2, 3, 30)"), one tip, and "Practise these questions again".
+- The scope, in words the evidence supports: on the first try itself, "In this try at this test. One test is not enough to show a lasting weakness."; on a later attempt, "From your first try at this test on this device, because after that you had seen the answers. One test is not enough to show a lasting weakness."
+- No repeated category: "No kind of mistake repeated on 3 or more questions in your first try at this test." Single occurrences stay as notes on their questions in review.
+- With one demo test, nothing claims a pattern across tests, a lasting weakness, improvement, a level or a band. Evidence across tests and rates (for example "at least a third of the opportunities") belong to M8.
+
+**Feedback the content can support:** the per-question explanation (pre-written), the observable note, and per category one fixed tip (catalog copy) that restates the test's own instruction or a verified rule: what FALSE and NOT GIVEN mean (the instruction's wording), that misspelt answers and answers over the limit lose the mark (verified above), that "from the passage" means the passage's words, where the evidence was (review), and to compare the question's words with the evidence (paraphrase) or check limiting words (qualifier). The only action offered is to practise those same questions again, labeled as seen before.
 
 ### Targeted practice (M5)
 
-**Recommended scope (D16): retry known mistakes; no unseen practice in M5.**
-- **What it is:** a Practice session on the same test with only the chosen questions: the mistakes (not correct or no answer) of an attempt, or the questions of a repeated-mistake card. Answers start empty; no timer; Pin Evidence available; the navigator and Previous / Next show only those questions; "Finish test" and its confirmation as in M4. The header adds "3 of 13 to practise".
-- **Results:** "Your second try": "9 of 13 now correct" and "You had already seen these questions and their answers, so this shows what you remember from the review. It does not measure your level." Then "Review mistakes" (the same review screen, for the retry attempt) and "Back to your test results".
-- **What it is not:** independent evidence of ability (never counted in patterns, never shown out of 40, never combined with the original score, never called improvement); a new test; a content library.
+**Recommended scope (D16): try known mistakes and unanswered questions again; no unseen practice in M5.**
+- **What it is:** a Practice session on the same test with only the chosen questions: **every question of an attempt that was not correct or unanswered**, or the questions of a repeated-mistake card. The results link says so ("Try 13 questions again: not correct or no answer"). Answers start empty; no timer; Pin Evidence available; the navigator and Previous / Next show only those questions; "Finish test" and its confirmation as in M4. The header adds "3 of 13 to practise".
+- **Results:** "Your second try": "9 of 13 now correct" (unanswered ones count in the 13) and "You had already seen these questions and their answers, so this shows what you remember from the review. It does not measure your level." Then the review button (as on the results page) and "Back to your test results".
+- **What it is not:** independent evidence of ability (never counted in repeated mistakes, never shown out of 40, never combined with the original score, never called improvement); a new test; a content library.
 - **Unseen practice** (new questions on a weak point) needs new content: only one demo test exists, and adding content sets is content sourcing (M9). A short original drill set would also need the content contract to allow tests shorter than 3 passages and 40 questions (ADR-0005). Not in M5.
 - One retry in progress per test, kept apart from the test's session (ADR-0009 §5): the same retry link resumes it; starting a different retry replaces an unfinished one.
 
 ### Explanations and the AI decision (M5)
 
-**Recommended for owner review (D12): content-authored explanations and authored simpler versions in uz, ru and en, without runtime AI.** This is a recommendation, not a decision.
+**Recommended for owner review (D12): pre-written explanations and simpler versions in uz, ru and en, without runtime AI.** This is a recommendation awaiting the owner's decision, not a decision.
 
-**Authoring rules:**
+**Who writes them, and their status** (ADR-0008 §6). In M5 the explanations, like the demo test and key from M4, are **drafted by Claude (AI)** in a worker task (M5-05). They are recorded as `aiDraft` and are never described as written by a person. Each key file and each explanation file carries one review status:
+
+| Status | Meaning | Set by |
+|---|---|---|
+| `aiDraft` | Drafted by Claude; no person has checked it | The worker task that drafts it |
+| `reviewed` | A person has checked it as described below; the review is recorded in PROGRESS.md (reviewer's role, date, what was checked, what changed) | A worker, on the owner's instruction after the review |
+| `approved` | The owner approves it for release | The owner |
+
+**Before beta** (D20), every Reading key and explanation file must be `approved`, after:
+1. **English answer accuracy:** a person with strong English and IELTS Reading knowledge, not the drafting AI, checks every accepted answer and variant against the passage, every evidence sentence, every NOT GIVEN judgment, every content tag, and the questions and passages as far as they affect the answers.
+2. **English explanations:** the same reviewer checks each explanation and simpler version: grounded only in the passage, accurate, plain, and the simpler one saying the same thing more simply.
+3. **uz and ru:** fluent speakers check every explanation and simpler version against the English: same meaning, plain language, consistent terms, English quotes untouched, Uzbek orthography (U+02BB, U+02BC) ([LOCALIZATION.md](LOCALIZATION.md), rule 7). Not raw machine translation.
+4. **Owner approval.**
+
+M5 may finish with `aiDraft` files: nothing is released to real users before beta. The status is not shown in the interface in M5. On approval of D20, the beta checks become M11 tasks.
+
+**Authoring rules** (for the drafts and for any later author):
 - One explanation and one simpler version per question unit (a "choose several" item once), in each of en, ru and uz, in the per-locale content files (ADR-0008 §5).
 - **Grounded only in the passage, the question and the key:** name the words of the evidence and the question words they match (the paraphrase); for choice and list types, say briefly why a tempting wrong option does not fit when that helps. No facts from outside the passage.
 - **NOT GIVEN:** what the passage says about the topic and what it does not say, as above. Never an invented sentence.
 - **Simpler:** the same reasoning in at most two short sentences, everyday words, no grammar terms. Limits enforced by the validator: explanation at most 450 characters, simpler at most 250 characters and shorter than the explanation, per locale.
 - English quotes at most 8 words, as `en` segments.
-- Written originally for this project, English first, then ru and uz. Drafts may be prepared with AI help at authoring time, but every text is reviewed by a person; uz and ru are reviewed by fluent speakers before beta ([LOCALIZATION.md](LOCALIZATION.md), rule 7), not raw machine translation.
+- English first, then ru and uz from the reviewed English.
 
-**Limitations of the recommendation:** fixed texts that cannot answer follow-up questions; not tailored to an arbitrary typed answer (the observable notes cover the common cases); one "simpler" level; about six texts per question (240 for one test) to write and review, growing with every new test; quality depends on reviewers.
+**Limitations of the recommendation:** fixed texts that cannot answer follow-up questions; not tailored to an arbitrary typed answer (the observable notes cover the common cases); one "simpler" level; about six texts per question (234 for the demo test's 39 units) to draft and review, growing with every new test; quality depends on the reviewers.
 
 **The AI alternative:** generating the simpler or a tailored explanation at runtime. It needs an **AI provider ADR first** (ARCHITECTURE.md lists "AI provider and evaluation pipeline" as TBD), deciding at least:
 - **Provider and model**, and where calls run (the API, never the browser; keys as secrets, AUTONOMOUS_WORKFLOW hard limits).
-- **Grounding:** inputs limited to the question, the key, the evidence sentences and the authored explanation; the output may quote only passage text that exists, checked after generation; nothing outside the passage.
+- **Grounding:** inputs limited to the question, the key, the evidence sentences and the reviewed explanation; the output may quote only passage text that exists, checked after generation; nothing outside the passage.
 - **Privacy:** what is sent (the typed answer at most, no identifiers), data residency for Uzbekistan, minors, retention at the provider.
-- **Failure behavior:** fall back to the authored text; a timeout budget; no blank card.
+- **Failure behavior:** fall back to the pre-written text; a timeout budget; no blank card.
 - **Latency** on weak mobile connections, and **cost** per call; since explanations are per question, not per learner, generating them once per question and locale and caching them (or at authoring time) gives most of the value.
 - **Quality** of Uzbek and Russian output, an evaluation set, and the honest label of AI-written text.
 No provider is chosen and no AI infrastructure is added in M5 unless the owner chooses this option, and then only after that ADR is accepted.
 
 ### Decisions for M5-01
 
-| # | Decision | Options | Recommendation |
-|---|---|---|---|
-| D1 | Band for the uncalibrated demo test | (a) raw score only; (b) "Estimated band" from ielts.org's average marks; (c) show those averages as background | **(a)** |
-| D2 | Typed-answer normalization | As listed; for the trailing full stop (no official source): (a) ignore one trailing `. , ; :`; (b) strict | **The list, with (a)** |
-| D3 | Accepted variants | (a) authored in full in the key (spellings, figures and words, optional words); (b) parse bracket and slash syntax like official keys; (c) fuzzy matching | **(a)** |
-| D4 | Articles and the word limit (no official source) | (a) the validator counts them as words; (b) it does not | **(a)** |
-| D5 | "Choose TWO" marks | (a) 1 mark per correct letter, any order, given to the item's numbers in order; (b) all or nothing | **(a)** (official keys: "IN EITHER ORDER", one number per letter) |
-| D6 | Results timing and the test link after finishing | Results at once after finishing or time-out in both modes; the test link then shows (a) the start screen with "See your last results"; (b) the results page | **(a)** |
-| D7 | Where checking runs | (a) in the browser on the results and review pages, key visible there; (b) a Server Action | **(a)** (ADR-0008) |
-| D8 | Review sequence | (a) "Review mistakes" walks the mistakes, the navigator reaches all; (b) Previous / Next through all 40 | **(a)** |
-| D9 | Passage in review | (a) scrolls to the evidence on question change; (b) never moves, as in the test | **(a)** |
-| D10 | NOT GIVEN evidence | (a) "related" sentences, may be empty, never proof; (b) no passage reference | **(a)** |
-| D11 | Status colors | (a) green `status.correct`, "not correct" in `ink` with a cross; (b) also an "incorrect" hue | **(a)** (DESIGN_SYSTEM.md) |
-| D12 | Explanations and "Explain simpler" | (a) authored in uz, ru, en, no runtime AI; (b) runtime AI after a provider ADR | **(a)** |
-| D13 | Explanation language | (a) the interface language, switched on the results page; (b) a language choice inside review | **(a)** |
-| D14 | Error Intelligence layers | (a) observable signals and authored tags; learner-confirmed causes later; (b) also ask "What happened?" after each mistake | **(a)** |
-| D15 | "Recurring" | (a) ≥ 3 questions in ≥ 2 groups, first try only, at most two shown; (b) another threshold | **(a)** |
-| D16 | Targeted practice | (a) retry known mistakes, labeled; (b) also a short original drill set (contract change, content work); (c) none | **(a)** |
-| D17 | Checking during a Practice test | (a) none in M5; (b) "check this answer" | **(a)** |
-| D18 | Home | (a) unchanged; (b) cookie pointer; (c) quiet link | **(a)** |
-| D19 | Attempt storage | ADR-0009: history per test, results stored once, 20 attempts kept, no reset control | **Accept ADR-0009** |
-| D20 | Fluent review of uz and ru explanations | (a) before beta (M11), not blocking M5; (b) before M5 is done | **(a)**, as for all M1 to M4 copy |
-| D21 | Routes and navigation | As in [Routes and navigation (M5)](#routes-and-navigation-m5) | **Approve as drafted** |
+Every row is **open** until the owner answers it at M5-01. "Recommendation" is Claude's proposal, not a decision.
+
+| # | Decision | Proposed behavior | Recommendation | Trade-off | Notes |
+|---|---|---|---|---|---|
+| D1 | Band for the uncalibrated demo test | "27 of 40 correct" and the honest line; no band and no "Estimated band", Academic or General Training | **(a) raw score only**. Alternatives: (b) an "Estimated band" from ielts.org's average marks; (c) those averages shown as background | Learners do not get the band they may want; any band from an uncalibrated test would be false precision | Sourced: tables are averages that vary by test version |
+| D2 | Typed-answer normalization | NFC; case ignored; spaces trimmed and collapsed; ’ ‘ ʼ → '; U+2010/U+2011 → -; one trailing `. , ; :` ignored; nothing else | **The list as proposed**. Alternative for the trailing mark: (b) strict | Ignoring it may accept an answer IELTS would reject; strict may mark a right word wrong because the keyboard added a full stop | Trailing punctuation: **no official source** |
+| D3 | Accepted variants | Every accepted answer written in full in the key and reviewed (UK/US spellings, figures and words, optional words); no fuzzy matching, nothing generated when checking | **(a)**. Alternatives: (b) parse official-style brackets and slashes; (c) fuzzy matching | Longer keys; a valid variant nobody listed is marked wrong until a key revision | Case, spelling, UK/US, figures: sourced |
+| D4 | Articles and the word limit | The validator counts "a" and "the" as words, so a variant with an article must fit the limit | **(a) count them**. Alternative: (b) do not count | May reject a variant IELTS would accept | **No official source** |
+| D5 | "Choose TWO" marks | 1 mark per distinct correct letter, any order, at most 2; the numbers take the marks in order; partial answers and blanks as in the worked example | **(a)**. Alternative: (b) all or nothing | Per-number outcomes are positional, not tied to a letter | Official keys: "IN EITHER ORDER", one number per letter |
+| D6 | Results timing; the test link after finishing | Results at once after finishing or time-out in both modes; the test link then shows the start screen with "See your last results" | **(a)**. Alternative: (b) the test link opens the results | Changes M4's "test link shows the finished page"; one more tap to old results | |
+| D7 | Where checking runs | In the browser on the results and review pages; the key is never on the test screen | **(a)** (ADR-0008). Alternative: (b) a Server Action | A determined user can read the key from those pages | No real secrecy is possible without accounts |
+| D8 | Review entry and sequence | The red button names what it opens and walks every not-correct **and unanswered** question; the navigator reaches all 40 | **(a)**. Alternative: (b) Previous / Next through all 40 | Two sequences to understand ("To review: 3 of 13" shows which) | |
+| D9 | The passage in review | Scrolls to the evidence on question change, instantly with reduced motion | **(a)**. Alternative: (b) never moves, as in the test | Differs from the test screen, where moving would reveal answers | |
+| D10 | NOT GIVEN evidence | "Where the passage talks about this", may be empty, never proof; the explanation says what is and is not said | **(a)**. Alternative: (b) no passage reference for NOT GIVEN | A related sentence can still be misread as proof; the label and explanation address it | **Contract change:** M4 requires at least one evidence sentence |
+| D11 | Status colors | Correct: green `status.correct` `#157A3C` with a check and the word; not correct: `ink` cross and the word; no answer: dash and the word | **(a)**. Alternative: (b) a dedicated "incorrect" hue | No red "wrong" that some users expect | Red stays the action color (DESIGN_SYSTEM.md) |
+| D12 | Explanations and "Explain simpler" | Pre-written explanation and simpler version per question in en, ru, uz; AI-drafted, reviewed before beta; no runtime AI | **(a)**. Alternative: (b) runtime AI after an AI provider ADR | Fixed texts, not tailored; 234 texts to review for one test | AI option's open decisions listed above |
+| D13 | Explanation language | Follows the interface language; switched on the results page | **(a)**. Alternative: (b) a language choice inside review | Seeing two languages side by side needs a switch | |
+| D14 | Error Intelligence layers | Observable signals and content tags only; no learner-confirmed causes in M5; never infer reasoning | **(a)**. Alternative: (b) ask "What happened?" after each mistake | No "why" from the learner in M5 | |
+| D15 | First try and repeated mistakes | First try stored per test; unknown after an M4 import or damaged history; a category repeats at ≥ 3 questions in ≥ 2 groups of the first try; at most two shown; scoped to "this test on this device" | **(a)**. Alternatives: (b) another threshold; (c) per-question notes only, no categories | The threshold is arbitrary and one test is little evidence; devices with M4 data get none for the demo test | **Proposed heuristic, not a validated diagnosis** |
+| D16 | Targeted practice | Try again every not-correct and unanswered question of an attempt (or a card's questions), Practice only, labeled as seen before; no unseen practice | **(a)**. Alternatives: (b) also a short drill set (contract change, content work); (c) none | Repeated questions measure memory, not ability | |
+| D17 | Checking during a test | None in either mode | **(a)**. Alternative: (b) "check this answer" in Practice | No instant feedback while practising | |
+| D18 | Home | Unchanged | **(a)**. Alternatives: (b) a cookie pointer; (c) a quiet link | Results are reached only through the test link | |
+| D19 | Attempt storage | ADR-0009: a history per test, attempts written once, results append-only with key revision and rules version, stored first-try provenance, 20 attempts kept, no reset control, an unknown schema never overwritten | **Accept ADR-0009** | Up to about 100 KB per test; clearing site data is the only reset | |
+| D20 | Review status and pre-beta review | Key and explanation files carry `aiDraft` / `reviewed` / `approved`; before beta: English accuracy review of the key, questions and English explanations, fluent uz and ru review, owner approval; M5 may finish with `aiDraft`; beta checks become M11 tasks | **(a) before beta, not blocking M5**. Alternative: (b) before M5 is done | AI drafts are visible in development builds until reviewed (no interface label) | |
+| D21 | Routes and navigation | `/results`, `/review`, `/retry` under the test; finishing and question changes replace the address; review and retry in the test-bar layout, results in the shell | **Approve as drafted** | Four addresses per test | |
+| D22 | Date formats | No date parsing; each accepted date form is its own pre-written variant; the demo test has no date answers | **(a) variants only**. Alternative: (b) parse dates | Every accepted form must be listed; a missing one is marked wrong until a key revision | **No official source** for Reading |
+| D23 | The demo test's content version | Keep `version: 1`, because M5 changes nothing the version guards; increase it if M5-02 must change a guarded part | **(a) keep**. Alternative: (b) increase it anyway | Keeping relies on the compatibility check (M5-02 tests it); increasing would drop M4 sessions without a structural reason | See Content versions and M4 data |
+| D24 | Key corrections and rule changes | Each result records the key revision and rules version; a newer one triggers a recheck from the unchanged answers; a changed result is appended and shown with a note, the earlier one kept | **(a)**. Alternatives: (b) freeze the first result; (c) overwrite it; (d) increase the content version instead | Two version numbers to maintain; a learner may see a score change, with the reason | |
+| D25 | M4 finished sessions | Imported once as an attempt without a result, checked at first view with a note; the test's first try becomes unknown | **(a)**. Alternatives: (b) do not import; (c) import and treat as the first try | Devices with M4 data get no repeated-mistake detection for the demo test | (c) would invent first-try provenance |

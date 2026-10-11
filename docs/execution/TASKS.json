@@ -2376,19 +2376,20 @@
       "owner": "human",
       "status": "todo",
       "dependsOn": [],
-      "goal": "One approval gate before any M5 product code: answer checking and results, evidence-first review, Error Intelligence, targeted practice, explanations (authored or AI), routes and Home, status colors, and how attempts are kept on the device.",
+      "goal": "One approval gate before any M5 product code: answer checking and results, evidence-first review, Error Intelligence, targeted practice, explanations (pre-written or runtime AI), routes and Home, status colors, and how attempts are kept on the device.",
       "scope": [
-        "Review the drafts prepared during M5 planning (2026-10-11, not a task): READING_EXPERIENCE.md 'M5 specifications (drafts)', USER_FLOWS.md 'Reading results and review flows (M5)' and 'Interface copy (M5)', DESIGN_SYSTEM.md 'M5 components (Reading results and review)'; mark what is approved as Approved",
-        "Answer decisions D1–D21 in READING_EXPERIENCE.md 'Decisions for M5-01', including the three IELTS rules with no official source (articles and the word limit, date formats, a trailing full stop) and, separately, the routes and navigation (D21) and Home (D18)",
+        "Review the drafts prepared during M5 planning (2026-10-11, not a task): READING_EXPERIENCE.md 'M5 specifications (drafts)', USER_FLOWS.md 'Reading results and review flows (M5)' and 'Interface copy (M5)', DESIGN_SYSTEM.md 'M5 components (Reading results and review)'; mark what is approved as Approved; the review snapshot docs/execution/M5-01-review-packet.md collects all of it, and the canonical sections win where they differ",
+        "Answer decisions D1–D25 in READING_EXPERIENCE.md 'Decisions for M5-01', including the three IELTS rules with no official source (D2 trailing punctuation, D4 articles and the word limit, D22 date formats), the content version, key corrections and M4 import (D23 to D25) and, separately, the routes and navigation (D21) and Home (D18)",
         "Review ADR-0008 (answer checking, explanations, review content) and ADR-0009 (attempts and results on the device) and set them to Accepted or ask for changes; on acceptance the status lines of ADR-0005 and ADR-0006 note the amended sections, and the ADR index and ARCHITECTURE.md are updated",
         "If AI is chosen for explanations (D12 b): an AI provider ADR becomes a new draft task, and no AI work starts before it is accepted; M5-05 and M5-07 are adjusted",
+        "If D20 is approved: add M11 human tasks for the pre-beta reviews of the Reading key and explanations (English accuracy, fluent uz and ru review, owner approval to 'approved')",
         "If an answer changes M5's scope (for example no retries, a drill set, Home changes, checking during a test, a band estimate), say so; M5-02 to M5-11 are adjusted before work continues",
         "Activating M5 (its status in TASKS.json) remains a separate owner action"
       ],
       "outOfScope": [],
       "acceptanceCriteria": [
         "The M5 specs, copy and design values are Approved, and ADR-0008 and ADR-0009 are Accepted (or the drafts are revised and this gate repeated)",
-        "Every decision D1–D21 has a recorded answer",
+        "Every decision D1–D25 has a recorded answer",
         "No open question blocks M5-02 to M5-11"
       ],
       "validation": [
@@ -2396,6 +2397,7 @@
         "grep -n 'Status' docs/architecture/decisions/0008-*.md docs/architecture/decisions/0009-*.md"
       ],
       "references": [
+        "docs/execution/M5-01-review-packet.md",
         "docs/product/READING_EXPERIENCE.md",
         "docs/product/USER_FLOWS.md",
         "docs/design/DESIGN_SYSTEM.md",
@@ -2423,10 +2425,10 @@
       "dependsOn": ["M5-01"],
       "goal": "The answer key and the content contract carry everything checking and Error Intelligence need, validated, without changing the demo test's version.",
       "scope": [
-        "Per ADR-0008 §3 and §4 as accepted, validator rules: typed variants are non-empty, distinct after normalization and within the word limit by the validator's count (every space-separated part is a word, a hyphenated part is one word, one numeric part is free when the limit allows a number, articles count unless D4 decided otherwise); every number of a 'choose several' item has the same set with exactly `choose` options; NOT GIVEN evidence may be empty; the optional `trap` tag (`paraphrase` | `qualifier`); the optional `fromPassage` flag, on typed groups only",
+        "Per ADR-0008 §3, §4 and §6 as accepted, validator rules: the key's `revision` (integer from 1) and required `review.status` (`aiDraft` | `reviewed` | `approved`); typed variants are non-empty, distinct after normalization and within the word limit by the validator's count (every space-separated part is a word, a hyphenated part is one word, one numeric part is free when the limit allows a number, articles count unless D4 decided otherwise); every number of a 'choose several' item has the same set with exactly as many distinct options as the item has numbers; NOT GIVEN evidence may be empty (relaxing M4's at-least-one rule for NOT GIVEN keys only); the optional `trap` tag (`paraphrase` | `qualifier`); the optional `fromPassage` flag, on typed groups only",
         "The validator's word count as one domain function, its tests citing the ielts.org hyphenation rule and stating that the article rule has no official source",
-        "Demo content: `fromPassage: true` on its typed groups. Demo key: reviewed against the passage; authored variants only where the passage supports them (optional words, British and American spellings, figures and words); `trap` tags where they apply. Record each authoring choice in PROGRESS.md",
-        "The demo test keeps `version: 1` (ADR-0009 §5), asserted by a test",
+        "Demo content: `fromPassage: true` on its typed groups. Demo key, drafted by Claude and marked `review.status: aiDraft`, `revision: 1`: variants only where the passage supports them (optional words, British and American spellings, figures and words; dates as listed variants, D22), `trap` tags where they apply. Record each choice in PROGRESS.md as an AI draft awaiting the D20 review",
+        "The demo test keeps the content version decided at D23 (recommended 1, because nothing it guards changes); a test asserts that M4-format stored sessions of the demo test still parse against the M5 content",
         "Unit tests for every new validator rule with small original fixtures; every content file still validated by the content test"
       ],
       "outOfScope": [
@@ -2436,8 +2438,8 @@
         "new tests or passages; changing question numbers, options or sentence ids"
       ],
       "acceptanceCriteria": [
-        "Every rule of ADR-0008 §3 and §4 is enforced and tested",
-        "The demo test and key validate; the demo test's version is still 1; the existing M4 session tests pass unchanged",
+        "Every rule of ADR-0008 §3, §4 and §6 is enforced and tested",
+        "The demo test and key validate; the content version matches D23; M4-format sessions still parse; the existing M4 session tests pass unchanged",
         "All gates pass"
       ],
       "validation": [
@@ -2466,9 +2468,10 @@
       "goal": "Every M4 question type is checked against the key with the approved normalization, marks, outcomes, denominators and observable signals, as tested domain code.",
       "scope": [
         "`apps/web/src/domain/reading/scoring.ts` (under .claude/rules/domain/ielts-scoring.md) per READING_EXPERIENCE.md 'M5 specifications', 'Answer checking (M5)' as approved: normalization (NFC, case, spaces, typographic apostrophes, phone hyphens, the D2 decision on trailing punctuation); outcomes for all 13 M4 types; 'choose several' marks in either order, given to the item's numbers in order; unanswered distinct from incorrect; the raw score out of 40 for a test attempt and out of the retried questions for a retry",
+        "`SCORING_RULES_VERSION` (ADR-0008 §1), recorded by every result; the 'choose two' cases of the worked example in READING_EXPERIENCE.md as tests (both, reversed, one right one wrong, none right, one chosen, nothing chosen; duplicates and unknown ids never award a mark or more than `choose` marks); a test that every shipped test has exactly 40 scoring positions and a maximum of 40 marks; unanswered: 0 marks, kept in the denominator",
         "The observable signals of 'Error Intelligence (M5)': ngInsteadOfFalse, falseInsteadOfNg, ngInsteadOfTrue, trueInsteadOfNg, spelling (exactly one letter added, missing or changed from an accepted variant of at least 4 letters), wordLimit, notFromPassage, timeUp, pinnedElsewhere",
         "Result types that keep a practice raw score distinct from any band or estimate; no band conversion anywhere",
-        "Unit tests for every rule and edge case, each IELTS rule citing its official source (or stating that none exists): case; spaces; smart apostrophes; phone hyphens; trailing punctuation; a misspelling is incorrect; British and American spellings only when authored; over the limit never correct; 'choose two' in either order with partial marks; unanswered vs incorrect; each signal's positive and negative cases, using the demo test and small fixtures"
+        "Unit tests for every rule and edge case, each IELTS rule citing its official source (or stating that none exists): case; spaces; smart apostrophes; phone hyphens; trailing punctuation; a misspelling is incorrect; British and American spellings only when listed in the key; over the limit never correct; 'choose two' in either order with partial marks; unanswered vs incorrect; each signal's positive and negative cases, using the demo test and small fixtures"
       ],
       "outOfScope": [
         "storage of attempts and results (M5-04)",
@@ -2506,9 +2509,9 @@
       "dependsOn": ["M5-03"],
       "goal": "Finished sessions become immutable attempts kept on the device, recorded once and compatible with M4 data.",
       "scope": [
-        "Per ADR-0009 as accepted: the attempt model and a domain parser that validates entry by entry; recording on finish (append unless the id exists, then remove the current session); removing a current session that is already recorded; storing `result` once (an adapter function the results page calls); retention (20 per test, keeping each content version's first test attempt); importing M4's `reading:<testId>:finished` entry once and removing it; the retry entry `reading:<testId>:retry` and the session's optional `retry` field, never on the main entry; an in-memory fallback when storage is blocked or full",
+        "Per ADR-0009 as accepted: the attempt model and a domain parser that validates entry by entry; recording on finish (append unless the id exists, then remove the current session); removing a current session that is already recorded; results append-only, each with `keyRevision` and `rulesVersion` (an adapter function the results page calls; ADR-0009 §4); `firstTry` provenance written once (ADR-0009 §6); retention (20 per test, never the `firstTry` attempt); importing M4's `reading:<testId>:finished` entry exactly as in READING_EXPERIENCE.md 'Import of a completed M4 session' (`results: []`, `importedFromM4`, `firstTry: \"unknown\"`; a non-importable entry left untouched); the retry entry `reading:<testId>:retry` and the session's optional `retry` field, never on the main entry; an in-memory fallback when storage is blocked or full",
         "The test screen's finish (by the user, by time-out, and a time-out noticed on load) records the attempt instead of writing `:finished`. The M4 finished page stays until M5-06 replaces it",
-        "Tests with stored values in the exact M4 format (schema 1, in progress and finished): resumed unchanged; a finished entry imported once; no duplicate after a reload, a second tab, or a time-out noticed on load; a bad entry dropped alone; an unknown schema read as empty; retention; result written once and never overwritten"
+        "Tests with stored values in the exact M4 format (schema 1, in progress and finished): resumed unchanged; a finished entry imported once; no duplicate after a reload, a second tab, or a time-out noticed on load; a bad attempt or result entry ignored and removed on the next write; unreadable JSON replaced with `firstTry: \"unknown\"`; an unknown schema never overwritten (attempts in memory); retention; results appended, never overwritten; `firstTry` for a first attempt, an M4 import, a restart, a retry and a damaged history"
       ],
       "outOfScope": [
         "the results and review UI (M5-06, M5-07)",
@@ -2539,22 +2542,23 @@
     },
     {
       "id": "M5-05",
-      "title": "Explanations for the demo test in uz, ru and en",
+      "title": "AI-drafted explanations for the demo test in uz, ru and en",
       "milestone": "M5",
       "owner": "worker",
       "status": "todo",
       "dependsOn": ["M5-02"],
-      "goal": "Every question unit of the demo test has a grounded explanation and a simpler version in each interface language, validated like content.",
+      "goal": "Every question unit of the demo test has an explanation and a simpler version in each interface language, drafted by Claude (AI), marked as AI drafts, and validated like content.",
       "scope": [
-        "Per ADR-0008 §5: the explanation file type, its domain validator (test and version match, one item per question unit, both texts in every locale, no empty text, the approved length limits, simpler shorter than the explanation, `en` segments) and a server-side loader in `data/` that returns one locale's file; a content test validating every file",
-        "Write `demo-academic-1.explanations.{en,ru,uz}.json` by the approved authoring rules: grounded only in the passage, question and key; the paraphrase named; NOT GIVEN explanations say what the passage covers and what it does not, never an invented sentence; English quotes as `en` segments of at most 8 words",
-        "Original text for this project, English first, then ru and uz; record in PROGRESS.md that uz and ru need a fluent-speaker review before beta (M11)"
+        "Per ADR-0008 §5: the explanation file type, its domain validator (test and version match, one item per question unit, both texts in every locale, a known `review.status`, no empty text, the approved length limits, simpler shorter than the explanation, `en` segments) and a server-side loader in `data/` that returns one locale's file; a content test validating every file",
+        "Draft (Claude, AI) `demo-academic-1.explanations.{en,ru,uz}.json` with `review.status: aiDraft`, by the approved authoring rules: grounded only in the passage, question and key; the paraphrase named; NOT GIVEN explanations say what the passage covers and what it does not, never an invented sentence; English quotes as `en` segments of at most 8 words",
+        "Original text for this project, English first, then ru and uz; never described as written by a person; PROGRESS.md records the files as AI drafts awaiting the D20 reviews (English accuracy, fluent uz and ru, owner approval)"
       ],
       "outOfScope": ["UI (M5-07)", "runtime AI", "other tests"],
       "acceptanceCriteria": [
         "All 39 question units (40 questions, 22–23 as one item) have both texts in en, ru and uz, and the files validate",
         "The validator rejects a missing unit, an unknown unit, an empty or too long text, a simpler text not shorter than its explanation, and a wrong test or version (tests)",
         "Each explanation refers only to its question's evidence and passage",
+        "Every file's review status is `aiDraft`, unless a human review is recorded in PROGRESS.md",
         "All gates pass"
       ],
       "validation": [
@@ -2583,11 +2587,11 @@
       "dependsOn": ["M5-04"],
       "goal": "Finishing a test in either mode, or running out of time, leads to an honest results page whose result never changes once shown.",
       "scope": [
-        "The results address as approved (D21), inside the shell: the key loaded on the server for the results and review pages only (ADR-0008 §2), the result computed on first view and stored once (ADR-0009 §3); 'Time is up.', 'Your results', the score out of 40, the honest line, the breakdown, the red 'Review mistakes' or 'Review answers' (linking to the review address that M5-07 builds), 'Start again'",
+        "The results address as approved (D21), inside the shell: the key loaded on the server for the results and review pages only (ADR-0008 §2), the result computed on first view and appended, then rechecked when the key revision or rules version is newer, with the 'Rechecked…' note and the earlier result kept (ADR-0009 §4); 'Time is up.', 'Your results', the score out of 40, the honest line, the breakdown, the red review button whose text names what it opens (mistakes and unanswered, mistakes, unanswered, or all answers; linking to the review address that M5-07 builds), 'Start again'",
         "Finishing and time-out replace the test screen with the results page; the test link shows the start screen with 'See your last results' (D6); the M4 finished page and its now unused copy are removed",
-        "States: no attempt, unknown attempt, an earlier content version (score kept, or cannot be checked), storage blocked (notice, in memory)",
+        "Every result state in DESIGN_SYSTEM.md 'Result states': including rechecked, imported from M4 (note), no attempt, unknown attempt, an earlier content version (score kept, or cannot be checked), storage blocked (notice, in memory)",
         "The `status.correct` token and outcome icons as approved (DESIGN_SYSTEM.md M5); uz/ru/en copy as approved",
-        "Tests: component tests; e2e on phone and desktop: Practice finish, Exam finish, Exam time-out on screen and while away (controlled clock), reload shows the same result, an M4-format finished session seeded in storage shows results, storage blocked, 320 px in uz/ru/en, axe"
+        "Tests: component tests; e2e on phone and desktop: Practice finish, Exam finish, Exam time-out on screen and while away (controlled clock), reload shows the same result, a result stored with an older key revision is rechecked with the note, an M4-format finished session seeded in storage shows results, storage blocked, 320 px in uz/ru/en, axe"
       ],
       "outOfScope": [
         "review (M5-07, M5-08)",
@@ -2637,9 +2641,9 @@
       "goal": "From the results, a learner reviews every question (mistakes first, correct and unanswered too) with their answer, the accepted answer, the evidence in the passage, the explanation and 'Explain simpler', on a phone.",
       "scope": [
         "The review address as approved, in the test-screen layout: the test bar with 'Results'; the read-only passage with evidence and related chips and underlines, the learner's highlights and the current question's pins; the review sheet card in the approved order (outcome, answers, evidence, why, 'Explain simpler', 'Your evidence' comparison, notes); the navigator with outcome badges",
-        "Sequences (D8) with the address replaced on question change; the passage scrolls to the evidence (D9), instantly with reduced motion; NOT GIVEN as 'Where the passage talks about this', never proof; focus and keyboard behavior as specified; the empty and error states",
+        "Sequences (D8): the red button's sequence walks every not-correct and unanswered question, unanswered ones shown as 'No answer' with 'You did not answer this question.' (and the time-out note), never skipped; the address replaced on question change; the passage scrolls to the evidence (D9), instantly with reduced motion; NOT GIVEN as 'Where the passage talks about this', never proof; focus and keyboard behavior as specified; the empty and error states",
         "Explanations of the active locale only; test content and `en` segments marked lang=en; uz/ru/en copy as approved",
-        "Tests: component tests of the card for each interaction family; e2e on phone: results to the first mistake, Next through mistakes, a correct and an unanswered question through the navigator, a NOT GIVEN question, 'Explain simpler', 'Show in passage', the keyboard path, 320 px in uz/ru/en, 200% zoom, reduced motion, axe"
+        "Tests: component tests of the card for each interaction family; e2e on phone: results to the first question to review, Next through mistakes and unanswered questions, a correct and an unanswered question through the navigator, a NOT GIVEN question, 'Explain simpler', 'Show in passage', the keyboard path, 320 px in uz/ru/en, 200% zoom, reduced motion, axe"
       ],
       "outOfScope": [
         "the desktop layout (M5-08)",
@@ -2715,16 +2719,16 @@
     },
     {
       "id": "M5-09",
-      "title": "Practise known mistakes again (retry)",
+      "title": "Try mistakes and unanswered questions again (retry)",
       "milestone": "M5",
       "owner": "worker",
       "status": "todo",
       "dependsOn": ["M5-08"],
-      "goal": "A learner can answer an attempt's mistakes again without seeing the answers, and sees an honestly labeled result that never changes the original attempt.",
+      "goal": "A learner can answer an attempt's not-correct and unanswered questions again without seeing the answers, and sees an honestly labeled result that never changes the original attempt.",
       "scope": [
         "The retry address as approved: a Practice session limited to the given questions (the session's `retry` field, ADR-0009 §5), enforced in the domain transitions (moving, answering and pinning only within the subset; the answered count and the finish confirmation over the subset); the navigator, Previous / Next and the desktop column show only those questions; 'n of m to practise'",
         "One retry in progress per test: the same retry resumes, a different one replaces it; finishing records a `retry` attempt",
-        "The retry's results ('Your second try', the score out of the retried questions, the honest retry line, 'Review mistakes', 'Back to your test results') and review of the retry; 'Practise your mistakes again' on a test attempt's results (hidden without mistakes)",
+        "The retry's results ('Your second try', the score out of the retried questions, the honest retry line, the review button named as on the results page, 'Back to your test results') and review of the retry; the quiet 'Try n questions again: not correct or no answer' on a test attempt's results, covering every question not correct or unanswered (hidden when there are none); the retry's denominator counts both",
         "Tests: domain tests for subset transitions; e2e on phone and desktop; the original attempt and its result are unchanged after a retry (stored data and its results page)"
       ],
       "outOfScope": [
@@ -2766,10 +2770,10 @@
       "dependsOn": ["M5-09"],
       "goal": "The results page shows repeated mistakes only when the first-try evidence meets the approved threshold, describes what happened without guessing why, and links to practising those questions again.",
       "scope": [
-        "Domain code per READING_EXPERIENCE.md 'M5 specifications', 'Error Intelligence (M5)' as approved: first-try selection per test; the categories from signals and authored tags with their opportunities; the threshold (D15); ordering and the limit of two; unanswered questions excluded",
-        "'What to work on' on a test attempt's results: the cards (title, count of opportunities with question numbers, tip, 'Practise these questions again' as a retry of those questions), the 'no repeated mistakes' text, the first-try sentence on later attempts, nothing on a retry's results; the per-question notes in review use the same signals",
+        "Domain code per READING_EXPERIENCE.md 'M5 specifications', 'Error Intelligence (M5)' as approved: the first try from the stored `firstTry` (ADR-0009 §6), per test, never guessed; no detection when it is unknown; the categories from signals and content tags with their opportunities; the threshold (D15), presented as a heuristic, never as a diagnosis; ordering and the limit of two; unanswered questions excluded",
+        "'Mistakes that repeated' on a test attempt's results: the scope line ('In this try at this test…' or 'From your first try…'), the cards (title, count of opportunities with question numbers, tip, 'Practise these questions again' as a retry of those questions), the 'none' text, the 'first try unknown' text, nothing on a retry's results; no wording that claims a pattern across tests or a lasting weakness; the per-question notes in review use the same signals",
         "uz/ru/en copy as approved, with English answer words lang=en",
-        "Tests: domain tests at every boundary (2 vs 3 questions, 1 vs 2 groups, first try only, later attempts and retries ignored, an imported M4 attempt, unanswered excluded, authored tags, ties); e2e with seeded attempts for a card, the none state and a later attempt"
+        "Tests: domain tests at every boundary (2 vs 3 questions, 1 vs 2 groups, first try only, later attempts, restarts and retries ignored, an imported M4 attempt and a damaged history (unknown first try), unanswered excluded, content tags, ties); e2e with seeded attempts for a card, the none state and a later attempt"
       ],
       "outOfScope": [
         "learner-confirmed causes (D14)",
@@ -2812,7 +2816,7 @@
       "dependsOn": ["M5-10"],
       "goal": "The product loop for Reading (practice, understand mistakes, practise again) works as one flow on phone and desktop, and the docs describe what exists.",
       "scope": [
-        "e2e journeys on both projects in uz/ru/en with English test content marked lang=en: a Practice test → finish → results → review mistakes (each interaction family, a NOT GIVEN question, 'Explain simpler') → practise mistakes → the retry's results → back; an Exam with a time-out → results → review; a reload at each step; M4-format data already on the device",
+        "e2e journeys on both projects in uz/ru/en with English test content marked lang=en: a Practice test → finish → results → review mistakes and unanswered questions (each interaction family, a NOT GIVEN question, an unanswered question, 'Explain simpler') → try them again → the retry's results → back; an Exam with a time-out → results → review; a reload at each step; M4-format data already on the device (an unfinished session resumed, a finished one imported with the 'checked later' note and no repeated-mistake detection)",
         "Accessibility pass per ACCESSIBILITY.md on the production build (keyboard, screen-reader order, announcements, 200% zoom, 320 px, reduced motion, not by color alone), with findings fixed or recorded; a TalkBack check recorded as before-beta if no device is available",
         "Docs: FEATURE_MAP (Error review, Error Intelligence, Targeted practice), CLAUDE.md Current state, READING_EXPERIENCE.md status line"
       ],
