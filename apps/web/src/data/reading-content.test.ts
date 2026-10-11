@@ -7,6 +7,9 @@ import {
   parseAnswerKey,
   parseReadingTest,
 } from "@/domain/reading/parse-content";
+import { checkAttempt } from "@/domain/reading/scoring";
+import type { Answer } from "@/domain/reading/session";
+import { questionUnits } from "@/domain/reading/units";
 
 // Every Reading test in the repository must validate with its answer key
 // (ADR-0005 §3), so broken content cannot be merged.
@@ -49,6 +52,33 @@ describe("Reading content files", () => {
             expect(entry?.evidence.length).toBeGreaterThan(0);
           }
         }
+      });
+
+      it("has exactly 40 scoring positions and at most 40 marks", () => {
+        if (!parsed.ok) throw new Error("the test itself is invalid");
+        const key = parseAnswerKey(
+          parsed.value,
+          readJson(file.replace(/\.json$/, ".key.json")),
+        );
+        if (!key.ok) throw new Error(key.errors.join("\n"));
+        const answers: Record<string, Answer> = {};
+        for (const unit of questionUnits(parsed.value)) {
+          const accept = key.value.answers[unit.numbers[0] ?? 0]?.accept ?? [];
+          answers[unit.key] =
+            unit.kind === "multi" ? accept : (accept[0] ?? "");
+        }
+        const check = (a: Record<string, Answer>) =>
+          checkAttempt(parsed.value, key.value, {
+            answers: a,
+            pins: {},
+            finishReason: "user",
+          }).score;
+        expect(check(answers)).toEqual({
+          kind: "practiceRawScore",
+          marks: QUESTION_COUNT,
+          positions: QUESTION_COUNT,
+        });
+        expect(check({}).positions).toBe(QUESTION_COUNT);
       });
     });
   }

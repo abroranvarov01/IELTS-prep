@@ -2467,7 +2467,7 @@
       "title": "Answer checking and the raw score in the domain",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M5-02"],
       "goal": "Every M4 question type is checked against the key with the approved normalization, marks, outcomes, denominators and observable signals, as tested domain code.",
       "scope": [
@@ -2502,7 +2502,8 @@
         "docs/engineering/TESTING_STRATEGY.md",
         ".claude/rules/testing/test-code.md",
         "docs/product/PRODUCT.md"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M5-04",
