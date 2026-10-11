@@ -2652,12 +2652,75 @@
       "completedAt": "2026-10-11"
     },
     {
+      "id": "M5-12",
+      "title": "Adopt Feature-Sliced Design in apps/web (owner-authorized migration)",
+      "milestone": "M5",
+      "owner": "worker",
+      "status": "in_progress",
+      "dependsOn": ["M5-06"],
+      "goal": "The existing apps/web frontend follows Feature-Sliced Design as the owner decided on 2026-10-11: layer, slice and public-API boundaries enforced by tools, ReadingScreen split by responsibility, approved behavior and stored data unchanged, and governing documents that agree with the code. M5-07 to M5-11 wait until it is done.",
+      "scope": [
+        "Layers in apps/web/src only where current code justifies them: app (the Next.js App Router and proxy.ts), views (the FSD pages layer, named so that Next.js never treats it as a Pages Router), widgets, features, entities, shared",
+        "Move onboarding, home, the level-check page, the shell, the Reading test and results screens, and the domain and storage code into slices with explicit public APIs; server-only content loaders and test fixtures behind their own entry points, so that the test route still imports neither the answer key nor explanations",
+        "Split ReadingScreen by responsibility (session lifecycle and storage, the Exam clock, passage selection with keyboard and focus scoped to the passage, passage scroll and navigation, composition), after investigating the overlapping completion paths, persistence failures swallowed before navigation, the ownership of snapshot, stored, local and history state, document-wide passage queries and listeners, and whether the clock causes needless persistence or re-renders",
+        "Enforce layer direction, slice isolation, public APIs, segment purity and import cycles with ESLint, verified with forbidden imports in alias, relative and re-export form",
+        "ADR-0010 supersedes ADR-0004; CLAUDE.md, ARCHITECTURE.md, BOUNDARIES.md, CODE_QUALITY.md, DEFINITION_OF_DONE.md, QUALITY_GATES.md, the path-scoped rules and the worker skills describe the new structure; stale paths removed, historical records kept",
+        "Tests follow the moved code; regression tests for behavioral risks the refactor introduces"
+      ],
+      "outOfScope": [
+        "M5-07 to M5-11 (review, retries, Error Intelligence) and any other unfinished feature",
+        "visual redesign, copy or content changes",
+        "changes to the storage contract (localStorage keys and envelope, the IndexedDB database, its records and transactions)",
+        "new runtime dependencies or a state-management library",
+        "apps/api and the monorepo package boundaries",
+        "activating another milestone"
+      ],
+      "acceptanceCriteria": [
+        "Every approved M4 and M5 behavior is unchanged: the browser e2e suite passes on phone and desktop, including persistence, reload, completion, cross-tab, keyboard and layout journeys",
+        "Lint rejects an import into a higher layer, an import between slices of one layer and an import past a slice's public API, whatever the import spelling",
+        "The test route imports neither the answer key nor explanations",
+        "The documents, the worker instructions, the lint enforcement and the code describe the same structure",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/architecture/INVARIANTS.md",
+        "docs/engineering/CODE_QUALITY.md",
+        "docs/engineering/QUALITY_GATES.md",
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0007-reading-ui-primitives.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        ".claude/skills/refactor/SKILL.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/ (new ADR-0010; ADR-0004 superseded; README.md index)",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/engineering/CODE_QUALITY.md",
+        "docs/engineering/DEFINITION_OF_DONE.md",
+        "docs/engineering/QUALITY_GATES.md",
+        "CLAUDE.md",
+        ".claude/rules/ and .claude/skills/ where they name the old structure",
+        "docs/execution/PROGRESS.md"
+      ],
+      "notes": "Owner decision 2026-10-11: adopt Feature-Sliced Design for apps/web. Executed directly by the owner-directed session, not by the autonomous loop. M5-07 depends on this task, so M5-07 to M5-11 are paused until it is done; M5 stays active."
+    },
+    {
       "id": "M5-07",
       "title": "Evidence-first review on phones",
       "milestone": "M5",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": ["M5-05", "M5-06"],
+      "dependsOn": ["M5-05", "M5-06", "M5-12"],
       "goal": "From the results, a learner reviews every answer unit (mistakes and unanswered first, correct ones too) with their answer, the accepted answer, the key's evidence, the explanation and 'Explain simpler', on a phone.",
       "scope": [
         "The review address as approved, in the test-screen layout: the test bar with 'Results'; the read-only passage with evidence and related chips and underlines, the attempt's recorded highlights (none, and no claim, when not recorded) and the current unit's pins; one card per answer unit in the approved order (unit outcome, option-level labels or typed answers, evidence, why, 'Explain simpler', the pin comparison with the key's cited sentences, notes); the navigator with outcome badges, both numbers of an item showing the unit's badge and opening its one card",
