@@ -2,7 +2,8 @@ import type { NextConfig } from "next";
 import { withSerwist } from "@serwist/turbopack";
 import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin();
+// The request config lives with the other i18n setup in shared (ADR-0010).
+const withNextIntl = createNextIntlPlugin("./src/shared/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   // CLAUDE.md is the single agent guide; stop `next dev` writing AGENTS.md.

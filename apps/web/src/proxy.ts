@@ -1,9 +1,8 @@
 import createMiddleware from "next-intl/middleware";
 import { type NextRequest, NextResponse } from "next/server";
-import { readGoal } from "./data/goal-cookie";
-import { readingTest } from "./data/reading-content";
-import { LATER, firstUnansweredQuestion } from "./domain/onboarding";
-import { routing } from "./i18n/routing";
+import { LATER, firstUnansweredQuestion, readGoal } from "@/entities/goal";
+import { readingTest } from "@/entities/reading/content.server";
+import { routing } from "@/shared/i18n/routing";
 
 const handleLocaleRouting = createMiddleware(routing);
 const LOCALES = routing.locales.join("|");

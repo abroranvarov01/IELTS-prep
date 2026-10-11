@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { readingTest, readingTestIds } from "@/data/reading-content";
-import { ReadingScreen } from "@/features/reading/ReadingScreen";
+import { readingTest, readingTestIds } from "@/entities/reading/content.server";
+import { ReadingScreen } from "@/views/reading-test";
 
 // Reading is reached by its direct route only in M4 (owner, M4-09).
 export function generateStaticParams() {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { TargetBandStep } from "@/features/onboarding/TargetBandStep";
+import { TargetBandStep } from "@/views/onboarding";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("onboarding.targetBand");

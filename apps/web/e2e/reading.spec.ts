@@ -4,7 +4,7 @@ import { createTranslator } from "next-intl";
 import en from "../messages/en.json";
 import ru from "../messages/ru.json";
 import uz from "../messages/uz.json";
-import { routing } from "../src/i18n/routing";
+import { routing } from "../src/shared/i18n/routing";
 import {
   type Locale,
   TEST,

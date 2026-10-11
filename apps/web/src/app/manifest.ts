@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import messages from "../../messages/uz.json";
-import { routing } from "@/i18n/routing";
+import { routing } from "@/shared/i18n/routing";
 
 // Platform metadata cannot read CSS variables, so colors mirror tokens.css
 // (allowlisted in scripts/check-tokens.mjs, guarded by manifest.test.ts).

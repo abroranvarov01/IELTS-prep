@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { type Locale, TEST, catalogs, fill, sentence } from "./reading";
-import { routing } from "../src/i18n/routing";
+import { routing } from "../src/shared/i18n/routing";
 
 // Whole Reading sessions, from the start screen to the results page, on the
 // phone layout (mobile project) and the desktop layout (desktop project), in

@@ -2,7 +2,7 @@ import { SerwistProvider } from "@serwist/turbopack/react";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { routing } from "@/shared/i18n/routing";
 import { fontVariables } from "../fonts";
 import "../globals.css";
 

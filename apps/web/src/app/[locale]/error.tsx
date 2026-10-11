@@ -1,8 +1,8 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { StatusMessage } from "../StatusMessage";
-import { Shell } from "./Shell";
+import { StatusMessage } from "@/shared/ui/StatusMessage";
+import { Shell } from "@/widgets/shell";
 
 export default function LocaleError({ retry }: { retry: () => void }) {
   const locale = useLocale();

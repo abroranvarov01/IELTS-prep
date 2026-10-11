@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 const ALLOWED_FILES = new Set([
-  "apps/web/src/styles/tokens.css",
+  "apps/web/src/shared/ui/tokens.css",
   "apps/web/src/app/manifest.ts",
 ]);
 const SOURCE_FILE = /\.(css|[cm]?[jt]sx?)$/;
@@ -58,6 +58,6 @@ if (problems.length > 0) {
   console.error(
     `Raw color values outside the design tokens:\n${problems.join("\n")}`,
   );
-  console.error("Use a token from apps/web/src/styles/tokens.css instead.");
+  console.error("Use a token from apps/web/src/shared/ui/tokens.css instead.");
   process.exit(1);
 }

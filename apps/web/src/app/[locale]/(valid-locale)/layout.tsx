@@ -1,6 +1,6 @@
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import { routing } from "@/shared/i18n/routing";
 
 // [locale] matches any first segment (e.g. /api/..., /old-page.html, which the
 // proxy does not handle). The locale layout renders those in the default

@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import en from "../../messages/en.json";
 import ru from "../../messages/ru.json";
 import uz from "../../messages/uz.json";
-import { routing } from "@/i18n/routing";
+import { routing } from "@/shared/i18n/routing";
 import { fontVariables } from "./fonts";
 import "./globals.css";
-import { StatusMessage } from "./StatusMessage";
+import { StatusMessage } from "@/shared/ui/StatusMessage";
 
 const catalogs = { uz, ru, en };
 

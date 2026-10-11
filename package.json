@@ -8,7 +8,7 @@
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint . && node scripts/check-tokens.mjs",
+    "lint": "eslint . && node scripts/check-tokens.mjs && node scripts/check-architecture.mjs",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "test:e2e": "pnpm -r test:e2e",

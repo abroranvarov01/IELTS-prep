@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-import { routing } from "../src/i18n/routing";
+import { routing } from "../src/shared/i18n/routing";
 import { saveGoal } from "./goal";
 
 // These tests visit home as a returning user (home sends a new one to onboarding).

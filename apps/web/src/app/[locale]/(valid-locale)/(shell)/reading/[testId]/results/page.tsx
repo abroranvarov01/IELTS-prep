@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { readingTest, readingTestIds } from "@/data/reading-content";
-import { readingKey } from "@/data/reading-keys";
-import { ResultsScreen } from "@/features/reading/ResultsScreen";
+import { readingTest, readingTestIds } from "@/entities/reading/content.server";
+import { readingKey } from "@/entities/reading/keys.server";
+import { ResultsScreen } from "@/views/reading-results";
 
 // The results of a Reading attempt, inside the shell (D21). The answer key is
 // read here, on the server, and passed to this page only (ADR-0008 §2).

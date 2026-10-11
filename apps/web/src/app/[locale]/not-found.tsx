@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { StatusMessage } from "../StatusMessage";
-import { Shell } from "./Shell";
+import { StatusMessage } from "@/shared/ui/StatusMessage";
+import { Shell } from "@/widgets/shell";
 
 export default async function NotFound() {
   const locale = await getLocale();
