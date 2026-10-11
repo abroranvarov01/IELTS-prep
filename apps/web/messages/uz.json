@@ -106,7 +106,8 @@
       "item": "{number}-savol, {states}",
       "unanswered": "javob yoʻq",
       "flagged": "tekshirish uchun belgilangan",
-      "current": "joriy"
+      "current": "joriy",
+      "passageProgress": "{number}-matn: {total} tadan {answered} tasiga javob berilgan"
     },
     "flag": {
       "add": "Tekshirish uchun belgilash",

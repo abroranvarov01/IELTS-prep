@@ -5,7 +5,12 @@ import { QUESTION_COUNT } from "@/domain/reading/content";
 import { answeredNumbers } from "@/domain/reading/session";
 import { useReading } from "./reading-context";
 
-/** "Finish the test?" in the expanded sheet (USER_FLOWS.md, Finish a test). */
+/**
+ * "Finish the test?" (USER_FLOWS.md, Finish a test): in the expanded sheet,
+ * or in a dialog on desktop, which is named by its heading.
+ */
+export const FINISH_TITLE_ID = "finish-title";
+
 export function FinishConfirmation({
   headingRef,
   onFinish,
@@ -22,6 +27,7 @@ export function FinishConfirmation({
   return (
     <>
       <h2
+        id={FINISH_TITLE_ID}
         ref={headingRef}
         tabIndex={-1}
         className="text-heading-3 font-bold focus:outline-none"

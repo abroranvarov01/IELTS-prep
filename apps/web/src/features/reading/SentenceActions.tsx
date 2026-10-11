@@ -4,7 +4,8 @@ import type { RefObject } from "react";
 /**
  * The bar of actions for the selected sentence, just above the sheet
  * (READING_EXPERIENCE.md, Highlighting and Pin Evidence). `pin` is absent
- * where Pin Evidence is not offered (Exam Mode).
+ * where Pin Evidence is not offered (Exam Mode). Without `bottom` (desktop) it
+ * stays at the bottom of the passage column, above the navigator bar.
  */
 export function SentenceActions({
   bottom,
@@ -15,7 +16,8 @@ export function SentenceActions({
   onToggleHighlight,
   onCancel,
 }: {
-  bottom: string;
+  /** Its distance from the bottom of the screen, above the sheet. */
+  bottom?: string;
   isHighlighted: boolean;
   pin?: { number: number; isPinned: boolean; onToggle: () => void };
   /** Why the last action was refused. */
@@ -32,8 +34,8 @@ export function SentenceActions({
     <div
       role="group"
       aria-label={t("mark.actions")}
-      className="fixed inset-x-gutter z-20 mx-auto flex max-w-column flex-wrap items-center justify-between gap-2 rounded-md bg-surface-base px-2 py-1 shadow-raised"
-      style={{ bottom }}
+      className={`${bottom === undefined ? "sticky bottom-2" : "fixed inset-x-gutter"} z-20 mx-auto flex max-w-column flex-wrap items-center justify-between gap-2 rounded-md bg-surface-base px-2 py-1 shadow-raised`}
+      style={bottom === undefined ? undefined : { bottom }}
     >
       {message && <p className="basis-full px-3 pt-2 font-medium">{message}</p>}
       <button

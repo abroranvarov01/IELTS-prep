@@ -3,6 +3,7 @@ import { type ReactNode, useRef } from "react";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { QuietLink } from "@/components/QuietLink";
 import { Link } from "@/i18n/navigation";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 /**
  * The compact bar that replaces the shell header on the test screen
@@ -36,11 +37,10 @@ export function TestBar({
         {children}
       </div>
       {confirmExit && (
-        <dialog
-          ref={dialogRef}
-          aria-labelledby="exit-exam-title"
-          aria-describedby="exit-exam-body"
-          className="m-auto w-[calc(100%-2*var(--spacing-gutter))] max-w-column rounded-xl border border-border-control bg-surface-base p-6 text-ink shadow-raised"
+        <ConfirmDialog
+          dialogRef={dialogRef}
+          labelledBy="exit-exam-title"
+          describedBy="exit-exam-body"
         >
           <h2 id="exit-exam-title" className="text-heading-3 font-bold">
             {t("exitExam.title")}
@@ -56,7 +56,7 @@ export function TestBar({
           <div className="mt-2">
             <QuietLink href="/">{t("exitExam.leave")}</QuietLink>
           </div>
-        </dialog>
+        </ConfirmDialog>
       )}
     </header>
   );

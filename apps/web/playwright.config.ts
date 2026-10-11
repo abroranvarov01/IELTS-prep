@@ -11,6 +11,8 @@ export default defineConfig({
     {
       name: "mobile",
       use: { ...devices["Pixel 7"], viewport: { width: 360, height: 800 } },
+      // The desktop Reading layout exists only in a wide window.
+      testIgnore: "reading-desktop.spec.ts",
     },
     {
       name: "desktop",

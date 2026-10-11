@@ -61,7 +61,7 @@ export function EvidenceList({
               {t("evidence.paragraph", { letter: paragraph })}
             </p>
             <blockquote
-              id={`evidence-${sentence.id}`}
+              id={`evidence-${number}-${sentence.id}`}
               lang="en"
               className="mt-1 font-passage text-passage"
             >
@@ -70,7 +70,7 @@ export function EvidenceList({
             <div className="flex flex-wrap gap-x-4">
               <button
                 type="button"
-                aria-describedby={`evidence-${sentence.id}`}
+                aria-describedby={`evidence-${number}-${sentence.id}`}
                 onClick={() => onShow(sentence.id)}
                 className={action}
               >
@@ -78,7 +78,7 @@ export function EvidenceList({
               </button>
               <button
                 type="button"
-                aria-describedby={`evidence-${sentence.id}`}
+                aria-describedby={`evidence-${number}-${sentence.id}`}
                 onClick={() => remove(sentence.id)}
                 className={action}
               >

@@ -106,7 +106,8 @@
       "item": "Question {number}, {states}",
       "unanswered": "no answer",
       "flagged": "marked for review",
-      "current": "current"
+      "current": "current",
+      "passageProgress": "Passage {number}: {answered} of {total} answered"
     },
     "flag": {
       "add": "Mark for review",

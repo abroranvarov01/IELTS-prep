@@ -5,17 +5,16 @@ import en from "../messages/en.json";
 import ru from "../messages/ru.json";
 import uz from "../messages/uz.json";
 import { routing } from "../src/i18n/routing";
-
-type Locale = (typeof routing.locales)[number];
-const catalogs = { uz, ru, en };
-const TEST = "demo-academic-1";
-
-function fill(template: string, values: Record<string, string | number>) {
-  return Object.entries(values).reduce(
-    (text, [key, value]) => text.replace(`{${key}}`, String(value)),
-    template,
-  );
-}
+import {
+  type Locale,
+  TEST,
+  actions,
+  catalogs,
+  choose,
+  fill,
+  noOverflow,
+  sentence,
+} from "./reading";
 
 async function startPractice(page: Page, locale: Locale = "en") {
   await page.goto(`/${locale}/reading/${TEST}`);
@@ -32,39 +31,16 @@ function questionHeading(page: Page, locale: Locale, number: number) {
   });
 }
 
-/** Taps an option row, as a user does (the native input inside is visually hidden). */
-async function choose(page: Page, name: string) {
-  await page
-    .locator("label")
-    .filter({ has: page.getByRole("radio", { name, exact: true }) })
-    .click();
-}
-
 const sheet = (page: Page, locale: Locale = "en") =>
   page.getByRole("region", { name: catalogs[locale].reading.sheet.label });
 
-const sentence = (page: Page, id: string) =>
-  page.locator(`main [data-sentence="${id}"]`);
-const actions = (page: Page, locale: Locale = "en") =>
-  page.getByRole("group", { name: catalogs[locale].reading.mark.actions });
-
-async function noOverflow(page: Page) {
-  const overflow = await page.evaluate(
-    () =>
-      document.documentElement.scrollWidth -
-      document.documentElement.clientWidth,
-  );
-  expect(overflow).toBe(0);
-  const clipped = await page
-    .locator("h1, h2, p, label, a, button")
-    .evaluateAll((elements) =>
-      elements
-        // Visually hidden elements (the skip link) are 1 px wide by design.
-        .filter((e) => e.clientWidth > 1 && e.scrollWidth > e.clientWidth + 1)
-        .map((e) => e.textContent),
-    );
-  expect(clipped).toEqual([]);
-}
+// The phone and tablet layout, with the question sheet. The desktop project
+// runs these below the desktop breakpoint; reading-desktop.spec.ts covers the
+// desktop layout.
+test.beforeEach(async ({ page }, testInfo) => {
+  if (testInfo.project.name === "desktop")
+    await page.setViewportSize({ width: 1000, height: 800 });
+});
 
 test("opens the start screen with both modes, Practice chosen, and starts the test", async ({
   page,

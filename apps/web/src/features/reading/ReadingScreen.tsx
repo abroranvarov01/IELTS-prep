@@ -24,6 +24,8 @@ import { questionUnits, unitOf } from "@/domain/reading/units";
 import { ExamTimer } from "./ExamTimer";
 import { FinishedScreen } from "./FinishedScreen";
 import { PassageView } from "./PassageView";
+import { QuestionBar } from "./QuestionBar";
+import { QuestionColumn } from "./QuestionColumn";
 import { QuestionSheet, SHEET_HEIGHT } from "./QuestionSheet";
 import { ReadingContext, useReading } from "./reading-context";
 import { SentenceActions } from "./SentenceActions";
@@ -33,6 +35,15 @@ import { TestBar } from "./TestBar";
 
 // Storage is read on the client only; the server renders the loading frame.
 const noSubscription = () => () => {};
+
+// From the approved desktop breakpoint (64rem, DESIGN_SYSTEM.md) the screen
+// is the desktop layout, a different tree from the phone's sheet.
+const DESKTOP = "(min-width: 64rem)";
+const subscribeToDesktop = (onChange: () => void) => {
+  const query = window.matchMedia(DESKTOP);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+};
 
 /** The Reading test screen: start, reading and answering, finished (ADR-0006, ADR-0007). */
 export function ReadingScreen({ test }: { test: ReadingTest }) {
@@ -110,6 +121,13 @@ function sentenceElement(id: string) {
 function ReadingView({ canSave, now }: { canSave: boolean; now: number }) {
   const t = useTranslations("reading");
   const { test, units, session, send } = useReading();
+  const isDesktop = useSyncExternalStore(
+    subscribeToDesktop,
+    () => window.matchMedia(DESKTOP).matches,
+    () => false,
+  );
+  // The passage scrolls in its column on desktop, with the page on phones.
+  const mainRef = useRef<HTMLElement>(null);
   const passage = test.passages[session.view.passage - 1] ?? test.passages[0];
   const savedScroll = passage ? (session.view.scroll[passage.id] ?? 0) : 0;
   const sentenceIds = useMemo(
@@ -135,8 +153,8 @@ function ReadingView({ canSave, now }: { canSave: boolean; now: number }) {
 
   // Show each passage where the user last left it (READING_EXPERIENCE.md).
   useEffect(() => {
-    window.scrollTo(0, savedScroll);
-  }, [passage?.id, savedScroll]);
+    (isDesktop ? mainRef.current : window)?.scrollTo(0, savedScroll);
+  }, [passage?.id, savedScroll, isDesktop]);
 
   // Taps and keys reach the sentences through delegated listeners (ADR-0007),
   // so the sentences themselves stay plain text.
@@ -212,7 +230,7 @@ function ReadingView({ canSave, now }: { canSave: boolean; now: number }) {
 
   // "Show in passage": the passage moves to the sentence and selects it.
   const showSentence = (id: string) => {
-    if (session.view.sheet === "expanded")
+    if (!isDesktop && session.view.sheet === "expanded")
       send({ type: "setView", view: { sheet: "partial" } });
     sentenceElement(id)?.scrollIntoView({ block: "start" });
     if (selected === id) firstActionRef.current?.focus();
@@ -230,7 +248,12 @@ function ReadingView({ canSave, now }: { canSave: boolean; now: number }) {
       send({
         type: "setView",
         view: {
-          scroll: { ...session.view.scroll, [passage.id]: window.scrollY },
+          scroll: {
+            ...session.view.scroll,
+            [passage.id]: isDesktop
+              ? (mainRef.current?.scrollTop ?? 0)
+              : window.scrollY,
+          },
         },
       });
     }
@@ -263,72 +286,119 @@ function ReadingView({ canSave, now }: { canSave: boolean; now: number }) {
     }
     closeActions(id);
   };
+  const skipLink = (
+    <a
+      href="#question-heading"
+      className="sr-only focus:not-sr-only focus:block focus:px-gutter focus:py-3 focus:font-bold focus:underline"
+    >
+      {t("skipToQuestion")}
+    </a>
+  );
+  const testBar = (
+    <TestBar confirmExit={session.mode === "exam"}>
+      <span className="font-medium">
+        {t("passageOf", {
+          number: passage.number,
+          total: test.passages.length,
+        })}
+      </span>
+      {remaining !== undefined && <ExamTimer remaining={remaining} />}
+    </TestBar>
+  );
+  const passageArea = (
+    <>
+      {!canSave && (
+        <p role="status" className="mx-auto max-w-measure pt-4 font-medium">
+          {t("storage.unavailable")}
+        </p>
+      )}
+      <PassageView
+        passage={passage}
+        bottomSpace={
+          isDesktop
+            ? "2rem"
+            : `calc(${SHEET_HEIGHT[session.view.sheet]} + 1rem)`
+        }
+        highlights={new Set(session.highlights)}
+        selected={selected}
+        focusable={focusable}
+        pins={
+          pinNumber === undefined
+            ? null
+            : { number: pinNumber, sentenceIds: new Set(pinned) }
+        }
+      />
+    </>
+  );
+  const liveRegion = (
+    <p aria-live="polite" className="sr-only">
+      {announcement}
+    </p>
+  );
+  const sentenceActions = selected && (
+    <SentenceActions
+      bottom={
+        isDesktop
+          ? undefined
+          : `calc(${SHEET_HEIGHT[session.view.sheet]} + 0.5rem)`
+      }
+      isHighlighted={isHighlighted}
+      pin={
+        pinNumber === undefined
+          ? undefined
+          : {
+              number: pinNumber,
+              isPinned: pinned.includes(selected),
+              onToggle: () => togglePin(pinNumber, selected),
+            }
+      }
+      message={
+        limitFor === selected
+          ? t("evidence.limit", { max: MAX_PINS })
+          : undefined
+      }
+      firstActionRef={firstActionRef}
+      onToggleHighlight={() => {
+        send({ type: "toggleHighlight", sentenceId: selected });
+        setAnnouncement(isHighlighted ? "" : t("mark.highlighted"));
+        closeActions(selected);
+      }}
+      onCancel={() => closeActions(selected)}
+    />
+  );
+
+  // Desktop: passage and questions side by side, each scrolling on its own,
+  // the navigator bar along the bottom (READING_EXPERIENCE.md, M4).
+  if (isDesktop) {
+    return (
+      <div className="flex h-dvh flex-col">
+        {skipLink}
+        {testBar}
+        <div className="grid min-h-[0] flex-1 grid-cols-[55fr_45fr] grid-rows-[minmax(0,1fr)]">
+          <main
+            id="main"
+            ref={mainRef}
+            className="relative overflow-y-auto px-gutter"
+          >
+            {passageArea}
+            {sentenceActions}
+          </main>
+          <QuestionColumn showSentence={showSentence} />
+        </div>
+        <QuestionBar goTo={goTo} />
+        {liveRegion}
+      </div>
+    );
+  }
   return (
     <>
-      <a
-        href="#question-heading"
-        className="sr-only focus:not-sr-only focus:block focus:px-gutter focus:py-3 focus:font-bold focus:underline"
-      >
-        {t("skipToQuestion")}
-      </a>
-      <TestBar confirmExit={session.mode === "exam"}>
-        <span className="font-medium">
-          {t("passageOf", {
-            number: passage.number,
-            total: test.passages.length,
-          })}
-        </span>
-        {remaining !== undefined && <ExamTimer remaining={remaining} />}
-      </TestBar>
+      {skipLink}
+      {testBar}
       <main id="main" className="px-gutter">
-        {!canSave && (
-          <p role="status" className="mx-auto max-w-measure pt-4 font-medium">
-            {t("storage.unavailable")}
-          </p>
-        )}
-        <PassageView
-          passage={passage}
-          bottomSpace={`calc(${SHEET_HEIGHT[session.view.sheet]} + 1rem)`}
-          highlights={new Set(session.highlights)}
-          selected={selected}
-          focusable={focusable}
-          pins={
-            pinNumber === undefined
-              ? null
-              : { number: pinNumber, sentenceIds: new Set(pinned) }
-          }
-        />
+        {passageArea}
       </main>
-      <p aria-live="polite" className="sr-only">
-        {announcement}
-      </p>
-      {selected && (
-        <SentenceActions
-          bottom={`calc(${SHEET_HEIGHT[session.view.sheet]} + 0.5rem)`}
-          isHighlighted={isHighlighted}
-          pin={
-            pinNumber === undefined
-              ? undefined
-              : {
-                  number: pinNumber,
-                  isPinned: pinned.includes(selected),
-                  onToggle: () => togglePin(pinNumber, selected),
-                }
-          }
-          message={
-            limitFor === selected
-              ? t("evidence.limit", { max: MAX_PINS })
-              : undefined
-          }
-          firstActionRef={firstActionRef}
-          onToggleHighlight={() => {
-            send({ type: "toggleHighlight", sentenceId: selected });
-            setAnnouncement(isHighlighted ? "" : t("mark.highlighted"));
-            closeActions(selected);
-          }}
-          onCancel={() => closeActions(selected)}
-        />
-      )}
+      {liveRegion}
+      {sentenceActions}
       <QuestionSheet goTo={goTo} showSentence={showSentence} />
     </>
   );

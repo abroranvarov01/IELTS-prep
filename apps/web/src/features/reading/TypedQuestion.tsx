@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import type { QuestionUnit } from "@/domain/reading/units";
 import { exceedsWordLimit } from "@/domain/reading/word-limit";
 import { GapText } from "./GapText";
+import { GroupText } from "./GroupText";
 import { useReading } from "./reading-context";
 
 /**
@@ -11,8 +12,16 @@ import { useReading } from "./reading-context";
  * The text shows its numbered gaps with the current one marked; the field
  * below takes the answer as typed, with no spelling help (owner, M4-09).
  * Practice warns when the answer has more words than the instruction allows.
+ * Without `withGroupText`, a summary's or notes' text is shown by the caller,
+ * once for all its questions (the desktop question column).
  */
-export function TypedQuestion({ unit }: { unit: QuestionUnit }) {
+export function TypedQuestion({
+  unit,
+  withGroupText = true,
+}: {
+  unit: QuestionUnit;
+  withGroupText?: boolean;
+}) {
   const t = useTranslations("reading");
   const { session, send } = useReading();
   const number = unit.numbers[0] ?? 0;
@@ -51,27 +60,7 @@ export function TypedQuestion({ unit }: { unit: QuestionUnit }) {
             />
           </p>
         )}
-        {(group.type === "summaryCompletion" ||
-          group.type === "noteCompletion") &&
-          group.title && <p className="font-bold">{group.title}</p>}
-        {group.type === "summaryCompletion" && (
-          <p className="mt-1">
-            <GapText
-              segments={group.text}
-              current={number}
-              answerOf={answerOf}
-            />
-          </p>
-        )}
-        {group.type === "noteCompletion" && (
-          <ul className="mt-1 flex flex-col gap-1">
-            {group.lines.map((line, i) => (
-              <li key={i}>
-                <GapText segments={line} current={number} answerOf={answerOf} />
-              </li>
-            ))}
-          </ul>
-        )}
+        {withGroupText && <GroupText group={group} current={number} />}
         {group.type === "shortAnswer" && (
           <p className="font-bold">
             {group.questions.find((q) => q.number === number)?.question}

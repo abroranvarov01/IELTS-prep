@@ -34,51 +34,74 @@ export function QuestionNavigator({
             </h3>
             {/* 44 px cells (DESIGN_SYSTEM.md, M4: question navigator). */}
             <ul className="mt-3 grid grid-cols-[repeat(auto-fill,2.75rem)] gap-1">
-              {numbers.map((number) => {
-                const isAnswered = answered.has(number);
-                const isFlagged = session.flagged.includes(number);
-                const isCurrent = session.currentQuestion === number;
-                const states = [
-                  isAnswered
-                    ? t("navigator.answered")
-                    : t("navigator.unanswered"),
-                  ...(isFlagged ? [t("navigator.flagged")] : []),
-                  ...(isCurrent ? [t("navigator.current")] : []),
-                ];
-                return (
-                  <li key={number} className="pb-2">
-                    <button
-                      type="button"
-                      aria-label={t("navigator.item", {
-                        number,
-                        states: states.join(", "),
-                      })}
-                      aria-current={isCurrent ? "true" : undefined}
-                      onClick={() => onChoose(number)}
-                      className={`relative flex size-[2.75rem] items-center justify-center rounded-sm font-bold tabular-nums ${
-                        isAnswered
-                          ? "bg-ink text-surface-base"
-                          : "border border-border-control bg-surface-base"
-                      } ${isCurrent ? "after:absolute after:-bottom-[7px] after:inset-x-[0] after:h-[3px] after:bg-ink" : ""}`}
-                    >
-                      {number}
-                      {isFlagged && (
-                        <span
-                          aria-hidden="true"
-                          className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full border border-ink bg-surface-base text-ink"
-                        >
-                          <FlagIcon className="size-3" />
-                        </span>
-                      )}
-                    </button>
-                  </li>
-                );
-              })}
+              {numbers.map((number) => (
+                <li key={number} className="pb-2">
+                  <NavigatorCell
+                    number={number}
+                    isAnswered={answered.has(number)}
+                    isFlagged={session.flagged.includes(number)}
+                    isCurrent={session.currentQuestion === number}
+                    onChoose={onChoose}
+                  />
+                </li>
+              ))}
             </ul>
           </section>
         );
       })}
     </div>
+  );
+}
+
+/**
+ * One 44 px question cell (DESIGN_SYSTEM.md, M4: question navigator), in the
+ * navigator and in the desktop navigator bar.
+ */
+export function NavigatorCell({
+  number,
+  isAnswered,
+  isFlagged,
+  isCurrent,
+  onChoose,
+}: {
+  number: number;
+  isAnswered: boolean;
+  isFlagged: boolean;
+  isCurrent: boolean;
+  onChoose: (number: number) => void;
+}) {
+  const t = useTranslations("reading");
+  const states = [
+    isAnswered ? t("navigator.answered") : t("navigator.unanswered"),
+    ...(isFlagged ? [t("navigator.flagged")] : []),
+    ...(isCurrent ? [t("navigator.current")] : []),
+  ];
+
+  return (
+    <button
+      type="button"
+      aria-label={t("navigator.item", {
+        number,
+        states: states.join(", "),
+      })}
+      aria-current={isCurrent ? "true" : undefined}
+      onClick={() => onChoose(number)}
+      className={`relative flex size-[2.75rem] items-center justify-center rounded-sm font-bold tabular-nums ${
+        isAnswered
+          ? "bg-ink text-surface-base"
+          : "border border-border-control bg-surface-base"
+      } ${isCurrent ? "after:absolute after:-bottom-[7px] after:inset-x-[0] after:h-[3px] after:bg-ink" : ""}`}
+    >
+      {number}
+      {isFlagged && (
+        <span
+          aria-hidden="true"
+          className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full border border-ink bg-surface-base text-ink"
+        >
+          <FlagIcon className="size-3" />
+        </span>
+      )}
+    </button>
   );
 }
 

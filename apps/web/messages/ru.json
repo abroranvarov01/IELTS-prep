@@ -106,7 +106,8 @@
       "item": "Вопрос {number}, {states}",
       "unanswered": "нет ответа",
       "flagged": "отмечен для проверки",
-      "current": "текущий"
+      "current": "текущий",
+      "passageProgress": "Текст {number}: отвечено {answered} из {total}"
     },
     "flag": {
       "add": "Отметить для проверки",
