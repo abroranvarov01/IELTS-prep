@@ -375,6 +375,7 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 | Earlier content version, no result | none | "…so your answers can't be checked." | "Start the test" | none | none |
 | No attempt on this device | none; H1 "No results on this device yet" and its sentence | none | "Start the test" | none | none |
 | Storage blocked or full | as in the matching state | the storage notice | as above | as above | as above |
+| Loading (the history is read after the page mounts, usually within a moment) | none | none | none | none | none; the shell and the H1 only, so nothing jumps or announces twice |
 | A retry's results | H1 "Your retry", "9 of 14 now correct" and "These are questions you have attempted before…" | none | the review button for the retry | never | "Back to your test results" |
 | A retry that can't be started | H1 "This practice can't be started" and the reason (source missing, earlier content version, questions not allowed) | none | "See your last results" | never | "Start the test" |
 

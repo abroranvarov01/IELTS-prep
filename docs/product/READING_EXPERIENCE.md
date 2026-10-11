@@ -288,7 +288,7 @@ Owner decision, 2026-10-11, on the review packet at commit 069877e: the recommen
 - **D2:** the mechanical normalization as proposed, but only **one trailing full stop** is ignored; commas, semicolons and colons are not stripped. This is a practice-product policy, not a verified IELTS rule.
 - **Highlights are kept** in the finished attempt with answers and pins, including those of imported M4 sessions; an absent field means "not recorded". Flags and view state are not kept.
 - **"Choose several" items are one answer unit** in review and retries: an aggregate outcome with option-level correctness, never a positional mark presented as a particular letter; a unit is reviewed or retried whole and once; review progress counts cards; a retry's navigator stays within its subset; repeated-mistake counts use units; retry addresses are validated against the source attempt.
-- **Concrete storage guarantees across tabs** (ADR-0009 §2 to §4): write-once entries, sources removed only after their record exists, kind-specific ids, recoverable M4 entries never destroyed by a failed write, tests with interleaved tabs.
+- **Concrete storage guarantees across tabs** (ADR-0009 §2 to §5, amended at the owner's request on 2026-10-11): committed history in IndexedDB transactions, so the first committed attempt (answers, pins, highlights, timestamps), the first-try marker and one result record per pair hold even when tabs race; a random id per session; sources removed only after their transaction has completed; recoverable M4 entries never destroyed by a failed write; tests with two tabs.
 - **Coherent result records:** one record per key-revision and rules-version pair even when unchanged, all kept; a correction notice only for learner-visible changes; feedback metadata such as `fromPassage` covered by the existing version numbers; the first try refreshed before patterns are derived; patterns unavailable when the matching content is not.
 - **Claims within the evidence:** "Possible spelling issue"; a neutral "not enough evidence" state; tags describe questions; pin comparisons describe agreement with the key's cited sentences; NOT GIVEN feedback separates absent information from contradiction and facts from the writer's views.
 - **Copy corrections:** "Your retry"; no claim that answers were viewed or that a retry measures memory; the score may wrap; no empty evidence block for NOT GIVEN; in en, ru and uz.
@@ -313,33 +313,32 @@ Fingerprint tests fail when a shipped test or key file changes without the match
 | Option ids of every question and list (A–D, i–viii, paragraph letters A–E, TRUE/FALSE/NOT GIVEN) | No |
 | Passage ids and numbers (scroll positions, the passage on screen) | No |
 | Sentence ids (highlights, pins) | No |
-| The session envelope `{ "schema": 1, "session" }` | No: M5 keeps it; the new `retry` field only appears in the new retry entry |
+| The session envelope `{ "schema": 1, "session" }` | No: M5 keeps schema 1; it adds the optional `sessionId` (an M4 session without one gets a deterministic id, ADR-0009 §3), and the `retry` field only appears in the new retry entry |
 | The test file | **No change at all** in M5 (`fromPassage` is in the key) |
 | The key file | Adds `revision`, `review`, optional `trap` and `fromPassage`, variants; sessions never store anything from the key |
 
 **Decision (D23): keep the demo test at `version: 1` while these conditions hold**: the test file stays byte-identical (the fingerprint test) and the session envelope stays at schema 1. If any later change touches the test file, the version increases and M4 sessions of that test read as absent (ADR-0006).
 
-**How a completed attempt stays tied to what judged it** (ADR-0009 §2 to §5): the attempt keeps `testVersion` and its unchanged answers, pins and highlights; each result record names its key revision and rules version. The learner sees the record of the current pair.
+**How a completed attempt stays tied to what judged it** (ADR-0009 §2 to §7): the attempt keeps `testVersion` and its unchanged answers, pins and highlights; each result record names its key revision and rules version. The learner sees the record of the current pair.
 
 | Event | What happens |
 |---|---|
 | **First view** of an attempt of the current content version | It is checked and a record is written for the current pair |
-| **Key revision or rules version increased** | On the next view, the attempt is checked again from its unchanged answers and a record is written for the new pair **even if nothing changed**, so later views know the pair was checked (concurrent views write the same entry once). If the score, an outcome or a note the learner sees changed, the page shows a correction notice ("Rechecked after a correction…"), quoting the earlier score only when the score changed. Otherwise there is no notice. Earlier records are kept (D24) |
+| **Key revision or rules version increased** | On the next view, the attempt is checked again from its unchanged answers and a record is written for the new pair **even if nothing changed**, so later views know the pair was checked (concurrent views in several tabs produce exactly one record, decided inside an IndexedDB transaction). If the score, an outcome or a note the learner sees changed, the page shows a correction notice ("Rechecked after a correction…"), quoting the earlier score only when the score changed. Otherwise there is no notice. Earlier records are kept (D24) |
 | **Content version changed** (the attempt's content is no longer shipped) | No check is possible: the most recent stored record is shown with "This test has changed since you took it, so a detailed review is not available"; without one, "…so your answers can't be checked" |
-| **Test no longer shipped** | Its entries stay in storage, shown nowhere, not deleted by M5 |
-| **Invalid stored data** | An invalid entry is ignored and removed by the next write of that test's history; an entry with an unknown schema is never overwritten or removed; never a crash (ADR-0009 §8) |
+| **Test no longer shipped** | Its records stay in storage, shown nowhere, not deleted by M5 |
+| **Invalid stored data** | An invalid record is ignored and may be replaced by a valid one with the same key; a record with an unknown schema, or a database newer than the app knows, is never overwritten or removed; never a crash (ADR-0009 §9) |
 
-**Import of a completed M4 session** (ADR-0009 §7, D25), on the first load of any Reading page of that test:
+**Import of a completed M4 session** (ADR-0009 §6, D25), on the first load of any Reading page of that test:
 1. Read `reading:<testId>:finished`. If it does not parse with the ADR-0006 rules or its `testVersion` is not the current one, leave it untouched and stop.
-2. Write the attempt `test-<startedAt>` (unless a valid one exists): `kind: "test"`, `importedFromM4: true`, its mode, times, answers, pins **and highlights** exactly as stored, and no result.
-3. Set the test's first try to "unknown".
-4. Only if steps 2 and 3 succeeded, remove the `:finished` entry. A failed write leaves it in place, and the next load tries again.
-5. Nothing else is created: no score, outcome, check date or first-try claim. The attempt is checked the first time its results are shown, and its results page says "You finished this test before the app checked answers. It was checked when you first opened these results."
-6. Earlier M4 finished sessions that M4 overwrote are gone; nothing pretends otherwise.
+2. In one IndexedDB transaction: if no attempt `m4-finished-<startedAt>` exists, add it (`kind: "test"`, `importedFromM4: true`, its mode, times, answers, pins **and highlights** exactly as stored, and no result); in any case set the test's first try to "unknown". Two tabs importing at once produce one attempt.
+3. Only when that transaction has completed, remove the `:finished` entry. A failed transaction leaves it in place, and the next load tries again.
+4. Nothing else is created: no score, outcome, check date or first-try claim. The attempt is checked the first time its results are shown, and its results page says "You finished this test before the app checked answers. It was checked when you first opened these results."
+5. Earlier M4 finished sessions that M4 overwrote are gone; nothing pretends otherwise.
 
-An **unfinished** M4 session is resumed unchanged and, when finished, recorded like any M5 attempt.
+An **unfinished** M4 session is resumed unchanged (with the id `m4-current-<startedAt>`) and, when finished, committed like any M5 attempt.
 
-**Across tabs** (ADR-0009 §2 to §4): every attempt, result record and first-try marker has its own entry, written once and never rewritten, so a tab working from stale data cannot overwrite another tab's attempt or result. Finishing writes the finished session first, then the attempt, and removes the session only after the attempt exists. A stale tab cannot overwrite a recorded attempt: the first committed one keeps its answers, pins and highlights. Test and retry attempts have different ids even when started in the same millisecond.
+**Across tabs** (ADR-0009 §2 to §5): sessions in progress stay in `localStorage` (synchronous, so nothing is lost when a tab closes); committed attempts, result records and first-try markers live in IndexedDB, and every "only if it does not exist yet" decision is made inside one IndexedDB read-write transaction, which the browser never runs at the same time as another overlapping one, in any tab. So when two tabs finish the same session, at the same moment or one after the other, the first committed attempt keeps its answers, pins, highlights and timestamps and the other tab is shown it; two tabs never both set the first try; and each attempt gets exactly one result record per key revision and rules version. A finished session stays in `localStorage` until its transaction has completed. Every session has a random id from its start, so two distinct sessions never share one; M4 sessions get deterministic ids (`m4-current-<startedAt>`, `m4-finished-<startedAt>`).
 
 ### Answer checking (M5)
 
@@ -425,14 +424,14 @@ The unit outcome is: **Correct** when marks = `choose`; **No answer** when nothi
 | Exam, "Finish test" → "Finish" | The same. "Feedback after the test only" holds: nothing is checked before finishing |
 | Exam, time-out with the screen open | Finishes by itself (M4) and opens the results page with "Time is up." |
 | Exam, time-out while away | On the next visit the session is found finished (ADR-0006); the attempt is recorded once and the results page opens with "Time is up." |
-| Reload of results or review | The same attempt and the same record (ADR-0009 §5) |
+| Reload of results or review | The same attempt and the same record (ADR-0009 §7) |
 | The key or the checking rules changed since the last record | Checked again and a record written for the new pair; the correction notice only when something the learner sees changed (D24) |
 | An M4 finished session on the device | Imported without a result, checked when its results are first shown, with the note that it was checked later (D25) |
 | Opening the test link after finishing | The start screen, with a quiet "See your last results" (D6). M4 showed the finished page there |
 | Storage blocked or full | Results are computed and shown, kept in memory for the tab, with the notice; recoverable sources stay in storage |
 | During a test, either mode | No checking and no explanations (D17) |
 
-Completed attempts never change: "Start again" and retries create new attempts, and a recheck adds a record instead of replacing one (ADR-0009 §5). Results are traceable to their key and rules, and never silently overwritten.
+Completed attempts never change: "Start again" and retries create new attempts, and a recheck adds a record instead of replacing one (ADR-0009 §7). Results are traceable to their key and rules, and never silently overwritten.
 
 ### Results page (M5)
 - Address: `/{locale}/reading/{testId}/results` (the latest test attempt) or `?attempt={id}` (a specific one); inside the shell, so the header's language switcher is there.
@@ -484,7 +483,7 @@ Decided as drafted (D21). All pages are prerendered per test and locale; the att
 | `/{locale}/reading/{testId}/review?attempt={id}&q={n}&set={mistakes\|all}` | The review (`mistakes` = units not fully correct or unanswered). Moving between cards replaces the address, so Back leaves the review instead of stepping through every card | Test bar |
 | `/{locale}/reading/{testId}/retry?of={id}&q={numbers}` | A retry of the given units of that test attempt (Practice), validated as in [Targeted practice](#targeted-practice-m5) | Test bar |
 
-- Attempt ids are `test-<startedAt>` or `retry-<startedAt>` (ADR-0009); invalid parameters fall back as in the empty states.
+- Attempt ids are the session's id (`s-` and a random UUID; `m4-current-…` or `m4-finished-…` for M4 sessions; ADR-0009 §3); invalid parameters fall back as in the empty states.
 - The level check and onboarding are not involved: a direct link still bypasses onboarding (USER_FLOWS.md).
 
 ### Home in M5
@@ -536,7 +535,7 @@ Unanswered questions belong to no category (see [Answer checking](#answer-checki
 
 **Content tags** (optional, one per question, only where true; an item's numbers carry the same tag): `paraphrase` (the question expresses the passage's idea in different words) and `qualifier` (the answer turns on a limiting word such as all, most, only, every, never). They describe the question. The demo key gets them where they apply (M5-02); a category with fewer than 3 tagged units in a test simply cannot appear.
 
-**The first try, precisely** (D15, ADR-0009 §6). Repeated mistakes use only the first try at a test, because later tries repeat questions the learner has already worked on. The first try is stored, never guessed:
+**The first try, precisely** (D15, ADR-0009 §5). Repeated mistakes use only the first try at a test, because later tries repeat questions the learner has already worked on. The first try is stored, never guessed:
 
 | Situation | First try for that test |
 |---|---|
@@ -553,7 +552,7 @@ Unanswered questions belong to no category (see [Answer checking](#answer-checki
 
 **Repeated exposure is excluded** by construction: only the first try's record is evidence, so each unit counts at most once; later attempts, retries and rechecks are never evidence; duplicates cannot arise (one attempt per id).
 
-**Before deriving patterns**, the first try's record is brought up to the current pair if its content version is the current one (ADR-0009 §5: a check writes a record). If the first try's content version is not the current one, **patterns are unavailable**: the page says "Repeated mistakes can't be shown because this test has changed since your first try." Old answers and signals are never combined with another version's groups or tags.
+**Before deriving patterns**, the first try's record is brought up to the current pair if its content version is the current one (ADR-0009 §7: a check writes a record). If the first try's content version is not the current one, **patterns are unavailable**: the page says "Repeated mistakes can't be shown because this test has changed since your first try." Old answers and signals are never combined with another version's groups or tags.
 
 **When the first try is unknown:** no repeated-mistake detection for that test, and the results page says "We can't tell which was your first try at this test on this device, so we don't look for repeated mistakes in it." Each unit's own notes still appear in review, because they describe only that attempt.
 
@@ -579,7 +578,7 @@ Unanswered questions belong to no category (see [Answer checking](#answer-checki
   - questions not allowed for that source: "These questions can't be practised from that attempt."
 - **What it is not:** independent evidence of ability (never counted in repeated mistakes, never shown out of 40, never combined with the original score, never called improvement); a new test; a content library.
 - **Unseen practice** (new questions on a weak point) needs new content: only one demo test exists, and adding content sets is content sourcing (M9). A short original drill set would also need the content contract to allow tests shorter than 3 passages and 40 questions (ADR-0005). Not in M5.
-- One retry in progress per test, kept apart from the test's session (ADR-0009 §9): the same retry link resumes it; starting a different retry replaces an unfinished one.
+- One retry in progress per test, kept apart from the test's session (ADR-0009 §8): the same retry link resumes it; starting a different retry replaces an unfinished one.
 
 ### Explanations and the AI decision (M5)
 
@@ -642,7 +641,7 @@ Owner decision, 2026-10-11: **approved as recommended for D1 and D3 to D25; D2 a
 | D16 | Targeted practice | Try again every unit not fully correct or unanswered (or a card's units), whole and once, Practice only, labeled as attempted before; validated against the source; no unseen practice | Repeated questions are not an independent measure | |
 | D17 | Checking during a test | None in either mode | No instant feedback while practising | |
 | D18 | Home | Unchanged | Results are reached only through the test link | |
-| D19 | Attempt storage | ADR-0009: write-once entries per attempt, result record and first-try marker; sources removed only after their record exists; result records per key revision and rules version, all kept; 20 attempts kept; no reset control; unknown schemas never overwritten | Up to about 100 KB per test; clearing site data is the only reset | |
+| D19 | Attempt storage | ADR-0009 (amended 2026-10-11): sessions in `localStorage`; committed attempts, result records and first-try markers in IndexedDB transactions that keep the first committed attempt across tabs; a random id per session; sources removed only after their transaction has completed; result records per key revision and rules version, all kept; 20 attempts kept; no reset control; unknown schemas never overwritten | Up to about 100 KB per test; clearing site data is the only reset | |
 | D20 | Review status and pre-beta review | `aiDraft` / `reviewed` / `approved`; M5 finishes with `aiDraft`; before beta: English review, reconciling ru and uz, fluent review, owner approval (M11-04 to M11-07) | AI drafts are visible in development builds until reviewed (no interface label) | Only people complete the reviews |
 | D21 | Routes and navigation | `/results`, `/review`, `/retry` under the test; finishing and card changes replace the address; review and retry in the test-bar layout, results in the shell | Four addresses per test | |
 | D22 | Date formats | No date parsing; each accepted date form is its own pre-written variant; the demo test has no date answers | Every accepted form must be listed; a missing one is marked wrong until a key revision | **No official source** for Reading |

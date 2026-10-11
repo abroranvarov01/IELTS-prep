@@ -16,7 +16,7 @@ A summary only; the parts below hold the text.
 - **D2 amended:** only one trailing full stop is ignored; other punctuation is kept (product policy, not a verified IELTS rule).
 - **Highlights** are kept in every attempt, including imported M4 sessions; an absent field means "not recorded".
 - **"Choose several" items are one answer unit** in review and retries: aggregate outcome ("1 of 2 correct"), option-level labels, never a positional mark presented as a letter; reviewed and retried whole and once; progress counts cards; the retry navigator stays within its subset; repeated-mistake counts use units; retry addresses validated with explicit safe states.
-- **Storage across tabs (ADR-0009):** one write-once entry per attempt, per result record and for the first-try marker, instead of one rewritten list; kind-specific ids (`test-…`, `retry-…`); sources removed only after their record exists; interleaved-tab tests required.
+- **Storage across tabs (ADR-0009, amended on 2026-10-11 at the owner's request):** sessions stay in `localStorage`; committed attempts, result records and first-try markers live in IndexedDB, and every "only if it does not exist yet" decision is made inside one read-write transaction, so the first committed attempt (answers, pins, highlights, timestamps), the first-try marker and one record per pair hold across tabs; a random id per session, deterministic ids for M4 sessions; sources removed only after their transaction has completed; unit tests with interleaved connections (`fake-indexeddb`) and two-page browser tests.
 - **Result records:** one per key revision and rules version, written even when unchanged, all kept; the correction notice only for learner-visible changes; `fromPassage` moved into the key so the key revision covers it; fingerprint tests enforce the version rules; the first try refreshed before patterns; patterns unavailable for another content version.
 - **Wording:** "Possible spelling issues"; "Not enough evidence to show a repeated pattern…"; pin comparisons about the key's cited sentences; statement notes in facts or the writer's views, separating absent information from contradiction; "Your retry" and "These are questions you have attempted before…"; the score may wrap; no empty NOT GIVEN evidence block.
 - **Explanations:** English drafted first, then ru and uz from it, all `aiDraft`; pre-beta English review, reconciliation, fluent review and owner approval as M11-04 to M11-07.
@@ -61,7 +61,7 @@ Owner decision, 2026-10-11: **approved as recommended for D1 and D3 to D25; D2 a
 | D16 | Targeted practice | Try again every unit not fully correct or unanswered (or a card's units), whole and once, Practice only, labeled as attempted before; validated against the source; no unseen practice | Repeated questions are not an independent measure | |
 | D17 | Checking during a test | None in either mode | No instant feedback while practising | |
 | D18 | Home | Unchanged | Results are reached only through the test link | |
-| D19 | Attempt storage | ADR-0009: write-once entries per attempt, result record and first-try marker; sources removed only after their record exists; result records per key revision and rules version, all kept; 20 attempts kept; no reset control; unknown schemas never overwritten | Up to about 100 KB per test; clearing site data is the only reset | |
+| D19 | Attempt storage | ADR-0009 (amended 2026-10-11): sessions in `localStorage`; committed attempts, result records and first-try markers in IndexedDB transactions that keep the first committed attempt across tabs; a random id per session; sources removed only after their transaction has completed; result records per key revision and rules version, all kept; 20 attempts kept; no reset control; unknown schemas never overwritten | Up to about 100 KB per test; clearing site data is the only reset | |
 | D20 | Review status and pre-beta review | `aiDraft` / `reviewed` / `approved`; M5 finishes with `aiDraft`; before beta: English review, reconciling ru and uz, fluent review, owner approval (M11-04 to M11-07) | AI drafts are visible in development builds until reviewed (no interface label) | Only people complete the reviews |
 | D21 | Routes and navigation | `/results`, `/review`, `/retry` under the test; finishing and card changes replace the address; review and retry in the test-bar layout, results in the shell | Four addresses per test | |
 | D22 | Date formats | No date parsing; each accepted date form is its own pre-written variant; the demo test has no date answers | Every accepted form must be listed; a missing one is marked wrong until a key revision | **No official source** for Reading |
@@ -92,7 +92,7 @@ Owner decision, 2026-10-11, on the review packet at commit 069877e: the recommen
 - **D2:** the mechanical normalization as proposed, but only **one trailing full stop** is ignored; commas, semicolons and colons are not stripped. This is a practice-product policy, not a verified IELTS rule.
 - **Highlights are kept** in the finished attempt with answers and pins, including those of imported M4 sessions; an absent field means "not recorded". Flags and view state are not kept.
 - **"Choose several" items are one answer unit** in review and retries: an aggregate outcome with option-level correctness, never a positional mark presented as a particular letter; a unit is reviewed or retried whole and once; review progress counts cards; a retry's navigator stays within its subset; repeated-mistake counts use units; retry addresses are validated against the source attempt.
-- **Concrete storage guarantees across tabs** (ADR-0009 §2 to §4): write-once entries, sources removed only after their record exists, kind-specific ids, recoverable M4 entries never destroyed by a failed write, tests with interleaved tabs.
+- **Concrete storage guarantees across tabs** (ADR-0009 §2 to §5, amended at the owner's request on 2026-10-11): committed history in IndexedDB transactions, so the first committed attempt (answers, pins, highlights, timestamps), the first-try marker and one result record per pair hold even when tabs race; a random id per session; sources removed only after their transaction has completed; recoverable M4 entries never destroyed by a failed write; tests with two tabs.
 - **Coherent result records:** one record per key-revision and rules-version pair even when unchanged, all kept; a correction notice only for learner-visible changes; feedback metadata such as `fromPassage` covered by the existing version numbers; the first try refreshed before patterns are derived; patterns unavailable when the matching content is not.
 - **Claims within the evidence:** "Possible spelling issue"; a neutral "not enough evidence" state; tags describe questions; pin comparisons describe agreement with the key's cited sentences; NOT GIVEN feedback separates absent information from contradiction and facts from the writer's views.
 - **Copy corrections:** "Your retry"; no claim that answers were viewed or that a retry measures memory; the score may wrap; no empty evidence block for NOT GIVEN; in en, ru and uz.
@@ -117,33 +117,32 @@ Fingerprint tests fail when a shipped test or key file changes without the match
 | Option ids of every question and list (A–D, i–viii, paragraph letters A–E, TRUE/FALSE/NOT GIVEN) | No |
 | Passage ids and numbers (scroll positions, the passage on screen) | No |
 | Sentence ids (highlights, pins) | No |
-| The session envelope `{ "schema": 1, "session" }` | No: M5 keeps it; the new `retry` field only appears in the new retry entry |
+| The session envelope `{ "schema": 1, "session" }` | No: M5 keeps schema 1; it adds the optional `sessionId` (an M4 session without one gets a deterministic id, ADR-0009 §3), and the `retry` field only appears in the new retry entry |
 | The test file | **No change at all** in M5 (`fromPassage` is in the key) |
 | The key file | Adds `revision`, `review`, optional `trap` and `fromPassage`, variants; sessions never store anything from the key |
 
 **Decision (D23): keep the demo test at `version: 1` while these conditions hold**: the test file stays byte-identical (the fingerprint test) and the session envelope stays at schema 1. If any later change touches the test file, the version increases and M4 sessions of that test read as absent (ADR-0006).
 
-**How a completed attempt stays tied to what judged it** (ADR-0009 §2 to §5): the attempt keeps `testVersion` and its unchanged answers, pins and highlights; each result record names its key revision and rules version. The learner sees the record of the current pair.
+**How a completed attempt stays tied to what judged it** (ADR-0009 §2 to §7): the attempt keeps `testVersion` and its unchanged answers, pins and highlights; each result record names its key revision and rules version. The learner sees the record of the current pair.
 
 | Event | What happens |
 |---|---|
 | **First view** of an attempt of the current content version | It is checked and a record is written for the current pair |
-| **Key revision or rules version increased** | On the next view, the attempt is checked again from its unchanged answers and a record is written for the new pair **even if nothing changed**, so later views know the pair was checked (concurrent views write the same entry once). If the score, an outcome or a note the learner sees changed, the page shows a correction notice ("Rechecked after a correction…"), quoting the earlier score only when the score changed. Otherwise there is no notice. Earlier records are kept (D24) |
+| **Key revision or rules version increased** | On the next view, the attempt is checked again from its unchanged answers and a record is written for the new pair **even if nothing changed**, so later views know the pair was checked (concurrent views in several tabs produce exactly one record, decided inside an IndexedDB transaction). If the score, an outcome or a note the learner sees changed, the page shows a correction notice ("Rechecked after a correction…"), quoting the earlier score only when the score changed. Otherwise there is no notice. Earlier records are kept (D24) |
 | **Content version changed** (the attempt's content is no longer shipped) | No check is possible: the most recent stored record is shown with "This test has changed since you took it, so a detailed review is not available"; without one, "…so your answers can't be checked" |
-| **Test no longer shipped** | Its entries stay in storage, shown nowhere, not deleted by M5 |
-| **Invalid stored data** | An invalid entry is ignored and removed by the next write of that test's history; an entry with an unknown schema is never overwritten or removed; never a crash (ADR-0009 §8) |
+| **Test no longer shipped** | Its records stay in storage, shown nowhere, not deleted by M5 |
+| **Invalid stored data** | An invalid record is ignored and may be replaced by a valid one with the same key; a record with an unknown schema, or a database newer than the app knows, is never overwritten or removed; never a crash (ADR-0009 §9) |
 
-**Import of a completed M4 session** (ADR-0009 §7, D25), on the first load of any Reading page of that test:
+**Import of a completed M4 session** (ADR-0009 §6, D25), on the first load of any Reading page of that test:
 1. Read `reading:<testId>:finished`. If it does not parse with the ADR-0006 rules or its `testVersion` is not the current one, leave it untouched and stop.
-2. Write the attempt `test-<startedAt>` (unless a valid one exists): `kind: "test"`, `importedFromM4: true`, its mode, times, answers, pins **and highlights** exactly as stored, and no result.
-3. Set the test's first try to "unknown".
-4. Only if steps 2 and 3 succeeded, remove the `:finished` entry. A failed write leaves it in place, and the next load tries again.
-5. Nothing else is created: no score, outcome, check date or first-try claim. The attempt is checked the first time its results are shown, and its results page says "You finished this test before the app checked answers. It was checked when you first opened these results."
-6. Earlier M4 finished sessions that M4 overwrote are gone; nothing pretends otherwise.
+2. In one IndexedDB transaction: if no attempt `m4-finished-<startedAt>` exists, add it (`kind: "test"`, `importedFromM4: true`, its mode, times, answers, pins **and highlights** exactly as stored, and no result); in any case set the test's first try to "unknown". Two tabs importing at once produce one attempt.
+3. Only when that transaction has completed, remove the `:finished` entry. A failed transaction leaves it in place, and the next load tries again.
+4. Nothing else is created: no score, outcome, check date or first-try claim. The attempt is checked the first time its results are shown, and its results page says "You finished this test before the app checked answers. It was checked when you first opened these results."
+5. Earlier M4 finished sessions that M4 overwrote are gone; nothing pretends otherwise.
 
-An **unfinished** M4 session is resumed unchanged and, when finished, recorded like any M5 attempt.
+An **unfinished** M4 session is resumed unchanged (with the id `m4-current-<startedAt>`) and, when finished, committed like any M5 attempt.
 
-**Across tabs** (ADR-0009 §2 to §4): every attempt, result record and first-try marker has its own entry, written once and never rewritten, so a tab working from stale data cannot overwrite another tab's attempt or result. Finishing writes the finished session first, then the attempt, and removes the session only after the attempt exists. A stale tab cannot overwrite a recorded attempt: the first committed one keeps its answers, pins and highlights. Test and retry attempts have different ids even when started in the same millisecond.
+**Across tabs** (ADR-0009 §2 to §5): sessions in progress stay in `localStorage` (synchronous, so nothing is lost when a tab closes); committed attempts, result records and first-try markers live in IndexedDB, and every "only if it does not exist yet" decision is made inside one IndexedDB read-write transaction, which the browser never runs at the same time as another overlapping one, in any tab. So when two tabs finish the same session, at the same moment or one after the other, the first committed attempt keeps its answers, pins, highlights and timestamps and the other tab is shown it; two tabs never both set the first try; and each attempt gets exactly one result record per key revision and rules version. A finished session stays in `localStorage` until its transaction has completed. Every session has a random id from its start, so two distinct sessions never share one; M4 sessions get deterministic ids (`m4-current-<startedAt>`, `m4-finished-<startedAt>`).
 
 #### Answer checking (M5)
 
@@ -229,14 +228,14 @@ The unit outcome is: **Correct** when marks = `choose`; **No answer** when nothi
 | Exam, "Finish test" → "Finish" | The same. "Feedback after the test only" holds: nothing is checked before finishing |
 | Exam, time-out with the screen open | Finishes by itself (M4) and opens the results page with "Time is up." |
 | Exam, time-out while away | On the next visit the session is found finished (ADR-0006); the attempt is recorded once and the results page opens with "Time is up." |
-| Reload of results or review | The same attempt and the same record (ADR-0009 §5) |
+| Reload of results or review | The same attempt and the same record (ADR-0009 §7) |
 | The key or the checking rules changed since the last record | Checked again and a record written for the new pair; the correction notice only when something the learner sees changed (D24) |
 | An M4 finished session on the device | Imported without a result, checked when its results are first shown, with the note that it was checked later (D25) |
 | Opening the test link after finishing | The start screen, with a quiet "See your last results" (D6). M4 showed the finished page there |
 | Storage blocked or full | Results are computed and shown, kept in memory for the tab, with the notice; recoverable sources stay in storage |
 | During a test, either mode | No checking and no explanations (D17) |
 
-Completed attempts never change: "Start again" and retries create new attempts, and a recheck adds a record instead of replacing one (ADR-0009 §5). Results are traceable to their key and rules, and never silently overwritten.
+Completed attempts never change: "Start again" and retries create new attempts, and a recheck adds a record instead of replacing one (ADR-0009 §7). Results are traceable to their key and rules, and never silently overwritten.
 
 #### Results page (M5)
 - Address: `/{locale}/reading/{testId}/results` (the latest test attempt) or `?attempt={id}` (a specific one); inside the shell, so the header's language switcher is there.
@@ -288,7 +287,7 @@ Decided as drafted (D21). All pages are prerendered per test and locale; the att
 | `/{locale}/reading/{testId}/review?attempt={id}&q={n}&set={mistakes\|all}` | The review (`mistakes` = units not fully correct or unanswered). Moving between cards replaces the address, so Back leaves the review instead of stepping through every card | Test bar |
 | `/{locale}/reading/{testId}/retry?of={id}&q={numbers}` | A retry of the given units of that test attempt (Practice), validated as in [Targeted practice](../product/READING_EXPERIENCE.md#targeted-practice-m5) | Test bar |
 
-- Attempt ids are `test-<startedAt>` or `retry-<startedAt>` (ADR-0009); invalid parameters fall back as in the empty states.
+- Attempt ids are the session's id (`s-` and a random UUID; `m4-current-…` or `m4-finished-…` for M4 sessions; ADR-0009 §3); invalid parameters fall back as in the empty states.
 - The level check and onboarding are not involved: a direct link still bypasses onboarding (USER_FLOWS.md).
 
 #### Home in M5
@@ -340,7 +339,7 @@ Unanswered questions belong to no category (see [Answer checking](../product/REA
 
 **Content tags** (optional, one per question, only where true; an item's numbers carry the same tag): `paraphrase` (the question expresses the passage's idea in different words) and `qualifier` (the answer turns on a limiting word such as all, most, only, every, never). They describe the question. The demo key gets them where they apply (M5-02); a category with fewer than 3 tagged units in a test simply cannot appear.
 
-**The first try, precisely** (D15, ADR-0009 §6). Repeated mistakes use only the first try at a test, because later tries repeat questions the learner has already worked on. The first try is stored, never guessed:
+**The first try, precisely** (D15, ADR-0009 §5). Repeated mistakes use only the first try at a test, because later tries repeat questions the learner has already worked on. The first try is stored, never guessed:
 
 | Situation | First try for that test |
 |---|---|
@@ -357,7 +356,7 @@ Unanswered questions belong to no category (see [Answer checking](../product/REA
 
 **Repeated exposure is excluded** by construction: only the first try's record is evidence, so each unit counts at most once; later attempts, retries and rechecks are never evidence; duplicates cannot arise (one attempt per id).
 
-**Before deriving patterns**, the first try's record is brought up to the current pair if its content version is the current one (ADR-0009 §5: a check writes a record). If the first try's content version is not the current one, **patterns are unavailable**: the page says "Repeated mistakes can't be shown because this test has changed since your first try." Old answers and signals are never combined with another version's groups or tags.
+**Before deriving patterns**, the first try's record is brought up to the current pair if its content version is the current one (ADR-0009 §7: a check writes a record). If the first try's content version is not the current one, **patterns are unavailable**: the page says "Repeated mistakes can't be shown because this test has changed since your first try." Old answers and signals are never combined with another version's groups or tags.
 
 **When the first try is unknown:** no repeated-mistake detection for that test, and the results page says "We can't tell which was your first try at this test on this device, so we don't look for repeated mistakes in it." Each unit's own notes still appear in review, because they describe only that attempt.
 
@@ -383,7 +382,7 @@ Unanswered questions belong to no category (see [Answer checking](../product/REA
   - questions not allowed for that source: "These questions can't be practised from that attempt."
 - **What it is not:** independent evidence of ability (never counted in repeated mistakes, never shown out of 40, never combined with the original score, never called improvement); a new test; a content library.
 - **Unseen practice** (new questions on a weak point) needs new content: only one demo test exists, and adding content sets is content sourcing (M9). A short original drill set would also need the content contract to allow tests shorter than 3 passages and 40 questions (ADR-0005). Not in M5.
-- One retry in progress per test, kept apart from the test's session (ADR-0009 §9): the same retry link resumes it; starting a different retry replaces an unfinished one.
+- One retry in progress per test, kept apart from the test's session (ADR-0009 §8): the same retry link resumes it; starting a different retry replaces an unfinished one.
 
 #### Explanations and the AI decision (M5)
 
@@ -622,6 +621,7 @@ The [Status colors](../design/DESIGN_SYSTEM.md#status-colors) are TBD and M5 is 
 | Earlier content version, no result | none | "…so your answers can't be checked." | "Start the test" | none | none |
 | No attempt on this device | none; H1 "No results on this device yet" and its sentence | none | "Start the test" | none | none |
 | Storage blocked or full | as in the matching state | the storage notice | as above | as above | as above |
+| Loading (the history is read after the page mounts, usually within a moment) | none | none | none | none | none; the shell and the H1 only, so nothing jumps or announces twice |
 | A retry's results | H1 "Your retry", "9 of 14 now correct" and "These are questions you have attempted before…" | none | the review button for the retry | never | "Back to your test results" |
 | A retry that can't be started | H1 "This practice can't be started" and the reason (source missing, earlier content version, questions not allowed) | none | "See your last results" | never | "Start the test" |
 
@@ -708,7 +708,7 @@ Forces:
 
 ##### 1. Checking is one domain module with a rules version
 - `apps/web/src/domain/reading/scoring.ts` (the name keeps it under `.claude/rules/domain/ielts-scoring.md`): a pure function from the test, the key and an attempt's answers (and pins) to a result: per question number (scoring position) an outcome (`correct`, `incorrect`, `unanswered`), per answer unit its observable signals, plus the marks and the number of scoring positions. Review, retries and repeated-mistake detection work in answer units (a "choose several" item is one unit), never in single positions of an item.
-- **`SCORING_RULES_VERSION`**, one integer constant in that module, increases whenever a change could alter an outcome, a mark or a signal for the same answers and key, bug fixes included. Each stored result records it (ADR-0009 §1, §5).
+- **`SCORING_RULES_VERSION`**, one integer constant in that module, increases whenever a change could alter an outcome, a mark or a signal for the same answers and key, bug fixes included. Each stored result records it (ADR-0009 §1, §7).
 - The rules (normalization, accepted variants, "choose several" marks, unanswered, denominators, signals) are those in [READING_EXPERIENCE.md, Answer checking (M5)](../product/READING_EXPERIENCE.md#answer-checking-m5) and [Error Intelligence (M5)](../product/READING_EXPERIENCE.md#error-intelligence-m5), each with unit tests that cite their source or say that no official source exists.
 - **No band conversion** in M5: nothing converts a raw score to a band, so INVARIANTS I-2 still has no implementation to protect.
 
@@ -718,7 +718,7 @@ Forces:
 - **Trust model, stated plainly:** a determined user can read the key from the results or review page before taking the test. Device-only practice cannot keep it secret: a server check would have to return the accepted answers for review anyway. This is practice, not a proctored test, as with the device clock (ADR-0006).
 
 ##### 3. Answer key additions (`<testId>.key.json`, still validated against its test)
-- **`revision`** (integer, from 1): increases with **any** change to the key file once it may have been used for results: accepted answers, evidence, tags, `fromPassage`. A key correction needs **no content version change**, because no stored answer or anchor becomes invalid; stored results record the revision they used, and ADR-0009 §5 decides what a correction does to them. `version` keeps matching the test's content version, as today.
+- **`revision`** (integer, from 1): increases with **any** change to the key file once it may have been used for results: accepted answers, evidence, tags, `fromPassage`. A key correction needs **no content version change**, because no stored answer or anchor becomes invalid; stored results record the revision they used, and ADR-0009 §7 decides what a correction does to them. `version` keeps matching the test's content version, as today.
 - **Fingerprint tests** make both rules enforceable: a unit test holds a hash of each shipped test file per content version and of each key file per revision, and fails when a file changes without the matching increase (the author then increases the number and updates the hash). This amends ADR-0005 §1 for tests whose results may exist: any change to the test file increases the version, because checking and feedback read word limits and passage words from it.
 - **Typed answers:** `accept` lists every accepted answer in full: no optional-word brackets or slash syntax to parse. Variants are written into the key ahead of time and reviewed; none are generated when checking. Each is non-empty, distinct from the others after normalization, and within the group's word limit by the validator's word count ([READING_EXPERIENCE.md, Answer checking (M5)](../product/READING_EXPERIENCE.md#answer-checking-m5): hyphenated words count once, articles count, one number is free only where the limit allows a number). The M4 Practice warning keeps its own, more lenient count.
 - **"Choose several" (new validator rule):** every number of an item has the same `accept` set, with exactly as many options as the item has numbers (its `choose`), and no option twice. The key format stays one entry per question number.
@@ -791,6 +791,7 @@ Band conversion and calibration; AI; authoring tools and the review workflow bey
 ### ADR-0009: Reading Attempts and Results on the Device
 
 - **Status:** Accepted (2026-10-11, owner, task M5-01, with the owner's amendments applied; drafted in M5 planning). Approval source: the owner instruction of 2026-10-11 on the review packet at commit 069877e. It amends [ADR-0006](../architecture/decisions/0006-reading-session-state.md) §2: the `reading:<testId>:finished` entry is replaced by the attempt history below.
+- **Amended:** 2026-10-11 by the owner (clarifying the approved requirement that the first committed attempt is preserved): the history moves from write-once `localStorage` entries to IndexedDB transactions, because an existence check followed by a write in `localStorage` is not atomic across tabs; every session gets a unique id. §2 to §9 below are the amended text.
 - **Date:** 2026-10-11
 - **Deciders:** Project owner (acceptance), Claude (draft)
 
@@ -798,17 +799,20 @@ Band conversion and calibration; AI; authoring tools and the review workflow bey
 
 M4 keeps a Reading session on the device ([ADR-0006](../architecture/decisions/0006-reading-session-state.md)): the current session under `reading:<testId>` and the most recent finished one under `reading:<testId>:finished`, both in the envelope `{ "schema": 1, "session": … }`. "Start again" starts a new session, and when that one finishes it **replaces** the earlier finished session. Nothing is checked or scored in M4, so no M4 session has a score.
 
-M5 ([READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts)) adds results, evidence-first review, repeated-mistake detection and retries. That needs:
+M5 ([READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts)) adds results, evidence-first review, repeated-mistake detection and retries. The approved requirements:
 
-- **Results tied to what produced them**: the content version, the answer-key revision and the checking rules ([ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) §3), with corrections visible, never silent.
-- **More than one finished attempt per test**, with answers, pins and highlights kept as finished, and new attempts and retries never overwriting an earlier one.
-- **A known first try**, or an explicit "unknown".
-- **Safety across tabs**: two tabs can finish, check, import and retry at the same time; a stale tab must not overwrite what another tab committed.
+- **The first committed completed attempt is preserved**: its answers, pins, highlights and timestamps. A later or stale tab must never replace it, including when two tabs finish the same session at the same moment.
+- **Results tied to what produced them** (the content version, the answer-key revision, the checking rules; [ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) §3), with exactly one record per attempt and pair, and corrections visible, never silent.
+- **A first try that is known or explicitly "unknown"**, decided consistently when tabs race.
+- **Ids that never collide** between distinct sessions, of the same kind or not.
 - **Compatibility with M4 data**, without losing a recoverable M4 entry when a write fails.
 
-Forces (unchanged from ADR-0006): no accounts and no server-side guest record (ADR-0003); stored data is untrusted input; domain rules stay out of the UI (I-3, I-4; ADR-0004); home is rendered on the server and cannot read `localStorage`. One attempt is a few kilobytes.
+Forces: no accounts and no server-side guest record (ADR-0003); stored data is untrusted input; domain rules stay out of the UI (I-3, I-4; ADR-0004); home is rendered on the server and cannot read browser storage; no new runtime dependency without a reason (CODE_QUALITY.md).
 
-**`localStorage` is not a transactional store across tabs.** Within one tab, a synchronous read followed by a write cannot be interrupted. Across tabs, browsers give no lock around a read-modify-write, and Chromium keeps a per-process copy that other processes update asynchronously, so a tab can read data that another tab has already replaced. A design that rewrites a shared list can therefore drop another tab's entry.
+**What the browser offers:**
+- **`localStorage`** is synchronous, so a write made while answering survives closing the tab right away (why ADR-0006 keeps sessions there). But it has **no cross-tab atomicity**: no lock around a read followed by a write, and Chromium keeps a per-process copy that other processes update asynchronously, so a tab can read data another tab has already replaced. "Write only if absent" can therefore let two tabs both see "absent" and the later write win.
+- **The Web Locks API** serializes tabs that request the same lock, but it does not make `localStorage` reads consistent across processes, so it does not close that gap.
+- **IndexedDB** has transactions: read-write transactions whose scopes overlap never run at the same time, across all tabs and connections of the origin, and each one commits all its changes or none. "Read, decide, write" inside one transaction is atomic. Its writes are asynchronous, so a write started just before the tab closes may not complete; the design below keeps the `localStorage` copy until the transaction has completed.
 
 The answer key is not loaded on the test screen ([ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) §2), so the test screen records an attempt and the results page checks it.
 
@@ -819,26 +823,25 @@ The answer key is not loaded on the test screen ([ADR-0008](../architecture/deci
 | Number | Where | Guards | Changes when |
 |---|---|---|---|
 | **Content version** | `ReadingTest.version` (ADR-0005); copied into every session and attempt as `testVersion` | Everything in the test file: what answers and marks point at (question numbers, items, option ids, passages, paragraph letters, sentence ids) and everything checking or feedback reads from it (word limits, passage words) | Any change to the test file once results may exist (ADR-0008 §3: a fingerprint test enforces it) |
-| **Storage schema** | `schema` in each stored envelope | The shape of the stored JSON | The stored shape changes. M5 keeps the session envelope at 1 and starts the attempt, result and first-try envelopes at 1 |
+| **Storage schema** | `schema` in each stored record; the IndexedDB database version | The shape of the stored data | The stored shape changes. M5 keeps the session envelope at 1 (with one optional field, §3) and starts the history records and the database at 1 |
 | **Answer-key revision** | `revision` in the key file; recorded in each result | Everything in the key: accepted answers, evidence, tags, `fromPassage` | Any change to the key once results may exist (fingerprint test) |
 | **Checking-rules version** | `SCORING_RULES_VERSION` in the checking module; recorded in each result | Normalization, marks, outcomes and signal rules | Any code change that could change a mark, an outcome or a signal for the same answers, key and content |
 
 Nothing else is versioned. Explanations are shown next to a result but are not part of it.
 
-##### 2. One write-once entry per record
+##### 2. Where things live
 
-| Key | Value | Written |
+| Data | Store | Why |
 |---|---|---|
-| `reading:<testId>` | The current test session (ADR-0006), in progress **or finished and not yet recorded** | As in M4, after every change; on finishing, the finished session first (§4) |
-| `reading:<testId>:retry` | The current retry session (§9), same rules | Likewise |
-| `reading:<testId>:attempt:<id>` | `{ "schema": 1, "attempt": ReadingAttempt }` | Once (§3) |
-| `reading:<testId>:result:<id>:<keyRevision>.<rulesVersion>` | `{ "schema": 1, "result": Result }` | Once per attempt and pair (§5) |
-| `reading:<testId>:firstTry` | `{ "schema": 1, "firstTry": "<id>" \| "unknown" }` | When the first try is decided, and only towards "unknown" afterwards (§6) |
-| `reading:<testId>:finished` | M4's entry | Never written by M5; imported and then removed (§7) |
+| The current test session, in progress **or finished and not yet committed** | `localStorage` `reading:<testId>` (ADR-0006) | Synchronous: nothing is lost when the tab closes |
+| The current retry session (§8), same rules | `localStorage` `reading:<testId>:retry` | Likewise |
+| Committed attempts, result records, first-try markers | **IndexedDB** database `ielts-prep-reading`, version 1, object stores `attempts` (key `id`, index `testId`), `results` (key `[attemptId, keyRevision, rulesVersion]`) and `firstTry` (key `testId`) | Atomic transactions across tabs |
+| M4's finished session | `localStorage` `reading:<testId>:finished` | Never written by M5; imported and then removed (§6) |
 
 ```
-ReadingAttempt
-  id               "test-<startedAt>" | "retry-<startedAt>": the kind and the session's start time
+ReadingAttempt (store "attempts")
+  schema           1
+  id               the session's id (§3)
   testId, testVersion
   kind             "test" | "retry"
   retryOf?         the id of the test attempt whose questions are retried (retry only)
@@ -846,73 +849,85 @@ ReadingAttempt
   mode             "practice" | "exam"        (a retry is always "practice")
   startedAt, finishedAt, finishReason ("user" | "timeUp")
   answers, pins    copied from the session, in the ADR-0006 shapes
-  highlights?      copied from the session (sentence ids); absent means "not recorded" (§7)
+  highlights?      copied from the session (sentence ids); absent means "not recorded"
   importedFromM4?  true for an attempt imported from M4's ":finished" entry
+  committedAt      when this record was committed
 
-Result
-  attemptId, keyRevision, rulesVersion, checkedAt
+Result (store "results")
+  schema, attemptId, keyRevision, rulesVersion, checkedAt
   outcomes         per question number (scoring position): "correct" | "incorrect" | "unanswered"
   signals          per answer unit (its first number): the observable signal codes (ADR-0008 §1)
   score, total     marks and scoring positions (40 for a test attempt; the retried positions for a retry)
+
+FirstTry (store "firstTry")
+  schema, testId, firstTry: "<attempt id>" | "unknown"
 ```
 
-- **Kept:** answers, pins and highlights, because review shows them. **Not kept:** flags and the view (sheet state, scroll), which only matter during the test.
-- **Why one entry per record:** a write never rewrites another record, so a tab that reads stale data cannot drop another tab's attempt or result. Attempts and results are never modified after they are written.
-- **Ids carry the kind**, so a test and a retry started in the same millisecond have different ids. Two sessions of one kind for one test cannot exist at once (one current entry each), so an id never names two different sessions on one device.
+- **Kept:** answers, pins and highlights, because review shows them, and the timestamps. **Not kept:** flags and the view (sheet state, scroll).
+- Records are never modified after they are committed (§4).
 
-##### 3. Write-once
-- An entry is written only if no **valid** entry exists at its key. A valid existing entry always wins, so the first committed attempt keeps its answers, pins and highlights even if a stale tab later finishes the same session with different ones.
-- An entry with our schema that fails validation is not a committed record: it may be replaced. An entry with an **unknown schema** (written by a newer app) is never overwritten or removed.
+##### 3. Ids are unique per session
+- **A new session gets a random id** when it starts (a version 4 UUID from `crypto.getRandomValues`, prefixed `s-`), stored in the session as the optional field `sessionId`. The attempt keeps that id. Two distinct sessions, of the same kind or not, in one tab or two, never share an id; the start time is not part of it.
+- **M4 sessions have no `sessionId`.** They get deterministic ids, so every tab derives the same one and importing is idempotent:
+  - a session found in `reading:<testId>` without an id: `m4-current-<startedAt>`, written into the session the first time M5 saves it;
+  - the session in `reading:<testId>:finished`: `m4-finished-<startedAt>`.
+  Each `localStorage` slot holds one session, and the two prefixes differ, so two M4 sessions cannot share an id even with equal start times.
+- The session envelope stays at schema 1: `sessionId` is optional, and the M4 parser rule (build a fresh object, ignore unknown fields) is kept for everything else. The session parser validates its format.
 
-##### 4. Finishing records the attempt without risking the source
-1. When `apply` returns a finished session (the user finished, or the Exam time ran out, also when that is noticed on load), the finished session is written to its current entry (`reading:<testId>` or `:retry`), as M4 writes every change.
-2. The attempt is written (§3).
-3. For a test attempt with no first-try entry, the first try is decided (§6).
-4. **Only if step 2 succeeded or an equal or earlier committed attempt with that id already exists**, the current entry is removed.
-- If step 2 fails (storage full or blocked), the finished session stays in its current entry as the recoverable source, the attempt is kept in memory for this tab (§10), and the next load repeats steps 2 to 4. A current entry holding a finished session whose attempt exists is simply removed.
-- A stale tab that keeps writing its in-progress copy of a session already recorded is refused: a current session whose attempt id exists is never written again.
+##### 4. Committing a finished session is one atomic transaction
+1. When `apply` returns a finished session (the user finished, or the Exam time ran out, also when that is noticed on load), the finished session is written to its `localStorage` entry, as M4 writes every change. A tab never writes an **in-progress** copy over a stored **finished** copy of the same session.
+2. One IndexedDB read-write transaction over `attempts`, `results` and `firstTry` (requested with strict durability where the browser supports it):
+   - reads the attempt with this id; **if one exists, it is kept unchanged** and nothing else in this step happens;
+   - otherwise adds the attempt (`add`, which also fails if the id exists);
+   - for a test attempt, reads the test's first-try marker; if there is none, writes this attempt's id if no other attempt of the test exists, otherwise "unknown" (§5);
+   - applies retention (§9).
+3. **Only when the transaction has completed**, and the committed attempt with this id exists (this tab's or an earlier one), the `localStorage` entry is removed.
+- **Two tabs finishing the same session**, at the same moment or one long after the other: their transactions run one after the other; the first commits, the second finds the attempt and keeps it. The first committed attempt's answers, pins, highlights and timestamps are never replaced. The second tab then shows the committed attempt.
+- **A failed or interrupted transaction** (storage full, blocked, the tab closing) commits nothing, and the finished session stays in `localStorage` as the recoverable source; the next load commits it. A finished session in `localStorage` whose attempt is already committed is removed. An in-progress session whose id has a committed attempt (a stale tab) is removed on load and never committed.
 
-##### 5. Results are records per key revision and rules version
-- **When the results or review page shows an attempt** whose `testVersion` is the current content version, and no result exists for the current pair (key revision, rules version), the attempt is checked from its unchanged answers and a result is written for that pair **even if nothing differs** from the previous record, so later views know this pair has been checked. Concurrent views write the same key; the first valid record wins.
-- **All earlier records are kept.** The learner sees the record of the current pair.
-- **Correction notice:** when the shown record differs from the most recent earlier record in anything the learner sees (the score, an outcome, or a signal shown as a note), the page shows "Rechecked after a correction to the answer key or to how answers are checked. Your earlier result was 27 of 40." When only the pair changed, no notice is shown and nothing suggests the score changed. If the score is the same but an outcome or note changed, the notice says so without quoting a different score (the copy has two forms).
-- A recheck never creates an attempt and never counts as new evidence (READING_EXPERIENCE.md, Error Intelligence).
-- **Content no longer available** (the attempt's `testVersion` is not the current one): no check is possible. The most recent stored record is shown (score and counts) with "This test has changed since you took it, so a detailed review is not available"; with no record, "…so your answers can't be checked". An attempt of a test the app no longer ships is kept, shown nowhere, and not deleted by M5.
-
-##### 6. First-try provenance
-- `firstTry` is decided when a **test** attempt is recorded and no first-try entry exists: if no other attempt entry exists for that test (valid, invalid or unknown), it is this attempt's id; otherwise "unknown".
-- It moves only towards "unknown": an M4 import writes "unknown" even over an id (the imported attempt is older than anything M5 recorded); an entry that names a missing or invalid attempt reads as "unknown". It never changes from one id to another.
-- Retries never decide it. "Start again" creates later attempts. A new content version does not change it.
+##### 5. First-try provenance, decided inside the same transactions
+- The first-try marker is written only inside a read-write transaction that also covers `attempts`, so two tabs cannot both decide it.
+- It is set when a **test** attempt is committed and no marker exists: this attempt's id if no other attempt of the test exists, otherwise "unknown".
+- It moves only towards "unknown": an M4 import writes "unknown" even over an id (the imported attempt is older than anything M5 committed); a marker naming a missing or invalid attempt reads as "unknown". It never changes from one id to another.
+- Retries never set it. "Start again" creates later attempts. A new content version does not change it.
 - What the device cannot know: attempts in another browser, on another device, or before site data was cleared. The copy says "on this device".
 
-##### 7. Compatibility with M4
-- **In-progress sessions** (`reading:<testId>`, envelope schema 1): unchanged and resumed as in M4; when finished, recorded by §4.
+##### 6. Compatibility with M4
+- **In-progress sessions** (`reading:<testId>`, envelope schema 1): resumed unchanged; they get the id `m4-current-<startedAt>` (§3) and are committed by §4 when finished.
 - **The M4 `:finished` entry**, on the first load of any Reading page of that test:
   1. If it does not parse with the ADR-0006 rules or its `testVersion` is not the current one: left untouched, never read again.
-  2. Otherwise the attempt `test-<startedAt>` is written (§3) with `importedFromM4: true`, its mode, times, answers, pins **and highlights** exactly as stored, and no result.
-  3. The first-try entry is set to "unknown".
-  4. Only if steps 2 and 3 succeeded (or a valid attempt with that id already existed), the `:finished` entry is removed. A failed write leaves it in place to be imported later.
+  2. One read-write transaction over `attempts` and `firstTry`: if no attempt `m4-finished-<startedAt>` exists, add it with `importedFromM4: true`, its mode, times, answers, pins **and highlights** exactly as stored, and no result; in any case set the test's marker to "unknown".
+  3. Only when that transaction has completed, the `:finished` entry is removed. A failed transaction leaves it in place, and the next load tries again; two tabs importing at once produce one attempt.
 - Nothing is invented: no score, outcome, check date or first-try claim. The attempt is checked the first time its results are shown, and its results page says so.
-- **Absent highlights:** M4 sessions always carry `highlights` (possibly empty), so an imported attempt has them. An attempt entry without the field is valid and means "not recorded": review then shows no highlights and says nothing about them. An empty list means the learner highlighted nothing.
+- **Absent highlights:** M4 sessions always carry `highlights` (possibly empty), so an imported attempt has them. An attempt without the field is valid and means "not recorded": review shows no highlights and says nothing about them. An empty list means the learner highlighted nothing.
 - **Content version:** M5 keeps the demo test's version because it does not change the test file; a fingerprint test fails if the file changes without a version increase (ADR-0008 §3).
 
-##### 8. Stored data is untrusted
-- Every entry is parsed by a domain parser as untrusted input. An entry that is not valid JSON, has our schema but fails validation, or belongs to another test is ignored; the next write of that test's history removes it, except at keys that a write would replace anyway.
-- An entry with an unknown schema is ignored for display but never overwritten or removed. An unknown-schema first-try entry reads as "unknown".
-- Results are only used with the attempt they name and only if their pair, outcomes and signals are consistent with the attempt's question numbers.
+##### 7. Results are records per key revision and rules version
+- **When the results or review page shows an attempt** whose `testVersion` is the current content version, and no record exists for the current pair (key revision, rules version), the attempt is checked from its unchanged answers and the record is added in a read-write transaction that first reads the key `[attemptId, keyRevision, rulesVersion]`: **exactly one record per attempt and pair**, whichever tab commits first; the others read and show it. The record is written **even if nothing differs** from the previous one, so later views know the pair has been checked.
+- **All earlier records are kept.** The learner sees the record of the current pair.
+- **Correction notice:** when the shown record differs from the most recent earlier record in anything the learner sees (the score, an outcome, or a note), the page says so ("Rechecked after a correction…"), quoting the earlier score only when the score changed. When only the pair changed, no notice is shown.
+- A recheck never creates an attempt and never counts as new evidence (READING_EXPERIENCE.md, Error Intelligence).
+- **Content no longer available** (the attempt's `testVersion` is not the current one): no check is possible; the most recent stored record is shown (score and counts) with "This test has changed since you took it, so a detailed review is not available"; with no record, "…so your answers can't be checked". An attempt of a test the app no longer ships is kept, shown nowhere, and not deleted by M5.
 
-##### 9. Retries in progress
-- `reading:<testId>:retry` holds one retry session (the ADR-0006 envelope, schema 1; the session additionally carries `retry: { of, questions }`, whole answer units). The main entry never carries `retry`. A retry is recorded by §4 as a `retry` attempt.
-- Starting a retry is validated against its source attempt (READING_EXPERIENCE.md, Targeted practice): the source must be a stored test attempt of the current content version, and the questions must be whole units it got not fully correct.
+##### 8. Retries in progress
+- `reading:<testId>:retry` holds one retry session (the ADR-0006 envelope, schema 1, with its own `sessionId`; the session additionally carries `retry: { of, questions }`, whole answer units). The main entry never carries `retry`. A retry is committed by §4 as a `retry` attempt.
+- Starting a retry is validated against its source attempt (READING_EXPERIENCE.md, Targeted practice): the source must be a committed test attempt of the current content version, and the questions must be whole units it got not fully correct.
 
-##### 10. Retention, reset and unavailable storage
-- At most **20 attempts per test**. When recording a new attempt exceeds that, the oldest attempts are removed with their result records, **except the first-try attempt**, and except entries with an unknown schema. About 100 KB per test at most.
+##### 9. Untrusted data, retention, reset and unavailable storage
+- **Untrusted:** every record read from IndexedDB or `localStorage` is parsed by a domain parser. A record with our schema that fails validation is ignored (it is not a committed attempt or result) and may be replaced by a valid one with the same key inside a transaction; a record with an **unknown schema** is ignored for display and never overwritten or removed. A database whose version is newer than the app knows (it cannot be opened at version 1) is treated as unavailable: never upgraded down or deleted.
+- **Retention:** at most **20 attempts per test**, applied inside the commit transaction: the oldest attempts are removed with their result records, **except the first-try attempt** and unknown-schema records. About 100 KB per test at most.
 - **No reset control in M5.** Clearing the browser's site data clears everything (ADR-0006).
-- **Storage blocked or full:** attempts and results are kept in memory in the storage module for the tab's lifetime (client-side navigation to results and review keeps them; a reload loses them) and the pages show the notice. Recoverable sources (§4, §7) are never removed after a failed write.
+- **IndexedDB unavailable or failing** (blocked, full, an old private mode): committed history is kept in memory in the storage module for the tab's lifetime (client-side navigation to results and review keeps it; a reload loses it), the pages show the notice, and the `localStorage` sources (§4, §6) are never removed, so a later load can commit them.
+- **Reading is asynchronous:** the results, review and retry pages, and the start screen's "See your last results", read the history after mounting and show a brief loading state, as the M4 test screen does before it reads the session.
 
-##### 11. Derived, not stored
-- Repeated mistakes are derived from the first try's record for the current pair on every read (refreshed by §5 first; READING_EXPERIENCE.md).
+##### 10. Derived, not stored
+- Repeated mistakes are derived from the first try's record for the current pair on every read (refreshed by §7 first; READING_EXPERIENCE.md).
 - The review position lives in the page address.
+
+##### 11. Testing the guarantees
+- **Unit tests** run the storage adapter against `fake-indexeddb` (a dev dependency for tests only; jsdom has no IndexedDB), with two database connections standing in for two tabs and their operations interleaved.
+- **Browser tests** (Playwright, real Chromium) open two pages in one browser context, which share `localStorage` and IndexedDB like two tabs.
+- Both cover: two tabs finishing the same session at the same moment and one after the other with different answers, pins and highlights (the first committed attempt and its timestamps survive); a stale tab's in-progress copy after the commit; two tabs viewing results at once (one record per pair); two tabs importing the same M4 entry (one attempt, marker "unknown"); two tabs committing first attempts of the same test (one marker); a test and a retry, and two sessions of one kind, started in the same millisecond (distinct ids); an interrupted transaction (the `localStorage` source survives and is committed on the next load).
 
 ##### 12. Not decided here
 - Home showing a Reading activity (ADR-0006 §4): not in M5 (owner, M5-01).
@@ -922,31 +937,30 @@ Result
 
 | Option | Pros | Cons |
 |---|---|---|
-| **A. One write-once entry per attempt, per result record and for the first try; recording writes before it removes (chosen)** | No write ever rewrites another record, so stale tabs cannot drop entries; synchronous like ADR-0006; no dependency | Reading a history scans the test's keys; a few more keys per attempt |
-| B. One list per test, rewritten on every change | One read for the whole history | A stale tab's rewrite can drop another tab's entry; locks do not fix stale per-process copies |
-| C. B plus the Web Locks API | Serializes tabs that hold the lock | Asynchronous; still exposed to stale per-process copies; more code than A |
-| D. IndexedDB transactions | Real cross-tab transactions | Asynchronous writes may not finish when the tab closes (rejected in ADR-0006 for this data) |
-| E. Freeze the first result, never recheck | Simplest | A known-wrong judgment stays forever after a key correction |
-| F. Recheck and overwrite | No history | The earlier result disappears silently |
-| G. Tie key corrections to the content version | One number fewer | A key typo fix would discard in-progress sessions and end review of earlier attempts |
-| H. Infer the first try as "the earliest attempt" | No stored field | Wrong after an M4 import or a damaged history |
+| **A. Sessions in `localStorage` (ADR-0006); committed history in IndexedDB transactions; random session ids (chosen)** | Atomic across tabs: the first committed attempt, the first-try marker and one record per pair are guaranteed; synchronous writes while answering are kept; no runtime dependency | History reads are asynchronous (a brief loading state); hand-written promise helpers around the IndexedDB API; a test-only dev dependency |
+| B. Write-once `localStorage` entries (the earlier draft) | Synchronous, simple | "Write only if absent" is not atomic across tabs: two tabs can both write, the later one wins |
+| C. `localStorage` plus the Web Locks API | Serializes tabs holding the lock | Does not make `localStorage` reads consistent across processes; still not atomic |
+| D. Everything in IndexedDB, including in-progress sessions | One store | Asynchronous writes while answering may not complete when the tab closes (ADR-0006's reason to use `localStorage`) |
+| E. Ids from start time plus kind | Deterministic | Two distinct sessions of one kind started in the same millisecond would share an id |
+| F. An IndexedDB wrapper library | Less code | A runtime dependency for a few transactions |
+| G. Server storage | Survives devices | Needs accounts (M7) and the open hosting and data-residency decision |
 
 #### Why this decision
 
-- **Correctness:** every record is written once and never rewritten; sources are removed only after their record exists; results name the key and rules that produced them; first-try provenance is never invented.
-- **Simplicity:** synchronous browser storage, envelopes and parsers as in ADR-0006; no dependency.
+- **Correctness:** every guarantee that depends on "only if absent" is decided inside an IndexedDB transaction, which the browser runs alone among overlapping read-write transactions across all tabs; sources are removed only after their transaction has completed; ids are random per session.
+- **Simplicity:** the platform's own stores, no runtime dependency; `localStorage` stays where synchronous writes matter.
 - **Consistency:** device-only guest state (ADR-0003, ADR-0006); rules in `domain/`, storage in `data/` (ADR-0004).
 
 #### Consequences
 
-- **Positive:** results, review, repeated mistakes and retries read one history; corrections are visible; M4 data carries over with its highlights and without invented scores.
-- **Costs accepted:** a cleared browser or another device starts with no history; Safari may clear a site's storage after 7 days without a visit (ADR-0006); attempt ids trust the device clock. **Residual race:** two tabs that finish the same session within the moment it takes one tab's write to reach the other may both see "no attempt yet", and the later write wins; the answers then come from one of the two tabs' copies of the same session. Different records can never overwrite each other.
-- **Harder to change later:** the entry shapes, once stored (mitigated by `schema` and the parsers).
+- **Positive:** the first committed attempt, the first-try marker and the one-record-per-pair rule hold across tabs; M4 data carries over with its highlights and without invented scores; corrections are visible.
+- **Costs accepted:** the history is read asynchronously; two storage mechanisms to maintain; a cleared browser or another device starts with no history; Safari may clear a site's storage after 7 days without a visit (ADR-0006); a browser without IndexedDB keeps history only in memory for the tab.
+- **Harder to change later:** the record shapes and the database layout (mitigated by `schema`, the database version and the parsers).
 
 #### Follow-up / migration notes
 
-- **Implementation:** M5-04 (entries, parsers, recording, import, provenance, retention, in-memory fallback, interleaved-tab tests); checking on view and rechecking (M5-06); retries (M5-09); first-try use (M5-10).
-- **Docs on acceptance:** the ADR index; ADR-0006's status line ("§2 amended by ADR-0009"); ARCHITECTURE.md (guest practice state); BOUNDARIES.md if the storage module gains a rule.
+- **Implementation:** M5-04 (session ids, the database, parsers, the commit transaction, import, provenance, retention, the in-memory fallback, the unit and browser tests of §11); result records per pair (M5-06); retries (M5-09); first-try use (M5-10).
+- **Docs on acceptance:** the ADR index; ADR-0006's status line; ARCHITECTURE.md (guest practice state); BOUNDARIES.md if the storage module gains a rule.
 
 ## Part 7. M5 tasks and the M11 review tasks
 
@@ -1059,23 +1073,27 @@ Rendered from TASKS.json. Every M5 implementation task depends on M5-01 directly
 #### M5-04: Attempt history on the device
 
 - **Owner:** worker · **Status:** `todo` · **Depends on:** M5-03
-- **Goal:** Finished sessions become immutable attempts with answers, pins and highlights, kept on the device in write-once entries that stay correct across tabs and compatible with M4 data.
+- **Goal:** Finished sessions become immutable attempts with answers, pins, highlights and timestamps, committed atomically to IndexedDB so that the first committed attempt, the first-try marker and one result record per pair hold across tabs, with unique session ids and compatibility with M4 data.
 - **Scope:**
-  - Per ADR-0009: the entry layout (one write-once entry per attempt, per result record and for the first-try marker; ids `test-<startedAt>` and `retry-<startedAt>`); domain parsers for each entry as untrusted input (attempts with answers, pins and optional highlights; absent highlights read as 'not recorded'); write-once semantics (a valid entry always wins; an invalid entry with our schema may be replaced; an unknown schema is never overwritten or removed)
-  - Recording on finish (ADR-0009 §4): the finished session written to its current entry, then the attempt, then the first-try decision, and the current entry removed only after the attempt exists; a current session whose attempt exists is never written again (stale tabs); a finished session left in a current entry is recorded on the next load
-  - Result records per key revision and rules version (ADR-0009 §5) as an adapter function the results page calls: written once per pair even when unchanged; all kept
-  - First-try provenance (ADR-0009 §6): decided when the first test attempt is recorded and no other attempt entries exist; moves only towards 'unknown' (M4 import, other entries, a marker naming a missing or invalid attempt)
-  - M4 import exactly as in READING_EXPERIENCE.md 'Import of a completed M4 session': answers, pins and highlights as stored, no result, first try 'unknown', the `:finished` entry removed only after both writes succeeded; a non-importable entry left untouched
-  - Retention (20 per test, never the first-try attempt or unknown-schema entries); the retry entry `reading:<testId>:retry` and the session's optional `retry` field (whole units), never on the main entry; an in-memory fallback when storage is blocked or full that never removes a recoverable source
-  - The test screen's finish (by the user, by time-out, and a time-out noticed on load) records the attempt instead of writing `:finished`. The M4 finished page stays until M5-06 replaces it
-  - Tests with stored values in the exact M4 format (schema 1, in progress and finished, with highlights) and with two simulated tabs sharing one storage, interleaved: both tabs finish the same session with different answers (the first committed attempt keeps its answers, pins and highlights); a stale tab writes its in-progress copy after the attempt exists (refused); two tabs write the same result pair (one record); a tab with a stale view records another attempt (no entry lost); import in two tabs (one attempt); a test and a retry started in the same millisecond (two attempts); a failed attempt write (the finished session and the M4 `:finished` entry stay and are recorded on the next load); unknown schema never overwritten; invalid entries removed on the next write; retention; first-try provenance for a first attempt, an M4 import, a restart, a retry and existing entries
+  - Per ADR-0009 (as amended 2026-10-11): a random `sessionId` (`s-` and a version 4 UUID from `crypto.getRandomValues`) for every new test and retry session, stored in the session (envelope schema 1, optional field, validated by the session parser); deterministic ids for M4 sessions (`m4-current-<startedAt>`, written into the session the first time M5 saves it; `m4-finished-<startedAt>` for the M4 `:finished` entry); a tab never writes an in-progress copy over a stored finished copy of the same session
+  - The IndexedDB database `ielts-prep-reading` version 1 with the stores `attempts` (key `id`, index `testId`), `results` (key `[attemptId, keyRevision, rulesVersion]`) and `firstTry` (key `testId`), behind small hand-written promise helpers in `data/` (no runtime library); domain parsers for every record as untrusted input (attempts with answers, pins, optional highlights, timestamps; absent highlights read as 'not recorded'); unknown-schema records and a newer database never overwritten, removed or downgraded
+  - The commit transaction (ADR-0009 §4): the finished session written to its `localStorage` entry first; then one read-write transaction over `attempts`, `results` and `firstTry` (strict durability where supported) that keeps an existing attempt unchanged or adds the new one, decides the first-try marker (ADR-0009 §5) and applies retention (20 per test, never the first-try attempt or unknown-schema records); the `localStorage` entry removed only after the transaction has completed and the committed attempt with this id exists; on load, a finished session in `localStorage` is committed, and an in-progress session whose id has a committed attempt is removed
+  - Result records per pair (ADR-0009 §7) as an adapter function the results page calls: inside a read-write transaction, read the key and add only if absent; written even when unchanged; all kept
+  - M4 import (ADR-0009 §6, READING_EXPERIENCE.md 'Import of a completed M4 session'): one transaction adds `m4-finished-<startedAt>` if absent (answers, pins, highlights and times as stored, no result) and sets the marker to 'unknown'; the `:finished` entry removed only after that transaction has completed; a non-importable entry left untouched
+  - The retry entry `reading:<testId>:retry` and the session's optional `retry` field (whole units, own `sessionId`), never on the main entry; an in-memory fallback when IndexedDB is unavailable or fails, which never removes a `localStorage` source; asynchronous history reads for the pages that need them
+  - The test screen's finish (by the user, by time-out, and a time-out noticed on load) commits the attempt instead of writing `:finished`. The M4 finished page stays until M5-06 replaces it
+  - Dev dependency for tests only: `fake-indexeddb` (named in ADR-0009 §11; current stable version; recorded in PROGRESS.md), because jsdom has no IndexedDB
+  - Unit tests against `fake-indexeddb` with two database connections as two tabs, operations interleaved (started together and in each order): both tabs commit the same session with different answers, pins, highlights and finish times (the first committed attempt and its timestamps survive; the second tab reads it back); a stale tab's in-progress copy after the commit (removed on load, never committed); two concurrent result-record writes for one pair (exactly one record); two concurrent imports of the same M4 entry (one attempt, marker 'unknown'); two tabs committing different first test attempts of the same test (exactly one marker, never two ids); a test and a retry, and two test sessions, with the same start time (distinct ids); an aborted transaction (the `localStorage` finished session and the M4 entry survive and are committed on the next load); unknown schema and a newer database never overwritten; retention
+  - Browser tests (Playwright, real Chromium, two pages in one browser context sharing storage): the same session finished in both pages with different answers, simultaneously and one after the other (one attempt, the first committed answers, pins, highlights and timestamps; both pages end up showing it); an M4-format in-progress and finished session seeded in storage (resumed and imported with highlights)
+  - Tests with stored values in the exact M4 format (schema 1, in progress and finished, with highlights)
 - **Out of scope:**
   - the results and review UI (M5-06, M5-07)
   - retry screens (M5-09)
   - server storage, accounts (M7)
 - **Acceptance criteria:**
-  - Behavior matches ADR-0009, proven by tests that include M4-format data and interleaved tabs
-  - No path removes a recoverable session or M4 entry after a failed write
+  - Behavior matches ADR-0009 as amended, proven by unit tests with interleaved connections and by two-page browser tests
+  - No path replaces a committed attempt, sets two first-try ids for a test, or writes two records for one attempt and pair; ids of distinct sessions never collide
+  - No path removes a recoverable session or M4 entry before its transaction has completed
   - The M4 Reading e2e journeys still pass
   - All gates pass
 - **Validation:**
@@ -1087,6 +1105,7 @@ Rendered from TASKS.json. Every M5 implementation task depends on M5-01 directly
   - docs/architecture/decisions/0006-reading-session-state.md
   - docs/architecture/decisions/0009-reading-attempts-on-the-device.md
   - docs/architecture/decisions/0004-web-feature-structure.md
+  - docs/engineering/CODE_QUALITY.md
   - .claude/rules/security/security.md
   - .claude/rules/testing/test-code.md
 - **Docs to update:**
@@ -1129,11 +1148,11 @@ Rendered from TASKS.json. Every M5 implementation task depends on M5-01 directly
 - **Owner:** worker · **Status:** `todo` · **Depends on:** M5-04
 - **Goal:** Finishing a test in either mode, or running out of time, leads to an honest results page whose results are traceable to their key and rules and never silently overwritten.
 - **Scope:**
-  - The results address as approved (D21), inside the shell: the key loaded on the server for the results and review pages only (ADR-0008 §2); a result record written for the current key revision and rules version when missing, also after a correction (ADR-0009 §5); the correction notice only when the score, an outcome or a note changed (two copy forms), none otherwise; 'Time is up.', 'Your results', the score out of 40 (wrapping allowed), the honest line, the breakdown in positions, the red review button whose text names what it opens (a partly correct item counts as a mistake; linking to the review address that M5-07 builds), 'Start again'
+  - The results address as approved (D21), inside the shell: the key loaded on the server for the results and review pages only (ADR-0008 §2); a result record written for the current key revision and rules version when missing, also after a correction (ADR-0009 §7, exactly one record per attempt and pair across tabs); the correction notice only when the score, an outcome or a note changed (two copy forms), none otherwise; 'Time is up.', 'Your results', the score out of 40 (wrapping allowed), the honest line, the breakdown in positions, the red review button whose text names what it opens (a partly correct item counts as a mistake; linking to the review address that M5-07 builds), 'Start again'
   - Finishing and time-out replace the test screen with the results page; the test link shows the start screen with 'See your last results' (D6); the M4 finished page and its now unused copy are removed
-  - Every result state in DESIGN_SYSTEM.md 'Result states', including rechecked (score changed, outcomes changed, nothing visible changed), imported from M4 (note), no attempt, unknown attempt, an earlier content version (record kept, or cannot be checked), storage blocked (notice, in memory)
+  - Every result state in DESIGN_SYSTEM.md 'Result states', including rechecked (score changed, outcomes changed, nothing visible changed), imported from M4 (note), no attempt, unknown attempt, an earlier content version (record kept, or cannot be checked), IndexedDB unavailable (notice, in memory, `localStorage` sources kept), loading
   - The `status.correct` token and outcome icons as approved (DESIGN_SYSTEM.md M5); uz/ru/en copy as approved
-  - Tests: component tests; e2e on phone and desktop: Practice finish, Exam finish, Exam time-out on screen and while away (controlled clock), reload shows the same record, a record stored for an older key revision gets a new record (with and without a visible change), an M4-format finished session with highlights seeded in storage shows results with the note, storage blocked, 320 px and 200% zoom in uz/ru/en, axe
+  - Tests: component tests; e2e on phone and desktop: Practice finish, Exam finish, Exam time-out on screen and while away (controlled clock), reload shows the same record, two pages opening the same results at once leave exactly one record, a record stored for an older key revision gets a new record (with and without a visible change), an M4-format finished session with highlights seeded in storage shows results with the note, storage blocked, 320 px and 200% zoom in uz/ru/en, axe
 - **Out of scope:**
   - review (M5-07, M5-08)
   - repeated mistakes (M5-10)
@@ -1243,10 +1262,10 @@ Rendered from TASKS.json. Every M5 implementation task depends on M5-01 directly
 - **Goal:** A learner can answer again, without seeing the answers, the answer units of an attempt that were not fully correct or unanswered, and sees an honestly labeled result that never changes the original attempt.
 - **Scope:**
   - The retry address as approved, validated against its source (READING_EXPERIENCE.md 'Targeted practice'): a stored test attempt of the current content version, its record for the current pair (written first if needed), the requested numbers expanded to whole units, every unit one the source did not get fully correct; otherwise the safe states (source missing or pruned, earlier content version, questions not allowed) with 'See your last results' and 'Start the test'
-  - A Practice session limited to those units (the session's `retry` field, ADR-0009 §9), enforced in the domain transitions (moving, answering and pinning only within the subset; the answered count and the finish confirmation over the subset); the navigator ('All questions'), Previous / Next and the desktop column show only those units; 22–23 starts with both choices empty; 'n of m to practise' in positions
-  - One retry in progress per test: the same retry resumes, a different one replaces it; finishing records a `retry` attempt (id `retry-<startedAt>`)
+  - A Practice session limited to those units (the session's `retry` field, ADR-0009 §8), enforced in the domain transitions (moving, answering and pinning only within the subset; the answered count and the finish confirmation over the subset); the navigator ('All questions'), Previous / Next and the desktop column show only those units; 22–23 starts with both choices empty; 'n of m to practise' in positions
+  - One retry in progress per test: the same retry resumes, a different one replaces it; each retry session has its own random `sessionId`; finishing commits a `retry` attempt with that id (ADR-0009 §4)
   - The retry's results ('Your retry', the score out of the retried positions, 'These are questions you have attempted before. This practice result is not an independent measure of your level.', the review button named as on the results page, 'Back to your test results') and review of the retry; the quiet 'Try n questions again: not correct or no answer' on a test attempt's results, n counted in positions after expanding and de-duplicating units (hidden when there are none)
-  - Tests: domain tests for subset transitions and unit expansion (22–23 included once with a denominator of 2); address validation for every safe state; e2e on phone and desktop; the original attempt and its records are unchanged after a retry (stored data and its results page)
+  - Tests: domain tests for subset transitions and unit expansion (22–23 included once with a denominator of 2); address validation for every safe state; e2e on phone and desktop; the original attempt and its records are unchanged after a retry (stored data and its results page); the same retry finished in two pages at once commits one attempt
 - **Out of scope:**
   - unseen or new practice content (M9)
   - repeated-mistake cards (M5-10)
@@ -1278,7 +1297,7 @@ Rendered from TASKS.json. Every M5 implementation task depends on M5-01 directly
 - **Owner:** worker · **Status:** `todo` · **Depends on:** M5-09
 - **Goal:** The results page shows repeated mistakes only when the first attempt's evidence meets the approved heuristic, describes what happened without guessing why, and links to practising those questions again.
 - **Scope:**
-  - Domain code per READING_EXPERIENCE.md 'M5 specifications', 'Error Intelligence (M5)': the first try from the stored marker (ADR-0009 §6), per test, never guessed, with no detection when it is unknown; the first try's record brought up to the current key revision and rules version before deriving (ADR-0009 §5), and patterns unavailable when its content version is not the current one (old signals never combined with another version's groups or tags); the categories from signals and content tags, counted in answer units (an item never counts twice) with their opportunities; the threshold (D15, ≥ 3 units in ≥ 2 groups), presented as a heuristic, never as a diagnosis; ordering and the limit of two; unanswered questions excluded
+  - Domain code per READING_EXPERIENCE.md 'M5 specifications', 'Error Intelligence (M5)': the first try from the stored marker (ADR-0009 §5), per test, never guessed, with no detection when it is unknown; the first try's record brought up to the current key revision and rules version before deriving (ADR-0009 §7), and patterns unavailable when its content version is not the current one (old signals never combined with another version's groups or tags); the categories from signals and content tags, counted in answer units (an item never counts twice) with their opportunities; the threshold (D15, ≥ 3 units in ≥ 2 groups), presented as a heuristic, never as a diagnosis; ordering and the limit of two; unanswered questions excluded
   - 'Mistakes that repeated' on a test attempt's results: the scope line ('In this attempt at this test…' or 'From your first attempt…'), the cards (title, count of opportunities with question numbers, tip, 'Practise these questions again' as a retry of those units), 'Not enough evidence to show a repeated pattern…' (whether units or groups fall short), the 'first try unknown' and 'unavailable' texts, nothing on a retry's results; 'Possible spelling issues'; pin cards about agreement with the key's cited sentences; no wording that claims a pattern across tests, a lasting weakness, a cause or improvement
   - uz/ru/en copy as approved, with English answer words lang=en
   - Tests: domain tests at every boundary (2 vs 3 units, 1 vs 2 groups, a 'choose two' item counted once, first try only, later attempts, restarts, retries and rechecks ignored, an imported M4 attempt and other entries (unknown first try), a first try from an earlier content version (unavailable), a first try whose record predates the current key revision (refreshed first), unanswered excluded, content tags, ties); e2e with seeded attempts for a card, the not-enough-evidence state, a later attempt and the unknown state
@@ -1316,6 +1335,7 @@ Rendered from TASKS.json. Every M5 implementation task depends on M5-01 directly
 - **Goal:** The product loop for Reading (practice, understand mistakes, practise again) works as one flow on phone and desktop, and the docs describe what exists.
 - **Scope:**
   - e2e journeys on both projects in uz/ru/en with English test content marked lang=en: a Practice test → finish → results → review mistakes and unanswered questions (each interaction family, a NOT GIVEN question with and without related sentences, an unanswered question, 22–23 as one card, 'Explain simpler') → try them again → the retry's results → back; an Exam with a time-out → results → review; a reload at each step; M4-format data already on the device (an unfinished session resumed, a finished one imported with its highlights, the 'checked later' note and no repeated-mistake detection)
+  - A two-tab journey (two pages in one browser context): the same test open in both, finished in one, then answered differently and finished in the other; the results in both pages show the first committed attempt, and the stored history holds one attempt, one first-try marker and one record per pair
   - Accessibility pass per ACCESSIBILITY.md on the production build (keyboard, screen-reader order, announcements, 200% zoom, 320 px, reduced motion, not by color alone), with findings fixed or recorded; a TalkBack check recorded as before-beta if no device is available
   - Docs: FEATURE_MAP (Error review, Error Intelligence, Targeted practice), CLAUDE.md Current state, READING_EXPERIENCE.md status line
 - **Out of scope:**
