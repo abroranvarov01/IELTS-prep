@@ -2656,7 +2656,7 @@
       "title": "Adopt Feature-Sliced Design in apps/web (owner-authorized migration)",
       "milestone": "M5",
       "owner": "worker",
-      "status": "in_progress",
+      "status": "done",
       "dependsOn": ["M5-06"],
       "goal": "The existing apps/web frontend follows Feature-Sliced Design as the owner decided on 2026-10-11: layer, slice and public-API boundaries enforced by tools, ReadingScreen split by responsibility, approved behavior and stored data unchanged, and governing documents that agree with the code. M5-07 to M5-11 wait until it is done.",
       "scope": [
@@ -2712,7 +2712,8 @@
         ".claude/rules/ and .claude/skills/ where they name the old structure",
         "docs/execution/PROGRESS.md"
       ],
-      "notes": "Owner decision 2026-10-11: adopt Feature-Sliced Design for apps/web. Executed directly by the owner-directed session, not by the autonomous loop. M5-07 depends on this task, so M5-07 to M5-11 are paused until it is done; M5 stays active."
+      "notes": "Owner decision 2026-10-11: adopt Feature-Sliced Design for apps/web. Executed directly by the owner-directed session, not by the autonomous loop. M5-07 depends on this task, so M5-07 to M5-11 are paused until it is done; M5 stays active.",
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M5-07",
@@ -2756,7 +2757,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         ".claude/rules/testing/test-code.md",
-        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0010-feature-sliced-design-in-apps-web.md",
+        "docs/architecture/BOUNDARIES.md",
         "docs/architecture/decisions/0007-reading-ui-primitives.md",
         "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
         "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
@@ -2798,7 +2800,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         ".claude/rules/testing/test-code.md",
-        "docs/architecture/decisions/0004-web-feature-structure.md"
+        "docs/architecture/decisions/0010-feature-sliced-design-in-apps-web.md",
+        "docs/architecture/BOUNDARIES.md"
       ]
     },
     {
@@ -2841,7 +2844,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         ".claude/rules/testing/test-code.md",
-        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0010-feature-sliced-design-in-apps-web.md",
+        "docs/architecture/BOUNDARIES.md",
         "docs/architecture/decisions/0006-reading-session-state.md",
         "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
       ]
@@ -2886,7 +2890,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         ".claude/rules/testing/test-code.md",
-        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0010-feature-sliced-design-in-apps-web.md",
+        "docs/architecture/BOUNDARIES.md",
         "docs/product/PRODUCT.md",
         ".claude/rules/domain/ielts-scoring.md",
         "docs/engineering/TESTING_STRATEGY.md"
@@ -2928,7 +2933,8 @@
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
         ".claude/rules/testing/test-code.md",
-        "docs/architecture/decisions/0004-web-feature-structure.md",
+        "docs/architecture/decisions/0010-feature-sliced-design-in-apps-web.md",
+        "docs/architecture/BOUNDARIES.md",
         "docs/product/FEATURE_MAP.md",
         "CLAUDE.md"
       ],

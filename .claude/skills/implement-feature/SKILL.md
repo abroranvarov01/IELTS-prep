@@ -11,7 +11,7 @@ Follow these steps in order. Keep notes short. The output is working code and an
 2. **Locate it in the product.** Check `docs/product/FEATURE_MAP.md` and `docs/product/USER_FLOWS.md`. If the feature has no flow spec and is user-facing, draft one (format is in USER_FLOWS.md) before building screens.
 3. **Inspect existing patterns.** Search the repository for similar code, components, domain modules, and tests. Plan to reuse them.
 4. **Inspect decisions.** Read the relevant ADRs in `docs/architecture/decisions/` and the relevant entries in `docs/architecture/INVARIANTS.md` and `BOUNDARIES.md`.
-5. **Define the minimal change surface.** List the files you expect to touch. Domain logic goes in domain code, UI in UI code. If the list keeps growing, stop and reconsider the approach.
+5. **Define the minimal change surface.** List the files you expect to touch. Rules go in a `model/` segment, storage and server access in `api/`, UI in `ui/`; in `apps/web`, choose the layer and slice with `docs/architecture/BOUNDARIES.md` § Placing code, and use other slices only through their public API. If the list keeps growing, stop and reconsider the approach.
 6. **Surface assumptions.** Ask about anything that is hard to reverse or touches something marked TBD in `docs/`. State smaller assumptions and proceed conservatively.
 7. **Implement.** Domain logic first, with its tests (use the `testing` skill). Then wiring, then UI (use the `ui-implementation` skill for any user-facing surface).
 8. **Review the diff.** Apply the self-review in `.claude/rules/01-change-discipline.md`.

@@ -39,11 +39,12 @@ Split a choice into its own ADR only when it independently meets the criteria ab
 | [0001](0001-initial-application-foundation.md) | Initial Application Foundation | Accepted |
 | [0002](0002-api-contracts-and-validation.md) | API Contracts and Input Validation | Accepted |
 | [0003](0003-guest-state-on-the-device.md) | Guest State on the Device | Accepted |
-| [0004](0004-web-feature-structure.md) | Feature Structure and Domain Code in apps/web | Accepted |
+| [0004](0004-web-feature-structure.md) | Feature Structure and Domain Code in apps/web | Superseded by 0010 |
 | [0005](0005-reading-content-contract.md) | Reading Content Contract | Accepted |
 | [0006](0006-reading-session-state.md) | Reading Session State and Persistence | Accepted |
 | [0007](0007-reading-ui-primitives.md) | Building Blocks for the Question Sheet and Passage Selection | Accepted |
 | [0008](0008-reading-answer-checking-and-explanations.md) | Reading Answer Checking, Explanations and Review Content | Accepted |
 | [0009](0009-reading-attempts-on-the-device.md) | Reading Attempts and Results on the Device | Accepted |
+| [0010](0010-feature-sliced-design-in-apps-web.md) | Feature-Sliced Design in apps/web | Accepted |
 
 Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).

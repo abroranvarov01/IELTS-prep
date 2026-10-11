@@ -1,6 +1,6 @@
 # ADR-0006: Reading Session State and Persistence
 
-- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-07). §1 extended and §2 amended by [ADR-0009](0009-reading-attempts-on-the-device.md) (an optional `sessionId` in the session; the `:finished` entry is replaced by the attempt history in IndexedDB).
+- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-07). §1 extended and §2 amended by [ADR-0009](0009-reading-attempts-on-the-device.md) (an optional `sessionId` in the session; the `:finished` entry is replaced by the attempt history in IndexedDB). Code locations: the folders it names (`domain/`, `data/`, `features/`, `components/`) moved with [ADR-0010](0010-feature-sliced-design-in-apps-web.md), which maps them.
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

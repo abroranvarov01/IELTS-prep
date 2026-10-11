@@ -6,8 +6,8 @@ A mobile-first IELTS preparation PWA for candidates in **Uzbekistan**, with an U
 
 ## Current state
 
-- **Foundation (M0), the app shell (M1), the backend foundation (M2), onboarding + home (M3), and the Reading engine (M4) are in place.** pnpm monorepo: `apps/web` (Next.js, next-intl uz/ru/en, Tailwind v4 tokens, PWA shell; header with logo and language switcher, localized not-found and error states; three-step onboarding at `/{locale}/start/...`, a home with one next action and the guest's goal, an interim "being prepared" level-check page; the Reading engine at `/{locale}/reading/{testId}` (direct link only: phone sheet and desktop columns, 13 question types, highlighting, Pin Evidence, Practice and Exam with the timer, sessions on the device per ADR-0006, one original demo test, no answer checking yet); the goal lives in a server-managed cookie (ADR-0003); code in `app/`, `features/`, `components/`, `domain/`, `data/` with lint-enforced boundaries (ADR-0004)) and `apps/api` (NestJS; Prisma + PostgreSQL through `DatabaseModule` with **no models yet**, migration scripts, `GET /health` and `/health/ready`, a global `ValidationPipe` and one error format, OpenAPI at `/docs` outside production). Local PostgreSQL via `compose.yaml` (`pnpm db:up`). Gates, tests, and CI exist. Git repository with a GitHub `origin`.
-- **Confirmed:** Next.js frontend, NestJS backend, TypeScript end-to-end, PostgreSQL + Prisma. The full foundation is in ADR-0001 (`docs/architecture/decisions/0001-initial-application-foundation.md`, **Accepted**); API contracts and validation in ADR-0002, guest goal state in ADR-0003, the `apps/web` structure in ADR-0004, and the Reading content contract, session state and UI building blocks in ADR-0005 to ADR-0007 (all **Accepted**). See `docs/architecture/ARCHITECTURE.md` for confirmed vs. proposed vs. TBD.
+- **Foundation (M0), the app shell (M1), the backend foundation (M2), onboarding + home (M3), and the Reading engine (M4) are in place.** pnpm monorepo: `apps/web` (Next.js, next-intl uz/ru/en, Tailwind v4 tokens, PWA shell; header with logo and language switcher, localized not-found and error states; three-step onboarding at `/{locale}/start/...`, a home with one next action and the guest's goal, an interim "being prepared" level-check page; the Reading engine at `/{locale}/reading/{testId}` (direct link only: phone sheet and desktop columns, 13 question types, highlighting, Pin Evidence, Practice and Exam with the timer, sessions on the device per ADR-0006, one original demo test, no answer checking yet); the goal lives in a server-managed cookie (ADR-0003); code organized by Feature-Sliced Design: `app/` (the App Router) and `proxy.ts`, `views/` (the FSD pages layer), `widgets/`, `features/`, `entities/`, `shared/`, with lint-enforced boundaries (ADR-0010)) and `apps/api` (NestJS; Prisma + PostgreSQL through `DatabaseModule` with **no models yet**, migration scripts, `GET /health` and `/health/ready`, a global `ValidationPipe` and one error format, OpenAPI at `/docs` outside production). Local PostgreSQL via `compose.yaml` (`pnpm db:up`). Gates, tests, and CI exist. Git repository with a GitHub `origin`.
+- **Confirmed:** Next.js frontend, NestJS backend, TypeScript end-to-end, PostgreSQL + Prisma. The full foundation is in ADR-0001 (`docs/architecture/decisions/0001-initial-application-foundation.md`, **Accepted**); API contracts and validation in ADR-0002, guest goal state in ADR-0003, the `apps/web` structure in ADR-0010 (Feature-Sliced Design, superseding ADR-0004), and the Reading content contract, session state and UI building blocks in ADR-0005 to ADR-0007 (all **Accepted**). See `docs/architecture/ARCHITECTURE.md` for confirmed vs. proposed vs. TBD.
 - **Execution:** work is done task by task from `docs/execution/TASKS.json` via the `work-next-task` skill. Do not install dependencies or write product code outside a task that asks for it.
 - `.claude/settings.json` denies `git push`, remote changes, history rewrites, and reading or writing secret `.env` files. Local status, diff, add, and commit follow normal permissions. The owner pushes.
 
@@ -21,6 +21,7 @@ Each item is owned by the linked document. These are reminders, not the full rul
 4. **Invariants** (single scoring source, domain logic outside UI, no hard-coded UI strings, no raw colors outside tokens, content is original or licensed, no secrets or personal data in logs). → `docs/architecture/INVARIANTS.md`
 5. **How to work:** priority order, smallest coherent solution, surgical changes, no speculative abstraction. → `.claude/rules/00-engineering-core.md`, `.claude/rules/01-change-discipline.md` (both always loaded), `docs/engineering/CODE_QUALITY.md`
 6. **TBD stays TBD.** Do not silently decide anything marked TBD in `docs/`. Ask, or propose an ADR.
+7. **Frontend architecture:** `apps/web` follows Feature-Sliced Design. Place code where BOUNDARIES.md says, use other slices only through their public API, and keep `model/` pure; `pnpm lint` enforces the boundaries. → `docs/architecture/BOUNDARIES.md`, ADR-0010
 
 ## Where things live (canonical owners)
 
@@ -39,7 +40,7 @@ Each topic has exactly **one** owner. Other files link to it instead of restatin
 | Accessibility requirements | `docs/design/ACCESSIBILITY.md` |
 | Forbidden UI patterns | `docs/design/UI_ANTI_PATTERNS.md` |
 | Architecture: confirmed / proposed / TBD | `docs/architecture/ARCHITECTURE.md` |
-| Module and dependency boundaries | `docs/architecture/BOUNDARIES.md` |
+| Module and dependency boundaries; `apps/web` layers, slices, public APIs and where code goes (Feature-Sliced Design) | `docs/architecture/BOUNDARIES.md` |
 | Must-always-hold statements | `docs/architecture/INVARIANTS.md` |
 | ADR rules, index, template | `docs/architecture/decisions/` |
 | Milestone sequencing rationale and blocking decisions | `docs/execution/ROADMAP.md` |
@@ -60,13 +61,13 @@ Each topic has exactly **one** owner. Other files link to it instead of restatin
 | `00-engineering-core.md` | Always: priorities, assumptions, existing-pattern-first, tool enforcement |
 | `01-change-discipline.md` | Always: surgical changes, cleanup, diff self-review |
 | `frontend/react.md` | `*.tsx` in `apps/web` and `packages/*` |
-| `styling/visual-implementation.md` | `*.tsx`, `*.css` in `apps/web` (tokens: `apps/web/src/styles/tokens.css`) |
+| `styling/visual-implementation.md` | `*.tsx`, `*.css` in `apps/web` (tokens: `apps/web/src/shared/ui/tokens.css`) |
 | `testing/test-code.md` | `*.test.*`, `*.spec.*`, `apps/web/e2e/`, `apps/api/test/` |
 | `security/security.md` | `apps/api/**`, web server code (proxy, route handlers, `*.server.*`, actions), `.env*` |
 | `backend/database.md` | `apps/api/prisma/**`, `apps/api/prisma.config.ts`, `apps/api/src/database/**`: schema changes, migrations, database access |
 | `domain/ielts-scoring.md` | Source files and directories under `apps/` or `packages/` named for scoring, bands, feedback, or assessment |
 
-The rule globs are scoped to the real layout (`apps/web`, `apps/api`, `packages/*`). Add a feature-specific domain rule (e.g. `domain/reading.md` scoped to the Reading feature directory) only once that directory exists and has rules worth stating.
+The rule globs are scoped to the real layout (`apps/web`, `apps/api`, `packages/*`). Add a feature-specific domain rule (e.g. `domain/reading.md` scoped to `apps/web/src/entities/reading/`) only once there are rules worth stating.
 
 ## Workflows (skills)
 

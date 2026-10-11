@@ -15,20 +15,77 @@ Canonical owner of **module and dependency boundaries**.
 - The web app talks to the API over HTTP only. Contracts follow [ADR-0002](decisions/0002-api-contracts-and-validation.md): DTO and response classes in `apps/api`, validated by the global `ValidationPipe`, and every error in one format (`apps/api/src/errors/`). Prisma types never appear in a response. How the web app gets these types is still open ([ARCHITECTURE.md](ARCHITECTURE.md#open-decisions-tbd)).
 - Module boundaries inside `apps/api` wait for its feature structure decision. The layering below is the intended direction.
 
-## Modules inside `apps/web`
+## Modules inside `apps/web`: Feature-Sliced Design
 
-Decided in [ADR-0004](decisions/0004-web-feature-structure.md). Folders under `apps/web/src`:
+Decided in [ADR-0010](decisions/0010-feature-sliced-design-in-apps-web.md) (it supersedes ADR-0004). This section owns the rules; tools enforce them (see "Enforcement" below).
 
-| Folder | Holds | May import | Must not import | Lint enforcement |
-|---|---|---|---|---|
-| `domain/` | Pure product and IELTS rules (the guest's goal; the Reading content contract and session) | other `domain/` files | React, Next.js, next-intl, `node:*`, and every other `src/` folder | Yes: `import/no-restricted-paths` zone and `no-restricted-imports` |
-| `data/` | Data access: the goal cookie on the server (ADR-0003), Reading sessions in the browser's `localStorage` (ADR-0006) and the Reading attempt history in IndexedDB (ADR-0009) | `domain/`, Next.js server APIs | `app/`, `features/`, `components/` | Yes: `import/no-restricted-paths` zone |
-| `components/` | UI used by two or more features | other `components/`, `i18n/` | `features/`, `data/`, `app/` | Added when the folder is created (M3-07) |
-| `features/<f>/` | A feature's screens and Server Actions | its own folder, `domain/`, `data/`, `components/`, `i18n/` | another feature, `app/` | Added when the folder is created (M3-07) |
-| `app/` | Routes, layouts, the shell; thin pages | everything above | | |
+### Layers
 
-- `proxy.ts` may import `domain/` and `data/` (it reads the goal cookie from the request), never `features/` or `components/`.
-- The zones resolve the `@/*` alias through the apps' tsconfig files, so `@/data/...` and `../data/...` are checked alike.
+`apps/web/src` has six layers. A layer imports only the layers **below** it in this table, and every file belongs to one of them.
+
+| Layer | Folder | Holds | Today |
+|---|---|---|---|
+| app | `app/` (the Next.js App Router) and `proxy.ts` | Routes and route groups, layouts, `error`, `not-found`, `global-error`, metadata, the manifest, the service worker, fonts, global CSS. Route files stay thin. | |
+| pages | `views/` | One slice per page, or per group of closely related pages: what the page shows, its page-only parts, its Server Actions | `home`, `onboarding`, `level-check`, `reading-test`, `reading-results` |
+| widgets | `widgets/` | A large block of UI used by several pages or layouts | `shell` (header, language switcher, main landmark) |
+| features | `features/` | A user capability with a narrow contract, used by more than one block | `answer-question` (the answer control of every question type, the option list, a group's shared text), `mark-passage` (selecting sentences by touch and keyboard, highlighting, Pin Evidence, the evidence list) |
+| entities | `entities/` | A product concept: its rules (`model/`), its data access (`api/`), its React binding (`ui/`) | `goal` (the guest's goal and its cookie, ADR-0003), `reading` (the Reading content contract, units, session, checking, attempts, results, explanations; `localStorage` sessions and the IndexedDB history; the running session's context) |
+| shared | `shared/` | Infrastructure and primitives with no product knowledge | `ui` (the primary button and link, the quiet link, the answer option, the option row, the status message, `tokens.css`), `i18n` (routing, locale-aware navigation, the next-intl request config) |
+
+- The FSD pages layer is named **`views`** so that Next.js never treats it as a Pages Router. There is no `src/pages`.
+- **Slices of one layer never import each other.** What two slices need moves to a lower layer. There are no `@x` cross-imports; adding one needs a reason recorded here first.
+
+### Segments
+
+Inside a slice (and in `shared`), code is grouped by purpose:
+
+| Segment | Holds | Must not |
+|---|---|---|
+| `model/` | Plain TypeScript: domain and IELTS rules, parsers of untrusted data, reducers, view-model functions (INVARIANTS I-3, I-4) | import React, Next.js, next-intl, `node:*`; use `window`, `document`, `navigator` or browser storage; import its slice's `ui/` or `api/` |
+| `api/` | I/O: `localStorage` and IndexedDB adapters, the goal cookie, content loading (`*.server.ts`), Server Actions (`api/actions.ts`, `"use server"`) | import React or its slice's `ui/` |
+| `ui/` | React components, and the hooks and context that serve them | |
+
+A segment is created by the first file that needs it. No empty segments or slices.
+
+File names: React components in PascalCase (`AnswerControl.tsx`), every other module in kebab-case, hooks included (`use-reading-session.ts`, `load-result.ts`). Tests sit next to the code they test (`*.test.ts(x)`).
+
+### Public API
+
+- A slice is used only through files at its root: **`index.ts`**; server-only entry points **`*.server.ts`**, imported by the app layer only; and **`testing.ts`**, fixtures imported by tests only. Everything else in a slice is internal.
+- `index.ts` names what it exports (no `export *`) and exports only what another slice uses today.
+- Inside a slice, files import each other relatively, never through their own `index.ts` (that would be a cycle).
+- `shared` has no slices: its modules are imported by path, for example `@/shared/ui/PrimaryLink` or `@/shared/i18n/routing`, so a client component or the proxy loads only what it uses.
+- Examples: the results route imports `readingKey` from `@/entities/reading/keys.server`; the test route imports `readingTest` from `@/entities/reading/content.server` and never the keys (ADR-0008 §2); a view imports `apply` from `@/entities/reading`, never from `@/entities/reading/model/session`.
+
+### Next.js routing
+
+- URLs and route groups are unchanged: `app/[locale]/(valid-locale)/(shell)/…` for pages inside the shell, `app/[locale]/(valid-locale)/reading/[testId]` for the test screen, which has its own test bar.
+- A route file reads its params, sets metadata, loads server-only data through a `*.server.ts` entry point, and renders one view (for example `ReadingScreen` from `@/views/reading-test`). It holds no product logic and no markup beyond that.
+- Server-only content (tests, keys, explanations) is loaded in route files and passed to views as props. Client components never import a `*.server.ts` entry point.
+- `proxy.ts` belongs to the app layer: it reads the goal cookie and the test list through public APIs (`@/entities/goal`, `@/entities/reading/content.server`).
+
+### Placing code
+
+Start where the code is used and move it down only when a second consumer exists:
+
+1. **A product or IELTS rule** (checking, scoring, goal parsing, the session's transitions): the `model/` of the entity it is about (`entities/reading/model/scoring.ts`). A rule only one page uses, and that is about that page's flow, may live in the page's `model/` (`views/home/model/next-action.ts`), still pure.
+2. **Reading or writing storage, cookies or content files:** the `api/` of the entity whose data it is (`entities/reading/api/history.ts`). Server-only loading gets a `*.server.ts` entry point.
+3. **Orchestration** (the order of loading, saving, committing and navigating for a screen): a hook in the page's `ui/` (`views/reading-test/ui/use-reading-session.ts`), or the page's `api/` when it renders nothing (`views/reading-results/api/load-result.ts`).
+4. **UI only one page uses:** that page's `ui/` (`QuestionSheet`, `QuestionColumn`, `QuestionBar` in `views/reading-test`).
+5. **A user capability that several blocks or pages use:** a feature (`AnswerControl` serves the phone sheet and the desktop column).
+6. **A large block several pages or layouts use:** a widget (`Shell` serves the shell layout, `error` and `not-found`).
+7. **A primitive without product knowledge** (a button, the option row, locale routing): `shared`. Reading-specific behavior does not move to `shared` because it looks reusable.
+
+### Enforcement
+
+| Rule | Tool |
+|---|---|
+| Layer direction; slices of one layer isolated; public API only; `*.server.ts` from the app layer only; `model/` never imports `ui/` or `api/`, `api/` never imports `ui/` | `import/no-restricted-paths` zones generated from the folders in `eslint.config.mjs`. They resolve the `@/*` alias and relative paths alike, and check imports, `export … from`, `import()` and `require` |
+| Fixtures and test helpers (`testing.ts`, `testing/`, `*.fixture.ts`) only in tests | the same rule, for non-test files |
+| `model/` is pure; `api/` never imports React | `no-restricted-imports`, `no-restricted-globals` |
+| No import cycles | `import/no-cycle` |
+| Every file is in a layer (no `src/pages`) | `no-restricted-syntax` on files outside the layers |
+| The rules above still reject what they should | `scripts/check-architecture.mjs` (run by `pnpm lint`): lints representative forbidden imports in every spelling and fails if one is accepted |
 
 ## Intended layering (proposal)
 
@@ -44,6 +101,7 @@ Application / data access  ─────────────┘
 - **UI** renders state and collects input. It calls domain functions. It never re-implements domain rules.
 - **Data access / integrations** (database, AI provider, storage, audio) sit behind interfaces that are only as wide as current use requires. These are not generic "adapters" for providers we do not use.
 - **Database entities are not public API contracts.** API responses use explicit types.
+- In `apps/web` these are the segments of each slice: `ui/`, `model/` and `api/` (above).
 
 ## Rules for defining boundaries later
 

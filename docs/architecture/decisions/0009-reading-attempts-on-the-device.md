@@ -1,6 +1,6 @@
 # ADR-0009: Reading Attempts and Results on the Device
 
-- **Status:** Accepted (2026-10-11, owner, task M5-01, with the owner's amendments applied; drafted in M5 planning). Approval source: the owner instruction of 2026-10-11 on the review packet at commit 069877e. It amends [ADR-0006](0006-reading-session-state.md) §2: the `reading:<testId>:finished` entry is replaced by the attempt history below.
+- **Status:** Accepted (2026-10-11, owner, task M5-01, with the owner's amendments applied; drafted in M5 planning). Approval source: the owner instruction of 2026-10-11 on the review packet at commit 069877e. It amends [ADR-0006](0006-reading-session-state.md) §2: the `reading:<testId>:finished` entry is replaced by the attempt history below. Code locations: the folders it names (`domain/`, `data/`, `features/`, `components/`) moved with [ADR-0010](0010-feature-sliced-design-in-apps-web.md), which maps them.
 - **Amended:** 2026-10-11 by the owner (clarifying the approved requirement that the first committed attempt is preserved): the history moves from write-once `localStorage` entries to IndexedDB transactions, because an existence check followed by a write in `localStorage` is not atomic across tabs; every session gets a unique id. §2 to §9 below are the amended text.
 - **Date:** 2026-10-11
 - **Deciders:** Project owner (acceptance), Claude (draft)

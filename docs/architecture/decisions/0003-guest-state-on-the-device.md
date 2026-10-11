@@ -1,6 +1,6 @@
 # ADR-0003: Guest State on the Device
 
-- **Status:** Accepted (2026-10-10, owner, task M3-05; drafted in M3-03).
+- **Status:** Accepted (2026-10-10, owner, task M3-05; drafted in M3-03). Code locations: the folders it names (`domain/`, `data/`, `features/`, `components/`) moved with [ADR-0010](0010-feature-sliced-design-in-apps-web.md), which maps them.
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

@@ -35,6 +35,16 @@ And it must **remove more complexity than it adds**. Not justified:
 
 When unsure, keep the code inline. Extracting later is cheap. Removing a premature abstraction is expensive.
 
+## Splitting components and hooks
+Split a component or hook along its **responsibilities**, each with a narrow contract and one owner for each piece of state. Not by line count, and not by moving a whole component into one large hook.
+- One concern per hook: a lifecycle (loading, saving, committing), one external system (a timer, a media query, a set of listeners), or one piece of interaction state. Its name says which.
+- Each piece of state has one owner. Others receive it as values or callbacks; nothing is copied into a second state and kept in sync.
+- An effect synchronizes with one external system and cleans up. Listeners go on the element the interaction belongs to, not on `document`, unless the interaction really spans the page (Escape closing a floating bar).
+- Something that changes often, like a clock, renders only the component that shows it.
+- What stays in the component is composition: which parts show, where, with which props.
+- Example: `ReadingScreen` (`views/reading-test`) renders the state of `useReadingSession` (the session from the device to its results); `TestWorkspace` lays out the test with `usePassagePosition` (scroll per passage) and `usePassageMarks` (`features/mark-passage`: selection, keyboard and focus on the passage); `ExamTimer` keeps its own clock.
+- Where each part goes: [BOUNDARIES.md, Placing code](../architecture/BOUNDARIES.md#placing-code).
+
 ## Duplication
 - Duplicate **knowledge** (a rule, a formula, a constant with meaning) is a bug waiting to happen. It must have one source.
 - Duplicate **shape** (two similar-looking blocks with different reasons to change) is acceptable. Tolerate small duplication until the shared meaning is clear.
@@ -42,7 +52,7 @@ When unsure, keep the code inline. Extracting later is cheap. Removing a prematu
 ## Domain separation
 - IELTS rules (scoring, answer checking, band conversion, recommendation logic) live in domain code, not inside components, route handlers, or SQL.
 - Domain code is pure where practical: inputs in, result out, no I/O.
-- See [INVARIANTS.md](../architecture/INVARIANTS.md) and [BOUNDARIES.md](../architecture/BOUNDARIES.md).
+- In `apps/web` they live in the `model/` segment of an entity (or of the one page that uses them), which lint keeps free of React, Next.js and browser APIs. See [INVARIANTS.md](../architecture/INVARIANTS.md) and [BOUNDARIES.md](../architecture/BOUNDARIES.md).
 
 ## Side effects
 - Keep side effects (network, storage, timers, analytics, AI calls) at the edges and make them obvious from the call site.

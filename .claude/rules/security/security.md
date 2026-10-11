@@ -4,7 +4,7 @@ paths:
   - "apps/web/src/proxy.ts"
   - "apps/web/src/app/**/route.ts"
   - "apps/web/src/**/*.server.*"
-  - "apps/web/src/**/actions/**"
+  - "apps/web/src/**/api/actions.ts"
   - "**/.env*"
 ---
 

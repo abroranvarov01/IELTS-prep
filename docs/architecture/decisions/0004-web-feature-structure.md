@@ -1,6 +1,6 @@
 # ADR-0004: Feature Structure and Domain Code in apps/web
 
-- **Status:** Accepted (2026-10-10, owner, task M3-05; drafted in M3-04).
+- **Status:** Superseded by [ADR-0010](0010-feature-sliced-design-in-apps-web.md) (2026-10-11, owner decision: Feature-Sliced Design). Accepted 2026-10-10 (owner, task M3-05; drafted in M3-04). Kept as history; its folders and import rules no longer describe the code.
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

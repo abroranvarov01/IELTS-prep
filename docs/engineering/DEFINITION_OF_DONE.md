@@ -15,6 +15,7 @@ Canonical owner of **when a change counts as finished**. Validation is **proport
 - [ ] Types are valid (typecheck passes).
 - [ ] Lint passes for the touched files.
 - [ ] Relevant tests pass. New behavior has a test. A fixed bug meets [bug-fix verification](TESTING_STRATEGY.md#bug-fix-verification).
+- [ ] In `apps/web`, new or moved code sits where [BOUNDARIES.md, Placing code](../architecture/BOUNDARIES.md#placing-code) puts it: the right layer, slice and segment, used by other slices only through the slice's public API, which exports nothing unused. `pnpm lint` checks the boundaries; placement within them is reviewed. A new slice, entry point or layer is reflected in BOUNDARIES.md.
 
 The commands are listed in [QUALITY_GATES.md](QUALITY_GATES.md). If a command does not exist yet, say so. Do not claim a check passed.
 

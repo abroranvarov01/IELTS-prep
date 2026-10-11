@@ -1,6 +1,6 @@
 # ADR-0007: Building Blocks for the Question Sheet and Passage Selection
 
-- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-08).
+- **Status:** Accepted (2026-10-10, owner, task M4-09; drafted in M4-08). Code locations: the folders it names (`domain/`, `data/`, `features/`, `components/`) moved with [ADR-0010](0010-feature-sliced-design-in-apps-web.md), which maps them.
 - **Date:** 2026-10-10
 - **Deciders:** Project owner (acceptance), Claude (draft)
 

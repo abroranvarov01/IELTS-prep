@@ -13,7 +13,7 @@ description: Procedure for building or changing any user-facing screen or compon
    - `docs/design/ACCESSIBILITY.md`
    - `docs/product/LOCALIZATION.md` if the change has text
    - `docs/product/READING_EXPERIENCE.md` for any Reading surface
-2. **Find existing components and patterns** in the codebase. Compose from them before creating new ones.
+2. **Find existing components and patterns** in the codebase (`apps/web/src/shared/ui/` for primitives, the slice's own `ui/` for the rest). Compose from them before creating new ones.
 3. **Name the screen's single primary action** and the user's goal. If you cannot name one primary action, resolve that before writing code.
 4. **Count the steps** from home to this action. If it is a primary action that takes more than 3, redesign it or record the justification in the flow spec (`docs/product/USER_FLOWS.md`).
 

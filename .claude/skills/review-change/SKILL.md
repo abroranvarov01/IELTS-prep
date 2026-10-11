@@ -23,7 +23,7 @@ Read the task or PR description. State in one sentence what the change should do
 
 ## 4. Consistency
 - Does it follow the existing patterns and the accepted ADRs?
-- Does it respect `docs/architecture/BOUNDARIES.md`?
+- Does it respect `docs/architecture/BOUNDARIES.md`? In `apps/web`: is each file in the layer, slice and segment that § Placing code gives it, does each public API export only what other slices use, and is no boundary rule disabled (`eslint-disable`)?
 
 ## 5. Product and UI (if user-facing)
 - Apply the "Check before finishing" list from the `ui-implementation` skill.
