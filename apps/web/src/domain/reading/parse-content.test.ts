@@ -365,9 +365,15 @@ describe("parseAnswerKey", () => {
     return result.value;
   })();
 
+  type Entry = {
+    accept: string[];
+    evidence: string[];
+    trap?: unknown;
+    fromPassage?: unknown;
+  };
+
   function validKey() {
-    const answers: Record<string, { accept: string[]; evidence: string[] }> =
-      {};
+    const answers: Record<string, Entry> = {};
     for (let n = 1; n <= QUESTION_COUNT; n++) {
       const passage = n <= 13 ? "p1-a" : n <= 27 ? "p2-a" : "p3-a";
       answers[n] = { accept: ["x"], evidence: [`${passage}-s1`] };
@@ -390,8 +396,19 @@ describe("parseAnswerKey", () => {
     set(14, ["D"]);
     set(15, ["B"]);
     [24, 25, 26, 27].forEach((n) => set(n, ["NOT GIVEN"]));
-    return { testId: "fixture-test", version: 1, answers };
+    return {
+      testId: "fixture-test",
+      version: 1,
+      revision: 1,
+      review: { status: "aiDraft" } as { status: unknown },
+      answers,
+    };
   }
+
+  const errorsOf = (key: unknown) => {
+    const result = parseAnswerKey(test, key);
+    return result.ok ? [] : result.errors;
+  };
 
   it("accepts a key with valid answers and evidence for every question", () => {
     expect(parseAnswerKey(test, validKey()).ok).toBe(true);
@@ -432,5 +449,109 @@ describe("parseAnswerKey", () => {
     const key = { ...validKey(), version: 2 };
     const result = parseAnswerKey(test, key);
     expect(result.ok ? [] : result.errors).toEqual(["key.version: expected 1"]);
+  });
+
+  it("has a revision and a review status (ADR-0008 §3, §6)", () => {
+    const key = validKey();
+    const result = parseAnswerKey(test, key);
+    expect(result.ok && result.value.revision).toBe(1);
+    expect(result.ok && result.value.review.status).toBe("aiDraft");
+
+    expect(
+      errorsOf({ ...key, revision: 0, review: { status: "draft" } }),
+    ).toEqual([
+      "key.revision: expected a whole number from 1",
+      "key.review.status: expected one of aiDraft, reviewed, approved",
+    ]);
+    const { testId, version, answers } = key;
+    expect(errorsOf({ testId, version, answers })).toHaveLength(2);
+  });
+
+  it("accepts typed variants listed in full, within the word limit", () => {
+    const key = validKey();
+    key.answers[16]!.accept = ["winter weather", "the weather", "1,500 shops"];
+    expect(errorsOf(key)).toEqual([]);
+  });
+
+  it("rejects typed variants that are empty, repeat another once normalized, or are over the limit", () => {
+    const key = validKey();
+    key.answers[16]!.accept = ["baskets", "Baskets.", " the  baskets "];
+    key.answers[17]!.accept = ["."];
+    key.answers[18]!.accept = ["the cold winter weather"];
+    expect(errorsOf(key)).toEqual([
+      'key.answers.16.accept: "Baskets." repeats another accepted answer',
+      'key.answers.17.accept: "." is empty',
+      'key.answers.18.accept: "the cold winter weather" is over the word limit',
+    ]);
+  });
+
+  it("needs the same set of different options under every number of a 'choose several' item", () => {
+    const key = validKey();
+    key.answers[5]!.accept = ["A", "B"];
+    expect(errorsOf(key)).toEqual([
+      "key.answers.4-5: every number of the item needs the same answers",
+    ]);
+
+    const tooFew = validKey();
+    tooFew.answers[4]!.accept = ["A"];
+    tooFew.answers[5]!.accept = ["A"];
+    expect(errorsOf(tooFew)).toEqual([
+      "key.answers.4-5: expected 2 different options, one per number",
+    ]);
+
+    const repeated = validKey();
+    repeated.answers[4]!.accept = ["A", "A"];
+    repeated.answers[5]!.accept = ["A", "A"];
+    expect(errorsOf(repeated)).toEqual([
+      "key.answers.4-5: expected 2 different options, one per number",
+    ]);
+  });
+
+  it("gives every number of a 'choose several' item the same tag or none", () => {
+    const key = validKey();
+    key.answers[4]!.trap = "paraphrase";
+    expect(errorsOf(key)).toEqual([
+      "key.answers.4-5: every number of the item needs the same tag",
+    ]);
+    key.answers[5]!.trap = "paraphrase";
+    expect(errorsOf(key)).toEqual([]);
+  });
+
+  it("lets a NOT GIVEN answer cite no sentence, but no other answer", () => {
+    const key = validKey();
+    key.answers[24]!.evidence = [];
+    expect(errorsOf(key)).toEqual([]);
+    key.answers[1]!.evidence = [];
+    key.answers[16]!.evidence = [];
+    expect(errorsOf(key)).toEqual([
+      "key.answers.1.evidence: expected a list with at least 1 item",
+      "key.answers.16.evidence: expected a list with at least 1 item",
+    ]);
+  });
+
+  it("accepts only the known content tags", () => {
+    const key = validKey();
+    key.answers[1]!.trap = "qualifier";
+    key.answers[2]!.trap = "paraphrase";
+    expect(errorsOf(key)).toEqual([]);
+    key.answers[3]!.trap = "vocabulary";
+    expect(errorsOf(key)).toEqual([
+      "key.answers.3.trap: expected one of paraphrase, qualifier",
+    ]);
+  });
+
+  it("marks only typed questions as taken from the passage", () => {
+    const key = validKey();
+    key.answers[16]!.fromPassage = true;
+    const result = parseAnswerKey(test, key);
+    expect(result.ok && result.value.answers[16]?.fromPassage).toBe(true);
+    expect(result.ok && result.value.answers[17]?.fromPassage).toBeUndefined();
+
+    key.answers[1]!.fromPassage = true;
+    key.answers[17]!.fromPassage = false;
+    expect(errorsOf(key)).toEqual([
+      "key.answers.1.fromPassage: only for typed answers",
+      "key.answers.17.fromPassage: expected true or no value",
+    ]);
   });
 });

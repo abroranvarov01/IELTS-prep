@@ -42,6 +42,43 @@ function tamper(change: (s: Record<string, unknown>) => void) {
 }
 
 describe("parseStoredSession", () => {
+  it("still reads sessions stored in the M4 format, in progress and finished", () => {
+    // Exactly what M4 wrote to localStorage (ADR-0006); M5 must keep reading
+    // it while the demo test stays at content version 1 (ADR-0009, D23).
+    const m4InProgress = {
+      schema: 1,
+      session: {
+        testId: "demo-academic-1",
+        testVersion: 1,
+        mode: "practice",
+        status: "inProgress",
+        startedAt: T0,
+        currentQuestion: 22,
+        answers: { "1": "TRUE", "13": "winter weather", "22": ["C", "A"] },
+        flagged: [7],
+        highlights: ["p1-2-s2", "p2-c-s3"],
+        pins: { "7": ["p1-2-s2"] },
+        view: { sheet: "partial", passage: 2, scroll: { p1: 420 } },
+      },
+    };
+    const m4Finished = {
+      schema: 1,
+      session: {
+        ...m4InProgress.session,
+        mode: "exam",
+        pins: {},
+        status: "finished",
+        finishReason: "timeUp",
+        finishedAt: T0 + 3_600_000,
+      },
+    };
+
+    expect(parseStoredSession(test, m4InProgress)).toEqual(
+      m4InProgress.session,
+    );
+    expect(parseStoredSession(test, m4Finished)).toEqual(m4Finished.session);
+  });
+
   it("reads back what was stored, in Practice and after finishing", () => {
     const s = richSession();
     expect(parseStoredSession(test, stored(s))).toEqual(s);

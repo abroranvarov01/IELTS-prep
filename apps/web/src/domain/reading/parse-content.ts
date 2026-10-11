@@ -15,6 +15,8 @@ import {
   gapNumbers,
   groupNumbers,
 } from "./content";
+import { normalizeTypedAnswer } from "./scoring";
+import { fitsWordLimit } from "./word-limit";
 
 export type Parsed<T> =
   { ok: true; value: T } | { ok: false; errors: string[] };
@@ -32,12 +34,30 @@ export function parseReadingTest(input: unknown): Parsed<ReadingTest> {
     : { ok: false, errors };
 }
 
-export type AnswerKeyEntry = { accept: string[]; evidence: string[] };
+/** What a question tests, written with the key; it describes the question, not the learner. */
+const TRAP_TAGS = ["paraphrase", "qualifier"] as const;
+export type TrapTag = (typeof TRAP_TAGS)[number];
 
-/** Accepted answers and evidence sentences per question number (ADR-0005 §2). */
+export type AnswerKeyEntry = {
+  accept: string[];
+  /** For a NOT GIVEN answer: where the passage deals with the topic, possibly none. */
+  evidence: string[];
+  trap?: TrapTag;
+  /** Typed questions whose instruction says the words come from the passage. */
+  fromPassage?: true;
+};
+
+/** Who has checked a key or explanation file (ADR-0008 §6). */
+const REVIEW_STATUSES = ["aiDraft", "reviewed", "approved"] as const;
+export type ReviewStatus = (typeof REVIEW_STATUSES)[number];
+
+/** Accepted answers and evidence sentences per question number (ADR-0005 §2, ADR-0008 §3). */
 export type AnswerKey = {
   testId: string;
   version: number;
+  /** Increases with any change to the key once it may have been used for results. */
+  revision: number;
+  review: { status: ReviewStatus };
   answers: Record<number, AnswerKeyEntry>;
 };
 
@@ -53,6 +73,8 @@ export function parseAnswerKey(
     errors.push(`key.testId: expected "${test.id}"`);
   if (input.version !== test.version)
     errors.push(`key.version: expected ${test.version}`);
+  const revision = readInteger(errors, "key.revision", input.revision, 1);
+  const review = readReview(errors, "key.review", input.review);
   const answers: Record<number, AnswerKeyEntry> = {};
   const entries = isRecord(input.answers) ? input.answers : undefined;
   if (!entries) errors.push("key.answers: expected an object");
@@ -77,10 +99,16 @@ export function parseAnswerKey(
         const accept = readList(errors, `${path}.accept`, entry.accept)?.map(
           (value, i) => readText(errors, `${path}.accept[${i}]`, value) ?? "",
         );
+        const isNotGiven =
+          (group.type === "trueFalseNotGiven" ||
+            group.type === "yesNoNotGiven") &&
+          accept?.length === 1 &&
+          accept[0] === "NOT GIVEN";
         const evidence = readList(
           errors,
           `${path}.evidence`,
           entry.evidence,
+          isNotGiven ? 0 : 1,
         )?.map(
           (value, i) => readText(errors, `${path}.evidence[${i}]`, value) ?? "",
         );
@@ -91,23 +119,124 @@ export function parseAnswerKey(
               `${path}.accept: "${value}" is not an option of question ${number}`,
             );
         }
+        if (!allowed && accept && "wordLimit" in group)
+          checkVariants(errors, `${path}.accept`, accept, group.wordLimit);
         for (const id of evidence ?? []) {
           if (!sentenceIds.has(id))
             errors.push(
               `${path}.evidence: "${id}" is not a sentence of passage ${passage.number}`,
             );
         }
-        answers[number] = { accept: accept ?? [], evidence: evidence ?? [] };
+        const trap = readTrap(errors, `${path}.trap`, entry.trap);
+        if (entry.fromPassage !== undefined) {
+          if (entry.fromPassage !== true)
+            errors.push(`${path}.fromPassage: expected true or no value`);
+          else if (allowed)
+            errors.push(`${path}.fromPassage: only for typed answers`);
+        }
+        answers[number] = {
+          accept: accept ?? [],
+          evidence: evidence ?? [],
+          ...(trap && { trap }),
+          ...(entry.fromPassage === true && !allowed && { fromPassage: true }),
+        };
       }
+      if (group.type === "multipleChoiceMulti" && entries)
+        for (const item of group.items)
+          checkItem(errors, answers, item.numbers);
     }
   });
   for (const key of Object.keys(entries ?? {})) {
     if (!questionNumbers.has(key))
       errors.push(`key.answers.${key}: no such question`);
   }
-  return errors.length === 0
-    ? { ok: true, value: { testId: test.id, version: test.version, answers } }
+  return errors.length === 0 && revision !== undefined && review
+    ? {
+        ok: true,
+        value: {
+          testId: test.id,
+          version: test.version,
+          revision,
+          review,
+          answers,
+        },
+      }
     : { ok: false, errors };
+}
+
+/**
+ * Typed answers are listed in full: each variant non-empty, different from
+ * the others once normalized as checking normalizes it, and within the
+ * instruction's word limit (an over-limit answer is never correct in IELTS).
+ */
+function checkVariants(
+  errors: string[],
+  path: string,
+  accept: string[],
+  limit: WordLimit,
+) {
+  const seen = new Set<string>();
+  for (const value of accept) {
+    const normalized = normalizeTypedAnswer(value);
+    if (normalized === "") errors.push(`${path}: "${value}" is empty`);
+    else if (seen.has(normalized))
+      errors.push(`${path}: "${value}" repeats another accepted answer`);
+    else if (!fitsWordLimit(normalized, limit))
+      errors.push(`${path}: "${value}" is over the word limit`);
+    seen.add(normalized);
+  }
+}
+
+/**
+ * The numbers of a "choose several" item share one answer (ADR-0006), so
+ * their key entries must agree: the same set, as many different options as
+ * the item has numbers, and the same tag or none (ADR-0008 §3).
+ */
+function checkItem(
+  errors: string[],
+  answers: Record<number, AnswerKeyEntry>,
+  numbers: number[],
+) {
+  const path = `key.answers.${numbers.join("-")}`;
+  const entries = numbers.map((n) => answers[n]);
+  if (entries.some((e) => e === undefined)) return;
+  const [first, ...rest] = entries as AnswerKeyEntry[];
+  if (!first) return;
+  const set = [...first.accept].sort().join();
+  if (rest.some((e) => [...e.accept].sort().join() !== set))
+    errors.push(`${path}: every number of the item needs the same answers`);
+  if (
+    new Set(first.accept).size !== first.accept.length ||
+    first.accept.length !== numbers.length
+  )
+    errors.push(
+      `${path}: expected ${numbers.length} different options, one per number`,
+    );
+  if (rest.some((e) => e.trap !== first.trap))
+    errors.push(`${path}: every number of the item needs the same tag`);
+}
+
+function readReview(
+  errors: string[],
+  path: string,
+  value: unknown,
+): { status: ReviewStatus } | undefined {
+  const status = isRecord(value) ? value.status : undefined;
+  if (REVIEW_STATUSES.includes(status as ReviewStatus))
+    return { status: status as ReviewStatus };
+  errors.push(`${path}.status: expected one of ${REVIEW_STATUSES.join(", ")}`);
+  return undefined;
+}
+
+function readTrap(
+  errors: string[],
+  path: string,
+  value: unknown,
+): TrapTag | undefined {
+  if (value === undefined) return undefined;
+  if (TRAP_TAGS.includes(value as TrapTag)) return value as TrapTag;
+  errors.push(`${path}: expected one of ${TRAP_TAGS.join(", ")}`);
+  return undefined;
 }
 
 /** The option ids a question accepts, or undefined for typed answers. */

@@ -2423,7 +2423,7 @@
       "title": "Answer key and content additions for checking",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M5-01"],
       "goal": "The answer key carries everything checking and Error Intelligence need, validated and fingerprinted, while the test file stays byte-identical so the demo test keeps content version 1.",
       "scope": [
@@ -2459,7 +2459,8 @@
         ".claude/rules/domain/ielts-scoring.md",
         ".claude/rules/testing/test-code.md",
         "docs/product/PRODUCT.md"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M5-03",
