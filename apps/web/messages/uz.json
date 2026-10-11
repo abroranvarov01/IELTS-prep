@@ -113,7 +113,11 @@
       "remove": "Belgini olib tashlash"
     },
     "evidence": {
-      "paragraph": "{letter} xatboshi"
+      "title": "Sizning dalilingiz",
+      "paragraph": "{letter} xatboshi",
+      "show": "Matnda koʻrsatish",
+      "remove": "Dalildan olib tashlash",
+      "limit": "Bitta savolga {max} tagacha gap biriktirish mumkin."
     },
     "passage": {
       "label": "Matn. Gaplar orasida oʻtish uchun strelkalar, amallar uchun Enter."
@@ -122,8 +126,11 @@
       "actions": "Gap bilan amallar",
       "highlight": "Ajratib koʻrsatish",
       "removeHighlight": "Ajratishni olib tashlash",
+      "pin": "{number}-savolga biriktirish",
+      "unpin": "{number}-savoldan ajratish",
       "cancel": "Bekor qilish",
-      "highlighted": "Ajratib koʻrsatildi"
+      "highlighted": "Ajratib koʻrsatildi",
+      "pinned": "{number}-savolga biriktirildi"
     }
   }
 }

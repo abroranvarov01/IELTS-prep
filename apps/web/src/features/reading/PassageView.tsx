@@ -1,11 +1,13 @@
 import { useLocale, useTranslations } from "next-intl";
 import type { Passage } from "@/domain/reading/content";
+import { PinIcon } from "./SentenceActions";
 
 /**
  * The passage, the screen's main object: approved passage typography, English
  * test content. Each sentence is a stable target (ADR-0007) for highlights and
  * pins: plain text for reading, focusable for the keyboard with one Tab stop
- * (roving tabindex), and selected by tap, click or Enter.
+ * (roving tabindex), and selected by tap, click or Enter. Sentences pinned to
+ * the current question carry a marker with its number.
  */
 export function PassageView({
   passage,
@@ -13,6 +15,7 @@ export function PassageView({
   highlights,
   selected,
   focusable,
+  pins,
 }: {
   passage: Passage;
   /** Room under the text, so its last line can be scrolled above the sheet. */
@@ -21,6 +24,8 @@ export function PassageView({
   selected: string | null;
   /** The sentence that takes the passage's one Tab stop. */
   focusable: string;
+  /** The current question's evidence, if Pin Evidence is offered. */
+  pins: { number: number; sentenceIds: ReadonlySet<string> } | null;
 }) {
   const t = useTranslations("reading");
   const locale = useLocale();
@@ -59,6 +64,15 @@ export function PassageView({
                     : ""
                 }`}
               >
+                {pins?.sentenceIds.has(sentence.id) && (
+                  <span className="me-1 inline-flex items-center gap-1 rounded-full border border-ink bg-surface-base px-2 font-sans text-meta font-bold">
+                    <PinIcon className="size-[0.875rem]" />
+                    <span aria-hidden="true">{pins.number}</span>
+                    <span lang={locale} className="sr-only">
+                      {t("mark.pinned", { number: pins.number })}
+                    </span>
+                  </span>
+                )}
                 {highlights.has(sentence.id) ? (
                   <mark className="border-b-2 border-border-control bg-highlight text-ink">
                     {sentence.text}

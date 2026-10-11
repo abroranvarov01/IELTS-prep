@@ -2154,7 +2154,7 @@
       "title": "Pin Evidence",
       "milestone": "M4",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M4-18"],
       "goal": "The user pins passage text to the current question and sees it next to the question, as approved, and pins persist for M5 review.",
       "scope": [
@@ -2183,7 +2183,8 @@
         "docs/architecture/decisions/0004-web-feature-structure.md",
         "docs/architecture/decisions/0006-reading-session-state.md",
         "docs/architecture/decisions/0007-reading-ui-primitives.md"
-      ]
+      ],
+      "completedAt": "2026-10-11"
     },
     {
       "id": "M4-20",

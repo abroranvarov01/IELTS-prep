@@ -113,7 +113,11 @@
       "remove": "Remove mark"
     },
     "evidence": {
-      "paragraph": "Paragraph {letter}"
+      "title": "Your evidence",
+      "paragraph": "Paragraph {letter}",
+      "show": "Show in passage",
+      "remove": "Remove from evidence",
+      "limit": "You can pin up to {max} sentences to one question."
     },
     "passage": {
       "label": "Passage. Use the arrow keys to move between sentences, Enter for actions."
@@ -122,8 +126,11 @@
       "actions": "Sentence actions",
       "highlight": "Highlight",
       "removeHighlight": "Remove highlight",
+      "pin": "Pin to question {number}",
+      "unpin": "Unpin from question {number}",
       "cancel": "Cancel",
-      "highlighted": "Highlighted"
+      "highlighted": "Highlighted",
+      "pinned": "Pinned to question {number}"
     }
   }
 }

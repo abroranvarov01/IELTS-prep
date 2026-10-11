@@ -6,6 +6,7 @@ import { QUESTION_COUNT } from "@/domain/reading/content";
 import { type SheetState, answeredNumbers } from "@/domain/reading/session";
 import { type QuestionUnit, unitOf } from "@/domain/reading/units";
 import { ChoiceQuestion } from "./ChoiceQuestion";
+import { EvidenceList } from "./EvidenceList";
 import { MatchingQuestion } from "./MatchingQuestion";
 import { MultiChoiceQuestion } from "./MultiChoiceQuestion";
 import { OptionPicker } from "./OptionPicker";
@@ -41,7 +42,13 @@ type FocusTarget = "navigatorButton" | "answerButton";
  * as well as by dragging, docked above the phone keyboard while typing. The
  * navigator and option lists open inside it, expanded.
  */
-export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
+export function QuestionSheet({
+  goTo,
+  showSentence,
+}: {
+  goTo: (number: number) => void;
+  showSentence: (sentenceId: string) => void;
+}) {
   const t = useTranslations("reading");
   const { test, units, session, send } = useReading();
   const state = session.view.sheet;
@@ -323,6 +330,12 @@ export function QuestionSheet({ goTo }: { goTo: (number: number) => void }) {
             <div ref={answerAreaRef} className="mt-4">
               <QuestionBody unit={unit} onChoose={() => openPanel("options")} />
             </div>
+            {session.mode === "practice" && (
+              <EvidenceList
+                number={unit.numbers[0] ?? number}
+                onShow={showSentence}
+              />
+            )}
           </div>
           <div className="flex shrink-0 justify-between gap-4 border-t border-border-subtle px-gutter py-2">
             {previous ? (

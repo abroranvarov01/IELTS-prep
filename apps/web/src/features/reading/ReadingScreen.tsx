@@ -15,7 +15,7 @@ import {
   storageSnapshot,
 } from "@/data/reading-session-storage";
 import type { ReadingTest } from "@/domain/reading/content";
-import type { ReadingEvent } from "@/domain/reading/session";
+import { MAX_PINS, type ReadingEvent } from "@/domain/reading/session";
 import { questionUnits, unitOf } from "@/domain/reading/units";
 import { PassageView } from "./PassageView";
 import { QuestionSheet, SHEET_HEIGHT } from "./QuestionSheet";
@@ -86,6 +86,8 @@ function ReadingView({ canSave }: { canSave: boolean }) {
   const [selection, setSelection] = useState<string | null>(null);
   const [lastFocused, setLastFocused] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
+  // The sentence whose pin was refused at the limit, to say why.
+  const [limitFor, setLimitFor] = useState<string | null>(null);
   const firstActionRef = useRef<HTMLButtonElement>(null);
   const selected =
     selection && sentenceIds.includes(selection) ? selection : null;
@@ -114,6 +116,7 @@ function ReadingView({ canSave }: { canSave: boolean }) {
       setSelection((current) => (current === id ? null : id));
       setLastFocused(id);
       setAnnouncement("");
+      setLimitFor(null);
     };
     const onKeyDown = (event: KeyboardEvent) => {
       const sentence = sentenceOf(document.activeElement);
@@ -132,6 +135,7 @@ function ReadingView({ canSave }: { canSave: boolean }) {
         event.preventDefault();
         setSelection(sentence.dataset.sentence ?? null);
         setAnnouncement("");
+        setLimitFor(null);
       }
     };
     document.addEventListener("click", onClick);
@@ -165,8 +169,21 @@ function ReadingView({ canSave }: { canSave: boolean }) {
   // Focus goes back to the sentence without moving the passage.
   function closeActions(id: string) {
     setSelection(null);
+    setLimitFor(null);
     sentenceElement(id)?.focus({ preventScroll: true });
   }
+
+  // "Show in passage": the passage moves to the sentence and selects it.
+  const showSentence = (id: string) => {
+    if (session.view.sheet === "expanded")
+      send({ type: "setView", view: { sheet: "partial" } });
+    sentenceElement(id)?.scrollIntoView({ block: "start" });
+    if (selected === id) firstActionRef.current?.focus();
+    setSelection(id);
+    setLastFocused(id);
+    setAnnouncement("");
+    setLimitFor(null);
+  };
 
   // Changing question never scrolls the passage; changing passage keeps the
   // old one's position for later.
@@ -186,6 +203,27 @@ function ReadingView({ canSave }: { canSave: boolean }) {
   if (!passage) return null;
   const isHighlighted =
     selected !== null && session.highlights.includes(selected);
+  // Pin Evidence (Practice only) goes to the current question; a "choose
+  // several" item keeps its pins under its first number.
+  const pinNumber =
+    session.mode === "practice"
+      ? unitOf(units, session.currentQuestion)?.numbers[0]
+      : undefined;
+  const pinned = pinNumber === undefined ? [] : (session.pins[pinNumber] ?? []);
+  const togglePin = (number: number, id: string) => {
+    if (pinned.includes(id)) {
+      send({ type: "unpin", number, sentenceId: id });
+      setAnnouncement("");
+    } else if (pinned.length >= MAX_PINS) {
+      setLimitFor(id);
+      setAnnouncement(t("evidence.limit", { max: MAX_PINS }));
+      return;
+    } else {
+      send({ type: "pin", number, sentenceId: id });
+      setAnnouncement(t("mark.pinned", { number }));
+    }
+    closeActions(id);
+  };
   return (
     <>
       <a
@@ -214,6 +252,11 @@ function ReadingView({ canSave }: { canSave: boolean }) {
           highlights={new Set(session.highlights)}
           selected={selected}
           focusable={focusable}
+          pins={
+            pinNumber === undefined
+              ? null
+              : { number: pinNumber, sentenceIds: new Set(pinned) }
+          }
         />
       </main>
       <p aria-live="polite" className="sr-only">
@@ -223,6 +266,20 @@ function ReadingView({ canSave }: { canSave: boolean }) {
         <SentenceActions
           bottom={`calc(${SHEET_HEIGHT[session.view.sheet]} + 0.5rem)`}
           isHighlighted={isHighlighted}
+          pin={
+            pinNumber === undefined
+              ? undefined
+              : {
+                  number: pinNumber,
+                  isPinned: pinned.includes(selected),
+                  onToggle: () => togglePin(pinNumber, selected),
+                }
+          }
+          message={
+            limitFor === selected
+              ? t("evidence.limit", { max: MAX_PINS })
+              : undefined
+          }
           firstActionRef={firstActionRef}
           onToggleHighlight={() => {
             send({ type: "toggleHighlight", sentenceId: selected });
@@ -232,7 +289,7 @@ function ReadingView({ canSave }: { canSave: boolean }) {
           onCancel={() => closeActions(selected)}
         />
       )}
-      <QuestionSheet goTo={goTo} />
+      <QuestionSheet goTo={goTo} showSentence={showSentence} />
     </>
   );
 }

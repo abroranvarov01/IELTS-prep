@@ -42,6 +42,11 @@ async function choose(page: Page, name: string) {
 const sheet = (page: Page, locale: Locale = "en") =>
   page.getByRole("region", { name: catalogs[locale].reading.sheet.label });
 
+const sentence = (page: Page, id: string) =>
+  page.locator(`main [data-sentence="${id}"]`);
+const actions = (page: Page, locale: Locale = "en") =>
+  page.getByRole("group", { name: catalogs[locale].reading.mark.actions });
+
 async function noOverflow(page: Page) {
   const overflow = await page.evaluate(
     () =>
@@ -670,10 +675,6 @@ test.describe("typed answers", () => {
 
 test.describe("highlighting", () => {
   test.use({ hasTouch: true });
-  const sentence = (page: Page, id: string) =>
-    page.locator(`main [data-sentence="${id}"]`);
-  const actions = (page: Page, locale: Locale = "en") =>
-    page.getByRole("group", { name: catalogs[locale].reading.mark.actions });
 
   test("tapping a sentence selects it; Highlight marks it, survives a reload, and can be removed", async ({
     page,
@@ -814,6 +815,188 @@ test.describe("highlighting", () => {
     await page.getByRole("button", { name: uz.reading.mark.highlight }).tap();
     await sentence(page, "p1-1-s1").tap();
     await expect(actions(page, "uz")).toBeVisible();
+    await noOverflow(page);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+});
+
+test.describe("Pin Evidence", () => {
+  test.use({ hasTouch: true });
+  const evidence = (page: Page) =>
+    sheet(page)
+      .getByRole("listitem")
+      .filter({ has: page.locator("blockquote") });
+  const pinTo = (page: Page, number: number) =>
+    page.getByRole("button", { name: fill(en.reading.mark.pin, { number }) });
+
+  test("pins a sentence to the current question, shows it in the sheet and the passage, and keeps it", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await sentence(page, "p1-2-s2").tap();
+    await pinTo(page, 1).tap();
+    await expect(actions(page)).toHaveCount(0);
+    await expect(sentence(page, "p1-2-s2")).toBeFocused();
+    await expect(
+      page.getByText(fill(en.reading.mark.pinned, { number: 1 }), {
+        exact: true,
+      }),
+    ).toHaveCount(2); // the marker's label and the announcement
+    await expect(
+      sentence(page, "p1-2-s2").getByText(
+        fill(en.reading.mark.pinned, { number: 1 }),
+      ),
+    ).toBeAttached();
+
+    await expect(
+      sheet(page).getByRole("heading", { name: en.reading.evidence.title }),
+    ).toBeVisible();
+    await expect(evidence(page)).toHaveCount(1);
+    await expect(evidence(page)).toContainText(
+      fill(en.reading.evidence.paragraph, { letter: 2 }),
+    );
+    await expect(evidence(page).locator("blockquote")).toHaveText(
+      /^A rider unlocks a bicycle/,
+    );
+
+    // A second pin is listed in passage order.
+    await sentence(page, "p1-1-s1").tap();
+    await pinTo(page, 1).tap();
+    await expect(evidence(page).locator("blockquote")).toHaveText([
+      /^For much of the twentieth century/,
+      /^A rider unlocks a bicycle/,
+    ]);
+
+    await page.reload();
+    await expect(evidence(page)).toHaveCount(2);
+
+    // Another question has its own evidence and markers.
+    await page.getByRole("button", { name: en.reading.question.next }).click();
+    await expect(questionHeading(page, "en", 2)).toBeFocused();
+    await expect(evidence(page)).toHaveCount(0);
+    await expect(
+      sentence(page, "p1-2-s2").getByText(
+        fill(en.reading.mark.pinned, { number: 1 }),
+      ),
+    ).toHaveCount(0);
+    await page
+      .getByRole("button", { name: en.reading.question.previous })
+      .click();
+    await expect(evidence(page)).toHaveCount(2);
+  });
+
+  test("refuses a fourth pin with a message, and unpins from the action bar", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    for (const id of ["p1-1-s1", "p1-1-s2", "p1-1-s3"]) {
+      await sentence(page, id).tap();
+      await pinTo(page, 1).tap();
+    }
+    await sentence(page, "p1-2-s1").tap();
+    await pinTo(page, 1).tap();
+    await expect(actions(page)).toContainText(
+      fill(en.reading.evidence.limit, { max: 3 }),
+    );
+    await expect(evidence(page)).toHaveCount(3);
+
+    await sentence(page, "p1-1-s2").tap();
+    await expect(actions(page)).not.toContainText(
+      fill(en.reading.evidence.limit, { max: 3 }),
+    );
+    await page
+      .getByRole("button", { name: fill(en.reading.mark.unpin, { number: 1 }) })
+      .tap();
+    await expect(evidence(page)).toHaveCount(2);
+  });
+
+  test("Show in passage moves to the sentence and selects it; Remove from evidence removes it", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await sentence(page, "p1-4-s3").scrollIntoViewIfNeeded();
+    await sentence(page, "p1-4-s3").tap();
+    await pinTo(page, 1).tap();
+    await page.evaluate(() => window.scrollTo(0, 0));
+
+    await sheet(page)
+      .getByRole("button", { name: en.reading.evidence.show })
+      .click();
+    await expect(sentence(page, "p1-4-s3")).toBeInViewport();
+    await expect(
+      page.getByRole("button", { name: en.reading.mark.highlight }),
+    ).toBeFocused();
+    await page.keyboard.press("Escape");
+
+    await sheet(page)
+      .getByRole("button", { name: en.reading.evidence.remove })
+      .click();
+    await expect(evidence(page)).toHaveCount(0);
+    await expect(questionHeading(page, "en", 1)).toBeFocused();
+    await expect(
+      sentence(page, "p1-4-s3").getByText(
+        fill(en.reading.mark.pinned, { number: 1 }),
+      ),
+    ).toHaveCount(0);
+  });
+
+  test("works with the keyboard only", async ({ page }) => {
+    await startPractice(page);
+    for (let i = 0; i < 3; i++) await page.keyboard.press("Tab");
+    await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Tab");
+    await expect(pinTo(page, 1)).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(sentence(page, "p1-1-s2")).toBeFocused();
+    await expect(evidence(page)).toHaveCount(1);
+  });
+
+  test("a 'choose two' item keeps its pins under its first number", async ({
+    page,
+  }) => {
+    await startPractice(page);
+    await goToQuestion(page, 23);
+    await sentence(page, "p2-a-s1").tap();
+    await expect(pinTo(page, 22)).toBeVisible();
+  });
+
+  test("Exam Mode has no Pin Evidence", async ({ page }) => {
+    await page.goto(`/en/reading/${TEST}`);
+    await page
+      .locator("label")
+      .filter({
+        has: page.getByRole("radio", {
+          name: new RegExp(en.reading.mode.exam),
+        }),
+      })
+      .click();
+    await page.getByRole("button", { name: en.reading.start }).click();
+    await sentence(page, "p1-1-s1").tap();
+    await expect(actions(page)).toBeVisible();
+    await expect(actions(page).getByRole("button")).toHaveText([
+      en.reading.mark.highlight,
+      en.reading.mark.cancel,
+    ]);
+  });
+
+  test("the evidence and the action bar fit 320 px and have no WCAG 2.2 AA violations", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await startPractice(page, "ru");
+    for (const id of ["p1-1-s1", "p1-1-s2", "p1-1-s3", "p1-2-s1"]) {
+      await sentence(page, id).tap();
+      await page
+        .getByRole("button", { name: fill(ru.reading.mark.pin, { number: 1 }) })
+        .tap();
+    }
+    await expect(actions(page, "ru")).toContainText(
+      fill(ru.reading.evidence.limit, { max: 3 }),
+    );
     await noOverflow(page);
     const results = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
