@@ -39,7 +39,7 @@ export function MultiChoiceQuestion({ unit }: { unit: QuestionUnit }) {
       <p className="mt-1 text-meta text-text-secondary" aria-live="polite">
         {t("answer.chosenCount", { count: chosen.length, total: unit.choose })}
       </p>
-      <div lang="en" className="mt-3 flex flex-col gap-3">
+      <div lang="en" className="mt-3 flex flex-col gap-2">
         {item.options.map((option) => {
           const isChosen = chosen.includes(option.id);
           return (

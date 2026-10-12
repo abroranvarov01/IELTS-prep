@@ -12,7 +12,7 @@ export function QuietLink({
   return (
     <Link
       href={href}
-      className="inline-flex min-h-12 items-center font-medium underline"
+      className="inline-flex min-h-12 items-center font-medium underline underline-offset-4"
     >
       {children}
     </Link>

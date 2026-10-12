@@ -11,20 +11,23 @@ import {
 } from "@/entities/reading";
 import { AnswerControl, OptionPicker } from "@/features/answer-question";
 import { EvidenceList } from "@/features/mark-passage";
+import { ChevronIcon, LineIcon } from "@/shared/ui/icons";
 import { PrimaryButton } from "@/shared/ui/PrimaryButton";
+import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { FinishConfirmation } from "./FinishConfirmation";
 import { FlagIcon, QuestionNavigator } from "./QuestionNavigator";
 import { SecondaryButton } from "./SecondaryButton";
 
 /** Sheet heights per state (DESIGN_SYSTEM.md, M4: question sheet). */
 export const SHEET_HEIGHT: Record<SheetState, string> = {
-  collapsed: "6rem",
+  collapsed: "5rem",
   partial: "max(45dvh, 15rem)",
   expanded: "calc(100dvh - 3rem)",
 };
 
 // A drag shorter than this is a tap on the handle.
 const DRAG_THRESHOLD_PX = 8;
+const COLLAPSED_PX = 80;
 
 type Drag = {
   startY: number;
@@ -192,7 +195,7 @@ export function QuestionSheet({
     setDrag({
       ...drag,
       height: Math.max(
-        96,
+        COLLAPSED_PX,
         Math.min(window.innerHeight - 48, drag.startHeight + delta),
       ),
       moved: drag.moved || Math.abs(delta) > DRAG_THRESHOLD_PX,
@@ -249,63 +252,67 @@ export function QuestionSheet({
           keepFocusInView();
       }}
     >
-      <button
-        type="button"
-        aria-expanded={isOpen}
-        aria-controls="question-body"
-        onClick={onHandleClick}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={() => setDrag(null)}
-        className="flex h-12 w-full shrink-0 touch-none items-center justify-center"
-      >
+      {/* The handle (READING_EXPERIENCE.md) spans the bar and the question's
+          title, so the grab area is large without a row of its own. */}
+      <div className="relative shrink-0 px-gutter pt-2 pb-1">
+        <button
+          type="button"
+          aria-expanded={isOpen}
+          aria-controls="question-body"
+          onClick={onHandleClick}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={() => setDrag(null)}
+          className="absolute inset-[0] w-full touch-none rounded-t-xl"
+        >
+          <span className="sr-only">
+            {isOpen ? t("sheet.hide") : t("sheet.show")}
+          </span>
+        </button>
         <span
           aria-hidden="true"
-          className="h-1 w-8 rounded-full bg-border-control"
+          className="mx-auto block h-1 w-8 rounded-full bg-border-control"
         />
-        <span className="sr-only">
-          {isOpen ? t("sheet.hide") : t("sheet.show")}
-        </span>
-      </button>
-
-      <div className="flex shrink-0 flex-wrap items-center gap-x-2 px-gutter">
-        <h2
-          id="question-heading"
-          ref={headingRef}
-          tabIndex={-1}
-          className="text-heading-3 font-bold focus:outline-none"
-        >
-          {label}
-        </h2>
-        {isAnswered && (
-          <span className="text-meta text-text-secondary">
-            · {t("navigator.answered")}
-          </span>
-        )}
-        {!isOpen && isFlagged && (
-          <span className="text-meta text-text-secondary">
-            · <FlagIcon className="inline size-3" /> {t("navigator.flagged")}
-          </span>
-        )}
+        <div className="pointer-events-none relative mt-3 flex flex-wrap items-baseline gap-x-2">
+          <h2
+            id="question-heading"
+            ref={headingRef}
+            tabIndex={-1}
+            className="text-heading-3 font-bold focus:outline-none"
+          >
+            {label}
+          </h2>
+          {isAnswered && (
+            <span className="text-meta text-text-secondary">
+              · {t("navigator.answered")}
+            </span>
+          )}
+          {!isOpen && isFlagged && (
+            <span className="text-meta text-text-secondary">
+              · <FlagIcon className="inline size-3" /> {t("navigator.flagged")}
+            </span>
+          )}
+        </div>
       </div>
 
       {isOpen && panel === "question" && (
-        <div className="flex shrink-0 flex-wrap gap-x-4 px-gutter">
+        // One row: a long label wraps inside its own button.
+        <div className="flex shrink-0 px-gutter">
           <button
             type="button"
             aria-pressed={isFlagged}
             onClick={() => send({ type: "toggleFlag", number })}
-            className="inline-flex min-h-12 items-center gap-2 font-medium underline"
+            className={`${QUIET_BUTTON} group -ms-3`}
           >
-            <FlagIcon className="size-4" />
+            <FlagIcon className="size-4 group-aria-pressed:fill-current" />
             {isFlagged ? t("flag.remove") : t("flag.add")}
           </button>
           <button
             ref={navigatorButtonRef}
             type="button"
             onClick={() => openPanel("navigator")}
-            className="inline-flex min-h-12 items-center gap-2 font-medium underline"
+            className={QUIET_BUTTON}
           >
             <GridIcon />
             {t("navigator.open")}
@@ -331,8 +338,9 @@ export function QuestionSheet({
                 <button
                   type="button"
                   onClick={() => closePanel(opener)}
-                  className="inline-flex min-h-12 items-center font-medium underline"
+                  className={`${QUIET_BUTTON} -me-3`}
                 >
+                  <ChevronIcon direction="left" />
                   {t("sheet.back")}
                 </button>
               </div>
@@ -389,6 +397,7 @@ export function QuestionSheet({
           <div className="flex shrink-0 flex-wrap justify-between gap-x-4 gap-y-2 border-t border-border-subtle px-gutter py-2">
             {previous ? (
               <SecondaryButton onClick={() => goTo(previous.numbers[0] ?? 1)}>
+                <ChevronIcon direction="left" />
                 {t("question.previous")}
               </SecondaryButton>
             ) : (
@@ -397,6 +406,7 @@ export function QuestionSheet({
             {next ? (
               <SecondaryButton onClick={() => goTo(next.numbers[0] ?? 1)}>
                 {t("question.next")}
+                <ChevronIcon direction="right" />
               </SecondaryButton>
             ) : (
               <PrimaryButton
@@ -416,7 +426,7 @@ export function QuestionSheet({
 function nearestState(height: number): SheetState {
   const viewport = window.visualViewport?.height ?? window.innerHeight;
   const heights: [SheetState, number][] = [
-    ["collapsed", 96],
+    ["collapsed", COLLAPSED_PX],
     ["partial", Math.max(viewport * 0.45, 240)],
     ["expanded", viewport - 48],
   ];
@@ -429,13 +439,11 @@ function nearestState(height: number): SheetState {
 
 function GridIcon() {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      className="size-4"
-      fill="currentColor"
-    >
-      <path d="M2 2h5v5H2zM9 2h5v5H9zM2 9h5v5H2zM9 9h5v5H9z" />
-    </svg>
+    <LineIcon className="size-4">
+      <rect x="2.25" y="2.25" width="4.5" height="4.5" rx="1" />
+      <rect x="9.25" y="2.25" width="4.5" height="4.5" rx="1" />
+      <rect x="2.25" y="9.25" width="4.5" height="4.5" rx="1" />
+      <rect x="9.25" y="9.25" width="4.5" height="4.5" rx="1" />
+    </LineIcon>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { type QuestionUnit, useReading } from "@/entities/reading";
+import { ChevronIcon } from "@/shared/ui/icons";
 import { listOptions, matchingPrompt } from "../model/matching";
 import { GroupText } from "./GroupText";
 
@@ -67,16 +68,7 @@ export function MatchingQuestion({
         ) : (
           <span className="text-text-secondary">{t("answer.choose")}</span>
         )}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 16 16"
-          className="size-4 shrink-0"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="m6 3 5 5-5 5" />
-        </svg>
+        <ChevronIcon direction="right" />
       </button>
     </>
   );

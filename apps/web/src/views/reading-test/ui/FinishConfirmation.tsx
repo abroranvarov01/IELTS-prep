@@ -46,7 +46,7 @@ export function FinishConfirmation({
         <button
           type="button"
           onClick={onCancel}
-          className="inline-flex min-h-12 items-center font-medium underline"
+          className="inline-flex min-h-12 items-center font-medium underline underline-offset-4"
         >
           {t("finish.cancel")}
         </button>

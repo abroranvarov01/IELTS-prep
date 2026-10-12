@@ -65,7 +65,7 @@ export function PassageView({
                 style={{ scrollMarginBottom: bottomSpace }}
                 className={`scroll-mt-16 cursor-pointer rounded-sm ${
                   sentence.id === selected
-                    ? "bg-brand-blush underline decoration-ink decoration-2 underline-offset-4"
+                    ? "bg-brand-blush-soft underline decoration-ink decoration-2 underline-offset-4"
                     : ""
                 }`}
               >

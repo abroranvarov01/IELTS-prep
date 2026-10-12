@@ -34,7 +34,7 @@ export function StatusMessage({
             </button>
             <Link
               href={home.href}
-              className="inline-flex min-h-12 items-center font-medium underline"
+              className="inline-flex min-h-12 items-center font-medium underline underline-offset-4"
             >
               {home.label}
             </Link>

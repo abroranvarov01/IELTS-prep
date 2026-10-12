@@ -4,6 +4,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { type KeyboardEvent, useEffect, useRef } from "react";
 import { Link, usePathname } from "@/shared/i18n/navigation";
 import { routing } from "@/shared/i18n/routing";
+import { CheckIcon, ChevronIcon, LineIcon } from "@/shared/ui/icons";
+import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 
 // A disclosure with plain links (not an ARIA menu), so it also works
 // without JavaScript. JavaScript only adds Escape and outside-tap closing.
@@ -46,23 +48,21 @@ export function LanguageSwitcher() {
           code: t("code"),
           language: t(`languages.${locale}`),
         })}
-        className="flex min-h-12 cursor-pointer list-none items-center gap-1 rounded-md border border-border-control px-3 font-bold [&::-webkit-details-marker]:hidden"
+        className={`${QUIET_BUTTON} -me-3 cursor-pointer list-none group-open:bg-brand-blush-soft [&::-webkit-details-marker]:hidden`}
       >
+        <LineIcon className="size-[1.25rem]">
+          <circle cx="8" cy="8" r="6.25" />
+          <path d="M1.75 8h12.5M8 1.75c-2.25 2.5-2.25 10 0 12.5M8 1.75c2.25 2.5 2.25 10 0 12.5" />
+        </LineIcon>
         {t("code")}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 16 16"
+        <ChevronIcon
+          direction="down"
           className="size-4 group-open:rotate-180"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="m4 6 4 4 4-4" />
-        </svg>
+        />
       </summary>
       <ul
         aria-label={t("listLabel")}
-        className="absolute end-[0] top-full z-10 mt-2 w-max rounded-md bg-surface-base py-2 shadow-raised"
+        className="absolute end-[0] top-full z-10 mt-1 w-max rounded-md bg-surface-base p-1 shadow-raised"
       >
         {routing.locales.map((code) => {
           const isCurrent = code === locale;
@@ -78,21 +78,10 @@ export function LanguageSwitcher() {
                   if (isCurrent) event.preventDefault();
                   if (detailsRef.current) detailsRef.current.open = false;
                 }}
-                className="flex min-h-12 items-center justify-between gap-4 px-4 hover:bg-surface-warm aria-[current=true]:font-bold"
+                className="flex min-h-12 items-center justify-between gap-4 rounded-sm px-3 font-medium hover:bg-brand-blush-soft aria-[current=true]:font-bold"
               >
                 {t(`languages.${code}`)}
-                {isCurrent && (
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 16 16"
-                    className="size-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="m3 8 3.5 3.5L13 5" />
-                  </svg>
-                )}
+                {isCurrent && <CheckIcon />}
               </Link>
             </li>
           );

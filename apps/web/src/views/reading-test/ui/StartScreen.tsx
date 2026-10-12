@@ -38,7 +38,7 @@ export function StartScreen({
           </h1>
           <fieldset className="mt-6">
             <legend className="font-bold">{t("mode.legend")}</legend>
-            <div className="mt-3 flex flex-col gap-3">
+            <div className="mt-3 flex flex-col gap-2">
               {(["practice", "exam"] as const).map((value) => (
                 <OptionRow
                   key={value}
@@ -49,7 +49,7 @@ export function StartScreen({
                   onChange={() => setMode(value)}
                 >
                   <span className="block font-bold">{t(`mode.${value}`)}</span>
-                  <span className="block font-normal">
+                  <span className="block font-normal text-text-secondary">
                     {t(`mode.${value}Detail`)}
                   </span>
                 </OptionRow>

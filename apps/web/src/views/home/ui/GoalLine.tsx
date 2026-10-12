@@ -15,12 +15,14 @@ export async function GoalLine() {
       : undefined;
 
   return (
-    <p>
+    <p className="text-text-secondary">
       {targetBand === undefined || targetBand === "unknown"
         ? t("home.goal.targetBandNotSet")
         : t.rich("home.goal.targetBand", {
             band: targetBand,
-            b: (chunks) => <strong className="font-bold">{chunks}</strong>,
+            b: (chunks) => (
+              <strong className="font-bold text-ink">{chunks}</strong>
+            ),
           })}
       {examTypeLabel && (
         <>

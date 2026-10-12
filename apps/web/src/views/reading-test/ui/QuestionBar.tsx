@@ -3,7 +3,9 @@
 import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import { answeredNumbers, unitOf, useReading } from "@/entities/reading";
+import { ChevronIcon } from "@/shared/ui/icons";
 import { PrimaryButton } from "@/shared/ui/PrimaryButton";
+import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { FINISH_TITLE_ID, FinishConfirmation } from "./FinishConfirmation";
 import { FlagIcon, NavigatorCell } from "./QuestionNavigator";
@@ -51,16 +53,19 @@ export function QuestionBar({ goTo }: { goTo: (number: number) => void }) {
         const numbers = numbersOf(passage.number);
         if (passage.number !== session.view.passage) {
           return (
-            <SecondaryButton
+            <button
               key={passage.id}
+              type="button"
               onClick={() => goTo(numbers[0] ?? 1)}
+              className={QUIET_BUTTON}
             >
               {t("navigator.passageProgress", {
                 number: passage.number,
                 answered: numbers.filter((n) => answered.has(n)).length,
                 total: numbers.length,
               })}
-            </SecondaryButton>
+              <ChevronIcon direction="right" />
+            </button>
           );
         }
         return (
@@ -85,24 +90,26 @@ export function QuestionBar({ goTo }: { goTo: (number: number) => void }) {
         );
       })}
       {/* The current question's controls stay together at the bar's end. */}
-      <div className="ms-auto flex flex-wrap items-center gap-x-4 gap-y-2">
+      <div className="ms-auto flex flex-wrap items-center gap-x-2 gap-y-2">
         <button
           type="button"
           aria-pressed={isFlagged}
           onClick={() => send({ type: "toggleFlag", number })}
-          className="inline-flex min-h-12 items-center gap-2 font-medium underline"
+          className={`${QUIET_BUTTON} group`}
         >
-          <FlagIcon className="size-4" />
+          <FlagIcon className="size-4 group-aria-pressed:fill-current" />
           {isFlagged ? t("flag.remove") : t("flag.add")}
         </button>
         {previous && (
           <SecondaryButton onClick={() => goTo(previous.numbers[0] ?? 1)}>
+            <ChevronIcon direction="left" />
             {t("question.previous")}
           </SecondaryButton>
         )}
         {next && (
           <SecondaryButton onClick={() => goTo(next.numbers[0] ?? 1)}>
             {t("question.next")}
+            <ChevronIcon direction="right" />
           </SecondaryButton>
         )}
         <PrimaryButton

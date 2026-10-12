@@ -99,9 +99,9 @@ export function QuestionColumn({
   return (
     <section
       aria-label={t("sheet.label")}
-      className="relative overflow-y-auto border-s border-border-subtle px-gutter py-6"
+      className="relative overflow-y-auto border-s border-border-subtle px-8 py-6"
     >
-      <div className="flex flex-col gap-10">
+      <div className="flex max-w-column flex-col gap-12">
         {passage.questionGroups.map((group) => {
           const groupUnits = units.filter((unit) => unit.group.id === group.id);
           const isShared = hasGroupText(group);

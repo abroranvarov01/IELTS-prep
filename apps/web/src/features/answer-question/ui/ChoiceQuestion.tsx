@@ -23,7 +23,7 @@ export function ChoiceQuestion({ unit }: { unit: QuestionUnit }) {
     <>
       <fieldset lang="en">
         <legend className="font-bold">{prompt}</legend>
-        <div className="mt-3 flex flex-col gap-3">
+        <div className="mt-3 flex flex-col gap-2">
           {options.map((option) => (
             <OptionRow
               key={option.id}
@@ -49,7 +49,7 @@ export function ChoiceQuestion({ unit }: { unit: QuestionUnit }) {
         <button
           type="button"
           onClick={() => send({ type: "clearAnswer", number })}
-          className="mt-2 inline-flex min-h-12 items-center font-medium underline"
+          className="mt-2 inline-flex min-h-12 items-center font-medium underline underline-offset-4"
         >
           {t("answer.clear")}
         </button>

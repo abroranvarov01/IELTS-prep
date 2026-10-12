@@ -22,7 +22,7 @@ export function ConfirmDialog({
       ref={dialogRef}
       aria-labelledby={labelledBy}
       aria-describedby={describedBy}
-      className="m-auto w-[calc(100%-2*var(--spacing-gutter))] max-w-column rounded-xl border border-border-control bg-surface-base p-6 text-ink shadow-raised"
+      className="m-auto w-[calc(100%-2*var(--spacing-gutter))] max-w-column rounded-xl bg-surface-base p-6 text-ink shadow-raised backdrop:bg-ink/40"
     >
       {children}
     </dialog>

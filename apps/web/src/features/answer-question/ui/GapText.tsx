@@ -23,7 +23,7 @@ export function GapText({
           <span
             key={i}
             aria-current={isCurrent ? "true" : undefined}
-            className={`inline-block rounded-sm px-1 ${isCurrent ? "bg-brand-blush" : ""}`}
+            className={`inline-block rounded-sm px-1 ${isCurrent ? "bg-brand-blush-soft" : ""}`}
           >
             <span className="font-bold">({segment.gap})</span>{" "}
             <span className="inline-block min-w-[6ch] border-b-2 border-ink">

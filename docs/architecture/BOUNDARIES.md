@@ -30,7 +30,7 @@ Decided in [ADR-0010](decisions/0010-feature-sliced-design-in-apps-web.md) (it s
 | widgets | `widgets/` | A large block of UI used by several pages or layouts | `shell` (header, language switcher, main landmark) |
 | features | `features/` | A user capability with a narrow contract, used by more than one block | `answer-question` (the answer control of every question type, the option list, a group's shared text), `mark-passage` (selecting sentences by touch and keyboard, highlighting, Pin Evidence, the evidence list) |
 | entities | `entities/` | A product concept: its rules (`model/`), its data access (`api/`), its React binding (`ui/`) | `goal` (the guest's goal and its cookie, ADR-0003), `reading` (the Reading content contract, units, session, checking, attempts, results, explanations; `localStorage` sessions and the IndexedDB history; the running session's context) |
-| shared | `shared/` | Infrastructure and primitives with no product knowledge | `ui` (the primary button and link, the quiet link, the answer option, the option row, the status message, `tokens.css`), `i18n` (routing, locale-aware navigation, the next-intl request config) |
+| shared | `shared/` | Infrastructure and primitives with no product knowledge | `ui` (the primary button and link, the quiet link and the quiet button, the answer option, the option row, the status message, the line icons, `tokens.css`), `i18n` (routing, locale-aware navigation, the next-intl request config) |
 
 - The FSD pages layer is named **`views`** so that Next.js never treats it as a Pages Router. There is no `src/pages`.
 - **Slices of one layer never import each other.** What two slices need moves to a lower layer. There are no `@x` cross-imports; adding one needs a reason recorded here first.

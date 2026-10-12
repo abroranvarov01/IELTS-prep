@@ -1,7 +1,9 @@
 import { useTranslations } from "next-intl";
 import { type ReactNode, useRef } from "react";
 import { Link } from "@/shared/i18n/navigation";
+import { CloseIcon } from "@/shared/ui/icons";
 import { PrimaryButton } from "@/shared/ui/PrimaryButton";
+import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { ConfirmDialog } from "./ConfirmDialog";
 
@@ -21,7 +23,7 @@ export function TestBar({
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
-    <header className="sticky top-[0] z-20 flex h-12 items-center gap-4 border-b border-border-subtle bg-surface-base px-gutter">
+    <header className="sticky top-[0] z-20 flex h-12 items-center gap-3 border-b border-border-subtle bg-surface-base px-gutter">
       <Link
         href="/"
         onClick={(event) => {
@@ -29,11 +31,12 @@ export function TestBar({
           event.preventDefault();
           dialogRef.current?.showModal();
         }}
-        className="inline-flex min-h-12 items-center font-medium underline"
+        className={`${QUIET_BUTTON} -ms-3`}
       >
+        <CloseIcon />
         {t("exit")}
       </Link>
-      <div className="flex flex-1 items-center justify-end gap-4">
+      <div className="flex flex-1 items-center justify-end gap-3">
         {children}
       </div>
       {confirmExit && (

@@ -8,7 +8,7 @@ Canonical owner of **design token values, the token policy, and component state 
 >
 > Once implementation starts, the token source in code becomes the single source of truth for values. This document then describes intent and usage and stops duplicating raw numbers.
 >
-> **Token source in code:** `apps/web/src/shared/ui/tokens.css` (Tailwind v4 `@theme`). Tailwind's default colors, spacing, radii, font sizes, font weights, and shadows are reset there, so only these tokens produce utilities. Fonts are loaded in `apps/web/src/app/[locale]/layout.tsx` (`next/font`). `pnpm lint` runs `scripts/check-tokens.mjs`, which rejects raw colors outside the token file. The content max width (`--container-content`, `max-w-content`) the raised shadow (`--shadow-raised`, `shadow-raised`), and the Heading 1 size (`--text-heading-1` with its line height, `text-heading-1`) are in code. Since M3-07, M3-08, M4-13 and M4-18 also: the passage highlight (`--color-highlight`, `bg-highlight`), the Heading 2 and 3 sizes (`--text-heading-2`, `--text-heading-3`), the passage size (`--text-passage`, `text-passage`, Literata via `font-passage`), the reading measure (`--container-measure`, `max-w-measure`), the "base" duration (`--duration-base`, used as `duration-(--duration-base)`), the small meta text size (`--text-meta`, `text-meta`), the tablet breakpoint (`--breakpoint-tablet`, `tablet:`), the onboarding and home column (`--container-column`, `max-w-column`), the "fast" duration and easing as Tailwind's transition defaults (`--default-transition-duration`, `--default-transition-timing-function`), and since M5-06 the status color for correct answers (`--color-status-correct`, used only by the outcome icons in `views/reading-results/ui/OutcomeIcon.tsx`). The M3 primary button lives in `apps/web/src/shared/ui/` as `PrimaryLink` and `PrimaryButton` (shared classes in `primary-action.ts`), the quiet link as `QuietLink`, the answer option as `AnswerOption` and the option row as `OptionRow`; the M4 Reading components in `apps/web/src/views/reading-test/ui/` (`QuestionSheet`, `SecondaryButton`, `TestBar`, `ExamTimer`, the desktop `QuestionColumn` and `QuestionBar`, `ConfirmDialog`, sheet heights in `SHEET_HEIGHT`) and `apps/web/src/features/mark-passage/ui/` (`PassageView`, `SentenceActions`, `EvidenceList`). Tailwind's default breakpoints and container sizes are reset, so no unapproved breakpoint exists. The desktop breakpoint (64rem) is used since M4-21 by the Reading screen, which renders a different layout from it (a `matchMedia` query in `views/reading-test/ui/TestWorkspace.tsx`); no CSS uses it yet, so it has no token (added when first needed, owner decision 2026-10-09; the M1 values were approved on 2026-10-10 with the condition that no speculative token is added).
+> **Token source in code:** `apps/web/src/shared/ui/tokens.css` (Tailwind v4 `@theme`). Tailwind's default colors, spacing, radii, font sizes, font weights, and shadows are reset there, so only these tokens produce utilities. Fonts are loaded in `apps/web/src/app/[locale]/layout.tsx` (`next/font`). `pnpm lint` runs `scripts/check-tokens.mjs`, which rejects raw colors outside the token file. The content max width (`--container-content`, `max-w-content`) the raised shadow (`--shadow-raised`, `shadow-raised`), and the Heading 1 size (`--text-heading-1` with its line height, `text-heading-1`) are in code. Since M3-07, M3-08, M4-13 and M4-18 also: the passage highlight (`--color-highlight`, `bg-highlight`), the Heading 2 and 3 sizes (`--text-heading-2`, `--text-heading-3`), the passage size (`--text-passage`, `text-passage`, Literata via `font-passage`), the reading measure (`--container-measure`, `max-w-measure`), the "base" duration (`--duration-base`, used as `duration-(--duration-base)`), the small meta text size (`--text-meta`, `text-meta`), the tablet breakpoint (`--breakpoint-tablet`, `tablet:`), the onboarding and home column (`--container-column`, `max-w-column`), the "fast" duration and easing as Tailwind's transition defaults (`--default-transition-duration`, `--default-transition-timing-function`), and since M5-06 the status color for correct answers (`--color-status-correct`, used only by the outcome icons in `views/reading-results/ui/OutcomeIcon.tsx`). The M3 primary button lives in `apps/web/src/shared/ui/` as `PrimaryLink` and `PrimaryButton` (shared classes in `primary-action.ts`), the quiet link as `QuietLink`, the answer option as `AnswerOption` and the option row as `OptionRow`; the M4 Reading components in `apps/web/src/views/reading-test/ui/` (`QuestionSheet`, `SecondaryButton`, `TestBar`, `ExamTimer`, the desktop `QuestionColumn` and `QuestionBar`, `ConfirmDialog`, sheet heights in `SHEET_HEIGHT`) and `apps/web/src/features/mark-passage/ui/` (`PassageView`, `SentenceActions`, `EvidenceList`). Tailwind's default breakpoints and container sizes are reset, so no unapproved breakpoint exists. The desktop breakpoint (64rem) is used since M4-21 by the Reading screen, which renders a different layout from it (a `matchMedia` query in `views/reading-test/ui/TestWorkspace.tsx`); no CSS uses it yet, so it has no token (added when first needed, owner decision 2026-10-09; the M1 values were approved on 2026-10-10 with the condition that no speculative token is added). Since the visual overhaul (owner request, 2026-10-12): the soft selected tint (`--color-brand-blush-soft`, `bg-brand-blush-soft`), the [quiet button](#quiet-button) (`QUIET_BUTTON` in `apps/web/src/shared/ui/quiet-action.ts`) and the [line icons](#icons) (`LineIcon` and the shared check, chevron and close icons in `apps/web/src/shared/ui/icons.tsx`).
 
 ## Token policy
 
@@ -57,6 +57,16 @@ Red is the application's **unmistakable** primary action color. No other color (
 
 **Approved** (owner, 2026-10-10, task M4-09; proposed in M4-05): `text.tertiary` (disabled option text in "choose several").
 
+### Selected tint
+
+**Visual overhaul** (owner request, 2026-10-12; values to confirm in the owner's screenshot review). The owner asked for a subtle selected background: `brand.blush` was too loud on rows that are chosen often.
+
+| Token | Value | Use | Contrast |
+|---|---|---|---|
+| `brand.blushSoft` | `#FCE9EA` (`brand.blush` mixed 40% into white: no new hue) | Selected answers and options, the selected sentence, the current gap, and hover and open states of quiet buttons | `ink` 15.9:1, `text.secondary` 7.0:1. Never the only sign of a state: a selected answer also has the 2 px `ink` boundary and the check |
+
+`brand.blush` itself is unchanged and stays in the palette for later emphasis surfaces.
+
 ### Status colors
 
 Status colors (correct, incorrect, warning, info) are **TBD** and will be set at implementation. Constraints:
@@ -96,12 +106,12 @@ Because Reading shares the brand's red family, Reading identity must rely on the
 
 ### Type scale
 
-**Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). Sizes are in rem (16 px = 1rem at the default browser setting), so text follows the user's font-size setting. Line heights are unitless. One scale for every width: on desktop, hierarchy comes from layout and spacing, not from bigger type.
+**Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02), with Heading 1 and Heading 2 **revised in the visual overhaul** (owner request, 2026-10-12: mobile headings felt oversized; previously 1.75rem/1.2 and 1.375rem/1.3). Sizes are in rem (16 px = 1rem at the default browser setting), so text follows the user's font-size setting. Line heights are unitless. One scale for every width: on desktop, hierarchy comes from layout and spacing, not from bigger type.
 
 | Role | Size | Line height | Weight | Rationale |
 |---|---|---|---|---|
-| Heading 1 (page title) | 1.75rem (28 px) | 1.2 | 800 | Bold and clear at the top of a phone screen. A long Russian or Uzbek title still fits in two or three lines at 320 px. |
-| Heading 2 (section) | 1.375rem (22 px) | 1.3 | 700 | Clearly smaller than H1 and clearly larger than body, so the step is visible by size and weight alone. |
+| Heading 1 (page title) | 1.5rem (24 px) | 1.25 | 800 | Bold and clear at the top of a phone screen without shouting; the weight carries it. A long Russian or Uzbek title fits in two lines at 320 px. |
+| Heading 2 (section) | 1.25rem (20 px) | 1.3 | 700 | Between H1 and H3; with its weight, clearly above body (the passage title, the next action on home). |
 | Heading 3 (subsection) | 1.125rem (18 px) | 1.4 | 700 | The smallest heading. It is told apart from body by weight. |
 | Body | 1rem (16 px, unchanged) | 1.5 | 400 | The existing minimum body size. 1.5 is the line height Tailwind's base styles already apply; this makes it explicit. |
 | Small meta text | 0.875rem (14 px) | 1.4 | 400 or 500 | The top of the allowed 13–14 px range, for reading outdoors. Color `text.tertiary` or darker: 6.2:1 on `surface.base`, 5.9:1 on `surface.warm`. |
@@ -163,6 +173,35 @@ Every interactive component defines: default, hover (pointer devices), focus-vis
 - Rationale: `ink` is the highest-contrast token and does not compete with the red primary action or look like an error. The offset puts the ring on the surface around the element, so it stays visible on red buttons too. An outline (not a box shadow) also stays visible in Windows forced-colors mode.
 - Contrast of the ring against the surface around it: 18.6:1 on `surface.base`, 17.7:1 on `surface.warm`, 12.4:1 on `brand.blush`, and 15.8:1 or more on every skill tint. All meet the 3:1 minimum for non-text UI. The ring is 2 px thick and fully surrounds the element, as WCAG 2.2's focus appearance criterion (2.4.13) describes.
 - Limit: against `brand.primary` the ring would be only 4.1:1, and 3.6:1 against `brand.primaryDeep`. Both still pass 3:1, with less margin.
+
+## Shared controls (visual overhaul)
+
+**Visual overhaul** (owner request, 2026-10-12; to confirm in the owner's screenshot review). They replace underlined links and mixed icons in bars and headers, so tools stop looking like raw HTML.
+
+### Quiet button
+
+For tool actions in bars, headers and panels: the test bar's "Exit", "Mark for review", "All questions", "Back", the sentence actions, the other passages in the desktop navigator bar, and the language switcher.
+
+| Property | Value |
+|---|---|
+| Look | A 16 px line icon and the label in `ink`, weight 500; no fill, no boundary, no underline |
+| Size | At least 48 px high, 12 px side padding (pulled back by 12 px where it starts or ends a row, so its text lines up with the gutter), 8 px between icon and label; a long label wraps inside the button |
+| Hover, pressed, open | `brand.blushSoft` fill, `radius.md` (`ink` 15.9:1) |
+| Focus | The approved ring |
+
+The underlined [quiet link](#quiet-secondary-action-text-link) stays for a secondary choice under a primary button ("Not now", "Keep working", "Leave", "Start again") and for actions inside content ("Clear answer", "Show in passage", "Remove from evidence"), now with a 4 px underline offset.
+
+### Icons
+
+One line family (this answers the icon-convention question of 2026-10-12): a 16 px grid, a 1.5 px stroke with round ends and joins, `currentColor`; drawn with `LineIcon`. 16 px next to a label, 20 px for the selected check, 12 px in the navigator's flag badge. Hidden from screen readers; the label or the control's name carries the meaning. A fill is used only where it carries a state: the flag while a question is marked, and the M5 outcome icons. No emoji, no filled glyph families.
+
+### Confirmation dialog
+
+The native `<dialog>` for leaving a running Exam and for "Finish test" on desktop: `surface.base`, `radius.xl`, 24 px padding, the approved raised shadow, **no boundary**, and an `ink` scrim at 40% behind it, so the decision stands apart without a second outline.
+
+### Language switcher
+
+The header's quiet button: a 20 px line globe, the language code and a down chevron; `brand.blushSoft` while the list is open. The list: `surface.base`, `radius.md`, 4 px padding, the raised shadow; each language a 48 px row with `radius.sm` hover in `brand.blushSoft`, the current one bold with the check.
 
 ## Responsive behavior
 
@@ -228,9 +267,9 @@ The answers on onboarding steps 1 and 2. Each is a button that saves and advance
 | Hover (pointer) | Boundary becomes `ink` | 18.58:1 |
 | Pressed | `surface.warm` fill | Text 17.68:1 |
 | Focus-visible | The approved ring | |
-| Selected (the earlier answer when returning to a step) | `brand.blush` fill, a 2 px `ink` boundary, and a 20 px `ink` check mark at the end (an inline SVG like the language switcher's, hidden from screen readers, with the text "Selected" for them) | Text and check 12.37:1 on blush. Selected is shown by the check mark and the heavier boundary, not by the fill alone (I-8) |
+| Selected (the earlier answer when returning to a step) | `brand.blushSoft` fill (visual overhaul, 2026-10-12; was `brand.blush`), a 2 px `ink` boundary, and a 20 px `ink` check mark at the end (the shared line check, hidden from screen readers, with the text "Selected" for them) | Text and check 15.9:1 on the soft tint. Selected is shown by the check mark and the heavier boundary, not by the fill alone (I-8) |
 
-- **Arrangement:** one vertical list with 12 px between answers, the same on step 1 and step 2. The five band values are a list too, not a grid: one scan direction, the same component on both steps, and it works at 320 px and at 200% zoom. Six 48 px answers with 12 px gaps take about 350 px, so the whole step still fits a 360 × 800 screen without scrolling.
+- **Arrangement:** one vertical list with 8 px between answers (visual overhaul, 2026-10-12; was 12 px), the same on step 1 and step 2 and in every option list. The five band values are a list too, not a grid: one scan direction, the same component on both steps, and it works at 320 px and at 200% zoom. Six 48 px answers with 8 px gaps take about 330 px, so the whole step still fits a 360 × 800 screen without scrolling.
 - **Not red:** the answers are not primary buttons. Steps 1 and 2 have no red element at all (USER_FLOWS.md: one primary action).
 
 ### Step indicator
@@ -278,7 +317,7 @@ This would be one new layout token (a container width) used by onboarding and ho
 
 ### Test bar
 - 48 px high, `surface.base`, a 1 px `border.subtle` line under it (decorative).
-- "Exit" in the quiet-link style with a 48 px tap area; "Passage 1 of 3" in body text, weight 500; the timer in body text, weight 700, with tabular figures so it does not jiggle, weight 800 from 5 minutes left.
+- "Exit" as a [quiet button](#quiet-button) with the close icon (visual overhaul, 2026-10-12; was the underlined quiet link), 12 px between the bar's items; "Passage 1 of 3" in body text, weight 500; the timer in body text, weight 700, with tabular figures so it does not jiggle, weight 800 from 5 minutes left.
 
 ### Passage
 - The approved passage size (Literata 17 px, line height 1.6), `ink` (18.58:1). Paragraph spacing 16 px.
@@ -287,31 +326,31 @@ This would be one new layout token (a container width) used by onboarding and ho
 
 ### Sentences: keyboard focus, selection, highlight, pin marker
 - **Keyboard focus** on a sentence: the approved focus ring.
-- **Selected** (action bar open): `brand.blush` background (`ink` 12.37:1) with a 2 px `ink` underline, `radius.sm` corners, so selection is not shown by color alone.
+- **Selected** (action bar open): `brand.blushSoft` background (visual overhaul, 2026-10-12; `ink` 15.9:1) with a 2 px `ink` underline, `radius.sm` corners, so selection is not shown by color alone.
 - **Highlighted:** the `highlight` background above.
-- **Pin marker** (the current question's pins): an inline chip before the sentence, `radius.full`, 1 px `ink` border, a 14 px pin icon and the question number in bold meta text, `ink` on `surface.base` (18.58:1).
+- **Pin marker** (the current question's pins): an inline chip before the sentence, `radius.full`, 1 px `ink` border, a 14 px line pin icon and the question number in bold meta text, `ink` on `surface.base` (18.58:1).
 
 ### Sentence action bar
-- Floats 8 px above the sheet, the full width between the gutters on phones (at most 36rem), `surface.base`, `radius.md`, the approved raised shadow; its actions are quiet buttons with an icon and a label, each at least 48 px.
+- Floats 8 px above the sheet, the full width between the gutters on phones (at most 36rem), `surface.base`, `radius.md`, the approved raised shadow, 4 px inner padding; its actions are [quiet buttons](#quiet-button) with a line icon and a label (no underline), each at least 48 px.
 - **Height follows the content** (owner, 2026-10-11, replacing the earlier 56 px): compact on phones, **at most two rows**, no horizontal clipping, no critical action hidden, and understandable in uz, ru and en. Where the labels would need a third row, shorter approved labels or icons are used, with the full label kept as the accessible name.
 - **Arrangement** (M4-24): Highlight (or Remove highlight) and Cancel share the first row, Cancel as a 48 px × icon button named "Cancel"; Pin (or Unpin), where offered, takes the second row. A label too long for its row wraps inside its own button rather than adding a row. The refused-pin message is contextual feedback above the actions, shown only after a refused pin; it does not count as one of the two rows (owner, 2026-10-11).
 
 ### Question sheet (phone and tablet)
 - `surface.base`, `radius.xl` top corners, the approved raised shadow; 16 px side padding.
-- **Handle:** a 32 × 4 px bar in `border.control` (3.22:1 on white) centered in a 48 px-high button.
-- **Heights:** collapsed = its content (handle and header, about 96 px); partial = 45% of the visible viewport height, at least 240 px; expanded = the visible height below the test bar. State changes animate height with the approved "base" duration (200 ms) and easing, none with reduced motion.
-- **Header row:** "Question 5 of 40" in Heading 3 (18 px, 700), the flag toggle and "All questions" as icon-plus-label quiet buttons, 48 px high.
-- **Footer row:** Previous and Next as **secondary buttons** (new component, below); the red primary button only for "Finish test". On phones "Finish test" is full width, as the primary button is there, on its own row under Previous (owner, 2026-10-11).
+- **Handle:** a 32 × 4 px bar in `border.control` (3.22:1 on white), 8 px from the top. The handle button covers the bar and the question's title row (about 52 px), so the title shares the grab area instead of sitting under a 48 px row of its own (visual overhaul, 2026-10-12).
+- **Heights:** collapsed = its content (handle and title, 80 px; 96 px before the visual overhaul); partial = 45% of the visible viewport height, at least 240 px; expanded = the visible height below the test bar. State changes animate height with the approved "base" duration (200 ms) and easing, none with reduced motion.
+- **Header row:** "Question 5 of 40" in Heading 3 (18 px, 700) with "· answered" in meta text, then one row with the flag toggle and "All questions" as [quiet buttons](#quiet-button), 48 px high; a long Russian or Uzbek label wraps inside its own button rather than adding a row. The flag icon is filled while the question is marked (the fill carries the state). Panels (the navigator, an option list) have "Back" as a quiet button with a left chevron.
+- **Footer row:** Previous and Next as **secondary buttons** (new component, below) with a left or right chevron; the red primary button only for "Finish test". On phones "Finish test" is full width, as the primary button is there, on its own row under Previous (owner, 2026-10-11).
 
 ### Secondary button (new)
-- For Previous / Next and similar navigation that must look like buttons but not compete with the red action: 48 px minimum height, 12/24 px padding, `radius.md`, 1 px `border.control` boundary (3.22:1), `ink` text weight 500 on `surface.base`; hover: `ink` boundary; pressed: `surface.warm` fill (`ink` 17.68:1); focus: the approved ring.
+- For Previous / Next and similar navigation that must look like buttons but not compete with the red action: 48 px minimum height, 12/16 px padding (visual overhaul, 2026-10-12; was 12/24 px), an optional 16 px line chevron 8 px from the label, `radius.md`, 1 px `border.control` boundary (3.22:1), `ink` text weight 500 on `surface.base`; hover: `ink` boundary; pressed: `surface.warm` fill (`ink` 17.68:1); focus: the approved ring.
 
 ### Choice controls in the sheet
-- **Option rows** reuse the approved M3 answer option (default, hover, pressed, focus, selected with `brand.blush`, the 2 px `ink` ring and the check mark), with a 20 px indicator at the start: a circle for "choose one" (radio) and a square with 4 px corners for "choose several" (checkbox; 4 px is a local dimension of this one indicator, since `radius.sm` would make a 20 px square look round, per the Token policy's "may stay local"), both with a 2 px `border.control` outline, filled `ink` with a white dot or check when chosen. The option letter is bold before the text.
+- **Option rows** reuse the M3 answer option (default, hover, pressed, focus, selected with `brand.blushSoft`, the 2 px `ink` boundary and the 20 px check mark at the end) over a visually hidden native radio or checkbox. **No radio or checkbox indicator is drawn inside the row** (visual overhaul, owner request 2026-10-12: a circle or square inside a bordered row read as a nested, form-like double boundary). The check's room is kept when unchosen, so choosing never moves the text. "Choose several" is explained by its instruction and the "1 of 2 chosen" line. The option letter is bold before the text.
 - **Disabled** (the limit of "choose several" reached): text in `text.tertiary` (6.24:1 on white), boundary `border.subtle`, no hover.
 - **Answer button** ("choose from a list"): the option-row look with a trailing chevron; "Choose an answer" in `text.secondary` (8.22:1) when empty, the chosen option's letter and text in `ink` when filled.
 - **Typed-answer field:** 48 px high, 1 px `border.control` boundary (3.22:1), `radius.md`, 12/16 px padding, body text; focus: the approved ring.
-- **Gaps in summaries and notes:** the number in bold followed by a 2 px `ink` underline as wide as about six characters; the **current gap** gets the selected look (`brand.blush` background, `radius.sm`).
+- **Gaps in summaries and notes:** the number in bold followed by a 2 px `ink` underline as wide as about six characters; the **current gap** gets the selected look (`brand.blushSoft` background, `radius.sm`).
 - **Word-limit warning** (Practice): body text in `ink` with a 20 px warning icon (a circle with "!"), not a status color.
 
 ### "Your evidence" block
@@ -323,9 +362,9 @@ This would be one new layout token (a container width) used by onboarding and ho
 - Group headings ("Passage 1") in Heading 3.
 
 ### Desktop exam layout (from 64rem / 1024 px)
-- Columns: passage 55%, questions 45%, separated by a 1 px `border.subtle` line (decorative: the columns are also separated by space and scroll on their own); both on `surface.base`; the passage at the 40rem measure inside its column.
+- Columns: passage 55%, questions 45%, separated by a 1 px `border.subtle` line (decorative: the columns are also separated by space and scroll on their own); both on `surface.base`; the passage at the 40rem measure inside its column. The question column has 32 px side padding, its content at most the 36rem column width, and 48 px between question groups (visual overhaul, 2026-10-12).
 - The current question in the question column: a 4 px `ink` bar along its start edge.
-- Navigator bar: a 1 px `border.subtle` line above it; the same 44 px cells; other passages as secondary buttons with their progress. **Its height follows its content** (owner, 2026-10-11, replacing the fixed 64 px): 64 px is the preferred compact height when everything fits one row; two rows at 1280 px and up to three rows at 1024 px are acceptable. Previous, Next and "Mark for review" keep their text labels; they are not made icon-only to save space.
+- Navigator bar: a 1 px `border.subtle` line above it; the same 44 px cells; other passages as [quiet buttons](#quiet-button) with their progress and a right chevron (visual overhaul, 2026-10-12; were secondary buttons); "Mark for review" as a quiet button with the flag icon. **Its height follows its content** (owner, 2026-10-11, replacing the fixed 64 px): 64 px is the preferred compact height when everything fits one row; two rows at 1280 px and up to three rows at 1024 px are acceptable. Previous, Next and "Mark for review" keep their text labels; they are not made icon-only to save space.
 
 ### Tokens this would add
 `--color-highlight`, `--container-measure` (40rem), `--breakpoint-desktop` (the approved 64rem, first use), and the approved "base" duration (200 ms) for the sheet. Everything else uses existing or approved values.

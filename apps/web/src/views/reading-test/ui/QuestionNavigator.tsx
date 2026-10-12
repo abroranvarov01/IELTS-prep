@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { answeredNumbers, useReading } from "@/entities/reading";
+import { LineIcon } from "@/shared/ui/icons";
 
 /**
  * Every question of the test, grouped by passage, with its state shown by
@@ -97,7 +98,7 @@ export function NavigatorCell({
           aria-hidden="true"
           className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full border border-ink bg-surface-base text-ink"
         >
-          <FlagIcon className="size-3" />
+          <FlagIcon className="size-3 fill-current" />
         </span>
       )}
     </button>
@@ -106,13 +107,8 @@ export function NavigatorCell({
 
 export function FlagIcon({ className }: { className: string }) {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      className={className}
-      fill="currentColor"
-    >
-      <path d="M4 2h1v12H4zM5.5 2.5h7l-2 3 2 3h-7z" />
-    </svg>
+    <LineIcon className={className}>
+      <path d="M3.5 14.5v-12M3.5 2.5h8.5l-2 3.25 2 3.25H3.5" />
+    </LineIcon>
   );
 }

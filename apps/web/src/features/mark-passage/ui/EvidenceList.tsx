@@ -39,7 +39,8 @@ export function EvidenceList({
     if (pinned.length > 1) headingRef.current?.focus();
     else document.getElementById("question-heading")?.focus();
   };
-  const action = "inline-flex min-h-12 items-center font-medium underline";
+  const action =
+    "inline-flex min-h-12 items-center font-medium underline underline-offset-4";
 
   return (
     <div className="mt-6">

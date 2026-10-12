@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
 import type { Ref } from "react";
+import { CloseIcon, LineIcon } from "@/shared/ui/icons";
+import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 
 /**
  * The bar of actions for the selected sentence, just above the sheet
@@ -29,14 +31,12 @@ export function SentenceActions({
   onCancel: () => void;
 }) {
   const t = useTranslations("reading");
-  const action =
-    "inline-flex min-h-12 items-center gap-2 px-3 text-start font-medium underline";
 
   return (
     <div
       role="group"
       aria-label={t("mark.actions")}
-      className={`${bottom === undefined ? "sticky bottom-2" : "fixed inset-x-gutter"} z-20 mx-auto grid max-w-column grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 rounded-md bg-surface-base px-2 py-1 shadow-raised`}
+      className={`${bottom === undefined ? "sticky bottom-2" : "fixed inset-x-gutter"} z-20 mx-auto grid max-w-column grid-cols-[minmax(0,1fr)_auto] items-center gap-x-1 rounded-md bg-surface-base p-1 shadow-raised`}
       style={bottom === undefined ? undefined : { bottom }}
     >
       {message && <p className="col-span-2 px-3 pt-2 font-medium">{message}</p>}
@@ -44,41 +44,24 @@ export function SentenceActions({
         ref={firstActionRef}
         type="button"
         onClick={onToggleHighlight}
-        className={`${action} justify-self-start`}
+        className={`${QUIET_BUTTON} justify-self-start`}
       >
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 16 16"
-          className="size-4"
-          fill="currentColor"
-        >
-          <path d="M3 13h10v1.5H3zM4 11l1.5-4L10 2.5l3.5 3.5L9 10.5l-4 1.5z" />
-        </svg>
+        <HighlightIcon />
         {isHighlighted ? t("mark.removeHighlight") : t("mark.highlight")}
       </button>
       <button
         type="button"
         aria-label={t("mark.cancel")}
         onClick={onCancel}
-        className="inline-flex size-12 items-center justify-center"
+        className={`${QUIET_BUTTON} size-12 justify-center px-[0]`}
       >
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 16 16"
-          className="size-4"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        >
-          <path d="M3.5 3.5l9 9M12.5 3.5l-9 9" />
-        </svg>
+        <CloseIcon />
       </button>
       {pin && (
         <button
           type="button"
           onClick={pin.onToggle}
-          className={`${action} col-span-2 justify-self-start`}
+          className={`${QUIET_BUTTON} col-span-2 justify-self-start`}
         >
           <PinIcon className="size-4" />
           {pin.isPinned
@@ -92,13 +75,16 @@ export function SentenceActions({
 
 export function PinIcon({ className }: { className: string }) {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      className={className}
-      fill="currentColor"
-    >
-      <path d="M9.5 1 15 6.5l-1.4 1.4-1-.6-2.6 2.6.4 3L9 14.3l-2.8-2.8-3.8 3.8-1.4-.7 3.8-3.8L2 8l1.4-1.4 3 .4L9 4.4l-.6-1z" />
-    </svg>
+    <LineIcon className={className}>
+      <path d="M5.5 1.75h5M6.5 1.75v4l-2 3h7l-2-3v-4M8 8.75v5.5" />
+    </LineIcon>
+  );
+}
+
+function HighlightIcon() {
+  return (
+    <LineIcon className="size-4">
+      <path d="M9.75 2.75l3.5 3.5L7.5 12H4v-3.5zM2.5 14.5h11" />
+    </LineIcon>
   );
 }

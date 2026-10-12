@@ -34,7 +34,7 @@ export function AnswerList({
   return (
     <form action={action}>
       <div role="group" aria-labelledby={labelledBy}>
-        <ul className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-2">
           {answers.map((answer) => {
             return (
               <li key={answer.value}>
