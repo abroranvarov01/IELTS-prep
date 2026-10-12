@@ -283,11 +283,33 @@ The answers on onboarding steps 1 and 2. Each is a button that saves and advance
 
 **Option:** drop the bar and keep the text only. **Recommendation: keep the bar.** It shows at a glance that the flow is short, which matters on the first screen a new user sees.
 
+**Onboarding art direction** (owner request, 2026-10-12; to confirm in the owner's screenshot review). The bar becomes three 32 × 4 px segments (`radius.full`, 4 px apart, `brand.highlight` up to the current step, `border.subtle` after it) on the same line as the text, 12 px before it; still decorative.
+
+### Onboarding art direction (steps 1–3)
+
+**Owner request, 2026-10-12** (replaces the M3 "one vertical list of answer options" look on these steps; behavior, order, choices and copy unchanged; to confirm in the owner's screenshot review). Each step has one focal decision instead of a stack of identical bordered rows. The answers stay submit buttons in one group named by the question.
+
+- **Step 1, exam type: two paths.** Academic and General Training as two tiles side by side (12 px apart, also at 320 px): `surface.base`, a 1 px `border.subtle` boundary (decorative: the label names the button), `radius.lg`, 16 px padding; a 64 px `brand.blushSoft` circle with the path's [illustration](#illustrations) in `brand.primaryDeep` (a graduation cap, a briefcase), then the label in Heading 3, 24 px apart. Hover: `brand.primary` boundary. **Selected** (when returning): a 2 px `brand.primary` boundary, `brand.blushSoft` fill, the circle filled `brand.primary` with a white illustration, and the check badge.
+- **Step 2, target band: a row of bands on an [accent panel](#accent-panel).** The five values in one row (8 px gaps), each at least 64 px high, `radius.md`, `surface.base` with a 1 px `brand.blush` boundary, the value in Heading 2 size, weight 800, tabular figures. **Selected:** `brand.primary` fill with the value in `surface.base` (4.6:1 at 20 px, weight 800) and the check badge. At 320 px each value is about 45 px wide (at least the 44 px target).
+- **"I don't know yet"** (steps 1 and 2): under the main answers, 16 px apart, as a quiet row, not a tile: a 24 px question-mark illustration in `text.secondary`, the label in body weight 500, a right chevron; no boundary; hover `brand.blushSoft`. Selected: `brand.blushSoft` fill, a 2 px `ink` boundary and the check badge.
+- **Check badge** (every selected answer): a 24 px `ink` circle with a 16 px white check, over the answer's top end corner; "Selected" for screen readers. With the boundary or the fill it shows the choice by shape, never by color alone.
+- **Step 3, level-check invitation:** an [accent panel](#accent-panel) above the H1 with the target illustration (48 px, `brand.primaryDeep`) centered in a 96 px white circle, then the H1, the sentence in `text.secondary`, the red button 32 px below, and "Not now".
+
 ### Home: next-action block and goal line
 
-- **Next-action block:** no card. No border, no fill, no shadow: the H2 ("Find your level", approved H2 size), the sentence (body, 8 px under the H2), and the primary button (24 px under the sentence) on the white page. The block is not one tappable unit (only its button is), so the card rule in [UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md) says no card. Hierarchy comes from the H2's size and the red button.
-- **Goal line:** body text in `ink`, the band value in weight 700 ("Target band: **7.0**"), the exam type after it in regular weight, and "Change goal" as the quiet link. 32 px above it separate it from the next-action block. No divider.
-- **Spacing on home:** 24 px between the H1 and the next-action block, 32 px between the block and the goal line.
+**Revised in the onboarding art direction** (owner request, 2026-10-12, replacing "no card"; to confirm in the owner's screenshot review). The next action is the screen's one focal block, so it gets the one emphasis surface.
+
+- **H1 ("Your next step"):** a quiet label above the block: meta size, weight 700, `brand.primaryDeep` (5.2:1). The next action, not the page's name, is what the screen shows.
+- **Next-action block:** an [accent panel](#accent-panel) 12 px under the H1 (24 px inner padding from the tablet breakpoint, 16 px on phones): a 48 px white circle with the target illustration, the H2 in Heading 1 size, weight 800, 16 px under it, the sentence in `text.secondary` 8 px under the H2, and the primary button 24 px under the sentence.
+- **Goal line:** 24 px under the block, one wrapping row: a 16 px line flag, the line in `text.secondary` with the band in `ink` weight 700 ("Target band: **7.0** · Academic"), and "Change goal" as the quiet link at the row's end. No divider.
+
+### Accent panel
+
+The one soft brand surface of a screen (onboarding step 2 and 3, the home next action): `brand.blushSoft`, `radius.lg`, 16 px padding, two decorative 2 px `brand.blush` arcs (concentric circles, clipped) in the top end corner. One per screen at most; never nested, never for ordinary sections.
+
+### Illustrations
+
+Spot illustrations in the line-icon style, drawn on a 24 px grid with the same 1.5 px stroke and round ends (`Illustration` in `apps/web/src/shared/ui/illustrations.tsx`), shown at 24–48 px in `brand.primaryDeep`, or white on `brand.primary` when selected. Decorative and hidden from screen readers: the text beside them carries the meaning. Current set: graduation cap (Academic), briefcase (General Training), question mark ("I don't know yet"), target ("Find your level").
 
 ### Column width for onboarding and home
 

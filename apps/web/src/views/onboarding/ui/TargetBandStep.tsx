@@ -10,20 +10,23 @@ import { SavedGoal } from "./SavedGoal";
 export async function TargetBandStep() {
   const locale = await getLocale();
   const t = await getTranslations();
-  const answers = TARGET_BANDS.map((value): Answer => {
-    if (value === "unknown") return { value, label: t("onboarding.dontKnow") };
-    if (value === "8+")
-      return {
-        value,
-        label: value,
-        spokenLabel: t("targetBand.eightPlusLabel"),
-      };
-    return { value, label: value };
-  });
+  const bands = TARGET_BANDS.filter((value) => value !== "unknown").map(
+    (value): Answer => {
+      if (value === "8+")
+        return {
+          value,
+          label: value,
+          spokenLabel: t("targetBand.eightPlusLabel"),
+        };
+      return { value, label: value };
+    },
+  );
   const list = (selected?: TargetBand) => (
     <AnswerList
       name="targetBand"
-      answers={answers}
+      layout="bands"
+      answers={bands}
+      fallback={{ value: "unknown", label: t("onboarding.dontKnow") }}
       selected={selected}
       selectedLabel={t("onboarding.selected")}
       labelledBy={QUESTION_ID}

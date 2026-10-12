@@ -11,8 +11,8 @@ import { AnswerList } from "./AnswerList";
 const answers = [
   { value: "7.5", label: "7.5" },
   { value: "8+", label: "8+", spokenLabel: "8 или выше" },
-  { value: "unknown", label: "Пока не знаю" },
 ];
+const fallback = { value: "unknown", label: "Пока не знаю" };
 
 function renderList(selected?: string) {
   const action = vi.fn();
@@ -21,7 +21,9 @@ function renderList(selected?: string) {
       <h1 id="question">Какой балл вам нужен?</h1>
       <AnswerList
         name="targetBand"
+        layout="bands"
         answers={answers}
+        fallback={fallback}
         selected={selected}
         selectedLabel="Выбрано"
         labelledBy="question"

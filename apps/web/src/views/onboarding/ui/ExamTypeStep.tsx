@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { EXAM_TYPES, type ExamType } from "@/entities/goal";
+import { Illustration } from "@/shared/ui/illustrations";
 import { answerExamType } from "../api/actions";
 import { AnswerList } from "./AnswerList";
 import { OnboardingStep, QUESTION_ID } from "./OnboardingStep";
@@ -10,16 +11,19 @@ import { SavedGoal } from "./SavedGoal";
 export async function ExamTypeStep() {
   const locale = await getLocale();
   const t = await getTranslations();
-  const labels: Record<ExamType, string> = {
-    academic: t("examType.academic"),
-    general: t("examType.general"),
-    unknown: t("onboarding.dontKnow"),
-  };
-  const answers = EXAM_TYPES.map((value) => ({ value, label: labels[value] }));
+  const paths = EXAM_TYPES.filter(
+    (value): value is keyof typeof PATH_ILLUSTRATIONS => value !== "unknown",
+  ).map((value) => ({
+    value,
+    label: t(`examType.${value}`),
+    illustration: PATH_ILLUSTRATIONS[value],
+  }));
   const list = (selected?: ExamType) => (
     <AnswerList
       name="examType"
-      answers={answers}
+      layout="paths"
+      answers={paths}
+      fallback={{ value: "unknown", label: t("onboarding.dontKnow") }}
       selected={selected}
       selectedLabel={t("onboarding.selected")}
       labelledBy={QUESTION_ID}
@@ -38,3 +42,19 @@ export async function ExamTypeStep() {
     </OnboardingStep>
   );
 }
+
+/** Academic: a graduation cap; General Training: a briefcase. */
+const PATH_ILLUSTRATIONS = {
+  academic: (
+    <Illustration className="size-8">
+      <path d="M2.5 9.25 12 4.75l9.5 4.5L12 13.75z" />
+      <path d="M6.5 11.5v4c0 1.5 2.5 3 5.5 3s5.5-1.5 5.5-3v-4M21.5 9.25v5" />
+    </Illustration>
+  ),
+  general: (
+    <Illustration className="size-8">
+      <rect x="3.25" y="7.25" width="17.5" height="12.5" rx="2.25" />
+      <path d="M8.75 7.25v-1.5c0-.83.67-1.5 1.5-1.5h3.5c.83 0 1.5.67 1.5 1.5v1.5M3.25 12.75h17.5" />
+    </Illustration>
+  ),
+};
