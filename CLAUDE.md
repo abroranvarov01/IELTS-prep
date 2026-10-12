@@ -17,7 +17,7 @@ Each item is owned by the linked document. These are reminders, not the full rul
 
 1. **Honest AI feedback.** AI scores are "Estimated band" / "Estimated range", never official IELTS results. No false precision. → `docs/product/PRODUCT.md`
 2. **UX constitution:** 10-second rule, 3-click rule, one primary action, progressive disclosure, mobile first, plain language, no learning curve, accessibility as a requirement. → `docs/product/UX_PRINCIPLES.md`
-3. **Visual direction:** white-first, red brand accent (inspired by IELTS, not copied), bold modern typography, no generic AI-SaaS look. → `docs/design/DESIGN_CONSTITUTION.md`, `docs/design/UI_ANTI_PATTERNS.md`
+3. **Visual direction:** white-first, red brand accent (inspired by IELTS, not copied), bold modern typography, no generic AI-SaaS look. The visual source of truth is local: owner-approved screenshots in `docs/design/references/` plus the design docs. No Figma dependency. User-facing UI is done only after a screenshot review (`visual-fidelity`). → `docs/design/DESIGN_CONSTITUTION.md`, `docs/design/UI_ANTI_PATTERNS.md`
 4. **Invariants** (single scoring source, domain logic outside UI, no hard-coded UI strings, no raw colors outside tokens, content is original or licensed, no secrets or personal data in logs). → `docs/architecture/INVARIANTS.md`
 5. **How to work:** priority order, smallest coherent solution, surgical changes, no speculative abstraction. → `.claude/rules/00-engineering-core.md`, `.claude/rules/01-change-discipline.md` (both always loaded), `docs/engineering/CODE_QUALITY.md`
 6. **TBD stays TBD.** Do not silently decide anything marked TBD in `docs/`. Ask, or propose an ADR.
@@ -35,7 +35,8 @@ Each topic has exactly **one** owner. Other files link to it instead of restatin
 | Reading interaction model (signature experience) | `docs/product/READING_EXPERIENCE.md` |
 | Flow specs (where step counts are checked) | `docs/product/USER_FLOWS.md` |
 | Interface languages and localization rules | `docs/product/LOCALIZATION.md` |
-| Visual direction | `docs/design/DESIGN_CONSTITUTION.md` |
+| Visual direction, surface direction, design-tooling policy (no Figma dependency) | `docs/design/DESIGN_CONSTITUTION.md` |
+| Approved visual reference screenshots | `docs/design/references/` |
 | Token policy and values: color, type, spacing, radii, shadows, states, breakpoints | `docs/design/DESIGN_SYSTEM.md` |
 | Accessibility requirements | `docs/design/ACCESSIBILITY.md` |
 | Forbidden UI patterns | `docs/design/UI_ANTI_PATTERNS.md` |
@@ -75,7 +76,7 @@ The rule globs are scoped to the real layout (`apps/web`, `apps/api`, `packages/
 |---|---|
 | Build or change functionality | `implement-feature` |
 | Fix a defect | `fix-bug` |
-| Any user-facing screen, component, style, or text | `ui-implementation` |
+| Any user-facing screen, component, style, or text | `ui-implementation` → `visual-fidelity` (screenshot review, required before UI is done) |
 | Behavior-preserving restructuring | `refactor` |
 | Review a diff against project rules | `review-change` (complements the built-in `/code-review`) |
 | Significant technical decision / new project-wide pattern | `architecture-decision` |

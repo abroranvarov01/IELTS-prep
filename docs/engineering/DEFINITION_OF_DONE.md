@@ -21,7 +21,10 @@ The commands are listed in [QUALITY_GATES.md](QUALITY_GATES.md). If a command do
 
 ## When UI changes
 
-- [ ] Checked at 360 px, at 320 px, and at desktop width when desktop layout is affected.
+User-facing UI only: anything a user sees or operates. Backend and other non-UI changes skip this section.
+
+- [ ] **Visual review done** with the [`visual-fidelity` skill](../../.claude/skills/visual-fidelity/SKILL.md). That means the running app was rendered and captured at the widths and in the locales that skill lists, the screenshots were compared with any approved reference in [docs/design/references/](../design/references/README.md) and with the design docs, and the problems were fixed and captured again. Passing lint, typecheck, tests, or accessibility checks does not satisfy this item.
+- [ ] No known visual regression against an approved reference.
 - [ ] Accessibility considered: keyboard, focus, names, contrast, touch targets ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)).
 - [ ] UX rules hold for the screen ([UX_PRINCIPLES.md](../product/UX_PRINCIPLES.md)).
 - [ ] No pattern from [UI_ANTI_PATTERNS.md](../design/UI_ANTI_PATTERNS.md).
@@ -46,6 +49,6 @@ The commands are listed in [QUALITY_GATES.md](QUALITY_GATES.md). If a command do
 | Change | Expected validation |
 |---|---|
 | Typo in a doc | Read it back. Nothing else. |
-| Copy change in a component | Localization entries for all three languages, layout check with the longest string |
+| Copy change in a component | Localization entries for all three languages, layout check with the longest string (a screenshot of the affected state at 320 px, per `visual-fidelity`) |
 | Bug fix in answer checking | A regression test that fails first, the domain test suite, typecheck |
 | New screen | Everything in the UI and text sections, plus relevant tests |

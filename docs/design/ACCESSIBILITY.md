@@ -28,7 +28,7 @@ Canonical owner of **accessibility requirements**. Target: **WCAG 2.2 Level AA**
 - Timers in practice mode can be paused or turned off. Exam-simulation timers mirror real conditions, and that is stated up front.
 
 ### Audio and media
-- Listening practice audio controls are accessible. Whether transcripts are offered (after an attempt) is a product decision (TBD), but transcripts must not leak answers during exam simulation.
+- Listening practice audio controls are accessible. Listening review shows transcript excerpts as evidence (owner, 2026-10-12, [DESIGN_CONSTITUTION.md](DESIGN_CONSTITUTION.md#surface-direction)). Whether full transcripts are offered, and when, is a product decision (TBD). Transcripts must not leak answers during exam simulation.
 - Speaking practice handles a denied microphone permission with a clear, plain-language explanation.
 
 ## Verification
