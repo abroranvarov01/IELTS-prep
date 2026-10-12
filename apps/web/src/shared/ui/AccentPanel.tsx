@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ArcMotif } from "./ArcMotif";
 
 /**
  * A soft brand surface (DESIGN_SYSTEM.md, Accent panel): `brand.blushSoft`
@@ -8,16 +9,7 @@ import type { ReactNode } from "react";
 export function AccentPanel({ children }: { children: ReactNode }) {
   return (
     <div className="relative overflow-hidden rounded-lg bg-brand-blush-soft p-4">
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 120 120"
-        className="pointer-events-none absolute -top-12 -right-12 size-[10rem]"
-        fill="none"
-        strokeWidth="2"
-      >
-        <circle cx="60" cy="60" r="58" className="stroke-brand-blush" />
-        <circle cx="60" cy="60" r="38" className="stroke-brand-blush" />
-      </svg>
+      <ArcMotif className="-top-12 -right-12 size-[10rem]" />
       <div className="relative">{children}</div>
     </div>
   );
