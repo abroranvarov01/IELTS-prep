@@ -13,7 +13,6 @@ import {
   type ReadingSession,
   type ReadingTest,
   type StorageSnapshot,
-  commitFinishedSession,
   deviceHistory,
   deviceStorage,
   loadSessions,
@@ -22,8 +21,8 @@ import {
   settleStoredSessions,
   storageSnapshot,
 } from "@/entities/reading";
-import { useRouter } from "@/shared/i18n/navigation";
 import { type Sessions, screenReducer } from "../model/screen-state";
+import { useCommitFinished } from "./use-commit-finished";
 
 /** What the test screen shows, from the first render to its results. */
 export type ReadingScreenState =
@@ -65,7 +64,6 @@ export function useReadingSession(test: ReadingTest): ReadingScreenState {
   );
   const [state, dispatch] = useReducer(screenReducer, {});
   const [hasResults, setHasResults] = useState(false);
-  const router = useRouter();
   // Settling the device on load; finishing waits for it (see below).
   const settled = useRef<Promise<void>>(null);
   const sessions = stored && (state.local ?? stored);
@@ -113,33 +111,7 @@ export function useReadingSession(test: ReadingTest): ReadingScreenState {
     if (changed) saveSession(deviceStorage(), changed);
   }, [state.local]);
 
-  // The one way out of a finished session: after the device has settled, so
-  // that settling and finishing never commit side by side, it is committed
-  // (its localStorage copy is removed only after a durable commit), and its
-  // results page replaces the test screen. A commit that fails leaves the
-  // finished session in localStorage, where the results page finds it and
-  // says that it is not saved (ADR-0009 §4, §9).
-  useEffect(() => {
-    if (!finished) return;
-    let active = true;
-    (settled.current ?? Promise.resolve())
-      .then(() => deviceHistory())
-      .then((history) =>
-        commitFinishedSession(
-          deviceStorage(),
-          history,
-          test,
-          finished,
-          Date.now(),
-        ),
-      )
-      .finally(() => {
-        if (active) router.replace(resultsHref(test.id, finished.sessionId));
-      });
-    return () => {
-      active = false;
-    };
-  }, [finished, test, router]);
+  useCommitFinished(test, finished, settled);
 
   // The Exam clock: a tick at once and every second lets the session finish
   // at 0:00, also when the time ran out while the user was away. A tick
@@ -204,8 +176,4 @@ function storedSessions(snapshot: StorageSnapshot): Sessions {
   return session.status === "inProgress"
     ? { current: session }
     : { finished: session };
-}
-
-function resultsHref(testId: string, attemptId: string) {
-  return `/reading/${testId}/results?attempt=${encodeURIComponent(attemptId)}`;
 }

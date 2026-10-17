@@ -26,8 +26,14 @@ export {
   apply,
   dueWarning,
   remainingMs,
+  sessionNumbers,
   startSession,
 } from "./model/session";
+export {
+  type RetryProblem,
+  retryQuestions,
+  validateRetry,
+} from "./model/retry";
 export {
   type OptionMark,
   SCORING_RULES_VERSION,

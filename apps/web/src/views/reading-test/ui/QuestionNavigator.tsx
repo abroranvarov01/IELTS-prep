@@ -24,6 +24,8 @@ export function QuestionNavigator({
         const numbers = units
           .filter((unit) => unit.passageNumber === passage.number)
           .flatMap((unit) => unit.numbers);
+        // A retry may leave a passage without questions.
+        if (numbers.length === 0) return null;
         return (
           <section key={passage.id} aria-labelledby={`navigator-${passage.id}`}>
             <h3

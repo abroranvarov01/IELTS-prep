@@ -218,7 +218,8 @@
         "start": "Start the test"
       },
       "oldVersion": "This test has changed since you took it, so a detailed review is not available.",
-      "cannotCheck": "This test has changed since you took it, so your answers can't be checked."
+      "cannotCheck": "This test has changed since you took it, so your answers can't be checked.",
+      "tryAgain": "{count, plural, one {Try # question again: not correct or no answer} other {Try # questions again: not correct or no answer}}"
     },
     "lastResults": "See your last results",
     "review": {
@@ -267,6 +268,17 @@
       "wordLimit": "Your answer has more words than the instruction allows.",
       "notFromPassage": "Your answer uses a word that is not in the passage. This task asks for words from the passage.",
       "timeUp": "This question had no answer when the time ran out."
+    },
+    "retry": {
+      "progress": "{current} of {total} to practise",
+      "title": "Your retry",
+      "score": "{score} of {total} now correct",
+      "honest": "These are questions you have attempted before. This practice result is not an independent measure of your level.",
+      "backToResults": "Back to your test results",
+      "unavailable": "This practice can't be started",
+      "sourceMissing": "The attempt these questions came from is no longer on this device.",
+      "sourceOldVersion": "This test has changed since that attempt, so its questions can't be practised again.",
+      "notAllowed": "These questions can't be practised from that attempt."
     }
   },
   "skills": {

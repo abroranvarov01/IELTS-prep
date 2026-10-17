@@ -1,4 +1,4 @@
-import type { ReadingTest } from "./content";
+import { QUESTION_COUNT, type ReadingTest } from "./content";
 import { type QuestionUnit, questionUnits, unitOf } from "./units";
 
 export type Mode = "practice" | "exam";
@@ -55,26 +55,48 @@ export type ReadingEvent =
 /** At most this many evidence sentences per question (owner, M4-09). */
 export const MAX_PINS = 3;
 
+/**
+ * A new session. With `retry`, a Practice session of those whole units only
+ * (ADR-0009 §8), starting at the first of them with every answer empty.
+ */
 export function startSession(
   test: ReadingTest,
   mode: Mode,
   now: number,
   sessionId: string,
+  retry?: { of: string; questions: number[] },
 ): ReadingSession {
+  const first = retry ? Math.min(...retry.questions) : 1;
   return {
     sessionId,
     testId: test.id,
     testVersion: test.version,
-    mode,
+    mode: retry ? "practice" : mode,
     status: "inProgress",
     startedAt: now,
-    currentQuestion: 1,
+    currentQuestion: first,
     answers: {},
     flagged: [],
     highlights: [],
     pins: {},
-    view: { sheet: "partial", passage: 1, scroll: {} },
+    view: {
+      sheet: "partial",
+      passage: unitOf(questionUnits(test), first)?.passageNumber ?? 1,
+      scroll: {},
+    },
+    ...(retry && {
+      retry: { of: retry.of, questions: [...retry.questions] },
+    }),
   };
+}
+
+/** The question numbers a session works on: a retry's units, otherwise all of them. */
+export function sessionNumbers(
+  session: Pick<ReadingSession, "retry">,
+): number[] {
+  return session.retry
+    ? [...session.retry.questions].sort((a, b) => a - b)
+    : Array.from({ length: QUESTION_COUNT }, (_, i) => i + 1);
 }
 
 /** Exam Mode: time left in milliseconds, never below 0. Practice has no clock. */
@@ -117,6 +139,13 @@ export function apply(
   if (timed.status === "finished" || event.type === "tick") return timed;
 
   const units = questionUnits(test);
+  // A retry moves, answers and pins only within its own units.
+  if (
+    "number" in event &&
+    timed.retry &&
+    !timed.retry.questions.includes(event.number)
+  )
+    return timed;
   switch (event.type) {
     case "answer": {
       const unit = unitOf(units, event.number);

@@ -104,6 +104,8 @@ export function QuestionColumn({
       <div className="flex max-w-column flex-col gap-12">
         {passage.questionGroups.map((group) => {
           const groupUnits = units.filter((unit) => unit.group.id === group.id);
+          // A retry may leave a group without questions.
+          if (groupUnits.length === 0) return null;
           const isShared = hasGroupText(group);
           return (
             <section key={group.id} aria-labelledby={`group-${group.id}`}>

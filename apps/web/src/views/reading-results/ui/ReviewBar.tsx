@@ -45,6 +45,8 @@ export function ReviewBar({
         const shown = all.filter(
           (card) => card.unit.passageNumber === passage.number,
         );
+        // A retry may leave a passage without questions.
+        if (shown.length === 0) return null;
         const first = shown[0]?.unit.numbers[0] ?? 1;
         if (passage.number !== onScreen)
           return (

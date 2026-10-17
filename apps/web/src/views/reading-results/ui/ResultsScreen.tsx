@@ -8,6 +8,7 @@ import {
   type ReadingTest,
   type ResultRecord,
   positionCounts,
+  retryQuestions,
   reviewOffer,
   unitOutcomes,
 } from "@/entities/reading";
@@ -96,6 +97,11 @@ export function ResultsScreen({
     );
 
   const { attempt } = loaded;
+  // A retry is shown on its own terms: out of its own questions, never out
+  // of 40 and never with the test's score (READING_EXPERIENCE.md, Targeted
+  // practice).
+  const isRetry = attempt.kind === "retry";
+  const title = isRetry ? t("retry.title") : t("results.title");
   const meta = (
     <p className="mt-2 text-meta text-text-secondary">
       <span lang="en">{test.title}</span> · {t(`mode.${attempt.mode}`)}
@@ -103,7 +109,7 @@ export function ResultsScreen({
   );
   const score = (record: ResultRecord) => (
     <p className="mt-6 text-heading-1 font-extrabold tabular-nums">
-      {t("results.score", {
+      {t(isRetry ? "retry.score" : "results.score", {
         score: record.score.marks,
         total: record.score.positions,
       })}
@@ -113,7 +119,7 @@ export function ResultsScreen({
   if (loaded.kind === "earlierVersion")
     return (
       <div className="mx-auto max-w-column py-8">
-        {heading(t("results.title"), attempt.finishReason === "timeUp")}
+        {heading(title, attempt.finishReason === "timeUp")}
         {meta}
         {loaded.record && score(loaded.record)}
         <Note>
@@ -135,31 +141,37 @@ export function ResultsScreen({
     answers: t("results.reviewAll"),
   }[offer];
   const reviewHref = `/reading/${test.id}/review?attempt=${encodeURIComponent(attempt.id)}&set=${offer === "answers" ? "all" : "mistakes"}`;
+  // Every unit not fully correct or unanswered, whole and once (positions).
+  const retry = isRetry ? [] : retryQuestions(test, attempt, record);
 
   return (
     <div className="mx-auto max-w-column py-8">
-      {heading(t("results.title"), attempt.finishReason === "timeUp")}
+      {heading(title, attempt.finishReason === "timeUp")}
       {meta}
       {score(record)}
-      <p className="mt-2">{t("results.honest")}</p>
-      <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-text-secondary">
-        {t.rich("results.breakdown", {
-          incorrect: counts.incorrect,
-          unanswered: counts.unanswered,
-          notCorrect: (chunks) => (
-            <span className="inline-flex items-center gap-1">
-              <OutcomeIcon outcome="incorrect" />
-              {chunks}
-            </span>
-          ),
-          noAnswer: (chunks) => (
-            <span className="inline-flex items-center gap-1">
-              <OutcomeIcon outcome="unanswered" />
-              {chunks}
-            </span>
-          ),
-        })}
+      <p className="mt-2">
+        {isRetry ? t("retry.honest") : t("results.honest")}
       </p>
+      {!isRetry && (
+        <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-text-secondary">
+          {t.rich("results.breakdown", {
+            incorrect: counts.incorrect,
+            unanswered: counts.unanswered,
+            notCorrect: (chunks) => (
+              <span className="inline-flex items-center gap-1">
+                <OutcomeIcon outcome="incorrect" />
+                {chunks}
+              </span>
+            ),
+            noAnswer: (chunks) => (
+              <span className="inline-flex items-center gap-1">
+                <OutcomeIcon outcome="unanswered" />
+                {chunks}
+              </span>
+            ),
+          })}
+        </p>
+      )}
       {attempt.importedFromM4 && <Note>{t("results.importedFromM4")}</Note>}
       {correction && (
         <Note>
@@ -175,9 +187,26 @@ export function ResultsScreen({
       <div className="mt-6">
         <PrimaryLink href={reviewHref}>{reviewLabel}</PrimaryLink>
       </div>
-      <div className="mt-8">
-        <QuietLink href={startHref}>{t("finished.again")}</QuietLink>
-      </div>
+      {isRetry ? (
+        <div className="mt-8">
+          <QuietLink
+            href={`/reading/${test.id}/results?attempt=${encodeURIComponent(attempt.retryOf ?? "")}`}
+          >
+            {t("retry.backToResults")}
+          </QuietLink>
+        </div>
+      ) : (
+        <div className="mt-8 flex flex-col gap-2">
+          {retry.length > 0 && (
+            <QuietLink
+              href={`/reading/${test.id}/retry?of=${encodeURIComponent(attempt.id)}&q=${retry.join(",")}`}
+            >
+              {t("results.tryAgain", { count: retry.length })}
+            </QuietLink>
+          )}
+          <QuietLink href={startHref}>{t("finished.again")}</QuietLink>
+        </div>
+      )}
     </div>
   );
 }

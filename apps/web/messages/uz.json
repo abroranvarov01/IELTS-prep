@@ -218,7 +218,8 @@
         "start": "Testni boshlash"
       },
       "oldVersion": "Siz topshirganingizdan keyin test oʻzgargan, shuning uchun batafsil tahlil mavjud emas.",
-      "cannotCheck": "Siz topshirganingizdan keyin test oʻzgargan, shuning uchun javoblarni tekshirib boʻlmaydi."
+      "cannotCheck": "Siz topshirganingizdan keyin test oʻzgargan, shuning uchun javoblarni tekshirib boʻlmaydi.",
+      "tryAgain": "Xato yoki javobsiz {count} ta savolga qayta javob berish"
     },
     "lastResults": "Oxirgi natijalarni koʻrish",
     "review": {
@@ -267,6 +268,17 @@
       "wordLimit": "Javobingizda topshiriq ruxsat berganidan koʻproq soʻz bor.",
       "notFromPassage": "Javobingizda matnda yoʻq soʻz bor. Bu topshiriqda matndagi soʻzlar kerak.",
       "timeUp": "Vaqt tugaganda bu savolga javob berilmagan edi."
+    },
+    "retry": {
+      "progress": "Takrorlash uchun {total} tadan {current}",
+      "title": "Takroriy mashq",
+      "score": "Endi {total} tadan {score} tasi toʻgʻri",
+      "honest": "Bu savollarni avval ishlab koʻrgansiz. Bu mashq natijasi darajangizning mustaqil oʻlchovi emas.",
+      "backToResults": "Test natijalariga qaytish",
+      "unavailable": "Bu mashqni boshlab boʻlmaydi",
+      "sourceMissing": "Bu savollar olingan urinish endi bu qurilmada yoʻq.",
+      "sourceOldVersion": "Oʻsha urinishdan keyin test oʻzgargan, shuning uchun uning savollarini qayta ishlab boʻlmaydi.",
+      "notAllowed": "Bu savollarni oʻsha urinishdan qayta ishlab boʻlmaydi."
     }
   },
   "skills": {

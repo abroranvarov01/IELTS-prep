@@ -2811,7 +2811,8 @@
       "title": "Try mistakes and unanswered questions again (retry)",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-17",
       "dependsOn": ["M5-08"],
       "goal": "A learner can answer again, without seeing the answers, the answer units of an attempt that were not fully correct or unanswered, and sees an honestly labeled result that never changes the original attempt.",
       "scope": [

@@ -18,6 +18,7 @@ import { SecondaryButton } from "@/shared/ui/SecondaryButton";
 import { BottomSheet } from "@/widgets/reading-layout";
 import { FinishConfirmation } from "./FinishConfirmation";
 import { FlagIcon, QuestionNavigator } from "./QuestionNavigator";
+import { RetryProgress } from "./RetryProgress";
 
 /** What the open sheet shows: the question, the navigator, a question's option list, or the finish confirmation. */
 type Panel = "question" | "navigator" | "options" | "finish";
@@ -164,6 +165,11 @@ export function QuestionSheet({
             <span className="text-meta text-text-secondary">
               · <FlagIcon className="inline size-3" /> {t("navigator.flagged")}
             </span>
+          )}
+          {session.retry && (
+            <div className="basis-full">
+              <RetryProgress />
+            </div>
           )}
         </div>
       }

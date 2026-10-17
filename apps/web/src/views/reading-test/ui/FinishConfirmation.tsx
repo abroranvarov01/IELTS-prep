@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
 import type { RefObject } from "react";
 import {
-  QUESTION_COUNT,
   answeredNumbers,
+  sessionNumbers,
   useReading,
 } from "@/entities/reading";
 import { PrimaryButton } from "@/shared/ui/PrimaryButton";
@@ -24,7 +24,9 @@ export function FinishConfirmation({
 }) {
   const t = useTranslations("reading");
   const { test, session } = useReading();
-  const unanswered = QUESTION_COUNT - answeredNumbers(session, test).size;
+  // A retry counts only its own questions.
+  const unanswered =
+    sessionNumbers(session).length - answeredNumbers(session, test).size;
 
   return (
     <>

@@ -25,6 +25,8 @@ export type ScreenAction =
       now: number;
       /** A new random id (ADR-0009 §3); made outside the reducer, which stays pure. */
       sessionId: string;
+      /** A retry's units (ADR-0009 §8). */
+      retry?: { of: string; questions: number[] };
       stored: Sessions;
     }
   | {
@@ -55,6 +57,7 @@ export function screenReducer(
             action.mode,
             action.now,
             action.sessionId,
+            action.retry,
           ),
         },
       };

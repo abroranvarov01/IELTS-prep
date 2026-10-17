@@ -444,7 +444,7 @@ The questions as they were put to the owner, with the options considered:
 - **Steps:** 1. Tap the link → the reading screen in Practice with only those questions (whole items: 22–23 with both choices empty), answers empty (no start screen: the mode is fixed). 2. Answer and move as in M4; "All questions" lists only these. 3. "Finish test", "Finish" → the retry's results: "Your retry", "9 of 14 now correct", "These are questions you have attempted before. This practice result is not an independent measure of your level.", the review button, "Back to your test results".
 - **Step count:** 1 to start.
 - **Empty / error states:** nothing to try again → the link is not shown. An unfinished retry of the same questions → resumed. Starting a different retry replaces an unfinished one. The source attempt missing, from an earlier content version, or the questions not allowed → "This practice can't be started" with the reason, "See your last results" and "Start the test".
-- **Languages checked:** not yet (M5-09).
+- **Languages checked:** M5-09 (2026-10-17), screenshots: ru at 320 px (the "Try … again" link, the safe state, the retry sheet), en at 360 and 1280 px; uz not yet (M5-11 pass).
 
 ### Come back to results later
 - **Steps:** 1. Open the test link → the start screen (M4) with a quiet "See your last results" under "Start", when this device has a finished attempt. 2. Tap it → the results page of the latest test attempt.

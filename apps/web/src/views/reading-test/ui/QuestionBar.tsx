@@ -9,6 +9,7 @@ import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { FINISH_TITLE_ID, FinishConfirmation } from "./FinishConfirmation";
 import { FlagIcon, NavigatorCell } from "./QuestionNavigator";
+import { RetryProgress } from "./RetryProgress";
 import { SecondaryButton } from "@/shared/ui/SecondaryButton";
 
 /**
@@ -51,6 +52,7 @@ export function QuestionBar({ goTo }: { goTo: (number: number) => void }) {
         ...test.passages.filter((p) => p.number !== session.view.passage),
       ].map((passage) => {
         const numbers = numbersOf(passage.number);
+        if (numbers.length === 0) return null;
         if (passage.number !== session.view.passage) {
           return (
             <button
@@ -91,6 +93,7 @@ export function QuestionBar({ goTo }: { goTo: (number: number) => void }) {
       })}
       {/* The current question's controls stay together at the bar's end. */}
       <div className="ms-auto flex flex-wrap items-center gap-x-2 gap-y-2">
+        <RetryProgress />
         <button
           type="button"
           aria-pressed={isFlagged}
