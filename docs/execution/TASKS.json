@@ -42,7 +42,8 @@
     {
       "id": "M5",
       "name": "Reading Review + Error Intelligence",
-      "status": "active",
+      "status": "done",
+      "completedAt": "2026-10-17",
       "goal": "As approved at M5-01 (owner, 2026-10-11): answer checking for every M4 question type with a raw practice score (no band for the uncalibrated demo test); immutable attempts with answers, pins and highlights kept on the device in write-once entries that are safe across tabs and compatible with M4 data, with result records traceable to their key revision and rules version; evidence-first review of every answer unit with pre-written explanations and 'Explain simpler' in uz/ru/en (AI drafts, reviewed by people before beta); conservatively worded repeated-mistake detection on the first attempt at a test; and retries of questions not fully correct or unanswered. Home unchanged; no runtime AI."
     },
     {
