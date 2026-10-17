@@ -431,7 +431,7 @@ The questions as they were put to the owner, with the options considered:
 - **Step count:** 1 from results to the first explanation; 3 from the last test question (finish, confirm, review).
 - **Unanswered questions** are never skipped: they are in the sequence, named on the button and shown as "No answer" (not "Not correct").
 - **Empty / error states:** all answers correct → the button reads "Review answers" and opens question 1. A question number or attempt not on this device → as above. Review of an attempt from an earlier content version → not available, with the score kept.
-- **Languages checked:** phone (M5-07, 2026-10-17): uz, ru and en at 320 px and at 200% zoom (the longest outcome "1 of 2 correct", the evidence heading, "Explain simpler" opened, the navigator), with axe. 1024 px: not yet (M5-08).
+- **Languages checked:** phone (M5-07, 2026-10-17): uz, ru and en at 320 px and at 200% zoom (the longest outcome "1 of 2 correct", the evidence heading, "Explain simpler" opened, the navigator), with axe. Desktop (M5-08, 2026-10-17): uz, ru and en at 1024 and 1280 px, with axe.
 
 ### Explain simpler
 - **Steps:** 1. "Explain simpler" under the explanation → the simpler version appears right after the button, in the interface language; the button becomes "Hide the simpler explanation".

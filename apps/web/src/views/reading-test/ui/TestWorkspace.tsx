@@ -1,13 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRef, useSyncExternalStore } from "react";
+import { useRef } from "react";
 import { useReading } from "@/entities/reading";
 import {
   PassageView,
   SentenceActions,
   usePassageMarks,
 } from "@/features/mark-passage";
+import { useIsDesktop } from "@/shared/ui/use-is-desktop";
 import { SHEET_HEIGHT } from "@/widgets/reading-layout";
 import { ExamTimer } from "./ExamTimer";
 import { QuestionBar } from "./QuestionBar";
@@ -15,15 +16,6 @@ import { QuestionColumn } from "./QuestionColumn";
 import { QuestionSheet } from "./QuestionSheet";
 import { TestBar } from "./TestBar";
 import { usePassagePosition } from "./use-passage-position";
-
-// From the approved desktop breakpoint (64rem, DESIGN_SYSTEM.md) the screen
-// is the desktop layout, a different tree from the phone's sheet.
-const DESKTOP = "(min-width: 64rem)";
-const subscribeToDesktop = (onChange: () => void) => {
-  const query = window.matchMedia(DESKTOP);
-  query.addEventListener("change", onChange);
-  return () => query.removeEventListener("change", onChange);
-};
 
 /**
  * A test in progress, laid out for the screen: on phones and tablets the
@@ -33,11 +25,7 @@ const subscribeToDesktop = (onChange: () => void) => {
 export function TestWorkspace({ canSave }: { canSave: boolean }) {
   const t = useTranslations("reading");
   const { test, session, send } = useReading();
-  const isDesktop = useSyncExternalStore(
-    subscribeToDesktop,
-    () => window.matchMedia(DESKTOP).matches,
-    () => false,
-  );
+  const isDesktop = useIsDesktop();
   // The passage scrolls in its column on desktop, with the page on phones.
   const columnRef = useRef<HTMLElement>(null);
   const passage = test.passages[session.view.passage - 1] ?? test.passages[0];

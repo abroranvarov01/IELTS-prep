@@ -8,24 +8,14 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  QUESTION_COUNT,
-  type ReadingTest,
-  type SheetState,
-} from "@/entities/reading";
+import type { ReadingTest, SheetState } from "@/entities/reading";
 import { ChevronIcon, GridIcon } from "@/shared/ui/icons";
 import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { SecondaryButton } from "@/shared/ui/SecondaryButton";
 import { BottomSheet } from "@/widgets/reading-layout";
 import type { ReviewPosition, ReviewSet } from "../model/review";
-import { OutcomeIcon } from "./OutcomeIcon";
 import { ReviewNavigator } from "./ReviewNavigator";
-
-const OUTCOME_WORD = {
-  correct: "review.correct",
-  incorrect: "review.incorrect",
-  unanswered: "review.unanswered",
-} as const;
+import { ReviewHeading } from "./ReviewParts";
 
 /**
  * The review on phones and tablets (READING_EXPERIENCE.md, Evidence-first
@@ -93,21 +83,7 @@ export function ReviewSheet({
   }, [showsNavigator, onStateChange]);
 
   if (!card) return null;
-  const { unit, outcome } = card;
-  const label =
-    unit.numbers.length > 1
-      ? t("question.range", {
-          from: unit.numbers[0] ?? 0,
-          to: unit.numbers.at(-1) ?? 0,
-        })
-      : t("question.of", { number: unit.key, total: QUESTION_COUNT });
-  const outcomeWord =
-    outcome === "partlyCorrect"
-      ? t("review.partly", {
-          correct: card.marks,
-          total: unit.numbers.length,
-        })
-      : t(OUTCOME_WORD[outcome]);
+  const { unit } = card;
 
   return (
     <BottomSheet
@@ -118,20 +94,7 @@ export function ReviewSheet({
         onStateChange(sheet);
       }}
       bodyId="question-body"
-      header={
-        <h2
-          id="question-heading"
-          ref={headingRef}
-          tabIndex={-1}
-          className="text-heading-3 font-bold focus:outline-none"
-        >
-          {label}
-          <span className="mt-1 flex items-center gap-2 text-body">
-            <OutcomeIcon outcome={outcome} />
-            {outcomeWord}
-          </span>
-        </h2>
-      }
+      header={<ReviewHeading card={card} headingRef={headingRef} />}
     >
       {isOpen && !showsNavigator && (
         // One row under the heading: the sequence's progress, then the navigator.

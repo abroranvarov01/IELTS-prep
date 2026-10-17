@@ -12,6 +12,7 @@ import type {
   SheetState,
 } from "@/entities/reading";
 import { PassageView } from "@/features/mark-passage";
+import { useIsDesktop } from "@/shared/ui/use-is-desktop";
 import { SHEET_HEIGHT } from "@/widgets/reading-layout";
 import {
   type ReviewSet,
@@ -20,14 +21,16 @@ import {
   reviewCards,
   reviewPosition,
 } from "../model/review";
+import { ReviewBar } from "./ReviewBar";
 import { ReviewCard } from "./ReviewCard";
+import { ReviewHeading } from "./ReviewParts";
 import { ReviewSheet } from "./ReviewSheet";
 
 /**
- * A checked attempt under review on phones and tablets (READING_EXPERIENCE.md,
- * Evidence-first review (M5)): the read-only passage with the attempt's
- * highlights and the current card's evidence and pins, and the card in the
- * sheet. The address (`q`, `set`) says which card is shown and is replaced on
+ * A checked attempt under review (READING_EXPERIENCE.md, Evidence-first
+ * review (M5)): the read-only passage with the attempt's highlights and the
+ * current card's evidence and pins, and the card: in the sheet on phones and
+ * tablets, in its own column with the navigator bar on desktop. The address (`q`, `set`) says which card is shown and is replaced on
  * every change, so Back leaves the review. Changing card moves focus to its
  * heading and scrolls the passage to the key's first sentence (D9).
  */
@@ -61,7 +64,10 @@ export function ReviewWorkspace({
   const entry = unit && answerKey.answers[unit.numbers[0] ?? 0];
   const passage = test.passages.find((p) => p.number === unit?.passageNumber);
   const [sheet, setSheet] = useState<SheetState>("partial");
+  const isDesktop = useIsDesktop();
   const passageRef = useRef<HTMLElement>(null);
+  // The passage scrolls in its column on desktop, with the page on phones.
+  const columnRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const shownPassage = useRef<string | undefined>(undefined);
   const firstSentence = keySentences(entry).sentenceIds[0];
@@ -82,9 +88,10 @@ export function ReviewWorkspace({
         block: "start",
         behavior: instant ? "instant" : "smooth",
       });
-    else if (shownPassage.current !== passage?.id) window.scrollTo(0, 0);
+    else if (shownPassage.current !== passage?.id)
+      (isDesktop ? columnRef.current : window)?.scrollTo(0, 0);
     shownPassage.current = passage?.id;
-  }, [unit?.key, firstSentence, passage?.id]);
+  }, [unit?.key, firstSentence, passage?.id, isDesktop]);
 
   if (!card || !unit || !passage) return null;
 
@@ -98,7 +105,7 @@ export function ReviewWorkspace({
   };
   // "Show in passage" lowers a raised sheet, then moves to the sentence.
   const showSentence = (id: string) => {
-    if (sheet === "expanded") setSheet("partial");
+    if (!isDesktop && sheet === "expanded") setSheet("partial");
     const sentence = passageRef.current?.querySelector<HTMLElement>(
       `[data-sentence="${id}"]`,
     );
@@ -108,39 +115,99 @@ export function ReviewWorkspace({
   const evidence = keySentences(entry);
   const pins = pinComparison(unit, attempt, entry);
 
+  const skipLink = (
+    <a
+      href="#question-heading"
+      className="sr-only focus:not-sr-only focus:block focus:px-gutter focus:py-3 focus:font-bold focus:underline"
+    >
+      {t("skipToQuestion")}
+    </a>
+  );
+  const passageArea = (
+    <>
+      {notice}
+      <PassageView
+        ref={passageRef}
+        passage={passage}
+        bottomSpace={isDesktop ? "2rem" : `calc(${SHEET_HEIGHT[sheet]} + 1rem)`}
+        highlights={new Set(attempt.highlights ?? [])}
+        selected={null}
+        focusable={passage.paragraphs[0]?.sentences[0]?.id ?? ""}
+        pins={
+          pins
+            ? {
+                number: unit.numbers[0] ?? 0,
+                sentenceIds: new Set(pins.sentenceIds),
+              }
+            : null
+        }
+        readOnly
+        evidence={{
+          number: unit.numbers[0] ?? 0,
+          kind: evidence.kind,
+          sentenceIds: new Set(evidence.sentenceIds),
+        }}
+      />
+    </>
+  );
+  const reviewCard = (
+    <ReviewCard
+      test={test}
+      unit={unit}
+      outcome={card.outcome}
+      attempt={attempt}
+      entry={entry}
+      signals={record.signals[unit.key] ?? []}
+      explanation={explanations?.items[unit.key]}
+      onShowSentence={showSentence}
+    />
+  );
+
+  // Desktop: the passage and the current card side by side, each scrolling
+  // on its own, the navigator bar along the bottom (DESIGN_SYSTEM.md, M5:
+  // review on phone, tablet and desktop).
+  if (isDesktop)
+    return (
+      <div className="flex h-dvh flex-col">
+        {skipLink}
+        {bar(passage.number)}
+        <div className="grid min-h-[0] flex-1 grid-cols-[55fr_45fr] grid-rows-[minmax(0,1fr)]">
+          <main
+            id="main"
+            ref={columnRef}
+            className="relative overflow-y-auto px-gutter"
+          >
+            {passageArea}
+          </main>
+          {/* A new element per card, so each one starts at its top. */}
+          <section
+            key={unit.key}
+            aria-label={t("sheet.label")}
+            className="overflow-y-auto border-s border-border-subtle px-8 py-6"
+          >
+            <div className="max-w-column">
+              <ReviewHeading card={card} headingRef={headingRef} />
+              {position.set === "mistakes" && (
+                <p className="mt-1 text-meta text-text-secondary">
+                  {t("review.toReview", {
+                    current: position.index + 1,
+                    total: position.cards.length,
+                  })}
+                </p>
+              )}
+              <div className="mt-6">{reviewCard}</div>
+            </div>
+          </section>
+        </div>
+        <ReviewBar test={test} position={position} onGo={go} />
+      </div>
+    );
   return (
     <>
-      <a
-        href="#question-heading"
-        className="sr-only focus:not-sr-only focus:block focus:px-gutter focus:py-3 focus:font-bold focus:underline"
-      >
-        {t("skipToQuestion")}
-      </a>
+      {skipLink}
       {bar(passage.number)}
       <main id="main" className="px-gutter">
-        {notice}
-        <PassageView
-          ref={passageRef}
-          passage={passage}
-          bottomSpace={`calc(${SHEET_HEIGHT[sheet]} + 1rem)`}
-          highlights={new Set(attempt.highlights ?? [])}
-          selected={null}
-          focusable={passage.paragraphs[0]?.sentences[0]?.id ?? ""}
-          pins={
-            pins
-              ? {
-                  number: unit.numbers[0] ?? 0,
-                  sentenceIds: new Set(pins.sentenceIds),
-                }
-              : null
-          }
-          readOnly
-          evidence={{
-            number: unit.numbers[0] ?? 0,
-            kind: evidence.kind,
-            sentenceIds: new Set(evidence.sentenceIds),
-          }}
-        />
+        {passageArea}
       </main>
       <ReviewSheet
         test={test}
@@ -150,16 +217,7 @@ export function ReviewWorkspace({
         onGo={go}
         headingRef={headingRef}
       >
-        <ReviewCard
-          test={test}
-          unit={unit}
-          outcome={card.outcome}
-          attempt={attempt}
-          entry={entry}
-          signals={record.signals[unit.key] ?? []}
-          explanation={explanations?.items[unit.key]}
-          onShowSentence={showSentence}
-        />
+        {reviewCard}
       </ReviewSheet>
     </>
   );

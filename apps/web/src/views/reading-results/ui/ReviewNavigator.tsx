@@ -1,16 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { ReadingTest, UnitOutcome } from "@/entities/reading";
+import type { ReadingTest } from "@/entities/reading";
 import type { ReviewCard } from "../model/review";
-import { OutcomeIcon } from "./OutcomeIcon";
-
-const STATE_WORD = {
-  correct: "navigator.correct",
-  partlyCorrect: "navigator.partly",
-  incorrect: "navigator.incorrect",
-  unanswered: "navigator.unanswered",
-} as const satisfies Record<UnitOutcome, string>;
+import { ReviewCell } from "./ReviewParts";
 
 /**
  * Every question of the attempt, grouped by passage, each with its unit's
@@ -49,42 +42,18 @@ export function ReviewNavigator({
             </h3>
             {/* 44 px cells (DESIGN_SYSTEM.md, M4: question navigator). */}
             <ul className="mt-3 grid grid-cols-[repeat(auto-fill,2.75rem)] gap-1">
-              {shown.flatMap(({ unit, outcome }) => {
-                const isCurrent = unit === current.unit;
-                const states = [
-                  t(STATE_WORD[outcome]),
-                  ...(isCurrent ? [t("navigator.current")] : []),
-                ].join(", ");
-                const name =
-                  unit.numbers.length > 1
-                    ? t("navigator.itemRange", {
-                        from: unit.numbers[0] ?? 0,
-                        to: unit.numbers.at(-1) ?? 0,
-                        states,
-                      })
-                    : t("navigator.item", { number: unit.key, states });
-                return unit.numbers.map((number) => (
-                  // The badge sits on the cell's corner, outside the button.
-                  <li key={number} className="relative pb-2">
-                    <button
-                      type="button"
-                      aria-label={name}
-                      aria-current={isCurrent ? "true" : undefined}
-                      onClick={() => onChoose(number)}
-                      className={`relative flex size-[2.75rem] items-center justify-center rounded-sm border bg-surface-base font-bold tabular-nums ${
-                        outcome === "unanswered"
-                          ? "border-border-control"
-                          : "border-ink"
-                      } ${isCurrent ? "after:absolute after:-bottom-[7px] after:inset-x-[0] after:h-[3px] after:bg-ink" : ""}`}
-                    >
-                      {number}
-                    </button>
-                    <span className="pointer-events-none absolute -top-1 -right-1 rounded-full bg-surface-base">
-                      <OutcomeIcon outcome={outcome} size={16} />
-                    </span>
+              {shown.flatMap((card) =>
+                card.unit.numbers.map((number) => (
+                  <li key={number} className="pb-2">
+                    <ReviewCell
+                      number={number}
+                      card={card}
+                      isCurrent={card.unit === current.unit}
+                      onChoose={onChoose}
+                    />
                   </li>
-                ));
-              })}
+                )),
+              )}
             </ul>
           </section>
         );

@@ -236,7 +236,12 @@ describe("ReviewCard", () => {
 describe("ReviewWorkspace", () => {
   // jsdom has no layout: scrolling and media queries are stubbed.
   beforeEach(() => {
-    vi.stubGlobal("matchMedia", () => ({ matches: true }));
+    // A phone window with reduced motion: the review in its sheet.
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: query.includes("reduced-motion"),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }));
     vi.stubGlobal("scrollTo", vi.fn());
     Element.prototype.scrollIntoView = vi.fn();
   });

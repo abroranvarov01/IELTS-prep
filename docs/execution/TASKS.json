@@ -2770,7 +2770,8 @@
       "title": "Review on desktop",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-17",
       "dependsOn": ["M5-07"],
       "goal": "Review uses the desktop two-column layout from 1024 px, as approved.",
       "scope": [
