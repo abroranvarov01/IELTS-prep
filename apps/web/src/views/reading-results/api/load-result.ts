@@ -1,10 +1,12 @@
 import {
   type AnswerKey,
   type Correction,
+  type PatternsView,
   type ReadingAttempt,
   type ReadingTest,
   type ResultRecord,
   SCORING_RULES_VERSION,
+  UNKNOWN_FIRST_TRY,
   attemptFromSession,
   checkAttempt,
   currentResult,
@@ -12,6 +14,7 @@ import {
   deviceStorage,
   latestRecord,
   loadSessions,
+  patternsView,
   recordResult,
   settleStoredSessions,
 } from "@/entities/reading";
@@ -26,6 +29,8 @@ export type Loaded =
       correction?: Correction;
       /** False when the result lives only in this tab (ADR-0009 §9). */
       saved: boolean;
+      /** "Mistakes that repeated": test attempts only, never a retry. */
+      patterns?: PatternsView;
     }
   | { kind: "earlierVersion"; attempt: ReadingAttempt; record?: ResultRecord };
 
@@ -80,18 +85,75 @@ export async function loadResult(
     ? await recordResult(history, test, key, attempt, now).catch(() => [])
     : [];
   const shown = currentResult(records, pair);
-  if (shown)
-    return { kind: "result", attempt, ...shown, saved: history.persistent };
   // Not stored: checked for this tab only.
-  return {
-    kind: "result",
-    attempt,
+  const result = shown ?? {
     record: {
       attemptId: attempt.id,
       ...pair,
       checkedAt: now,
       ...checkAttempt(test, key, attempt),
     },
-    saved: false,
   };
+  return {
+    kind: "result",
+    attempt,
+    ...result,
+    saved: Boolean(shown) && history.persistent,
+    ...(attempt.kind === "test" && {
+      patterns: await firstTryPatterns(
+        history,
+        test,
+        key,
+        attempt,
+        result.record,
+        all,
+        now,
+      ),
+    }),
+  };
+}
+
+/**
+ * Repeated mistakes come from the test's first try only (ADR-0009 §5, §7):
+ * its marker, and its record for the current pair, written first if needed.
+ */
+async function firstTryPatterns(
+  history: Awaited<ReturnType<typeof deviceHistory>>,
+  test: ReadingTest,
+  key: AnswerKey,
+  shown: ReadingAttempt,
+  shownRecord: ResultRecord,
+  attempts: ReadingAttempt[],
+  now: number,
+): Promise<PatternsView> {
+  const firstTry = await history.read(test).then(
+    (h) => h.firstTry,
+    () => undefined,
+  );
+  if (!firstTry || firstTry === UNKNOWN_FIRST_TRY)
+    return patternsView(test, key, shown.id, undefined);
+  if (firstTry === shown.id)
+    return patternsView(test, key, shown.id, {
+      attempt: shown,
+      record: shownRecord,
+    });
+  const first = attempts.find((a) => a.id === firstTry);
+  if (!first || first.testVersion !== test.version)
+    return patternsView(test, key, shown.id, first && { attempt: first });
+  const pair = {
+    keyRevision: key.revision,
+    rulesVersion: SCORING_RULES_VERSION,
+  };
+  const records = await recordResult(history, test, key, first, now).catch(
+    () => [],
+  );
+  return patternsView(test, key, shown.id, {
+    attempt: first,
+    record: currentResult(records, pair)?.record ?? {
+      attemptId: first.id,
+      ...pair,
+      checkedAt: now,
+      ...checkAttempt(test, key, first),
+    },
+  });
 }

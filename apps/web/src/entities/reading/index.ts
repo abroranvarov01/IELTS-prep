@@ -45,8 +45,15 @@ export {
 export {
   type ReadingAttempt,
   type ResultRecord,
+  UNKNOWN_FIRST_TRY,
   attemptFromSession,
 } from "./model/attempts";
+export {
+  type Pattern,
+  type PatternCategory,
+  type PatternsView,
+  patternsView,
+} from "./model/patterns";
 export {
   type Correction,
   currentResult,

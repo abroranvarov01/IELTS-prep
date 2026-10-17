@@ -2858,7 +2858,8 @@
       "title": "Error Intelligence: repeated mistakes",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-17",
       "dependsOn": ["M5-09"],
       "goal": "The results page shows repeated mistakes only when the first attempt's evidence meets the approved heuristic, describes what happened without guessing why, and links to practising those questions again.",
       "scope": [

@@ -279,6 +279,56 @@
       "sourceMissing": "The attempt these questions came from is no longer on this device.",
       "sourceOldVersion": "This test has changed since that attempt, so its questions can't be practised again.",
       "notAllowed": "These questions can't be practised from that attempt."
+    },
+    "patterns": {
+      "title": "Mistakes that repeated",
+      "scopeThisTry": "In this attempt at this test. One test is not enough to show a lasting weakness.",
+      "scopeFirstTry": "From your first attempt at this test on this device. Later attempts repeat questions you have worked on before, so they are not used. One test is not enough to show a lasting weakness.",
+      "noneThisTry": "Not enough evidence to show a repeated pattern in this attempt.",
+      "noneFirstTry": "Not enough evidence to show a repeated pattern in your first attempt at this test.",
+      "unknownFirstTry": "We can't tell which was your first try at this test on this device, so we don't look for repeated mistakes in it.",
+      "unavailable": "Repeated mistakes can't be shown because this test has changed since your first attempt.",
+      "practise": "Practise these questions again",
+      "ngFalse": {
+        "title": "<en>NOT GIVEN</en> mixed up with <en>FALSE</en> or <en>NO</en>",
+        "count": "{count} of {total} questions whose answer was <en>NOT GIVEN</en>, <en>FALSE</en> or <en>NO</en> (questions {numbers})",
+        "tip": "<en>FALSE</en> or <en>NO</en> means the passage, or the writer's view, contradicts the statement. <en>NOT GIVEN</en> means it neither agrees nor contradicts: the information or the writer's view is not there. Before choosing <en>FALSE</en> or <en>NO</en>, find what contradicts the statement."
+      },
+      "ngTrue": {
+        "title": "<en>NOT GIVEN</en> mixed up with <en>TRUE</en> or <en>YES</en>",
+        "count": "{count} of {total} questions whose answer was <en>NOT GIVEN</en>, <en>TRUE</en> or <en>YES</en> (questions {numbers})",
+        "tip": "<en>TRUE</en> or <en>YES</en> needs the passage, or the writer's view, to agree with the statement, often in other words. If nothing agrees and nothing contradicts, the answer is <en>NOT GIVEN</en>."
+      },
+      "oneLetterAway": {
+        "title": "Possible spelling issues",
+        "count": "{count} of {total} typed answers were one letter away from an accepted answer (questions {numbers})",
+        "tip": "One letter away may be a spelling slip or a different word. In the test, a misspelt answer loses the mark, so copy words from the passage letter by letter."
+      },
+      "wordLimit": {
+        "title": "Too many words",
+        "count": "{count} of {total} typed answers had more words than allowed (questions {numbers})",
+        "tip": "In the test, an answer with more words than allowed loses the mark. Check the limit in the instruction, for example <en>NO MORE THAN TWO WORDS</en>, and write only the words that answer the question."
+      },
+      "notFromPassage": {
+        "title": "Words not from the passage",
+        "count": "{count} of {total} typed answers used a word that is not in the passage (questions {numbers})",
+        "tip": "When the instruction says <en>from the passage</en>, write the passage's own words, even if you know a synonym."
+      },
+      "pins": {
+        "title": "Pins differed from the cited evidence",
+        "count": "{count} of {total} questions with pinned sentences: none of the pins was a sentence the key cites (questions {numbers})",
+        "tip": "Compare your pinned sentence with the sentence the review cites. Look for the same idea in the passage, not only the same words."
+      },
+      "paraphrase": {
+        "title": "Questions that use other words",
+        "count": "{count} of {total} questions that say the passage's idea in other words were not fully correct (questions {numbers})",
+        "tip": "Look for the same idea, not the same words. In the review, compare the question's words with the evidence."
+      },
+      "qualifier": {
+        "title": "Questions that turn on a small word",
+        "count": "{count} of {total} questions that turn on a word like <en>all</en>, <en>most</en> or <en>only</en> were not fully correct (questions {numbers})",
+        "tip": "Check words such as <en>all</en>, <en>most</en>, <en>some</en>, <en>only</en>, <en>always</en> and <en>never</en> in both the question and the passage."
+      }
     }
   },
   "skills": {

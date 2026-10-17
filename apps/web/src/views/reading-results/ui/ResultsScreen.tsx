@@ -17,6 +17,7 @@ import { QuietLink } from "@/shared/ui/QuietLink";
 import { type Loaded, loadResult } from "../api/load-result";
 import { InfoIcon } from "./InfoIcon";
 import { OutcomeIcon } from "./OutcomeIcon";
+import { RepeatedMistakes } from "./RepeatedMistakes";
 
 /** A short note on the result (DESIGN_SYSTEM.md, M5 results page). */
 function Note({ children }: { children: ReactNode }) {
@@ -187,6 +188,9 @@ export function ResultsScreen({
       <div className="mt-6">
         <PrimaryLink href={reviewHref}>{reviewLabel}</PrimaryLink>
       </div>
+      {loaded.patterns && (
+        <RepeatedMistakes testId={test.id} view={loaded.patterns} />
+      )}
       {isRetry ? (
         <div className="mt-8">
           <QuietLink

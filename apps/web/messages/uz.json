@@ -279,6 +279,56 @@
       "sourceMissing": "Bu savollar olingan urinish endi bu qurilmada yoʻq.",
       "sourceOldVersion": "Oʻsha urinishdan keyin test oʻzgargan, shuning uchun uning savollarini qayta ishlab boʻlmaydi.",
       "notAllowed": "Bu savollarni oʻsha urinishdan qayta ishlab boʻlmaydi."
+    },
+    "patterns": {
+      "title": "Takrorlangan xatolar",
+      "scopeThisTry": "Bu testdagi shu urinishda. Doimiy zaif tomonni koʻrsatish uchun bitta test yetarli emas.",
+      "scopeFirstTry": "Bu qurilmadagi bu testning birinchi urinishingiz boʻyicha. Keyingi urinishlar avval ishlagan savollaringizni takrorlaydi, shuning uchun hisobga olinmaydi. Doimiy zaif tomonni koʻrsatish uchun bitta test yetarli emas.",
+      "noneThisTry": "Bu urinishda takrorlanuvchi qonuniyatni koʻrsatish uchun maʼlumot yetarli emas.",
+      "noneFirstTry": "Bu testdagi birinchi urinishingizda takrorlanuvchi qonuniyatni koʻrsatish uchun maʼlumot yetarli emas.",
+      "unknownFirstTry": "Bu qurilmada bu testning qaysi urinishi birinchi boʻlganini bilmaymiz, shuning uchun undagi takrorlangan xatolarni qidirmaymiz.",
+      "unavailable": "Takrorlangan xatolarni koʻrsatib boʻlmaydi: birinchi urinishingizdan keyin test oʻzgargan.",
+      "practise": "Bu savollarni qayta ishlash",
+      "ngFalse": {
+        "title": "<en>NOT GIVEN</en> bilan <en>FALSE</en> yoki <en>NO</en> adashtirilgan",
+        "count": "Javobi <en>NOT GIVEN</en>, <en>FALSE</en> yoki <en>NO</en> boʻlgan {total} ta savoldan {count} tasi ({numbers}-savollar)",
+        "tip": "<en>FALSE</en> yoki <en>NO</en>: matn yoki muallif fikri bu fikrga zid. <en>NOT GIVEN</en>: matn uni tasdiqlamaydi ham, rad etmaydi ham, bunday maʼlumot yoki muallif fikri yoʻq. <en>FALSE</en> yoki <en>NO</en> ni tanlashdan oldin fikrga zid narsani toping."
+      },
+      "ngTrue": {
+        "title": "<en>NOT GIVEN</en> bilan <en>TRUE</en> yoki <en>YES</en> adashtirilgan",
+        "count": "Javobi <en>NOT GIVEN</en>, <en>TRUE</en> yoki <en>YES</en> boʻlgan {total} ta savoldan {count} tasi ({numbers}-savollar)",
+        "tip": "<en>TRUE</en> yoki <en>YES</en> uchun matn yoki muallif fikri bu fikrga mos boʻlishi kerak, koʻpincha boshqa soʻzlar bilan. Hech narsa tasdiqlamasa va zid boʻlmasa, javob: <en>NOT GIVEN</en>."
+      },
+      "oneLetterAway": {
+        "title": "Ehtimoliy imlo xatolari",
+        "count": "Yozilgan {total} ta javobdan {count} tasi qabul qilingan javobdan bitta harf bilan farq qildi ({numbers}-savollar)",
+        "tip": "Bitta harf farqi imlo xatosi ham, boshqa soʻz ham boʻlishi mumkin. Imtihonda xato yozilgan javob uchun ball berilmaydi, shuning uchun soʻzlarni matndan harfma-harf koʻchiring."
+      },
+      "wordLimit": {
+        "title": "Soʻzlar juda koʻp",
+        "count": "Yozilgan {total} ta javobdan {count} tasida ruxsat etilganidan koʻp soʻz bor edi ({numbers}-savollar)",
+        "tip": "Imtihonda ruxsat etilganidan koʻp soʻzli javob uchun ball berilmaydi. Topshiriqdagi cheklovni tekshiring, masalan <en>NO MORE THAN TWO WORDS</en>, va faqat savolga javob boʻladigan soʻzlarni yozing."
+      },
+      "notFromPassage": {
+        "title": "Matnda yoʻq soʻzlar",
+        "count": "Yozilgan {total} ta javobdan {count} tasida matnda yoʻq soʻz bor edi ({numbers}-savollar)",
+        "tip": "Topshiriqda <en>from the passage</en> deyilgan boʻlsa, sinonimni bilsangiz ham, matndagi soʻzlarni yozing."
+      },
+      "pins": {
+        "title": "Biriktirilgan gaplar kalitdagi dalilga mos kelmadi",
+        "count": "Gap biriktirilgan {total} ta savoldan {count} tasida biriktirilgan gaplarning hech biri kalitda koʻrsatilmagan ({numbers}-savollar)",
+        "tip": "Biriktirgan gapingizni tahlilda keltirilgan gap bilan solishtiring. Matndan faqat oʻsha soʻzlarni emas, oʻsha fikrni qidiring."
+      },
+      "paraphrase": {
+        "title": "Boshqa soʻzlar bilan berilgan savollar",
+        "count": "Matndagi fikr boshqa soʻzlar bilan berilgan {total} ta savoldan {count} tasi toʻliq toʻgʻri emas ({numbers}-savollar)",
+        "tip": "Bir xil soʻzlarni emas, bir xil fikrni qidiring. Tahlilda savoldagi soʻzlarni dalil bilan solishtiring."
+      },
+      "qualifier": {
+        "title": "Bitta kichik soʻzga bogʻliq savollar",
+        "count": "<en>all</en>, <en>most</en> yoki <en>only</en> kabi soʻzga bogʻliq {total} ta savoldan {count} tasi toʻliq toʻgʻri emas ({numbers}-savollar)",
+        "tip": "Savolda ham, matnda ham <en>all</en>, <en>most</en>, <en>some</en>, <en>only</en>, <en>always</en> va <en>never</en> kabi soʻzlarni tekshiring."
+      }
     }
   },
   "skills": {
