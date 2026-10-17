@@ -6,10 +6,10 @@ paths:
 
 # Visual implementation
 
-Visual direction: docs/design/DESIGN_CONSTITUTION.md. Token values: docs/design/DESIGN_SYSTEM.md. Forbidden patterns: docs/design/UI_ANTI_PATTERNS.md. Approved reference screenshots: docs/design/references/. Implementation and verification workflow: the `visual-fidelity` skill.
+Visual direction: docs/design/DESIGN_CONSTITUTION.md. Token values: docs/design/DESIGN_SYSTEM.md. Forbidden patterns: docs/design/UI_ANTI_PATTERNS.md. Approved reference screenshots: docs/design/references/. Implementation and verification workflow: the `product-design` skill. When checks run: docs/engineering/DEFINITION_OF_DONE.md § Validation by risk.
 
 - **Visual authority is local:** owner-approved screenshots in docs/design/references/ and the design docs. Existing code is not a reference by itself. No external design tool (Figma or any other) is required, and none may block work.
-- **User-facing UI is done only after the `visual-fidelity` screenshot review.** Passing lint, types, tests and axe is not enough.
+- **User-facing UI is done only after the `product-design` screenshot review.** Passing lint, types, tests and axe is not enough.
 - **Follow the token policy** in docs/design/DESIGN_SYSTEM.md § Token policy. Raw colors are never allowed (`bg-[#e11]`). Do not bypass the type, spacing, or radius scales with off-scale arbitrary values (`text-[13px]`). If a scale lacks a value you need, propose a change. Do not inline it.
 - **Red marks the primary action and key brand moments.** One primary action per important screen. Skill colors are for recognition, never for primary actions.
 - **Hierarchy comes from type size and weight first**, then spacing, and only then surfaces, borders, or shadows.

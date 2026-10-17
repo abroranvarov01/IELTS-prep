@@ -8,7 +8,7 @@ import uz from "../../messages/uz.json";
 import { routing } from "@/shared/i18n/routing";
 import { fontVariables } from "./fonts";
 import "./globals.css";
-import { StatusMessage } from "@/shared/ui/StatusMessage";
+import { RetryPicture, StatusMessage } from "@/shared/ui/StatusMessage";
 
 const catalogs = { uz, ru, en };
 
@@ -31,6 +31,7 @@ export default function GlobalError({ retry }: { retry: () => void }) {
             <StatusMessage
               title={t("error.title")}
               body={t("error.body")}
+              picture={(size) => <RetryPicture size={size} />}
               home={{ href: `/${locale}`, label: t("common.goHome") }}
               retry={{ label: t("error.retry"), onRetry: retry }}
             />

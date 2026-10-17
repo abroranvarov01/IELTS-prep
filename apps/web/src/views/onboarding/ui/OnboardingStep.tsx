@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
-import { ArcMotif } from "@/shared/ui/ArcMotif";
+import { PictureLayout } from "@/shared/ui/PictureLayout";
 
 const TOTAL_STEPS = 3;
 
@@ -8,54 +8,66 @@ export const QUESTION_ID = "question";
 
 /**
  * The frame of every onboarding step (DESIGN_SYSTEM.md, Onboarding
- * composition). Phones: the step alone, in one column. Desktop: the step on
- * the end side and a blush support field on the start side, which carries the
- * brand motif and the step's picture. The step indicator's segments are
- * decorative; its text carries the meaning.
+ * composition): the step indicator, the question and the step's answers or
+ * actions, beside the picture panel with the step's encouragement on desktop.
+ * Phones: the question alone, with a small picture only where the step has
+ * one. The indicator's segments are decorative; its text carries the meaning.
  */
 export async function OnboardingStep({
   step,
   title,
-  support,
+  description,
+  art,
+  mobilePicture,
   children,
 }: {
   step: 1 | 2 | 3;
   title: string;
-  /** The support field's picture (desktop only). */
-  support: ReactNode;
+  description: string;
+  /** The desktop panel: a picture and an encouragement under it, one sentence per line. */
+  art: { picture: ReactNode; title: string; body: string };
+  /** A small picture above the question on phones. */
+  mobilePicture?: ReactNode;
+  /** The answers or the step's actions. */
   children: ReactNode;
 }) {
   const t = await getTranslations("onboarding");
 
   return (
-    <div className="mx-auto max-w-column pt-6 pb-12 desktop:grid desktop:max-w-none desktop:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] desktop:gap-16 desktop:py-8">
-      <div className="desktop:flex desktop:flex-col desktop:justify-center desktop:py-8">
-        <div className="flex items-center gap-3">
-          <div aria-hidden="true" className="flex gap-1">
-            {Array.from({ length: TOTAL_STEPS }, (_, i) => (
-              <span
-                key={i}
-                className={`h-1 w-6 rounded-full ${i < step ? "bg-brand-highlight" : "bg-border-subtle"}`}
-              />
-            ))}
+    <PictureLayout
+      panel={
+        <>
+          <div className="flex flex-1 items-center justify-center py-8">
+            {art.picture}
           </div>
-          <p className="text-meta font-medium text-text-secondary">
-            {t("step", { current: step, total: TOTAL_STEPS })}
+          <p className="max-w-[26rem] text-heading-1 font-extrabold whitespace-pre-line">
+            {art.title}
           </p>
+          <p className="mt-3 max-w-[24rem] text-text-secondary">{art.body}</p>
+        </>
+      }
+    >
+      <div className="flex items-center gap-3">
+        <div aria-hidden="true" className="flex gap-1">
+          {Array.from({ length: TOTAL_STEPS }, (_, i) => (
+            <span
+              key={i}
+              className={`h-1 w-8 rounded-full ${i < step ? "bg-brand-primary" : "bg-border-subtle"}`}
+            />
+          ))}
         </div>
-        <h1 id={QUESTION_ID} className="mt-4 text-heading-1 font-extrabold">
-          {title}
-        </h1>
-        {children}
+        <p className="text-meta font-medium text-text-secondary">
+          {t("step", { current: step, total: TOTAL_STEPS })}
+        </p>
       </div>
-      {/* Supporting only, so it follows the step in reading order. */}
-      <div className="relative hidden min-h-[32rem] items-center justify-center overflow-hidden rounded-xl bg-brand-blush-soft p-12 desktop:order-first desktop:flex">
-        <ArcMotif className="-right-32 -bottom-32 size-[30rem]" />
-        <ArcMotif className="-top-16 -left-16 size-[12rem]" />
-        <div className="relative flex flex-col items-center gap-6">
-          {support}
-        </div>
-      </div>
-    </div>
+      {mobilePicture && (
+        <div className="mt-6 desktop:hidden">{mobilePicture}</div>
+      )}
+      <h1 id={QUESTION_ID} className="mt-4 text-heading-1 font-extrabold">
+        {title}
+      </h1>
+      <p className="mt-2 text-text-secondary">{description}</p>
+      <div className="mt-6 desktop:mt-8">{children}</div>
+    </PictureLayout>
   );
 }

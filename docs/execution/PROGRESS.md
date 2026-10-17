@@ -11,6 +11,16 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 - **`apps/api/.env`.** Workers may not create real `.env` files (AUTONOMOUS_WORKFLOW hard limits, `.claude/settings.json`). For local `pnpm --filter api dev` and `pnpm test:e2e` without exporting `DATABASE_URL`, copy `apps/api/.env.example` to `apps/api/.env`.
 
+## Validation record
+
+Which checks cover which work, so unchanged work is not checked again ([DEFINITION_OF_DONE.md, Validation by risk](../engineering/DEFINITION_OF_DONE.md#validation-by-risk)). One line per checkpoint, newest last. A line holds until a later change touches its scope.
+
+| Date | Checkpoint | Scope covered | Tree | Checks → result |
+|---|---|---|---|---|
+| 2026-10-15 | Baseline for the risk-based workflow | Whole repository | `c9d20cf` + onboarding stage composition (working tree) | `pnpm check` → pass (web unit 244, api 16). Browser specs onboarding, level check, home, shell, locales, language switcher → 220 pass (2026-10-12, same tree) |
+| 2026-10-15 | Onboarding to the owner's reference (screen markup and copy) | `views/onboarding`, onboarding catalog keys, `tokens.css` (display size removed) | Working tree | `pnpm check` → pass (web 244, api 16). `onboarding` + `level-check` specs, both projects → first run 12 failed (path descriptions entered the button names), fixed; then format/lint/typecheck/unit for the slice → pass, `onboarding` → 70 pass; `level-check` → pass in the first run, untouched by the fix |
+| 2026-10-15 | Home, level check (being prepared), not found and errors in the onboarding language (shared building blocks) | `shared/ui` (`PictureLayout`, `SkillsPicture`, `StatusMessage`; `AccentPanel`, `ArcMotif`, the target illustration removed), `views/home`, `views/level-check`, `views/onboarding`, `app/[locale]/not-found.tsx`, `error.tsx`, `global-error.tsx`, `skills` catalog keys | Working tree | `pnpm check` → pass (web 244, api 16). Specs `onboarding`, `home`, `level-check`, `not-found`, `shell`, `locales`, `language-switcher`, both projects → 240 pass. Supersedes the onboarding line above |
+
 ## Log
 
 Entry format:
@@ -638,3 +648,9 @@ Entry format:
 - Verification: `pnpm check` passes (web unit 244, api 16). Playwright onboarding, home, shell and locales: 166 passed (axe uz/ru/en, 320/360 px fit, keyboard only, no JavaScript). Screenshots at 1440 and 390 px before; after three iterations at 1440, 1280 (ru, uz), 1024 and 390 px en and 320 px en, ru and uz, including selected states and step 3 with and without a saved goal. Fixed along the way: the support field was heavier than the task (lowered), a `p-0` that is not on the scale (now `p-[0]`), the selected tile's motif crossing its label (moved to the corner).
 - Notes: A one-line description per exam path and a time estimate for the level check would strengthen steps 1 and 3; both need approved copy.
 
+
+### 2026-10-12: Onboarding stage composition (owner request, not a task)
+- Result: done, for the owner's screenshot review (DESIGN_SYSTEM.md, Onboarding art direction, rewritten). Review screenshots are temporary artifacts in the session scratchpad, not references; nothing was added to `docs/design/references/`.
+- Changes: The decorative support field is gone. Each step is one composition: the question and a blush **stage** holding the step's object. Desktop: the whole step is one stage (`radius.xl`, at least 34rem, the same height on every step) centered in the window, question on the start side, object on the end side, the arc motif only in two corners. Phones: the question on white, the stage under it with the answers only. Answers are white objects on the stage; a chosen answer turns red (one selection language for steps 1 and 2). Step 1: path tiles without boundaries, selected = red tile, white icon circle, arcs and a white check badge in the corner. Step 2: band values 40 px on desktop (new display size, a proposal), the scale track only once a band is chosen. Step 3: a starting-point scale (band 4–9, the target pinned in red, the unknown start as a dashed question mark joined to it), the button under the sentence on desktop and under the stage on phones. Unfilled progress segments in `brand.blush`. Fixed: arc offsets such as `-top-24` and `-bottom-32` are not on the spacing scale and generated no CSS, so the earlier motifs sat in their static position. No behavior, route, copy, cookie or test change; no dependency; Home and Reading untouched.
+- Verification: `pnpm check` passes (web unit 244, api 16). Playwright onboarding, level check, home, shell, locales and language switcher: 220 passed (both projects; axe WCAG 2.2 AA in uz/ru/en, 320/360 px fit, keyboard only, no JavaScript). Screenshots before at 1440 and 390 px en; after five iterations at 1440 and 390 px in en, ru and uz, 1280 and 1024 px in ru and uz, 320 px in ru and uz, each with and without a saved goal; keyboard focus at 1440 and 390 px.
+- Notes: The header logo sits at the window's edge while the desktop stage is centered in the 1200 px column, so they do not line up at 1440 px (shell, out of scope). Copy that would strengthen the screens still needs approval: who each exam path is for, and how long the level check takes.

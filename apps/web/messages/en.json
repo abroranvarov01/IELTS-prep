@@ -34,10 +34,50 @@
     "dontKnow": "I don't know yet",
     "notNow": "Not now",
     "examType": {
-      "title": "Which IELTS are you taking?"
+      "title": "Which IELTS are you taking?",
+      "paths": {
+        "academic": "For university study and academic goals.",
+        "general": "For work, migration and everyday goals."
+      }
     },
     "targetBand": {
-      "title": "Which band score do you need?"
+      "title": "Which band score do you need?",
+      "notes": {
+        "band60": {
+          "title": "6.0 is a solid level",
+          "body": "A common requirement for study and work abroad."
+        },
+        "band65": {
+          "title": "6.5 is a common university requirement",
+          "body": "Many universities abroad ask for this band."
+        },
+        "band70": {
+          "title": "7.0 is a strong result",
+          "body": "It opens more options for study and work abroad."
+        },
+        "band75": {
+          "title": "7.5 is a very strong result",
+          "body": "It suits more demanding programs and professions."
+        },
+        "band8plus": {
+          "title": "8+ is very good to expert English",
+          "body": "The top of the IELTS scale: confident English in almost any situation."
+        }
+      }
+    },
+    "art": {
+      "exam": {
+        "title": "Different goals.\nSame opportunities.",
+        "body": "IELTS opens doors to study, work and a new life abroad."
+      },
+      "band": {
+        "title": "Set your target.\nWe'll help you reach it.",
+        "body": "Choose the band you're aiming for, and we'll point your practice toward it."
+      },
+      "levelCheck": {
+        "title": "Let's find your\nstarting point.",
+        "body": "A quick check shows your current level and helps us suggest what to practice next."
+      }
     }
   },
   "examType": {
@@ -177,5 +217,11 @@
       "cannotCheck": "This test has changed since you took it, so your answers can't be checked."
     },
     "lastResults": "See your last results"
+  },
+  "skills": {
+    "reading": "Reading",
+    "listening": "Listening",
+    "writing": "Writing",
+    "speaking": "Speaking"
   }
 }

@@ -17,7 +17,7 @@ Each item is owned by the linked document. These are reminders, not the full rul
 
 1. **Honest AI feedback.** AI scores are "Estimated band" / "Estimated range", never official IELTS results. No false precision. → `docs/product/PRODUCT.md`
 2. **UX constitution:** 10-second rule, 3-click rule, one primary action, progressive disclosure, mobile first, plain language, no learning curve, accessibility as a requirement. → `docs/product/UX_PRINCIPLES.md`
-3. **Visual direction:** white-first, red brand accent (inspired by IELTS, not copied), bold modern typography, no generic AI-SaaS look. The visual source of truth is local: owner-approved screenshots in `docs/design/references/` plus the design docs. No Figma dependency. User-facing UI is done only after a screenshot review (`visual-fidelity`). → `docs/design/DESIGN_CONSTITUTION.md`, `docs/design/UI_ANTI_PATTERNS.md`
+3. **Visual direction:** white-first, red brand accent (inspired by IELTS, not copied), bold modern typography, no generic AI-SaaS look. The visual source of truth is local: owner-approved screenshots in `docs/design/references/` plus the design docs. No Figma dependency. User-facing UI is done only after a screenshot review (`product-design`). → `docs/design/DESIGN_CONSTITUTION.md`, `docs/design/UI_ANTI_PATTERNS.md`
 4. **Invariants** (single scoring source, domain logic outside UI, no hard-coded UI strings, no raw colors outside tokens, content is original or licensed, no secrets or personal data in logs). → `docs/architecture/INVARIANTS.md`
 5. **How to work:** priority order, smallest coherent solution, surgical changes, no speculative abstraction. → `.claude/rules/00-engineering-core.md`, `.claude/rules/01-change-discipline.md` (both always loaded), `docs/engineering/CODE_QUALITY.md`
 6. **TBD stays TBD.** Do not silently decide anything marked TBD in `docs/`. Ask, or propose an ADR.
@@ -76,7 +76,7 @@ The rule globs are scoped to the real layout (`apps/web`, `apps/api`, `packages/
 |---|---|
 | Build or change functionality | `implement-feature` |
 | Fix a defect | `fix-bug` |
-| Any user-facing screen, component, style, or text | `ui-implementation` → `visual-fidelity` (screenshot review, required before UI is done) |
+| Any user-facing screen, component, style, or text | `ui-implementation` → `product-design` (composition and screenshot review, required before UI is done) |
 | Behavior-preserving restructuring | `refactor` |
 | Review a diff against project rules | `review-change` (complements the built-in `/code-review`) |
 | Significant technical decision / new project-wide pattern | `architecture-decision` |
@@ -88,7 +88,9 @@ The rule globs are scoped to the real layout (`apps/web`, `apps/api`, `packages/
 Run from the repository root with Node 24 (`.nvmrc`; e.g. `nvm use`) and pnpm via Corepack (`corepack enable`). The canonical list is `docs/engineering/QUALITY_GATES.md`.
 
 - `pnpm install --frozen-lockfile`: install
-- `pnpm check`: format check, lint (including the token check), typecheck, unit tests. Run it before reporting done.
+- `pnpm check`: format check, lint (including the token check), typecheck, unit tests.
+
+**Validate by risk, at checkpoints** (owner, 2026-10-15): no automated suites between small visual adjustments; the checks of the change class once per coherent batch; the full suite once at the end of an agreed scope; reuse unchanged results from the validation record in `PROGRESS.md`. Rules: `docs/engineering/DEFINITION_OF_DONE.md` § Validation by risk.
 - `pnpm build`: build both apps
 - `pnpm test:e2e`: API e2e and Playwright (needs Chromium: `pnpm --filter web exec playwright install chromium`; the API e2e needs `DATABASE_URL`, see `apps/api/.env.example`)
 

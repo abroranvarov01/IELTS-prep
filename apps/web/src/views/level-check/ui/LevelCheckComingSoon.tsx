@@ -1,4 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
+import { SkillsPicture } from "@/shared/ui/SkillsPicture";
 import { StatusMessage } from "@/shared/ui/StatusMessage";
 
 // The level check's future address. Until the level check is designed and
@@ -12,6 +13,7 @@ export async function LevelCheckComingSoon() {
     <StatusMessage
       title={t("levelCheck.comingSoon.title")}
       body={t("levelCheck.comingSoon.body")}
+      picture={(size) => <SkillsPicture size={size} />}
       home={{ href: `/${locale}`, label: t("common.goHome") }}
     />
   );

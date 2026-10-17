@@ -1,9 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { AccentPanel } from "@/shared/ui/AccentPanel";
-import { TargetIllustration } from "@/shared/ui/illustrations";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
+import { SkillsPicture } from "@/shared/ui/SkillsPicture";
 import { type NextAction, nextAction } from "../model/next-action";
 import { GoalLine } from "./GoalLine";
 
@@ -12,7 +11,7 @@ export async function Home() {
   const t = await getTranslations();
 
   return (
-    <div className="mx-auto max-w-column pt-6 pb-12">
+    <div className="mx-auto max-w-column pt-6 pb-12 desktop:max-w-none desktop:pt-8">
       {/* The page's name is a quiet label; the next action is what it shows. */}
       <h1 className="text-meta font-bold text-brand-primary-deep">
         {t("home.title")}
@@ -37,24 +36,25 @@ async function NextActionBlock({ action }: { action: NextAction }) {
   switch (action.kind) {
     case "levelCheck":
       return (
-        <section aria-labelledby="next-action">
-          <AccentPanel>
-            <div className="tablet:p-2">
-              <div className="flex size-12 items-center justify-center rounded-full bg-surface-base text-brand-primary-deep">
-                <TargetIllustration />
-              </div>
-              <h2
-                id="next-action"
-                className="mt-4 text-heading-1 font-extrabold"
-              >
-                {t("title")}
-              </h2>
-              <p className="mt-2 text-text-secondary">{t("body")}</p>
-              <div className="mt-6">
-                <PrimaryLink href="/level-check">{t("start")}</PrimaryLink>
-              </div>
+        <section
+          aria-labelledby="next-action"
+          className="rounded-xl bg-brand-blush-soft p-4 tablet:p-8 desktop:grid desktop:grid-cols-2 desktop:items-center desktop:gap-12 desktop:p-12"
+        >
+          <div className="mb-4 desktop:hidden">
+            <SkillsPicture size="small" />
+          </div>
+          <div>
+            <h2 id="next-action" className="text-heading-1 font-extrabold">
+              {t("title")}
+            </h2>
+            <p className="mt-2 text-text-secondary">{t("body")}</p>
+            <div className="mt-6 desktop:mt-8">
+              <PrimaryLink href="/level-check">{t("start")}</PrimaryLink>
             </div>
-          </AccentPanel>
+          </div>
+          <div className="hidden desktop:block">
+            <SkillsPicture size="large" />
+          </div>
         </section>
       );
   }

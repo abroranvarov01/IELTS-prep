@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { StatusMessage } from "@/shared/ui/StatusMessage";
+import { SignpostPicture, StatusMessage } from "@/shared/ui/StatusMessage";
 import { Shell } from "@/widgets/shell";
 
 export default async function NotFound() {
@@ -13,6 +13,7 @@ export default async function NotFound() {
         <StatusMessage
           title={t("notFound.title")}
           body={t("notFound.body")}
+          picture={(size) => <SignpostPicture size={size} />}
           home={{ href: `/${locale}`, label: t("common.goHome") }}
         />
       </Shell>

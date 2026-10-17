@@ -29,7 +29,7 @@ Canonical owner of the **list of forbidden visual and interaction patterns**. Th
 | Truncated or shrunk labels, or understandable labels swapped for ambiguous icons, to make a layout fit ("Prog…", "Узнать бол…") | Layout sized for English only | Wrapping/adaptive layouts with content-driven height, tested with the longest language |
 | Showing every feature to new users | Overwhelming | Progressive disclosure |
 | Confetti/score theatrics on AI estimates | Implies false certainty | Calm presentation of an estimated range |
-| Unexplained visual novelty (a color, component look, or layout idea that no document or reference supports) | Fragments the visual language and looks accidental | Reuse existing patterns. A new one needs owner approval (the `visual-fidelity` skill). |
+| Unexplained visual novelty (a color, component look, or layout idea that no document or reference supports) | Fragments the visual language and looks accidental | Reuse existing patterns. A new one needs owner approval (the `product-design` skill). |
 
 ## Review question
 

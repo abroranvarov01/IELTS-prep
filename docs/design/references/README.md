@@ -2,7 +2,7 @@
 
 Canonical owner of the **approved visual reference screenshots** and of the rules for adding them.
 
-- These screenshots are **approved visual references**: local, version-controlled source material for how IELTS Prep should look. With the design docs, they are the visual source of truth. The order in which sources win, and how Claude uses them, is in the [`visual-fidelity` skill](../../../.claude/skills/visual-fidelity/SKILL.md).
+- These screenshots are **approved visual references**: local, version-controlled source material for how IELTS Prep should look. With the design docs, they are the visual source of truth. The order in which sources win, and how Claude uses them, is in the [`product-design` skill](../../../.claude/skills/product-design/SKILL.md).
 - **Only owner-approved screenshots belong here.** Screenshots taken while implementing or reviewing a change are working files. They are never committed here automatically.
 - **A screenshot defines composition and visual quality.** That covers layout, hierarchy, density, proportions and overall feel. Exact reusable values (colors, type sizes, spacing, radii, shadows) stay owned by [DESIGN_SYSTEM.md](../DESIGN_SYSTEM.md). A screenshot never overrides approved behavior in a feature spec.
 - **When a screenshot and a document disagree,** record the contradiction and get it resolved by the owner (update the document, or replace the screenshot). Do not choose silently.

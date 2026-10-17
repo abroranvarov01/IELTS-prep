@@ -32,6 +32,7 @@ Read the task or PR description. State in one sentence what the change should do
 ## 6. Tests and verification
 - Does the new behavior or the bug fix have tests at the right level (`docs/engineering/TESTING_STRATEGY.md`)?
 - Were the gates actually run? Does the claimed verification match what was done?
+- Do the checks match the change class in `docs/engineering/DEFINITION_OF_DONE.md` § Validation by risk, and does the validation record in `docs/execution/PROGRESS.md` cover the change? Neither too little (a shared or behavior change checked like styling) nor repeated runs over unchanged work.
 
 ## Output
 List findings ranked by severity: **Blocking** (incorrect, unsafe, violates an invariant) → **Should fix** → **Consider**. Each finding gets a file:line reference, the concrete problem, and a suggested fix. Do not pad the review with style nits that a formatter or linter should handle. Recommend the tool instead. If nothing is wrong, say so.

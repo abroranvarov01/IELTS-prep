@@ -34,10 +34,50 @@
     "dontKnow": "Hali bilmayman",
     "notNow": "Hozir emas",
     "examType": {
-      "title": "Qaysi IELTS topshirasiz?"
+      "title": "Qaysi IELTS topshirasiz?",
+      "paths": {
+        "academic": "Universitetda oʻqish va akademik maqsadlar uchun.",
+        "general": "Ish, immigratsiya va kundalik maqsadlar uchun."
+      }
     },
     "targetBand": {
-      "title": "Sizga qaysi ball kerak?"
+      "title": "Sizga qaysi ball kerak?",
+      "notes": {
+        "band60": {
+          "title": "6.0 — ishonchli daraja",
+          "body": "Chet elda oʻqish va ishlash uchun koʻp soʻraladigan talab."
+        },
+        "band65": {
+          "title": "6.5 — universitetlarning keng tarqalgan talabi",
+          "body": "Koʻplab xorijiy universitetlar aynan shu ballni soʻraydi."
+        },
+        "band70": {
+          "title": "7.0 — kuchli natija",
+          "body": "Chet elda oʻqish va ishlash uchun koʻproq imkoniyat ochadi."
+        },
+        "band75": {
+          "title": "7.5 — juda kuchli natija",
+          "body": "Talabchanroq dasturlar va kasblar uchun mos keladi."
+        },
+        "band8plus": {
+          "title": "8+ — juda yaxshi va ekspert daraja",
+          "body": "IELTS shkalasining choʻqqisi: deyarli har qanday vaziyatda ishonchli ingliz tili."
+        }
+      }
+    },
+    "art": {
+      "exam": {
+        "title": "Maqsadlar turlicha.\nImkoniyatlar bir xil.",
+        "body": "IELTS chet elda oʻqish, ishlash va yangi hayot uchun eshik ochadi."
+      },
+      "band": {
+        "title": "Maqsadni belgilang.\nUnga erishishga yordam beramiz.",
+        "body": "Intilayotgan ballingizni tanlang, mashqlaringizni shunga yoʻnaltiramiz."
+      },
+      "levelCheck": {
+        "title": "Boshlangʻich nuqtangizni\ntopamiz.",
+        "body": "Qisqa tekshiruv hozirgi darajangizni koʻrsatadi va keyin nimani mashq qilishni taklif qilishga yordam beradi."
+      }
     }
   },
   "examType": {
@@ -177,5 +217,11 @@
       "cannotCheck": "Siz topshirganingizdan keyin test oʻzgargan, shuning uchun javoblarni tekshirib boʻlmaydi."
     },
     "lastResults": "Oxirgi natijalarni koʻrish"
+  },
+  "skills": {
+    "reading": "Reading",
+    "listening": "Listening",
+    "writing": "Writing",
+    "speaking": "Speaking"
   }
 }

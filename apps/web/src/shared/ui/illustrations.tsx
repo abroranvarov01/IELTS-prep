@@ -27,15 +27,3 @@ export function Illustration({
     </svg>
   );
 }
-
-/** "Find your level": a target with an arrow in it, on step 3 and home. */
-export function TargetIllustration({ className }: { className?: string }) {
-  return (
-    <Illustration className={className}>
-      <circle cx="11" cy="13" r="8.25" />
-      <circle cx="11" cy="13" r="4.75" />
-      <circle cx="11" cy="13" r="1.25" />
-      <path d="M11 13l8.5-8.5M16.5 4.5h3v3" />
-    </Illustration>
-  );
-}

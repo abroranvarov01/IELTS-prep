@@ -5,6 +5,7 @@ import { Illustration } from "@/shared/ui/illustrations";
 import { answerExamType } from "../api/actions";
 import { AnswerList } from "./AnswerList";
 import { OnboardingStep, QUESTION_ID } from "./OnboardingStep";
+import { PathsPicture } from "./pictures";
 import { SavedGoal } from "./SavedGoal";
 
 /** Step 1: which IELTS the user is taking. */
@@ -16,6 +17,7 @@ export async function ExamTypeStep() {
   ).map((value) => ({
     value,
     label: t(`examType.${value}`),
+    description: t(`onboarding.examType.paths.${value}`),
     illustration: PATH_ILLUSTRATIONS[value],
   }));
   const list = (selected?: ExamType) => (
@@ -35,14 +37,16 @@ export async function ExamTypeStep() {
     <OnboardingStep
       step={1}
       title={t("onboarding.examType.title")}
-      support={<PathsPicture />}
+      description={t("onboarding.changeLater")}
+      art={{
+        picture: <PathsPicture />,
+        title: t("onboarding.art.exam.title"),
+        body: t("onboarding.art.exam.body"),
+      }}
     >
-      <p className="mt-2 text-text-secondary">{t("onboarding.changeLater")}</p>
-      <div className="mt-6">
-        <Suspense fallback={list()}>
-          <SavedGoal>{(goal) => list(goal.examType)}</SavedGoal>
-        </Suspense>
-      </div>
+      <Suspense fallback={list()}>
+        <SavedGoal>{(goal) => list(goal.examType)}</SavedGoal>
+      </Suspense>
     </OnboardingStep>
   );
 }
@@ -70,19 +74,3 @@ const PATH_ILLUSTRATIONS = {
   academic: <AcademicIllustration className="size-6 desktop:size-8" />,
   general: <GeneralIllustration className="size-6 desktop:size-8" />,
 };
-
-/** The support field: the two paths, side by side. */
-function PathsPicture() {
-  const circle =
-    "flex size-[8rem] items-center justify-center rounded-full bg-surface-base text-brand-primary-deep";
-  return (
-    <div className="flex items-center">
-      <span className={circle}>
-        <AcademicIllustration className="size-16" />
-      </span>
-      <span className={`${circle} -ms-6 ring-8 ring-brand-blush-soft`}>
-        <GeneralIllustration className="size-16" />
-      </span>
-    </div>
-  );
-}

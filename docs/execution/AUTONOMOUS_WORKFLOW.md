@@ -24,7 +24,7 @@ Canonical owner of **how an autonomous worker executes tasks** from [TASKS.json]
 
 ### 1. Select
 Take the **first** task in `TASKS.json` order whose `milestone` is the active milestone, where `owner` is `"worker"`, `status` is `"todo"`, and every `dependsOn` task is `"done"`. Never take a task from a `planned` milestone.
-- If none is ready and all tasks of the active milestone are `done`: the milestone is complete. Set its `status` to `"done"` and add `"completedAt"`, append a PROGRESS.md entry, commit both, report, and stop. **Never activate the next milestone.** The owner does that, after its tasks are written.
+- If none is ready and all tasks of the active milestone are `done`: the milestone is complete. Run the integration checkpoint (DEFINITION_OF_DONE.md, Validation by risk) for what the record does not already cover, set its `status` to `"done"` and add `"completedAt"`, append a PROGRESS.md entry, commit both, report, and stop. **Never activate the next milestone.** The owner does that, after its tasks are written.
 - If none is ready otherwise: report which tasks wait on what (human tasks, blocked tasks) and stop.
 
 ### 2. Claim
@@ -39,12 +39,12 @@ Follow the `implement-feature` skill, plus `ui-implementation` / `testing` where
 - Use current stable versions. Check official documentation for version-specific setup. Do not rely on memory.
 
 ### 5. Validate
-Run every command in the task's `validation` list, plus every gate that already exists in [QUALITY_GATES.md](../engineering/QUALITY_GATES.md) (lint, typecheck, tests). All must pass.
+Run every command in the task's `validation` list, plus the gates [DEFINITION_OF_DONE.md, Validation by risk](../engineering/DEFINITION_OF_DONE.md#validation-by-risk) requires for the task's change class (commands: [QUALITY_GATES.md](../engineering/QUALITY_GATES.md)). All must pass. The task is one checkpoint; completing the milestone is an integration checkpoint. Add a line to the validation record in PROGRESS.md.
 - If a gate does not exist yet, record "not available yet" instead of claiming it passed.
 - To fix a failure, apply the `fix-bug` skill within the task's scope. See the failure budget below.
 
 ### 6. Review the diff
-Run `git diff` (and `git status` for new files). Apply the `review-change` skill and the self-review in `.claude/rules/01-change-discipline.md`. Check [DEFINITION_OF_DONE.md](../engineering/DEFINITION_OF_DONE.md). Fix what you find, then re-run step 5.
+Run `git diff` (and `git status` for new files). Apply the `review-change` skill and the self-review in `.claude/rules/01-change-discipline.md`. Check [DEFINITION_OF_DONE.md](../engineering/DEFINITION_OF_DONE.md). Fix what you find, then re-run the step 5 checks that the fixes invalidate.
 
 ### 7. Record
 - Update the docs listed in the task's `docsToUpdate`. Update other docs only if the change made them inaccurate.

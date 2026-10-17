@@ -6,7 +6,7 @@ Canonical owner of the **approved visual direction** (what the product should lo
 - What to avoid: [UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md)
 - UX rules: [UX_PRINCIPLES.md](../product/UX_PRINCIPLES.md)
 - Approved reference screenshots: [references/](references/README.md)
-- How Claude implements and verifies the look: the [`visual-fidelity` skill](../../.claude/skills/visual-fidelity/SKILL.md)
+- How Claude composes, implements and verifies the look: the [`product-design` skill](../../.claude/skills/product-design/SKILL.md)
 
 ## Approved core (do not change without explicit product approval)
 
@@ -73,7 +73,7 @@ shadcn/ui (or Radix) may be used as **behavior, accessibility and interaction in
 ## Visual sources and design tooling
 
 **Approved** (owner, 2026-10-12).
-- **The visual source of truth is local:** owner-approved screenshots in [references/](references/README.md) together with these design documents. Existing code is not a visual reference by itself. The order in which sources win is in the [`visual-fidelity` skill](../../.claude/skills/visual-fidelity/SKILL.md).
+- **The visual source of truth is local:** owner-approved screenshots in [references/](references/README.md) together with these design documents. Existing code is not a visual reference by itself. The order in which sources win is in the [`product-design` skill](../../.claude/skills/product-design/SKILL.md).
 - **Figma is optional design tooling, not repository infrastructure.** Development stays fully usable without Figma, a Figma MCP server, paid design subscriptions, or external design API credits. If a Figma design exists, the owner may export screenshots, approve them, and add them to [references/](references/README.md). No task requires Figma or waits for it.
 
 ## Quality bar
