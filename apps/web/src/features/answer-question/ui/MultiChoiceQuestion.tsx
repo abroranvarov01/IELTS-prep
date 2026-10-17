@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { type QuestionUnit, useReading } from "@/entities/reading";
 import { OptionRow } from "@/shared/ui/OptionRow";
+import { multiItem } from "../model/choices";
 
 /**
  * "Choose several": one item for several question numbers ("Choose TWO
@@ -13,10 +14,7 @@ export function MultiChoiceQuestion({ unit }: { unit: QuestionUnit }) {
   const t = useTranslations("reading");
   const { session, send } = useReading();
   const number = unit.numbers[0] ?? 0;
-  const item =
-    unit.group.type === "multipleChoiceMulti"
-      ? unit.group.items.find((i) => i.numbers.includes(number))
-      : undefined;
+  const item = multiItem(unit);
   const stored = session.answers[unit.key];
   const chosen = Array.isArray(stored) ? stored : [];
   const isFull = chosen.length >= unit.choose;

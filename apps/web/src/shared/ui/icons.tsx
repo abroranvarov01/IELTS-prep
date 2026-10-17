@@ -64,3 +64,15 @@ export function CloseIcon({ className = "size-4" }: { className?: string }) {
     </LineIcon>
   );
 }
+
+/** "All questions": the question navigator. */
+export function GridIcon() {
+  return (
+    <LineIcon className="size-4">
+      <rect x="2.25" y="2.25" width="4.5" height="4.5" rx="1" />
+      <rect x="9.25" y="2.25" width="4.5" height="4.5" rx="1" />
+      <rect x="2.25" y="9.25" width="4.5" height="4.5" rx="1" />
+      <rect x="9.25" y="9.25" width="4.5" height="4.5" rx="1" />
+    </LineIcon>
+  );
+}

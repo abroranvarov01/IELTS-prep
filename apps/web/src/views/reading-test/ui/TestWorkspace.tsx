@@ -8,10 +8,11 @@ import {
   SentenceActions,
   usePassageMarks,
 } from "@/features/mark-passage";
+import { SHEET_HEIGHT } from "@/widgets/reading-layout";
 import { ExamTimer } from "./ExamTimer";
 import { QuestionBar } from "./QuestionBar";
 import { QuestionColumn } from "./QuestionColumn";
-import { QuestionSheet, SHEET_HEIGHT } from "./QuestionSheet";
+import { QuestionSheet } from "./QuestionSheet";
 import { TestBar } from "./TestBar";
 import { usePassagePosition } from "./use-passage-position";
 

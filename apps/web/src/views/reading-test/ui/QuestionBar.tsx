@@ -9,7 +9,7 @@ import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { FINISH_TITLE_ID, FinishConfirmation } from "./FinishConfirmation";
 import { FlagIcon, NavigatorCell } from "./QuestionNavigator";
-import { SecondaryButton } from "./SecondaryButton";
+import { SecondaryButton } from "@/shared/ui/SecondaryButton";
 
 /**
  * The desktop navigator bar along the bottom (READING_EXPERIENCE.md, desktop

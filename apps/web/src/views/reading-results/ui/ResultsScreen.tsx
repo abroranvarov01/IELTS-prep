@@ -14,35 +14,14 @@ import {
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { type Loaded, loadResult } from "../api/load-result";
+import { InfoIcon } from "./InfoIcon";
 import { OutcomeIcon } from "./OutcomeIcon";
 
 /** A short note on the result (DESIGN_SYSTEM.md, M5 results page). */
 function Note({ children }: { children: ReactNode }) {
   return (
     <p className="mt-4 flex gap-2">
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 20 20"
-        width={20}
-        height={20}
-        className="shrink-0"
-      >
-        <circle
-          cx="10"
-          cy="10"
-          r="8.5"
-          fill="none"
-          strokeWidth="1.5"
-          className="stroke-ink"
-        />
-        <path
-          d="M10 9v5M10 6.2v.1"
-          fill="none"
-          strokeWidth="2"
-          strokeLinecap="round"
-          className="stroke-ink"
-        />
-      </svg>
+      <InfoIcon />
       <span>{children}</span>
     </p>
   );

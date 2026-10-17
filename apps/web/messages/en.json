@@ -147,7 +147,11 @@
       "unanswered": "no answer",
       "flagged": "marked for review",
       "current": "current",
-      "passageProgress": "Passage {number}: {answered} of {total} answered"
+      "passageProgress": "Passage {number}: {answered} of {total} answered",
+      "correct": "correct",
+      "incorrect": "not correct",
+      "partly": "partly correct",
+      "itemRange": "Questions {from}–{to}, {states}"
     },
     "flag": {
       "add": "Mark for review",
@@ -216,7 +220,54 @@
       "oldVersion": "This test has changed since you took it, so a detailed review is not available.",
       "cannotCheck": "This test has changed since you took it, so your answers can't be checked."
     },
-    "lastResults": "See your last results"
+    "lastResults": "See your last results",
+    "review": {
+      "toResults": "Results",
+      "correct": "Correct",
+      "incorrect": "Not correct",
+      "unanswered": "No answer",
+      "partly": "{correct} of {total} correct",
+      "yourAnswer": "Your answer",
+      "yourAnswerCorrect": "Your answer, correct",
+      "yourAnswerIncorrect": "Your answer, not correct",
+      "correctAnswer": "Correct answer",
+      "alsoAccepted": "Also accepted",
+      "noAnswerGiven": "You did not answer this question.",
+      "evidenceTitle": "Evidence in the passage",
+      "relatedTitle": "Where the passage talks about this",
+      "why": "Why",
+      "simpler": "Explain simpler",
+      "simplerHide": "Hide the simpler explanation",
+      "simplerTitle": "In simple words",
+      "pinMatch": "You pinned a sentence the answer key cites as evidence.",
+      "pinMiss": "None of your pinned sentences is one the answer key cites as evidence.",
+      "pinNotGiven": "The answer is <en>NOT GIVEN</en>, so no sentence in the passage confirms or contradicts the statement.",
+      "toReview": "To review: {current} of {total}",
+      "evidenceMarker": "Evidence for question {number}",
+      "relatedMarker": "Related to question {number}"
+    },
+    "signals": {
+      "ngInsteadOfFalse": {
+        "facts": "You chose <en>NOT GIVEN</en>. The passage contradicts this statement, so the answer is <en>FALSE</en>. <en>NOT GIVEN</en> would mean the passage gives no information on it.",
+        "views": "You chose <en>NOT GIVEN</en>. The writer's views contradict this statement, so the answer is <en>NO</en>. <en>NOT GIVEN</en> would mean it is impossible to say what the writer thinks about it."
+      },
+      "falseInsteadOfNg": {
+        "facts": "You chose <en>FALSE</en>. The passage gives no information on this: it neither agrees with nor contradicts the statement, so the answer is <en>NOT GIVEN</en>. <en>FALSE</en> would need a sentence that contradicts it.",
+        "views": "You chose <en>NO</en>. It is impossible to say what the writer thinks about this: the passage neither agrees with nor contradicts the statement, so the answer is <en>NOT GIVEN</en>. <en>NO</en> would need the writer's views to contradict it."
+      },
+      "ngInsteadOfTrue": {
+        "facts": "You chose <en>NOT GIVEN</en>. The passage agrees with this statement, so the answer is <en>TRUE</en>. <en>NOT GIVEN</en> would mean the passage gives no information on it.",
+        "views": "You chose <en>NOT GIVEN</en>. The statement agrees with the writer's views, so the answer is <en>YES</en>. <en>NOT GIVEN</en> would mean it is impossible to say what the writer thinks about it."
+      },
+      "trueInsteadOfNg": {
+        "facts": "You chose <en>TRUE</en>. The passage gives no information on this: it neither agrees with nor contradicts the statement, so the answer is <en>NOT GIVEN</en>. <en>TRUE</en> would need a sentence that agrees with it.",
+        "views": "You chose <en>YES</en>. It is impossible to say what the writer thinks about this, so the answer is <en>NOT GIVEN</en>. <en>YES</en> would need the statement to agree with the writer's views."
+      },
+      "oneLetterAway": "Your answer differs from an accepted answer by one letter.",
+      "wordLimit": "Your answer has more words than the instruction allows.",
+      "notFromPassage": "Your answer uses a word that is not in the passage. This task asks for words from the passage.",
+      "timeUp": "This question had no answer when the time ran out."
+    }
   },
   "skills": {
     "reading": "Reading",

@@ -147,7 +147,11 @@
       "unanswered": "javob yoʻq",
       "flagged": "tekshirish uchun belgilangan",
       "current": "joriy",
-      "passageProgress": "{number}-matn: {total} tadan {answered} tasiga javob berilgan"
+      "passageProgress": "{number}-matn: {total} tadan {answered} tasiga javob berilgan",
+      "correct": "toʻgʻri",
+      "incorrect": "notoʻgʻri",
+      "partly": "qisman toʻgʻri",
+      "itemRange": "{from}–{to}-savollar, {states}"
     },
     "flag": {
       "add": "Tekshirish uchun belgilash",
@@ -216,7 +220,54 @@
       "oldVersion": "Siz topshirganingizdan keyin test oʻzgargan, shuning uchun batafsil tahlil mavjud emas.",
       "cannotCheck": "Siz topshirganingizdan keyin test oʻzgargan, shuning uchun javoblarni tekshirib boʻlmaydi."
     },
-    "lastResults": "Oxirgi natijalarni koʻrish"
+    "lastResults": "Oxirgi natijalarni koʻrish",
+    "review": {
+      "toResults": "Natijalar",
+      "correct": "Toʻgʻri",
+      "incorrect": "Notoʻgʻri",
+      "unanswered": "Javob yoʻq",
+      "partly": "{total} tadan {correct} tasi toʻgʻri",
+      "yourAnswer": "Sizning javobingiz",
+      "yourAnswerCorrect": "Sizning javobingiz, toʻgʻri",
+      "yourAnswerIncorrect": "Sizning javobingiz, notoʻgʻri",
+      "correctAnswer": "Toʻgʻri javob",
+      "alsoAccepted": "Bu ham qabul qilinadi",
+      "noAnswerGiven": "Bu savolga javob bermagansiz.",
+      "evidenceTitle": "Matndagi dalil",
+      "relatedTitle": "Matnda bu haqda soʻz boradigan joy",
+      "why": "Nima uchun",
+      "simpler": "Soddaroq tushuntirish",
+      "simplerHide": "Sodda tushuntirishni yashirish",
+      "simplerTitle": "Oddiy soʻzlar bilan",
+      "pinMatch": "Siz javoblar kaliti dalil sifatida keltirgan gapni biriktirgansiz.",
+      "pinMiss": "Siz biriktirgan gaplarning hech biri javoblar kalitida dalil sifatida koʻrsatilmagan.",
+      "pinNotGiven": "Javob: <en>NOT GIVEN</en>, shuning uchun matndagi hech bir gap fikrni tasdiqlamaydi ham, rad etmaydi ham.",
+      "toReview": "Tahlil: {total} tadan {current}",
+      "evidenceMarker": "{number}-savol uchun dalil",
+      "relatedMarker": "{number}-savolga tegishli"
+    },
+    "signals": {
+      "ngInsteadOfFalse": {
+        "facts": "Siz <en>NOT GIVEN</en> ni tanladingiz. Matn bu fikrga zid, shuning uchun javob: <en>FALSE</en>. <en>NOT GIVEN</en> matnda bu haqda maʼlumot yoʻqligini bildirardi.",
+        "views": "Siz <en>NOT GIVEN</en> ni tanladingiz. Muallifning fikri bu fikrga zid, shuning uchun javob: <en>NO</en>. <en>NOT GIVEN</en> muallif bu haqda nima deb oʻylashini aytib boʻlmasligini bildirardi."
+      },
+      "falseInsteadOfNg": {
+        "facts": "Siz <en>FALSE</en> ni tanladingiz. Matnda bu haqda maʼlumot yoʻq: u fikrni tasdiqlamaydi ham, unga zid ham emas, shuning uchun javob: <en>NOT GIVEN</en>. <en>FALSE</en> uchun fikrga zid gap kerak.",
+        "views": "Siz <en>NO</en> ni tanladingiz. Muallif bu haqda nima deb oʻylashini aytib boʻlmaydi: matn fikrni tasdiqlamaydi ham, unga zid ham emas, shuning uchun javob: <en>NOT GIVEN</en>. <en>NO</en> uchun muallifning fikri unga zid boʻlishi kerak."
+      },
+      "ngInsteadOfTrue": {
+        "facts": "Siz <en>NOT GIVEN</en> ni tanladingiz. Matn bu fikrni tasdiqlaydi, shuning uchun javob: <en>TRUE</en>. <en>NOT GIVEN</en> matnda bu haqda maʼlumot yoʻqligini bildirardi.",
+        "views": "Siz <en>NOT GIVEN</en> ni tanladingiz. Fikr muallifning qarashlariga mos, shuning uchun javob: <en>YES</en>. <en>NOT GIVEN</en> muallif bu haqda nima deb oʻylashini aytib boʻlmasligini bildirardi."
+      },
+      "trueInsteadOfNg": {
+        "facts": "Siz <en>TRUE</en> ni tanladingiz. Matnda bu haqda maʼlumot yoʻq: u fikrni tasdiqlamaydi ham, unga zid ham emas, shuning uchun javob: <en>NOT GIVEN</en>. <en>TRUE</en> uchun fikrni tasdiqlaydigan gap kerak.",
+        "views": "Siz <en>YES</en> ni tanladingiz. Muallif bu haqda nima deb oʻylashini aytib boʻlmaydi, shuning uchun javob: <en>NOT GIVEN</en>. <en>YES</en> uchun fikr muallifning qarashlariga mos boʻlishi kerak."
+      },
+      "oneLetterAway": "Javobingiz qabul qilingan javobdan bitta harf bilan farq qiladi.",
+      "wordLimit": "Javobingizda topshiriq ruxsat berganidan koʻproq soʻz bor.",
+      "notFromPassage": "Javobingizda matnda yoʻq soʻz bor. Bu topshiriqda matndagi soʻzlar kerak.",
+      "timeUp": "Vaqt tugaganda bu savolga javob berilmagan edi."
+    }
   },
   "skills": {
     "reading": "Reading",

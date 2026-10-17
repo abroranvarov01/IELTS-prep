@@ -1,12 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import {
-  type QuestionUnit,
-  STATEMENT_ANSWERS,
-  useReading,
-} from "@/entities/reading";
+import { type QuestionUnit, useReading } from "@/entities/reading";
 import { OptionRow } from "@/shared/ui/OptionRow";
+import { choices } from "../model/choices";
 
 /**
  * "Choose one": TRUE/FALSE/NOT GIVEN, YES/NO/NOT GIVEN, multiple choice with
@@ -56,30 +53,4 @@ export function ChoiceQuestion({ unit }: { unit: QuestionUnit }) {
       )}
     </>
   );
-}
-
-function choices(unit: QuestionUnit, number: number) {
-  const group = unit.group;
-  switch (group.type) {
-    case "trueFalseNotGiven":
-    case "yesNoNotGiven":
-      return {
-        prompt:
-          group.questions.find((q) => q.number === number)?.statement ?? "",
-        options: STATEMENT_ANSWERS[group.type].map((id) => ({
-          id,
-          text: id,
-          letter: false,
-        })),
-      };
-    case "multipleChoice": {
-      const question = group.questions.find((q) => q.number === number);
-      return {
-        prompt: question?.stem ?? "",
-        options: (question?.options ?? []).map((o) => ({ ...o, letter: true })),
-      };
-    }
-    default:
-      return { prompt: "", options: [] };
-  }
 }

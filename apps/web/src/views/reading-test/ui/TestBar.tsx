@@ -5,12 +5,13 @@ import { CloseIcon } from "@/shared/ui/icons";
 import { PrimaryButton } from "@/shared/ui/PrimaryButton";
 import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { QuietLink } from "@/shared/ui/QuietLink";
+import { TestBarFrame } from "@/widgets/reading-layout";
 import { ConfirmDialog } from "./ConfirmDialog";
 
 /**
- * The compact bar that replaces the shell header on the test screen
- * (READING_EXPERIENCE.md). With `confirmExit` (a running Exam), "Exit" asks
- * first in a modal dialog (ADR-0007), because the time keeps running.
+ * The test screen's bar, with "Exit" on the start side. With `confirmExit` (a
+ * running Exam), "Exit" asks first in a modal dialog (ADR-0007), because the
+ * time keeps running.
  */
 export function TestBar({
   confirmExit = false,
@@ -23,22 +24,23 @@ export function TestBar({
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
-    <header className="sticky top-[0] z-20 flex h-12 items-center gap-3 border-b border-border-subtle bg-surface-base px-gutter">
-      <Link
-        href="/"
-        onClick={(event) => {
-          if (!confirmExit) return;
-          event.preventDefault();
-          dialogRef.current?.showModal();
-        }}
-        className={`${QUIET_BUTTON} -ms-3`}
-      >
-        <CloseIcon />
-        {t("exit")}
-      </Link>
-      <div className="flex flex-1 items-center justify-end gap-3">
-        {children}
-      </div>
+    <TestBarFrame
+      start={
+        <Link
+          href="/"
+          onClick={(event) => {
+            if (!confirmExit) return;
+            event.preventDefault();
+            dialogRef.current?.showModal();
+          }}
+          className={`${QUIET_BUTTON} -ms-3`}
+        >
+          <CloseIcon />
+          {t("exit")}
+        </Link>
+      }
+    >
+      {children}
       {confirmExit && (
         <ConfirmDialog
           dialogRef={dialogRef}
@@ -61,6 +63,6 @@ export function TestBar({
           </div>
         </ConfirmDialog>
       )}
-    </header>
+    </TestBarFrame>
   );
 }

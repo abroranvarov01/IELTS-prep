@@ -2720,7 +2720,8 @@
       "title": "Evidence-first review on phones",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-17",
       "dependsOn": ["M5-05", "M5-06", "M5-12"],
       "goal": "From the results, a learner reviews every answer unit (mistakes and unanswered first, correct ones too) with their answer, the accepted answer, the key's evidence, the explanation and 'Explain simpler', on a phone.",
       "scope": [

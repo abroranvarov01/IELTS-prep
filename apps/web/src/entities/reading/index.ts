@@ -1,7 +1,8 @@
 // Public API of the Reading entity (ADR-0010): the Reading domain model, the
 // device storage of sessions and attempts, and the running session's React
 // context. Server-only content loading has its own entry points
-// (content.server.ts, keys.server.ts); test fixtures are in testing.ts.
+// (content.server.ts, keys.server.ts, explanations.server.ts); test fixtures
+// are in testing.ts.
 
 export {
   type GapSegment,
@@ -12,7 +13,7 @@ export {
   type ReadingTest,
   STATEMENT_ANSWERS,
 } from "./model/content";
-export type { AnswerKey } from "./model/parse-content";
+export type { AnswerKey, AnswerKeyEntry } from "./model/parse-content";
 export { type QuestionUnit, questionUnits, unitOf } from "./model/units";
 export { exceedsWordLimit } from "./model/word-limit";
 export {
@@ -28,9 +29,12 @@ export {
   startSession,
 } from "./model/session";
 export {
+  type OptionMark,
   SCORING_RULES_VERSION,
+  type Signal,
   type UnitOutcome,
   checkAttempt,
+  optionMarks,
 } from "./model/scoring";
 export {
   type ReadingAttempt,
@@ -45,6 +49,7 @@ export {
   reviewOffer,
   unitOutcomes,
 } from "./model/results";
+export type { ExplanationSegment, Explanations } from "./model/explanations";
 export {
   type StorageSnapshot,
   deviceStorage,

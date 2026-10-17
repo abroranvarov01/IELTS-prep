@@ -23,6 +23,19 @@ export function GroupText({
       return group.options.find((o) => o.id === answer)?.text;
     return answer.trim() !== "" ? answer : undefined;
   };
+  return <GroupTextView group={group} current={current} answerOf={answerOf} />;
+}
+
+/** The group's text with the given answers in its gaps, without a session. */
+export function GroupTextView({
+  group,
+  current,
+  answerOf,
+}: {
+  group: QuestionGroup;
+  current: number;
+  answerOf: (number: number) => string | undefined;
+}) {
   if (!hasGroupText(group)) return null;
 
   return (
