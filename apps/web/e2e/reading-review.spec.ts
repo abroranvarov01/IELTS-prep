@@ -216,6 +216,23 @@ test("the keyboard path: results to the review, Next, and the navigator closed w
   await expect(navigatorButton).toBeFocused();
 });
 
+test("the review's skip link reaches the visible card heading when a hidden page holds the same id", async ({
+  page,
+}) => {
+  await openReviewFromResults(page);
+  // A hidden copy of the id first, as a page left behind by client navigation.
+  await page.evaluate(() => {
+    const hidden = document.createElement("h2");
+    hidden.id = "question-heading";
+    hidden.tabIndex = -1;
+    hidden.style.display = "none";
+    document.body.prepend(hidden);
+  });
+  await page.getByRole("link", { name: en.reading.skipToQuestion }).focus();
+  await page.keyboard.press("Enter");
+  await expect(cardHeading(page)).toBeFocused();
+});
+
 test("an unknown attempt shows the empty state with Start the test", async ({
   page,
 }) => {

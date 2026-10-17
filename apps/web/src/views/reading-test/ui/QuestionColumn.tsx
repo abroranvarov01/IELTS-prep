@@ -15,6 +15,7 @@ import {
   hasGroupText,
 } from "@/features/answer-question";
 import { EvidenceList } from "@/features/mark-passage";
+import { visibleElementById } from "@/shared/ui/visible-element";
 
 /**
  * The desktop question column (READING_EXPERIENCE.md, desktop layout): every
@@ -48,7 +49,7 @@ export function QuestionColumn({
       changedHere.current = false;
       return;
     }
-    document.getElementById("question-heading")?.focus();
+    visibleElementById("question-heading")?.focus();
   }, [session.currentQuestion]);
 
   // An open option list has its heading focused; a closed one returns focus

@@ -255,6 +255,24 @@ for (const locale of routing.locales) {
       await expect(questionHeading(page, locale, 1)).toBeFocused();
     });
 
+    test("the skip link reaches the visible question when a hidden page holds the same id", async ({
+      page,
+    }) => {
+      await startPractice(page, locale);
+      // Pages left behind by client navigation stay mounted but hidden, so
+      // the heading's id can appear twice; this puts a hidden copy first.
+      await page.evaluate(() => {
+        const hidden = document.createElement("h2");
+        hidden.id = "question-heading";
+        hidden.tabIndex = -1;
+        hidden.style.display = "none";
+        document.body.prepend(hidden);
+      });
+      await page.keyboard.press("Tab");
+      await page.keyboard.press("Enter");
+      await expect(questionHeading(page, locale, 1)).toBeFocused();
+    });
+
     for (const width of [320, 360]) {
       test(`fits ${width} px without horizontal scroll or truncation`, async ({
         page,

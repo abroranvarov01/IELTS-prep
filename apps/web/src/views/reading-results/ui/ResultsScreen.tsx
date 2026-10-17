@@ -12,6 +12,7 @@ import {
   reviewOffer,
   unitOutcomes,
 } from "@/entities/reading";
+import { useRouter } from "@/shared/i18n/navigation";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { type Loaded, loadResult } from "../api/load-result";
@@ -42,9 +43,18 @@ export function ResultsScreen({
   answerKey: AnswerKey;
 }) {
   const t = useTranslations("reading");
-  const attemptId = useSearchParams().get("attempt");
+  const params = useSearchParams();
+  const attemptId = params.get("attempt");
+  // Sent by a retry whose source had no record for the current key revision:
+  // loading writes it, then the retry continues (use-retry-session.ts).
+  const retryRequest = params.get("retry");
+  const router = useRouter();
   const [loaded, setLoaded] = useState<Loaded>();
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const returning =
+    retryRequest !== null &&
+    loaded?.kind === "result" &&
+    loaded.attempt.kind === "test";
 
   useEffect(() => {
     let active = true;
@@ -58,10 +68,20 @@ export function ResultsScreen({
     };
   }, [test, answerKey, attemptId]);
 
+  useEffect(() => {
+    if (!returning || !loaded || retryRequest === null) return;
+    const address = new URLSearchParams({
+      of: loaded.attempt.id,
+      q: retryRequest,
+      rechecked: "1",
+    });
+    router.replace(`/reading/${test.id}/retry?${address}`);
+  }, [returning, loaded, retryRequest, router, test.id]);
+
   // Arriving from the test, the page says what happened (as M4's finished page).
   useEffect(() => {
-    if (loaded) headingRef.current?.focus();
-  }, [loaded]);
+    if (loaded && !returning) headingRef.current?.focus();
+  }, [loaded, returning]);
 
   const startHref = `/reading/${test.id}`;
   const heading = (title: string, timeUp = false) => (
@@ -79,7 +99,7 @@ export function ResultsScreen({
     </h1>
   );
 
-  if (!loaded)
+  if (!loaded || returning)
     return (
       <div className="mx-auto max-w-column py-8">
         {heading(t("results.title"))}

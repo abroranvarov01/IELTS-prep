@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import { unitOf, useReading } from "@/entities/reading";
+import { visibleElementById } from "@/shared/ui/visible-element";
 
 /**
  * "Your evidence": the sentences pinned to a question, in passage order, under
@@ -37,7 +38,7 @@ export function EvidenceList({
     send({ type: "unpin", number, sentenceId });
     // The removed quote held focus; keep it nearby.
     if (pinned.length > 1) headingRef.current?.focus();
-    else document.getElementById("question-heading")?.focus();
+    else visibleElementById("question-heading")?.focus();
   };
   const action =
     "inline-flex min-h-12 items-center font-medium underline underline-offset-4";

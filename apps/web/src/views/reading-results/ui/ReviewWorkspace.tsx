@@ -13,7 +13,7 @@ import type {
 } from "@/entities/reading";
 import { PassageView } from "@/features/mark-passage";
 import { useIsDesktop } from "@/shared/ui/use-is-desktop";
-import { SHEET_HEIGHT } from "@/widgets/reading-layout";
+import { SHEET_HEIGHT, SkipToQuestion } from "@/widgets/reading-layout";
 import {
   type ReviewSet,
   keySentences,
@@ -115,14 +115,7 @@ export function ReviewWorkspace({
   const evidence = keySentences(entry);
   const pins = pinComparison(unit, attempt, entry);
 
-  const skipLink = (
-    <a
-      href="#question-heading"
-      className="sr-only focus:not-sr-only focus:block focus:px-gutter focus:py-3 focus:font-bold focus:underline"
-    >
-      {t("skipToQuestion")}
-    </a>
-  );
+  const skipLink = <SkipToQuestion />;
   const passageArea = (
     <>
       {notice}

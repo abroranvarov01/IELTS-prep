@@ -9,7 +9,7 @@ import {
   usePassageMarks,
 } from "@/features/mark-passage";
 import { useIsDesktop } from "@/shared/ui/use-is-desktop";
-import { SHEET_HEIGHT } from "@/widgets/reading-layout";
+import { SHEET_HEIGHT, SkipToQuestion } from "@/widgets/reading-layout";
 import { ExamTimer } from "./ExamTimer";
 import { QuestionBar } from "./QuestionBar";
 import { QuestionColumn } from "./QuestionColumn";
@@ -42,14 +42,7 @@ export function TestWorkspace({ canSave }: { canSave: boolean }) {
   };
 
   if (!passage) return null;
-  const skipLink = (
-    <a
-      href="#question-heading"
-      className="sr-only focus:not-sr-only focus:block focus:px-gutter focus:py-3 focus:font-bold focus:underline"
-    >
-      {t("skipToQuestion")}
-    </a>
-  );
+  const skipLink = <SkipToQuestion />;
   const testBar = (
     <TestBar confirmExit={session.mode === "exam"}>
       <span className="font-medium">

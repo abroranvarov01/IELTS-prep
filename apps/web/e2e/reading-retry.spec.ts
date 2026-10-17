@@ -206,6 +206,44 @@ test("a retry finished in two pages at once commits one attempt", async ({
   await expect(other.getByText("1 of 1 now correct")).toBeVisible();
 });
 
+test("a retry of an attempt whose results were never shown has them checked first, then starts", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  await page.evaluate(
+    ([test, t0, id]) =>
+      localStorage.setItem(
+        `reading:${test}`,
+        JSON.stringify({
+          schema: 1,
+          session: {
+            sessionId: id,
+            testId: test,
+            testVersion: 1,
+            mode: "practice",
+            status: "finished",
+            finishReason: "user",
+            startedAt: t0,
+            finishedAt: t0 + 600_000,
+            currentQuestion: 1,
+            answers: { "1": "TRUE" },
+            flagged: [],
+            highlights: [],
+            pins: {},
+            view: { sheet: "partial", passage: 1, scroll: {} },
+          },
+        }),
+      ),
+    [TEST, T0, ID] as const,
+  );
+  // Straight to the retry: the attempt is committed here, without a record.
+  await page.goto(`/en/reading/${TEST}/retry?of=${ID}&q=2`);
+  await expect(page).toHaveURL(/\/retry\?of=.*rechecked=1$/);
+  await expect(heading(page, 2)).toBeVisible();
+  await expect(page.getByText("1 of 1 to practise")).toBeVisible();
+  expect(await storedRecords(page, "results")).toHaveLength(1);
+});
+
 for (const [name, address, reason] of [
   [
     "a source not on this device",

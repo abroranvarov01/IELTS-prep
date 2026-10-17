@@ -11,6 +11,7 @@ import { FINISH_TITLE_ID, FinishConfirmation } from "./FinishConfirmation";
 import { FlagIcon, NavigatorCell } from "./QuestionNavigator";
 import { RetryProgress } from "./RetryProgress";
 import { SecondaryButton } from "@/shared/ui/SecondaryButton";
+import { visibleElementById } from "@/shared/ui/visible-element";
 
 /**
  * The desktop navigator bar along the bottom (READING_EXPERIENCE.md, desktop
@@ -36,7 +37,7 @@ export function QuestionBar({ goTo }: { goTo: (number: number) => void }) {
       .filter((u) => u.passageNumber === passageNumber)
       .flatMap((u) => u.numbers);
   const choose = (target: number) => {
-    if (target === number) document.getElementById("question-heading")?.focus();
+    if (target === number) visibleElementById("question-heading")?.focus();
     else goTo(target);
   };
 

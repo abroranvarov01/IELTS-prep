@@ -23,6 +23,8 @@ let address = "";
 vi.mock("next/navigation", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/navigation")>()),
   useSearchParams: () => new URLSearchParams(address),
+  // Only a retry's return trip navigates (not exercised here).
+  useRouter: () => ({ replace: vi.fn(), push: vi.fn(), prefetch: vi.fn() }),
 }));
 
 afterEach(cleanup);

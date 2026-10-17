@@ -51,9 +51,10 @@ const noSubscription = () => () => {};
  * address (`of`, `q`) to its results. The device is settled first; then the
  * address is validated against its source attempt and the source's record for
  * the current key revision (`keyRevision`; the key itself is not on this
- * page, ADR-0008 §2). A source without that record yet (the key or the rules
- * changed since it was last shown) goes to its results page, which checks it
- * again. The same retry in progress resumes; any other is replaced by a new
+ * page, ADR-0008 §2). A source without that record yet (never shown, or the
+ * key or the rules changed since) goes to its results page, which writes it
+ * and comes back to this address once (`rechecked`). The same retry in
+ * progress resumes; any other is replaced by a new
  * session with its own id. Finishing commits a retry attempt and shows its
  * results.
  */
@@ -62,6 +63,8 @@ export function useRetrySession(
   keyRevision: number,
   of: string | null,
   requested: string | null,
+  /** Back from the source's results page, which wrote its record. */
+  rechecked: boolean,
 ): RetryScreenState {
   const snapshot = useSyncExternalStore(
     noSubscription,
@@ -112,11 +115,14 @@ export function useRetrySession(
         if (
           source?.kind === "test" &&
           source.testVersion === test.version &&
-          !record
+          !record &&
+          !rechecked
         ) {
-          router.replace(
-            `/reading/${test.id}/results?attempt=${encodeURIComponent(source.id)}`,
-          );
+          const address = new URLSearchParams({
+            attempt: source.id,
+            retry: requested ?? "",
+          });
+          router.replace(`/reading/${test.id}/results?${address}`);
           return undefined;
         }
         return validateRetry(test, source, record, requested);
@@ -132,7 +138,7 @@ export function useRetrySession(
     return () => {
       active = false;
     };
-  }, [test, keyRevision, of, requested, router]);
+  }, [test, keyRevision, of, requested, rechecked, router]);
 
   // A valid address without its retry in progress starts one.
   useEffect(() => {

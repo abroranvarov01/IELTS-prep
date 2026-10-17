@@ -34,6 +34,7 @@ export function RetryScreen({
     keyRevision,
     params.get("of"),
     params.get("q"),
+    params.has("rechecked"),
   );
   const questions =
     screen.status === "active" ? screen.session.retry?.questions : undefined;
