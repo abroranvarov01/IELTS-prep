@@ -2906,7 +2906,8 @@
       "title": "Reading review end to end, accessibility pass and docs",
       "milestone": "M5",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-17",
       "dependsOn": ["M5-10"],
       "goal": "The product loop for Reading (practice, understand mistakes, practise again) works as one flow on phone and desktop, and the docs describe what exists.",
       "scope": [

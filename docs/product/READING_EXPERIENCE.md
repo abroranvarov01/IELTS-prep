@@ -2,7 +2,7 @@
 
 Canonical owner of the **Reading interaction model**, the product's signature experience.
 
-> **STATUS: APPROVED PRODUCT/UX DIRECTION.** The interaction model below is decided. The [M4 specifications](#m4-specifications-drafts) are **implemented** (M4 Reading engine, 2026-10-11): the phone and desktop layouts, the question types of the M4 scope, highlighting, Pin Evidence, and Practice and Exam Mode. Answer checking, results, the evidence-first review on phones, tablets and desktop, retries and repeated mistakes are implemented (M5-03 to M5-10). The [M5 specifications](#m5-specifications-drafts) are approved with amendments (owner, 2026-10-11, M5-01) and are being implemented in M5.
+> **STATUS: APPROVED PRODUCT/UX DIRECTION.** The interaction model below is decided. The [M4 specifications](#m4-specifications-drafts) are **implemented** (M4 Reading engine, 2026-10-11): the phone and desktop layouts, the question types of the M4 scope, highlighting, Pin Evidence, and Practice and Exam Mode. The [M5 specifications](#m5-specifications-drafts), approved with amendments (owner, 2026-10-11, M5-01), are **implemented** (M5 Reading review + Error Intelligence, 2026-10-17): answer checking and the practice score, the attempt history on the device, results, the evidence-first review on phones, tablets and desktop, retries and repeated mistakes. The explanations and the key stay `aiDraft` until the human reviews before beta (M11-04 to M11-07).
 
 General UX rules still apply ([UX_PRINCIPLES.md](UX_PRINCIPLES.md)), as do accessibility requirements ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)) and the visual system ([DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md)).
 
