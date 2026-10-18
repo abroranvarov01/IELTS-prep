@@ -3,25 +3,28 @@
  * renders it. Content is untrusted data; parse it with `parseReadingTest`.
  */
 
-export type ExamType = "academic" | "general";
+import {
+  type GapSegment,
+  type Option,
+  type Origin,
+  type WordLimit,
+  gapNumbers,
+} from "@/shared/content/types";
 
-export type Origin =
-  | { kind: "original"; author: string; note?: string }
-  | { kind: "licensed"; source: string; license: string };
+export {
+  type GapSegment,
+  type Option,
+  type Origin,
+  type WordLimit,
+  gapNumbers,
+} from "@/shared/content/types";
+
+export type ExamType = "academic" | "general";
 
 export type Sentence = { id: string; text: string };
 
 /** `letter` (A, B, …) is set on every paragraph of a passage or on none. */
 export type Paragraph = { id: string; letter?: string; sentences: Sentence[] };
-
-/** A lettered or numbered choice: "A", "B", … or "i", "ii", … */
-export type Option = { id: string; text: string };
-
-/** Gap texts are structured: a gap carries its question number. */
-export type GapSegment = { text: string } | { gap: number };
-
-/** "NO MORE THAN TWO WORDS AND/OR A NUMBER" is { words: 2, numbers: true }. */
-export type WordLimit = { words: number; numbers: boolean };
 
 type GroupBase = { id: string; instruction: string };
 
@@ -151,8 +154,4 @@ export function groupNumbers(group: QuestionGroup): number[] {
     default:
       return group.questions.map((question) => question.number);
   }
-}
-
-export function gapNumbers(segments: GapSegment[]): number[] {
-  return segments.flatMap((segment) => ("gap" in segment ? [segment.gap] : []));
 }

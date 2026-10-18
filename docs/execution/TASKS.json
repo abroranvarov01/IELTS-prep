@@ -4044,7 +4044,8 @@
       "title": "Listening content contract and validator in the domain",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-06"],
       "goal": "Listening tests and keys are parsed and validated as untrusted data, as Reading content is.",
       "scope": [
