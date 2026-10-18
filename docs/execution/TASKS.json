@@ -3589,7 +3589,8 @@
       "title": "Level-check sessions and results on the device",
       "milestone": "M7",
       "owner": "worker",
-      "status": "in_progress",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M7-07"],
       "goal": "A level check can be left, resumed, finished and retaken, and its results are kept on the device as the ADR decided.",
       "scope": [
@@ -3621,7 +3622,7 @@
       "title": "The level check on phone and desktop",
       "milestone": "M7",
       "owner": "worker",
-      "status": "todo",
+      "status": "in_progress",
       "dependsOn": ["M7-06", "M7-08"],
       "goal": "The real level check replaces the interim page at /{locale}/level-check.",
       "scope": [
