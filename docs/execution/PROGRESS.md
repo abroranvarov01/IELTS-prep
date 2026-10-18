@@ -894,3 +894,8 @@ Entry format:
 - Verification: The integration checkpoint is the M7-11 run on this tree (validation record above): `pnpm db:up`, `pnpm check` (web unit 365, api 16), `pnpm build`, and `pnpm test:e2e` (api 16, web 589, both projects, all specs) all passed; this commit changes only TASKS.json and PROGRESS.md.
 - Notes: Open items for the owner from M7: the human review of form A's items, key and explanations and the fluent-speaker review of the M7 uz and ru strings (M15); the Reading test screen's kept-alive save effect (M7-11 entry); the illustrations from the direction image (open question above). Later milestones: the Listening section (M9), sync of the level-check records (M10), what Home and personalization read from the records (M11), a second form for retakes (M13).
 
+
+### 2026-10-18: Owner activates M8 (not a task)
+- Result: recorded
+- Changes: Owner instruction of 2026-10-18 in the session: "Активирую M8. Поставь M8 в active в TASKS.json, запиши моё одобрение в PROGRESS.md, закоммить локально (не пушить) и запусти следующую задачу." TASKS.json: M8 `status: "active"`; M7 stays done. Exactly one milestone is active.
+- Verification: n/a (owner decision).
