@@ -36,6 +36,7 @@ export {
 } from "./model/retry";
 export {
   type OptionMark,
+  type PracticeRawScore,
   SCORING_RULES_VERSION,
   type Signal,
   type UnitOutcome,

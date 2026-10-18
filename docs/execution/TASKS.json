@@ -3166,7 +3166,8 @@
       "title": "Practice Hub",
       "milestone": "M6",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M6-05"],
       "goal": "Learners find every Reading test in one place, with its state on this device, and the Hub is ready to list Listening later.",
       "scope": [

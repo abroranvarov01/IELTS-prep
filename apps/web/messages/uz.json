@@ -341,5 +341,19 @@
     "label": "Asosiy navigatsiya",
     "home": "Bosh sahifa",
     "practice": "Mashq"
+  },
+  "practice": {
+    "title": "Mashq",
+    "skill": {
+      "reading": "Oʻqish"
+    },
+    "format": "{passages} ta matn · {questions} ta savol · taxminan {minutes} daqiqa",
+    "state": {
+      "notStarted": "Boshlanmagan",
+      "inProgress": "Davom etmoqda · {mode}",
+      "finished": "Oxirgi natija: {total} tadan {score} tasi toʻgʻri"
+    },
+    "storageUnavailable": "Bu qurilmadagi natijalaringizni oʻqib boʻlmadi.",
+    "empty": "Hozircha mashq testlari yoʻq."
   }
 }

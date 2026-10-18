@@ -341,5 +341,19 @@
     "label": "Основная навигация",
     "home": "Главная",
     "practice": "Практика"
+  },
+  "practice": {
+    "title": "Практика",
+    "skill": {
+      "reading": "Чтение"
+    },
+    "format": "Текстов: {passages} · вопросов: {questions} · около {minutes} минут",
+    "state": {
+      "notStarted": "Не начат",
+      "inProgress": "В процессе · {mode}",
+      "finished": "Последний результат: верно {score} из {total}"
+    },
+    "storageUnavailable": "Не удаётся прочитать ваш прогресс на этом устройстве.",
+    "empty": "Пока нет тестов для практики."
   }
 }

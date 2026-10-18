@@ -1,5 +1,6 @@
 "use client";
 
+import { InfoIcon } from "@/shared/ui/icons";
 import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useState } from "react";
 import {
@@ -17,7 +18,6 @@ import {
 import { QuestionPrompt, unitOptions } from "@/features/answer-question";
 import { SecondaryButton } from "@/shared/ui/SecondaryButton";
 import { keySentences, pinComparison, quotesOf } from "../model/review";
-import { InfoIcon } from "./InfoIcon";
 import { OutcomeIcon } from "./OutcomeIcon";
 
 /** English words inside a localized string (`<en>…</en>` in the catalogs). */

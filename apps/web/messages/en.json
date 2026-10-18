@@ -341,5 +341,19 @@
     "label": "Main",
     "home": "Home",
     "practice": "Practice"
+  },
+  "practice": {
+    "title": "Practice",
+    "skill": {
+      "reading": "Reading"
+    },
+    "format": "{passages} passages · {questions} questions · about {minutes} minutes",
+    "state": {
+      "notStarted": "Not started",
+      "inProgress": "In progress · {mode}",
+      "finished": "Last result: {score} of {total} correct"
+    },
+    "storageUnavailable": "Your progress on this device can't be read.",
+    "empty": "No practice tests yet."
   }
 }

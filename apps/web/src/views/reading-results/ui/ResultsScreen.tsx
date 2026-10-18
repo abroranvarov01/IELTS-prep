@@ -1,5 +1,6 @@
 "use client";
 
+import { InfoIcon } from "@/shared/ui/icons";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useRef, useState } from "react";
@@ -16,7 +17,6 @@ import { useRouter } from "@/shared/i18n/navigation";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { type Loaded, loadResult } from "../api/load-result";
-import { InfoIcon } from "./InfoIcon";
 import { OutcomeIcon } from "./OutcomeIcon";
 import { RepeatedMistakes } from "./RepeatedMistakes";
 

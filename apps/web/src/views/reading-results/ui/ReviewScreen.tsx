@@ -5,12 +5,11 @@ import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import type { AnswerKey, Explanations, ReadingTest } from "@/entities/reading";
 import { Link } from "@/shared/i18n/navigation";
-import { ChevronIcon } from "@/shared/ui/icons";
+import { ChevronIcon, InfoIcon } from "@/shared/ui/icons";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { TestBarFrame } from "@/widgets/reading-layout";
 import { type Loaded, loadResult } from "../api/load-result";
-import { InfoIcon } from "./InfoIcon";
 import { ReviewWorkspace } from "./ReviewWorkspace";
 
 /**

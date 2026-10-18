@@ -606,7 +606,7 @@ Reused without change: "Time is up.", "Start again", "Show in passage", "Your ev
   - **Offline after loading:** the list stays; opening a test needs the network (offline scope is M14).
   - The Hub never changes stored sessions or attempts by being visited.
 - **Accessibility:** one H1; each skill section a heading (H2) with its list; each row a single link whose name includes the title, the format and the state; the state never by color alone.
-- **Languages checked:** not yet (M6-06: Russian and Uzbek state lines and "Last result" at 320 px).
+- **Languages checked:** M6-06 (2026-10-18): every state in uz, ru and en at 320, 390 and 1280 px (screenshots), and 320 and 1280 px fit with axe in the e2e spec.
 
 ### Open questions (M6-02)
 
