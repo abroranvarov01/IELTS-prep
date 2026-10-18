@@ -1,0 +1,1783 @@
+{
+  "testId": "temporary-voa-1",
+  "version": 1,
+  "locale": "uz",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "at": "p1-s5"
+        },
+        {
+          "text": " da Penelopa "
+        },
+        {
+          "en": "through the city on a bus"
+        },
+        {
+          "text": " ekskursiyasi haqida soʻraydi. Qaydda xuddi shu soʻzlar bor, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "bus"
+        },
+        {
+          "text": " yoziladi. Ikkinchi ekskursiya, "
+        },
+        {
+          "en": "along the river in a boat"
+        },
+        {
+          "text": ", 2-savolga tegishli."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Penelopa "
+        },
+        {
+          "en": "through the city on a bus"
+        },
+        {
+          "text": " ekskursiyasini aytadi. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "bus"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "at": "p1-s6"
+        },
+        {
+          "text": " da Penelopa "
+        },
+        {
+          "en": "goes along the river in a boat"
+        },
+        {
+          "text": " ekskursiyasi haqida soʻraydi. Qayd shu soʻzlarni takrorlaydi, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "river"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ikkinchi ekskursiya "
+        },
+        {
+          "en": "along the river in a boat"
+        },
+        {
+          "text": " boradi. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "river"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "at": "p1-s20"
+        },
+        {
+          "text": " da Anna mashhur DC Ducksni "
+        },
+        {
+          "en": "the boat with wheels"
+        },
+        {
+          "text": " deydi. "
+        },
+        {
+          "en": "The DC Ducks"
+        },
+        {
+          "text": " ostidagi qaydda "
+        },
+        {
+          "en": "A boat with ___"
+        },
+        {
+          "text": " deyilgan, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "wheels"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna DC Ducksni "
+        },
+        {
+          "en": "the boat with wheels"
+        },
+        {
+          "text": " deb ataydi. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "wheels"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "at": "p1-s26"
+        },
+        {
+          "text": " da Penelopa qayiq Ikkinchi jahon urushi davrida "
+        },
+        {
+          "en": "to carry people and supplies"
+        },
+        {
+          "text": " yaratilganini aytadi. Qayddagi "
+        },
+        {
+          "en": "made"
+        },
+        {
+          "text": " soʻzi yozuvdagi "
+        },
+        {
+          "en": "created"
+        },
+        {
+          "text": " bilan bir xil maʼnoda. Shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "supplies"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Qayiq urush paytida "
+        },
+        {
+          "en": "to carry people and supplies"
+        },
+        {
+          "text": " qilingan. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "supplies"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "at": "p1-s43"
+        },
+        {
+          "text": " da Professor Bot Vashington monumenti "
+        },
+        {
+          "en": "was damaged in an earthquake"
+        },
+        {
+          "text": " ekanini bilasizmi, deb soʻraydi. Qaydda xuddi shu soʻzlar bor, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "earthquake"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Professor Bot monument "
+        },
+        {
+          "en": "was damaged in an earthquake"
+        },
+        {
+          "text": " deydi. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "earthquake"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "at": "p1-s41"
+        },
+        {
+          "text": " da Anna "
+        },
+        {
+          "en": "Hey, the Washington Monument is on the left!"
+        },
+        {
+          "text": " deydi. Demak, monument ularning chap tomonida: javob "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". Hech kim uni oʻngda yoki orqada deb aytmaydi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna monument "
+        },
+        {
+          "en": "is on the left"
+        },
+        {
+          "text": " deydi. Javob — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "at": "p1-s53"
+        },
+        {
+          "text": " da bola Oq uy ichida "
+        },
+        {
+          "en": "there is a swimming pool"
+        },
+        {
+          "text": ", kinoteatr va 32 ta hammom borligini aytadi. Suzish havzasi — "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": " varianti. U bouling yoki kutubxonani tilga olmaydi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Bola Oq uyda "
+        },
+        {
+          "en": "there is a swimming pool"
+        },
+        {
+          "text": " deydi. Javob — "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "at": "p1-s59"
+        },
+        {
+          "text": " da Penelopa "
+        },
+        {
+          "en": "we should give him a tip!"
+        },
+        {
+          "text": " deydi, "
+        },
+        {
+          "at": "p1-s63"
+        },
+        {
+          "text": " da esa "
+        },
+        {
+          "en": "That was a great Fun Fact!"
+        },
+        {
+          "text": " deb qoʻshadi. U qiziqarli fakt uchun choychaqa bermoqchi: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". Bola qayiqni boshqargani yoki broshyura sotgani haqida gap yoʻq."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Penelopa bolaga choychaqa bermoqchi va "
+        },
+        {
+          "en": "That was a great Fun Fact!"
+        },
+        {
+          "text": " deydi. Javob — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "at": "p1-s53"
+        },
+        {
+          "text": " da bola Oq uyda "
+        },
+        {
+          "en": "a movie theater and 32 bathrooms"
+        },
+        {
+          "text": " borligini aytadi. Javob — "
+        },
+        {
+          "en": "32"
+        },
+        {
+          "text": ". Uni raqam bilan yoki soʻz bilan, "
+        },
+        {
+          "en": "thirty-two"
+        },
+        {
+          "text": ", yozish mumkin."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Bola Oq uyda "
+        },
+        {
+          "en": "32 bathrooms"
+        },
+        {
+          "text": " bor deydi. Javob — "
+        },
+        {
+          "en": "32"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "at": "p1-s57"
+        },
+        {
+          "text": " da bola onasi, toʻrt opa-singlisi va ikki xolasi bilan yashashini, uyda esa "
+        },
+        {
+          "en": "and only one bathroom!"
+        },
+        {
+          "text": " ekanini aytadi. Demak, hammom bitta: "
+        },
+        {
+          "en": "one"
+        },
+        {
+          "text": ". Boshqa sonlar odamlar haqida, hammomlar haqida emas."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Bolaning uyida "
+        },
+        {
+          "en": "only one bathroom"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "one"
+        },
+        {
+          "text": " yoki "
+        },
+        {
+          "en": "1"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "at": "p2-s19"
+        },
+        {
+          "text": " da boshlovchi "
+        },
+        {
+          "en": "The first step"
+        },
+        {
+          "text": " ni aytadi: "
+        },
+        {
+          "en": "to find club members"
+        },
+        {
+          "text": ". Sxemaning birinchi blokida "
+        },
+        {
+          "en": "Find club ___"
+        },
+        {
+          "text": " deyilgan, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "members"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Birinchi qadam — "
+        },
+        {
+          "en": "to find club members"
+        },
+        {
+          "text": ". Tushib qolgan soʻz — "
+        },
+        {
+          "en": "members"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "at": "p2-s27"
+        },
+        {
+          "text": " da keyingi qadam aytiladi: klub yigʻiladigan joy kerak — "
+        },
+        {
+          "en": "you must find a place"
+        },
+        {
+          "text": ". Ikkinchi blokda "
+        },
+        {
+          "en": "Find a ___ for the club to meet"
+        },
+        {
+          "text": " deyilgan, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "place"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Keyin klub uchun "
+        },
+        {
+          "en": "you must find a place"
+        },
+        {
+          "text": ". Tushib qolgan soʻz — "
+        },
+        {
+          "en": "place"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "at": "p2-s43"
+        },
+        {
+          "text": " da boshlovchi uchinchi qadamni aytadi: "
+        },
+        {
+          "en": "hold your first meeting"
+        },
+        {
+          "text": ". Uchinchi blokda "
+        },
+        {
+          "en": "Hold the first ___"
+        },
+        {
+          "text": " deyilgan, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "meeting"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Uchinchi qadam — "
+        },
+        {
+          "en": "hold your first meeting"
+        },
+        {
+          "text": ". Tushib qolgan soʻz — "
+        },
+        {
+          "en": "meeting"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "at": "p2-s45"
+        },
+        {
+          "text": " da boshlovchi birinchi uchrashuvdan "
+        },
+        {
+          "en": "to talk with members about logistics"
+        },
+        {
+          "text": " uchun foydalanishni maslahat beradi. Oxirgi blokda "
+        },
+        {
+          "en": "talk with members about ___"
+        },
+        {
+          "text": " deyilgan, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "logistics"
+        },
+        {
+          "text": " yoziladi. Imloni tekshiring: har bir harf muhim."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Birinchi uchrashuvda "
+        },
+        {
+          "en": "talk with members about logistics"
+        },
+        {
+          "text": ". Tushib qolgan soʻz — "
+        },
+        {
+          "en": "logistics"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "15": {
+      "explanation": [
+        {
+          "at": "p2-s21"
+        },
+        {
+          "text": " da boshlovchi oʻqituvchi "
+        },
+        {
+          "en": "put up signs in classrooms"
+        },
+        {
+          "text": " mumkinligini aytadi. "
+        },
+        {
+          "en": "A teacher"
+        },
+        {
+          "text": " qatorida "
+        },
+        {
+          "en": "Put up signs in ___"
+        },
+        {
+          "text": " deyilgan, shuning uchun boʻsh joyga yozuvdagidek koʻplikda "
+        },
+        {
+          "en": "classrooms"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Oʻqituvchi "
+        },
+        {
+          "en": "put up signs in classrooms"
+        },
+        {
+          "text": " mumkin. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "classrooms"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "16": {
+      "explanation": [
+        {
+          "at": "p2-s23"
+        },
+        {
+          "text": " da boshlovchi ish joyida klubni "
+        },
+        {
+          "en": "by sending an email around to coworkers"
+        },
+        {
+          "text": " reklama qilish mumkinligini aytadi. "
+        },
+        {
+          "en": "Someone at work"
+        },
+        {
+          "text": " qatorida "
+        },
+        {
+          "en": "Send an ___ around to coworkers"
+        },
+        {
+          "text": " deyilgan, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "email"
+        },
+        {
+          "text": " yoziladi ("
+        },
+        {
+          "en": "e-mail"
+        },
+        {
+          "text": " ham qabul qilinadi)."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ishda "
+        },
+        {
+          "en": "an email around to coworkers"
+        },
+        {
+          "text": " yuboring. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "email"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "17": {
+      "explanation": [
+        {
+          "at": "p2-s25"
+        },
+        {
+          "text": " da boshlovchi klub hamma uchun ochiq boʻlsa, "
+        },
+        {
+          "en": "you can use the internet to find members"
+        },
+        {
+          "text": " deydi. "
+        },
+        {
+          "en": "Anyone"
+        },
+        {
+          "text": " qatorida "
+        },
+        {
+          "en": "Use the ___"
+        },
+        {
+          "text": " deyilgan, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "internet"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Klub hamma uchun ochiq boʻlsa, "
+        },
+        {
+          "en": "use the internet to find members"
+        },
+        {
+          "text": ". Tushib qolgan soʻz — "
+        },
+        {
+          "en": "internet"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "18": {
+      "explanation": [
+        {
+          "at": "p2-s31"
+        },
+        {
+          "text": " da birinchi band: aʼzolarga joyni topish va unga borish qanchalik oson — "
+        },
+        {
+          "en": "how easy is it"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "to find and get to the location"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "at": "p2-s34"
+        },
+        {
+          "text": " da ikkinchi band: "
+        },
+        {
+          "en": "to find a location that is safe"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". Narx, sokinlik va avtoturargohni boshlovchi band sifatida aytmaydi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Boshlovchi ikki narsani aytadi: joyga "
+        },
+        {
+          "en": "to find and get to"
+        },
+        {
+          "text": " oson boʻlishi va u "
+        },
+        {
+          "en": "is safe"
+        },
+        {
+          "text": ". Javoblar — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "20": {
+      "explanation": [
+        {
+          "at": "p2-s40"
+        },
+        {
+          "text": " da boshlovchi kafe, restoran va barlar haqida "
+        },
+        {
+          "en": "often have enough space for large groups"
+        },
+        {
+          "text": " deydi. Bu — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " varianti. Ular arzon yoki sokin ekani aytilmaydi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Bu joylarda "
+        },
+        {
+          "en": "often have enough space for large groups"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "21": {
+      "explanation": [
+        {
+          "at": "p3-s13"
+        },
+        {
+          "text": " da Kerolayn "
+        },
+        {
+          "en": "If I use a smoker"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "the bees will stay calm"
+        },
+        {
+          "text": " deydi. Demak, tutatgich asalarilarni tinchlantiradi: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Tutatgich bilan "
+        },
+        {
+          "en": "the bees will stay calm"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "22": {
+      "explanation": [
+        {
+          "at": "p3-s41"
+        },
+        {
+          "text": " da Anna kitob "
+        },
+        {
+          "en": "which bees like which types of flowers"
+        },
+        {
+          "text": " ni aytib berishini aytadi. Demak, kitob asalarilar qaysi gullarni yoqtirishini koʻrsatadi: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kitob "
+        },
+        {
+          "en": "which bees like which types of flowers"
+        },
+        {
+          "text": " ni aytadi. Javob — "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "23": {
+      "explanation": [
+        {
+          "at": "p3-s10"
+        },
+        {
+          "text": " da Kerolayn "
+        },
+        {
+          "en": "we wear protective clothing"
+        },
+        {
+          "text": " deydi. Toʻr, kostyum va qoʻlqop — ana shu himoya kiyimi, "
+        },
+        {
+          "en": "protective"
+        },
+        {
+          "text": " esa u asalarichini himoya qilishini bildiradi: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Asalarichilar "
+        },
+        {
+          "en": "wear protective clothing"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "24": {
+      "explanation": [
+        {
+          "at": "p3-s26"
+        },
+        {
+          "text": " da Kerolayn uyadagi vazifalarni tushuntiradi: "
+        },
+        {
+          "en": "The queen bee lays the eggs"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": " variantida ham xuddi shu soʻzlar, "
+        },
+        {
+          "en": "lays the eggs"
+        },
+        {
+          "text": ", bor, shuning uchun javob — "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "en": "The queen bee lays the eggs"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "25": {
+      "explanation": [
+        {
+          "at": "p3-s27"
+        },
+        {
+          "text": " da Kerolayn "
+        },
+        {
+          "en": "The worker bees collect nectar and pollen"
+        },
+        {
+          "text": " deydi va ular buni gullardan uyaga olib kelishini aytadi. "
+        },
+        {
+          "en": "E"
+        },
+        {
+          "text": " variantida xuddi shu soʻzlar bor."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ishchi asalarilar "
+        },
+        {
+          "en": "collect nectar and pollen"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "E"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "26": {
+      "explanation": [
+        {
+          "at": "p3-s38"
+        },
+        {
+          "text": " da Kerolayn "
+        },
+        {
+          "en": "You can plant native flowers that bees like"
+        },
+        {
+          "text": " deydi — bu "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "at": "p3-s45"
+        },
+        {
+          "text": " da esa "
+        },
+        {
+          "en": "Buying local honey also helps the bees"
+        },
+        {
+          "text": " deydi — bu "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". Himoya kiyimi va tutatgich oldinroq tilga olinadi, lekin asalarichining buyumlari sifatida, asalarilarga yordam usuli sifatida emas."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kerolayn odamlar "
+        },
+        {
+          "en": "plant native flowers"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "local honey"
+        },
+        {
+          "text": " sotib olishi mumkin deydi. Javoblar — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "28": {
+      "explanation": [
+        {
+          "at": "p3-s18"
+        },
+        {
+          "text": " da Kerolayn "
+        },
+        {
+          "en": "When I lift the frame"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "you will see the bees"
+        },
+        {
+          "text": " deydi. "
+        },
+        {
+          "en": "When Caroline lifts the ___"
+        },
+        {
+          "text": " gapi ham shuni aytadi, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "frame"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kerolayn "
+        },
+        {
+          "en": "When I lift the frame"
+        },
+        {
+          "text": " deydi. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "frame"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "29": {
+      "explanation": [
+        {
+          "at": "p3-s27"
+        },
+        {
+          "text": " da Kerolayn ishchi asalarilar nektar va changni yigʻib, "
+        },
+        {
+          "en": "and bring it back to the hive"
+        },
+        {
+          "text": " deydi. "
+        },
+        {
+          "en": "bring nectar and pollen back to the ___"
+        },
+        {
+          "text": " gapi bunga mos, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "hive"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ishchi asalarilar "
+        },
+        {
+          "en": "bring it back to the hive"
+        },
+        {
+          "text": ". Tushib qolgan soʻz — "
+        },
+        {
+          "en": "hive"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "30": {
+      "explanation": [
+        {
+          "at": "p3-s57"
+        },
+        {
+          "text": " da Kerolayn "
+        },
+        {
+          "en": "You have my business card"
+        },
+        {
+          "text": " deydi. "
+        },
+        {
+          "en": "she has her business ___"
+        },
+        {
+          "text": " gapi buni Anna tomonidan aytadi, shuning uchun boʻsh joyga "
+        },
+        {
+          "en": "card"
+        },
+        {
+          "text": " yoziladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kerolayn "
+        },
+        {
+          "en": "You have my business card"
+        },
+        {
+          "text": " deydi. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "card"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "31": {
+      "explanation": [
+        {
+          "at": "p4-s26"
+        },
+        {
+          "text": " da boshlovchi "
+        },
+        {
+          "en": "you open the front door"
+        },
+        {
+          "text": " va polda "
+        },
+        {
+          "en": "see a bag of flour"
+        },
+        {
+          "text": " deydi. Demak, kirish eshigi yonida un bor: "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kirish eshigida siz "
+        },
+        {
+          "en": "see a bag of flour"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "32": {
+      "explanation": [
+        {
+          "at": "p4-s30"
+        },
+        {
+          "text": " da boshlovchi "
+        },
+        {
+          "en": "On top of your bed"
+        },
+        {
+          "text": " bir piyola suv turibdi deydi. Demak, karavotda suv bor: "
+        },
+        {
+          "en": "G"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Karavotda "
+        },
+        {
+          "en": "sits a cup of water"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "G"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "33": {
+      "explanation": [
+        {
+          "at": "p4-s33"
+        },
+        {
+          "text": " da mehmonxonada siz divanda "
+        },
+        {
+          "en": "a very large spoon of dry yeast"
+        },
+        {
+          "text": " ni koʻrasiz. Demak, divanda quruq xamirturush bor: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Divanda "
+        },
+        {
+          "en": "a very large spoon of dry yeast"
+        },
+        {
+          "text": " bor. Javob — "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "34": {
+      "explanation": [
+        {
+          "at": "p4-s37"
+        },
+        {
+          "text": " da boshlovchi "
+        },
+        {
+          "en": "you walk into the kitchen"
+        },
+        {
+          "text": " va bir-birini quvlayotgan "
+        },
+        {
+          "en": "see two tomatoes"
+        },
+        {
+          "text": " deydi. Demak, oshxonada pomidorlar bor: "
+        },
+        {
+          "en": "F"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Oshxonada siz "
+        },
+        {
+          "en": "see two tomatoes"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "F"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "35": {
+      "explanation": [
+        {
+          "text": "Orqa eshikni ochib "
+        },
+        {
+          "en": "go outside"
+        },
+        {
+          "text": " qilganingizdan soʻng, "
+        },
+        {
+          "at": "p4-s40"
+        },
+        {
+          "text": " da boshlovchi siz "
+        },
+        {
+          "en": "very tall green basil plants"
+        },
+        {
+          "text": " ni koʻrasiz deydi. Tashqari — bu bogʻ, demak, bogʻda rayhon: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Tashqarida, bogʻda, "
+        },
+        {
+          "en": "very tall green basil plants"
+        },
+        {
+          "text": " bor. Javob — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "36": {
+      "explanation": [
+        {
+          "at": "p4-s7"
+        },
+        {
+          "text": " da boshlovchi Holms xotira saroyining bir xonasida "
+        },
+        {
+          "en": "finds his childhood dog"
+        },
+        {
+          "text": " deydi. Uch soʻzgacha yozish mumkin, shuning uchun "
+        },
+        {
+          "en": "his childhood dog"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "childhood dog"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "a dog"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "dog"
+        },
+        {
+          "text": " qabul qilinadi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Holms "
+        },
+        {
+          "en": "finds his childhood dog"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "his childhood dog"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "37": {
+      "explanation": [
+        {
+          "at": "p4-s57"
+        },
+        {
+          "text": " da boshlovchi Entoni Metivye avval xotira saroyining oddiy xaritasini chizishni maslahat berishini aytadi: "
+        },
+        {
+          "en": "suggests first drawing a simple map"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "a simple map"
+        },
+        {
+          "text": "; uch soʻz doirasida "
+        },
+        {
+          "en": "simple map"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "map"
+        },
+        {
+          "text": " ham qabul qilinadi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Metivye "
+        },
+        {
+          "en": "first drawing a simple map"
+        },
+        {
+          "text": " ni maslahat beradi. Javob — "
+        },
+        {
+          "en": "a simple map"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "38": {
+      "explanation": [
+        {
+          "at": "p4-s58"
+        },
+        {
+          "text": " da boshlovchi "
+        },
+        {
+          "en": "Then, number the places along your path"
+        },
+        {
+          "text": " deydi. Demak, "
+        },
+        {
+          "en": "the places"
+        },
+        {
+          "text": " raqamlanadi; faqat "
+        },
+        {
+          "en": "places"
+        },
+        {
+          "text": " ham qabul qilinadi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Siz "
+        },
+        {
+          "en": "number the places along your path"
+        },
+        {
+          "text": ". Javob — "
+        },
+        {
+          "en": "the places"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "39": {
+      "explanation": [
+        {
+          "at": "p4-s64"
+        },
+        {
+          "text": " da ikkala mutaxassis "
+        },
+        {
+          "en": "imagining things in a humorous or crazy way"
+        },
+        {
+          "text": " eslab qolishga yordam beradi deydi: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "at": "p4-s65"
+        },
+        {
+          "text": " da ular "
+        },
+        {
+          "en": "connecting images to actions or movement"
+        },
+        {
+          "text": " uzoq xotira yaratishiga ham qoʻshiladi: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "Humorous"
+        },
+        {
+          "text": " — "
+        },
+        {
+          "en": "funny"
+        },
+        {
+          "text": " degani."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Mutaxassislar kulgili yoki gʻalati tasavvurlar va "
+        },
+        {
+          "en": "connecting images to actions or movement"
+        },
+        {
+          "text": " haqida bir fikrda. Javoblar — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  }
+}

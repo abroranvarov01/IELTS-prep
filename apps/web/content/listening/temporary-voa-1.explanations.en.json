@@ -1,0 +1,1915 @@
+{
+  "testId": "temporary-voa-1",
+  "version": 1,
+  "locale": "en",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s5"
+        },
+        {
+          "text": " Penelope asks about the tour that goes "
+        },
+        {
+          "en": "through the city on a bus"
+        },
+        {
+          "text": ". The note "
+        },
+        {
+          "en": "One goes through the city on a"
+        },
+        {
+          "text": " uses the same words, so the gap is "
+        },
+        {
+          "en": "bus"
+        },
+        {
+          "text": ". The other tour, "
+        },
+        {
+          "en": "along the river in a boat"
+        },
+        {
+          "text": ", is question 2."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Penelope names the tour "
+        },
+        {
+          "en": "through the city on a bus"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "bus"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s6"
+        },
+        {
+          "text": " Penelope asks about the tour that "
+        },
+        {
+          "en": "goes along the river in a boat"
+        },
+        {
+          "text": ". The note "
+        },
+        {
+          "en": "One goes along the ___ in a boat"
+        },
+        {
+          "text": " matches it, so the gap is "
+        },
+        {
+          "en": "river"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The second tour goes "
+        },
+        {
+          "en": "along the river in a boat"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "river"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s20"
+        },
+        {
+          "text": " Anna says the famous DC Ducks is "
+        },
+        {
+          "en": "the boat with wheels"
+        },
+        {
+          "text": ". The note under "
+        },
+        {
+          "en": "The DC Ducks"
+        },
+        {
+          "text": " says "
+        },
+        {
+          "en": "A boat with ___"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "wheels"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna calls the DC Ducks "
+        },
+        {
+          "en": "the boat with wheels"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "wheels"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s26"
+        },
+        {
+          "text": " Penelope says the boat was created during World War II "
+        },
+        {
+          "en": "to carry people and supplies"
+        },
+        {
+          "text": ". The note says "
+        },
+        {
+          "en": "First made in World War II"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "made"
+        },
+        {
+          "text": " means "
+        },
+        {
+          "en": "created"
+        },
+        {
+          "text": ". So the gap after "
+        },
+        {
+          "en": "people and"
+        },
+        {
+          "text": " is "
+        },
+        {
+          "en": "supplies"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The boat was made in the war "
+        },
+        {
+          "en": "to carry people and supplies"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "supplies"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s43"
+        },
+        {
+          "text": " Professor Bot asks if you knew that the Washington Monument "
+        },
+        {
+          "en": "was damaged in an earthquake"
+        },
+        {
+          "text": ". The fun fact in the notes uses the same words, so the gap is "
+        },
+        {
+          "en": "earthquake"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Professor Bot says the monument "
+        },
+        {
+          "en": "was damaged in an earthquake"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "earthquake"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s41"
+        },
+        {
+          "text": " Anna says: "
+        },
+        {
+          "en": "Hey, the Washington Monument is on the left!"
+        },
+        {
+          "text": " So when they see it, the monument is on their left: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". Nobody says it is on the right or behind them."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna says the monument "
+        },
+        {
+          "en": "is on the left"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s53"
+        },
+        {
+          "text": " the boy says that inside the White House "
+        },
+        {
+          "en": "there is a swimming pool"
+        },
+        {
+          "text": ", a movie theater and 32 bathrooms. A swimming pool is "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". He mentions no bowling alley and no library."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The boy says "
+        },
+        {
+          "en": "there is a swimming pool"
+        },
+        {
+          "text": " in the White House. The answer is "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s59"
+        },
+        {
+          "text": " Penelope says "
+        },
+        {
+          "en": "we should give him a tip!"
+        },
+        {
+          "text": " and at "
+        },
+        {
+          "at": "p1-s63"
+        },
+        {
+          "text": " she adds "
+        },
+        {
+          "en": "That was a great Fun Fact!"
+        },
+        {
+          "text": " She wants to tip him because of his fun fact: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". Nothing is said about him driving the boat or selling a brochure."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Penelope wants to tip the boy and says "
+        },
+        {
+          "en": "That was a great Fun Fact!"
+        },
+        {
+          "text": " The answer is "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s53"
+        },
+        {
+          "text": " the boy says the White House has "
+        },
+        {
+          "en": "a movie theater and 32 bathrooms"
+        },
+        {
+          "text": ". So the answer is "
+        },
+        {
+          "en": "32"
+        },
+        {
+          "text": ". You can write it in figures or as "
+        },
+        {
+          "en": "thirty-two"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The boy says the White House has "
+        },
+        {
+          "en": "32 bathrooms"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "32"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s57"
+        },
+        {
+          "text": " the boy says he lives with his mom, four sisters and two aunts "
+        },
+        {
+          "en": "and only one bathroom!"
+        },
+        {
+          "text": " So his house has "
+        },
+        {
+          "en": "one"
+        },
+        {
+          "text": " bathroom. The other numbers are people, not bathrooms."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The boy's house has "
+        },
+        {
+          "en": "only one bathroom"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "one"
+        },
+        {
+          "text": " or "
+        },
+        {
+          "en": "1"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s19"
+        },
+        {
+          "text": " the presenter gives "
+        },
+        {
+          "en": "The first step"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "to find club members"
+        },
+        {
+          "text": ". The first box of the flow chart says "
+        },
+        {
+          "en": "Find club ___"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "members"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The first step is "
+        },
+        {
+          "en": "to find club members"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "members"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s27"
+        },
+        {
+          "text": " the next step is that "
+        },
+        {
+          "en": "you must find a place"
+        },
+        {
+          "text": " for your club to meet. The second box says "
+        },
+        {
+          "en": "Find a ___ for the club to meet"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "place"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Next, "
+        },
+        {
+          "en": "you must find a place"
+        },
+        {
+          "text": " for the club. The missing word is "
+        },
+        {
+          "en": "place"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s43"
+        },
+        {
+          "text": " the presenter gives the third step: "
+        },
+        {
+          "en": "hold your first meeting"
+        },
+        {
+          "text": ". The third box says "
+        },
+        {
+          "en": "Hold the first ___"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "meeting"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The third step is to "
+        },
+        {
+          "en": "hold your first meeting"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "meeting"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s45"
+        },
+        {
+          "text": " the presenter suggests using the first meeting "
+        },
+        {
+          "en": "to talk with members about logistics"
+        },
+        {
+          "text": ". The last box says "
+        },
+        {
+          "en": "talk with members about ___"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "logistics"
+        },
+        {
+          "text": ". Check the spelling: every letter counts."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "At the first meeting, "
+        },
+        {
+          "en": "talk with members about logistics"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "logistics"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "15": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s21"
+        },
+        {
+          "text": " the presenter says a teacher can "
+        },
+        {
+          "en": "put up signs in classrooms"
+        },
+        {
+          "text": ". The row "
+        },
+        {
+          "en": "A teacher"
+        },
+        {
+          "text": " says "
+        },
+        {
+          "en": "Put up signs in ___"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "classrooms"
+        },
+        {
+          "text": ", in the plural as you hear it."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "A teacher can "
+        },
+        {
+          "en": "put up signs in classrooms"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "classrooms"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "16": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s23"
+        },
+        {
+          "text": " the presenter says that at your place of work you can advertise the club "
+        },
+        {
+          "en": "by sending an email around to coworkers"
+        },
+        {
+          "text": ". The row "
+        },
+        {
+          "en": "Someone at work"
+        },
+        {
+          "text": " says "
+        },
+        {
+          "en": "Send an ___ around to coworkers"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "email"
+        },
+        {
+          "text": " (also accepted: "
+        },
+        {
+          "en": "e-mail"
+        },
+        {
+          "text": ")."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "At work, send "
+        },
+        {
+          "en": "an email around to coworkers"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "email"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "17": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s25"
+        },
+        {
+          "text": " the presenter says that if your club is open for anyone, "
+        },
+        {
+          "en": "you can use the internet to find members"
+        },
+        {
+          "text": ". The row "
+        },
+        {
+          "en": "Anyone"
+        },
+        {
+          "text": " says "
+        },
+        {
+          "en": "Use the ___"
+        },
+        {
+          "text": ", so the gap is "
+        },
+        {
+          "en": "internet"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "For a club open to anyone, "
+        },
+        {
+          "en": "use the internet to find members"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "internet"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "18": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s31"
+        },
+        {
+          "text": " the first point is "
+        },
+        {
+          "en": "how easy is it"
+        },
+        {
+          "text": " for members "
+        },
+        {
+          "en": "to find and get to the location"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". At "
+        },
+        {
+          "at": "p2-s34"
+        },
+        {
+          "text": " the second point is "
+        },
+        {
+          "en": "to find a location that is safe"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". The talk does not give cost, quiet or parking as points."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The presenter names two things: how easy the place is "
+        },
+        {
+          "en": "to find and get to"
+        },
+        {
+          "text": " and that it "
+        },
+        {
+          "en": "is safe"
+        },
+        {
+          "text": ". The answers are "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "20": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s40"
+        },
+        {
+          "text": " the presenter says cafes, restaurants and bars "
+        },
+        {
+          "en": "often have enough space for large groups"
+        },
+        {
+          "text": ". That is option "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". The talk does not say they are cheap or quiet."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "These places "
+        },
+        {
+          "en": "often have enough space for large groups"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "21": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s13"
+        },
+        {
+          "text": " Caroline says "
+        },
+        {
+          "en": "If I use a smoker"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "the bees will stay calm"
+        },
+        {
+          "text": ". So the smoker keeps the bees calm: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "With a smoker, "
+        },
+        {
+          "en": "the bees will stay calm"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "22": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s41"
+        },
+        {
+          "text": " Anna says the book tells you "
+        },
+        {
+          "en": "which bees like which types of flowers"
+        },
+        {
+          "text": ". So the book shows which flowers bees like: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The book tells you "
+        },
+        {
+          "en": "which bees like which types of flowers"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "23": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s10"
+        },
+        {
+          "text": " Caroline says "
+        },
+        {
+          "en": "we wear protective clothing"
+        },
+        {
+          "text": ". The veil, suit and gloves are that clothing, and "
+        },
+        {
+          "en": "protective"
+        },
+        {
+          "text": " means they protect the beekeeper: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Beekeepers "
+        },
+        {
+          "en": "wear protective clothing"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "24": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s26"
+        },
+        {
+          "text": " Caroline explains the jobs in the hive: "
+        },
+        {
+          "en": "The queen bee lays the eggs"
+        },
+        {
+          "text": ". Option "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": " uses the same words, "
+        },
+        {
+          "en": "lays the eggs"
+        },
+        {
+          "text": ", so the answer is "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "en": "The queen bee lays the eggs"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "25": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s27"
+        },
+        {
+          "text": " Caroline says "
+        },
+        {
+          "en": "The worker bees collect nectar and pollen"
+        },
+        {
+          "text": " from flowers and bring it back to the hive. Option "
+        },
+        {
+          "en": "E"
+        },
+        {
+          "text": " uses the same words."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Worker bees "
+        },
+        {
+          "en": "collect nectar and pollen"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "E"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "26": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s38"
+        },
+        {
+          "text": " Caroline says "
+        },
+        {
+          "en": "You can plant native flowers that bees like"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". At "
+        },
+        {
+          "at": "p3-s45"
+        },
+        {
+          "text": " she says "
+        },
+        {
+          "en": "Buying local honey also helps the bees"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". Protective clothing and a smoker are mentioned earlier, but as things a beekeeper uses, not as ways for people to help bees."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Caroline says people can "
+        },
+        {
+          "en": "plant native flowers"
+        },
+        {
+          "text": " and buy "
+        },
+        {
+          "en": "local honey"
+        },
+        {
+          "text": ". The answers are "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "28": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s18"
+        },
+        {
+          "text": " Caroline says "
+        },
+        {
+          "en": "When I lift the frame"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "you will see the bees"
+        },
+        {
+          "text": ". The sentence "
+        },
+        {
+          "en": "When Caroline lifts the ___"
+        },
+        {
+          "text": " says the same, so the gap is "
+        },
+        {
+          "en": "frame"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Caroline says "
+        },
+        {
+          "en": "When I lift the frame"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "frame"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "29": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s27"
+        },
+        {
+          "text": " Caroline says the worker bees collect nectar and pollen "
+        },
+        {
+          "en": "and bring it back to the hive"
+        },
+        {
+          "text": ". The sentence "
+        },
+        {
+          "en": "bring nectar and pollen back to the ___"
+        },
+        {
+          "text": " matches, so the gap is "
+        },
+        {
+          "en": "hive"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Worker bees "
+        },
+        {
+          "en": "bring it back to the hive"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "hive"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "30": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p3-s57"
+        },
+        {
+          "text": " Caroline says "
+        },
+        {
+          "en": "You have my business card"
+        },
+        {
+          "text": ". The sentence "
+        },
+        {
+          "en": "she has her business ___"
+        },
+        {
+          "text": " says the same from Anna's side, so the gap is "
+        },
+        {
+          "en": "card"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Caroline says "
+        },
+        {
+          "en": "You have my business card"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "card"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "31": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p4-s26"
+        },
+        {
+          "text": " the presenter says "
+        },
+        {
+          "en": "you open the front door"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "see a bag of flour"
+        },
+        {
+          "text": " on the floor. So the front door goes with flour: "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "At the front door you "
+        },
+        {
+          "en": "see a bag of flour"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "32": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p4-s30"
+        },
+        {
+          "text": " the presenter says that "
+        },
+        {
+          "en": "On top of your bed"
+        },
+        {
+          "text": " there is a cup of water. So the bed goes with water: "
+        },
+        {
+          "en": "G"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "On the bed "
+        },
+        {
+          "en": "sits a cup of water"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "G"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "33": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p4-s33"
+        },
+        {
+          "text": ", in the living room, you see "
+        },
+        {
+          "en": "a very large spoon of dry yeast"
+        },
+        {
+          "text": " on the sofa. So the sofa goes with dry yeast: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "On the sofa there is "
+        },
+        {
+          "en": "a very large spoon of dry yeast"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "34": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p4-s37"
+        },
+        {
+          "text": " the presenter says "
+        },
+        {
+          "en": "you walk into the kitchen"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "see two tomatoes"
+        },
+        {
+          "text": " chasing each other. So the kitchen goes with tomatoes: "
+        },
+        {
+          "en": "F"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "In the kitchen you "
+        },
+        {
+          "en": "see two tomatoes"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "F"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "35": {
+      "explanation": [
+        {
+          "text": "After you open the back door and "
+        },
+        {
+          "en": "go outside"
+        },
+        {
+          "text": ", at "
+        },
+        {
+          "at": "p4-s40"
+        },
+        {
+          "text": " the presenter says you see "
+        },
+        {
+          "en": "very tall green basil plants"
+        },
+        {
+          "text": ". Outside is the garden, so the garden goes with basil: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Outside, in the garden, there are "
+        },
+        {
+          "en": "very tall green basil plants"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "36": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p4-s7"
+        },
+        {
+          "text": " the presenter says that in one room of his mind palace, Holmes "
+        },
+        {
+          "en": "finds his childhood dog"
+        },
+        {
+          "text": ". Up to three words are allowed, so "
+        },
+        {
+          "en": "his childhood dog"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "childhood dog"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "a dog"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "dog"
+        },
+        {
+          "text": " are all accepted."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Holmes "
+        },
+        {
+          "en": "finds his childhood dog"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "his childhood dog"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "37": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p4-s57"
+        },
+        {
+          "text": " the presenter says Anthony Metivier "
+        },
+        {
+          "en": "suggests first drawing a simple map"
+        },
+        {
+          "text": " of your memory palace. So the answer is "
+        },
+        {
+          "en": "a simple map"
+        },
+        {
+          "text": "; "
+        },
+        {
+          "en": "simple map"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "map"
+        },
+        {
+          "text": " are also accepted within three words."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Metivier suggests "
+        },
+        {
+          "en": "first drawing a simple map"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "a simple map"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "38": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p4-s58"
+        },
+        {
+          "text": " the presenter says "
+        },
+        {
+          "en": "Then, number the places along your path"
+        },
+        {
+          "text": ". So you number "
+        },
+        {
+          "en": "the places"
+        },
+        {
+          "text": "; "
+        },
+        {
+          "en": "places"
+        },
+        {
+          "text": " alone is also accepted."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "You "
+        },
+        {
+          "en": "number the places along your path"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "the places"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "39": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p4-s64"
+        },
+        {
+          "text": " both experts say "
+        },
+        {
+          "en": "imagining things in a humorous or crazy way"
+        },
+        {
+          "text": " helps you remember: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". At "
+        },
+        {
+          "at": "p4-s65"
+        },
+        {
+          "text": " they also agree that "
+        },
+        {
+          "en": "connecting images to actions or movement"
+        },
+        {
+          "text": " creates lasting memories: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "Humorous"
+        },
+        {
+          "text": " means "
+        },
+        {
+          "en": "funny"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The experts agree on funny or crazy pictures and on "
+        },
+        {
+          "en": "connecting images to actions or movement"
+        },
+        {
+          "text": ". The answers are "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  }
+}

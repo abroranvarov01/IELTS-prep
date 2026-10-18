@@ -4702,7 +4702,8 @@
       "title": "AI-drafted Listening explanations in uz, ru and en",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-04"],
       "goal": "Every answer unit of the demo Listening test has an explanation and a simpler version, drafted in English first, then ru and uz.",
       "scope": [

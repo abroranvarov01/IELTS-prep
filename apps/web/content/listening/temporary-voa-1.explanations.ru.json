@@ -1,0 +1,1891 @@
+{
+  "testId": "temporary-voa-1",
+  "version": 1,
+  "locale": "ru",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s5"
+        },
+        {
+          "text": " Пенелопа спрашивает об экскурсии, которая идёт "
+        },
+        {
+          "en": "through the city on a bus"
+        },
+        {
+          "text": ". В заметке те же слова, поэтому в пропуске "
+        },
+        {
+          "en": "bus"
+        },
+        {
+          "text": ". Другая экскурсия, "
+        },
+        {
+          "en": "along the river in a boat"
+        },
+        {
+          "text": ", — это вопрос 2."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Пенелопа называет экскурсию "
+        },
+        {
+          "en": "through the city on a bus"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "bus"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s6"
+        },
+        {
+          "text": " Пенелопа спрашивает об экскурсии, которая "
+        },
+        {
+          "en": "goes along the river in a boat"
+        },
+        {
+          "text": ". Заметка повторяет эти слова, поэтому в пропуске "
+        },
+        {
+          "en": "river"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Вторая экскурсия идёт "
+        },
+        {
+          "en": "along the river in a boat"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "river"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s20"
+        },
+        {
+          "text": " Анна говорит, что знаменитая DC Ducks — это "
+        },
+        {
+          "en": "the boat with wheels"
+        },
+        {
+          "text": ". В заметке под "
+        },
+        {
+          "en": "The DC Ducks"
+        },
+        {
+          "text": " написано "
+        },
+        {
+          "en": "A boat with ___"
+        },
+        {
+          "text": ", поэтому в пропуске "
+        },
+        {
+          "en": "wheels"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Анна называет DC Ducks "
+        },
+        {
+          "en": "the boat with wheels"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "wheels"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s26"
+        },
+        {
+          "text": " Пенелопа говорит, что лодку создали во время Второй мировой войны "
+        },
+        {
+          "en": "to carry people and supplies"
+        },
+        {
+          "text": ". В заметке "
+        },
+        {
+          "en": "made"
+        },
+        {
+          "text": " значит то же, что "
+        },
+        {
+          "en": "created"
+        },
+        {
+          "text": " в записи. Поэтому в пропуске "
+        },
+        {
+          "en": "supplies"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Лодку сделали в войну, "
+        },
+        {
+          "en": "to carry people and supplies"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "supplies"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s43"
+        },
+        {
+          "text": " Профессор Бот спрашивает, знали ли вы, что монумент Вашингтона "
+        },
+        {
+          "en": "was damaged in an earthquake"
+        },
+        {
+          "text": ". В заметке те же слова, поэтому в пропуске "
+        },
+        {
+          "en": "earthquake"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Профессор Бот говорит, что монумент "
+        },
+        {
+          "en": "was damaged in an earthquake"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "earthquake"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s41"
+        },
+        {
+          "text": " Анна говорит: "
+        },
+        {
+          "en": "Hey, the Washington Monument is on the left!"
+        },
+        {
+          "text": " Значит, монумент слева от них: ответ "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". Никто не говорит, что он справа или сзади."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Анна говорит, что монумент "
+        },
+        {
+          "en": "is on the left"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s53"
+        },
+        {
+          "text": " мальчик говорит, что в Белом доме "
+        },
+        {
+          "en": "there is a swimming pool"
+        },
+        {
+          "text": ", кинотеатр и 32 ванные комнаты. Бассейн — это вариант "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". Боулинг и библиотеку он не упоминает."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Мальчик говорит, что в Белом доме "
+        },
+        {
+          "en": "there is a swimming pool"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s59"
+        },
+        {
+          "text": " Пенелопа говорит "
+        },
+        {
+          "en": "we should give him a tip!"
+        },
+        {
+          "text": ", а на "
+        },
+        {
+          "at": "p1-s63"
+        },
+        {
+          "text": " добавляет "
+        },
+        {
+          "en": "That was a great Fun Fact!"
+        },
+        {
+          "text": " Она хочет дать чаевые за интересный факт: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". О том, что он вёл лодку или продал брошюру, не говорится."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Пенелопа хочет дать мальчику чаевые и говорит "
+        },
+        {
+          "en": "That was a great Fun Fact!"
+        },
+        {
+          "text": " Ответ — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s53"
+        },
+        {
+          "text": " мальчик говорит, что в Белом доме "
+        },
+        {
+          "en": "a movie theater and 32 bathrooms"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "32"
+        },
+        {
+          "text": ". Можно написать цифрами или словами: "
+        },
+        {
+          "en": "thirty-two"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Мальчик говорит, что в Белом доме "
+        },
+        {
+          "en": "32 bathrooms"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "32"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p1-s57"
+        },
+        {
+          "text": " мальчик говорит, что живёт с мамой, четырьмя сёстрами и двумя тётями "
+        },
+        {
+          "en": "and only one bathroom!"
+        },
+        {
+          "text": " Значит, ванная одна: "
+        },
+        {
+          "en": "one"
+        },
+        {
+          "text": ". Другие числа — это люди, а не ванные."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "В доме мальчика "
+        },
+        {
+          "en": "only one bathroom"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "one"
+        },
+        {
+          "text": " или "
+        },
+        {
+          "en": "1"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s19"
+        },
+        {
+          "text": " ведущий называет "
+        },
+        {
+          "en": "The first step"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "to find club members"
+        },
+        {
+          "text": ". В первом блоке схемы "
+        },
+        {
+          "en": "Find club ___"
+        },
+        {
+          "text": ", поэтому в пропуске "
+        },
+        {
+          "en": "members"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Первый шаг — "
+        },
+        {
+          "en": "to find club members"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "members"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s27"
+        },
+        {
+          "text": " следующий шаг: "
+        },
+        {
+          "en": "you must find a place"
+        },
+        {
+          "text": ", где будет собираться клуб. Во втором блоке "
+        },
+        {
+          "en": "Find a ___ for the club to meet"
+        },
+        {
+          "text": ", поэтому в пропуске "
+        },
+        {
+          "en": "place"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Дальше "
+        },
+        {
+          "en": "you must find a place"
+        },
+        {
+          "text": " для клуба. Пропущенное слово — "
+        },
+        {
+          "en": "place"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s43"
+        },
+        {
+          "text": " ведущий называет третий шаг: "
+        },
+        {
+          "en": "hold your first meeting"
+        },
+        {
+          "text": ". В третьем блоке "
+        },
+        {
+          "en": "Hold the first ___"
+        },
+        {
+          "text": ", поэтому в пропуске "
+        },
+        {
+          "en": "meeting"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Третий шаг — "
+        },
+        {
+          "en": "hold your first meeting"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "meeting"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s45"
+        },
+        {
+          "text": " ведущий советует на первой встрече "
+        },
+        {
+          "en": "to talk with members about logistics"
+        },
+        {
+          "text": ". В последнем блоке "
+        },
+        {
+          "en": "talk with members about ___"
+        },
+        {
+          "text": ", поэтому в пропуске "
+        },
+        {
+          "en": "logistics"
+        },
+        {
+          "text": ". Проверьте написание: важна каждая буква."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "На первой встрече "
+        },
+        {
+          "en": "talk with members about logistics"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "logistics"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "15": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s21"
+        },
+        {
+          "text": " ведущий говорит, что учитель может "
+        },
+        {
+          "en": "put up signs in classrooms"
+        },
+        {
+          "text": ". В строке "
+        },
+        {
+          "en": "A teacher"
+        },
+        {
+          "text": " написано "
+        },
+        {
+          "en": "Put up signs in ___"
+        },
+        {
+          "text": ", поэтому в пропуске "
+        },
+        {
+          "en": "classrooms"
+        },
+        {
+          "text": " — во множественном числе, как в записи."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Учитель может "
+        },
+        {
+          "en": "put up signs in classrooms"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "classrooms"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "16": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s23"
+        },
+        {
+          "text": " ведущий говорит, что на работе клуб можно рекламировать "
+        },
+        {
+          "en": "by sending an email around to coworkers"
+        },
+        {
+          "text": ". В строке "
+        },
+        {
+          "en": "Someone at work"
+        },
+        {
+          "text": " написано "
+        },
+        {
+          "en": "Send an ___ around to coworkers"
+        },
+        {
+          "text": ", поэтому в пропуске "
+        },
+        {
+          "en": "email"
+        },
+        {
+          "text": " (также принимается "
+        },
+        {
+          "en": "e-mail"
+        },
+        {
+          "text": ")."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "На работе отправьте "
+        },
+        {
+          "en": "an email around to coworkers"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "email"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "17": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s25"
+        },
+        {
+          "text": " ведущий говорит, что если клуб открыт для всех, "
+        },
+        {
+          "en": "you can use the internet to find members"
+        },
+        {
+          "text": ". В строке "
+        },
+        {
+          "en": "Anyone"
+        },
+        {
+          "text": " написано "
+        },
+        {
+          "en": "Use the ___"
+        },
+        {
+          "text": ", поэтому в пропуске "
+        },
+        {
+          "en": "internet"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Если клуб открыт для всех, "
+        },
+        {
+          "en": "use the internet to find members"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "internet"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "18": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s31"
+        },
+        {
+          "text": " первый пункт — "
+        },
+        {
+          "en": "how easy is it"
+        },
+        {
+          "text": " участникам "
+        },
+        {
+          "en": "to find and get to the location"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". На "
+        },
+        {
+          "at": "p2-s34"
+        },
+        {
+          "text": " второй пункт — "
+        },
+        {
+          "en": "to find a location that is safe"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". Цену, тишину и парковку ведущий как пункты не называет."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ведущий называет две вещи: легко ли место "
+        },
+        {
+          "en": "to find and get to"
+        },
+        {
+          "text": " и что оно "
+        },
+        {
+          "en": "is safe"
+        },
+        {
+          "text": ". Ответы — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "20": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p2-s40"
+        },
+        {
+          "text": " ведущий говорит, что кафе, рестораны и бары "
+        },
+        {
+          "en": "often have enough space for large groups"
+        },
+        {
+          "text": ". Это вариант "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". О том, что они дешёвые или тихие, не говорится."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "В этих местах "
+        },
+        {
+          "en": "often have enough space for large groups"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "21": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s13"
+        },
+        {
+          "text": " Кэролайн говорит: "
+        },
+        {
+          "en": "If I use a smoker"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "the bees will stay calm"
+        },
+        {
+          "text": ". Значит, дымарь успокаивает пчёл: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "С дымарём "
+        },
+        {
+          "en": "the bees will stay calm"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "22": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s41"
+        },
+        {
+          "text": " Анна говорит, что книга рассказывает, "
+        },
+        {
+          "en": "which bees like which types of flowers"
+        },
+        {
+          "text": ". Значит, книга показывает, какие цветы любят пчёлы: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Книга рассказывает, "
+        },
+        {
+          "en": "which bees like which types of flowers"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "23": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s10"
+        },
+        {
+          "text": " Кэролайн говорит: "
+        },
+        {
+          "en": "we wear protective clothing"
+        },
+        {
+          "text": ". Сетка, костюм и перчатки — это и есть защитная одежда, а "
+        },
+        {
+          "en": "protective"
+        },
+        {
+          "text": " значит, что она защищает пчеловода: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Пчеловоды "
+        },
+        {
+          "en": "wear protective clothing"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "24": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s26"
+        },
+        {
+          "text": " Кэролайн объясняет, кто что делает в улье: "
+        },
+        {
+          "en": "The queen bee lays the eggs"
+        },
+        {
+          "text": ". В варианте "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": " те же слова, "
+        },
+        {
+          "en": "lays the eggs"
+        },
+        {
+          "text": ", поэтому ответ — "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "en": "The queen bee lays the eggs"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "25": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s27"
+        },
+        {
+          "text": " Кэролайн говорит: "
+        },
+        {
+          "en": "The worker bees collect nectar and pollen"
+        },
+        {
+          "text": " с цветов и приносят их в улей. В варианте "
+        },
+        {
+          "en": "E"
+        },
+        {
+          "text": " те же слова."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Рабочие пчёлы "
+        },
+        {
+          "en": "collect nectar and pollen"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "E"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "26": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s38"
+        },
+        {
+          "text": " Кэролайн говорит: "
+        },
+        {
+          "en": "You can plant native flowers that bees like"
+        },
+        {
+          "text": " — это "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". На "
+        },
+        {
+          "at": "p3-s45"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "Buying local honey also helps the bees"
+        },
+        {
+          "text": " — это "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". Защитная одежда и дымарь упоминаются раньше, но как вещи пчеловода, а не как способы помочь пчёлам."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Кэролайн говорит, что можно "
+        },
+        {
+          "en": "plant native flowers"
+        },
+        {
+          "text": " и покупать "
+        },
+        {
+          "en": "local honey"
+        },
+        {
+          "text": ". Ответы — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "28": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s18"
+        },
+        {
+          "text": " Кэролайн говорит: "
+        },
+        {
+          "en": "When I lift the frame"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "you will see the bees"
+        },
+        {
+          "text": ". Предложение "
+        },
+        {
+          "en": "When Caroline lifts the ___"
+        },
+        {
+          "text": " говорит то же самое, поэтому в пропуске "
+        },
+        {
+          "en": "frame"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Кэролайн говорит: "
+        },
+        {
+          "en": "When I lift the frame"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "frame"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "29": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s27"
+        },
+        {
+          "text": " Кэролайн говорит, что рабочие пчёлы собирают нектар и пыльцу "
+        },
+        {
+          "en": "and bring it back to the hive"
+        },
+        {
+          "text": ". Предложение "
+        },
+        {
+          "en": "bring nectar and pollen back to the ___"
+        },
+        {
+          "text": " совпадает, поэтому в пропуске "
+        },
+        {
+          "en": "hive"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Рабочие пчёлы "
+        },
+        {
+          "en": "bring it back to the hive"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "hive"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "30": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p3-s57"
+        },
+        {
+          "text": " Кэролайн говорит: "
+        },
+        {
+          "en": "You have my business card"
+        },
+        {
+          "text": ". Предложение "
+        },
+        {
+          "en": "she has her business ___"
+        },
+        {
+          "text": " говорит то же самое со стороны Анны, поэтому в пропуске "
+        },
+        {
+          "en": "card"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Кэролайн говорит: "
+        },
+        {
+          "en": "You have my business card"
+        },
+        {
+          "text": ". Пропущенное слово — "
+        },
+        {
+          "en": "card"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "31": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p4-s26"
+        },
+        {
+          "text": " ведущий говорит: "
+        },
+        {
+          "en": "you open the front door"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "see a bag of flour"
+        },
+        {
+          "text": " на полу. Значит, у входной двери — мука: "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "У входной двери вы "
+        },
+        {
+          "en": "see a bag of flour"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "D"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "32": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p4-s30"
+        },
+        {
+          "text": " ведущий говорит, что "
+        },
+        {
+          "en": "On top of your bed"
+        },
+        {
+          "text": " стоит чашка воды. Значит, на кровати — вода: "
+        },
+        {
+          "en": "G"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "На кровати "
+        },
+        {
+          "en": "sits a cup of water"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "G"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "33": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p4-s33"
+        },
+        {
+          "text": " в гостиной вы видите на диване "
+        },
+        {
+          "en": "a very large spoon of dry yeast"
+        },
+        {
+          "text": ". Значит, на диване — сухие дрожжи: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "На диване лежит "
+        },
+        {
+          "en": "a very large spoon of dry yeast"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "34": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p4-s37"
+        },
+        {
+          "text": " ведущий говорит: "
+        },
+        {
+          "en": "you walk into the kitchen"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "see two tomatoes"
+        },
+        {
+          "text": ", которые гоняются друг за другом. Значит, на кухне — помидоры: "
+        },
+        {
+          "en": "F"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "На кухне вы "
+        },
+        {
+          "en": "see two tomatoes"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "F"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "35": {
+      "explanation": [
+        {
+          "text": "Когда вы открываете заднюю дверь и "
+        },
+        {
+          "en": "go outside"
+        },
+        {
+          "text": ", на "
+        },
+        {
+          "at": "p4-s40"
+        },
+        {
+          "text": " ведущий говорит, что вы видите "
+        },
+        {
+          "en": "very tall green basil plants"
+        },
+        {
+          "text": ". Снаружи — это сад, значит, в саду базилик: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Снаружи, в саду, растут "
+        },
+        {
+          "en": "very tall green basil plants"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "36": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p4-s7"
+        },
+        {
+          "text": " ведущий говорит, что в одной из комнат своего дворца памяти Холмс "
+        },
+        {
+          "en": "finds his childhood dog"
+        },
+        {
+          "text": ". Можно не больше трёх слов, поэтому принимаются "
+        },
+        {
+          "en": "his childhood dog"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "childhood dog"
+        },
+        {
+          "text": ", "
+        },
+        {
+          "en": "a dog"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "dog"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Холмс "
+        },
+        {
+          "en": "finds his childhood dog"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "his childhood dog"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "37": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p4-s57"
+        },
+        {
+          "text": " ведущий говорит, что Энтони Метивье "
+        },
+        {
+          "en": "suggests first drawing a simple map"
+        },
+        {
+          "text": " вашего дворца памяти. Ответ — "
+        },
+        {
+          "en": "a simple map"
+        },
+        {
+          "text": "; в пределах трёх слов принимаются также "
+        },
+        {
+          "en": "simple map"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "map"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Метивье советует "
+        },
+        {
+          "en": "first drawing a simple map"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "a simple map"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "38": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p4-s58"
+        },
+        {
+          "text": " ведущий говорит: "
+        },
+        {
+          "en": "Then, number the places along your path"
+        },
+        {
+          "text": ". Значит, нумеруют "
+        },
+        {
+          "en": "the places"
+        },
+        {
+          "text": "; принимается и просто "
+        },
+        {
+          "en": "places"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Вы "
+        },
+        {
+          "en": "number the places along your path"
+        },
+        {
+          "text": ". Ответ — "
+        },
+        {
+          "en": "the places"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "39": {
+      "explanation": [
+        {
+          "text": "На "
+        },
+        {
+          "at": "p4-s64"
+        },
+        {
+          "text": " оба эксперта говорят, что помогает "
+        },
+        {
+          "en": "imagining things in a humorous or crazy way"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". На "
+        },
+        {
+          "at": "p4-s65"
+        },
+        {
+          "text": " они соглашаются, что "
+        },
+        {
+          "en": "connecting images to actions or movement"
+        },
+        {
+          "text": " создаёт прочные воспоминания: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "Humorous"
+        },
+        {
+          "text": " значит "
+        },
+        {
+          "en": "funny"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Эксперты согласны насчёт смешных или безумных образов и "
+        },
+        {
+          "en": "connecting images to actions or movement"
+        },
+        {
+          "text": ". Ответы — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { parseExplanations } from "../model/explanations";
 import {
   parseListeningKey,
   parseListeningTest,
@@ -20,7 +21,8 @@ const testFiles = files.filter(
   (f) =>
     f.endsWith(".json") &&
     !f.endsWith(".key.json") &&
-    !f.endsWith(".transcript.json"),
+    !f.endsWith(".transcript.json") &&
+    !f.includes(".explanations."),
 );
 const readJson = (file: string): unknown =>
   JSON.parse(readFileSync(path.join(CONTENT_DIR, file), "utf8"));
@@ -34,8 +36,8 @@ const FINGERPRINTS: Record<string, { number: number; sha256: string }> = {
     sha256: "8a25788a8f6d53d299805ee50f17099d4341d3ffefa7a009d430382b14a9e128",
   },
   "temporary-voa-1.key.json": {
-    number: 2,
-    sha256: "d78ed12c20bf597433cfd3928adae7d26cb9accb2bf993d30b54f4222e138327",
+    number: 3,
+    sha256: "c07677ead482c7a0b6772476505f6473a6b2befe359c80b014a740b9e919b630",
   },
   "temporary-voa-1.transcript.json": {
     number: 1,
@@ -79,11 +81,42 @@ describe("Listening content files", () => {
         );
         expect(key.ok ? [] : key.errors).toEqual([]);
       });
+
+      it("has valid explanations in every interface language", () => {
+        if (!parsed.ok) throw new Error("the test itself is invalid");
+        const transcript = parseTranscript(
+          parsed.value,
+          readJson(`${base}.transcript.json`),
+        );
+        if (!transcript.ok) throw new Error(transcript.errors.join("\n"));
+        const key = parseListeningKey(
+          parsed.value,
+          transcript.value,
+          readJson(`${base}.key.json`),
+        );
+        if (!key.ok) throw new Error(key.errors.join("\n"));
+        const errors = ["uz", "ru", "en"].flatMap((locale) => {
+          const explanations = parseExplanations(
+            parsed.value,
+            key.value,
+            transcript.value,
+            readJson(`${base}.explanations.${locale}.json`),
+            locale,
+          );
+          return explanations.ok
+            ? []
+            : explanations.errors.map((e) => `${locale}: ${e}`);
+        });
+        expect(errors).toEqual([]);
+      });
     });
   }
 
   it("each change with a new version or revision", () => {
-    for (const file of files.filter((f) => f.endsWith(".json"))) {
+    // Explanations are content shown next to a result, not part of it (ADR-0008 §1).
+    for (const file of files.filter(
+      (f) => f.endsWith(".json") && !f.includes(".explanations."),
+    )) {
       const raw = readFileSync(path.join(CONTENT_DIR, file));
       const data = JSON.parse(raw.toString("utf8")) as {
         version: number;
