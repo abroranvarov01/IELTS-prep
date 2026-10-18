@@ -336,5 +336,10 @@
     "listening": "Listening",
     "writing": "Writing",
     "speaking": "Speaking"
+  },
+  "nav": {
+    "label": "Основная навигация",
+    "home": "Главная",
+    "practice": "Практика"
   }
 }

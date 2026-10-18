@@ -3119,7 +3119,8 @@
       "title": "Navigation and the responsive shell",
       "milestone": "M6",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M6-04"],
       "goal": "The approved navigation works on phone, tablet and desktop in every language, without crowding the phone screen.",
       "scope": [

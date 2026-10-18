@@ -27,7 +27,7 @@ Decided in [ADR-0010](decisions/0010-feature-sliced-design-in-apps-web.md) (it s
 |---|---|---|---|
 | app | `app/` (the Next.js App Router) and `proxy.ts` | Routes and route groups, layouts, `error`, `not-found`, `global-error`, metadata, the manifest, the service worker, fonts, global CSS. Route files stay thin. | |
 | pages | `views/` | One slice per page, or per group of closely related pages: what the page shows, its page-only parts, its Server Actions | `home`, `onboarding`, `level-check`, `reading-test` (the test and its retry), `reading-results` (the results and the review) |
-| widgets | `widgets/` | A large block of UI used by several pages or layouts | `shell` (header, language switcher, main landmark), `reading-layout` (the test bar frame, the bottom sheet and the skip link, shared by the Reading test and its review) |
+| widgets | `widgets/` | A large block of UI used by several pages or layouts | `shell` (header, language switcher, product navigation, main landmark), `reading-layout` (the test bar frame, the bottom sheet and the skip link, shared by the Reading test and its review) |
 | features | `features/` | A user capability with a narrow contract, used by more than one block | `answer-question` (the answer control of every question type, the option list, a group's shared text, and for the review what a question asks and the options it offers), `mark-passage` (selecting sentences by touch and keyboard, highlighting, Pin Evidence, the evidence list, the passage's review marks) |
 | entities | `entities/` | A product concept: its rules (`model/`), its data access (`api/`), its React binding (`ui/`) | `goal` (the guest's goal and its cookie, ADR-0003), `reading` (the Reading content contract, units, session, checking, attempts, results, explanations; `localStorage` sessions and the IndexedDB history; the running session's context) |
 | shared | `shared/` | Infrastructure and primitives with no product knowledge | `ui` (the primary button and link, the quiet link and the quiet button, the secondary button, the desktop-breakpoint hook, the visible-element lookup, the answer option, the option row, the status message, the line icons and illustrations, the arc motif and the accent panel, `tokens.css`), `i18n` (routing, locale-aware navigation, the next-intl request config) |
@@ -59,7 +59,7 @@ File names: React components in PascalCase (`AnswerControl.tsx`), every other mo
 
 ### Next.js routing
 
-- URLs and route groups are unchanged: `app/[locale]/(valid-locale)/(shell)/…` for pages inside the shell, `app/[locale]/(valid-locale)/reading/[testId]` for the test screen, which has its own test bar.
+- URLs and route groups are unchanged: `app/[locale]/(valid-locale)/(shell)/…` for pages inside the shell with the product navigation, `app/[locale]/(valid-locale)/(onboarding)/start/…` for the onboarding steps (the shell without navigation, M6-05), `app/[locale]/(valid-locale)/reading/[testId]` for the test screen, which has its own test bar.
 - A route file reads its params, sets metadata, loads server-only data through a `*.server.ts` entry point, and renders one view (for example `ReadingScreen` from `@/views/reading-test`). It holds no product logic and no markup beyond that.
 - Server-only content (tests, keys, explanations) is loaded in route files and passed to views as props. Client components never import a `*.server.ts` entry point.
 - `proxy.ts` belongs to the app layer: it reads the goal cookie and the test list through public APIs (`@/entities/goal`, `@/entities/reading/content.server`).

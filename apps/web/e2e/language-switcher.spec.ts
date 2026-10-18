@@ -1,10 +1,19 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, type Locator, test, type Page } from "@playwright/test";
 import en from "../messages/en.json";
 import ru from "../messages/ru.json";
 import uz from "../messages/uz.json";
 import { routing } from "../src/shared/i18n/routing";
 import { saveGoal } from "./goal";
+
+/** Presses Tab until `target` has focus: a few stops at most (skip link, logo, navigation). */
+async function tabTo(page: Page, target: Locator) {
+  for (let i = 0; i < 6; i++) {
+    await page.keyboard.press("Tab");
+    if (await target.evaluate((e) => e === document.activeElement)) return;
+  }
+  await expect(target).toBeFocused();
+}
 
 type Locale = (typeof routing.locales)[number];
 
@@ -98,9 +107,9 @@ test("works with the keyboard only", async ({ page }) => {
   await page.goto("/uz");
   await untilInteractive(page);
   const button = switcherButton(page, "uz");
-  // Skip link, logo, switcher.
-  for (let i = 0; i < 3; i++) await page.keyboard.press("Tab");
-  await expect(button).toBeFocused();
+  // Skip link, logo, the header's navigation links (from the tablet
+  // breakpoint), then the switcher.
+  await tabTo(page, button);
 
   await page.keyboard.press("Enter");
   await expect(languageLink(page, "uz", "en")).toBeVisible();
@@ -135,8 +144,8 @@ test("Escape closes a list that was opened before the page finished loading", as
   await page.goto("/uz", { waitUntil: "commit" });
   const button = switcherButton(page, "uz");
   await expect(button).toBeVisible();
-  for (let i = 0; i < 3; i++) await page.keyboard.press("Tab");
-  await expect(button).toBeFocused();
+  // Without its CSS yet, the page may also show the header's navigation links.
+  await tabTo(page, button);
   await page.keyboard.press("Enter");
   await expect(languageLink(page, "uz", "en")).toBeVisible();
 

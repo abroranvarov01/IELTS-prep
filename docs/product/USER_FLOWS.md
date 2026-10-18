@@ -582,7 +582,7 @@ Reused without change: "Time is up.", "Start again", "Show in passage", "Your ev
 - **Step count:** 1 to either destination from any shell page.
 - **Keyboard and screen readers:** the skip link stays first; the navigation comes after the header in the reading order on desktop and after `main` on phones (bottom bar), so screen readers reach the page content first; every destination is a link reachable by Tab.
 - **Empty / error states:** without JavaScript the destinations are plain links. Offline: as the shell (offline scope is M14).
-- **Languages checked:** not yet (M6-05: the four-item bar at 320 px in uz and ru, for the future destinations' longest labels).
+- **Languages checked:** M6-05 (2026-10-18): the two-destination bar at 320 px and the header links at 600 px in uz, ru and en (e2e fit and axe; screenshots at 320, 390, 600, 1024 and 1280 px). The four-item bar is checked when Progress and the account arrive.
 
 ### Practice Hub (M6)
 
