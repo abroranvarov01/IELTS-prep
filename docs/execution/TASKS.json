@@ -4346,7 +4346,8 @@
       "title": "Required before beta: Reading table completion",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M4-22", "M8-15"],
       "goal": "Table completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
       "scope": [

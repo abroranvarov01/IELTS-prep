@@ -1,6 +1,7 @@
 "use client";
 
 import { type QuestionGroup, useReading } from "@/entities/reading";
+import { CompletionTable } from "@/shared/ui/CompletionTable";
 import { GapText } from "./GapText";
 
 /**
@@ -37,6 +38,22 @@ export function GroupTextView({
   answerOf: (number: number) => string | undefined;
 }) {
   if (!hasGroupText(group)) return null;
+  if (group.type === "tableCompletion")
+    return (
+      <div lang="en">
+        {group.title && <p className="mb-2 font-bold">{group.title}</p>}
+        <CompletionTable
+          table={group}
+          cell={(segments) => (
+            <GapText
+              segments={segments}
+              current={current}
+              answerOf={answerOf}
+            />
+          )}
+        />
+      </div>
+    );
 
   return (
     <div lang="en">
@@ -62,16 +79,21 @@ export function GroupTextView({
   );
 }
 
-/** Groups whose questions share one text: summaries, notes and word boxes. */
-export function hasGroupText(
-  group: QuestionGroup,
-): group is Extract<
+/** Groups whose questions share one text: summaries, notes, word boxes and tables. */
+export function hasGroupText(group: QuestionGroup): group is Extract<
   QuestionGroup,
-  { type: "summaryCompletion" | "summaryWordBox" | "noteCompletion" }
+  {
+    type:
+      | "summaryCompletion"
+      | "summaryWordBox"
+      | "noteCompletion"
+      | "tableCompletion";
+  }
 > {
   return (
     group.type === "summaryCompletion" ||
     group.type === "summaryWordBox" ||
-    group.type === "noteCompletion"
+    group.type === "noteCompletion" ||
+    group.type === "tableCompletion"
   );
 }

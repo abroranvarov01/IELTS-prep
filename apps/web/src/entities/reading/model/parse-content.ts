@@ -13,6 +13,7 @@ import {
   readText,
   readWordLimit,
 } from "@/shared/content/parse";
+import { checkTable, readTable } from "@/shared/content/shapes";
 import {
   type ExamType,
   PASSAGE_COUNT,
@@ -632,6 +633,13 @@ function readGroup(
         qs && { ...base, type: "shortAnswer", wordLimit: limit, questions: qs }
       );
     }
+    case "tableCompletion": {
+      const limit = wordLimit();
+      const table = readTable(errors, path, value);
+      return limit && table
+        ? { ...base, ...table, type: "tableCompletion", wordLimit: limit }
+        : undefined;
+    }
     default:
       errors.push(
         `${path}.type: unknown question type ${JSON.stringify(value.type)}`,
@@ -751,6 +759,9 @@ function checkGroup(
     case "noteCompletion":
       if (group.lines.flatMap(gapNumbers).length === 0)
         errors.push(`${path}.lines: have no gap`);
+      return;
+    case "tableCompletion":
+      checkTable(errors, path, group);
       return;
     case "sentenceCompletion":
       group.sentences.forEach((s, i) => {

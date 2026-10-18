@@ -3,6 +3,7 @@
  * renders it. Content is untrusted data; parse it with `parseReadingTest`.
  */
 
+import { type TableShape, tableNumbers } from "@/shared/content/shapes";
 import {
   type GapSegment,
   type Option,
@@ -94,7 +95,13 @@ export type QuestionGroup =
       type: "shortAnswer";
       wordLimit: WordLimit;
       questions: { number: number; question: string }[];
-    });
+    })
+  | (GroupBase &
+      TableShape & {
+        /** The shared table layout (ADR-0012 §2), typed gaps in its cells. */
+        type: "tableCompletion";
+        wordLimit: WordLimit;
+      });
 
 export type QuestionType = QuestionGroup["type"];
 
@@ -151,6 +158,8 @@ export function groupNumbers(group: QuestionGroup): number[] {
       return group.sentences.flatMap(gapNumbers);
     case "noteCompletion":
       return group.lines.flatMap(gapNumbers);
+    case "tableCompletion":
+      return tableNumbers(group);
     default:
       return group.questions.map((question) => question.number);
   }

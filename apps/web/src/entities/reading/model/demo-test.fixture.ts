@@ -25,3 +25,41 @@ export const demoKey: AnswerKey = (() => {
 export function testSessionId(n = 1): string {
   return `s-00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 }
+
+/**
+ * The demo test with its notes group (questions 7–9) as a table on the
+ * shared layout (M8-17), same gaps and key: a fixture for table completion.
+ */
+export function demoTestWithTable(): ReadingTest {
+  const json = structuredClone(demo) as unknown as {
+    passages: { questionGroups: Record<string, unknown>[] }[];
+  };
+  json.passages[0]!.questionGroups[2] = {
+    id: "p1-g3",
+    type: "tableCompletion",
+    instruction:
+      "Complete the table below. Choose ONE WORD ONLY from the passage for each answer.",
+    wordLimit: { words: 1, numbers: false },
+    title: "Shared bicycles",
+    columns: ["Step", "What to do"],
+    rowHeaders: true,
+    rows: [
+      {
+        cells: [
+          [{ text: "Start" }],
+          [{ text: "Unlock it with a " }, { gap: 7 }],
+        ],
+      },
+      {
+        cells: [
+          [{ text: "Finish" }],
+          [{ text: "Leave it at a marked " }, { gap: 8 }],
+        ],
+      },
+      { cells: [[{ text: "Benefit" }], [{ text: "Cleaner " }, { gap: 9 }]] },
+    ],
+  };
+  const result = parseReadingTest(json);
+  if (!result.ok) throw new Error(result.errors.join("\n"));
+  return result.value;
+}

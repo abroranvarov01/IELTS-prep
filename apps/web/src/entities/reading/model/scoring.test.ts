@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { demoKey, demoTest } from "./demo-test.fixture";
+import { demoKey, demoTest, demoTestWithTable } from "./demo-test.fixture";
 import type { AnswerKey } from "./parse-content";
 import {
   type CheckedAnswers,
@@ -413,5 +413,19 @@ describe("the outcome of an answer unit", () => {
     expect(unitOutcome(["correct", "incorrect"])).toBe("partlyCorrect");
     expect(unitOutcome(["correct", "unanswered"])).toBe("partlyCorrect");
     expect(unitOutcome(["incorrect", "unanswered"])).toBe("incorrect");
+  });
+});
+
+describe("checking a table gap (M8-17)", () => {
+  it("checks a typed answer in a table cell like any typed answer, word limit included", () => {
+    const test = demoTestWithTable();
+    const result = checkAttempt(
+      test,
+      demoKey,
+      attempt({ "7": "Phone", "8": "a station", "9": "" }),
+    );
+    expect(result.outcomes[7]).toBe("correct");
+    expect(result.outcomes[8]).toBe("incorrect");
+    expect(result.outcomes[9]).toBe("unanswered");
   });
 });

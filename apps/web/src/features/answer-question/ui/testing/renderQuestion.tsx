@@ -12,13 +12,13 @@ import {
   startSession,
   unitOf,
 } from "@/entities/reading";
-import { demoTest as test, testSessionId } from "@/entities/reading/testing";
+import { demoTest, testSessionId } from "@/entities/reading/testing";
+import type { ReadingTest } from "@/entities/reading";
 import en from "../../../../../messages/en.json";
 import ru from "../../../../../messages/ru.json";
 import uz from "../../../../../messages/uz.json";
 
 const catalogs = { en, ru, uz };
-const units = questionUnits(test);
 
 /**
  * Renders a question component for one question of the demo test with a real
@@ -27,9 +27,14 @@ const units = questionUnits(test);
 export function renderQuestion(
   number: number,
   ui: (unit: QuestionUnit) => ReactNode,
-  options: { locale?: keyof typeof catalogs; mode?: Mode } = {},
+  options: {
+    locale?: keyof typeof catalogs;
+    mode?: Mode;
+    test?: ReadingTest;
+  } = {},
 ) {
-  const { locale = "en", mode = "practice" } = options;
+  const { locale = "en", mode = "practice", test = demoTest } = options;
+  const units = questionUnits(test);
   const unit = unitOf(units, number);
   if (!unit) throw new Error(`no question ${number}`);
   const latest: { session?: ReadingSession } = {};

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { type QuestionType, QUESTION_COUNT } from "./content";
+import { demoTestWithTable } from "./demo-test.fixture";
 import { parseAnswerKey, parseReadingTest } from "./parse-content";
 
 // Minimal original fixtures, written for these tests (INVARIANTS I-5).
@@ -230,9 +231,9 @@ describe("parseReadingTest", () => {
   it("rejects an unknown question type", () => {
     const test = validTest();
     (test.passages[2]!.questionGroups[0] as { type: string }).type =
-      "tableCompletion";
+      "essayWriting";
     expect(errorsOf(test)).toEqual([
-      'passages[2].questionGroups[0].type: unknown question type "tableCompletion"',
+      'passages[2].questionGroups[0].type: unknown question type "essayWriting"',
     ]);
   });
 
@@ -551,5 +552,46 @@ describe("parseAnswerKey", () => {
       "key.answers.1.fromPassage: only for typed answers",
       "key.answers.17.fromPassage: expected true or no value",
     ]);
+  });
+});
+
+describe("table completion in Reading (M8-17)", () => {
+  it("accepts a table on the shared layout, its gaps numbered like any typed question", () => {
+    const test = demoTestWithTable();
+    const group = test.passages[0]!.questionGroups[2]!;
+    expect(group.type).toBe("tableCompletion");
+  });
+
+  it("rejects a table whose rows do not match its columns, or without a gap", () => {
+    const test = validTest() as unknown as {
+      passages: { questionGroups: Record<string, unknown>[] }[];
+    };
+    const groups = test.passages.find((p) =>
+      p.questionGroups.some((g) => g.type === "shortAnswer"),
+    )!.questionGroups;
+    const index = groups.findIndex((g) => g.type === "shortAnswer");
+    const numbers = (groups[index]!.questions as { number: number }[]).map(
+      (q) => q.number,
+    );
+    groups[index] = {
+      id: groups[index]!.id,
+      type: "tableCompletion",
+      instruction: "Complete the table.",
+      wordLimit: limit,
+      columns: ["A", "B"],
+      rowHeaders: false,
+      rows: [
+        {
+          cells: [[{ text: "x" }], [{ gap: numbers[0] }], [{ text: "extra" }]],
+        },
+        ...numbers
+          .slice(1)
+          .map((n) => ({ cells: [[{ text: "y" }], [{ gap: n }]] })),
+      ],
+    };
+    const parsed = parseReadingTest(test);
+    expect(parsed.ok ? [] : parsed.errors).toContainEqual(
+      expect.stringContaining("cells: expected one cell per column (2)"),
+    );
   });
 });
