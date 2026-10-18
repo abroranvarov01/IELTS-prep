@@ -25,7 +25,14 @@ export function QuestionPrompt({
   const group = unit.group;
 
   if (hasGroupText(group))
-    return <GroupTextView group={group} current={number} answerOf={noAnswer} />;
+    return (
+      <GroupTextView
+        group={group}
+        current={number}
+        answerOf={noAnswer}
+        testId={test.id}
+      />
+    );
   switch (unit.kind) {
     case "single":
       return (

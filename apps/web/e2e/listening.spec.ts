@@ -359,14 +359,14 @@ test("the plan can be enlarged, zoomed with buttons and closed with Escape", asy
 }) => {
   await startPractice(page);
   await goToQuestion(page, 31);
-  await page.getByRole("button", { name: L.picture.enlarge }).click();
+  await page.getByRole("button", { name: en.picture.enlarge }).click();
   const view = page.getByRole("dialog", {
     name: "Plan of a home used as a memory palace",
   });
   await expect(view).toBeVisible();
-  await view.getByRole("button", { name: L.picture.zoomIn }).click();
+  await view.getByRole("button", { name: en.picture.zoomIn }).click();
   await expect(
-    view.getByRole("button", { name: L.picture.zoomOut }),
+    view.getByRole("button", { name: en.picture.zoomOut }),
   ).toBeEnabled();
   await page.keyboard.press("Escape");
   await expect(view).toBeHidden();

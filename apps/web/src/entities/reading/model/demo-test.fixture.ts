@@ -1,5 +1,6 @@
 import demo from "../../../../content/reading/demo-academic-1.json";
 import demoKeyJson from "../../../../content/reading/demo-academic-1.key.json";
+import demo2 from "../../../../content/reading/demo-academic-2.json";
 import type { ReadingTest } from "./content";
 import {
   type AnswerKey,
@@ -86,3 +87,10 @@ export function demoTestWithFlowChart(): ReadingTest {
   if (!result.ok) throw new Error(result.errors.join("\n"));
   return result.value;
 }
+
+/** Demo Reading Test 2 (M8-19): the table, flow-chart and diagram layouts. */
+export const demoTest2: ReadingTest = (() => {
+  const result = parseReadingTest(demo2);
+  if (!result.ok) throw new Error(result.errors.join("\n"));
+  return result.value;
+})();

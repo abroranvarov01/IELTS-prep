@@ -1,0 +1,879 @@
+{
+  "id": "demo-academic-2",
+  "version": 1,
+  "title": "Demo Reading Test 2",
+  "examType": "academic",
+  "durationMinutes": 60,
+  "origin": {
+    "kind": "original",
+    "author": "IELTS Prep project",
+    "note": "Demo content drafted by Claude (AI) for this project to exercise the table, flow-chart and diagram layouts; not taken or adapted from any published IELTS material. The facts are simplified for practice and the researchers in passage 3 are invented."
+  },
+  "passages": [
+    {
+      "id": "p1",
+      "number": 1,
+      "title": "Heating Water with the Sun",
+      "paragraphs": [
+        {
+          "id": "p1-1",
+          "sentences": [
+            {
+              "id": "p1-1-s1",
+              "text": "A solar water heater uses energy from the sun to warm the water a household needs."
+            },
+            {
+              "id": "p1-1-s2",
+              "text": "The most common design for homes has two main parts: a flat collector fixed to the roof and a storage tank placed above or near it."
+            },
+            {
+              "id": "p1-1-s3",
+              "text": "Because it has no engine, the system makes almost no noise."
+            }
+          ]
+        },
+        {
+          "id": "p1-2",
+          "sentences": [
+            {
+              "id": "p1-2-s1",
+              "text": "The collector is a shallow box with a sheet of glass on top."
+            },
+            {
+              "id": "p1-2-s2",
+              "text": "Under the glass lies a dark metal plate, which absorbs sunlight and turns it into heat."
+            },
+            {
+              "id": "p1-2-s3",
+              "text": "Narrow copper pipes run across the plate and carry water through the collector."
+            },
+            {
+              "id": "p1-2-s4",
+              "text": "A layer of insulation behind the plate stops the heat from escaping through the back of the box."
+            }
+          ]
+        },
+        {
+          "id": "p1-3",
+          "sentences": [
+            {
+              "id": "p1-3-s1",
+              "text": "The system needs no pump when the tank sits higher than the collector."
+            },
+            {
+              "id": "p1-3-s2",
+              "text": "Cold water first enters the bottom of the collector from a pipe connected to the tank."
+            },
+            {
+              "id": "p1-3-s3",
+              "text": "As the water in the pipes warms, it becomes lighter and rises to the top of the collector."
+            },
+            {
+              "id": "p1-3-s4",
+              "text": "From there it flows into the upper part of the tank, while cooler water from the bottom of the tank moves down to replace it."
+            },
+            {
+              "id": "p1-3-s5",
+              "text": "This slow circulation continues for as long as the sun shines on the glass."
+            },
+            {
+              "id": "p1-3-s6",
+              "text": "When someone opens a hot tap, the hottest water is drawn from the top of the tank."
+            }
+          ]
+        },
+        {
+          "id": "p1-4",
+          "sentences": [
+            {
+              "id": "p1-4-s1",
+              "text": "Solar heaters work best in sunny regions, but they are also used in cooler countries."
+            },
+            {
+              "id": "p1-4-s2",
+              "text": "In winter, a small electric heater inside the tank can raise the temperature on cloudy days."
+            },
+            {
+              "id": "p1-4-s3",
+              "text": "Owners are advised to clean the glass twice a year, since dust can reduce the amount of light that reaches the plate."
+            },
+            {
+              "id": "p1-4-s4",
+              "text": "With this simple care, a well-built system can last for more than twenty years."
+            }
+          ]
+        }
+      ],
+      "questionGroups": [
+        {
+          "id": "p1-g1",
+          "type": "diagramLabelCompletion",
+          "instruction": "Label the diagram below. Choose ONE WORD ONLY from the passage for each answer.",
+          "wordLimit": {
+            "words": 1,
+            "numbers": false
+          },
+          "title": "A solar water heater",
+          "image": {
+            "src": "diagram.d3da5f0d4c22.svg",
+            "mimeType": "image/svg+xml",
+            "width": 800,
+            "height": 460,
+            "alt": "Diagram of a solar water heater on a roof",
+            "description": "A flat collector box lies on a roof, with a storage tank above it on the right, joined by two pipes. Inside the collector there are four layers from top to bottom. Label 1 is on the top layer, 2 on the dark layer under it, 3 on the two lines running across the box, 4 on the bottom layer, and 5 on the round container above the collector.",
+            "bytes": 1212,
+            "sha256": "d3da5f0d4c227e5c5ea5c9b1bb6161d5e6dd580bf0695fc2859412dd1f6507b3",
+            "provenance": {
+              "producedBy": "IELTS Prep (drawn by Claude)",
+              "method": "drawn",
+              "license": "Original, made for this app",
+              "producedAt": "2026-10-18"
+            }
+          },
+          "markers": [
+            {
+              "id": "p1-m1",
+              "label": "1",
+              "x": 52.5,
+              "y": 52.8,
+              "question": 1
+            },
+            {
+              "id": "p1-m2",
+              "label": "2",
+              "x": 37.5,
+              "y": 59,
+              "question": 2
+            },
+            {
+              "id": "p1-m3",
+              "label": "3",
+              "x": 22.5,
+              "y": 67,
+              "question": 3
+            },
+            {
+              "id": "p1-m4",
+              "label": "4",
+              "x": 47.5,
+              "y": 76,
+              "question": 4
+            },
+            {
+              "id": "p1-m5",
+              "label": "5",
+              "x": 81,
+              "y": 26,
+              "question": 5
+            }
+          ],
+          "questions": [
+            {
+              "number": 1
+            },
+            {
+              "number": 2
+            },
+            {
+              "number": 3
+            },
+            {
+              "number": 4
+            },
+            {
+              "number": 5
+            }
+          ]
+        },
+        {
+          "id": "p1-g2",
+          "type": "flowChartCompletion",
+          "instruction": "Complete the flow chart below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+          "wordLimit": {
+            "words": 2,
+            "numbers": false
+          },
+          "title": "How water moves without a pump",
+          "steps": [
+            [
+              [
+                {
+                  "text": "Cold water enters the bottom of the "
+                },
+                {
+                  "gap": 6
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "Warm water becomes "
+                },
+                {
+                  "gap": 7
+                },
+                {
+                  "text": " and rises"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "It flows into the "
+                },
+                {
+                  "gap": 8
+                },
+                {
+                  "text": " of the tank"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "Hot water is drawn when someone opens a "
+                },
+                {
+                  "gap": 9
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "p1-g3",
+          "type": "trueFalseNotGiven",
+          "instruction": "Do the following statements agree with the information given in the passage? Write TRUE, FALSE or NOT GIVEN.",
+          "questions": [
+            {
+              "number": 10,
+              "statement": "Solar water heaters for homes are usually very noisy."
+            },
+            {
+              "number": 11,
+              "statement": "A pump is needed if the tank is placed lower than the collector."
+            },
+            {
+              "number": 12,
+              "statement": "Solar water heaters are only used in hot countries."
+            },
+            {
+              "number": 13,
+              "statement": "Dust on the glass can lower the system's performance."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "number": 2,
+      "title": "Libraries for Everyone",
+      "paragraphs": [
+        {
+          "id": "p2-a",
+          "letter": "A",
+          "sentences": [
+            {
+              "id": "p2-a-s1",
+              "text": "For most of history, books were rare and expensive objects."
+            },
+            {
+              "id": "p2-a-s2",
+              "text": "The collections that did exist belonged to temples, universities and wealthy families, and few ordinary people could use them."
+            }
+          ]
+        },
+        {
+          "id": "p2-b",
+          "letter": "B",
+          "sentences": [
+            {
+              "id": "p2-b-s1",
+              "text": "This began to change in the nineteenth century, when several towns opened libraries paid for by local taxes."
+            },
+            {
+              "id": "p2-b-s2",
+              "text": "Supporters argued that free access to books would help working people educate themselves."
+            },
+            {
+              "id": "p2-b-s3",
+              "text": "Critics, however, worried about the cost to taxpayers."
+            }
+          ]
+        },
+        {
+          "id": "p2-c",
+          "letter": "C",
+          "sentences": [
+            {
+              "id": "p2-c-s1",
+              "text": "Early public libraries looked very different from today's."
+            },
+            {
+              "id": "p2-c-s2",
+              "text": "Readers could not take books from the shelves themselves; instead, they asked a librarian, who fetched each volume from a closed store."
+            },
+            {
+              "id": "p2-c-s3",
+              "text": "Open shelves, where visitors choose freely, became common only in the early twentieth century."
+            }
+          ]
+        },
+        {
+          "id": "p2-d",
+          "letter": "D",
+          "sentences": [
+            {
+              "id": "p2-d-s1",
+              "text": "Children were often not allowed inside the first public libraries."
+            },
+            {
+              "id": "p2-d-s2",
+              "text": "The first separate children's rooms appeared around 1900, with smaller furniture and books written for young readers."
+            },
+            {
+              "id": "p2-d-s3",
+              "text": "Within a few decades, story hours and reading clubs had made children some of the most regular visitors."
+            }
+          ]
+        },
+        {
+          "id": "p2-e",
+          "letter": "E",
+          "sentences": [
+            {
+              "id": "p2-e-s1",
+              "text": "Today, many libraries lend far more than books."
+            },
+            {
+              "id": "p2-e-s2",
+              "text": "Visitors can borrow laptops, use study rooms and join language classes."
+            },
+            {
+              "id": "p2-e-s3",
+              "text": "Some libraries even lend tools or musical instruments, and most offer free internet access."
+            },
+            {
+              "id": "p2-e-s4",
+              "text": "Even so, librarians report that quiet reading space is still among the services people value most."
+            }
+          ]
+        }
+      ],
+      "questionGroups": [
+        {
+          "id": "p2-g1",
+          "type": "matchingHeadings",
+          "instruction": "The passage has five paragraphs, A–E. Choose the correct heading for paragraphs B–E from the list of headings below.",
+          "options": [
+            {
+              "id": "i",
+              "text": "Lending beyond books"
+            },
+            {
+              "id": "ii",
+              "text": "A debate over public money"
+            },
+            {
+              "id": "iii",
+              "text": "Asking staff for every book"
+            },
+            {
+              "id": "iv",
+              "text": "Young readers find a place"
+            },
+            {
+              "id": "v",
+              "text": "Why libraries are closing"
+            },
+            {
+              "id": "vi",
+              "text": "The first printed books"
+            },
+            {
+              "id": "vii",
+              "text": "Rules for borrowing music"
+            }
+          ],
+          "questions": [
+            {
+              "number": 14,
+              "paragraphId": "p2-b"
+            },
+            {
+              "number": 15,
+              "paragraphId": "p2-c"
+            },
+            {
+              "number": 16,
+              "paragraphId": "p2-d"
+            },
+            {
+              "number": 17,
+              "paragraphId": "p2-e"
+            }
+          ]
+        },
+        {
+          "id": "p2-g2",
+          "type": "tableCompletion",
+          "instruction": "Complete the table below. Choose ONE WORD AND/OR A NUMBER from the passage for each answer.",
+          "wordLimit": {
+            "words": 1,
+            "numbers": true
+          },
+          "title": "Changes in public libraries",
+          "columns": ["Period", "Change"],
+          "rowHeaders": true,
+          "rows": [
+            {
+              "cells": [
+                [
+                  {
+                    "text": "19th century"
+                  }
+                ],
+                [
+                  {
+                    "text": "Towns pay for libraries through local "
+                  },
+                  {
+                    "gap": 18
+                  }
+                ]
+              ]
+            },
+            {
+              "cells": [
+                [
+                  {
+                    "text": "Early libraries"
+                  }
+                ],
+                [
+                  {
+                    "text": "A "
+                  },
+                  {
+                    "gap": 19
+                  },
+                  {
+                    "text": " brings each book from a closed store"
+                  }
+                ]
+              ]
+            },
+            {
+              "cells": [
+                [
+                  {
+                    "text": "Early 20th century"
+                  }
+                ],
+                [
+                  {
+                    "gap": 20
+                  },
+                  {
+                    "text": " shelves become common"
+                  }
+                ]
+              ]
+            },
+            {
+              "cells": [
+                [
+                  {
+                    "text": "Around "
+                  },
+                  {
+                    "gap": 21
+                  }
+                ],
+                [
+                  {
+                    "text": "Separate rooms for children appear"
+                  }
+                ]
+              ]
+            },
+            {
+              "cells": [
+                [
+                  {
+                    "text": "Today"
+                  }
+                ],
+                [
+                  {
+                    "text": "Visitors can borrow "
+                  },
+                  {
+                    "gap": 22
+                  },
+                  {
+                    "text": " and use study rooms"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p2-g3",
+          "type": "multipleChoice",
+          "instruction": "Choose the correct letter, A, B, C or D.",
+          "questions": [
+            {
+              "number": 23,
+              "stem": "Why did supporters want free public libraries?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "to reduce local taxes"
+                },
+                {
+                  "id": "B",
+                  "text": "to help working people learn"
+                },
+                {
+                  "id": "C",
+                  "text": "to protect rare books"
+                },
+                {
+                  "id": "D",
+                  "text": "to give librarians work"
+                }
+              ]
+            },
+            {
+              "number": 24,
+              "stem": "According to librarians, which service do people still value most?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "free internet access"
+                },
+                {
+                  "id": "B",
+                  "text": "language classes"
+                },
+                {
+                  "id": "C",
+                  "text": "quiet reading space"
+                },
+                {
+                  "id": "D",
+                  "text": "tool lending"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p2-g4",
+          "type": "sentenceCompletion",
+          "instruction": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+          "wordLimit": {
+            "words": 2,
+            "numbers": false
+          },
+          "sentences": [
+            [
+              {
+                "text": "Before public libraries, collections belonged to temples, universities and "
+              },
+              {
+                "gap": 25
+              },
+              {
+                "text": "."
+              }
+            ],
+            [
+              {
+                "text": "The first children's rooms had smaller "
+              },
+              {
+                "gap": 26
+              },
+              {
+                "text": " and books for young readers."
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "number": 3,
+      "title": "Sleep and Memory",
+      "paragraphs": [
+        {
+          "id": "p3-1",
+          "sentences": [
+            {
+              "id": "p3-1-s1",
+              "text": "For a long time, sleep was seen simply as a period of rest for the body."
+            },
+            {
+              "id": "p3-1-s2",
+              "text": "Over the last fifty years, however, researchers have shown that the brain remains very active while we sleep."
+            },
+            {
+              "id": "p3-1-s3",
+              "text": "In my view, this discovery is one of the most important in modern psychology."
+            }
+          ]
+        },
+        {
+          "id": "p3-2",
+          "sentences": [
+            {
+              "id": "p3-2-s1",
+              "text": "Much of this activity seems to support memory."
+            },
+            {
+              "id": "p3-2-s2",
+              "text": "In one well-known study, Dr Lena Hartmann asked students to learn a list of word pairs in the evening."
+            },
+            {
+              "id": "p3-2-s3",
+              "text": "Students who then slept recalled more pairs the next morning than students who stayed awake for the same number of hours."
+            },
+            {
+              "id": "p3-2-s4",
+              "text": "Hartmann concluded that sleep protects new memories from being disturbed."
+            }
+          ]
+        },
+        {
+          "id": "p3-3",
+          "sentences": [
+            {
+              "id": "p3-3-s1",
+              "text": "Other researchers have looked at what happens during different stages of sleep."
+            },
+            {
+              "id": "p3-3-s2",
+              "text": "Professor Ade Okafor found that deep sleep early in the night is linked to remembering facts, such as names and dates."
+            },
+            {
+              "id": "p3-3-s3",
+              "text": "Later stages, which come mostly in the hours before waking, appear to help with skills, such as playing an instrument."
+            },
+            {
+              "id": "p3-3-s4",
+              "text": "Cutting sleep short may therefore cost a learner more than they expect."
+            }
+          ]
+        },
+        {
+          "id": "p3-4",
+          "sentences": [
+            {
+              "id": "p3-4-s1",
+              "text": "A third line of research concerns short daytime naps."
+            },
+            {
+              "id": "p3-4-s2",
+              "text": "Dr Mei Tanaka reported that a nap of about twenty minutes improved attention in the afternoon."
+            },
+            {
+              "id": "p3-4-s3",
+              "text": "Longer naps, she warned, can leave people feeling heavy and slow for a while after waking."
+            }
+          ]
+        },
+        {
+          "id": "p3-5",
+          "sentences": [
+            {
+              "id": "p3-5-s1",
+              "text": "None of this means that students should sleep instead of studying."
+            },
+            {
+              "id": "p3-5-s2",
+              "text": "Yet I believe schools that start very early in the morning are working against the way young people learn."
+            },
+            {
+              "id": "p3-5-s3",
+              "text": "Whether later start times would raise exam results is a question that still needs careful study."
+            }
+          ]
+        }
+      ],
+      "questionGroups": [
+        {
+          "id": "p3-g1",
+          "type": "yesNoNotGiven",
+          "instruction": "Do the following statements agree with the views of the writer? Write YES, NO or NOT GIVEN.",
+          "questions": [
+            {
+              "number": 27,
+              "statement": "The discovery that the brain is active during sleep is very important."
+            },
+            {
+              "number": 28,
+              "statement": "Students should spend more time sleeping than studying."
+            },
+            {
+              "number": 29,
+              "statement": "Very early school start times do not suit the way young people learn."
+            },
+            {
+              "number": 30,
+              "statement": "Later school start times would raise exam results."
+            }
+          ]
+        },
+        {
+          "id": "p3-g2",
+          "type": "matchingFeatures",
+          "instruction": "Match each finding with the correct researcher, A, B or C. You may use any letter more than once.",
+          "options": [
+            {
+              "id": "A",
+              "text": "Lena Hartmann"
+            },
+            {
+              "id": "B",
+              "text": "Ade Okafor"
+            },
+            {
+              "id": "C",
+              "text": "Mei Tanaka"
+            }
+          ],
+          "allowRepeat": true,
+          "questions": [
+            {
+              "number": 31,
+              "statement": "Sleep before waking may help people learn practical skills."
+            },
+            {
+              "number": 32,
+              "statement": "A short rest in the day can help people concentrate."
+            },
+            {
+              "number": 33,
+              "statement": "Sleeping after learning keeps new memories safe."
+            }
+          ]
+        },
+        {
+          "id": "p3-g3",
+          "type": "multipleChoiceMulti",
+          "instruction": "Choose TWO letters, A–E.",
+          "items": [
+            {
+              "numbers": [34, 35],
+              "stem": "Which TWO of these findings are reported in the passage?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "Students who slept remembered more word pairs."
+                },
+                {
+                  "id": "B",
+                  "text": "Deep sleep comes mostly just before waking."
+                },
+                {
+                  "id": "C",
+                  "text": "Long naps can make people feel slow."
+                },
+                {
+                  "id": "D",
+                  "text": "Sleep has always been seen as active."
+                },
+                {
+                  "id": "E",
+                  "text": "Naps improve exam results."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p3-g4",
+          "type": "summaryWordBox",
+          "instruction": "Complete the summary using the list of words, A–F, below.",
+          "options": [
+            {
+              "id": "A",
+              "text": "rest"
+            },
+            {
+              "id": "B",
+              "text": "active"
+            },
+            {
+              "id": "C",
+              "text": "cost"
+            },
+            {
+              "id": "D",
+              "text": "quiet"
+            },
+            {
+              "id": "E",
+              "text": "help"
+            },
+            {
+              "id": "F",
+              "text": "teach"
+            }
+          ],
+          "title": "What we know about sleep",
+          "text": [
+            {
+              "text": "Researchers once thought sleep was only a time of "
+            },
+            {
+              "gap": 36
+            },
+            {
+              "text": " for the body. We now know the brain stays "
+            },
+            {
+              "gap": 37
+            },
+            {
+              "text": " at night, and that losing sleep may "
+            },
+            {
+              "gap": 38
+            },
+            {
+              "text": " learners more than they think."
+            }
+          ]
+        },
+        {
+          "id": "p3-g5",
+          "type": "shortAnswer",
+          "instruction": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+          "wordLimit": {
+            "words": 3,
+            "numbers": true
+          },
+          "questions": [
+            {
+              "number": 39,
+              "question": "What did Hartmann's students learn in the evening?"
+            },
+            {
+              "number": 40,
+              "question": "How long was the nap that improved attention?"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

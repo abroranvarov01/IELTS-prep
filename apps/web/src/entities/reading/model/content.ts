@@ -5,6 +5,7 @@
 
 import {
   type FlowChartShape,
+  type LabellingShape,
   type TableShape,
   flowChartNumbers,
   tableNumbers,
@@ -111,6 +112,12 @@ export type QuestionGroup =
       FlowChartShape & {
         /** The shared flow-chart layout (ADR-0012 §2), typed gaps in its steps. */
         type: "flowChartCompletion";
+        wordLimit: WordLimit;
+      })
+  | (GroupBase &
+      Omit<LabellingShape, "answer"> & {
+        /** The shared labelling picture (ADR-0012 §6), each numbered label typed. */
+        type: "diagramLabelCompletion";
         wordLimit: WordLimit;
       });
 

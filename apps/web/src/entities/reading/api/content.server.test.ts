@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { unsafeSvgParts } from "@/shared/content/shapes";
 import { routing } from "@/shared/i18n/routing";
 import { QUESTION_COUNT, groupNumbers } from "../model/content";
 import { parseExplanations } from "../model/explanations";
@@ -135,6 +136,14 @@ const FINGERPRINTS: Record<string, { number: number; sha256: string }> = {
     number: 1,
     sha256: "e81438bf3a388055e5648c876306764657a67b544a88611d75f215ad32cbe9c5",
   },
+  "demo-academic-2.json": {
+    number: 1,
+    sha256: "dfa480ae15b46f45955ccbfa692650c2ecad9a3e18e0811b7688cf1b5b696998",
+  },
+  "demo-academic-2.key.json": {
+    number: 1,
+    sha256: "96df3a5423a3328c64f9b987f70bd446cdf0189bb03daf250d295784c26e0e36",
+  },
 };
 
 describe("Reading content fingerprints", () => {
@@ -155,6 +164,48 @@ describe("Reading content fingerprints", () => {
         { number, sha256 },
         `${file}: increase its ${file.endsWith(".key.json") ? "revision" : "version"} and record the new fingerprint`,
       ).toEqual(FINGERPRINTS[file]);
+    });
+  }
+});
+
+describe("Reading pictures (M8-19)", () => {
+  it("demo test 2 uses the table, flow-chart and diagram layouts", () => {
+    const parsed = parseReadingTest(readJson("demo-academic-2.json"));
+    if (!parsed.ok) throw new Error(parsed.errors.join("\n"));
+    const types = parsed.value.passages.flatMap((p) =>
+      p.questionGroups.map((g) => g.type),
+    );
+    expect(types).toEqual(
+      expect.arrayContaining([
+        "tableCompletion",
+        "flowChartCompletion",
+        "diagramLabelCompletion",
+      ]),
+    );
+  });
+
+  for (const file of testFiles) {
+    it(`${file}: every diagram's file is present, unchanged and safe`, () => {
+      const parsed = parseReadingTest(readJson(file));
+      if (!parsed.ok) throw new Error(parsed.errors.join("\n"));
+      for (const group of parsed.value.passages.flatMap(
+        (p) => p.questionGroups,
+      )) {
+        if (group.type !== "diagramLabelCompletion") continue;
+        const raw = readFileSync(
+          path.join(
+            CONTENT_DIR,
+            "../../public/media/reading",
+            parsed.value.id,
+            group.image.src,
+          ),
+        );
+        expect(raw.length).toBe(group.image.bytes);
+        expect(createHash("sha256").update(raw).digest("hex")).toBe(
+          group.image.sha256,
+        );
+        expect(unsafeSvgParts(raw.toString("utf8"))).toEqual([]);
+      }
     });
   }
 });

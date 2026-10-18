@@ -1,0 +1,1216 @@
+{
+  "testId": "demo-academic-2",
+  "version": 1,
+  "locale": "uz",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "Matnda kollektor "
+        },
+        {
+          "en": "a sheet of glass on top"
+        },
+        {
+          "text": " boʻlgan quti ekani aytilgan. 1-belgi yuqori qatlamda, shuning uchun javob — "
+        },
+        {
+          "en": "glass"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Qutining yuqori qatlami — "
+        },
+        {
+          "en": "glass"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "en": "Under the glass lies a dark metal plate"
+        },
+        {
+          "text": ". 2-belgi oynaning ostidagi qora qatlam: "
+        },
+        {
+          "en": "plate"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Oyna ostidagi qora qatlam — "
+        },
+        {
+          "en": "plate"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "Ingichka mis "
+        },
+        {
+          "en": "pipes run across the plate"
+        },
+        {
+          "text": ". 3-belgi quti boʻylab chiziqlarda, demak soʻz — "
+        },
+        {
+          "en": "pipes"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Quti boʻylab chiziqlar — "
+        },
+        {
+          "en": "pipes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "en": "A layer of insulation behind the plate"
+        },
+        {
+          "text": " issiqlikni saqlaydi. 4-belgi pastki qatlam: "
+        },
+        {
+          "en": "insulation"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Pastki qatlam — "
+        },
+        {
+          "en": "insulation"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "Tizimda kollektor va uning "
+        },
+        {
+          "en": "a storage tank placed above"
+        },
+        {
+          "text": " bor. 5-belgi kollektor ustidagi idish: "
+        },
+        {
+          "en": "tank"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kollektor ustidagi idish — "
+        },
+        {
+          "en": "tank"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "Sovuq suv avval "
+        },
+        {
+          "en": "enters the bottom of the collector"
+        },
+        {
+          "text": ", shuning uchun birinchi bosqichda "
+        },
+        {
+          "en": "collector"
+        },
+        {
+          "text": " kerak."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Sovuq suv avval "
+        },
+        {
+          "en": "collector"
+        },
+        {
+          "text": " ga kiradi."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "Isiganda suv "
+        },
+        {
+          "en": "it becomes lighter and rises"
+        },
+        {
+          "text": ". Sxemada xuddi shu fikr: "
+        },
+        {
+          "en": "lighter"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Iliq suv "
+        },
+        {
+          "en": "lighter"
+        },
+        {
+          "text": " boʻlib, yuqoriga chiqadi."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "Iliq suv "
+        },
+        {
+          "en": "flows into the upper part of the tank"
+        },
+        {
+          "text": ". Ikki soʻzga ruxsat bor, javob — "
+        },
+        {
+          "en": "upper part"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Suv bakning "
+        },
+        {
+          "en": "upper part"
+        },
+        {
+          "text": " iga oqadi."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "Eng issiq suv "
+        },
+        {
+          "en": "when someone opens a hot tap"
+        },
+        {
+          "text": " olinadi. "
+        },
+        {
+          "en": "hot tap"
+        },
+        {
+          "text": " ikki soʻzga sigʻadi; faqat "
+        },
+        {
+          "en": "tap"
+        },
+        {
+          "text": " ham qabul qilinadi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Issiq suv "
+        },
+        {
+          "en": "hot tap"
+        },
+        {
+          "text": " ochilganda chiqadi."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "Matnda tizim "
+        },
+        {
+          "en": "makes almost no noise"
+        },
+        {
+          "text": " deyilgan. Gapda u juda shovqinli deyilgan, bu matnga zid: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "U deyarli jim, shovqinli emas, shuning uchun "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "Matnda faqat "
+        },
+        {
+          "en": "needs no pump when the tank sits higher"
+        },
+        {
+          "text": " deyilgan. Pastroqdagi bak haqida hech narsa yoʻq: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Pastdagi bak haqida matnda yoʻq: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "Matnda ular "
+        },
+        {
+          "en": "are also used in cooler countries"
+        },
+        {
+          "text": " deyilgan. Gapdagi "
+        },
+        {
+          "en": "only"
+        },
+        {
+          "text": " soʻzi uni notoʻgʻri qiladi: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ular salqin mamlakatlarda ham ishlatiladi, demak "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "en": "dust can reduce the amount of light"
+        },
+        {
+          "text": ", plastinaga yetib boradigan nur kamayadi; nur kam — issiqlik kam. Bu gapga mos: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Chang nurni kamaytiradi, shuning uchun "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "B xatboshida "
+        },
+        {
+          "en": "paid for by local taxes"
+        },
+        {
+          "text": " kutubxonalar va "
+        },
+        {
+          "en": "the cost to taxpayers"
+        },
+        {
+          "text": " haqidagi tashvish bor. Bu pul haqidagi bahs: "
+        },
+        {
+          "en": "ii"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "B — kutubxonaga davlat puli toʻlanishi haqidagi bahs: "
+        },
+        {
+          "en": "ii"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "15": {
+      "explanation": [
+        {
+          "text": "C xatboshida oʻquvchilar "
+        },
+        {
+          "en": "asked a librarian, who fetched each volume"
+        },
+        {
+          "text": ". Bu "
+        },
+        {
+          "en": "Asking staff for every book"
+        },
+        {
+          "text": " ga mos: "
+        },
+        {
+          "en": "iii"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "C da har bir kitobni kutubxonachidan soʻrashgan: "
+        },
+        {
+          "en": "iii"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "16": {
+      "explanation": [
+        {
+          "text": "D xatboshida bolalar avval kiritilmagani, keyin "
+        },
+        {
+          "en": "separate children's rooms"
+        },
+        {
+          "text": " paydo boʻlgani aytilgan: "
+        },
+        {
+          "en": "iv"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "D — bolalarga alohida xonalar haqida: "
+        },
+        {
+          "en": "iv"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "17": {
+      "explanation": [
+        {
+          "text": "E xatboshida kutubxonalar "
+        },
+        {
+          "en": "lend far more than books"
+        },
+        {
+          "text": " deyilgan: noutbuk, asboblar. Bu "
+        },
+        {
+          "en": "Lending beyond books"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "i"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "E — kitobdan boshqa narsalar berilishi haqida: "
+        },
+        {
+          "en": "i"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "18": {
+      "explanation": [
+        {
+          "text": "Shaharlar "
+        },
+        {
+          "en": "paid for by local taxes"
+        },
+        {
+          "text": " kutubxonalar ochgan, demak soʻz — "
+        },
+        {
+          "en": "taxes"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kutubxonalar mahalliy "
+        },
+        {
+          "en": "taxes"
+        },
+        {
+          "text": " hisobidan toʻlangan."
+        }
+      ]
+    },
+    "19": {
+      "explanation": [
+        {
+          "text": "Oʻquvchilar "
+        },
+        {
+          "en": "asked a librarian, who fetched each volume"
+        },
+        {
+          "text": " yopiq omboridan: "
+        },
+        {
+          "en": "librarian"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Har bir kitobni "
+        },
+        {
+          "en": "librarian"
+        },
+        {
+          "text": " olib kelgan."
+        }
+      ]
+    },
+    "20": {
+      "explanation": [
+        {
+          "en": "Open shelves, where visitors choose freely"
+        },
+        {
+          "text": " yigirmanchi asr boshida keng tarqalgan: "
+        },
+        {
+          "en": "open"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "1900-yillar boshida javonlar "
+        },
+        {
+          "en": "open"
+        },
+        {
+          "text": " boʻlgan."
+        }
+      ]
+    },
+    "21": {
+      "explanation": [
+        {
+          "en": "The first separate children's rooms appeared around 1900"
+        },
+        {
+          "text": ". Raqam yozish mumkin: "
+        },
+        {
+          "en": "1900"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Bolalar xonalari "
+        },
+        {
+          "en": "1900"
+        },
+        {
+          "text": " yillar atrofida paydo boʻlgan."
+        }
+      ]
+    },
+    "22": {
+      "explanation": [
+        {
+          "en": "Visitors can borrow laptops"
+        },
+        {
+          "text": " va oʻqish xonalaridan foydalanadi: "
+        },
+        {
+          "en": "laptops"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Bugun "
+        },
+        {
+          "en": "laptops"
+        },
+        {
+          "text": " olish mumkin."
+        }
+      ]
+    },
+    "23": {
+      "explanation": [
+        {
+          "text": "Tarafdorlar bepul kitoblar "
+        },
+        {
+          "en": "would help working people educate themselves"
+        },
+        {
+          "text": " deyishgan. Bu boshqacha aytilgan "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": " varianti."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ular ishchilar oʻqishini xohlashgan: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "24": {
+      "explanation": [
+        {
+          "text": "Kutubxonachilar "
+        },
+        {
+          "en": "quiet reading space is still among"
+        },
+        {
+          "text": " eng qadrli xizmatlardan ekanini aytadi: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Odamlar jim oʻqish joyini eng qadrlaydi: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "25": {
+      "explanation": [
+        {
+          "text": "Toʻplamlar "
+        },
+        {
+          "en": "belonged to temples, universities and wealthy families"
+        },
+        {
+          "text": ". Ikki soʻz mos: "
+        },
+        {
+          "en": "wealthy families"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ularga boylar egalik qilgan: "
+        },
+        {
+          "en": "wealthy families"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "26": {
+      "explanation": [
+        {
+          "text": "Birinchi bolalar xonalari "
+        },
+        {
+          "en": "with smaller furniture and books"
+        },
+        {
+          "text": " boʻlgan: "
+        },
+        {
+          "en": "furniture"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Xonalarda kichikroq "
+        },
+        {
+          "en": "furniture"
+        },
+        {
+          "text": " boʻlgan."
+        }
+      ]
+    },
+    "27": {
+      "explanation": [
+        {
+          "text": "Muallif "
+        },
+        {
+          "en": "In my view"
+        },
+        {
+          "text": " deb, kashfiyotni "
+        },
+        {
+          "en": "one of the most important"
+        },
+        {
+          "text": " deydi. Gap muallif fikriga mos: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif buni juda muhim deb biladi: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "28": {
+      "explanation": [
+        {
+          "text": "Muallif "
+        },
+        {
+          "en": "None of this means that students should sleep"
+        },
+        {
+          "text": " oʻqish oʻrniga deydi. Gap muallif fikriga zid: "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif oʻqish oʻrniga uxlashni maslahat bermaydi: "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "29": {
+      "explanation": [
+        {
+          "text": "Muallif erta boshlanadigan maktablar "
+        },
+        {
+          "en": "are working against the way young people learn"
+        },
+        {
+          "text": " deb hisoblaydi, bu gapning oʻzi: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif juda erta boshlanishni oʻqish uchun yomon deb biladi: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "30": {
+      "explanation": [
+        {
+          "text": "Muallif bu "
+        },
+        {
+          "en": "still needs careful study"
+        },
+        {
+          "text": " deydi: kech boshlanish natijani oshiradimi, aytmaydi. "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Muallif hali bilmaydi: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "31": {
+      "explanation": [
+        {
+          "text": "Okafor kech bosqichlar, "
+        },
+        {
+          "en": "in the hours before waking"
+        },
+        {
+          "text": ", cholgʻu chalish kabi koʻnikmalarga yordam berishini topgan: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Okaforga koʻra, uygʻonish oldidagi uyqu koʻnikmaga yordam beradi: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "32": {
+      "explanation": [
+        {
+          "text": "Tanaka "
+        },
+        {
+          "en": "a nap of about twenty minutes improved attention"
+        },
+        {
+          "text": " deb xabar bergan. Diqqatni jamlash — eʼtibor: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Tanaka: qisqa uyqu diqqatga yordam beradi: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "33": {
+      "explanation": [
+        {
+          "text": "Hartmann "
+        },
+        {
+          "en": "concluded that sleep protects new memories"
+        },
+        {
+          "text": ". Saqlaydi — himoya qiladi degani: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Hartmann: uyqu yangi xotirani himoya qiladi: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "34": {
+      "explanation": [
+        {
+          "text": "Uxlagan talabalar "
+        },
+        {
+          "en": "recalled more pairs the next morning"
+        },
+        {
+          "text": " (A), uzoq uyqu esa "
+        },
+        {
+          "en": "can leave people feeling heavy and slow"
+        },
+        {
+          "text": " (C). Chuqur uyqu erta keladi, B emas: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda A va C bor: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "36": {
+      "explanation": [
+        {
+          "text": "Avval uyqu "
+        },
+        {
+          "en": "simply as a period of rest"
+        },
+        {
+          "text": " deb hisoblangan: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ", rest."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Uyquni shunchaki dam deb oʻylashgan: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "37": {
+      "explanation": [
+        {
+          "text": "Olimlar "
+        },
+        {
+          "en": "the brain remains very active while we sleep"
+        },
+        {
+          "text": " ekanini koʻrsatgan: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ", active."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kechasi miya ishlaydi: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "38": {
+      "explanation": [
+        {
+          "text": "Uyquni qisqartirish "
+        },
+        {
+          "en": "may therefore cost a learner more"
+        },
+        {
+          "text": ", kutilganidan koʻproq: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": ", cost."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Uyqusizlik qimmatga tushishi mumkin: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "39": {
+      "explanation": [
+        {
+          "text": "Hartmann talabalardan kechqurun "
+        },
+        {
+          "en": "to learn a list of word pairs"
+        },
+        {
+          "text": " ni soʻragan. Uch soʻz ichida: "
+        },
+        {
+          "en": "word pairs"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ular "
+        },
+        {
+          "en": "word pairs"
+        },
+        {
+          "text": " ni oʻrganishgan."
+        }
+      ]
+    },
+    "40": {
+      "explanation": [
+        {
+          "text": "Tanaka "
+        },
+        {
+          "en": "a nap of about twenty minutes"
+        },
+        {
+          "text": " diqqatni yaxshilaganini aytgan: "
+        },
+        {
+          "en": "about twenty minutes"
+        },
+        {
+          "text": " (raqam bilan ham boʻladi)."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Uyqu taxminan "
+        },
+        {
+          "en": "twenty minutes"
+        },
+        {
+          "text": " davom etgan."
+        }
+      ]
+    }
+  }
+}

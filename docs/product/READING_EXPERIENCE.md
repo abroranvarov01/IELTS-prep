@@ -78,7 +78,7 @@ If the user pinned evidence, review compares it with the actual evidence. Review
 | **Choose from a list** (shared options) | Matching headings; matching information (which paragraph contains…); matching features; matching sentence endings; summary completion from a box of words | Yes |
 | **Type words** | Sentence completion; summary completion from the passage; note completion; short-answer questions | Yes |
 | **Type words, special layout** | Table completion; flow-chart completion | **Deferred**; added on the shared layouts: table completion in M8-17 (`tableCompletion`), flow-chart completion in M8-18 (`flowChartCompletion`) |
-| **Type words, on an image** | Diagram label completion | **Deferred** |
+| **Type words, on an image** | Diagram label completion | **Deferred**; added in M8-19 on the shared labelling picture (`diagramLabelCompletion`), used by Demo Reading Test 2 |
 
 **Why the deferrals:** table and flow-chart completion need a two-dimensional layout that does not fit 320 px without its own design pass, and diagram labelling needs images with text alternatives and an image pipeline the content contract does not have yet. None of them adds a new way to answer: each is "type words" in another layout, so the engine (data contract, session, navigator) covers them, and they can be added with their first content set without engine changes. Proposed: when real content needs them, each with one design pass (now planned in M8, with Listening).
 

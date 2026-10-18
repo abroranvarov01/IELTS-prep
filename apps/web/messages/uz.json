@@ -22,6 +22,12 @@
   "common": {
     "goHome": "Bosh sahifaga oʻtish"
   },
+  "picture": {
+    "enlarge": "Rasmni kattalashtirish",
+    "zoomIn": "Yaqinlashtirish",
+    "zoomOut": "Uzoqlashtirish",
+    "close": "Yopish"
+  },
   "error": {
     "title": "Xatolik yuz berdi",
     "body": "Qaytadan urinib koʻring. Xatolik takrorlansa, keyinroq qayting.",
@@ -502,12 +508,6 @@
     "navigator": {
       "part": "{number}-qism",
       "partProgress": "{number}-qism: {total} tadan {answered} tasiga javob berilgan"
-    },
-    "picture": {
-      "enlarge": "Rasmni kattalashtirish",
-      "zoomIn": "Yaqinlashtirish",
-      "zoomOut": "Uzoqlashtirish",
-      "close": "Yopish"
     },
     "temporary": {
       "label": "Vaqtinchalik mashq testi",

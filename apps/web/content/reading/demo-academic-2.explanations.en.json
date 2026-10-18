@@ -1,0 +1,1216 @@
+{
+  "testId": "demo-academic-2",
+  "version": 1,
+  "locale": "en",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "The passage says the collector is a box with "
+        },
+        {
+          "en": "a sheet of glass on top"
+        },
+        {
+          "text": ". Label 1 is on the top layer, so the answer is "
+        },
+        {
+          "en": "glass"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The top layer of the box is "
+        },
+        {
+          "en": "glass"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "en": "Under the glass lies a dark metal plate"
+        },
+        {
+          "text": ". Label 2 is the dark layer under the glass: "
+        },
+        {
+          "en": "plate"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The dark layer under the glass is the "
+        },
+        {
+          "en": "plate"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "Narrow copper "
+        },
+        {
+          "en": "pipes run across the plate"
+        },
+        {
+          "text": ". Label 3 is on the lines across the box, so the word is "
+        },
+        {
+          "en": "pipes"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The lines across the box are "
+        },
+        {
+          "en": "pipes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "en": "A layer of insulation behind the plate"
+        },
+        {
+          "text": " keeps the heat in. Label 4 is the bottom layer: "
+        },
+        {
+          "en": "insulation"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The bottom layer is "
+        },
+        {
+          "en": "insulation"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "The system has a collector and "
+        },
+        {
+          "en": "a storage tank placed above"
+        },
+        {
+          "text": " it. Label 5 is the container above the collector: "
+        },
+        {
+          "en": "tank"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The container above the collector is the "
+        },
+        {
+          "en": "tank"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "Cold water first "
+        },
+        {
+          "en": "enters the bottom of the collector"
+        },
+        {
+          "text": ", so the first step needs "
+        },
+        {
+          "en": "collector"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Cold water goes into the "
+        },
+        {
+          "en": "collector"
+        },
+        {
+          "text": " first."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "As the water warms, "
+        },
+        {
+          "en": "it becomes lighter and rises"
+        },
+        {
+          "text": ". The flow chart says the same with other words: "
+        },
+        {
+          "en": "lighter"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Warm water gets "
+        },
+        {
+          "en": "lighter"
+        },
+        {
+          "text": " and goes up."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "The warm water "
+        },
+        {
+          "en": "flows into the upper part of the tank"
+        },
+        {
+          "text": ". Two words are allowed, so the answer is "
+        },
+        {
+          "en": "upper part"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "It goes into the "
+        },
+        {
+          "en": "upper part"
+        },
+        {
+          "text": " of the tank."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "The hottest water is drawn "
+        },
+        {
+          "en": "when someone opens a hot tap"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "hot tap"
+        },
+        {
+          "text": " fits the two-word limit; "
+        },
+        {
+          "en": "tap"
+        },
+        {
+          "text": " alone is also accepted."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Hot water comes out when you open a "
+        },
+        {
+          "en": "hot tap"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "The passage says the system "
+        },
+        {
+          "en": "makes almost no noise"
+        },
+        {
+          "text": ". The statement says it is very noisy, which contradicts the passage: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "It is almost silent, not noisy, so "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "The passage only says "
+        },
+        {
+          "en": "needs no pump when the tank sits higher"
+        },
+        {
+          "text": ". It says nothing about a tank placed lower, so we cannot know: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage does not talk about a lower tank: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "The passage says they "
+        },
+        {
+          "en": "are also used in cooler countries"
+        },
+        {
+          "text": ". The word "
+        },
+        {
+          "en": "only"
+        },
+        {
+          "text": " in the statement makes it wrong: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "They are used in cool countries too, so "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "en": "dust can reduce the amount of light"
+        },
+        {
+          "text": " that reaches the plate; less light means less heat. That agrees with the statement: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Dust lets in less light, so the system works less well: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "Paragraph B describes libraries "
+        },
+        {
+          "en": "paid for by local taxes"
+        },
+        {
+          "text": " and critics worried about "
+        },
+        {
+          "en": "the cost to taxpayers"
+        },
+        {
+          "text": ". This is a debate about money: "
+        },
+        {
+          "en": "ii"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "B is about whether public money should pay for libraries: "
+        },
+        {
+          "en": "ii"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "15": {
+      "explanation": [
+        {
+          "text": "In paragraph C, readers "
+        },
+        {
+          "en": "asked a librarian, who fetched each volume"
+        },
+        {
+          "text": ". That matches "
+        },
+        {
+          "en": "Asking staff for every book"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "iii"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "In C, people had to ask a librarian for each book: "
+        },
+        {
+          "en": "iii"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "16": {
+      "explanation": [
+        {
+          "text": "Paragraph D tells how children were first kept out and then got "
+        },
+        {
+          "en": "separate children's rooms"
+        },
+        {
+          "text": ". Young readers found a place: "
+        },
+        {
+          "en": "iv"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "D is about children getting their own rooms: "
+        },
+        {
+          "en": "iv"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "17": {
+      "explanation": [
+        {
+          "text": "Paragraph E says libraries "
+        },
+        {
+          "en": "lend far more than books"
+        },
+        {
+          "text": ": laptops, tools, instruments. That is "
+        },
+        {
+          "en": "Lending beyond books"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "i"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "E is about lending things other than books: "
+        },
+        {
+          "en": "i"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "18": {
+      "explanation": [
+        {
+          "text": "Towns opened libraries "
+        },
+        {
+          "en": "paid for by local taxes"
+        },
+        {
+          "text": ", so the word is "
+        },
+        {
+          "en": "taxes"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Libraries were paid for by local "
+        },
+        {
+          "en": "taxes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "19": {
+      "explanation": [
+        {
+          "text": "Readers "
+        },
+        {
+          "en": "asked a librarian, who fetched each volume"
+        },
+        {
+          "text": " from a closed store: "
+        },
+        {
+          "en": "librarian"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "A "
+        },
+        {
+          "en": "librarian"
+        },
+        {
+          "text": " brought each book."
+        }
+      ]
+    },
+    "20": {
+      "explanation": [
+        {
+          "en": "Open shelves, where visitors choose freely"
+        },
+        {
+          "text": " became common in the early twentieth century: "
+        },
+        {
+          "en": "open"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "In the early 1900s, shelves became "
+        },
+        {
+          "en": "open"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "21": {
+      "explanation": [
+        {
+          "en": "The first separate children's rooms appeared around 1900"
+        },
+        {
+          "text": ". A number is allowed: "
+        },
+        {
+          "en": "1900"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Children's rooms appeared around "
+        },
+        {
+          "en": "1900"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "22": {
+      "explanation": [
+        {
+          "en": "Visitors can borrow laptops"
+        },
+        {
+          "text": " and use study rooms: "
+        },
+        {
+          "en": "laptops"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Today people can borrow "
+        },
+        {
+          "en": "laptops"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "23": {
+      "explanation": [
+        {
+          "text": "Supporters said free books "
+        },
+        {
+          "en": "would help working people educate themselves"
+        },
+        {
+          "text": ". That is option "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": " in other words."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "They wanted working people to learn: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "24": {
+      "explanation": [
+        {
+          "text": "Librarians report that "
+        },
+        {
+          "en": "quiet reading space is still among"
+        },
+        {
+          "text": " the services people value most: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "People still value quiet reading space most: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "25": {
+      "explanation": [
+        {
+          "text": "Collections "
+        },
+        {
+          "en": "belonged to temples, universities and wealthy families"
+        },
+        {
+          "text": ". Two words fit: "
+        },
+        {
+          "en": "wealthy families"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Rich people owned them: "
+        },
+        {
+          "en": "wealthy families"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "26": {
+      "explanation": [
+        {
+          "text": "The first children's rooms came "
+        },
+        {
+          "en": "with smaller furniture and books"
+        },
+        {
+          "text": " for young readers: "
+        },
+        {
+          "en": "furniture"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The rooms had smaller "
+        },
+        {
+          "en": "furniture"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "27": {
+      "explanation": [
+        {
+          "text": "The writer says "
+        },
+        {
+          "en": "In my view"
+        },
+        {
+          "text": ", the discovery is "
+        },
+        {
+          "en": "one of the most important"
+        },
+        {
+          "text": ". The statement agrees with the writer: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer thinks it is very important: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "28": {
+      "explanation": [
+        {
+          "text": "The writer says "
+        },
+        {
+          "en": "None of this means that students should sleep"
+        },
+        {
+          "text": " instead of studying. The statement goes against the writer: "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer says students should not sleep instead of study: "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "29": {
+      "explanation": [
+        {
+          "text": "The writer believes early schools "
+        },
+        {
+          "en": "are working against the way young people learn"
+        },
+        {
+          "text": ", which is the statement in other words: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer thinks very early starts are bad for learning: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "30": {
+      "explanation": [
+        {
+          "text": "The writer says this "
+        },
+        {
+          "en": "still needs careful study"
+        },
+        {
+          "text": ": they do not say whether later starts would raise results. "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The writer does not know yet: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "31": {
+      "explanation": [
+        {
+          "text": "Okafor found that later stages, "
+        },
+        {
+          "en": "in the hours before waking"
+        },
+        {
+          "text": ", help with skills such as an instrument: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Sleep before waking helps skills, says Okafor: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "32": {
+      "explanation": [
+        {
+          "text": "Tanaka reported that "
+        },
+        {
+          "en": "a nap of about twenty minutes improved attention"
+        },
+        {
+          "text": ". Concentrate means pay attention: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Tanaka found short naps help attention: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "33": {
+      "explanation": [
+        {
+          "text": "Hartmann "
+        },
+        {
+          "en": "concluded that sleep protects new memories"
+        },
+        {
+          "text": ". Keeps safe means protects: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Hartmann said sleep protects new memories: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "34": {
+      "explanation": [
+        {
+          "text": "Students who slept "
+        },
+        {
+          "en": "recalled more pairs the next morning"
+        },
+        {
+          "text": " (A), and longer naps "
+        },
+        {
+          "en": "can leave people feeling heavy and slow"
+        },
+        {
+          "text": " (C). Deep sleep comes early, not before waking, so not B: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage reports A and C: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " and "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "36": {
+      "explanation": [
+        {
+          "text": "Sleep was once seen "
+        },
+        {
+          "en": "simply as a period of rest"
+        },
+        {
+          "text": " for the body: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ", rest."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "People thought sleep was just rest: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "37": {
+      "explanation": [
+        {
+          "text": "Researchers showed "
+        },
+        {
+          "en": "the brain remains very active while we sleep"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ", active."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The brain is busy at night: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "38": {
+      "explanation": [
+        {
+          "text": "Cutting sleep short "
+        },
+        {
+          "en": "may therefore cost a learner more"
+        },
+        {
+          "text": " than they expect: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": ", cost."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Losing sleep can cost learners a lot: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "39": {
+      "explanation": [
+        {
+          "text": "Hartmann asked students "
+        },
+        {
+          "en": "to learn a list of word pairs"
+        },
+        {
+          "text": " in the evening. Within three words: "
+        },
+        {
+          "en": "word pairs"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "They learned "
+        },
+        {
+          "en": "word pairs"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "40": {
+      "explanation": [
+        {
+          "text": "Tanaka reported that "
+        },
+        {
+          "en": "a nap of about twenty minutes"
+        },
+        {
+          "text": " improved attention: "
+        },
+        {
+          "en": "about twenty minutes"
+        },
+        {
+          "text": " (figures are accepted too)."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The nap was about "
+        },
+        {
+          "en": "twenty minutes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  }
+}

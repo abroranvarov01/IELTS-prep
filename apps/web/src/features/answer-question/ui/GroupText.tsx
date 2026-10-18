@@ -1,8 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { type QuestionGroup, useReading } from "@/entities/reading";
 import { CompletionTable } from "@/shared/ui/CompletionTable";
 import { FlowChart } from "@/shared/ui/FlowChart";
+import { LabelledPicture } from "@/shared/ui/LabelledPicture";
 import { GapText } from "./GapText";
 
 /**
@@ -17,7 +19,7 @@ export function GroupText({
   group: QuestionGroup;
   current: number;
 }) {
-  const { session } = useReading();
+  const { session, test } = useReading();
   const answerOf = (gap: number) => {
     const answer = session.answers[String(gap)];
     if (typeof answer !== "string") return undefined;
@@ -25,7 +27,14 @@ export function GroupText({
       return group.options.find((o) => o.id === answer)?.text;
     return answer.trim() !== "" ? answer : undefined;
   };
-  return <GroupTextView group={group} current={current} answerOf={answerOf} />;
+  return (
+    <GroupTextView
+      group={group}
+      current={current}
+      answerOf={answerOf}
+      testId={test.id}
+    />
+  );
 }
 
 /** The group's text with the given answers in its gaps, without a session. */
@@ -33,12 +42,34 @@ export function GroupTextView({
   group,
   current,
   answerOf,
+  testId,
 }: {
   group: QuestionGroup;
   current: number;
   answerOf: (number: number) => string | undefined;
+  /** For pictures: where the test's media are served (ADR-0013 §1). */
+  testId: string;
 }) {
+  const t = useTranslations("picture");
   if (!hasGroupText(group)) return null;
+  if (group.type === "diagramLabelCompletion")
+    return (
+      <div lang="en">
+        {group.title && <p className="mb-2 font-bold">{group.title}</p>}
+        <LabelledPicture
+          src={`/media/reading/${testId}/${group.image.src}`}
+          image={group.image}
+          markers={group.markers}
+          currentQuestion={current}
+          labels={{
+            enlarge: t("enlarge"),
+            zoomIn: t("zoomIn"),
+            zoomOut: t("zoomOut"),
+            close: t("close"),
+          }}
+        />
+      </div>
+    );
   if (group.type === "flowChartCompletion")
     return (
       <div lang="en">
@@ -96,7 +127,7 @@ export function GroupTextView({
   );
 }
 
-/** Groups whose questions share one text: summaries, notes, word boxes, tables and flow charts. */
+/** Groups whose questions share one text: summaries, notes, word boxes, tables, flow charts and diagrams. */
 export function hasGroupText(group: QuestionGroup): group is Extract<
   QuestionGroup,
   {
@@ -105,7 +136,8 @@ export function hasGroupText(group: QuestionGroup): group is Extract<
       | "summaryWordBox"
       | "noteCompletion"
       | "tableCompletion"
-      | "flowChartCompletion";
+      | "flowChartCompletion"
+      | "diagramLabelCompletion";
   }
 > {
   return (
@@ -113,6 +145,7 @@ export function hasGroupText(group: QuestionGroup): group is Extract<
     group.type === "summaryWordBox" ||
     group.type === "noteCompletion" ||
     group.type === "tableCompletion" ||
-    group.type === "flowChartCompletion"
+    group.type === "flowChartCompletion" ||
+    group.type === "diagramLabelCompletion"
   );
 }

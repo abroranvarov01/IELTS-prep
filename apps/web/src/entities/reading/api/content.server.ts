@@ -1,4 +1,5 @@
 import demoAcademic1 from "../../../../content/reading/demo-academic-1.json";
+import demoAcademic2 from "../../../../content/reading/demo-academic-2.json";
 import type { ReadingTest } from "../model/content";
 import { parseReadingTest } from "../model/parse-content";
 
@@ -7,6 +8,7 @@ import { parseReadingTest } from "../model/parse-content";
 // apart, in keys.server.ts, by the results and review pages only (ADR-0008 §2).
 const FILES: Record<string, unknown> = {
   "demo-academic-1": demoAcademic1,
+  "demo-academic-2": demoAcademic2,
 };
 
 const TESTS = new Map(

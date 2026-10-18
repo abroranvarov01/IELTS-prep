@@ -17,7 +17,7 @@ type Labelling = Extract<QuestionGroup, { type: "labelling" }>;
  * by side.
  */
 export function LabellingView({ group }: { group: Labelling }) {
-  const t = useTranslations("listening.picture");
+  const t = useTranslations("picture");
   const { test, session } = useListening();
   const options =
     group.answer.kind === "choose"

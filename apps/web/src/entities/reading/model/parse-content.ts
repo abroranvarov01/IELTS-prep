@@ -15,8 +15,10 @@ import {
 } from "@/shared/content/parse";
 import {
   checkFlowChart,
+  checkLabelling,
   checkTable,
   readFlowChart,
+  readLabelling,
   readTable,
 } from "@/shared/content/shapes";
 import {
@@ -652,6 +654,21 @@ function readGroup(
         ? { ...base, ...chart, type: "flowChartCompletion", wordLimit: limit }
         : undefined;
     }
+    case "diagramLabelCompletion": {
+      // Every label is typed: the shared reader gets that answer kind.
+      const shape = readLabelling(errors, path, {
+        ...value,
+        answer: { kind: "typed", wordLimit: value.wordLimit },
+      });
+      if (!shape || shape.answer.kind !== "typed") return undefined;
+      const { answer, ...picture } = shape;
+      return {
+        ...base,
+        ...picture,
+        type: "diagramLabelCompletion",
+        wordLimit: answer.wordLimit,
+      };
+    }
     default:
       errors.push(
         `${path}.type: unknown question type ${JSON.stringify(value.type)}`,
@@ -777,6 +794,12 @@ function checkGroup(
       return;
     case "flowChartCompletion":
       checkFlowChart(errors, path, group);
+      return;
+    case "diagramLabelCompletion":
+      checkLabelling(errors, path, {
+        ...group,
+        answer: { kind: "typed", wordLimit: group.wordLimit },
+      });
       return;
     case "sentenceCompletion":
       group.sentences.forEach((s, i) => {

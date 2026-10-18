@@ -1,6 +1,9 @@
 import demoAcademic1En from "../../../../content/reading/demo-academic-1.explanations.en.json";
 import demoAcademic1Ru from "../../../../content/reading/demo-academic-1.explanations.ru.json";
 import demoAcademic1Uz from "../../../../content/reading/demo-academic-1.explanations.uz.json";
+import demoAcademic2En from "../../../../content/reading/demo-academic-2.explanations.en.json";
+import demoAcademic2Ru from "../../../../content/reading/demo-academic-2.explanations.ru.json";
+import demoAcademic2Uz from "../../../../content/reading/demo-academic-2.explanations.uz.json";
 import { type Explanations, parseExplanations } from "../model/explanations";
 import { readingTest } from "./content.server";
 
@@ -13,6 +16,11 @@ const FILES: Record<string, Record<string, unknown>> = {
     en: demoAcademic1En,
     ru: demoAcademic1Ru,
     uz: demoAcademic1Uz,
+  },
+  "demo-academic-2": {
+    en: demoAcademic2En,
+    ru: demoAcademic2Ru,
+    uz: demoAcademic2Uz,
   },
 };
 

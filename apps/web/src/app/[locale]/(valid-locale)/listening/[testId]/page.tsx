@@ -18,17 +18,23 @@ export async function generateMetadata({
   return { title: listeningTest(testId)?.title };
 }
 
-export default async function ListeningPage({
+// The params and the start screen's ?mode= are read inside the Suspense
+// boundary, so a navigation to the test stays instant.
+export default function ListeningPage({
   params,
 }: PageProps<"/[locale]/listening/[testId]">) {
+  return (
+    <Suspense>
+      <Test params={params} />
+    </Suspense>
+  );
+}
+
+async function Test({
+  params,
+}: Pick<PageProps<"/[locale]/listening/[testId]">, "params">) {
   const { testId } = await params;
   const test = listeningTest(testId);
   if (!test) notFound();
-
-  // The start screen reads ?mode= (useSearchParams needs a Suspense boundary).
-  return (
-    <Suspense>
-      <ListeningScreen test={test} />
-    </Suspense>
-  );
+  return <ListeningScreen test={test} />;
 }

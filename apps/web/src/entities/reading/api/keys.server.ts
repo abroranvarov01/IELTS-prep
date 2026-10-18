@@ -1,4 +1,5 @@
 import demoAcademic1Key from "../../../../content/reading/demo-academic-1.key.json";
+import demoAcademic2Key from "../../../../content/reading/demo-academic-2.key.json";
 import { type AnswerKey, parseAnswerKey } from "../model/parse-content";
 import { readingTest } from "./content.server";
 
@@ -8,6 +9,7 @@ import { readingTest } from "./content.server";
 // never carries a key.
 const FILES: Record<string, unknown> = {
   "demo-academic-1": demoAcademic1Key,
+  "demo-academic-2": demoAcademic2Key,
 };
 
 const KEYS = new Map(

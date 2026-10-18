@@ -1,0 +1,1216 @@
+{
+  "testId": "demo-academic-2",
+  "version": 1,
+  "locale": "ru",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "В тексте сказано, что коллектор — это ящик "
+        },
+        {
+          "en": "a sheet of glass on top"
+        },
+        {
+          "text": ". Метка 1 стоит на верхнем слое, поэтому ответ — "
+        },
+        {
+          "en": "glass"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Верхний слой ящика — "
+        },
+        {
+          "en": "glass"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "en": "Under the glass lies a dark metal plate"
+        },
+        {
+          "text": ". Метка 2 — тёмный слой под стеклом: "
+        },
+        {
+          "en": "plate"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Тёмный слой под стеклом — "
+        },
+        {
+          "en": "plate"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "Узкие медные "
+        },
+        {
+          "en": "pipes run across the plate"
+        },
+        {
+          "text": ". Метка 3 стоит на линиях поперёк ящика, значит, слово — "
+        },
+        {
+          "en": "pipes"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Линии поперёк ящика — это "
+        },
+        {
+          "en": "pipes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "en": "A layer of insulation behind the plate"
+        },
+        {
+          "text": " удерживает тепло. Метка 4 — нижний слой: "
+        },
+        {
+          "en": "insulation"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Нижний слой — "
+        },
+        {
+          "en": "insulation"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "У системы есть коллектор и "
+        },
+        {
+          "en": "a storage tank placed above"
+        },
+        {
+          "text": " него. Метка 5 — ёмкость над коллектором: "
+        },
+        {
+          "en": "tank"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ёмкость над коллектором — "
+        },
+        {
+          "en": "tank"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "Холодная вода сначала "
+        },
+        {
+          "en": "enters the bottom of the collector"
+        },
+        {
+          "text": ", поэтому в первом шаге нужно "
+        },
+        {
+          "en": "collector"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Холодная вода сначала идёт в "
+        },
+        {
+          "en": "collector"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "Нагреваясь, вода "
+        },
+        {
+          "en": "it becomes lighter and rises"
+        },
+        {
+          "text": ". В схеме та же мысль: "
+        },
+        {
+          "en": "lighter"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Тёплая вода становится "
+        },
+        {
+          "en": "lighter"
+        },
+        {
+          "text": " и поднимается."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "Тёплая вода "
+        },
+        {
+          "en": "flows into the upper part of the tank"
+        },
+        {
+          "text": ". Можно два слова, поэтому ответ — "
+        },
+        {
+          "en": "upper part"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Вода идёт в "
+        },
+        {
+          "en": "upper part"
+        },
+        {
+          "text": " бака."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "Горячую воду берут, "
+        },
+        {
+          "en": "when someone opens a hot tap"
+        },
+        {
+          "text": ". "
+        },
+        {
+          "en": "hot tap"
+        },
+        {
+          "text": " укладывается в два слова; одно "
+        },
+        {
+          "en": "tap"
+        },
+        {
+          "text": " тоже принимается."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Горячая вода идёт, когда открывают "
+        },
+        {
+          "en": "hot tap"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "В тексте сказано, что система "
+        },
+        {
+          "en": "makes almost no noise"
+        },
+        {
+          "text": ". Утверждение говорит, что она очень шумная, это противоречит тексту: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Она почти бесшумная, а не шумная, поэтому "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "В тексте сказано только "
+        },
+        {
+          "en": "needs no pump when the tank sits higher"
+        },
+        {
+          "text": ". О баке ниже коллектора ничего не сказано, узнать нельзя: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "О баке ниже коллектора в тексте нет: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "В тексте сказано, что их "
+        },
+        {
+          "en": "are also used in cooler countries"
+        },
+        {
+          "text": ". Слово "
+        },
+        {
+          "en": "only"
+        },
+        {
+          "text": " делает утверждение неверным: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Их используют и в прохладных странах, поэтому "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "en": "dust can reduce the amount of light"
+        },
+        {
+          "text": ", который попадает на пластину; меньше света — меньше тепла. Это совпадает с утверждением: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Пыль пропускает меньше света, поэтому "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "Абзац B о библиотеках "
+        },
+        {
+          "en": "paid for by local taxes"
+        },
+        {
+          "text": ", а критики беспокоились о "
+        },
+        {
+          "en": "the cost to taxpayers"
+        },
+        {
+          "text": ". Это спор о деньгах: "
+        },
+        {
+          "en": "ii"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "B — спор о том, платить ли за библиотеки из общих денег: "
+        },
+        {
+          "en": "ii"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "15": {
+      "explanation": [
+        {
+          "text": "В абзаце C читатели "
+        },
+        {
+          "en": "asked a librarian, who fetched each volume"
+        },
+        {
+          "text": ". Это совпадает с "
+        },
+        {
+          "en": "Asking staff for every book"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "iii"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "В C каждую книгу просили у библиотекаря: "
+        },
+        {
+          "en": "iii"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "16": {
+      "explanation": [
+        {
+          "text": "Абзац D рассказывает, что детей сначала не пускали, а потом появились "
+        },
+        {
+          "en": "separate children's rooms"
+        },
+        {
+          "text": ". Юные читатели нашли место: "
+        },
+        {
+          "en": "iv"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "D — о том, как у детей появились свои залы: "
+        },
+        {
+          "en": "iv"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "17": {
+      "explanation": [
+        {
+          "text": "Абзац E говорит, что библиотеки "
+        },
+        {
+          "en": "lend far more than books"
+        },
+        {
+          "text": ": ноутбуки, инструменты. Это "
+        },
+        {
+          "en": "Lending beyond books"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "i"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "E — о том, что выдают не только книги: "
+        },
+        {
+          "en": "i"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "18": {
+      "explanation": [
+        {
+          "text": "Города открывали библиотеки, "
+        },
+        {
+          "en": "paid for by local taxes"
+        },
+        {
+          "text": ", поэтому слово — "
+        },
+        {
+          "en": "taxes"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Библиотеки оплачивали из местных "
+        },
+        {
+          "en": "taxes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "19": {
+      "explanation": [
+        {
+          "text": "Читатели "
+        },
+        {
+          "en": "asked a librarian, who fetched each volume"
+        },
+        {
+          "text": " из закрытого хранилища: "
+        },
+        {
+          "en": "librarian"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Каждую книгу приносил "
+        },
+        {
+          "en": "librarian"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "20": {
+      "explanation": [
+        {
+          "en": "Open shelves, where visitors choose freely"
+        },
+        {
+          "text": " распространились в начале двадцатого века: "
+        },
+        {
+          "en": "open"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "В начале 1900-х полки стали "
+        },
+        {
+          "en": "open"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "21": {
+      "explanation": [
+        {
+          "en": "The first separate children's rooms appeared around 1900"
+        },
+        {
+          "text": ". Число допускается: "
+        },
+        {
+          "en": "1900"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Детские залы появились около "
+        },
+        {
+          "en": "1900"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "22": {
+      "explanation": [
+        {
+          "en": "Visitors can borrow laptops"
+        },
+        {
+          "text": " и пользоваться залами для занятий: "
+        },
+        {
+          "en": "laptops"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Сегодня можно взять "
+        },
+        {
+          "en": "laptops"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "23": {
+      "explanation": [
+        {
+          "text": "Сторонники говорили, что бесплатные книги "
+        },
+        {
+          "en": "would help working people educate themselves"
+        },
+        {
+          "text": ". Это вариант "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": " другими словами."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Они хотели, чтобы рабочие учились: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "24": {
+      "explanation": [
+        {
+          "text": "Библиотекари сообщают, что "
+        },
+        {
+          "en": "quiet reading space is still among"
+        },
+        {
+          "text": " самых ценимых услуг: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Люди больше всего ценят тихое место для чтения: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "25": {
+      "explanation": [
+        {
+          "text": "Собрания "
+        },
+        {
+          "en": "belonged to temples, universities and wealthy families"
+        },
+        {
+          "text": ". Подходят два слова: "
+        },
+        {
+          "en": "wealthy families"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ими владели богатые: "
+        },
+        {
+          "en": "wealthy families"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "26": {
+      "explanation": [
+        {
+          "text": "Первые детские залы были "
+        },
+        {
+          "en": "with smaller furniture and books"
+        },
+        {
+          "text": " для юных читателей: "
+        },
+        {
+          "en": "furniture"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "В залах была меньше "
+        },
+        {
+          "en": "furniture"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "27": {
+      "explanation": [
+        {
+          "text": "Автор пишет "
+        },
+        {
+          "en": "In my view"
+        },
+        {
+          "text": " и называет открытие "
+        },
+        {
+          "en": "one of the most important"
+        },
+        {
+          "text": ". Утверждение совпадает с мнением автора: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Автор считает это очень важным: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "28": {
+      "explanation": [
+        {
+          "text": "Автор пишет: "
+        },
+        {
+          "en": "None of this means that students should sleep"
+        },
+        {
+          "text": " вместо учёбы. Утверждение противоречит мнению автора: "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Автор не советует спать вместо учёбы: "
+        },
+        {
+          "en": "NO"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "29": {
+      "explanation": [
+        {
+          "text": "Автор считает, что ранние школы "
+        },
+        {
+          "en": "are working against the way young people learn"
+        },
+        {
+          "text": ", это то же утверждение другими словами: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Автор считает ранний старт плохим для учёбы: "
+        },
+        {
+          "en": "YES"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "30": {
+      "explanation": [
+        {
+          "text": "Автор пишет, что это "
+        },
+        {
+          "en": "still needs careful study"
+        },
+        {
+          "text": ": он не говорит, повысит ли поздний старт результаты. "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Автор этого пока не знает: "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "31": {
+      "explanation": [
+        {
+          "text": "Окафор обнаружил, что поздние стадии, "
+        },
+        {
+          "en": "in the hours before waking"
+        },
+        {
+          "text": ", помогают навыкам, например игре на инструменте: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "По Окафору, сон перед пробуждением помогает навыкам: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "32": {
+      "explanation": [
+        {
+          "text": "Танака сообщила, что "
+        },
+        {
+          "en": "a nap of about twenty minutes improved attention"
+        },
+        {
+          "text": ". Сосредоточиться — значит быть внимательным: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Танака: короткий сон помогает вниманию: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "33": {
+      "explanation": [
+        {
+          "text": "Хартманн "
+        },
+        {
+          "en": "concluded that sleep protects new memories"
+        },
+        {
+          "text": ". «Сохраняет» значит «защищает»: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Хартманн: сон защищает новые воспоминания: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "34": {
+      "explanation": [
+        {
+          "text": "Студенты, которые спали, "
+        },
+        {
+          "en": "recalled more pairs the next morning"
+        },
+        {
+          "text": " (A), а долгий сон "
+        },
+        {
+          "en": "can leave people feeling heavy and slow"
+        },
+        {
+          "text": " (C). Глубокий сон бывает рано, поэтому не B: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "В тексте есть A и C: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " и "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "36": {
+      "explanation": [
+        {
+          "text": "Раньше сон считали "
+        },
+        {
+          "en": "simply as a period of rest"
+        },
+        {
+          "text": " для тела: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ", rest."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Сон считали просто отдыхом: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "37": {
+      "explanation": [
+        {
+          "text": "Учёные показали, что "
+        },
+        {
+          "en": "the brain remains very active while we sleep"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ", active."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ночью мозг работает: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "38": {
+      "explanation": [
+        {
+          "text": "Если сокращать сон, это "
+        },
+        {
+          "en": "may therefore cost a learner more"
+        },
+        {
+          "text": ", чем он ожидает: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": ", cost."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Недосып может дорого стоить: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "39": {
+      "explanation": [
+        {
+          "text": "Хартманн просила студентов "
+        },
+        {
+          "en": "to learn a list of word pairs"
+        },
+        {
+          "text": " вечером. В три слова: "
+        },
+        {
+          "en": "word pairs"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Они учили "
+        },
+        {
+          "en": "word pairs"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "40": {
+      "explanation": [
+        {
+          "text": "Танака сообщила, что "
+        },
+        {
+          "en": "a nap of about twenty minutes"
+        },
+        {
+          "text": " улучшил внимание: "
+        },
+        {
+          "en": "about twenty minutes"
+        },
+        {
+          "text": " (можно и цифрами)."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Сон длился около "
+        },
+        {
+          "en": "twenty minutes"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  }
+}

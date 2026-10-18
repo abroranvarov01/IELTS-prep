@@ -2,6 +2,7 @@
 export {
   demoKey,
   demoTest,
+  demoTest2,
   demoTestWithFlowChart,
   demoTestWithTable,
   testSessionId,

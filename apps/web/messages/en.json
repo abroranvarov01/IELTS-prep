@@ -22,6 +22,12 @@
   "common": {
     "goHome": "Go to home page"
   },
+  "picture": {
+    "enlarge": "Enlarge picture",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "close": "Close"
+  },
   "error": {
     "title": "Something went wrong",
     "body": "Please try again. If it keeps happening, come back later.",
@@ -502,12 +508,6 @@
     "navigator": {
       "part": "Part {number}",
       "partProgress": "Part {number}: {answered} of {total} answered"
-    },
-    "picture": {
-      "enlarge": "Enlarge picture",
-      "zoomIn": "Zoom in",
-      "zoomOut": "Zoom out",
-      "close": "Close"
     },
     "temporary": {
       "label": "Temporary practice test",
