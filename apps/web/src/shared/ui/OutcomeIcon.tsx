@@ -1,4 +1,5 @@
-import type { UnitOutcome } from "@/entities/reading";
+/** An answer unit's outcome, as Reading and Listening show it. */
+export type Outcome = "correct" | "partlyCorrect" | "incorrect" | "unanswered";
 
 /**
  * An outcome's shape (DESIGN_SYSTEM.md, M5 components: status). Always shown
@@ -9,7 +10,7 @@ export function OutcomeIcon({
   outcome,
   size = 20,
 }: {
-  outcome: UnitOutcome;
+  outcome: Outcome;
   size?: 16 | 20;
 }) {
   return (

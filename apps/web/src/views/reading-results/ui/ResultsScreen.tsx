@@ -18,7 +18,7 @@ import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { TaskLayout } from "@/shared/ui/TaskLayout";
 import { type Loaded, loadResult } from "../api/load-result";
-import { OutcomeIcon } from "./OutcomeIcon";
+import { OutcomeIcon } from "@/shared/ui/OutcomeIcon";
 import { RepeatedMistakes } from "./RepeatedMistakes";
 
 /** A short note on the result (DESIGN_SYSTEM.md, M5 results page). */

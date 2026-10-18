@@ -1,7 +1,7 @@
 // Public API of the Listening entity (ADR-0010): the Listening domain model,
 // the device storage of sessions and attempts (ADR-0014), and the Exam audio
-// download. Server-only content loading has its own entry point
-// (content.server.ts).
+// download. Server-only content loading has its own entry points
+// (content.server.ts; keys.server.ts for the key and transcript).
 
 export {
   type ListeningTest,
@@ -15,6 +15,7 @@ export {
   type CheckResult,
   type CheckedAnswers,
   LISTENING_SCORING_RULES_VERSION,
+  type PracticeRawScore,
   type Outcome,
   type Signal,
   checkAttempt,
@@ -35,11 +36,24 @@ export {
   startSession,
 } from "./model/session";
 export { loadSessions, saveSession } from "./api/session-storage";
+export type { ListeningKey, Transcript } from "./model/content";
+export {
+  type Correction,
+  type ReviewOffer,
+  type UnitOutcome,
+  currentResult,
+  latestRecord,
+  positionCounts,
+  reviewOffer,
+  unitOutcomes,
+  wasInterrupted,
+} from "./model/results";
 export {
   type FirstTry,
   type ListeningAttempt,
   type ResultRecord,
   UNKNOWN_FIRST_TRY,
+  attemptFromSession,
 } from "./model/attempts";
 export {
   type History,

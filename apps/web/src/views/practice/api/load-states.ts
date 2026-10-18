@@ -10,16 +10,19 @@ import {
 import {
   type ListeningAttempt,
   type ListeningTest,
+  type PracticeRawScore,
+  type ResultRecord as ListeningRecord,
   deviceHistory as deviceListeningHistory,
+  latestRecord as latestListeningRecord,
   loadSessions as loadListeningSessions,
 } from "@/entities/listening";
 import { type TestState, testState } from "../model/test-state";
 
-/** A Listening test on this device: not started, in progress in a mode, or finished (no score until M9). */
+/** A Listening test on this device: not started, in progress in a mode, or finished with its last score when one is stored. */
 export type ListeningState =
   | { kind: "notStarted" }
   | { kind: "inProgress"; mode: "practice" | "exam" }
-  | { kind: "finished" };
+  | { kind: "finished"; score?: PracticeRawScore };
 
 /**
  * Each test's state on this device, read only: the Hub never settles,
@@ -54,10 +57,17 @@ export async function loadStates(
           () => [] as ListeningAttempt[],
         )
       : [];
+    const latest = attempts.at(-1);
+    const records = latest
+      ? await listeningHistory!
+          .results(test, latest)
+          .catch(() => [] as ListeningRecord[])
+      : [];
+    const score = latestListeningRecord(records)?.score;
     listening[test.id] = current
       ? { kind: "inProgress", mode: current.mode }
-      : finished || attempts.length > 0
-        ? { kind: "finished" }
+      : finished || latest
+        ? { kind: "finished", ...(score && { score }) }
         : { kind: "notStarted" };
   }
 

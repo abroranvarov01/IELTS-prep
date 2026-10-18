@@ -137,13 +137,15 @@ test.describe("Listening in Practice", () => {
     await page
       .getByRole("button", { name: en.reading.finish.confirm, exact: true })
       .click();
+    // Finishing replaces the test with its results (M9).
     await expect(
-      page.getByRole("heading", { name: L.finished.title }),
+      page.getByRole("heading", { name: en.reading.results.title }),
     ).toBeVisible();
+    await expect(page).toHaveURL(/\/listening\/[^/]+\/results\?attempt=/);
     await expect(
-      page.getByText(fill(L.finished.answered, { answered: 1, total: 40 })),
+      page.getByText(fill(en.reading.results.score, { score: 1, total: 40 })),
     ).toBeVisible();
-    await expect(page.getByText(L.finished.notChecked)).toBeVisible();
+    await expect(page.getByText(L.results.honest)).toBeVisible();
   });
 });
 

@@ -161,6 +161,11 @@ export function PracticeHub({
                     </span>
                     <ChevronIcon direction="right" />
                   </Link>
+                  {state?.kind === "finished" && (
+                    <QuietLink href={`/listening/${test.id}/results`}>
+                      {t("reading.lastResults")}
+                    </QuietLink>
+                  )}
                 </li>
               );
             })}
@@ -231,7 +236,12 @@ function ListeningStateLine({ state }: { state: ListeningState }) {
             mode: t(`reading.mode.${state.mode}`),
           })
         : state.kind === "finished"
-          ? t("practice.state.finishedNoScore")
+          ? state.score
+            ? t("practice.state.finished", {
+                score: state.score.marks,
+                total: state.score.positions,
+              })
+            : t("practice.state.finishedNoScore")
           : t("practice.state.notStarted")}
     </>
   );

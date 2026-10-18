@@ -12,6 +12,7 @@ import {
 import { InfoIcon, LineIcon, ListeningIcon } from "@/shared/ui/icons";
 import { OptionRow } from "@/shared/ui/OptionRow";
 import { PrimaryButton } from "@/shared/ui/PrimaryButton";
+import { QuietLink } from "@/shared/ui/QuietLink";
 import { TaskLayout } from "@/shared/ui/TaskLayout";
 import { TestBar } from "./TestBar";
 
@@ -26,9 +27,12 @@ const MARK = "\u0000";
 export function StartScreen({
   test,
   onStart,
+  lastResultsHref,
 }: {
   test: ListeningTest;
   onStart: (mode: Mode) => void;
+  /** When this device has a finished attempt (as Reading's D6). */
+  lastResultsHref?: string;
 }) {
   const t = useTranslations("listening");
   const reading = useTranslations("reading");
@@ -146,6 +150,13 @@ export function StartScreen({
               {reading("start")}
             </PrimaryButton>
           </div>
+          {lastResultsHref && (
+            <div className="mt-2">
+              <QuietLink href={lastResultsHref}>
+                {reading("lastResults")}
+              </QuietLink>
+            </div>
+          )}
         </TaskLayout>
       </main>
     </>

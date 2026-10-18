@@ -17,7 +17,6 @@ import {
   type Mode,
   apply,
   cleanUpAudioCache,
-  commitFinishedSession,
   deviceHistory,
   downloadTestAudio,
   loadSessions,
@@ -96,13 +95,24 @@ export function useListeningSession(test: ListeningTest) {
   const session = sessions?.session;
 
   // What the device holds is settled once per load: M8's finished session is
-  // imported, a finished one committed (ADR-0014 §3, §5).
+  // imported, a finished one committed (ADR-0014 §3, §5). Finishing waits for
+  // it, so the two never commit side by side; then whether results exist.
   const loaded = snapshot !== null;
+  const settled = useRef<Promise<void> | null>(null);
+  const [hasResults, setHasResults] = useState(false);
   useEffect(() => {
     if (!loaded) return;
-    void deviceHistory().then((history) =>
-      settleStoredSessions(deviceStorage(), history, test, Date.now()),
-    );
+    let active = true;
+    settled.current = deviceHistory()
+      .then(async (history) => {
+        await settleStoredSessions(deviceStorage(), history, test, Date.now());
+        const { attempts } = await history.read(test);
+        if (active) setHasResults(attempts.length > 0);
+      })
+      .catch(() => undefined);
+    return () => {
+      active = false;
+    };
   }, [loaded, test]);
 
   // Nothing but an Exam in progress keeps audio in the cache (ADR-0013 §2).
@@ -129,20 +139,8 @@ export function useListeningSession(test: ListeningTest) {
           : { ...base, session: next };
       latest.current = updated;
       saveSession(deviceStorage(), test, next);
-      if (next.status === "finished") {
-        // The finished session becomes an attempt (ADR-0014 §3); its copy in
-        // localStorage stays until the commit has completed.
-        void deviceHistory().then((history) =>
-          commitFinishedSession(
-            deviceStorage(),
-            history,
-            test,
-            next,
-            Date.now(),
-          ),
-        );
-        if (next.mode === "exam") void cleanUpAudioCache([]);
-      }
+      if (next.status === "finished" && next.mode === "exam")
+        void cleanUpAudioCache([]);
       setLocal(updated);
     },
     [test],
@@ -193,7 +191,9 @@ export function useListeningSession(test: ListeningTest) {
   return {
     loaded,
     session: session?.status === "inProgress" ? session : undefined,
-    finished: session?.status === "inProgress" ? undefined : sessions?.finished,
+    // Finished on this page: its results replace the screen. A finished
+    // session found on the device is settled instead (ADR-0014 §3).
+    finished: local?.session?.status === "finished" ? local.session : undefined,
     canSave: snapshot === null || !snapshot.startsWith("0"),
     now,
     download: download ?? ({ status: "loading" } as Download),
@@ -203,9 +203,7 @@ export function useListeningSession(test: ListeningTest) {
     },
     send,
     start,
-    startAgain: () => {
-      latest.current = {};
-      setLocal({});
-    },
+    settled,
+    hasResults,
   };
 }

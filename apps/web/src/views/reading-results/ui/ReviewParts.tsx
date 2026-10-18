@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import type { RefObject } from "react";
 import type { UnitOutcome } from "@/entities/reading";
 import type { ReviewCard } from "../model/review";
-import { OutcomeIcon } from "./OutcomeIcon";
+import { OutcomeIcon } from "@/shared/ui/OutcomeIcon";
 
 // What the phone sheet and the desktop layout of the review share: the card's
 // heading and the navigator's cells (DESIGN_SYSTEM.md, M5: review card,

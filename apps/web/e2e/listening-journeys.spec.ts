@@ -5,7 +5,8 @@ import { catalogs, fill, noOverflow } from "./reading";
 
 // The temporary Listening test end to end (M8-20), in every interface
 // language: a learner finds it, practises with the real audio, answers in
-// each part, and finishes; the Exam's clock reaches its check time.
+// each part, finishes and sees the results; the Exam's clock reaches its
+// check time.
 
 const TEST = "temporary-voa-1";
 const desktop = (page: Page) => (page.viewportSize()?.width ?? 0) >= 1024;
@@ -16,7 +17,7 @@ const axe = (page: Page) =>
 
 for (const locale of routing.locales) {
   const m = catalogs[locale];
-  test(`a Practice journey from the Hub to the finished page in /${locale}`, async ({
+  test(`a Practice journey from the Hub to the results page in /${locale}`, async ({
     page,
   }) => {
     await page.goto(`/${locale}/practice`);
@@ -91,22 +92,25 @@ for (const locale of routing.locales) {
     await page
       .getByRole("button", { name: m.reading.finish.confirm, exact: true })
       .click();
+    // Finishing replaces the test with its results (M9).
     await expect(
-      page.getByRole("heading", { name: m.listening.finished.title }),
+      page.getByRole("heading", { name: m.reading.results.title }),
     ).toBeVisible();
     await expect(
-      page.getByText(
-        fill(m.listening.finished.answered, { answered: 2, total: 40 }),
-      ),
+      page.getByText(fill(m.reading.results.score, { score: 2, total: 40 })),
     ).toBeVisible();
+    await expect(page.getByText(m.listening.results.honest)).toBeVisible();
     await noOverflow(page);
     expect((await axe(page)).violations).toEqual([]);
 
-    // The Hub knows it is finished.
+    // The Hub shows its last practice score and the way back to its results.
     await page.goto(`/${locale}/practice`);
     await expect(
       page.getByRole("link", { name: /Temporary Listening Practice 1/ }),
-    ).toContainText(m.practice.state.finishedNoScore);
+    ).toContainText(fill(m.practice.state.finished, { score: 2, total: 40 }));
+    await expect(
+      page.getByRole("link", { name: m.reading.lastResults }).last(),
+    ).toBeVisible();
   });
 }
 

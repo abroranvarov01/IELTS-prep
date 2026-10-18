@@ -1,10 +1,10 @@
 "use client";
 
 import { type ListeningTest, examClock } from "@/entities/listening";
-import { FinishedPage } from "./FinishedPage";
 import { Preparing } from "./Preparing";
 import { StartScreen } from "./StartScreen";
 import { TestBar } from "./TestBar";
+import { useCommitFinished } from "./use-commit-finished";
 import { useListeningSession } from "./use-listening-session";
 import { Workspace } from "./Workspace";
 import { useState } from "react";
@@ -12,24 +12,26 @@ import { useState } from "react";
 /**
  * The Listening test screen (LISTENING_EXPERIENCE.md, USER_FLOWS.md,
  * Listening flows): start, an Exam's download and its one tap, listening
- * and answering, and the finished page.
+ * and answering. A finished test is replaced by its results page.
  */
 export function ListeningScreen({ test }: { test: ListeningTest }) {
   const screen = useListeningSession(test);
   // The tap that lets an Exam play, once per page (the browser needs it).
   const [tapped, setTapped] = useState(false);
   const { session } = screen;
+  useCommitFinished(test, screen.finished, screen.settled);
 
-  if (!screen.loaded) return <TestBar />;
+  // While a finished test goes to its results page, only the test bar shows.
+  if (!screen.loaded || screen.finished) return <TestBar />;
   if (!session)
-    return screen.finished ? (
-      <FinishedPage
+    return (
+      <StartScreen
         test={test}
-        session={screen.finished}
-        onStartAgain={screen.startAgain}
+        onStart={screen.start}
+        lastResultsHref={
+          screen.hasResults ? `/listening/${test.id}/results` : undefined
+        }
       />
-    ) : (
-      <StartScreen test={test} onStart={screen.start} />
     );
 
   if (session.mode === "exam") {

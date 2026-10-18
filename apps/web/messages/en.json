@@ -500,9 +500,6 @@
       "finish": "Finish without the rest"
     },
     "finished": {
-      "title": "Test finished",
-      "answered": "You answered {answered} of {total} questions.",
-      "notChecked": "Checking answers and explanations will come in a later version.",
       "interrupted": "The recording was interrupted, so this was not a full exam sitting."
     },
     "navigator": {
@@ -512,6 +509,9 @@
     "temporary": {
       "label": "Temporary practice test",
       "source": "Source: {attribution}"
+    },
+    "results": {
+      "honest": "A practice score on a practice test. It is not an IELTS band score."
     }
   }
 }

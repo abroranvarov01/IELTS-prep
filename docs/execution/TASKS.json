@@ -4733,7 +4733,8 @@
       "title": "Listening results",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-05", "M9-06"],
       "goal": "Finishing a Listening test shows its practice score, counts and the review the button names, as the Reading results do.",
       "scope": [

@@ -500,9 +500,6 @@
       "finish": "Qolgan qismisiz yakunlash"
     },
     "finished": {
-      "title": "Test yakunlandi",
-      "answered": "{total} ta savoldan {answered} tasiga javob berdingiz.",
-      "notChecked": "Javoblarni tekshirish va izohlar keyingi versiyada paydo boʻladi.",
       "interrupted": "Yozuv uzilib qoldi, shuning uchun bu toʻliq imtihon boʻlmadi."
     },
     "navigator": {
@@ -512,6 +509,9 @@
     "temporary": {
       "label": "Vaqtinchalik mashq testi",
       "source": "Manba: {attribution}"
+    },
+    "results": {
+      "honest": "Bu mashq testidagi natija, IELTS bali emas."
     }
   }
 }

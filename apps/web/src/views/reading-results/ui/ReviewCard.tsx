@@ -18,7 +18,7 @@ import {
 import { QuestionPrompt, unitOptions } from "@/features/answer-question";
 import { SecondaryButton } from "@/shared/ui/SecondaryButton";
 import { keySentences, pinComparison, quotesOf } from "../model/review";
-import { OutcomeIcon } from "./OutcomeIcon";
+import { OutcomeIcon } from "@/shared/ui/OutcomeIcon";
 
 /** English words inside a localized string (`<en>…</en>` in the catalogs). */
 const en = (chunks: ReactNode) => <span lang="en">{chunks}</span>;
