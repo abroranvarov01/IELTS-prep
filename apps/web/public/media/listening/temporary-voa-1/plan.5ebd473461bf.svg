@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520" font-family="sans-serif" font-size="22" fill="#222">
+  <rect x="40" y="40" width="560" height="440" fill="#fafafa" stroke="#333" stroke-width="4"/>
+  <line x1="240" y1="40" x2="240" y2="300" stroke="#333" stroke-width="3"/>
+  <line x1="420" y1="40" x2="420" y2="300" stroke="#333" stroke-width="3"/>
+  <line x1="40" y1="300" x2="600" y2="300" stroke="#333" stroke-width="3"/>
+  <rect x="70" y="90" width="140" height="90" fill="#e6e6e6" stroke="#555" stroke-width="2"/>
+  <rect x="270" y="190" width="120" height="50" fill="#e6e6e6" stroke="#555" stroke-width="2"/>
+  <rect x="300" y="60" width="90" height="12" fill="#555"/>
+  <rect x="450" y="70" width="120" height="40" fill="#e6e6e6" stroke="#555" stroke-width="2"/>
+  <rect x="80" y="476" width="90" height="8" fill="#fafafa" stroke="#333" stroke-width="2"/>
+  <rect x="596" y="380" width="8" height="70" fill="#fafafa" stroke="#333" stroke-width="2"/>
+  <rect x="610" y="300" width="170" height="200" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="80" y="275">Bedroom</text>
+  <text x="140" y="140" font-size="18">bed</text>
+  <text x="270" y="275">Living room</text>
+  <text x="300" y="225" font-size="18">sofa</text>
+  <text x="315" y="95" font-size="16">TV</text>
+  <text x="450" y="275">Kitchen</text>
+  <text x="250" y="400">Hall</text>
+  <text x="70" y="460">Front door</text>
+  <text x="440" y="420">Back door</text>
+  <text x="640" y="330">Garden</text>
+</svg>

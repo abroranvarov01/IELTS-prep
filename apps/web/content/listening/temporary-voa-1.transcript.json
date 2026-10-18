@@ -1,0 +1,2046 @@
+{
+  "testId": "temporary-voa-1",
+  "version": 1,
+  "revision": 1,
+  "review": {
+    "status": "aiDraft"
+  },
+  "parts": [
+    {
+      "partId": "p1",
+      "segments": [
+        {
+          "id": "p1-s1",
+          "startMs": 32080,
+          "endMs": 36880,
+          "speaker": "Penelope",
+          "text": "Anna, thanks for taking me on a tour of D.C. today."
+        },
+        {
+          "id": "p1-s2",
+          "startMs": 36880,
+          "endMs": 38770,
+          "speaker": "Anna",
+          "text": "Sure thing, Penelope."
+        },
+        {
+          "id": "p1-s3",
+          "startMs": 38770,
+          "endMs": 40510,
+          "speaker": "Anna",
+          "text": "You are new to town."
+        },
+        {
+          "id": "p1-s4",
+          "startMs": 40510,
+          "endMs": 45080,
+          "speaker": "Anna",
+          "text": "And a tour is the best way to see more of the city!"
+        },
+        {
+          "id": "p1-s5",
+          "startMs": 45080,
+          "endMs": 51430,
+          "speaker": "Penelope",
+          "text": "So, which tour are we taking – the one that goes through the city on a bus?"
+        },
+        {
+          "id": "p1-s6",
+          "startMs": 51430,
+          "endMs": 55760,
+          "speaker": "Penelope",
+          "text": "Or the one that goes along the river in a boat?"
+        },
+        {
+          "id": "p1-s7",
+          "startMs": 55760,
+          "endMs": 56760,
+          "speaker": "Anna",
+          "text": "Both!"
+        },
+        {
+          "id": "p1-s8",
+          "startMs": 56760,
+          "endMs": 57760,
+          "speaker": "Penelope",
+          "text": "What?"
+        },
+        {
+          "id": "p1-s9",
+          "startMs": 57760,
+          "endMs": 63560,
+          "speaker": "Penelope",
+          "text": "Anna, this isn’t going to be one of those trips, is it?"
+        },
+        {
+          "id": "p1-s10",
+          "startMs": 63560,
+          "endMs": 64560,
+          "speaker": "Anna",
+          "text": "No."
+        },
+        {
+          "id": "p1-s11",
+          "startMs": 64560,
+          "endMs": 68180,
+          "speaker": "Anna",
+          "text": "Follow me."
+        },
+        {
+          "id": "p1-s12",
+          "startMs": 68180,
+          "endMs": 73060,
+          "speaker": "Professor Bot",
+          "text": "In this lesson, you are going to hear lots of prepositions!"
+        },
+        {
+          "id": "p1-s13",
+          "startMs": 73060,
+          "endMs": 76040,
+          "speaker": "Professor Bot",
+          "text": "What’s a preposition, you ask?"
+        },
+        {
+          "id": "p1-s14",
+          "startMs": 76040,
+          "endMs": 81560,
+          "speaker": "Professor Bot",
+          "text": "It’s a word that shows relationships between things."
+        },
+        {
+          "id": "p1-s15",
+          "startMs": 81560,
+          "endMs": 87800,
+          "speaker": "Professor Bot",
+          "text": "Anna says they are going on a tour through the city and along the river."
+        },
+        {
+          "id": "p1-s16",
+          "startMs": 87800,
+          "endMs": 92000,
+          "speaker": "Professor Bot",
+          "text": "Through and along are both prepositions."
+        },
+        {
+          "id": "p1-s17",
+          "startMs": 92000,
+          "endMs": 93760,
+          "speaker": "Professor Bot",
+          "text": "Watch for more!"
+        },
+        {
+          "id": "p1-s18",
+          "startMs": 93760,
+          "endMs": 98920,
+          "speaker": "Anna",
+          "text": "Well, Penelope, there’s our ride!"
+        },
+        {
+          "id": "p1-s19",
+          "startMs": 98920,
+          "endMs": 100920,
+          "speaker": "Penelope",
+          "text": "What is it?"
+        },
+        {
+          "id": "p1-s20",
+          "startMs": 100920,
+          "endMs": 105120,
+          "speaker": "Anna",
+          "text": "It’s the famous DC Ducks -- the boat with wheels!"
+        },
+        {
+          "id": "p1-s21",
+          "startMs": 105120,
+          "endMs": 110720,
+          "speaker": "Anna",
+          "text": "We will ride on the road and then sail on the water!"
+        },
+        {
+          "id": "p1-s22",
+          "startMs": 110720,
+          "endMs": 112960,
+          "speaker": "Penelope",
+          "text": "Who thinks of these things?"
+        },
+        {
+          "id": "p1-s23",
+          "startMs": 112960,
+          "endMs": 114040,
+          "speaker": "Anna",
+          "text": "I don't know."
+        },
+        {
+          "id": "p1-s24",
+          "startMs": 114040,
+          "endMs": 115800,
+          "speaker": "Anna",
+          "text": "But I’m glad they do!"
+        },
+        {
+          "id": "p1-s25",
+          "startMs": 115800,
+          "endMs": 118080,
+          "speaker": "Anna",
+          "text": "Let’s get aboard, Sailor!"
+        },
+        {
+          "id": "p1-s26",
+          "startMs": 118080,
+          "endMs": 129280,
+          "speaker": "Penelope",
+          "text": "Hey, did you know that this bus … um, boat was created during World War II to carry people and supplies?"
+        },
+        {
+          "id": "p1-s27",
+          "startMs": 129280,
+          "endMs": 130600,
+          "speaker": "Anna",
+          "text": "Wow."
+        },
+        {
+          "id": "p1-s28",
+          "startMs": 130600,
+          "endMs": 137400,
+          "speaker": "Anna",
+          "text": "You know, a tour is so much more interesting with Fun Facts, like that one."
+        },
+        {
+          "id": "p1-s29",
+          "startMs": 137400,
+          "endMs": 139000,
+          "speaker": "Penelope",
+          "text": "I agree."
+        },
+        {
+          "id": "p1-s30",
+          "startMs": 139000,
+          "endMs": 140760,
+          "speaker": "Penelope",
+          "text": "I love Fun Facts!"
+        },
+        {
+          "id": "p1-s31",
+          "startMs": 140760,
+          "endMs": 144640,
+          "speaker": "Boy",
+          "text": "Did I hear you say you love Fun Facts?"
+        },
+        {
+          "id": "p1-s32",
+          "startMs": 144640,
+          "endMs": 145640,
+          "speaker": "Anna & Penelope",
+          "text": "Yeah."
+        },
+        {
+          "id": "p1-s33",
+          "startMs": 146640,
+          "endMs": 150480,
+          "speaker": "Boy",
+          "text": "Well, I have tons of Fun Facts for this tour!"
+        },
+        {
+          "id": "p1-s34",
+          "startMs": 151480,
+          "endMs": 152480,
+          "speaker": "Anna & Penelope",
+          "text": "Great!"
+        },
+        {
+          "id": "p1-s35",
+          "startMs": 152480,
+          "endMs": 155440,
+          "speaker": "Anna",
+          "text": "Penelope, where are his parents?"
+        },
+        {
+          "id": "p1-s36",
+          "startMs": 155440,
+          "endMs": 160800,
+          "speaker": "Penelope",
+          "text": "Maybe - maybe he’s the Captain’s son and he helps his dad on tours!"
+        },
+        {
+          "id": "p1-s37",
+          "startMs": 160800,
+          "endMs": 162720,
+          "speaker": "Anna",
+          "text": "Oh yeah!"
+        },
+        {
+          "id": "p1-s38",
+          "startMs": 162720,
+          "endMs": 171160,
+          "speaker": "Anna",
+          "text": "It would be so awesome to ride around the city in a boat all day with your dad!"
+        },
+        {
+          "id": "p1-s39",
+          "startMs": 171160,
+          "endMs": 172960,
+          "speaker": "Penelope",
+          "text": "This is amazing, Anna."
+        },
+        {
+          "id": "p1-s40",
+          "startMs": 172960,
+          "endMs": 176320,
+          "speaker": "Penelope",
+          "text": "There are so many beautiful buildings along this road!"
+        },
+        {
+          "id": "p1-s41",
+          "startMs": 176320,
+          "endMs": 181360,
+          "speaker": "Anna",
+          "text": "Hey, the Washington Monument is on the left!"
+        },
+        {
+          "id": "p1-s42",
+          "startMs": 181360,
+          "endMs": 183640,
+          "speaker": "Professor Bot",
+          "text": "I have a Fun Fact too!"
+        },
+        {
+          "id": "p1-s43",
+          "startMs": 183640,
+          "endMs": 188760,
+          "speaker": "Professor Bot",
+          "text": "Did you know that the Washington Monument was damaged in an earthquake?"
+        },
+        {
+          "id": "p1-s44",
+          "startMs": 188760,
+          "endMs": 189490,
+          "speaker": "Professor Bot",
+          "text": "Whoa."
+        },
+        {
+          "id": "p1-s45",
+          "startMs": 189490,
+          "endMs": 191640,
+          "speaker": "Professor Bot",
+          "text": "Did you feel that?!"
+        },
+        {
+          "id": "p1-s46",
+          "startMs": 191640,
+          "endMs": 198110,
+          "speaker": "Professor Bot",
+          "text": "I heard: \"around the city in a boat,\" \"along this road and \"on the left."
+        },
+        {
+          "id": "p1-s47",
+          "startMs": 201800,
+          "endMs": 205480,
+          "speaker": "Professor Bot",
+          "text": "All of these are prepositions showing place."
+        },
+        {
+          "id": "p1-s48",
+          "startMs": 205480,
+          "endMs": 208720,
+          "speaker": "Professor Bot",
+          "text": "Let's watch for more places and prepositions!"
+        },
+        {
+          "id": "p1-s49",
+          "startMs": 208720,
+          "endMs": 212600,
+          "speaker": "Penelope",
+          "text": "Look, Anna, we’re across from the White House!"
+        },
+        {
+          "id": "p1-s50",
+          "startMs": 212600,
+          "endMs": 229720,
+          "speaker": "Anna",
+          "text": "Penelope, the only thing between us and the President is the street … and a park … and a security gate .... and police officers … with guns."
+        },
+        {
+          "id": "p1-s51",
+          "startMs": 229720,
+          "endMs": 235640,
+          "speaker": "Boy",
+          "text": "Excuse me, do you want to know a Fun Fact about the White House?"
+        },
+        {
+          "id": "p1-s52",
+          "startMs": 236640,
+          "endMs": 237640,
+          "speaker": "Anna & Penelope",
+          "text": "Yes!"
+        },
+        {
+          "id": "p1-s53",
+          "startMs": 237640,
+          "endMs": 246680,
+          "speaker": "Boy",
+          "text": "Inside the White House there is a swimming pool, a movie theater and 32 bathrooms!"
+        },
+        {
+          "id": "p1-s54",
+          "startMs": 246680,
+          "endMs": 248600,
+          "speaker": "Penelope",
+          "text": "Thirty-two bathrooms!"
+        },
+        {
+          "id": "p1-s55",
+          "startMs": 248600,
+          "endMs": 250520,
+          "speaker": "Penelope",
+          "text": "That’s a lot of bathrooms!"
+        },
+        {
+          "id": "p1-s56",
+          "startMs": 250520,
+          "endMs": 252280,
+          "speaker": "Boy",
+          "text": "I’d be happy with two."
+        },
+        {
+          "id": "p1-s57",
+          "startMs": 252280,
+          "endMs": 260400,
+          "speaker": "Boy",
+          "text": "I live in a house with my mom, four sisters, two aunts and only one bathroom!"
+        },
+        {
+          "id": "p1-s58",
+          "startMs": 260400,
+          "endMs": 262360,
+          "speaker": "Penelope",
+          "text": "Oh my!"
+        },
+        {
+          "id": "p1-s59",
+          "startMs": 262360,
+          "endMs": 265200,
+          "speaker": "Penelope",
+          "text": "You know, Anna, we should give him a tip!"
+        },
+        {
+          "id": "p1-s60",
+          "startMs": 265200,
+          "endMs": 266060,
+          "speaker": "Anna",
+          "text": "Of course!"
+        },
+        {
+          "id": "p1-s61",
+          "startMs": 266060,
+          "endMs": 268760,
+          "speaker": "Anna",
+          "text": "It is polite to tip your tour guide!"
+        },
+        {
+          "id": "p1-s62",
+          "startMs": 268760,
+          "endMs": 272520,
+          "speaker": "Anna",
+          "text": "Luckily, I have lots of dollar bills!"
+        },
+        {
+          "id": "p1-s63",
+          "startMs": 272520,
+          "endMs": 274520,
+          "speaker": "Penelope",
+          "text": "That was a great Fun Fact!"
+        },
+        {
+          "id": "p1-s64",
+          "startMs": 274520,
+          "endMs": 275520,
+          "speaker": "Penelope",
+          "text": "Here you go!"
+        },
+        {
+          "id": "p1-s65",
+          "startMs": 275520,
+          "endMs": 276680,
+          "speaker": "Boy",
+          "text": "Thank you!"
+        },
+        {
+          "id": "p1-s66",
+          "startMs": 276680,
+          "endMs": 281480,
+          "speaker": "Boy",
+          "text": "I can tell you Fun Facts all day!"
+        },
+        {
+          "id": "p1-s67",
+          "startMs": 281480,
+          "endMs": 285320,
+          "speaker": "Professor Bot",
+          "text": "Did you hear any more prepositions of place?"
+        },
+        {
+          "id": "p1-s68",
+          "startMs": 285320,
+          "endMs": 295520,
+          "speaker": "Professor Bot",
+          "text": "I heard \"between us and the president\" “inside the White House\" and \"in a house.\""
+        },
+        {
+          "id": "p1-s69",
+          "startMs": 295520,
+          "endMs": 299840,
+          "speaker": "Professor Bot",
+          "text": "And did you hear that the Duck Boat can go on the river?"
+        },
+        {
+          "id": "p1-s70",
+          "startMs": 299840,
+          "endMs": 301800,
+          "speaker": "Professor Bot",
+          "text": "I don't believe it."
+        },
+        {
+          "id": "p1-s71",
+          "startMs": 301800,
+          "endMs": 312160,
+          "speaker": "Professor Bot",
+          "text": "Join us next time to find out which preposition we will use: The boat went ON the river or The boat went INTO the river?"
+        }
+      ]
+    },
+    {
+      "partId": "p2",
+      "segments": [
+        {
+          "id": "p2-s1",
+          "startMs": 30000,
+          "endMs": 41280,
+          "speaker": "Presenter",
+          "text": "For many English learners, speaking is the most difficult part of the language to master."
+        },
+        {
+          "id": "p2-s2",
+          "startMs": 41280,
+          "endMs": 51440,
+          "speaker": "Presenter",
+          "text": "To improve your speaking skills, you need to be able to practice with other English learners or English speakers."
+        },
+        {
+          "id": "p2-s3",
+          "startMs": 51440,
+          "endMs": 57480,
+          "speaker": "Presenter",
+          "text": "One way to do this is by joining – or starting – an English club."
+        },
+        {
+          "id": "p2-s4",
+          "startMs": 57480,
+          "endMs": 66520,
+          "speaker": "Presenter",
+          "text": "In today’s Education Tips, we discuss how English clubs can be helpful to your language-learning process."
+        },
+        {
+          "id": "p2-s5",
+          "startMs": 66520,
+          "endMs": 71520,
+          "speaker": "Presenter",
+          "text": "This is part one of a two-part series on English clubs."
+        },
+        {
+          "id": "p2-s6",
+          "startMs": 71520,
+          "endMs": 78440,
+          "speaker": "Presenter",
+          "text": "In this episode, we offer advice for how to start and organize an English club."
+        },
+        {
+          "id": "p2-s7",
+          "startMs": 78440,
+          "endMs": 86200,
+          "speaker": "Presenter",
+          "text": "In next week’s episode, we will suggest some fun and educational activities for your club."
+        },
+        {
+          "id": "p2-s8",
+          "startMs": 86200,
+          "endMs": 96280,
+          "speaker": "Presenter",
+          "text": "There are many reasons why English clubs can help learners of all ages and levels improve their English."
+        },
+        {
+          "id": "p2-s9",
+          "startMs": 96280,
+          "endMs": 105400,
+          "speaker": "Presenter",
+          "text": "The most important reason is that they offer learners a chance to practice English by actually speaking it."
+        },
+        {
+          "id": "p2-s10",
+          "startMs": 105400,
+          "endMs": 108560,
+          "speaker": "Presenter",
+          "text": "There are other advantages, too."
+        },
+        {
+          "id": "p2-s11",
+          "startMs": 108560,
+          "endMs": 113200,
+          "speaker": "Presenter",
+          "text": "English clubs are less formal than a classroom setting."
+        },
+        {
+          "id": "p2-s12",
+          "startMs": 113200,
+          "endMs": 118860,
+          "speaker": "Presenter",
+          "text": "Many learners find them more fun than usual English classes."
+        },
+        {
+          "id": "p2-s13",
+          "startMs": 118860,
+          "endMs": 125440,
+          "speaker": "Presenter",
+          "text": "They also let learners practice English in more real-life situations."
+        },
+        {
+          "id": "p2-s14",
+          "startMs": 125440,
+          "endMs": 131560,
+          "speaker": "Presenter",
+          "text": "This can increase a learner’s desire to practice and learn on their own."
+        },
+        {
+          "id": "p2-s15",
+          "startMs": 131560,
+          "endMs": 138200,
+          "speaker": "Presenter",
+          "text": "Bonnie Norton and Ernst Von Glasersfeld are learning theory experts."
+        },
+        {
+          "id": "p2-s16",
+          "startMs": 138200,
+          "endMs": 147480,
+          "speaker": "Presenter",
+          "text": "They say that using a language in authentic situations is very important for learners."
+        },
+        {
+          "id": "p2-s17",
+          "startMs": 147480,
+          "endMs": 153840,
+          "speaker": "Presenter",
+          "text": "So is being motivated to practice and improve, they say."
+        },
+        {
+          "id": "p2-s18",
+          "startMs": 153840,
+          "endMs": 162920,
+          "speaker": "Presenter",
+          "text": "Now that you understand some of the benefits of an English club, let’s discus how you can create your own club."
+        },
+        {
+          "id": "p2-s19",
+          "startMs": 162920,
+          "endMs": 168040,
+          "speaker": "Presenter",
+          "text": "The first step in starting an English club is to find club members."
+        },
+        {
+          "id": "p2-s20",
+          "startMs": 168040,
+          "endMs": 171160,
+          "speaker": "Presenter",
+          "text": "There are different ways to do this."
+        },
+        {
+          "id": "p2-s21",
+          "startMs": 171160,
+          "endMs": 181800,
+          "speaker": "Presenter",
+          "text": "If you are a teacher creating the club for your students, then the easiest way is to put up signs in classrooms advertising the club’s first meeting."
+        },
+        {
+          "id": "p2-s22",
+          "startMs": 181800,
+          "endMs": 186160,
+          "speaker": "Presenter",
+          "text": "You can also pass around a sign-up sheet in classes."
+        },
+        {
+          "id": "p2-s23",
+          "startMs": 186160,
+          "endMs": 194200,
+          "speaker": "Presenter",
+          "text": "If you are trying to start a club at your place of work, you can advertise your club by sending an email around to coworkers."
+        },
+        {
+          "id": "p2-s24",
+          "startMs": 194200,
+          "endMs": 199560,
+          "speaker": "Presenter",
+          "text": "You can also put up signs about the club around the workplace."
+        },
+        {
+          "id": "p2-s25",
+          "startMs": 199560,
+          "endMs": 206320,
+          "speaker": "Presenter",
+          "text": "If your club is open for anyone to join, you can use the internet to find members."
+        },
+        {
+          "id": "p2-s26",
+          "startMs": 206320,
+          "endMs": 213600,
+          "speaker": "Presenter",
+          "text": "Websites such as Meetup or Facebook are great places to announce club meetings and communicate with members."
+        },
+        {
+          "id": "p2-s27",
+          "startMs": 213600,
+          "endMs": 218040,
+          "speaker": "Presenter",
+          "text": "Next, you must find a place for your club to meet."
+        },
+        {
+          "id": "p2-s28",
+          "startMs": 218040,
+          "endMs": 220760,
+          "speaker": "Presenter",
+          "text": "This step is very important."
+        },
+        {
+          "id": "p2-s29",
+          "startMs": 220760,
+          "endMs": 226720,
+          "speaker": "Presenter",
+          "text": "The location of your club will affect how many people come to your meetings."
+        },
+        {
+          "id": "p2-s30",
+          "startMs": 226720,
+          "endMs": 231960,
+          "speaker": "Presenter",
+          "text": "It is important to consider several things when choosing a location."
+        },
+        {
+          "id": "p2-s31",
+          "startMs": 231960,
+          "endMs": 238080,
+          "speaker": "Presenter",
+          "text": "First, how easy is it for members to find and get to the location?"
+        },
+        {
+          "id": "p2-s32",
+          "startMs": 238080,
+          "endMs": 244000,
+          "speaker": "Presenter",
+          "text": "It is a good idea to find a central location that is easy to get to."
+        },
+        {
+          "id": "p2-s33",
+          "startMs": 244000,
+          "endMs": 248000,
+          "speaker": "Presenter",
+          "text": "Otherwise, members may slowly stop coming."
+        },
+        {
+          "id": "p2-s34",
+          "startMs": 248000,
+          "endMs": 253080,
+          "speaker": "Presenter",
+          "text": "Second, it is important to find a location that is safe."
+        },
+        {
+          "id": "p2-s35",
+          "startMs": 253080,
+          "endMs": 258540,
+          "speaker": "Presenter",
+          "text": "You want your members to feel comfortable as they are arriving and leaving."
+        },
+        {
+          "id": "p2-s36",
+          "startMs": 258540,
+          "endMs": 268000,
+          "speaker": "Presenter",
+          "text": "If you are a teacher, the easiest location is probably in a classroom or another room in the school building."
+        },
+        {
+          "id": "p2-s37",
+          "startMs": 268000,
+          "endMs": 273160,
+          "speaker": "Presenter",
+          "text": "English clubs often meet after school or work hours."
+        },
+        {
+          "id": "p2-s38",
+          "startMs": 273160,
+          "endMs": 277640,
+          "speaker": "Presenter",
+          "text": "This can make it easier to find an available room."
+        },
+        {
+          "id": "p2-s39",
+          "startMs": 277640,
+          "endMs": 288840,
+          "speaker": "Presenter",
+          "text": "If you are creating an English club outside of a class or work setting, consider holding meetings at a cafe, restaurant or bar."
+        },
+        {
+          "id": "p2-s40",
+          "startMs": 288840,
+          "endMs": 293560,
+          "speaker": "Presenter",
+          "text": "These places often have enough space for large groups."
+        },
+        {
+          "id": "p2-s41",
+          "startMs": 293560,
+          "endMs": 301760,
+          "speaker": "Presenter",
+          "text": "Club members coming straight from school or work will also have a chance to eat or drink something."
+        },
+        {
+          "id": "p2-s42",
+          "startMs": 302320,
+          "endMs": 310400,
+          "speaker": "Presenter",
+          "text": "Wherever you meet, make sure to speak with the owners of the business or building and get their permission."
+        },
+        {
+          "id": "p2-s43",
+          "startMs": 310400,
+          "endMs": 314040,
+          "speaker": "Presenter",
+          "text": "The third step is to hold your first meeting."
+        },
+        {
+          "id": "p2-s44",
+          "startMs": 314040,
+          "endMs": 317720,
+          "speaker": "Presenter",
+          "text": "The first meeting is important for every English club."
+        },
+        {
+          "id": "p2-s45",
+          "startMs": 317720,
+          "endMs": 324560,
+          "speaker": "Presenter",
+          "text": "It is a good idea to use the first meeting as a chance to talk with members about logistics."
+        },
+        {
+          "id": "p2-s46",
+          "startMs": 324560,
+          "endMs": 336280,
+          "speaker": "Presenter",
+          "text": "This includes how often and where the club will meet, whether or not there will be membership fees, and how the club leadership will work."
+        },
+        {
+          "id": "p2-s47",
+          "startMs": 336280,
+          "endMs": 342680,
+          "speaker": "Presenter",
+          "text": "Club leadership is one of the most important parts of starting an English club."
+        },
+        {
+          "id": "p2-s48",
+          "startMs": 342680,
+          "endMs": 350480,
+          "speaker": "Presenter",
+          "text": "If you have a good system of leadership, your club has a better chance at lasting."
+        },
+        {
+          "id": "p2-s49",
+          "startMs": 350480,
+          "endMs": 358280,
+          "speaker": "Presenter",
+          "text": "If your club is small enough, or more informal, sometimes all you need is one person to lead the club."
+        },
+        {
+          "id": "p2-s50",
+          "startMs": 358280,
+          "endMs": 364200,
+          "speaker": "Presenter",
+          "text": "The main responsibility of the one leader is to organize and lead the meetings."
+        },
+        {
+          "id": "p2-s51",
+          "startMs": 364200,
+          "endMs": 368920,
+          "speaker": "Presenter",
+          "text": "The leader also must communicate information to club members."
+        },
+        {
+          "id": "p2-s52",
+          "startMs": 368920,
+          "endMs": 377360,
+          "speaker": "Presenter",
+          "text": "However, if your club is large, it is a good idea to have a group of people that can help run the club."
+        },
+        {
+          "id": "p2-s53",
+          "startMs": 377360,
+          "endMs": 380760,
+          "speaker": "Presenter",
+          "text": "This kind of leadership is useful for many reasons."
+        },
+        {
+          "id": "p2-s54",
+          "startMs": 380760,
+          "endMs": 386160,
+          "speaker": "Presenter",
+          "text": "It divides the amount of work it takes to run a club among several people."
+        },
+        {
+          "id": "p2-s55",
+          "startMs": 386160,
+          "endMs": 392160,
+          "speaker": "Presenter",
+          "text": "It also helps club members practice speaking English with real-life tasks."
+        },
+        {
+          "id": "p2-s56",
+          "startMs": 392160,
+          "endMs": 400520,
+          "speaker": "Presenter",
+          "text": "And, if the members of your club are mostly students, it can help them develop teamwork and leadership skills."
+        },
+        {
+          "id": "p2-s57",
+          "startMs": 400520,
+          "endMs": 405360,
+          "speaker": "Presenter",
+          "text": "It is also important to have rules for the leadership system."
+        },
+        {
+          "id": "p2-s58",
+          "startMs": 405360,
+          "endMs": 411440,
+          "speaker": "Presenter",
+          "text": "For example, how long will club leaders hold their positions?"
+        },
+        {
+          "id": "p2-s59",
+          "startMs": 411440,
+          "endMs": 417320,
+          "speaker": "Presenter",
+          "text": "How will they transfer power to someone else if they must quit the club?"
+        },
+        {
+          "id": "p2-s60",
+          "startMs": 417320,
+          "endMs": 422240,
+          "speaker": "Presenter",
+          "text": "You should consider holding elections to choose new leaders."
+        },
+        {
+          "id": "p2-s61",
+          "startMs": 422240,
+          "endMs": 434360,
+          "speaker": "Presenter",
+          "text": "Whatever leadership system you choose, the goal of an English club remains the same: to keep your club members motivated to continue participating."
+        },
+        {
+          "id": "p2-s62",
+          "startMs": 434360,
+          "endMs": 439800,
+          "speaker": "Presenter",
+          "text": "So, club leaders should not try to do everything themselves."
+        },
+        {
+          "id": "p2-s63",
+          "startMs": 439800,
+          "endMs": 445880,
+          "speaker": "Presenter",
+          "text": "In fact, it is a good idea to give tasks to many different club members."
+        },
+        {
+          "id": "p2-s64",
+          "startMs": 445880,
+          "endMs": 449000,
+          "speaker": "Presenter",
+          "text": "This makes the members feel important."
+        },
+        {
+          "id": "p2-s65",
+          "startMs": 449000,
+          "endMs": 453560,
+          "speaker": "Presenter",
+          "text": "They are more likely to remain committed to the club."
+        },
+        {
+          "id": "p2-s66",
+          "startMs": 453560,
+          "endMs": 457680,
+          "speaker": "Presenter",
+          "text": "And it can increase their desire to learn."
+        },
+        {
+          "id": "p2-s67",
+          "startMs": 457680,
+          "endMs": 463480,
+          "speaker": "Presenter",
+          "text": "English clubs can take many forms and serve many purposes."
+        },
+        {
+          "id": "p2-s68",
+          "startMs": 463480,
+          "endMs": 469600,
+          "speaker": "Presenter",
+          "text": "Following these steps will help any club have a successful start."
+        },
+        {
+          "id": "p2-s69",
+          "startMs": 469600,
+          "endMs": 479080,
+          "speaker": "Presenter",
+          "text": "Join us next week as we talk about fun and creative activities to do with your newly formed English club."
+        },
+        {
+          "id": "p2-s70",
+          "startMs": 479080,
+          "endMs": 481480,
+          "speaker": "Presenter",
+          "text": "I'm Jill Robbins."
+        },
+        {
+          "id": "p2-s71",
+          "startMs": 481480,
+          "endMs": 482840,
+          "speaker": "Presenter",
+          "text": "And I’m Phil Dierking."
+        }
+      ]
+    },
+    {
+      "partId": "p3",
+      "segments": [
+        {
+          "id": "p3-s1",
+          "startMs": 30000,
+          "endMs": 36000,
+          "speaker": "Professor Bot",
+          "text": "We are back with Anna and Caroline and the bees."
+        },
+        {
+          "id": "p3-s2",
+          "startMs": 36000,
+          "endMs": 39000,
+          "speaker": "Professor Bot",
+          "text": "Last time, Anna was afraid."
+        },
+        {
+          "id": "p3-s3",
+          "startMs": 39000,
+          "endMs": 40540,
+          "speaker": "Professor Bot",
+          "text": "I'm not afraid of bees!"
+        },
+        {
+          "id": "p3-s4",
+          "startMs": 41000,
+          "endMs": 45000,
+          "speaker": "Professor Bot",
+          "text": "But Caroline is helping her to stay safe."
+        },
+        {
+          "id": "p3-s5",
+          "startMs": 45000,
+          "endMs": 51000,
+          "speaker": "Professor Bot",
+          "text": "Look at sentences that start with \"If\" to find more conditional sentences."
+        },
+        {
+          "id": "p3-s6",
+          "startMs": 51000,
+          "endMs": 63000,
+          "speaker": "Professor Bot",
+          "text": "Remember, Type 1 conditionals use the present tense and \"will,\" and Type 2 use the past tense and \"would."
+        },
+        {
+          "id": "p3-s7",
+          "startMs": 63000,
+          "endMs": 70000,
+          "speaker": "Professor Bot",
+          "text": "Now, let's find out what happens with Anna and the bees."
+        },
+        {
+          "id": "p3-s8",
+          "startMs": 70000,
+          "endMs": 74000,
+          "speaker": "Caroline",
+          "text": "I have a feeling that your fear of bees will be gone soon."
+        },
+        {
+          "id": "p3-s9",
+          "startMs": 74000,
+          "endMs": 77000,
+          "speaker": "Caroline",
+          "text": "There are things beekeepers do to protect ourselves."
+        },
+        {
+          "id": "p3-s10",
+          "startMs": 77000,
+          "endMs": 79000,
+          "speaker": "Caroline",
+          "text": "For example, we wear protective clothing."
+        },
+        {
+          "id": "p3-s11",
+          "startMs": 79000,
+          "endMs": 83000,
+          "speaker": "Caroline",
+          "text": "This is a beekeeper’s veil, suit and gloves."
+        },
+        {
+          "id": "p3-s12",
+          "startMs": 83000,
+          "endMs": 86000,
+          "speaker": "Caroline",
+          "text": "There are other things we can do, too."
+        },
+        {
+          "id": "p3-s13",
+          "startMs": 86000,
+          "endMs": 90000,
+          "speaker": "Caroline",
+          "text": "If I use a smoker, the bees will stay calm."
+        },
+        {
+          "id": "p3-s14",
+          "startMs": 90000,
+          "endMs": 93000,
+          "speaker": "Anna",
+          "text": "Let’s use smoke … lots of smoke."
+        },
+        {
+          "id": "p3-s15",
+          "startMs": 93000,
+          "endMs": 96000,
+          "speaker": "Caroline",
+          "text": "Okay, Anna, that’s enough smoke."
+        },
+        {
+          "id": "p3-s16",
+          "startMs": 96000,
+          "endMs": 101000,
+          "speaker": "Caroline",
+          "text": "Another thing you can do is stay calm."
+        },
+        {
+          "id": "p3-s17",
+          "startMs": 101000,
+          "endMs": 101520,
+          "speaker": "Caroline",
+          "text": "Okay."
+        },
+        {
+          "id": "p3-s18",
+          "startMs": 101520,
+          "endMs": 105000,
+          "speaker": "Caroline",
+          "text": "When I lift the frame, you will see the bees."
+        },
+        {
+          "id": "p3-s19",
+          "startMs": 105000,
+          "endMs": 106150,
+          "speaker": "Anna",
+          "text": "I’m ready."
+        },
+        {
+          "id": "p3-s20",
+          "startMs": 106150,
+          "endMs": 108000,
+          "speaker": "Anna",
+          "text": "Let's do this thing!"
+        },
+        {
+          "id": "p3-s21",
+          "startMs": 108000,
+          "endMs": 111000,
+          "speaker": "Caroline",
+          "text": "Okay, let's put on our protective clothing."
+        },
+        {
+          "id": "p3-s22",
+          "startMs": 111000,
+          "endMs": 113000,
+          "speaker": "Caroline",
+          "text": "I will carefully take out a frame."
+        },
+        {
+          "id": "p3-s23",
+          "startMs": 113000,
+          "endMs": 115000,
+          "speaker": "Caroline",
+          "text": "This is where the bees live."
+        },
+        {
+          "id": "p3-s24",
+          "startMs": 115000,
+          "endMs": 118000,
+          "speaker": "Caroline",
+          "text": "There are worker bees, drone bees and the queen bee."
+        },
+        {
+          "id": "p3-s25",
+          "startMs": 118000,
+          "endMs": 120000,
+          "speaker": "Caroline",
+          "text": "The bees have different jobs."
+        },
+        {
+          "id": "p3-s26",
+          "startMs": 120000,
+          "endMs": 122000,
+          "speaker": "Caroline",
+          "text": "The queen bee lays the eggs."
+        },
+        {
+          "id": "p3-s27",
+          "startMs": 122000,
+          "endMs": 126000,
+          "speaker": "Caroline",
+          "text": "The worker bees collect nectar and pollen ​from flowers and bring it back to the hive."
+        },
+        {
+          "id": "p3-s28",
+          "startMs": 126000,
+          "endMs": 128000,
+          "speaker": "Caroline",
+          "text": "Then they make honey!"
+        },
+        {
+          "id": "p3-s29",
+          "startMs": 128000,
+          "endMs": 130000,
+          "speaker": "Caroline",
+          "text": "Now, you hold the frame."
+        },
+        {
+          "id": "p3-s30",
+          "startMs": 130000,
+          "endMs": 131000,
+          "speaker": "Caroline",
+          "text": "There are the bees."
+        },
+        {
+          "id": "p3-s31",
+          "startMs": 131000,
+          "endMs": 134000,
+          "speaker": "Anna",
+          "text": "There are so many!"
+        },
+        {
+          "id": "p3-s32",
+          "startMs": 134000,
+          "endMs": 136000,
+          "speaker": "Anna",
+          "text": "And they are so busy!"
+        },
+        {
+          "id": "p3-s33",
+          "startMs": 136000,
+          "endMs": 139000,
+          "speaker": "Anna",
+          "text": "Now I know why we say, “busy as a bee!”"
+        },
+        {
+          "id": "p3-s34",
+          "startMs": 139000,
+          "endMs": 141000,
+          "speaker": "Caroline",
+          "text": "Good job, Anna."
+        },
+        {
+          "id": "p3-s35",
+          "startMs": 141000,
+          "endMs": 145000,
+          "speaker": "Anna",
+          "text": "Caroline, bees are beautiful and important."
+        },
+        {
+          "id": "p3-s36",
+          "startMs": 145000,
+          "endMs": 150000,
+          "speaker": "Anna",
+          "text": "If I wanted to help the bees, what would I do?"
+        },
+        {
+          "id": "p3-s37",
+          "startMs": 150000,
+          "endMs": 151040,
+          "speaker": "Caroline",
+          "text": "Great question."
+        },
+        {
+          "id": "p3-s38",
+          "startMs": 151040,
+          "endMs": 153000,
+          "speaker": "Caroline",
+          "text": "You can plant native flowers that bees like."
+        },
+        {
+          "id": "p3-s39",
+          "startMs": 153000,
+          "endMs": 156000,
+          "speaker": "Caroline",
+          "text": "Here’s a book to help you know which ones to plant."
+        },
+        {
+          "id": "p3-s40",
+          "startMs": 156000,
+          "endMs": 158000,
+          "speaker": "Anna",
+          "text": "It’s a beautiful book."
+        },
+        {
+          "id": "p3-s41",
+          "startMs": 158000,
+          "endMs": 163000,
+          "speaker": "Anna",
+          "text": "And look, it tells you which bees like which types of flowers."
+        },
+        {
+          "id": "p3-s42",
+          "startMs": 163000,
+          "endMs": 167000,
+          "speaker": "Caroline",
+          "text": "It also tells you how the flowers affect the flavor of the honey."
+        },
+        {
+          "id": "p3-s43",
+          "startMs": 167000,
+          "endMs": 170000,
+          "speaker": "Anna",
+          "text": "Flowers make a big difference to bees."
+        },
+        {
+          "id": "p3-s44",
+          "startMs": 170000,
+          "endMs": 173000,
+          "speaker": "Anna",
+          "text": "If they don’t eat, they won’t live."
+        },
+        {
+          "id": "p3-s45",
+          "startMs": 173000,
+          "endMs": 176000,
+          "speaker": "Caroline",
+          "text": "Buying local honey also helps the bees."
+        },
+        {
+          "id": "p3-s46",
+          "startMs": 176000,
+          "endMs": 179000,
+          "speaker": "Caroline",
+          "text": "If you want to help bees, do those two things."
+        },
+        {
+          "id": "p3-s47",
+          "startMs": 179000,
+          "endMs": 182000,
+          "speaker": "Professor Bot",
+          "text": "I learned a lot about bees."
+        },
+        {
+          "id": "p3-s48",
+          "startMs": 182000,
+          "endMs": 187000,
+          "speaker": "Professor Bot",
+          "text": "Hey, if I worked with bees, I would not need protective clothing!"
+        },
+        {
+          "id": "p3-s49",
+          "startMs": 187000,
+          "endMs": 189000,
+          "speaker": "Professor Bot",
+          "text": "Guess what?"
+        },
+        {
+          "id": "p3-s50",
+          "startMs": 189000,
+          "endMs": 191000,
+          "speaker": "Professor Bot",
+          "text": "That was a Type 2 conditional."
+        },
+        {
+          "id": "p3-s51",
+          "startMs": 191000,
+          "endMs": 195000,
+          "speaker": "Professor Bot",
+          "text": "And I heard a Type 1 conditional, too."
+        },
+        {
+          "id": "p3-s52",
+          "startMs": 195000,
+          "endMs": 199000,
+          "speaker": "Professor Bot",
+          "text": "If they don’t eat, they won’t live."
+        },
+        {
+          "id": "p3-s53",
+          "startMs": 199000,
+          "endMs": 205000,
+          "speaker": "Anna",
+          "text": "Thanks for the book, Caroline, and the bee puppet and for teaching me about bees."
+        },
+        {
+          "id": "p3-s54",
+          "startMs": 205000,
+          "endMs": 208000,
+          "speaker": "Anna",
+          "text": "Look … I’m not scared."
+        },
+        {
+          "id": "p3-s55",
+          "startMs": 208000,
+          "endMs": 209000,
+          "speaker": "Caroline",
+          "text": "Good job, Anna."
+        },
+        {
+          "id": "p3-s56",
+          "startMs": 209000,
+          "endMs": 212000,
+          "speaker": "Caroline",
+          "text": "If you ever want to see the bees again, I’ll be here!"
+        },
+        {
+          "id": "p3-s57",
+          "startMs": 212000,
+          "endMs": 214000,
+          "speaker": "Caroline",
+          "text": "You have my business card."
+        },
+        {
+          "id": "p3-s58",
+          "startMs": 214000,
+          "endMs": 215000,
+          "speaker": "Caroline",
+          "text": "I'll let you see yourself out."
+        },
+        {
+          "id": "p3-s59",
+          "startMs": 215000,
+          "endMs": 215560,
+          "speaker": "Anna",
+          "text": "Thanks!"
+        },
+        {
+          "id": "p3-s60",
+          "startMs": 215560,
+          "endMs": 216030,
+          "speaker": "Anna",
+          "text": "Bye!"
+        },
+        {
+          "id": "p3-s61",
+          "startMs": 216030,
+          "endMs": 219000,
+          "speaker": "Anna",
+          "text": "I will plant tons of flowers!"
+        },
+        {
+          "id": "p3-s62",
+          "startMs": 221000,
+          "endMs": 223000,
+          "speaker": "Anna",
+          "text": "Sure thing, bees!"
+        },
+        {
+          "id": "p3-s63",
+          "startMs": 223000,
+          "endMs": 227000,
+          "speaker": "Anna",
+          "text": "Oh, and I'm sorry about hitting that hive when I was a little girl."
+        },
+        {
+          "id": "p3-s64",
+          "startMs": 230000,
+          "endMs": 233000,
+          "speaker": "Anna",
+          "text": "Take care, bees!"
+        },
+        {
+          "id": "p3-s65",
+          "startMs": 233000,
+          "endMs": 236000,
+          "speaker": "Anna",
+          "text": "Which way is the Metro?"
+        },
+        {
+          "id": "p3-s66",
+          "startMs": 238000,
+          "endMs": 239000,
+          "speaker": "Anna",
+          "text": "Thanks!"
+        },
+        {
+          "id": "p3-s67",
+          "startMs": 239000,
+          "endMs": 247000,
+          "speaker": "Professor Bot",
+          "text": "So, if I you want to learn more about bees, visit your local beekeeper like Anna did."
+        },
+        {
+          "id": "p3-s68",
+          "startMs": 247000,
+          "endMs": 251000,
+          "speaker": "Professor Bot",
+          "text": "Maybe you can try some local honey, too."
+        },
+        {
+          "id": "p3-s69",
+          "startMs": 251000,
+          "endMs": 253000,
+          "speaker": "Professor Bot",
+          "text": "Now it’s your turn."
+        },
+        {
+          "id": "p3-s70",
+          "startMs": 253000,
+          "endMs": 256000,
+          "speaker": "Professor Bot",
+          "text": "Practice making conditional sentences."
+        },
+        {
+          "id": "p3-s71",
+          "startMs": 256000,
+          "endMs": 259000,
+          "speaker": "Professor Bot",
+          "text": "If you practice, you will become better at them."
+        },
+        {
+          "id": "p3-s72",
+          "startMs": 259000,
+          "endMs": 261000,
+          "speaker": "Professor Bot",
+          "text": "That's type 1!"
+        }
+      ]
+    },
+    {
+      "partId": "p4",
+      "segments": [
+        {
+          "id": "p4-s1",
+          "startMs": 30000,
+          "endMs": 44300,
+          "speaker": "Presenter",
+          "text": "Sherlock Holmes is an imaginary private detective created by British writer Arthur Conan Doyle in the late 1880s."
+        },
+        {
+          "id": "p4-s2",
+          "startMs": 44300,
+          "endMs": 52560,
+          "speaker": "Presenter",
+          "text": "Doyle’s stories about the detective have been turned into movies and television shows."
+        },
+        {
+          "id": "p4-s3",
+          "startMs": 52560,
+          "endMs": 58580,
+          "speaker": "Presenter",
+          "text": "One of Sherlock Holmes’ great skills is a powerful memory."
+        },
+        {
+          "id": "p4-s4",
+          "startMs": 58580,
+          "endMs": 70420,
+          "speaker": "Presenter",
+          "text": "In a recent BBC television series, the character uses a memory technique called a “mind palace” or “memory palace.”"
+        },
+        {
+          "id": "p4-s5",
+          "startMs": 70420,
+          "endMs": 83080,
+          "speaker": "Presenter",
+          "text": "On one show, for example, Holmes has been severely wounded in a shooting and retreats into his mind to search for ways to survive."
+        },
+        {
+          "id": "p4-s6",
+          "startMs": 83080,
+          "endMs": 89780,
+          "speaker": "Presenter",
+          "text": "He visits rooms in his mind palace, looking for helpful memories."
+        },
+        {
+          "id": "p4-s7",
+          "startMs": 89780,
+          "endMs": 99040,
+          "speaker": "Presenter",
+          "text": "In one room, he finds his childhood dog, and the memory helps calm the detective."
+        },
+        {
+          "id": "p4-s8",
+          "startMs": 99040,
+          "endMs": 105340,
+          "speaker": "Presenter",
+          "text": "The memory palace idea was not a BBC creation."
+        },
+        {
+          "id": "p4-s9",
+          "startMs": 105340,
+          "endMs": 112060,
+          "speaker": "Presenter",
+          "text": "The method for remembering has existed for thousands of years."
+        },
+        {
+          "id": "p4-s10",
+          "startMs": 112060,
+          "endMs": 121300,
+          "speaker": "Presenter",
+          "text": "Many language educators today teach their students how to use the method to improve their language skills."
+        },
+        {
+          "id": "p4-s11",
+          "startMs": 121300,
+          "endMs": 124370,
+          "speaker": "Presenter",
+          "text": "But what exactly is a memory palace?"
+        },
+        {
+          "id": "p4-s12",
+          "startMs": 124370,
+          "endMs": 132690,
+          "speaker": "Presenter",
+          "text": "It is a real structure, such as a home or building, that you can picture in your head."
+        },
+        {
+          "id": "p4-s13",
+          "startMs": 132690,
+          "endMs": 141620,
+          "speaker": "Presenter",
+          "text": "You then imagine placing things you want to remember inside the structure."
+        },
+        {
+          "id": "p4-s14",
+          "startMs": 141620,
+          "endMs": 151940,
+          "speaker": "Presenter",
+          "text": "You can use a memory palace to remember words, phrases, facts, or even the order of events."
+        },
+        {
+          "id": "p4-s15",
+          "startMs": 151940,
+          "endMs": 161010,
+          "speaker": "Presenter",
+          "text": "If you can see the inside of a house or building in your mind, you can make your own memory palace."
+        },
+        {
+          "id": "p4-s16",
+          "startMs": 161010,
+          "endMs": 166800,
+          "speaker": "Presenter",
+          "text": "On today’s Education Tips, we will show you how."
+        },
+        {
+          "id": "p4-s17",
+          "startMs": 166800,
+          "endMs": 171750,
+          "speaker": "Presenter",
+          "text": "Start with a list of words or phrases that you want to remember."
+        },
+        {
+          "id": "p4-s18",
+          "startMs": 171750,
+          "endMs": 185490,
+          "speaker": "Presenter",
+          "text": "Then, close your eyes and choose a physical space that you know well, such as your home, a school you attended, or a current or former workplace."
+        },
+        {
+          "id": "p4-s19",
+          "startMs": 185490,
+          "endMs": 193440,
+          "speaker": "Presenter",
+          "text": "If your chosen space has only one or two rooms, do not worry."
+        },
+        {
+          "id": "p4-s20",
+          "startMs": 193440,
+          "endMs": 204860,
+          "speaker": "Presenter",
+          "text": "You can also use things like doors, passageways, steps or other permanent places along the physical path."
+        },
+        {
+          "id": "p4-s21",
+          "startMs": 204860,
+          "endMs": 214940,
+          "speaker": "Presenter",
+          "text": "The next step is to imagine walking through the space using the path that you would normally take through it."
+        },
+        {
+          "id": "p4-s22",
+          "startMs": 214940,
+          "endMs": 223400,
+          "speaker": "Presenter",
+          "text": "As you walk through, put objects that you want to remember at specific places along the path."
+        },
+        {
+          "id": "p4-s23",
+          "startMs": 223400,
+          "endMs": 231700,
+          "speaker": "Presenter",
+          "text": "Leave the objects there to pick up later when you visit your memory palace."
+        },
+        {
+          "id": "p4-s24",
+          "startMs": 231700,
+          "endMs": 246500,
+          "speaker": "Presenter",
+          "text": "Now, let’s try this technique by using six ingredients for a pizza: flour, water, dry yeast, tomato sauce, cheese and basil."
+        },
+        {
+          "id": "p4-s25",
+          "startMs": 246500,
+          "endMs": 249750,
+          "speaker": "Presenter",
+          "text": "Close your eyes and picture a home."
+        },
+        {
+          "id": "p4-s26",
+          "startMs": 249750,
+          "endMs": 257480,
+          "speaker": "Presenter",
+          "text": "First, you open the front door and see a bag of flour on the floor."
+        },
+        {
+          "id": "p4-s27",
+          "startMs": 257480,
+          "endMs": 264300,
+          "speaker": "Presenter",
+          "text": "The bag is broken and some of the flour has spilled."
+        },
+        {
+          "id": "p4-s28",
+          "startMs": 264300,
+          "endMs": 271660,
+          "speaker": "Presenter",
+          "text": "You are worried that you might slip, so you carefully step over the area."
+        },
+        {
+          "id": "p4-s29",
+          "startMs": 271660,
+          "endMs": 275820,
+          "speaker": "Presenter",
+          "text": "Second, you walk into your bedroom."
+        },
+        {
+          "id": "p4-s30",
+          "startMs": 275820,
+          "endMs": 279800,
+          "speaker": "Presenter",
+          "text": "On top of your bed sits a cup of water."
+        },
+        {
+          "id": "p4-s31",
+          "startMs": 279800,
+          "endMs": 285900,
+          "speaker": "Presenter",
+          "text": "The cup is shaped like an upside-down piece of pizza."
+        },
+        {
+          "id": "p4-s32",
+          "startMs": 285900,
+          "endMs": 292140,
+          "speaker": "Presenter",
+          "text": "You think about how funny that is and laugh about it."
+        },
+        {
+          "id": "p4-s33",
+          "startMs": 292140,
+          "endMs": 302910,
+          "speaker": "Presenter",
+          "text": "Third, as you enter the living room, you see a very large spoon of dry yeast sitting on the sofa."
+        },
+        {
+          "id": "p4-s34",
+          "startMs": 302910,
+          "endMs": 308640,
+          "speaker": "Presenter",
+          "text": "The spoon is watching a cooking show on television."
+        },
+        {
+          "id": "p4-s35",
+          "startMs": 308640,
+          "endMs": 316380,
+          "speaker": "Presenter",
+          "text": "Fourth, while standing in the living room, you notice the room has a strange smell to it."
+        },
+        {
+          "id": "p4-s36",
+          "startMs": 316380,
+          "endMs": 322720,
+          "speaker": "Presenter",
+          "text": "You look above the television and see a block of cheese hanging on the wall."
+        },
+        {
+          "id": "p4-s37",
+          "startMs": 322720,
+          "endMs": 331210,
+          "speaker": "Presenter",
+          "text": "Fifth, you walk into the kitchen and see two tomatoes chasing each other around the room."
+        },
+        {
+          "id": "p4-s38",
+          "startMs": 331210,
+          "endMs": 338380,
+          "speaker": "Presenter",
+          "text": "Suddenly, they crash and explode, covering the floor in red."
+        },
+        {
+          "id": "p4-s39",
+          "startMs": 338380,
+          "endMs": 343220,
+          "speaker": "Presenter",
+          "text": "And sixth, you open the back door and go outside."
+        },
+        {
+          "id": "p4-s40",
+          "startMs": 343220,
+          "endMs": 350670,
+          "speaker": "Presenter",
+          "text": "There, you see a group of very tall green basil plants."
+        },
+        {
+          "id": "p4-s41",
+          "startMs": 350670,
+          "endMs": 357680,
+          "speaker": "Presenter",
+          "text": "In a funny voice, the tallest plant says, “Choose me!"
+        },
+        {
+          "id": "p4-s42",
+          "startMs": 357680,
+          "endMs": 359600,
+          "speaker": "Presenter",
+          "text": "Choose me!”"
+        },
+        {
+          "id": "p4-s43",
+          "startMs": 359600,
+          "endMs": 363610,
+          "speaker": "Presenter",
+          "text": "Did you notice anything strange about the palace?"
+        },
+        {
+          "id": "p4-s44",
+          "startMs": 363610,
+          "endMs": 368480,
+          "speaker": "Presenter",
+          "text": "It was full of extraordinary and humorous imagery."
+        },
+        {
+          "id": "p4-s45",
+          "startMs": 368480,
+          "endMs": 373580,
+          "speaker": "Presenter",
+          "text": "We will say more about that in a few minutes."
+        },
+        {
+          "id": "p4-s46",
+          "startMs": 373580,
+          "endMs": 378700,
+          "speaker": "Presenter",
+          "text": "But first, let’s check how well our technique worked."
+        },
+        {
+          "id": "p4-s47",
+          "startMs": 378700,
+          "endMs": 382580,
+          "speaker": "Presenter",
+          "text": "See if you can answer these questions:"
+        },
+        {
+          "id": "p4-s48",
+          "startMs": 382580,
+          "endMs": 389140,
+          "speaker": "Presenter",
+          "text": "1-What was on the wall above the television?"
+        },
+        {
+          "id": "p4-s49",
+          "startMs": 389140,
+          "endMs": 395070,
+          "speaker": "Presenter",
+          "text": "2-Where were the tomatoes and what were they doing?"
+        },
+        {
+          "id": "p4-s50",
+          "startMs": 395070,
+          "endMs": 400370,
+          "speaker": "Presenter",
+          "text": "3-Which object was sitting on the bed?"
+        },
+        {
+          "id": "p4-s51",
+          "startMs": 400370,
+          "endMs": 406740,
+          "speaker": "Presenter",
+          "text": "4-Where was the yeast and what was it doing?"
+        },
+        {
+          "id": "p4-s52",
+          "startMs": 406740,
+          "endMs": 413620,
+          "speaker": "Presenter",
+          "text": "5-Which ingredient spoke and what did it say?"
+        },
+        {
+          "id": "p4-s53",
+          "startMs": 413620,
+          "endMs": 419040,
+          "speaker": "Presenter",
+          "text": "6-What did you see when you opened the front door?"
+        },
+        {
+          "id": "p4-s54",
+          "startMs": 419040,
+          "endMs": 425720,
+          "speaker": "Presenter",
+          "text": "My guess is that you remembered everything in our memory palace."
+        },
+        {
+          "id": "p4-s55",
+          "startMs": 425720,
+          "endMs": 429050,
+          "speaker": "Presenter",
+          "text": "That’s good news."
+        },
+        {
+          "id": "p4-s56",
+          "startMs": 429050,
+          "endMs": 435300,
+          "speaker": "Presenter",
+          "text": "Experts offer some advice for making strong memory palaces."
+        },
+        {
+          "id": "p4-s57",
+          "startMs": 435300,
+          "endMs": 449050,
+          "speaker": "Presenter",
+          "text": "For instance, if you want to remember a lot of words, memory trainer Anthony Metivier suggests first drawing a simple map of your memory palace."
+        },
+        {
+          "id": "p4-s58",
+          "startMs": 449050,
+          "endMs": 457880,
+          "speaker": "Presenter",
+          "text": "Then, number the places along your path where you will put the things that you want to remember."
+        },
+        {
+          "id": "p4-s59",
+          "startMs": 457880,
+          "endMs": 463020,
+          "speaker": "Presenter",
+          "text": "You can put more than one thing in each room or area."
+        },
+        {
+          "id": "p4-s60",
+          "startMs": 463020,
+          "endMs": 468340,
+          "speaker": "Presenter",
+          "text": "Later, you will add the mental imagery."
+        },
+        {
+          "id": "p4-s61",
+          "startMs": 468340,
+          "endMs": 478720,
+          "speaker": "Presenter",
+          "text": "English teacher James, of the YouTube channel JamesESL English Lessons, has additional advice."
+        },
+        {
+          "id": "p4-s62",
+          "startMs": 478720,
+          "endMs": 487060,
+          "speaker": "Presenter",
+          "text": "In his video on memory palaces, he says that there are three keys to a strong memory palace."
+        },
+        {
+          "id": "p4-s63",
+          "startMs": 487060,
+          "endMs": 496640,
+          "speaker": "Presenter",
+          "text": "They are: emotion, movement, and connections between the object and something permanent."
+        },
+        {
+          "id": "p4-s64",
+          "startMs": 496640,
+          "endMs": 508540,
+          "speaker": "Presenter",
+          "text": "Both he and Metivier say imagining things in a humorous or crazy way improves your ability to remember them."
+        },
+        {
+          "id": "p4-s65",
+          "startMs": 508540,
+          "endMs": 518860,
+          "speaker": "Presenter",
+          "text": "These experts also agree that connecting images to actions or movement will create lasting memories."
+        },
+        {
+          "id": "p4-s66",
+          "startMs": 518860,
+          "endMs": 526540,
+          "speaker": "Presenter",
+          "text": "For instance, the tomatoes were chasing each other and the basil spoke."
+        },
+        {
+          "id": "p4-s67",
+          "startMs": 526540,
+          "endMs": 536980,
+          "speaker": "Presenter",
+          "text": "And finally, teacher James suggests placing the objects next to or on something permanent in your palace."
+        },
+        {
+          "id": "p4-s68",
+          "startMs": 536980,
+          "endMs": 545580,
+          "speaker": "Presenter",
+          "text": "Beds, sofas, floors, walls, doors – all of these are permanent."
+        },
+        {
+          "id": "p4-s69",
+          "startMs": 545580,
+          "endMs": 551500,
+          "speaker": "Presenter",
+          "text": "The block of cheese was on the wall, for example."
+        },
+        {
+          "id": "p4-s70",
+          "startMs": 551500,
+          "endMs": 553420,
+          "speaker": "Presenter",
+          "text": "Now, it’s your turn."
+        },
+        {
+          "id": "p4-s71",
+          "startMs": 553420,
+          "endMs": 562920,
+          "speaker": "Presenter",
+          "text": "Pick a list of English words or phrases that you have trouble remembering and try this method on your own."
+        },
+        {
+          "id": "p4-s72",
+          "startMs": 562920,
+          "endMs": 565100,
+          "speaker": "Presenter",
+          "text": "Let us know how it goes."
+        },
+        {
+          "id": "p4-s73",
+          "startMs": 565100,
+          "endMs": 567900,
+          "speaker": "Presenter",
+          "text": "I’m John Russell."
+        },
+        {
+          "id": "p4-s74",
+          "startMs": 567900,
+          "endMs": 569500,
+          "speaker": "Presenter",
+          "text": "And I’m Alice Bryant."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,794 @@
+{
+  "id": "temporary-voa-1",
+  "version": 1,
+  "title": "Temporary Listening Practice 1",
+  "origin": {
+    "kind": "licensed",
+    "source": "VOA Learning English (Voice of America); questions written for this app by Claude",
+    "license": "Public domain (VOA Learning English: texts and MP3s may be reprinted for educational and commercial purposes with credit to learningenglish.voanews.com; https://learningenglish.voanews.com/p/6861.html, read 2026-10-18)",
+    "url": "https://learningenglish.voanews.com/p/6861.html",
+    "attribution": "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app."
+  },
+  "temporary": true,
+  "parts": [
+    {
+      "id": "p1",
+      "number": 1,
+      "audio": {
+        "src": "part-1.ac073429d5b0.m4a",
+        "mimeType": "audio/mp4",
+        "durationMs": 314766,
+        "bytes": 1786373,
+        "sha256": "ac073429d5b02a2969c7a3df1d211c6899e1c0a7e46ac3a0d6099185fc98217c",
+        "provenance": {
+          "producedBy": "VOA Learning English (Voice of America)",
+          "method": "recorded",
+          "voices": [
+            {
+              "role": "Anna",
+              "accent": "North American"
+            },
+            {
+              "role": "Penelope",
+              "accent": "North American"
+            },
+            {
+              "role": "Boy",
+              "accent": "North American"
+            },
+            {
+              "role": "Professor Bot",
+              "accent": "North American"
+            }
+          ],
+          "license": "Public domain (VOA Learning English: texts and MP3s may be reprinted for educational and commercial purposes with credit to learningenglish.voanews.com; https://learningenglish.voanews.com/p/6861.html, read 2026-10-18)",
+          "sourceUrl": "https://learningenglish.voanews.com/a/lesson-6-will-it-float/4064553.html",
+          "attribution": "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app.",
+          "producedAt": "2017-10-10",
+          "note": "Converted for this app on 2026-10-18: 30 seconds of silence added before the recording for reading time; mono AAC-LC 48 kbps."
+        }
+      },
+      "questionGroups": [
+        {
+          "id": "p1-notes",
+          "type": "noteCompletion",
+          "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+          "title": "A tour of Washington, D.C.",
+          "lines": [
+            {
+              "heading": "The tours"
+            },
+            [
+              {
+                "text": "One goes through the city on a "
+              },
+              {
+                "gap": 1
+              }
+            ],
+            [
+              {
+                "text": "One goes along the "
+              },
+              {
+                "gap": 2
+              },
+              {
+                "text": " in a boat"
+              }
+            ],
+            {
+              "heading": "The DC Ducks"
+            },
+            [
+              {
+                "text": "A boat with "
+              },
+              {
+                "gap": 3
+              }
+            ],
+            [
+              {
+                "text": "First made in World War II to carry people and "
+              },
+              {
+                "gap": 4
+              }
+            ],
+            {
+              "heading": "A fun fact"
+            },
+            [
+              {
+                "text": "The Washington Monument was damaged in an "
+              },
+              {
+                "gap": 5
+              }
+            ]
+          ],
+          "answer": {
+            "kind": "typed",
+            "wordLimit": {
+              "words": 1,
+              "numbers": true
+            }
+          }
+        },
+        {
+          "id": "p1-mc",
+          "type": "multipleChoice",
+          "instruction": "Choose the correct letter, A, B or C.",
+          "questions": [
+            {
+              "number": 6,
+              "stem": "Where is the Washington Monument when they see it?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "On their left"
+                },
+                {
+                  "id": "B",
+                  "text": "On their right"
+                },
+                {
+                  "id": "C",
+                  "text": "Behind them"
+                }
+              ]
+            },
+            {
+              "number": 7,
+              "stem": "What does the boy say is inside the White House?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "A bowling alley"
+                },
+                {
+                  "id": "B",
+                  "text": "A swimming pool"
+                },
+                {
+                  "id": "C",
+                  "text": "A library"
+                }
+              ]
+            },
+            {
+              "number": 8,
+              "stem": "Why does Penelope want to give the boy a tip?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "He told them a fun fact."
+                },
+                {
+                  "id": "B",
+                  "text": "He drove the boat."
+                },
+                {
+                  "id": "C",
+                  "text": "He sold them a brochure."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p1-short",
+          "type": "shortAnswer",
+          "instruction": "Answer the questions below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+          "wordLimit": {
+            "words": 2,
+            "numbers": true
+          },
+          "questions": [
+            {
+              "number": 9,
+              "question": "How many bathrooms does the White House have?"
+            },
+            {
+              "number": 10,
+              "question": "How many bathrooms are there in the boy's house?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "number": 2,
+      "audio": {
+        "src": "part-2.daf2c8a852f7.m4a",
+        "mimeType": "audio/mp4",
+        "durationMs": 487168,
+        "bytes": 2745501,
+        "sha256": "daf2c8a852f78f6f2095df19601ea268a8a4f0d5309acb162f7ed84e5c6df987",
+        "provenance": {
+          "producedBy": "VOA Learning English (Voice of America)",
+          "method": "recorded",
+          "voices": [
+            {
+              "role": "Presenter (Jill Robbins)",
+              "accent": "North American"
+            },
+            {
+              "role": "Presenter (Phil Dierking)",
+              "accent": "North American"
+            }
+          ],
+          "license": "Public domain (VOA Learning English: texts and MP3s may be reprinted for educational and commercial purposes with credit to learningenglish.voanews.com; https://learningenglish.voanews.com/p/6861.html, read 2026-10-18)",
+          "sourceUrl": "https://learningenglish.voanews.com/a/learning-english-with-english-clubs-starting-and-organizing-your-club/3947928.html",
+          "attribution": "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app.",
+          "producedAt": "2017-07-17",
+          "note": "Converted for this app on 2026-10-18: 30 seconds of silence added before the recording for reading time; mono AAC-LC 48 kbps."
+        }
+      },
+      "questionGroups": [
+        {
+          "id": "p2-flow",
+          "type": "flowChartCompletion",
+          "instruction": "Complete the flow chart below. Write ONE WORD ONLY for each answer.",
+          "title": "Starting an English club",
+          "steps": [
+            [
+              [
+                {
+                  "text": "Find club "
+                },
+                {
+                  "gap": 11
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "Find a "
+                },
+                {
+                  "gap": 12
+                },
+                {
+                  "text": " for the club to meet"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "Hold the first "
+                },
+                {
+                  "gap": 13
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "text": "At the first meeting, talk with members about "
+                },
+                {
+                  "gap": 14
+                }
+              ]
+            ]
+          ],
+          "answer": {
+            "kind": "typed",
+            "wordLimit": {
+              "words": 1,
+              "numbers": false
+            }
+          }
+        },
+        {
+          "id": "p2-table",
+          "type": "tableCompletion",
+          "instruction": "Complete the table below. Write ONE WORD ONLY for each answer.",
+          "title": "Ways to find members",
+          "columns": ["Who starts the club", "How to find members"],
+          "rowHeaders": true,
+          "rows": [
+            {
+              "cells": [
+                [
+                  {
+                    "text": "A teacher"
+                  }
+                ],
+                [
+                  {
+                    "text": "Put up signs in "
+                  },
+                  {
+                    "gap": 15
+                  }
+                ]
+              ]
+            },
+            {
+              "cells": [
+                [
+                  {
+                    "text": "Someone at work"
+                  }
+                ],
+                [
+                  {
+                    "text": "Send an "
+                  },
+                  {
+                    "gap": 16
+                  },
+                  {
+                    "text": " around to coworkers"
+                  }
+                ]
+              ]
+            },
+            {
+              "cells": [
+                [
+                  {
+                    "text": "Anyone"
+                  }
+                ],
+                [
+                  {
+                    "text": "Use the "
+                  },
+                  {
+                    "gap": 17
+                  }
+                ]
+              ]
+            }
+          ],
+          "answer": {
+            "kind": "typed",
+            "wordLimit": {
+              "words": 1,
+              "numbers": false
+            }
+          }
+        },
+        {
+          "id": "p2-multi",
+          "type": "multipleChoiceMulti",
+          "instruction": "Choose TWO letters, A–E.",
+          "items": [
+            {
+              "numbers": [18, 19],
+              "stem": "Which TWO things should you think about when you choose a place for the club?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "How easy it is to get to"
+                },
+                {
+                  "id": "B",
+                  "text": "Whether it is safe"
+                },
+                {
+                  "id": "C",
+                  "text": "How much it costs"
+                },
+                {
+                  "id": "D",
+                  "text": "How quiet it is"
+                },
+                {
+                  "id": "E",
+                  "text": "Whether there is parking"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p2-mc",
+          "type": "multipleChoice",
+          "instruction": "Choose the correct letter, A, B or C.",
+          "questions": [
+            {
+              "number": 20,
+              "stem": "Why are cafes and restaurants good places for clubs outside school or work?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "They often have enough space for large groups."
+                },
+                {
+                  "id": "B",
+                  "text": "They are cheap."
+                },
+                {
+                  "id": "C",
+                  "text": "They are quiet."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "number": 3,
+      "audio": {
+        "src": "part-3.725f9c5fb6de.m4a",
+        "mimeType": "audio/mp4",
+        "durationMs": 261434,
+        "bytes": 1532091,
+        "sha256": "725f9c5fb6dee57649c60d1ece18c99c1fc09a1cd265b4035ca94bf4e6bcdc62",
+        "provenance": {
+          "producedBy": "VOA Learning English (Voice of America)",
+          "method": "recorded",
+          "voices": [
+            {
+              "role": "Anna",
+              "accent": "North American"
+            },
+            {
+              "role": "Caroline",
+              "accent": "North American"
+            },
+            {
+              "role": "Professor Bot",
+              "accent": "North American"
+            }
+          ],
+          "license": "Public domain (VOA Learning English: texts and MP3s may be reprinted for educational and commercial purposes with credit to learningenglish.voanews.com; https://learningenglish.voanews.com/p/6861.html, read 2026-10-18)",
+          "sourceUrl": "https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-13-save-the-bees/4145716.html",
+          "attribution": "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app.",
+          "producedAt": "2017-12-01",
+          "note": "Converted for this app on 2026-10-18: 30 seconds of silence added before the recording for reading time; mono AAC-LC 48 kbps."
+        }
+      },
+      "questionGroups": [
+        {
+          "id": "p3-match",
+          "type": "matchingFeatures",
+          "instruction": "What does the conversation say about each of the following? Choose the correct letter, A–F. You may use each letter only once.",
+          "options": [
+            {
+              "id": "A",
+              "text": "keeps the bees calm"
+            },
+            {
+              "id": "B",
+              "text": "shows which flowers bees like"
+            },
+            {
+              "id": "C",
+              "text": "protects the beekeeper"
+            },
+            {
+              "id": "D",
+              "text": "lays the eggs"
+            },
+            {
+              "id": "E",
+              "text": "collects nectar and pollen"
+            },
+            {
+              "id": "F",
+              "text": "makes the honey sweeter"
+            }
+          ],
+          "allowRepeat": false,
+          "questions": [
+            {
+              "number": 21,
+              "statement": "the smoker"
+            },
+            {
+              "number": 22,
+              "statement": "the book"
+            },
+            {
+              "number": 23,
+              "statement": "the veil, suit and gloves"
+            },
+            {
+              "number": 24,
+              "statement": "the queen bee"
+            },
+            {
+              "number": 25,
+              "statement": "the worker bees"
+            }
+          ]
+        },
+        {
+          "id": "p3-multi",
+          "type": "multipleChoiceMulti",
+          "instruction": "Choose TWO letters, A–E.",
+          "items": [
+            {
+              "numbers": [26, 27],
+              "stem": "Which TWO things does Caroline say people can do to help bees?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "Plant native flowers"
+                },
+                {
+                  "id": "B",
+                  "text": "Buy local honey"
+                },
+                {
+                  "id": "C",
+                  "text": "Keep their own hive"
+                },
+                {
+                  "id": "D",
+                  "text": "Wear protective clothing"
+                },
+                {
+                  "id": "E",
+                  "text": "Use a smoker"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p3-sentences",
+          "type": "sentenceCompletion",
+          "instruction": "Complete the sentences below. Write ONE WORD ONLY for each answer.",
+          "sentences": [
+            [
+              {
+                "text": "When Caroline lifts the "
+              },
+              {
+                "gap": 28
+              },
+              {
+                "text": ", Anna can see the bees."
+              }
+            ],
+            [
+              {
+                "text": "Worker bees bring nectar and pollen back to the "
+              },
+              {
+                "gap": 29
+              },
+              {
+                "text": "."
+              }
+            ],
+            [
+              {
+                "text": "Caroline reminds Anna that she has her business "
+              },
+              {
+                "gap": 30
+              },
+              {
+                "text": "."
+              }
+            ]
+          ],
+          "answer": {
+            "kind": "typed",
+            "wordLimit": {
+              "words": 1,
+              "numbers": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "p4",
+      "number": 4,
+      "audio": {
+        "src": "part-4.e86a942a593d.m4a",
+        "mimeType": "audio/mp4",
+        "durationMs": 569918,
+        "bytes": 3389840,
+        "sha256": "e86a942a593da551086b012a4e2657b9c0e76e9a75de40ea5a317a8e178e5f46",
+        "provenance": {
+          "producedBy": "VOA Learning English (Voice of America)",
+          "method": "recorded",
+          "voices": [
+            {
+              "role": "Presenter (John Russell)",
+              "accent": "North American"
+            },
+            {
+              "role": "Presenter (Alice Bryant)",
+              "accent": "North American"
+            }
+          ],
+          "license": "Public domain (VOA Learning English: texts and MP3s may be reprinted for educational and commercial purposes with credit to learningenglish.voanews.com; https://learningenglish.voanews.com/p/6861.html, read 2026-10-18)",
+          "sourceUrl": "https://learningenglish.voanews.com/a/improve-your-english-with-a-memory-palace/5855771.html",
+          "attribution": "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app.",
+          "producedAt": "2021-04-20",
+          "note": "Converted for this app on 2026-10-18: 30 seconds of silence added before the recording for reading time; mono AAC-LC 48 kbps."
+        }
+      },
+      "questionGroups": [
+        {
+          "id": "p4-plan",
+          "type": "labelling",
+          "instruction": "Label the plan of the memory palace below. Choose the correct letter, A–G, for questions 31–35.",
+          "title": "The memory palace",
+          "image": {
+            "src": "plan.5ebd473461bf.svg",
+            "mimeType": "image/svg+xml",
+            "width": 800,
+            "height": 520,
+            "alt": "Plan of a home used as a memory palace",
+            "description": "A plan of a one-floor home. The front door is at the bottom left and opens into a hall. The bedroom, with a bed, is at the top left; the living room, with a sofa and a television, is in the middle; the kitchen is at the top right. A back door on the right leads out to a garden. Number 31 is at the front door, 32 on the bed, 33 on the sofa, 34 in the kitchen and 35 in the garden.",
+            "bytes": 1544,
+            "sha256": "5ebd473461bf4b17834cfc5feb12d3c07f011af5e676ce5a0e5d67389cb8f92f",
+            "provenance": {
+              "producedBy": "IELTS Prep (drawn by Claude)",
+              "method": "drawn",
+              "license": "Original, made for this app",
+              "producedAt": "2026-10-18"
+            }
+          },
+          "markers": [
+            {
+              "id": "p4-m-31",
+              "label": "31",
+              "x": 15.6,
+              "y": 92,
+              "question": 31
+            },
+            {
+              "id": "p4-m-32",
+              "label": "32",
+              "x": 17.5,
+              "y": 26,
+              "question": 32
+            },
+            {
+              "id": "p4-m-33",
+              "label": "33",
+              "x": 41,
+              "y": 41,
+              "question": 33
+            },
+            {
+              "id": "p4-m-34",
+              "label": "34",
+              "x": 64,
+              "y": 38,
+              "question": 34
+            },
+            {
+              "id": "p4-m-35",
+              "label": "35",
+              "x": 87,
+              "y": 77,
+              "question": 35
+            }
+          ],
+          "questions": [
+            {
+              "number": 31,
+              "prompt": "Front door"
+            },
+            {
+              "number": 32,
+              "prompt": "Bed"
+            },
+            {
+              "number": 33,
+              "prompt": "Sofa"
+            },
+            {
+              "number": 34,
+              "prompt": "Kitchen"
+            },
+            {
+              "number": 35,
+              "prompt": "Garden"
+            }
+          ],
+          "answer": {
+            "kind": "choose",
+            "options": [
+              {
+                "id": "A",
+                "text": "basil"
+              },
+              {
+                "id": "B",
+                "text": "cheese"
+              },
+              {
+                "id": "C",
+                "text": "dry yeast"
+              },
+              {
+                "id": "D",
+                "text": "flour"
+              },
+              {
+                "id": "E",
+                "text": "salt"
+              },
+              {
+                "id": "F",
+                "text": "tomatoes"
+              },
+              {
+                "id": "G",
+                "text": "water"
+              }
+            ],
+            "allowRepeat": false
+          }
+        },
+        {
+          "id": "p4-short",
+          "type": "shortAnswer",
+          "instruction": "Answer the questions below. Write NO MORE THAN THREE WORDS for each answer.",
+          "wordLimit": {
+            "words": 3,
+            "numbers": false
+          },
+          "questions": [
+            {
+              "number": 36,
+              "question": "In the television series, what does Holmes find in one room of his mind palace?"
+            },
+            {
+              "number": 37,
+              "question": "What does Anthony Metivier suggest drawing first?"
+            },
+            {
+              "number": 38,
+              "question": "What do you number along your path?"
+            }
+          ]
+        },
+        {
+          "id": "p4-multi",
+          "type": "multipleChoiceMulti",
+          "instruction": "Choose TWO letters, A–E.",
+          "items": [
+            {
+              "numbers": [39, 40],
+              "stem": "Which TWO things do both experts agree help you to remember?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "Imagining things in a funny or crazy way"
+                },
+                {
+                  "id": "B",
+                  "text": "Connecting images to movement"
+                },
+                {
+                  "id": "C",
+                  "text": "Saying the words aloud"
+                },
+                {
+                  "id": "D",
+                  "text": "Using photographs"
+                },
+                {
+                  "id": "E",
+                  "text": "Studying at night"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

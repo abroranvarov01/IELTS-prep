@@ -47,7 +47,7 @@ Every file was downloaded on 2026-10-18 and its duration measured with ffprobe: 
 **Known differences from a real IELTS test**, stated so the temporary test is not mistaken for one:
 - Every voice has a North American accent, and Learning English is read slowly; IELTS uses several accents at natural speed.
 - Parts 1 and 3 include Professor Bot's short grammar comments between scenes; Parts 2 and 4 are read by two presenters in turn rather than one speaker.
-- The recordings total about 25 minutes, not about 30, and have no IELTS-style spoken instructions or reading pauses. M8-08 may add silence before each part for reading time (allowed: the material is public domain), recorded as a conversion.
+- The recordings total about 25 minutes, not about 30, and have no IELTS-style spoken instructions or reading pauses. M8-08 added 30 seconds of silence before each part for reading time (allowed: the material is public domain), recorded in each file's provenance; with it the test runs about 27 minutes.
 - The questions are written for this product by Claude (`aiDraft`), not by VOA or IELTS.
 
 ## Question types (M8)

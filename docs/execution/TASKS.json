@@ -4002,7 +4002,8 @@
       "title": "Prepare the temporary Listening test in the content contract and verify it against its audio",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-07", "M8-09"],
       "goal": "The M8-07 material is a valid Listening test in the accepted content contract, labelled as temporary with its attribution, whose questions, answers and transcript match its audio.",
       "scope": [

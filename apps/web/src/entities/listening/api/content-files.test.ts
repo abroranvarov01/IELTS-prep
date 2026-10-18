@@ -28,9 +28,26 @@ const readJson = (file: string): unknown =>
 // A shipped test file may change only with a new content version, and a key
 // or transcript file only with a new revision (ADR-0012 §7, ADR-0008 §3).
 // When this fails: increase the number, then record the new fingerprint here.
-const FINGERPRINTS: Record<string, { number: number; sha256: string }> = {};
+const FINGERPRINTS: Record<string, { number: number; sha256: string }> = {
+  "temporary-voa-1.json": {
+    number: 1,
+    sha256: "8a25788a8f6d53d299805ee50f17099d4341d3ffefa7a009d430382b14a9e128",
+  },
+  "temporary-voa-1.key.json": {
+    number: 1,
+    sha256: "f115844fd770f96ee9db87bd78351c862e258043905cec0d58fdafe6dd12b643",
+  },
+  "temporary-voa-1.transcript.json": {
+    number: 1,
+    sha256: "5abec681612fe034bf7576de48f59c7d8c7eb2f3a4e9bf0c2ec98bdff3e25b88",
+  },
+};
 
 describe("Listening content files", () => {
+  it("exist", () => {
+    expect(testFiles.length).toBeGreaterThan(0);
+  });
+
   for (const file of testFiles) {
     describe(file, () => {
       const parsed = parseListeningTest(readJson(file));
