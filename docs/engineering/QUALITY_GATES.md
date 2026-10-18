@@ -26,6 +26,8 @@ Canonical owner of the **validation commands and deterministic enforcement**.
 | API docs (not a gate) | The running API (`pnpm --filter api dev`, port 3001) serves Swagger UI at `/docs` and the OpenAPI document at `/docs-json`, generated from the controllers and their classes, **only when `NODE_ENV` is not `production`** (ADR-0002 §5). The e2e tests check the document's contents | Exists |
 | Prisma Client | `pnpm --filter api db:generate` (also runs on install as `postinstall`). The client is generated into `apps/api/src/generated/` and not committed. Needs no database and no `DATABASE_URL` | Exists |
 
+**Owner-approved lint exceptions** (each an `eslint-disable-next-line` with its reason in the code; add none without the owner): `jsx-a11y/media-has-caption` on the two `<audio>` elements of `features/listening-player`, because a Listening test's captions are its transcript and would give the answers away (LISTENING_EXPERIENCE.md P4; owner, 2026-10-18). Transcripts for deaf or hard-of-hearing learners stay an open question (ACCESSIBILITY.md).
+
 **Agents must not claim that a check passed if they did not run it.** This table is the only canonical list of commands. Update it when a command changes.
 
 ## Future deterministic enforcement

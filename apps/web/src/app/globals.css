@@ -7,6 +7,57 @@
   background-image: var(--gradient-blush);
 }
 
+/* The player's range inputs (DESIGN_SYSTEM.md, M8: Player): a 4 px track,
+   the played part in the Listening color, a 20 px ink thumb with a white
+   ring. The native control stays underneath for keyboard and screen readers. */
+@utility player-slider {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+
+  &::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 9999px;
+    /* --played is the played share, set by the component. */
+    background: linear-gradient(
+      to right,
+      var(--color-skill-listening) var(--played, 0%),
+      var(--color-border-subtle) var(--played, 0%)
+    );
+  }
+  &::-moz-range-track {
+    height: 4px;
+    border-radius: 9999px;
+    background: var(--color-border-subtle);
+  }
+  &::-moz-range-progress {
+    height: 4px;
+    border-radius: 9999px;
+    background: var(--color-skill-listening);
+  }
+  &::-webkit-slider-thumb {
+    appearance: none;
+    margin-top: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 9999px;
+    background: var(--color-ink);
+    box-shadow: 0 0 0 2px var(--color-surface-base);
+  }
+  &::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--color-ink);
+    box-shadow: 0 0 0 2px var(--color-surface-base);
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+
 @layer base {
   html {
     background-color: var(--color-surface-base);

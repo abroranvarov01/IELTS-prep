@@ -164,7 +164,8 @@
     },
     "chooseSkill": "Koʻnikmani tanlang",
     "skills": {
-      "reading": "Oʻqish koʻnikmalarini rivojlantiring."
+      "reading": "Oʻqish koʻnikmalarini rivojlantiring.",
+      "listening": "Tinglash koʻnikmalarini rivojlantiring."
     },
     "nextAction": {
       "practiseReading": {
@@ -415,15 +416,101 @@
   "practice": {
     "title": "Mashq",
     "skill": {
-      "reading": "Oʻqish"
+      "reading": "Oʻqish",
+      "listening": "Tinglash"
     },
     "format": "{passages} ta matn · {questions} ta savol · taxminan {minutes} daqiqa",
     "state": {
       "notStarted": "Boshlanmagan",
       "inProgress": "Davom etmoqda · {mode}",
-      "finished": "Oxirgi natija: {total} tadan {score} tasi toʻgʻri"
+      "finished": "Oxirgi natija: {total} tadan {score} tasi toʻgʻri",
+      "finishedNoScore": "Yakunlangan"
     },
     "storageUnavailable": "Bu qurilmadagi natijalaringizni oʻqib boʻlmadi.",
-    "empty": "Hozircha mashq testlari yoʻq."
+    "empty": "Hozircha mashq testlari yoʻq.",
+    "formatListening": "{parts} ta qism · {questions} ta savol · taxminan {minutes} daqiqa"
+  },
+  "listening": {
+    "skipToQuestions": "Savollarga oʻtish",
+    "partOf": "{total} tadan {number}-qism",
+    "questionsRange": "{from}–{to}-savollar",
+    "player": {
+      "label": "Audio pleyer",
+      "play": "Ijro etish",
+      "pause": "Pauza",
+      "back": "{seconds} soniya orqaga",
+      "forward": "{seconds} soniya oldinga",
+      "position": "Yozuvdagi joy",
+      "valueText": "{total} dan {elapsed}",
+      "duration": "{minutes} daqiqa {seconds} soniya",
+      "speed": "Tezlik: {speed}",
+      "speedList": "Tezlik",
+      "loading": "Audio yuklanmoqda…",
+      "failed": "Audioni yuklab boʻlmadi.",
+      "retry": "Qayta urinish",
+      "ended": "{number}-qism tugadi",
+      "playAgain": "Qayta ijro etish"
+    },
+    "exam": {
+      "playing": "Yozuv: {number}-qism",
+      "volume": "Ovoz balandligi",
+      "deviceVolume": "Qurilmangizning ovoz tugmalaridan foydalaning."
+    },
+    "partStarted": "{number}-qism boshlandi.",
+    "goToPart": "{number}-qismga oʻtish",
+    "check": {
+      "announcement": "Yozuv tugadi. Javoblarni tekshirish uchun {minutes} daqiqangiz bor.",
+      "timer": "Tekshirish vaqti: {time}",
+      "warning": "30 soniya qoldi"
+    },
+    "mode": {
+      "practiceDetail": "Pauza, orqaga qaytarish va tezlikni tanlash. Vaqt cheklanmagan.",
+      "examDetail": "Yozuv bir marta toʻxtovsiz ijro etiladi, taxminan {minutes} daqiqa, keyin tekshirish uchun 2 daqiqa. Yordamsiz. Chiqib ketsangiz ham vaqt davom etadi."
+    },
+    "start": {
+      "audioSize": "Audio: taxminan {size} MB. Wi-Fi orqali yaxshiroq.",
+      "headphones": "Imkon boʻlsa, quloqchindan foydalaning.",
+      "unsupported": "Bu qurilma test audiosini ijro eta olmaydi."
+    },
+    "prepare": {
+      "title": "Audio tayyorlanmoqda",
+      "progress": "{total} MB dan {loaded} MB",
+      "ready": "Audio tayyor. Yozuv bir marta ijro etiladi va tugmani bosganingizda boshlanadi.",
+      "start": "Yozuvni boshlash",
+      "failed": "Audioni yuklab olib boʻlmadi. Internetni tekshirib, qayta urinib koʻring."
+    },
+    "resume": {
+      "title": "Testni davom ettirish",
+      "body": "Siz yoʻqligingizda yozuv davom etdi. U {part}-qism, {time} dan davom etadi.",
+      "continue": "Davom etish"
+    },
+    "exitExam": {
+      "body": "Siz yoʻqligingizda yozuv davom etadi."
+    },
+    "interrupted": {
+      "title": "Audio toʻxtadi",
+      "body": "Yozuv {part}-qism, {time} da toʻxtatildi, javoblaringiz saqlangan.",
+      "finish": "Qolgan qismisiz yakunlash"
+    },
+    "finished": {
+      "title": "Test yakunlandi",
+      "answered": "{total} ta savoldan {answered} tasiga javob berdingiz.",
+      "notChecked": "Javoblarni tekshirish va izohlar keyingi versiyada paydo boʻladi.",
+      "interrupted": "Yozuv uzilib qoldi, shuning uchun bu toʻliq imtihon boʻlmadi."
+    },
+    "navigator": {
+      "part": "{number}-qism",
+      "partProgress": "{number}-qism: {total} tadan {answered} tasiga javob berilgan"
+    },
+    "picture": {
+      "enlarge": "Rasmni kattalashtirish",
+      "zoomIn": "Yaqinlashtirish",
+      "zoomOut": "Uzoqlashtirish",
+      "close": "Yopish"
+    },
+    "temporary": {
+      "label": "Vaqtinchalik mashq testi",
+      "source": "Manba: {attribution}"
+    }
   }
 }

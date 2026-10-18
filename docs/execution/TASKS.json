@@ -4112,7 +4112,8 @@
       "title": "The audio player",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-10"],
       "goal": "The signature player loads, buffers and plays audio as approved in both modes, and is fully operable by keyboard and screen reader.",
       "scope": [

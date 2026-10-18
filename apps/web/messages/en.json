@@ -164,7 +164,8 @@
     },
     "chooseSkill": "Choose a skill",
     "skills": {
-      "reading": "Build your reading skills."
+      "reading": "Build your reading skills.",
+      "listening": "Build your listening skills."
     },
     "nextAction": {
       "practiseReading": {
@@ -415,15 +416,101 @@
   "practice": {
     "title": "Practice",
     "skill": {
-      "reading": "Reading"
+      "reading": "Reading",
+      "listening": "Listening"
     },
     "format": "{passages} passages · {questions} questions · about {minutes} minutes",
     "state": {
       "notStarted": "Not started",
       "inProgress": "In progress · {mode}",
-      "finished": "Last result: {score} of {total} correct"
+      "finished": "Last result: {score} of {total} correct",
+      "finishedNoScore": "Finished"
     },
     "storageUnavailable": "Your progress on this device can't be read.",
-    "empty": "No practice tests yet."
+    "empty": "No practice tests yet.",
+    "formatListening": "{parts} parts · {questions} questions · about {minutes} minutes"
+  },
+  "listening": {
+    "skipToQuestions": "Skip to the questions",
+    "partOf": "Part {number} of {total}",
+    "questionsRange": "Questions {from}–{to}",
+    "player": {
+      "label": "Audio player",
+      "play": "Play",
+      "pause": "Pause",
+      "back": "{seconds, plural, one {Back # second} other {Back # seconds}}",
+      "forward": "{seconds, plural, one {Forward # second} other {Forward # seconds}}",
+      "position": "Position in the recording",
+      "valueText": "{elapsed} of {total}",
+      "duration": "{minutes, plural, one {# minute} other {# minutes}} {seconds, plural, one {# second} other {# seconds}}",
+      "speed": "Speed: {speed}",
+      "speedList": "Speed",
+      "loading": "Loading the audio…",
+      "failed": "The audio couldn't load.",
+      "retry": "Try again",
+      "ended": "End of Part {number}",
+      "playAgain": "Play again"
+    },
+    "exam": {
+      "playing": "Recording: Part {number}",
+      "volume": "Volume",
+      "deviceVolume": "Use your device's volume buttons."
+    },
+    "partStarted": "Part {number} has started.",
+    "goToPart": "Go to Part {number}",
+    "check": {
+      "announcement": "The recording has ended. You have {minutes, plural, one {# minute} other {# minutes}} to check your answers.",
+      "timer": "Time to check: {time}",
+      "warning": "30 seconds left"
+    },
+    "mode": {
+      "practiceDetail": "Pause, go back and change the speed. No time limit.",
+      "examDetail": "The recording plays once without stopping, about {minutes} minutes, then 2 minutes to check. No help. The time keeps running if you leave."
+    },
+    "start": {
+      "audioSize": "Audio: about {size} MB. Wi-Fi is best.",
+      "headphones": "Use headphones if you can.",
+      "unsupported": "This device can't play the test's audio."
+    },
+    "prepare": {
+      "title": "Preparing the audio",
+      "progress": "{loaded} of {total} MB",
+      "ready": "The audio is ready. The recording plays once and starts when you tap the button.",
+      "start": "Start the recording",
+      "failed": "The audio couldn't be downloaded. Check your connection and try again."
+    },
+    "resume": {
+      "title": "Continue the test",
+      "body": "The recording kept going while you were away. It continues from Part {part}, {time}.",
+      "continue": "Continue"
+    },
+    "exitExam": {
+      "body": "The recording keeps going while you are away."
+    },
+    "interrupted": {
+      "title": "The audio stopped",
+      "body": "The recording is paused at Part {part}, {time}, and your answers are saved.",
+      "finish": "Finish without the rest"
+    },
+    "finished": {
+      "title": "Test finished",
+      "answered": "You answered {answered} of {total} questions.",
+      "notChecked": "Checking answers and explanations will come in a later version.",
+      "interrupted": "The recording was interrupted, so this was not a full exam sitting."
+    },
+    "navigator": {
+      "part": "Part {number}",
+      "partProgress": "Part {number}: {answered} of {total} answered"
+    },
+    "picture": {
+      "enlarge": "Enlarge picture",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "close": "Close"
+    },
+    "temporary": {
+      "label": "Temporary practice test",
+      "source": "Source: {attribution}"
+    }
   }
 }
