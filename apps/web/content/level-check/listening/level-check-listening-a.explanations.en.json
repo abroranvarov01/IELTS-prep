@@ -1,0 +1,646 @@
+{
+  "testId": "level-check-listening-a",
+  "version": 1,
+  "locale": "en",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s4"
+        },
+        {
+          "text": " Kaveh says "
+        },
+        {
+          "en": "I would go every day"
+        },
+        {
+          "text": ". The note says he went "
+        },
+        {
+          "en": "every"
+        },
+        {
+          "text": " ___, so the missing word is "
+        },
+        {
+          "en": "day"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kaveh went there "
+        },
+        {
+          "en": "every day"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "day"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s13"
+        },
+        {
+          "text": " Kaveh says the office "
+        },
+        {
+          "en": "used to be across from the cafeteria"
+        },
+        {
+          "text": ". The note uses the same words, so the gap is "
+        },
+        {
+          "en": "cafeteria"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "It "
+        },
+        {
+          "en": "used to be across from the cafeteria"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "cafeteria"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s14"
+        },
+        {
+          "text": " Kaveh says "
+        },
+        {
+          "en": "now it’s down in the basement"
+        },
+        {
+          "text": ". The note "
+        },
+        {
+          "en": "Now it is in the ___"
+        },
+        {
+          "text": " matches, so the gap is "
+        },
+        {
+          "en": "basement"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Now it is "
+        },
+        {
+          "en": "in the basement"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "basement"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s80"
+        },
+        {
+          "text": " Anna says "
+        },
+        {
+          "en": "the key to my apartment"
+        },
+        {
+          "text": ". So it is the key to her "
+        },
+        {
+          "en": "apartment"
+        },
+        {
+          "text": " (the British word "
+        },
+        {
+          "en": "flat"
+        },
+        {
+          "text": " is also accepted)."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna needs "
+        },
+        {
+          "en": "the key to my apartment"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "apartment"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s46"
+        },
+        {
+          "text": " Serenity says "
+        },
+        {
+          "en": "with a very important job"
+        },
+        {
+          "text": ". So she used to have a very important job: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". She talks about singing, but not as a career."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Serenity had "
+        },
+        {
+          "en": "a very important job"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "Serenity asks what Anna used to do to feel happy. At "
+        },
+        {
+          "at": "p1-s61"
+        },
+        {
+          "text": " Anna answers "
+        },
+        {
+          "en": "I used to sing … with my family"
+        },
+        {
+          "text": ": "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": ". Nobody mentions dancing or reading."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna "
+        },
+        {
+          "en": "used to sing … with my family"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p1-s85"
+        },
+        {
+          "text": " Anna says "
+        },
+        {
+          "en": "I left it in the ladies’ room"
+        },
+        {
+          "text": ". The ladies' room is option "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": ". She sings in elevators, but she does not say the key is there."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna says "
+        },
+        {
+          "en": "I left it in the ladies’ room"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s6"
+        },
+        {
+          "text": " the speaker says a microcredential is completed "
+        },
+        {
+          "en": "from a week to a month"
+        },
+        {
+          "text": ". The sentence uses the same words, so the gap is "
+        },
+        {
+          "en": "month"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "It takes "
+        },
+        {
+          "en": "from a week to a month"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "month"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s11"
+        },
+        {
+          "text": " the speaker says "
+        },
+        {
+          "en": "51 percent of colleges"
+        },
+        {
+          "text": " that offer microcredentials also give school credit. Write "
+        },
+        {
+          "en": "51 percent"
+        },
+        {
+          "text": " or "
+        },
+        {
+          "en": "51%"
+        },
+        {
+          "text": ": that is a number and one word, within the limit."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The report says "
+        },
+        {
+          "en": "51 percent"
+        },
+        {
+          "text": " of these colleges give credit. The answer is "
+        },
+        {
+          "en": "51 percent"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s22"
+        },
+        {
+          "text": " the speaker says Coursera has "
+        },
+        {
+          "en": "a yearly fee of $399"
+        },
+        {
+          "text": ". The sentence asks about the yearly membership, so the answer is "
+        },
+        {
+          "en": "399"
+        },
+        {
+          "text": ". The other price, "
+        },
+        {
+          "en": "$59"
+        },
+        {
+          "text": ", is the monthly fee."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The yearly fee is "
+        },
+        {
+          "en": "$399"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "399"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s2"
+        },
+        {
+          "text": " the speaker names "
+        },
+        {
+          "en": "the computer language … taught in the 1990s"
+        },
+        {
+          "text": ". So the answer is "
+        },
+        {
+          "en": "BASIC"
+        },
+        {
+          "text": ". Python and SQL are languages workers may need now."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The language from the 1990s is "
+        },
+        {
+          "en": "BASIC"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "BASIC"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s19"
+        },
+        {
+          "text": " the speaker says "
+        },
+        {
+          "en": "One example is Ukraine"
+        },
+        {
+          "text": ", which has the "
+        },
+        {
+          "en": "ReSkill UA"
+        },
+        {
+          "text": " initiative. So the answer is "
+        },
+        {
+          "en": "Ukraine"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The program "
+        },
+        {
+          "en": "ReSkill UA"
+        },
+        {
+          "text": " is in "
+        },
+        {
+          "en": "Ukraine"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "Ukraine"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s5"
+        },
+        {
+          "text": " the speaker says UNESCO defines a microcredential as one that "
+        },
+        {
+          "en": "learning outcomes in a narrow field"
+        },
+        {
+          "text": ". That is option "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". Nothing is said about several subjects or replacing a degree."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "A microcredential is about "
+        },
+        {
+          "en": "a narrow field"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "At "
+        },
+        {
+          "at": "p2-s21"
+        },
+        {
+          "text": " the speaker says providers "
+        },
+        {
+          "en": "use the materials for free"
+        },
+        {
+          "text": ", but "
+        },
+        {
+          "en": "payment is required"
+        },
+        {
+          "text": " to earn a certification. So the free part is the course materials: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Learners can "
+        },
+        {
+          "en": "use the materials for free"
+        },
+        {
+          "text": ". The answer is "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  }
+}

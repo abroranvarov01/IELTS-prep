@@ -591,6 +591,15 @@ Within the approved M7 model ([LEVEL_CHECK.md](LEVEL_CHECK.md), D1–D14), which
 - **Review after the section:** the M9 review above, with the excerpt and the transcript (the section is finished, so nothing leaks).
 - **Existing Reading results stay valid** (M9-12 tests it): nothing in the Reading section, its records or its versions changes.
 
+**The form as built (M9-12, 2026-10-18):** `level-check-listening-a`, version 1, `temporary: true`, in `apps/web/content/level-check/listening/` (kept apart from the Reading forms and the Listening tests), with its media in `public/media/listening/level-check-listening-a/`. Question types: note completion and multiple choice (recording 1); sentence completion, short answer and multiple choice (recording 2). Questions, key and explanations written by Claude (`aiDraft`), checked against the audio as M8-08 did (whisper.cpp word timestamps: 550 of 570 transcript words matched in recording 1, 458 of 473 in recording 2; every key quote heard in its segment, 145 of 147 words). No silence is added: the learner reads before tapping Play.
+
+| Recording | Format role | VOA item | Speakers | Length | Source MP3 (128 kbps), sha256 |
+|---|---|---|---|---|---|
+| 1 | Everyday conversation | Let's Learn English Level 2, Lesson 16: "Find Your Joy!" (https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-16/4198066.html): Anna loses her key and walks into the wrong office | Anna, Kaveh, Serenity, a worker; Professor Bot | 4:41 | `voa-audio.voanews.eu/vle/2018/01/10/95f0ce1f-6cfd-44e4-b83a-e225d7cb0224_hq.mp3`, `5b56f0a7…b0466c` |
+| 2 | Talk on an educational subject | Education Tips: "Learn New Skills with Microcredentials" (https://learningenglish.voanews.com/a/learn-new-skills-with-microcredentials-/7908673.html), written by Jill Robbins from Coursera, UNESCO and university sources | John Russell | 4:45 | `voa-audio.voanews.eu/vle/2025/01/07/191de2c9-f532-4ac6-bfb3-4c2a26adcc0b_hq.mp3`, `922b74c7…865478` |
+
+Both are VOA's own productions with no agency credit or text, under the terms recorded in M8-07, with the same attribution; downloaded with the owner's approval (2026-10-18). Lesson 16's soundtrack has a line VOA's transcript leaves out (a worker: "These signs are wrong. There. That's better."), which the transcript includes; the microcredentials article's three headings are not read aloud and are left out.
+
 ### Decisions for M9-04
 
 Each with its options and a recommendation. Rules marked **policy** have no official source.

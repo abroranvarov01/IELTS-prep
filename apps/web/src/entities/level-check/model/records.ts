@@ -26,6 +26,13 @@ export type FinishedSection = {
   startedAt: number;
   finishedAt: number;
   answers: Record<string, Answer>;
+  /**
+   * Listening only (LD20, ADR-0014 §7): the learner's pauses (including
+   * leaving while the audio played) and the playback stops the learner did
+   * not make. Absent on Reading attempts.
+   */
+  pauses?: number;
+  interruptions?: number;
 };
 
 export type LevelCheckAttempt = FinishedSection & {
@@ -90,6 +97,10 @@ export function parseLevelCheckAttempt(
     return invalid;
   const answers = parseAnswers(a.answers);
   if (!answers) return invalid;
+  for (const count of [a.pauses, a.interruptions])
+    if (count !== undefined && !isCount(count)) return invalid;
+  if (a.skill !== "listening" && (a.pauses ?? a.interruptions) !== undefined)
+    return invalid;
   return {
     kind: "valid",
     value: {
@@ -100,6 +111,10 @@ export function parseLevelCheckAttempt(
       startedAt: a.startedAt,
       finishedAt: a.finishedAt,
       answers,
+      ...(a.pauses !== undefined && { pauses: a.pauses as number }),
+      ...(a.interruptions !== undefined && {
+        interruptions: a.interruptions as number,
+      }),
       timeTakenMs: a.timeTakenMs as number,
       committedAt: a.committedAt,
     },
@@ -227,6 +242,10 @@ function parseAnswers(value: unknown): Record<string, Answer> | undefined {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isCount(value: unknown): value is number {
+  return Number.isInteger(value) && (value as number) >= 0;
 }
 
 function isTime(value: unknown): value is number {

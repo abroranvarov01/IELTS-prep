@@ -61,14 +61,17 @@ const MARK_ICON: Record<OptionMark, Outcome> = {
 
 /**
  * "Question 5 of 40" (or "Questions 18–19") with the unit's outcome as icon
- * and word, so focusing the heading announces the outcome.
+ * and word, so focusing the heading announces the outcome. `total` is the
+ * test's or the level-check form's number of questions.
  */
 export function ReviewHeading({
   card,
+  total,
   headingRef,
   progress,
 }: {
   card: Card;
+  total: number;
   headingRef: RefObject<HTMLHeadingElement | null>;
   progress?: string;
 }) {
@@ -87,7 +90,7 @@ export function ReviewHeading({
               from: unit.numbers[0] ?? 0,
               to: unit.numbers.at(-1) ?? 0,
             })
-          : t("question.of", { number: unit.key, total: 40 })}
+          : t("question.of", { number: unit.key, total })}
         <span className="mt-1 flex items-center gap-2 text-body">
           <OutcomeIcon outcome={outcome} />
           {outcome === "partlyCorrect"

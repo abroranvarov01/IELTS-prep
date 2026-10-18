@@ -55,7 +55,7 @@ File names: React components in PascalCase (`AnswerControl.tsx`), every other mo
 - `index.ts` names what it exports (no `export *`) and exports only what another slice uses today.
 - Inside a slice, files import each other relatively, never through their own `index.ts` (that would be a cycle).
 - `shared` has no slices: its modules are imported by path, for example `@/shared/ui/PrimaryLink` or `@/shared/i18n/routing`, so a client component or the proxy loads only what it uses.
-- Examples: the results route imports `readingKey` from `@/entities/reading/keys.server`; the test route imports `readingTest` from `@/entities/reading/content.server` and never the keys (ADR-0008 §2); the level-check routes import the form, and the result and review routes its key and explanations, from `@/entities/reading/forms.server`; a view imports `apply` from `@/entities/reading`, never from `@/entities/reading/model/session`.
+- Examples: the results route imports `readingKey` from `@/entities/reading/keys.server`; the test route imports `readingTest` from `@/entities/reading/content.server` and never the keys (ADR-0008 §2); the level-check routes import the form, and the result and review routes its key and explanations, from `@/entities/reading/forms.server`; the Listening section's routes do the same from `@/entities/listening/forms.server` (its key with the transcript it pins); a view imports `apply` from `@/entities/reading`, never from `@/entities/reading/model/session`.
 
 ### Next.js routing
 

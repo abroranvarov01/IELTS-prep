@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
   type ReactNode,
   useEffect,
@@ -8,12 +8,18 @@ import {
   useSyncExternalStore,
 } from "react";
 import {
-  type SectionState,
+  type LevelCheckState,
+  type Skill,
   setLevelCheckSectionState,
 } from "@/entities/level-check";
 import {
+  type ListeningTest,
+  groupNumbers,
+  saveSession as saveListeningSession,
+  startCheckSession,
+} from "@/entities/listening";
+import {
   type ReadingTest,
-  answeredNumbers,
   deviceStorage,
   newSessionId,
   positionCount,
@@ -21,98 +27,120 @@ import {
   startSession,
 } from "@/entities/reading";
 import { useRouter } from "@/shared/i18n/navigation";
-import { InfoIcon, LineIcon, ReadingIcon } from "@/shared/ui/icons";
+import {
+  InfoIcon,
+  LineIcon,
+  ListeningIcon,
+  ReadingIcon,
+} from "@/shared/ui/icons";
 import { PRIMARY_ACTION } from "@/shared/ui/primary-action";
 import { PictureStage } from "@/shared/ui/StatusMessage";
+import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { SkillsPicture } from "@/shared/ui/SkillsPicture";
-import { type DeviceState, loadDeviceState } from "../api/load-state";
+import { type DeviceState, loadDeviceStates } from "../api/load-state";
 
 const noSubscription = () => () => {};
+const SKILLS: Skill[] = ["reading", "listening"];
+/** When the learner clicked, in ms since the epoch (it starts or opens a visit). */
+const clickTime = (event: { timeStamp: number }) =>
+  Math.round(performance.timeOrigin + event.timeStamp);
+const QUIET_LINK_BUTTON =
+  "inline-flex min-h-12 items-center font-medium underline underline-offset-4";
+
+/** English words inside a localized string (`<en>…</en>` in the catalogs). */
+const en = (chunks: ReactNode) => <span lang="en">{chunks}</span>;
 
 /**
- * The level check's intro (USER_FLOWS.md, Level check flows (M7);
- * DESIGN_SYSTEM.md, M7 components): what the check covers, the honest line
- * and one red action, in the form the device's state asks for: start,
- * continue (with "Start over") or take it again. The cookie's state chooses
- * the first render; the device, read after mounting, decides.
+ * The level check's intro (USER_FLOWS.md, The level check with two
+ * sections; DESIGN_SYSTEM.md, Level check: two sections): the two sections
+ * as rows with their facts and state, the Listening row's notes, the honest
+ * line, one red action for the first section not finished (Reading first,
+ * owner decision F1) and the other section's action as a quiet link. The
+ * cookie's states choose the first render; the device, read after
+ * mounting, decides.
  */
 export function LevelCheckIntro({
-  form,
+  reading,
+  listening,
   cookieState,
   academicNote,
 }: {
-  form: ReadingTest;
-  cookieState: SectionState;
+  reading: ReadingTest;
+  listening: ListeningTest;
+  cookieState: LevelCheckState;
   /** The learner's goal is General Training: the texts are Academic-style. */
   academicNote: boolean;
 }) {
   const t = useTranslations("levelCheck");
-  const tCommon = useTranslations();
-  const formatter = useFormatter();
+  const tRoot = useTranslations();
   const router = useRouter();
-  const [device, setDevice] = useState<DeviceState>();
+  const [device, setDevice] = useState<Record<Skill, DeviceState>>();
   // Storage is read on the client only; the server assumes it can save.
   const canSave = useSyncExternalStore(
     noSubscription,
     () => deviceStorage() !== undefined,
     () => true,
   );
-  const total = positionCount(form);
 
   useEffect(() => {
     let active = true;
-    loadDeviceState(form).then(
-      (state) => {
-        if (active) setDevice(state);
+    loadDeviceStates(reading, listening).then(
+      (states) => {
+        if (active) setDevice(states);
       },
-      () => {
-        if (active) setDevice({ kind: "notStarted" });
-      },
+      () => undefined,
     );
     return () => {
       active = false;
     };
-  }, [form]);
+  }, [reading, listening]);
 
-  // Until the device is read, the cookie's state stands in (never the score).
-  const kind =
-    device?.kind ??
-    (cookieState === "inProgress"
+  // Until the device is read, the cookie's states stand in.
+  const stateOf = (skill: Skill): DeviceState["kind"] =>
+    device?.[skill].kind ??
+    (cookieState[skill] === "inProgress"
       ? "inProgress"
-      : cookieState === "done"
+      : cookieState[skill] === "done"
         ? "finished"
         : "notStarted");
+  const unfinished = SKILLS.filter((skill) => stateOf(skill) !== "finished");
+  const lead = unfinished[0];
+  const otherSkill = unfinished[1];
 
-  const start = () => {
-    const session = startSession(form, "practice", Date.now(), newSessionId());
-    saveSession(deviceStorage(), session);
-    setLevelCheckSectionState("reading", "inProgress")
+  const start = (skill: Skill, now: number) => {
+    if (skill === "reading")
+      saveSession(
+        deviceStorage(),
+        startSession(reading, "practice", now, newSessionId()),
+      );
+    else
+      saveListeningSession(
+        deviceStorage(),
+        listening,
+        startCheckSession(listening, now, newSessionId()),
+      );
+    setLevelCheckSectionState(skill, "inProgress")
       .catch(() => undefined)
-      .finally(() => router.push(`/level-check/reading?start=${Date.now()}`));
+      .finally(() => router.push(`/level-check/${skill}?start=${now}`));
   };
+  // A section in progress is resumed; any other is started.
+  const enter = (skill: Skill, now: number) => {
+    if (stateOf(skill) === "inProgress")
+      router.push(`/level-check/${skill}?resume=${now}`);
+    else start(skill, now);
+  };
+  const actionLabel = (skill: Skill) =>
+    stateOf(skill) === "inProgress"
+      ? t(`continue.${skill}`)
+      : t(`startSection.${skill}`);
 
-  const facts = (
-    <ul className="mt-4 flex flex-col gap-2">
-      <Fact icon={<ReadingIcon />}>
-        {t("intro.covers", {
-          passages: form.passages.length,
-          questions: total,
-        })}
-      </Fact>
-      <Fact icon={<ClockIcon />}>
-        {t("intro.time", { minutes: form.durationMinutes })}
-      </Fact>
-      <Fact icon={<DeviceIcon />}>{t("intro.saved")}</Fact>
-    </ul>
-  );
-  const notes = (
-    <div className="mt-4 flex flex-col gap-2">
-      <Note>{t("intro.honest")}</Note>
-      {academicNote && <Note>{t("intro.academicNote")}</Note>}
-      {!canSave && <Note>{t("intro.storageUnavailable")}</Note>}
-    </div>
-  );
+  const total = {
+    reading: positionCount(reading),
+    listening: listening.parts.flatMap((p) =>
+      p.questionGroups.flatMap(groupNumbers),
+    ).length,
+  };
   const arrow = (
     <LineIcon className="size-4">
       <path d="M2.75 8h10.5M9 3.75 13.25 8 9 12.25" />
@@ -121,122 +149,121 @@ export function LevelCheckIntro({
 
   return (
     <PictureStage picture={(size) => <SkillsPicture size={size} />}>
-      {kind === "inProgress" ? (
-        <>
-          <h1 className="text-heading-1 font-extrabold">{t("resume.title")}</h1>
-          {device?.kind === "inProgress" && (
-            <ResumeProgress
-              answered={answeredNumbers(device.session, form).size}
-              total={total}
-            />
-          )}
-          {!canSave && (
-            <div className="mt-4">
-              <Note>{t("intro.storageUnavailable")}</Note>
-            </div>
-          )}
-          <div className="mt-6 desktop:mt-8">
-            <button
-              type="button"
-              onClick={() =>
-                router.push(`/level-check/reading?resume=${Date.now()}`)
-              }
-              className={PRIMARY_ACTION}
+      <h1 className="text-heading-1 font-extrabold">{t("title")}</h1>
+      <ul className="mt-4 flex flex-col">
+        {SKILLS.map((skill, i) => {
+          const state = device?.[skill];
+          return (
+            <li
+              key={skill}
+              className={`flex items-start gap-3 py-4 ${i > 0 ? "border-t border-border-subtle" : ""}`}
             >
-              <span className="inline-flex items-center gap-2">
-                {t("resume.continue")}
-                {arrow}
+              <span
+                className={`mt-[0.125rem] ${skill === "reading" ? "text-brand-primary" : "text-skill-listening"}`}
+              >
+                {skill === "reading" ? <ReadingIcon /> : <ListeningIcon />}
               </span>
-            </button>
-          </div>
-          <div className="mt-2">
-            <button
-              type="button"
-              onClick={start}
-              className="inline-flex min-h-12 items-center font-medium underline underline-offset-4"
-            >
-              {t("resume.startOver")}
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <h1 className="text-heading-1 font-extrabold">{t("title")}</h1>
-          {facts}
-          {notes}
-          {kind === "finished" && device?.kind === "finished" && (
-            <div className="mt-2 flex flex-col gap-2">
-              <Note>
-                {t("retake.body", {
-                  date: formatter.dateTime(new Date(device.finishedAt), {
-                    dateStyle: "long",
-                  }),
-                  level:
-                    device.level === undefined ||
-                    device.level === "insufficient"
-                      ? "—"
-                      : t(`levels.${device.level}`),
-                })}
-              </Note>
-              <Note>{t("retake.sameQuestions")}</Note>
-            </div>
-          )}
-          <div className="mt-6 desktop:mt-8">
-            <button type="button" onClick={start} className={PRIMARY_ACTION}>
-              <span className="inline-flex items-center gap-2">
-                {kind === "finished" ? t("retake.start") : t("intro.start")}
-                {arrow}
-              </span>
-            </button>
-          </div>
-          <div className="mt-2">
-            {kind === "finished" ? (
-              <QuietLink href="/level-check/result">
-                {tCommon("home.nextAction.seeStartingPoint")}
-              </QuietLink>
-            ) : (
-              <QuietLink href="/">{tCommon("onboarding.notNow")}</QuietLink>
-            )}
-          </div>
-        </>
-      )}
-    </PictureStage>
-  );
-}
-
-/** "You answered 6 of 14 questions…" with a decorative bar of the answered share. */
-function ResumeProgress({
-  answered,
-  total,
-}: {
-  answered: number;
-  total: number;
-}) {
-  const t = useTranslations("levelCheck");
-  return (
-    <>
-      <p className="mt-2 text-text-secondary">
-        {t("resume.body", { answered, total })}
-      </p>
-      <div
-        aria-hidden="true"
-        className="mt-3 h-1 max-w-[16rem] overflow-hidden rounded-full bg-border-subtle"
-      >
-        <div
-          className="h-full rounded-full bg-brand-primary"
-          style={{ width: `${(answered / total) * 100}%` }}
-        />
+              <div className="flex-1">
+                <p>{t(`sections.${skill}`)}</p>
+                <p className="mt-1 text-meta text-text-secondary">
+                  {stateOf(skill) === "finished"
+                    ? t("sections.finished")
+                    : stateOf(skill) === "inProgress"
+                      ? t("sections.inProgress", {
+                          answered:
+                            state?.kind === "inProgress" ? state.answered : 0,
+                          total: total[skill],
+                        })
+                      : t("sections.notStarted")}
+                </p>
+                {state?.kind === "inProgress" && (
+                  <div
+                    aria-hidden="true"
+                    className="mt-2 h-1 max-w-[16rem] overflow-hidden rounded-full bg-border-subtle"
+                  >
+                    <div
+                      className="h-full rounded-full bg-brand-primary"
+                      style={{
+                        width: `${(state.answered / total[skill]) * 100}%`,
+                      }}
+                    />
+                  </div>
+                )}
+                {skill === "listening" && (
+                  <div className="mt-3 flex flex-col gap-2">
+                    <Note>{t("listening.playsOnce")}</Note>
+                    <Note>{tRoot("listening.start.headphones")}</Note>
+                    <Note>{t("listening.temporaryAudio")}</Note>
+                    <Note>
+                      {tRoot.rich("listening.start.dateFormat", { en })}
+                    </Note>
+                  </div>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <div className="mt-2 flex flex-col gap-2">
+        <Note>{t("intro.saved")}</Note>
+        <Note>{t("intro.honest")}</Note>
+        {academicNote && <Note>{t("intro.academicNote")}</Note>}
+        {!canSave && <Note>{t("intro.storageUnavailable")}</Note>}
       </div>
-    </>
-  );
-}
-
-function Fact({ icon, children }: { icon: ReactNode; children: ReactNode }) {
-  return (
-    <li className="flex items-start gap-3">
-      <span className="mt-[0.125rem] text-text-secondary">{icon}</span>
-      <span>{children}</span>
-    </li>
+      <div className="mt-6 desktop:mt-8">
+        {lead ? (
+          <button
+            type="button"
+            onClick={(event) => enter(lead, clickTime(event))}
+            className={PRIMARY_ACTION}
+          >
+            <span className="inline-flex items-center gap-2">
+              {actionLabel(lead)}
+              {arrow}
+            </span>
+          </button>
+        ) : (
+          <PrimaryLink href="/level-check/result">
+            {tRoot("home.nextAction.seeStartingPoints")}
+          </PrimaryLink>
+        )}
+      </div>
+      <div className="mt-2 flex flex-col items-start">
+        {otherSkill && (
+          <button
+            type="button"
+            className={QUIET_LINK_BUTTON}
+            onClick={(event) => enter(otherSkill, clickTime(event))}
+          >
+            {actionLabel(otherSkill)}
+          </button>
+        )}
+        {lead && stateOf(lead) === "inProgress" && (
+          <button
+            type="button"
+            className={QUIET_LINK_BUTTON}
+            onClick={(event) => start(lead, clickTime(event))}
+          >
+            {t("resume.startOver")}
+          </button>
+        )}
+        {SKILLS.every((skill) => stateOf(skill) === "notStarted") && (
+          <QuietLink href="/">{tRoot("onboarding.notNow")}</QuietLink>
+        )}
+        {SKILLS.filter((skill) => stateOf(skill) === "finished").map(
+          (skill) => (
+            <button
+              type="button"
+              className={QUIET_LINK_BUTTON}
+              key={skill}
+              onClick={(event) => start(skill, clickTime(event))}
+            >
+              {t(`startSection.${skill}`)}
+            </button>
+          ),
+        )}
+      </div>
+    </PictureStage>
   );
 }
 
@@ -246,23 +273,5 @@ function Note({ children }: { children: ReactNode }) {
       <InfoIcon />
       <span>{children}</span>
     </p>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <LineIcon className="size-[1.25rem]">
-      <circle cx="8" cy="8" r="6.25" />
-      <path d="M8 4.5V8l2.5 1.75" />
-    </LineIcon>
-  );
-}
-
-function DeviceIcon() {
-  return (
-    <LineIcon className="size-[1.25rem]">
-      <rect x="4.25" y="1.75" width="7.5" height="12.5" rx="1.5" />
-      <path d="M7 12h2" />
-    </LineIcon>
   );
 }

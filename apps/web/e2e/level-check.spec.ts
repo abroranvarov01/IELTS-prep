@@ -7,8 +7,9 @@ import { routing } from "../src/shared/i18n/routing";
 import { saveGoal } from "./goal";
 import { choose } from "./reading";
 
-// The level check (USER_FLOWS.md, Level check flows (M7)): the intro, the
-// Reading section on the form, leaving and resuming. Finishing and the result
+// The level check (USER_FLOWS.md, Level check flows (M7), and the intro with
+// two sections (M9)): the intro, the Reading section on the form, leaving
+// and resuming. Finishing and the result
 // are covered with the result page (M7-10, M7-11).
 
 const catalogs = { uz, ru, en };
@@ -30,7 +31,7 @@ async function startCheck(page: Page, locale: keyof typeof catalogs = "en") {
   const messages = catalogs[locale];
   await page.goto(`/${locale}/level-check`);
   await page
-    .getByRole("button", { name: messages.levelCheck.intro.start })
+    .getByRole("button", { name: messages.levelCheck.startSection.reading })
     .click();
   await expect(page).toHaveURL(/\/level-check\/reading\?start=\d+$/);
   await expect(page.locator("#question-heading:visible")).toHaveText(
@@ -59,13 +60,16 @@ for (const locale of routing.locales) {
           name: messages.levelCheck.title,
         }),
       ).toBeVisible();
+      // Both sections, each with its facts and its state.
+      for (const skill of ["reading", "listening"] as const)
+        await expect(
+          page.getByText(messages.levelCheck.sections[skill]),
+        ).toBeVisible();
       await expect(
-        page.getByText(
-          fill(messages.levelCheck.intro.covers, {
-            passages: 2,
-            questions: 14,
-          }),
-        ),
+        page.getByText(messages.levelCheck.sections.notStarted),
+      ).toHaveCount(2);
+      await expect(
+        page.getByText(messages.levelCheck.listening.temporaryAudio),
       ).toBeVisible();
       await expect(
         page.getByText(messages.levelCheck.intro.honest),
@@ -75,7 +79,9 @@ for (const locale of routing.locales) {
         page.getByText(messages.levelCheck.intro.academicNote),
       ).toBeVisible();
       await expect(
-        page.getByRole("button", { name: messages.levelCheck.intro.start }),
+        page.getByRole("button", {
+          name: messages.levelCheck.startSection.reading,
+        }),
       ).toBeVisible();
       await page
         .getByRole("link", { name: messages.onboarding.notNow })
@@ -86,7 +92,9 @@ for (const locale of routing.locales) {
     test("has no WCAG 2.2 AA violations", async ({ page }) => {
       await page.goto(`/${locale}/level-check`);
       await expect(
-        page.getByRole("button", { name: messages.levelCheck.intro.start }),
+        page.getByRole("button", {
+          name: messages.levelCheck.startSection.reading,
+        }),
       ).toBeVisible();
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
@@ -101,7 +109,9 @@ for (const locale of routing.locales) {
         await page.setViewportSize({ width, height: 800 });
         await page.goto(`/${locale}/level-check`);
         await expect(
-          page.getByRole("button", { name: messages.levelCheck.intro.start }),
+          page.getByRole("button", {
+            name: messages.levelCheck.startSection.reading,
+          }),
         ).toBeVisible();
         const overflow = await page.evaluate(
           () =>
@@ -189,20 +199,19 @@ test("leaving keeps the answers on the device; Home and the intro offer to conti
     await page.evaluate((key) => localStorage.getItem(key), `reading:${FORM}`),
   ).toContain('"TRUE"');
 
-  // Home's card continues the check; the intro's in-progress form too.
+  // Home's card continues the check; the intro's Reading row too.
   await expect(
     page.getByRole("heading", { level: 2, name: en.levelCheck.resume.title }),
   ).toBeVisible();
   await page.getByRole("link", { name: en.levelCheck.resume.continue }).click();
   await expect(page).toHaveURL("/en/level-check");
   await expect(
-    page.getByRole("heading", { level: 1, name: en.levelCheck.resume.title }),
-  ).toBeVisible();
-  await expect(
-    page.getByText(fill(en.levelCheck.resume.body, { answered: 1, total: 14 })),
+    page.getByText(
+      fill(en.levelCheck.sections.inProgress, { answered: 1, total: 14 }),
+    ),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: en.levelCheck.resume.continue })
+    .getByRole("button", { name: en.levelCheck.continue.reading })
     .click();
   await expect(page).toHaveURL(/\/en\/level-check\/reading\?resume=\d+$/);
   await expect(page.locator("#question-heading:visible")).toHaveText(
@@ -440,15 +449,16 @@ test("'See your answers' opens the review of the check's attempt, and the result
   await expect(page).toHaveURL(/\/en\/level-check\/result/);
   await expect(page.getByText(en.levelCheck.levels[2])).toBeVisible();
 
-  // The intro now offers to take it again, naming the starting point.
+  // The intro now shows Reading as finished, offers Listening first and
+  // Reading again as a quiet action.
   await page.goto("/en/level-check");
+  await expect(page.getByText(en.levelCheck.sections.finished)).toBeVisible();
   await expect(
-    page.getByRole("button", { name: en.levelCheck.retake.start }),
+    page.getByRole("button", { name: en.levelCheck.startSection.listening }),
   ).toBeVisible();
   await expect(
-    page.getByText(en.levelCheck.retake.sameQuestions),
+    page.getByRole("button", { name: en.levelCheck.startSection.reading }),
   ).toBeVisible();
-  await expect(page.getByText(/On the way/)).toBeVisible();
 });
 
 test("the result page with nothing finished on this device says so", async ({

@@ -124,7 +124,9 @@ for (const locale of routing.locales) {
     await expect(page.getByText(m.levelCheck.intro.honest)).toBeVisible();
     await expect(page.getByText(m.levelCheck.intro.academicNote)).toBeVisible();
     expect((await axe(page)).violations).toEqual([]);
-    await page.getByRole("button", { name: m.levelCheck.intro.start }).click();
+    await page
+      .getByRole("button", { name: m.levelCheck.startSection.reading })
+      .click();
     await expect(ui.questionHeading(1)).toBeVisible();
     await expect(
       page.getByRole("button", { name: m.reading.flag.add }),
@@ -140,12 +142,12 @@ for (const locale of routing.locales) {
       .click();
     await expect(
       page.getByText(
-        fill(m.levelCheck.resume.body, { answered: 1, total: 14 }),
+        fill(m.levelCheck.sections.inProgress, { answered: 1, total: 14 }),
       ),
     ).toBeVisible();
     await answerMoreOnTheDevice(page);
     await page
-      .getByRole("button", { name: m.levelCheck.resume.continue })
+      .getByRole("button", { name: m.levelCheck.continue.reading })
       .click();
     await expect(ui.questionHeading(1)).toBeVisible();
 
@@ -184,10 +186,10 @@ for (const locale of routing.locales) {
 
     // Taking it again starts a fresh section; the earlier result stands.
     await page.getByRole("link", { name: m.levelCheck.retake.start }).click();
-    await expect(
-      page.getByText(m.levelCheck.retake.sameQuestions),
-    ).toBeVisible();
-    await page.getByRole("button", { name: m.levelCheck.retake.start }).click();
+    await expect(page.getByText(m.levelCheck.sections.finished)).toBeVisible();
+    await page
+      .getByRole("button", { name: m.levelCheck.startSection.reading })
+      .click();
     await expect(ui.questionHeading(1)).toBeVisible();
     await expect(
       page.getByRole("radio", { name: "TRUE" }).first(),
@@ -214,7 +216,9 @@ test("a device that keeps nothing still runs the check in the tab and shows the 
   await expect(
     page.getByText(m.levelCheck.intro.storageUnavailable),
   ).toBeVisible();
-  await page.getByRole("button", { name: m.levelCheck.intro.start }).click();
+  await page
+    .getByRole("button", { name: m.levelCheck.startSection.reading })
+    .click();
   await expect(ui.questionHeading(1)).toBeVisible();
   await expect(page.getByRole("status")).toHaveText(
     m.reading.storage.unavailable,
@@ -247,7 +251,9 @@ test.describe("with reduced motion", () => {
     );
     await page.goto("/en/level-check");
     await page
-      .getByRole("button", { name: catalogs.en.levelCheck.intro.start })
+      .getByRole("button", {
+        name: catalogs.en.levelCheck.startSection.reading,
+      })
       .click();
     const sheet = page.getByRole("region", {
       name: catalogs.en.reading.sheet.label,
@@ -267,7 +273,7 @@ test("the keyboard reaches the intro's action after the skip link, the logo and 
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/en/level-check");
   const start = page.getByRole("button", {
-    name: catalogs.en.levelCheck.intro.start,
+    name: catalogs.en.levelCheck.startSection.reading,
   });
   await expect(start).toBeVisible();
   for (let i = 0; i < 8; i++) {
@@ -275,6 +281,13 @@ test("the keyboard reaches the intro's action after the skip link, the logo and 
     if (await start.evaluate((e) => e === document.activeElement)) break;
   }
   await expect(start).toBeFocused();
+  // Then the other section's quiet action and "Not now".
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("button", {
+      name: catalogs.en.levelCheck.startSection.listening,
+    }),
+  ).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
     page.getByRole("link", { name: catalogs.en.onboarding.notNow }),

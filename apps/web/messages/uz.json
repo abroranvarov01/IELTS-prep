@@ -145,6 +145,20 @@
       "none": {
         "title": "Bu qurilmada hali boshlangʻich nuqta yoʻq",
         "body": "Natija shu qurilmada tekshiruvni yakunlaganingizdan keyin shu yerda paydo boʻladi."
+      },
+      "titleListening": "Listening boʻyicha boshlangʻich nuqtangiz",
+      "listeningRough": "Buni taxminiy boshlangʻich nuqta deb biling: Listening darajalari dastlabki chegaralar boʻyicha hisoblangan va bu kalibrlangan IELTS bali emas.",
+      "notComparable": "Reading va Listening darajalari alohida shkalalarda, shuning uchun ularni bir-biri bilan solishtirib boʻlmaydi.",
+      "withPauses": "<strong>Pauzalar bilan yakunlandi.</strong> Siz yozuvni pauza qildingiz, shuning uchun bu bir marta tinglanadigan tekshiruv boʻlmadi.",
+      "playbackInterrupted": "Audio siz pauza qilganingiz uchun emas, ijro muammosi tufayli toʻxtadi.",
+      "titleBoth": "Boshlangʻich nuqtalaringiz",
+      "practiseListening": "Listening mashq qilish",
+      "practiseAnyListening": "Har qanday Listening mashqi yaxshi keyingi qadam.",
+      "seeAnswersListening": "Listening javoblarini koʻrish",
+      "retakeListening": "Listening tekshiruvini qayta topshirish",
+      "otherSection": {
+        "reading": "Reading boʻyicha darajangizni ham aniqlash",
+        "listening": "Listening boʻyicha darajangizni ham aniqlash"
       }
     },
     "levels": {
@@ -156,7 +170,34 @@
       "trueFalseNotGiven": "<en>True / False / Not Given</en> savollari",
       "matchingHeadings": "sarlavhalarni moslashtirish (<en>matching headings</en>)",
       "sentenceCompletion": "gaplarni toʻldirish (<en>sentence completion</en>)",
-      "multipleChoice": "javobni tanlash (<en>multiple choice</en>)"
+      "multipleChoice": "javobni tanlash (<en>multiple choice</en>)",
+      "formCompletion": "formani toʻldirish (<en>form completion</en>)",
+      "noteCompletion": "qaydlarni toʻldirish (<en>note completion</en>)",
+      "matching": "moslashtirish (<en>matching</en>)",
+      "shortAnswer": "qisqa javoblar (<en>short answers</en>)"
+    },
+    "sections": {
+      "reading": "Reading · 2 ta qisqa matn · 14 ta savol · taxminan 15 daqiqa",
+      "listening": "Listening · 2 ta qisqa yozuv · 14 ta savol · taxminan 15 daqiqa",
+      "notStarted": "Boshlanmagan",
+      "inProgress": "Davom etmoqda: {total} tadan {answered} tasiga javob berilgan",
+      "finished": "Yakunlangan"
+    },
+    "startSection": {
+      "reading": "Reading boʻlimini boshlash",
+      "listening": "Listening boʻlimini boshlash"
+    },
+    "continue": {
+      "reading": "Reading boʻlimini davom ettirish",
+      "listening": "Listening boʻlimini davom ettirish"
+    },
+    "listening": {
+      "playsOnce": "Har bir yozuv bir marta ijro etiladi. Uni pauza qilish mumkin.",
+      "recordingOf": "{total} tadan {number}-yozuv",
+      "play": "Yozuvni ijro etish",
+      "continue": "Davom etish",
+      "ended": "{number}-yozuv tugadi",
+      "temporaryAudio": "Bu tekshiruvda vaqtinchalik yozuvlar ishlatiladi: ularda nutq sekinroq va faqat Shimoliy Amerika talaffuzidagi ovozlar bor, shuning uchun u IELTS Listening testidan osonroq boʻlishi mumkin."
     }
   },
   "home": {
@@ -180,7 +221,16 @@
       "seeStartingPoint": "Boshlangʻich nuqtani koʻrish",
       "continueCheck": {
         "body": "Siz oʻrtasida toʻxtadingiz. Javoblaringiz shu qurilmada saqlangan."
-      }
+      },
+      "practiseListening": {
+        "body": "Sizda Listening boʻyicha boshlangʻich nuqta bor. Mashq testi bilan davom eting."
+      },
+      "practiseBoth": {
+        "title": "Mashq",
+        "body": "Sizda Reading va Listening boʻyicha boshlangʻich nuqtalar bor. Mashq testi bilan davom eting."
+      },
+      "openPractice": "Mashqni ochish",
+      "seeStartingPoints": "Boshlangʻich nuqtalarni koʻrish"
     }
   },
   "reading": {
@@ -477,7 +527,8 @@
     "start": {
       "audioSize": "Audio: taxminan {size} MB. Wi-Fi orqali yaxshiroq.",
       "headphones": "Imkon boʻlsa, quloqchindan foydalaning.",
-      "unsupported": "Bu qurilma test audiosini ijro eta olmaydi."
+      "unsupported": "Bu qurilma test audiosini ijro eta olmaydi.",
+      "dateFormat": "Sanani raqamlar bilan kunidan boshlab yozing: masalan, <en>24/04</en> — 24-aprel."
     },
     "prepare": {
       "title": "Audio tayyorlanmoqda",

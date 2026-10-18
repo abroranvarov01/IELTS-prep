@@ -915,7 +915,7 @@ As M5: the test link opens the start screen with "See your last results" under "
   5. **Home afterwards:** one section finished: the M7 card for that skill ("Practise Listening", "You have a Listening starting point. Keep going with a practice test."); both finished: "Practise", "You have starting points in Reading and Listening. Keep going with a practice test." and the red "Open practice" → the Hub; "See your starting points" quiet.
 - **Step count:** 2 from Home to the first Listening question (intro, Start Listening); 3 to hear the recording (Play); 2 to finish from the last question; 1 from the result to practice.
 - **Empty / error states:** M7's, per section (insufficient data shows its block with "Not enough answers for a starting point" and "Take the Listening check again"; storage blocked; an earlier form version). **The audio cannot load:** the player shows "The audio couldn't load." with "Try again"; the questions stay visible. **The audio stops by itself** (a call, the browser, a failure): the player is paused at that exact point and "Continue" plays on; nothing is lost; it is recorded as a technical interruption, not as the learner's pause (LD20, decided). **Leaving:** the section keeps its answers and the recording's exact position; coming back opens the player paused **at that position, with no rewind**, with "Continue". Leaving while the recording plays counts as the learner's pause. The position can never be moved back.
-- **Languages checked:** not yet (M9-12).
+- **Languages checked:** uz, ru, en (M9-12: e2e at phone and desktop widths, screenshots at 390 and 1280 px).
 
 ### Open questions (M9-02)
 
@@ -977,8 +977,8 @@ As M5: the test link opens the start screen with "See your last results" under "
 | `levelCheck.sections.notStarted` | Intro, a row's state | Not started | Не начато | Boshlanmagan |
 | `levelCheck.sections.inProgress` | Intro, a row's state | In progress: {answered} of {total} answered | В процессе: отвечено {answered} из {total} | Davom etmoqda: {total} tadan {answered} tasiga javob berilgan |
 | `levelCheck.sections.finished` | Intro, a row's state | Finished | Завершено | Yakunlangan |
-| `levelCheck.start.reading` | Intro, red | Start Reading | Начать Reading | Reading boʻlimini boshlash |
-| `levelCheck.start.listening` | Intro, red, or quiet as the other section | Start Listening | Начать Listening | Listening boʻlimini boshlash |
+| `levelCheck.startSection.reading` | Intro, red | Start Reading | Начать Reading | Reading boʻlimini boshlash |
+| `levelCheck.startSection.listening` | Intro, red, or quiet as the other section | Start Listening | Начать Listening | Listening boʻlimini boshlash |
 | `levelCheck.continue.reading` | Intro, red, a section in progress | Continue Reading | Продолжить Reading | Reading boʻlimini davom ettirish |
 | `levelCheck.continue.listening` | Intro, red, a section in progress | Continue Listening | Продолжить Listening | Listening boʻlimini davom ettirish |
 | `levelCheck.listening.playsOnce` | Intro, the Listening row; the section's player before Play | Each recording plays once. You can pause it. | Каждая запись звучит один раз. Её можно поставить на паузу. | Har bir yozuv bir marta ijro etiladi. Uni pauza qilish mumkin. |

@@ -145,6 +145,20 @@
       "none": {
         "title": "На этом устройстве пока нет стартовой точки",
         "body": "Результат появится здесь, когда вы завершите проверку на этом устройстве."
+      },
+      "titleListening": "Ваша стартовая точка по Listening",
+      "listeningRough": "Считайте это приблизительной стартовой точкой: уровни Listening рассчитаны по предварительным границам, и это не откалиброванный балл IELTS.",
+      "notComparable": "Уровни Reading и Listening рассчитаны по разным шкалам, поэтому их нельзя сравнивать между собой.",
+      "withPauses": "<strong>Пройдено с паузами.</strong> Вы ставили запись на паузу, поэтому это не была проверка с однократным прослушиванием.",
+      "playbackInterrupted": "Аудио останавливалось из-за проблемы с воспроизведением, а не из-за вашей паузы.",
+      "titleBoth": "Ваши стартовые точки",
+      "practiseListening": "Практиковать Listening",
+      "practiseAnyListening": "Любая практика Listening будет хорошим следующим шагом.",
+      "seeAnswersListening": "Посмотреть ответы по Listening",
+      "retakeListening": "Пройти проверку Listening ещё раз",
+      "otherSection": {
+        "reading": "Узнать и свой уровень по Reading",
+        "listening": "Узнать и свой уровень по Listening"
       }
     },
     "levels": {
@@ -156,7 +170,34 @@
       "trueFalseNotGiven": "вопросы <en>True / False / Not Given</en>",
       "matchingHeadings": "подбор заголовков (<en>matching headings</en>)",
       "sentenceCompletion": "дополнение предложений (<en>sentence completion</en>)",
-      "multipleChoice": "выбор ответа (<en>multiple choice</en>)"
+      "multipleChoice": "выбор ответа (<en>multiple choice</en>)",
+      "formCompletion": "заполнение формы (<en>form completion</en>)",
+      "noteCompletion": "заполнение заметок (<en>note completion</en>)",
+      "matching": "сопоставление (<en>matching</en>)",
+      "shortAnswer": "краткие ответы (<en>short answers</en>)"
+    },
+    "sections": {
+      "reading": "Reading · 2 коротких текста · 14 вопросов · около 15 минут",
+      "listening": "Listening · 2 короткие записи · 14 вопросов · около 15 минут",
+      "notStarted": "Не начато",
+      "inProgress": "В процессе: отвечено {answered} из {total}",
+      "finished": "Завершено"
+    },
+    "startSection": {
+      "reading": "Начать Reading",
+      "listening": "Начать Listening"
+    },
+    "continue": {
+      "reading": "Продолжить Reading",
+      "listening": "Продолжить Listening"
+    },
+    "listening": {
+      "playsOnce": "Каждая запись звучит один раз. Её можно поставить на паузу.",
+      "recordingOf": "Запись {number} из {total}",
+      "play": "Включить запись",
+      "continue": "Продолжить",
+      "ended": "Конец записи {number}",
+      "temporaryAudio": "В этой проверке используются временные записи: речь в них медленнее, а голоса только североамериканские, поэтому проверка может оказаться легче, чем Listening на IELTS."
     }
   },
   "home": {
@@ -180,7 +221,16 @@
       "seeStartingPoint": "Посмотреть стартовую точку",
       "continueCheck": {
         "body": "Вы остановились на середине. Ответы сохранены на этом устройстве."
-      }
+      },
+      "practiseListening": {
+        "body": "У вас есть стартовая точка по Listening. Продолжайте с практического теста."
+      },
+      "practiseBoth": {
+        "title": "Практика",
+        "body": "У вас есть стартовые точки по Reading и Listening. Продолжайте с практического теста."
+      },
+      "openPractice": "Открыть практику",
+      "seeStartingPoints": "Посмотреть стартовые точки"
     }
   },
   "reading": {
@@ -477,7 +527,8 @@
     "start": {
       "audioSize": "Аудио: около {size} МБ. Лучше через Wi-Fi.",
       "headphones": "По возможности используйте наушники.",
-      "unsupported": "Это устройство не может воспроизвести аудио теста."
+      "unsupported": "Это устройство не может воспроизвести аудио теста.",
+      "dateFormat": "Даты цифрами пишите, начиная с дня: например, <en>24/04</en> — это 24 апреля."
     },
     "prepare": {
       "title": "Подготовка аудио",

@@ -197,6 +197,10 @@ export function ReviewWorkspace({
       {notice}
       <ReviewHeading
         card={card}
+        total={
+          test.parts.flatMap((p) => p.questionGroups.flatMap(groupNumbers))
+            .length
+        }
         headingRef={headingRef}
         progress={
           position.set === "mistakes"

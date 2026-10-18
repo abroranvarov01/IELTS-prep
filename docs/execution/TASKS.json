@@ -4877,7 +4877,8 @@
       "title": "The level check's Listening section",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-05", "M7-11"],
       "goal": "The level check covers Listening under the model approved in M7, and its result says which skills it covers.",
       "scope": [

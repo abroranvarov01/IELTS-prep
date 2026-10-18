@@ -8,8 +8,10 @@ import {
   apply,
   examClock,
   settleLoaded,
+  startCheckSession,
   startSession,
 } from "./session";
+import { SESSION_SCHEMA, parseStoredSession } from "./parse-session";
 
 const parsed = parseListeningTest(fixtureTest());
 if (!parsed.ok) throw new Error(parsed.errors.join("\n"));
@@ -278,5 +280,50 @@ describe("a finished session", () => {
     expect(
       apply(done, test, { type: "answer", number: 1, answer: "late" }, T0 + 6),
     ).toBe(done);
+  });
+});
+
+describe("the level check's Listening section (LD20)", () => {
+  const part = test.parts[0]!.id;
+  const check = () => startCheckSession(test, T0, ID);
+
+  it("counts the learner's pauses apart from playback stops they did not make", () => {
+    const s = run(
+      check(),
+      [{ type: "checkPause" }, T0],
+      [{ type: "checkPause" }, T0],
+      [{ type: "checkInterruption" }, T0],
+    );
+    expect(s).toMatchObject({
+      mode: "practice",
+      check: { pauses: 2, interruptions: 1 },
+    });
+    // Not a check: nothing is counted.
+    expect(run(practice(), [{ type: "checkPause" }, T0])).not.toHaveProperty(
+      "check",
+    );
+  });
+
+  it("never moves a recording back and plays it at normal speed", () => {
+    const s = run(
+      check(),
+      [{ type: "setPosition", partId: part, positionMs: 2000 }, T0],
+      [{ type: "setPosition", partId: part, positionMs: 1500 }, T0],
+      [{ type: "setSpeed", speed: 1.25 }, T0],
+    );
+    expect(s.practice).toEqual({ positions: { [part]: 2000 }, speed: 1 });
+  });
+
+  it("is read back from the device with its counts", () => {
+    const s = run(check(), [{ type: "checkInterruption" }, T0]);
+    expect(
+      parseStoredSession(test, { schema: SESSION_SCHEMA, session: s }),
+    ).toEqual(s);
+    expect(
+      parseStoredSession(test, {
+        schema: SESSION_SCHEMA,
+        session: { ...s, check: { pauses: -1, interruptions: 0 } },
+      }),
+    ).toBeUndefined();
   });
 });

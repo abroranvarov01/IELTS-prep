@@ -1,0 +1,604 @@
+{
+  "testId": "level-check-listening-a",
+  "version": 1,
+  "locale": "uz",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "at": "p1-s4"
+        },
+        {
+          "text": " da Kaveh: "
+        },
+        {
+          "en": "I would go every day"
+        },
+        {
+          "text": " deydi. Eslatmada u u yerga "
+        },
+        {
+          "en": "every"
+        },
+        {
+          "text": " ___ borgani yozilgan, demak, tushib qolgan soʻz "
+        },
+        {
+          "en": "day"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Kaveh u yerga "
+        },
+        {
+          "en": "every day"
+        },
+        {
+          "text": " borgan. Javob: "
+        },
+        {
+          "en": "day"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "at": "p1-s13"
+        },
+        {
+          "text": " da Kaveh xona "
+        },
+        {
+          "en": "used to be across from the cafeteria"
+        },
+        {
+          "text": " deydi. Eslatmada xuddi shu soʻzlar, shuning uchun javob "
+        },
+        {
+          "en": "cafeteria"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Avval u "
+        },
+        {
+          "en": "across from the cafeteria"
+        },
+        {
+          "text": " edi. Javob: "
+        },
+        {
+          "en": "cafeteria"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "at": "p1-s14"
+        },
+        {
+          "text": " da Kaveh: "
+        },
+        {
+          "en": "now it’s down in the basement"
+        },
+        {
+          "text": " deydi. Bu "
+        },
+        {
+          "en": "Now it is in the ___"
+        },
+        {
+          "text": " eslatmasiga mos, shuning uchun javob "
+        },
+        {
+          "en": "basement"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Endi u "
+        },
+        {
+          "en": "in the basement"
+        },
+        {
+          "text": ". Javob: "
+        },
+        {
+          "en": "basement"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "at": "p1-s80"
+        },
+        {
+          "text": " da Anna: "
+        },
+        {
+          "en": "the key to my apartment"
+        },
+        {
+          "text": " deydi. Demak, bu uning "
+        },
+        {
+          "en": "apartment"
+        },
+        {
+          "text": " kaliti (britancha "
+        },
+        {
+          "en": "flat"
+        },
+        {
+          "text": " ham qabul qilinadi)."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Annaga "
+        },
+        {
+          "en": "the key to my apartment"
+        },
+        {
+          "text": " kerak. Javob: "
+        },
+        {
+          "en": "apartment"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "at": "p1-s46"
+        },
+        {
+          "text": " da Serenity: "
+        },
+        {
+          "en": "with a very important job"
+        },
+        {
+          "text": " deydi. Demak, uning juda muhim ishi boʻlgan: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": ". U qoʻshiq haqida gapiradi, lekin kasb sifatida emas."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Serenityning "
+        },
+        {
+          "en": "a very important job"
+        },
+        {
+          "text": " boʻlgan. Javob: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "Serenity Anna bolaligida baxtli boʻlish uchun nima qilganini soʻraydi. "
+        },
+        {
+          "at": "p1-s61"
+        },
+        {
+          "text": " da Anna: "
+        },
+        {
+          "en": "I used to sing … with my family"
+        },
+        {
+          "text": " deydi: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": ". Raqs yoki kitob haqida hech kim gapirmaydi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna "
+        },
+        {
+          "en": "used to sing … with my family"
+        },
+        {
+          "text": ". Javob: "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "at": "p1-s85"
+        },
+        {
+          "text": " da Anna: "
+        },
+        {
+          "en": "I left it in the ladies’ room"
+        },
+        {
+          "text": " deydi. Ayollar xonasi — "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": " varianti. U liftda qoʻshiq aytadi, lekin kalit u yerda deb aytmaydi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Anna: "
+        },
+        {
+          "en": "I left it in the ladies’ room"
+        },
+        {
+          "text": ". Javob: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "at": "p2-s6"
+        },
+        {
+          "text": " da mikrosertifikat "
+        },
+        {
+          "en": "from a week to a month"
+        },
+        {
+          "text": " ichida tugatilishi aytiladi. Gapda xuddi shu soʻzlar, shuning uchun javob "
+        },
+        {
+          "en": "month"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Bu "
+        },
+        {
+          "en": "from a week to a month"
+        },
+        {
+          "text": " vaqt oladi. Javob: "
+        },
+        {
+          "en": "month"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "at": "p2-s11"
+        },
+        {
+          "text": " da "
+        },
+        {
+          "en": "51 percent of colleges"
+        },
+        {
+          "text": " mikrosertifikat bilan birga kredit ham berishi aytiladi. "
+        },
+        {
+          "en": "51 percent"
+        },
+        {
+          "text": " yoki "
+        },
+        {
+          "en": "51%"
+        },
+        {
+          "text": " deb yozing: bu son va bitta soʻz, cheklov ichida."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Hisobotda "
+        },
+        {
+          "en": "51 percent"
+        },
+        {
+          "text": " kollej deyilgan. Javob: "
+        },
+        {
+          "en": "51 percent"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "at": "p2-s22"
+        },
+        {
+          "text": " da Courserada "
+        },
+        {
+          "en": "a yearly fee of $399"
+        },
+        {
+          "text": " borligi aytiladi. Gap yillik obuna haqida, shuning uchun javob "
+        },
+        {
+          "en": "399"
+        },
+        {
+          "text": ". Boshqa narx, "
+        },
+        {
+          "en": "$59"
+        },
+        {
+          "text": ", oylik toʻlov."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Yillik toʻlov "
+        },
+        {
+          "en": "$399"
+        },
+        {
+          "text": ". Javob: "
+        },
+        {
+          "en": "399"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "at": "p2-s2"
+        },
+        {
+          "text": " da "
+        },
+        {
+          "en": "the computer language … taught in the 1990s"
+        },
+        {
+          "text": " tilga olinadi. Demak, javob "
+        },
+        {
+          "en": "BASIC"
+        },
+        {
+          "text": ". Python va SQL hozir kerak boʻlishi mumkin boʻlgan tillar."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "1990-yillar tili "
+        },
+        {
+          "en": "BASIC"
+        },
+        {
+          "text": ". Javob: "
+        },
+        {
+          "en": "BASIC"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "at": "p2-s19"
+        },
+        {
+          "text": " da "
+        },
+        {
+          "en": "One example is Ukraine"
+        },
+        {
+          "text": " deyiladi, u yerda "
+        },
+        {
+          "en": "ReSkill UA"
+        },
+        {
+          "text": " dasturi bor. Javob: "
+        },
+        {
+          "en": "Ukraine"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "en": "ReSkill UA"
+        },
+        {
+          "text": " dasturi "
+        },
+        {
+          "en": "Ukraine"
+        },
+        {
+          "text": " da. Javob: "
+        },
+        {
+          "en": "Ukraine"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "at": "p2-s5"
+        },
+        {
+          "text": " da YuNESKO taʼrifiga koʻra mikrosertifikat "
+        },
+        {
+          "en": "learning outcomes in a narrow field"
+        },
+        {
+          "text": " deyiladi. Bu "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": " varianti. Bir nechta fan yoki diplom oʻrnini bosish haqida gap yoʻq."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Mikrosertifikat "
+        },
+        {
+          "en": "a narrow field"
+        },
+        {
+          "text": " haqida. Javob: "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "at": "p2-s21"
+        },
+        {
+          "text": " da provayderlar "
+        },
+        {
+          "en": "use the materials for free"
+        },
+        {
+          "text": " deyiladi, lekin sertifikat uchun "
+        },
+        {
+          "en": "payment is required"
+        },
+        {
+          "text": ". Bepul narsa — kurs materiallari: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Oʻquvchilar "
+        },
+        {
+          "en": "use the materials for free"
+        },
+        {
+          "text": ". Javob: "
+        },
+        {
+          "en": "A"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  }
+}

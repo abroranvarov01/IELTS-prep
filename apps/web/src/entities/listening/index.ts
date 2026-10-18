@@ -36,9 +36,14 @@ export {
   apply,
   examClock,
   sessionNumbers,
+  startCheckSession,
   startSession,
 } from "./model/session";
-export { loadSessions, saveSession } from "./api/session-storage";
+export {
+  loadSessions,
+  removeSession,
+  saveSession,
+} from "./api/session-storage";
 export type {
   Evidence,
   KeyEntry,

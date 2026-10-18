@@ -1,0 +1,316 @@
+{
+  "id": "level-check-listening-a",
+  "version": 1,
+  "title": "Level check: Listening",
+  "temporary": true,
+  "origin": {
+    "kind": "licensed",
+    "source": "VOA Learning English (Voice of America); questions written for this app by Claude",
+    "license": "Public domain (VOA Learning English: texts and MP3s may be reprinted for educational and commercial purposes with credit to learningenglish.voanews.com; https://learningenglish.voanews.com/p/6861.html, read 2026-10-18)",
+    "url": "https://learningenglish.voanews.com/p/6861.html",
+    "attribution": "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app."
+  },
+  "parts": [
+    {
+      "id": "p1",
+      "number": 1,
+      "audio": {
+        "src": "part-1.e1ba56cd9213.m4a",
+        "mimeType": "audio/mp4",
+        "durationMs": 281327,
+        "bytes": 1745185,
+        "sha256": "e1ba56cd9213c04eb34cbd9b12992d8b57eb343040b3c8e7db62732ad2aab4cf",
+        "provenance": {
+          "producedBy": "VOA Learning English (Voice of America)",
+          "method": "recorded",
+          "voices": [
+            {
+              "role": "Anna",
+              "accent": "North American"
+            },
+            {
+              "role": "Kaveh",
+              "accent": "North American"
+            },
+            {
+              "role": "Serenity",
+              "accent": "North American"
+            },
+            {
+              "role": "Worker",
+              "accent": "North American"
+            },
+            {
+              "role": "Professor Bot",
+              "accent": "North American"
+            }
+          ],
+          "license": "Public domain (VOA Learning English: texts and MP3s may be reprinted for educational and commercial purposes with credit to learningenglish.voanews.com; https://learningenglish.voanews.com/p/6861.html, read 2026-10-18)",
+          "sourceUrl": "https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-16/4198066.html",
+          "attribution": "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app.",
+          "producedAt": "2018-01-10",
+          "note": "Converted for this app on 2026-10-18: mono AAC-LC 48 kbps; nothing added or removed (the learner reads the questions before tapping Play)."
+        }
+      },
+      "questionGroups": [
+        {
+          "id": "p1-notes",
+          "type": "noteCompletion",
+          "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+          "title": "Anna's lost key",
+          "lines": [
+            {
+              "heading": "Lunch"
+            },
+            [
+              {
+                "text": "When Kaveh started his job, he went to the place every "
+              },
+              {
+                "gap": 1
+              }
+            ],
+            {
+              "heading": "The Lost & Found office"
+            },
+            [
+              {
+                "text": "It used to be across from the "
+              },
+              {
+                "gap": 2
+              }
+            ],
+            [
+              {
+                "text": "Now it is in the "
+              },
+              {
+                "gap": 3
+              },
+              {
+                "text": ", next to the elevators"
+              }
+            ],
+            {
+              "heading": "The key"
+            },
+            [
+              {
+                "text": "It is the key to Anna's "
+              },
+              {
+                "gap": 4
+              }
+            ]
+          ],
+          "answer": {
+            "kind": "typed",
+            "wordLimit": {
+              "words": 1,
+              "numbers": false
+            }
+          }
+        },
+        {
+          "id": "p1-mc",
+          "type": "multipleChoice",
+          "instruction": "Choose the correct letter, A, B or C.",
+          "questions": [
+            {
+              "number": 5,
+              "stem": "What does Serenity say she used to have?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "A big family"
+                },
+                {
+                  "id": "B",
+                  "text": "A very important job"
+                },
+                {
+                  "id": "C",
+                  "text": "A singing career"
+                }
+              ]
+            },
+            {
+              "number": 6,
+              "stem": "What did Anna use to do as a child to feel happy?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "Dance with her friends"
+                },
+                {
+                  "id": "B",
+                  "text": "Read books with her father"
+                },
+                {
+                  "id": "C",
+                  "text": "Sing with her family"
+                }
+              ]
+            },
+            {
+              "number": 7,
+              "stem": "Where does Anna think she left her key?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "In the ladies' room"
+                },
+                {
+                  "id": "B",
+                  "text": "In the elevator"
+                },
+                {
+                  "id": "C",
+                  "text": "In the cafeteria"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "number": 2,
+      "audio": {
+        "src": "part-2.50582b492f07.m4a",
+        "mimeType": "audio/mp4",
+        "durationMs": 285704,
+        "bytes": 1783174,
+        "sha256": "50582b492f07463b22c2155ce677ce7948943c2d912c1282f41ff5d1d494f44d",
+        "provenance": {
+          "producedBy": "VOA Learning English (Voice of America)",
+          "method": "recorded",
+          "voices": [
+            {
+              "role": "John Russell",
+              "accent": "North American"
+            }
+          ],
+          "license": "Public domain (VOA Learning English: texts and MP3s may be reprinted for educational and commercial purposes with credit to learningenglish.voanews.com; https://learningenglish.voanews.com/p/6861.html, read 2026-10-18)",
+          "sourceUrl": "https://learningenglish.voanews.com/a/learn-new-skills-with-microcredentials-/7908673.html",
+          "attribution": "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app.",
+          "producedAt": "2025-01-07",
+          "note": "Converted for this app on 2026-10-18: mono AAC-LC 48 kbps; nothing added or removed (the learner reads the questions before tapping Play)."
+        }
+      },
+      "questionGroups": [
+        {
+          "id": "p2-sentences",
+          "type": "sentenceCompletion",
+          "instruction": "Complete the sentences below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+          "sentences": [
+            [
+              {
+                "text": "A microcredential takes from a week to a "
+              },
+              {
+                "gap": 8
+              },
+              {
+                "text": " to complete."
+              }
+            ],
+            [
+              {
+                "text": "Of the US colleges that offer microcredentials, "
+              },
+              {
+                "gap": 9
+              },
+              {
+                "text": " also give school credit for them."
+              }
+            ],
+            [
+              {
+                "text": "A yearly Coursera Plus membership costs $"
+              },
+              {
+                "gap": 10
+              },
+              {
+                "text": "."
+              }
+            ]
+          ],
+          "answer": {
+            "kind": "typed",
+            "wordLimit": {
+              "words": 2,
+              "numbers": true
+            }
+          }
+        },
+        {
+          "id": "p2-short",
+          "type": "shortAnswer",
+          "instruction": "Answer the questions below. Write ONE WORD ONLY for each answer.",
+          "wordLimit": {
+            "words": 1,
+            "numbers": false
+          },
+          "questions": [
+            {
+              "number": 11,
+              "question": "Which computer language was taught in the 1990s?"
+            },
+            {
+              "number": 12,
+              "question": "Which country has the ReSkill UA program?"
+            }
+          ]
+        },
+        {
+          "id": "p2-mc",
+          "type": "multipleChoice",
+          "instruction": "Choose the correct letter, A, B or C.",
+          "questions": [
+            {
+              "number": 13,
+              "stem": "According to UNESCO, a microcredential",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "covers several different subjects."
+                },
+                {
+                  "id": "B",
+                  "text": "centers on a narrow field."
+                },
+                {
+                  "id": "C",
+                  "text": "replaces a university degree."
+                }
+              ]
+            },
+            {
+              "number": 14,
+              "stem": "What do many course providers let learners use for free?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "The course materials"
+                },
+                {
+                  "id": "B",
+                  "text": "The certificate"
+                },
+                {
+                  "id": "C",
+                  "text": "The membership"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

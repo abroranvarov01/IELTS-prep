@@ -87,6 +87,31 @@ describe("parseLevelCheckAttempt", () => {
   });
 });
 
+describe("a Listening attempt's pause counts (LD20)", () => {
+  it("are kept when present, and only on a Listening attempt", () => {
+    const listening = {
+      schema: HISTORY_SCHEMA,
+      ...attempt(1, { skill: "listening", pauses: 1, interruptions: 0 }),
+    };
+    expect(parseLevelCheckAttempt(listening)).toMatchObject({
+      kind: "valid",
+      value: { pauses: 1, interruptions: 0 },
+    });
+    const noCounts = {
+      ...listening,
+      pauses: undefined,
+      interruptions: undefined,
+    };
+    expect(parseLevelCheckAttempt(noCounts).kind).toBe("valid");
+    expect(
+      parseLevelCheckAttempt({ ...listening, skill: "reading" }).kind,
+    ).toBe("invalid");
+    expect(parseLevelCheckAttempt({ ...listening, pauses: -1 }).kind).toBe(
+      "invalid",
+    );
+  });
+});
+
 describe("parseLevelCheckResultRecord", () => {
   const a = attempt(1);
   const stored = (patch: Record<string, unknown> = {}) =>

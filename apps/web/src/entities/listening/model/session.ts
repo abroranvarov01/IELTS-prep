@@ -56,6 +56,12 @@ export type ListeningSession = {
   exam?: ExamState;
   /** A retry of whole answer units of a committed test attempt (ADR-0014 §3, as ADR-0009 §8). */
   retry?: { of: string; questions: number[] };
+  /**
+   * The level check's Listening section (LD20, ADR-0014 §7): Practice with
+   * each recording played once from where it stopped, never moved back, and
+   * the learner's pauses and the playback stops they did not make counted.
+   */
+  check?: { pauses: number; interruptions: number };
 };
 
 export type ListeningEvent =
@@ -68,6 +74,9 @@ export type ListeningEvent =
   // Practice
   | { type: "setPosition"; partId: string; positionMs: number }
   | { type: "setSpeed"; speed: Speed }
+  // The level check
+  | { type: "checkPause" }
+  | { type: "checkInterruption" }
   // Exam
   | { type: "startRecording" }
   | { type: "stall" }
@@ -127,6 +136,18 @@ export function sessionNumbers(
   return session.retry
     ? [...session.retry.questions].sort((a, b) => a - b)
     : questionUnits(test).flatMap((unit) => unit.numbers);
+}
+
+/** A new level-check Listening section: Practice at normal speed, nothing paused yet. */
+export function startCheckSession(
+  test: ListeningTest,
+  now: number,
+  sessionId: string,
+): ListeningSession {
+  return {
+    ...startSession(test, "practice", now, sessionId),
+    check: { pauses: 0, interruptions: 0 },
+  };
 }
 
 export type ExamClock =
@@ -237,6 +258,12 @@ export function apply(
         event.positionMs > part.audio.durationMs
       )
         return timed;
+      // A check's recording plays once: its position never moves back.
+      if (
+        timed.check &&
+        event.positionMs < (timed.practice.positions[event.partId] ?? 0)
+      )
+        return timed;
       return {
         ...timed,
         practice: {
@@ -248,8 +275,21 @@ export function apply(
         },
       };
     }
+    case "checkPause":
+    case "checkInterruption": {
+      const check = timed.check;
+      if (!check) return timed;
+      return {
+        ...timed,
+        check:
+          event.type === "checkPause"
+            ? { ...check, pauses: check.pauses + 1 }
+            : { ...check, interruptions: check.interruptions + 1 },
+      };
+    }
     case "setSpeed":
-      if (!timed.practice || !SPEEDS.includes(event.speed)) return timed;
+      if (!timed.practice || timed.check || !SPEEDS.includes(event.speed))
+        return timed;
       return { ...timed, practice: { ...timed.practice, speed: event.speed } };
     case "startRecording":
       if (!exam || exam.recordingStartedAt !== undefined) return timed;

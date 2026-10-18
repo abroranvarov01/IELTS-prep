@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { readGoal } from "@/entities/goal";
 import { readLevelCheckState } from "@/entities/level-check";
+import { levelCheckListeningForm } from "@/entities/listening/forms.server";
 import { levelCheckForm } from "@/entities/reading/forms.server";
 import { LevelCheckIntro } from "@/views/level-check";
 
@@ -25,8 +26,9 @@ async function IntroFromCookies() {
   const cookieStore = await cookies();
   return (
     <LevelCheckIntro
-      form={levelCheckForm()}
-      cookieState={readLevelCheckState(cookieStore).reading}
+      reading={levelCheckForm()}
+      listening={levelCheckListeningForm()}
+      cookieState={readLevelCheckState(cookieStore)}
       academicNote={readGoal(cookieStore).examType === "general"}
     />
   );

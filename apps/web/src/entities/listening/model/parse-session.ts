@@ -97,6 +97,9 @@ export function parseStoredSession(
   if (!answers) return undefined;
   const retry = parseRetry(s.retry, checkUnits(test));
   if (retry === null || (retry && s.mode !== "practice")) return undefined;
+  const check = s.check === undefined ? undefined : parseCheck(s.check);
+  if (check === null || (check && (s.mode !== "practice" || retry)))
+    return undefined;
 
   const partIds = new Set(test.parts.map((p) => p.id));
   const view = s.view;
@@ -131,6 +134,7 @@ export function parseStoredSession(
       scroll: { ...(view.scroll as Record<string, number>) },
     },
     ...(retry && { retry }),
+    ...(check && { check }),
   } satisfies Partial<ListeningSession>;
 
   if (s.mode === "practice") {
@@ -171,6 +175,17 @@ export function parseRetry(
   )
     return null;
   return { of: value.of, questions: [...(questions as number[])] };
+}
+
+/** A check's pause counts; null when invalid. */
+function parseCheck(value: unknown): ListeningSession["check"] | null {
+  if (!isRecord(value)) return null;
+  const { pauses, interruptions } = value;
+  return [pauses, interruptions].every(
+    (n) => Number.isInteger(n) && (n as number) >= 0,
+  )
+    ? { pauses: pauses as number, interruptions: interruptions as number }
+    : null;
 }
 
 function parsePractice(

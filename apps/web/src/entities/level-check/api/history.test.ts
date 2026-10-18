@@ -147,6 +147,64 @@ describe("unavailable storage", () => {
   });
 });
 
+describe("Listening records in the level-check database (M9-12)", () => {
+  it("fit its stores, keys, index and readers without an upgrade, and leave Reading's records as they were", async () => {
+    const factory = new IDBFactory();
+    const history = await openLevelCheckHistory(factory);
+    const reading = await history.commit(section(1), T0);
+    if (!reading) throw new Error("not committed");
+    const readingRecord = await history.addResult(reading, record(reading));
+
+    // Listening answers (a typed gap, a letter, a choice of several) and
+    // the section's pause counts (LD20).
+    const listening: FinishedSection = {
+      ...section(2, { "1": "day", "5": "B", "8": ["A", "C"] }),
+      skill: "listening",
+      formId: "level-check-listening-a",
+      pauses: 2,
+      interruptions: 1,
+    };
+    for (let n = 0; n < 11; n++)
+      await history.commit({ ...listening, id: id(20 + n) }, T0 + n);
+    const listenings = await history.read("listening");
+    expect(listenings).toHaveLength(10);
+    const latest = listenings.at(-1)!;
+    expect(latest).toMatchObject({
+      skill: "listening",
+      answers: { "1": "day", "5": "B", "8": ["A", "C"] },
+      pauses: 2,
+      interruptions: 1,
+    });
+    const listeningRecord = {
+      ...record(latest, { rulesVersion: 1 }),
+      practiseFirst: ["multipleChoice"],
+    };
+    expect(await history.addResult(latest, listeningRecord)).toEqual(
+      listeningRecord,
+    );
+    expect(await history.results(latest)).toEqual([listeningRecord]);
+
+    // Reading's attempt and record are read back unchanged, and retention
+    // of Listening attempts never reaches them.
+    expect(await history.read("reading")).toEqual([reading]);
+    expect(await history.results(reading)).toEqual([readingRecord]);
+
+    const db = await rawOpen(factory, "ielts-prep-level-check");
+    expect(db.version).toBe(1);
+    expect([...db.objectStoreNames].sort()).toEqual(["attempts", "results"]);
+    const tx = db.transaction(["attempts", "results"]);
+    expect(tx.objectStore("attempts").keyPath).toBe("id");
+    expect([...tx.objectStore("attempts").indexNames]).toEqual(["skill"]);
+    expect(tx.objectStore("results").keyPath).toEqual([
+      "attemptId",
+      "keyRevision",
+      "rulesVersion",
+      "levelRulesVersion",
+    ]);
+    db.close();
+  });
+});
+
 describe("the Reading history", () => {
   it("is untouched: the level check uses its own database and leaves the Reading one as it was", async () => {
     const factory = new IDBFactory();

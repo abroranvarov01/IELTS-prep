@@ -85,7 +85,7 @@ export async function Home() {
 async function NextActionCard() {
   return (
     <NextActionBlock
-      action={nextAction(readLevelCheckState(await cookies()).reading)}
+      action={nextAction(readLevelCheckState(await cookies()))}
     />
   );
 }
@@ -110,6 +110,18 @@ async function NextActionBlock({ action }: { action: NextAction }) {
       title: t("levelCheck.result.practise"),
       body: t("home.nextAction.practiseReading.body"),
       button: t("levelCheck.result.practise"),
+      href: "/practice",
+    },
+    practiseListening: {
+      title: t("levelCheck.result.practiseListening"),
+      body: t("home.nextAction.practiseListening.body"),
+      button: t("levelCheck.result.practiseListening"),
+      href: "/practice#practice-listening",
+    },
+    practiseBoth: {
+      title: t("home.nextAction.practiseBoth.title"),
+      body: t("home.nextAction.practiseBoth.body"),
+      button: t("home.nextAction.openPractice"),
       href: "/practice",
     },
   }[action.kind];
@@ -139,10 +151,12 @@ async function NextActionBlock({ action }: { action: NextAction }) {
             </span>
           </PrimaryLink>
         </div>
-        {action.kind === "practiseReading" && (
+        {action.kind.startsWith("practise") && (
           <div className="mt-2">
             <QuietLink href="/level-check/result">
-              {t("home.nextAction.seeStartingPoint")}
+              {action.kind === "practiseBoth"
+                ? t("home.nextAction.seeStartingPoints")
+                : t("home.nextAction.seeStartingPoint")}
             </QuietLink>
           </div>
         )}

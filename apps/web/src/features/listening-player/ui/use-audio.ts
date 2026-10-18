@@ -2,6 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+const HAVE_METADATA = 1;
+const HAVE_FUTURE_DATA = 3;
+
 export type AudioStatus =
   "loading" | "paused" | "playing" | "buffering" | "ended" | "failed";
 
@@ -39,8 +42,13 @@ export function useAudio({
   useEffect(() => {
     const audio = ref.current;
     if (!audio) return;
-    setStatus("loading");
-    setPositionMs(0);
+    // A file that is already loaded (cached, or loaded before these
+    // listeners were attached) sends no more load events: start from its state.
+    setStatus(audio.readyState >= HAVE_FUTURE_DATA ? "paused" : "loading");
+    setDurationMs(
+      audio.readyState >= HAVE_METADATA ? audio.duration * 1000 : 0,
+    );
+    setPositionMs(audio.currentTime * 1000);
     const on = (event: string, handler: () => void) => {
       audio.addEventListener(event, handler);
       return () => audio.removeEventListener(event, handler);

@@ -1,0 +1,916 @@
+{
+  "testId": "level-check-listening-a",
+  "version": 1,
+  "revision": 1,
+  "review": {
+    "status": "aiDraft"
+  },
+  "parts": [
+    {
+      "partId": "p1",
+      "segments": [
+        {
+          "id": "p1-s1",
+          "startMs": 0,
+          "endMs": 1250,
+          "speaker": "Anna",
+          "text": "Hi, Kaveh!"
+        },
+        {
+          "id": "p1-s2",
+          "startMs": 1250,
+          "endMs": 3080,
+          "speaker": "Anna",
+          "text": "Let’s go to lunch!"
+        },
+        {
+          "id": "p1-s3",
+          "startMs": 3080,
+          "endMs": 5720,
+          "speaker": "Kaveh",
+          "text": "Ooh, I know a great place."
+        },
+        {
+          "id": "p1-s4",
+          "startMs": 5720,
+          "endMs": 9440,
+          "speaker": "Kaveh",
+          "text": "When I first started working here, I would go every day!"
+        },
+        {
+          "id": "p1-s5",
+          "startMs": 9440,
+          "endMs": 10440,
+          "speaker": "Anna",
+          "text": "Great."
+        },
+        {
+          "id": "p1-s6",
+          "startMs": 10440,
+          "endMs": 12400,
+          "speaker": "Anna",
+          "text": "Oh, no."
+        },
+        {
+          "id": "p1-s7",
+          "startMs": 12400,
+          "endMs": 13400,
+          "speaker": "Kaveh",
+          "text": "What’s wrong?"
+        },
+        {
+          "id": "p1-s8",
+          "startMs": 13400,
+          "endMs": 15040,
+          "speaker": "Anna",
+          "text": "I lost my key!"
+        },
+        {
+          "id": "p1-s9",
+          "startMs": 15040,
+          "endMs": 17360,
+          "speaker": "Anna",
+          "text": "I just had it this morning."
+        },
+        {
+          "id": "p1-s10",
+          "startMs": 17360,
+          "endMs": 19800,
+          "speaker": "Kaveh",
+          "text": "You should check the Lost & Found office."
+        },
+        {
+          "id": "p1-s11",
+          "startMs": 19800,
+          "endMs": 21600,
+          "speaker": "Anna",
+          "text": "Great idea."
+        },
+        {
+          "id": "p1-s12",
+          "startMs": 21600,
+          "endMs": 22600,
+          "speaker": "Anna",
+          "text": "Where is it?"
+        },
+        {
+          "id": "p1-s13",
+          "startMs": 22600,
+          "endMs": 25200,
+          "speaker": "Kaveh",
+          "text": "Oh, it used to be across from the cafeteria."
+        },
+        {
+          "id": "p1-s14",
+          "startMs": 25200,
+          "endMs": 28760,
+          "speaker": "Kaveh",
+          "text": "But now it’s down in the basement next to the elevators."
+        },
+        {
+          "id": "p1-s15",
+          "startMs": 28760,
+          "endMs": 31320,
+          "speaker": "Kaveh",
+          "text": "It’s really hard to find."
+        },
+        {
+          "id": "p1-s16",
+          "startMs": 31320,
+          "endMs": 36040,
+          "speaker": "Anna",
+          "text": "The Lost & Found is hard to find."
+        },
+        {
+          "id": "p1-s17",
+          "startMs": 36040,
+          "endMs": 37240,
+          "speaker": "Anna",
+          "text": "That’s funny."
+        },
+        {
+          "id": "p1-s18",
+          "startMs": 37240,
+          "endMs": 42440,
+          "speaker": "Kaveh",
+          "text": "It is."
+        },
+        {
+          "id": "p1-s19",
+          "startMs": 42440,
+          "endMs": 47200,
+          "speaker": "Professor Bot",
+          "text": "I hope Anna can find the Lost & Found office!"
+        },
+        {
+          "id": "p1-s20",
+          "startMs": 47200,
+          "endMs": 53680,
+          "speaker": "Professor Bot",
+          "text": "Used to and would describe something that happened repeatedly in the past."
+        },
+        {
+          "id": "p1-s21",
+          "startMs": 53680,
+          "endMs": 59720,
+          "speaker": "Professor Bot",
+          "text": "Kaveh uses would when he says, “When I first started working here, I would go every day!"
+        },
+        {
+          "id": "p1-s22",
+          "startMs": 59720,
+          "endMs": 64400,
+          "speaker": "Professor Bot",
+          "text": "There are two differences between used to and would."
+        },
+        {
+          "id": "p1-s23",
+          "startMs": 64400,
+          "endMs": 71200,
+          "speaker": "Professor Bot",
+          "text": "Number one: We use would only when we say the time period first."
+        },
+        {
+          "id": "p1-s24",
+          "startMs": 71200,
+          "endMs": 81210,
+          "speaker": "Professor Bot",
+          "text": "Number two: For verbs like be, think, feel, see and understand, we can only use used to."
+        },
+        {
+          "id": "p1-s25",
+          "startMs": 81210,
+          "endMs": 84480,
+          "speaker": "Professor Bot",
+          "text": "Kaveh says, \"It used to be across from the cafeteria.\""
+        },
+        {
+          "id": "p1-s26",
+          "startMs": 84480,
+          "endMs": 88200,
+          "speaker": "Professor Bot",
+          "text": "Keep listening for more!"
+        },
+        {
+          "id": "p1-s27",
+          "startMs": 88200,
+          "endMs": 90520,
+          "speaker": "Worker",
+          "text": "These signs are wrong."
+        },
+        {
+          "id": "p1-s28",
+          "startMs": 90520,
+          "endMs": 91520,
+          "speaker": "Worker",
+          "text": "There."
+        },
+        {
+          "id": "p1-s29",
+          "startMs": 91520,
+          "endMs": 93720,
+          "speaker": "Worker",
+          "text": "That's better."
+        },
+        {
+          "id": "p1-s30",
+          "startMs": 93720,
+          "endMs": 97520,
+          "speaker": "Serenity",
+          "text": "Come in!"
+        },
+        {
+          "id": "p1-s31",
+          "startMs": 97520,
+          "endMs": 101320,
+          "speaker": "Serenity",
+          "text": "I am Serenity."
+        },
+        {
+          "id": "p1-s32",
+          "startMs": 101320,
+          "endMs": 104040,
+          "speaker": "Anna",
+          "text": "Hi, Serenity."
+        },
+        {
+          "id": "p1-s33",
+          "startMs": 104040,
+          "endMs": 105520,
+          "speaker": "Anna",
+          "text": "I’m Anna!"
+        },
+        {
+          "id": "p1-s34",
+          "startMs": 105520,
+          "endMs": 108840,
+          "speaker": "Serenity",
+          "text": "Please, sit down."
+        },
+        {
+          "id": "p1-s35",
+          "startMs": 108840,
+          "endMs": 111680,
+          "speaker": "Serenity",
+          "text": "How can I help you?"
+        },
+        {
+          "id": "p1-s36",
+          "startMs": 111680,
+          "endMs": 115280,
+          "speaker": "Anna",
+          "text": "I lost something very important."
+        },
+        {
+          "id": "p1-s37",
+          "startMs": 115280,
+          "endMs": 116800,
+          "speaker": "Serenity",
+          "text": "Shh. I already know."
+        },
+        {
+          "id": "p1-s38",
+          "startMs": 116800,
+          "endMs": 118000,
+          "speaker": "Serenity",
+          "text": "You need help."
+        },
+        {
+          "id": "p1-s39",
+          "startMs": 118000,
+          "endMs": 119000,
+          "speaker": "Anna",
+          "text": "Yes."
+        },
+        {
+          "id": "p1-s40",
+          "startMs": 119000,
+          "endMs": 122240,
+          "speaker": "Anna",
+          "text": "I need help finding the key …"
+        },
+        {
+          "id": "p1-s41",
+          "startMs": 122240,
+          "endMs": 127960,
+          "speaker": "Serenity",
+          "text": "Shh. You need to find the key – the key that will give you happiness."
+        },
+        {
+          "id": "p1-s42",
+          "startMs": 127960,
+          "endMs": 128960,
+          "speaker": "Anna",
+          "text": "Yes."
+        },
+        {
+          "id": "p1-s43",
+          "startMs": 128960,
+          "endMs": 133460,
+          "speaker": "Anna",
+          "text": "Finding this key will make me very happy."
+        },
+        {
+          "id": "p1-s44",
+          "startMs": 133460,
+          "endMs": 137240,
+          "speaker": "Serenity",
+          "text": "First, Anna, let me tell you a little bit about myself."
+        },
+        {
+          "id": "p1-s45",
+          "startMs": 137240,
+          "endMs": 138240,
+          "speaker": "Anna",
+          "text": "Okay."
+        },
+        {
+          "id": "p1-s46",
+          "startMs": 138240,
+          "endMs": 145360,
+          "speaker": "Serenity",
+          "text": "I used to be a very important person with a very important job."
+        },
+        {
+          "id": "p1-s47",
+          "startMs": 145360,
+          "endMs": 149400,
+          "speaker": "Serenity",
+          "text": "I made a lot of money -- I mean a lot."
+        },
+        {
+          "id": "p1-s48",
+          "startMs": 149400,
+          "endMs": 150400,
+          "speaker": "Anna",
+          "text": "Wow."
+        },
+        {
+          "id": "p1-s49",
+          "startMs": 150400,
+          "endMs": 151880,
+          "speaker": "Anna",
+          "text": "Good for you!"
+        },
+        {
+          "id": "p1-s50",
+          "startMs": 151880,
+          "endMs": 152720,
+          "speaker": "Serenity",
+          "text": "No!"
+        },
+        {
+          "id": "p1-s51",
+          "startMs": 152720,
+          "endMs": 155200,
+          "speaker": "Serenity",
+          "text": "No, it was bad for me."
+        },
+        {
+          "id": "p1-s52",
+          "startMs": 155200,
+          "endMs": 160000,
+          "speaker": "Serenity",
+          "text": "I lost the most important thing – the key!"
+        },
+        {
+          "id": "p1-s53",
+          "startMs": 160000,
+          "endMs": 162480,
+          "speaker": "Serenity",
+          "text": "You’ve lost it too, haven’t you, Anna?"
+        },
+        {
+          "id": "p1-s54",
+          "startMs": 162480,
+          "endMs": 164170,
+          "speaker": "Serenity",
+          "text": "Haven’t you?"
+        },
+        {
+          "id": "p1-s55",
+          "startMs": 164170,
+          "endMs": 165480,
+          "speaker": "Anna",
+          "text": "I guess."
+        },
+        {
+          "id": "p1-s56",
+          "startMs": 165480,
+          "endMs": 167800,
+          "speaker": "Anna",
+          "text": "So, how does this work?"
+        },
+        {
+          "id": "p1-s57",
+          "startMs": 167800,
+          "endMs": 171420,
+          "speaker": "Anna",
+          "text": "Do I have to fill out a form or something?"
+        },
+        {
+          "id": "p1-s58",
+          "startMs": 171420,
+          "endMs": 172040,
+          "speaker": "Serenity",
+          "text": "No."
+        },
+        {
+          "id": "p1-s59",
+          "startMs": 172040,
+          "endMs": 173800,
+          "speaker": "Serenity",
+          "text": "No forms."
+        },
+        {
+          "id": "p1-s60",
+          "startMs": 173800,
+          "endMs": 182160,
+          "speaker": "Serenity",
+          "text": "Just answer this one question: As a child, what did you use to do to feel happy?"
+        },
+        {
+          "id": "p1-s61",
+          "startMs": 182160,
+          "endMs": 188640,
+          "speaker": "Anna",
+          "text": "When I was little, I used to sing all the time with my family."
+        },
+        {
+          "id": "p1-s62",
+          "startMs": 188640,
+          "endMs": 191120,
+          "speaker": "Anna",
+          "text": "Those were good times."
+        },
+        {
+          "id": "p1-s63",
+          "startMs": 191120,
+          "endMs": 193120,
+          "speaker": "Serenity",
+          "text": "Singing is so joyful!"
+        },
+        {
+          "id": "p1-s64",
+          "startMs": 193120,
+          "endMs": 195200,
+          "speaker": "Serenity",
+          "text": "I used to sing."
+        },
+        {
+          "id": "p1-s65",
+          "startMs": 195200,
+          "endMs": 199640,
+          "speaker": "Serenity",
+          "text": "But now that I’ve started my business, I’ve just been too busy."
+        },
+        {
+          "id": "p1-s66",
+          "startMs": 199640,
+          "endMs": 200640,
+          "speaker": "Serenity",
+          "text": "Too busy!"
+        },
+        {
+          "id": "p1-s67",
+          "startMs": 200640,
+          "endMs": 203680,
+          "speaker": "Serenity",
+          "text": "Anna, why don’t you sing again?"
+        },
+        {
+          "id": "p1-s68",
+          "startMs": 203680,
+          "endMs": 205000,
+          "speaker": "Anna",
+          "text": "I sing everywhere!"
+        },
+        {
+          "id": "p1-s69",
+          "startMs": 205000,
+          "endMs": 206380,
+          "speaker": "Anna",
+          "text": "I sing in the office."
+        },
+        {
+          "id": "p1-s70",
+          "startMs": 206380,
+          "endMs": 207800,
+          "speaker": "Anna",
+          "text": "I sing on the metro."
+        },
+        {
+          "id": "p1-s71",
+          "startMs": 207800,
+          "endMs": 209040,
+          "speaker": "Anna",
+          "text": "I sing in the elevators."
+        },
+        {
+          "id": "p1-s72",
+          "startMs": 209040,
+          "endMs": 210630,
+          "speaker": "Anna",
+          "text": "I sing on the escalators."
+        },
+        {
+          "id": "p1-s73",
+          "startMs": 210630,
+          "endMs": 212200,
+          "speaker": "Anna",
+          "text": "I sing in the bathroom."
+        },
+        {
+          "id": "p1-s74",
+          "startMs": 212200,
+          "endMs": 213560,
+          "speaker": "Anna",
+          "text": "Serenity!"
+        },
+        {
+          "id": "p1-s75",
+          "startMs": 213560,
+          "endMs": 214920,
+          "speaker": "Anna",
+          "text": "Serenity!"
+        },
+        {
+          "id": "p1-s76",
+          "startMs": 214920,
+          "endMs": 218400,
+          "speaker": "Anna",
+          "text": "I really need to find my key."
+        },
+        {
+          "id": "p1-s77",
+          "startMs": 218400,
+          "endMs": 219120,
+          "speaker": "Anna",
+          "text": "Yeah!"
+        },
+        {
+          "id": "p1-s78",
+          "startMs": 219120,
+          "endMs": 223000,
+          "speaker": "Serenity",
+          "text": "Yes, we need to find the key … the key to happiness."
+        },
+        {
+          "id": "p1-s79",
+          "startMs": 223000,
+          "endMs": 223810,
+          "speaker": "Anna",
+          "text": "No, no."
+        },
+        {
+          "id": "p1-s80",
+          "startMs": 223810,
+          "endMs": 227200,
+          "speaker": "Anna",
+          "text": "I just need to find the key to my apartment."
+        },
+        {
+          "id": "p1-s81",
+          "startMs": 227200,
+          "endMs": 228820,
+          "speaker": "Serenity",
+          "text": "I used to know."
+        },
+        {
+          "id": "p1-s82",
+          "startMs": 228820,
+          "endMs": 230550,
+          "speaker": "Serenity",
+          "text": "But now I don't!"
+        },
+        {
+          "id": "p1-s83",
+          "startMs": 230550,
+          "endMs": 232360,
+          "speaker": "Serenity",
+          "text": "Do you, Anna?"
+        },
+        {
+          "id": "p1-s84",
+          "startMs": 232360,
+          "endMs": 233560,
+          "speaker": "Anna",
+          "text": "I don’t know."
+        },
+        {
+          "id": "p1-s85",
+          "startMs": 233560,
+          "endMs": 236740,
+          "speaker": "Anna",
+          "text": "I think I left it in the ladies’ room."
+        },
+        {
+          "id": "p1-s86",
+          "startMs": 236740,
+          "endMs": 239440,
+          "speaker": "Anna",
+          "text": "You know, this isn’t the Lost & Found, is it?"
+        },
+        {
+          "id": "p1-s87",
+          "startMs": 239440,
+          "endMs": 241680,
+          "speaker": "Serenity",
+          "text": "It could be the Lost & Found."
+        },
+        {
+          "id": "p1-s88",
+          "startMs": 241680,
+          "endMs": 242720,
+          "speaker": "Serenity",
+          "text": "I’m lost!"
+        },
+        {
+          "id": "p1-s89",
+          "startMs": 242720,
+          "endMs": 245990,
+          "speaker": "Serenity",
+          "text": "And I used to find joy for people!"
+        },
+        {
+          "id": "p1-s90",
+          "startMs": 245990,
+          "endMs": 248080,
+          "speaker": "Serenity",
+          "text": "I used to find joy!"
+        },
+        {
+          "id": "p1-s91",
+          "startMs": 248080,
+          "endMs": 251240,
+          "speaker": "Anna",
+          "text": "You know, this is a bad time for you."
+        },
+        {
+          "id": "p1-s92",
+          "startMs": 251240,
+          "endMs": 254520,
+          "speaker": "Anna",
+          "text": "I’ll find the Lost & Found myself."
+        },
+        {
+          "id": "p1-s93",
+          "startMs": 254520,
+          "endMs": 255520,
+          "speaker": "Anna",
+          "text": "Bye, thanks."
+        },
+        {
+          "id": "p1-s94",
+          "startMs": 255520,
+          "endMs": 257360,
+          "speaker": "Serenity",
+          "text": "I used to find joy."
+        },
+        {
+          "id": "p1-s95",
+          "startMs": 257360,
+          "endMs": 260530,
+          "speaker": "Serenity",
+          "text": "I used to find joy!"
+        },
+        {
+          "id": "p1-s96",
+          "startMs": 260530,
+          "endMs": 263880,
+          "speaker": "Serenity",
+          "text": "I used to find joy!"
+        },
+        {
+          "id": "p1-s97",
+          "startMs": 263880,
+          "endMs": 267000,
+          "speaker": "Anna",
+          "text": "Ah, I found my key!"
+        },
+        {
+          "id": "p1-s98",
+          "startMs": 267000,
+          "endMs": 268300,
+          "speaker": "Professor Bot",
+          "text": "Oh no."
+        },
+        {
+          "id": "p1-s99",
+          "startMs": 268300,
+          "endMs": 272650,
+          "speaker": "Professor Bot",
+          "text": "Serenity lost her joy."
+        },
+        {
+          "id": "p1-s100",
+          "startMs": 272650,
+          "endMs": 278640,
+          "speaker": "Professor Bot",
+          "text": "But at least Anna found her key!"
+        },
+        {
+          "id": "p1-s101",
+          "startMs": 278640,
+          "endMs": 281327,
+          "speaker": "Professor Bot",
+          "text": "Check out our website for more!"
+        }
+      ]
+    },
+    {
+      "partId": "p2",
+      "segments": [
+        {
+          "id": "p2-s1",
+          "startMs": 0,
+          "endMs": 11180,
+          "speaker": "John Russell",
+          "text": "In today’s workplace, what you learned in the usual college courses may not be very useful later in life."
+        },
+        {
+          "id": "p2-s2",
+          "startMs": 11180,
+          "endMs": 25060,
+          "speaker": "John Russell",
+          "text": "For example, in the field of information technology, workers might never use BASIC, the computer language that was taught in the 1990s."
+        },
+        {
+          "id": "p2-s3",
+          "startMs": 25060,
+          "endMs": 29960,
+          "speaker": "John Russell",
+          "text": "But they might need to know Python or SQL."
+        },
+        {
+          "id": "p2-s4",
+          "startMs": 29960,
+          "endMs": 40180,
+          "speaker": "John Russell",
+          "text": "The answer for students or workers is a professional certificate program, or what is called microcredential."
+        },
+        {
+          "id": "p2-s5",
+          "startMs": 40180,
+          "endMs": 54920,
+          "speaker": "John Russell",
+          "text": "UNESCO, the world’s education agency, defines microcredential as professional certification that centers on a set of learning outcomes in a narrow field."
+        },
+        {
+          "id": "p2-s6",
+          "startMs": 54920,
+          "endMs": 64920,
+          "speaker": "John Russell",
+          "text": "It is completed over a shorter time than a traditional university program, from a week to a month."
+        },
+        {
+          "id": "p2-s7",
+          "startMs": 64920,
+          "endMs": 77360,
+          "speaker": "John Russell",
+          "text": "The most popular fields in which microcredentials appear are data analytics, information technology support and cybersecurity."
+        },
+        {
+          "id": "p2-s8",
+          "startMs": 77360,
+          "endMs": 88480,
+          "speaker": "John Russell",
+          "text": "The courses are often developed by technology businesses like Google, Salesforce, Meta, Intuit and IBM."
+        },
+        {
+          "id": "p2-s9",
+          "startMs": 88480,
+          "endMs": 94600,
+          "speaker": "John Russell",
+          "text": "The businesses provide a certificate when a student finishes the course."
+        },
+        {
+          "id": "p2-s10",
+          "startMs": 94600,
+          "endMs": 109800,
+          "speaker": "John Russell",
+          "text": "Coursera, an online educational service, recently released a report on how microcredentials are preparing students for jobs and affecting higher education schools."
+        },
+        {
+          "id": "p2-s11",
+          "startMs": 109800,
+          "endMs": 124720,
+          "speaker": "John Russell",
+          "text": "It says that 51 percent of colleges in the United States that offer microcredentials also provide school credit and more plan to do so in the next few years."
+        },
+        {
+          "id": "p2-s12",
+          "startMs": 124720,
+          "endMs": 134040,
+          "speaker": "John Russell",
+          "text": "Some colleges include one or more courses leading to microcredentials as part of their usual programs."
+        },
+        {
+          "id": "p2-s13",
+          "startMs": 134040,
+          "endMs": 147800,
+          "speaker": "John Russell",
+          "text": "At Hawaii Pacific University, school leaders say including professional certifications in its business program has sharply increased the number of interested students."
+        },
+        {
+          "id": "p2-s14",
+          "startMs": 147800,
+          "endMs": 158760,
+          "speaker": "John Russell",
+          "text": "For students, Credential Finder offers a way to search for the right microcredential offerings by field of study or industry."
+        },
+        {
+          "id": "p2-s15",
+          "startMs": 158760,
+          "endMs": 170120,
+          "speaker": "John Russell",
+          "text": "For example, if you are studying information science, you may take Google Data Analytics or an IBM Data Analyst course."
+        },
+        {
+          "id": "p2-s16",
+          "startMs": 170120,
+          "endMs": 179160,
+          "speaker": "John Russell",
+          "text": "If you are working toward a degree in business administration, you may take a Google Project Management course."
+        },
+        {
+          "id": "p2-s17",
+          "startMs": 179160,
+          "endMs": 189600,
+          "speaker": "John Russell",
+          "text": "Your university program’s advisors should be helpful in identifying the best certificate programs for your area of study."
+        },
+        {
+          "id": "p2-s18",
+          "startMs": 189600,
+          "endMs": 197560,
+          "speaker": "John Russell",
+          "text": "Be sure to check with your country’s government for more information on special training programs."
+        },
+        {
+          "id": "p2-s19",
+          "startMs": 197560,
+          "endMs": 208240,
+          "speaker": "John Russell",
+          "text": "One example is Ukraine, which is aiming to meet its shortage of skilled workers with its ReSkill UA initiative."
+        },
+        {
+          "id": "p2-s20",
+          "startMs": 208240,
+          "endMs": 213160,
+          "speaker": "John Russell",
+          "text": "It provides help with finding training and employment."
+        },
+        {
+          "id": "p2-s21",
+          "startMs": 213160,
+          "endMs": 224520,
+          "speaker": "John Russell",
+          "text": "Many of the course providers permit learners to use the materials for free, but to earn a certification, payment is required."
+        },
+        {
+          "id": "p2-s22",
+          "startMs": 224520,
+          "endMs": 236200,
+          "speaker": "John Russell",
+          "text": "Coursera has a monthly fee of $59 or a yearly fee of $399 for its Coursera Plus membership."
+        },
+        {
+          "id": "p2-s23",
+          "startMs": 236200,
+          "endMs": 245480,
+          "speaker": "John Russell",
+          "text": "For courses that universities offer for credit, the payment will depend on the price set by the school."
+        },
+        {
+          "id": "p2-s24",
+          "startMs": 245480,
+          "endMs": 257200,
+          "speaker": "John Russell",
+          "text": "The languages available in Coursera are English, German, Spanish, French, Russian and Portuguese (Brazilian)."
+        },
+        {
+          "id": "p2-s25",
+          "startMs": 257200,
+          "endMs": 267520,
+          "speaker": "John Russell",
+          "text": "Other available languages include Japanese, Korean, Chinese (traditional and simplified) and Arabic."
+        },
+        {
+          "id": "p2-s26",
+          "startMs": 267520,
+          "endMs": 283800,
+          "speaker": "John Russell",
+          "text": "The online education service also provides automatic translation of course materials in Swedish, Greek, Polish, Bahasa Indonesian, Italian, Turkish, Thai and Kazakh."
+        },
+        {
+          "id": "p2-s27",
+          "startMs": 283800,
+          "endMs": 285300,
+          "speaker": "John Russell",
+          "text": "I’m John Russell."
+        }
+      ]
+    }
+  ]
+}

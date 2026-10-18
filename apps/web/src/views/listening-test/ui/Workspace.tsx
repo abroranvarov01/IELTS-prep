@@ -20,7 +20,11 @@ import {
   useListening,
 } from "@/entities/listening";
 import { GroupView } from "@/features/answer-listening";
-import { ExamPlayer, PracticePlayer } from "@/features/listening-player";
+import {
+  CheckPlayer,
+  ExamPlayer,
+  PracticePlayer,
+} from "@/features/listening-player";
 import { ChevronIcon, GridIcon, InfoIcon, LineIcon } from "@/shared/ui/icons";
 import { PrimaryButton } from "@/shared/ui/PrimaryButton";
 import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
@@ -74,6 +78,7 @@ function Screen({
 }) {
   const t = useTranslations("listening");
   const reading = useTranslations("reading");
+  const tCheck = useTranslations("levelCheck");
   const { test, session, send } = useListening();
   const clock: ExamClock =
     session.mode === "exam"
@@ -107,9 +112,20 @@ function Screen({
       >
         {t("skipToQuestions")}
       </a>
-      <TestBar confirmExit={session.mode === "exam"}>
+      <TestBar
+        check={Boolean(session.check)}
+        confirmExit={session.mode === "exam" || (session.check && !canSave)}
+      >
         <span className="font-medium">
-          {t("partOf", { number: session.view.part, total: test.parts.length })}
+          {session.check
+            ? tCheck("listening.recordingOf", {
+                number: session.view.part,
+                total: test.parts.length,
+              })
+            : t("partOf", {
+                number: session.view.part,
+                total: test.parts.length,
+              })}
         </span>
         {clock.phase === "checking" && (
           <span
@@ -120,7 +136,19 @@ function Screen({
           </span>
         )}
       </TestBar>
-      {session.mode === "practice" && session.practice ? (
+      {session.check && session.practice ? (
+        <CheckPlayer
+          key={part.id}
+          src={mediaUrl(test, part.audio.src)}
+          recordingNumber={part.number}
+          savedPositionMs={session.practice.positions[part.id] ?? 0}
+          onPosition={(positionMs) =>
+            send({ type: "setPosition", partId: part.id, positionMs })
+          }
+          onLearnerPause={() => send({ type: "checkPause" })}
+          onInterruption={() => send({ type: "checkInterruption" })}
+        />
+      ) : session.mode === "practice" && session.practice ? (
         <PracticePlayer
           key={part.id}
           src={mediaUrl(test, part.audio.src)}
@@ -260,6 +288,7 @@ function BottomBar({
 }) {
   const t = useTranslations("listening");
   const reading = useTranslations("reading");
+  const tCheck = useTranslations("levelCheck");
   const { test, session, send } = useListening();
   const navigator = useRef<HTMLDialogElement>(null);
   const finish = useRef<HTMLDialogElement>(null);
@@ -270,6 +299,11 @@ function BottomBar({
   const at = numbers.indexOf(n);
   const last = at === numbers.length - 1;
   const isDesktop = useIsDesktop();
+  // The level check has no "Mark for review" and finishes "the check".
+  const check = Boolean(session.check);
+  const finishLabel = check
+    ? tCheck("finish.button")
+    : reading("finish.button");
 
   return (
     <nav
@@ -278,20 +312,22 @@ function BottomBar({
     >
       <div className="mx-auto flex max-w-measure flex-col gap-1 tablet:flex-row tablet:items-center desktop:max-w-content">
         <div className="flex flex-wrap items-center gap-1">
-          <button
-            type="button"
-            aria-pressed={flagged}
-            onClick={() => send({ type: "toggleFlag", number: n })}
-            className={`${QUIET_BUTTON} -ms-3`}
-          >
-            <LineIcon className="size-4">
-              <path
-                d="M3.5 14V2.5h8l-1.5 3 1.5 3h-8"
-                fill={flagged ? "currentColor" : "none"}
-              />
-            </LineIcon>
-            {flagged ? reading("flag.remove") : reading("flag.add")}
-          </button>
+          {!check && (
+            <button
+              type="button"
+              aria-pressed={flagged}
+              onClick={() => send({ type: "toggleFlag", number: n })}
+              className={`${QUIET_BUTTON} -ms-3`}
+            >
+              <LineIcon className="size-4">
+                <path
+                  d="M3.5 14V2.5h8l-1.5 3 1.5 3h-8"
+                  fill={flagged ? "currentColor" : "none"}
+                />
+              </LineIcon>
+              {flagged ? reading("flag.remove") : reading("flag.add")}
+            </button>
+          )}
           {isDesktop ? (
             <DesktopParts
               numbers={numbers}
@@ -324,7 +360,7 @@ function BottomBar({
           )}
           {(last || isDesktop) && (
             <PrimaryButton onClick={() => finish.current?.showModal()}>
-              {reading("finish.button")}
+              {finishLabel}
             </PrimaryButton>
           )}
         </div>
@@ -358,7 +394,7 @@ function BottomBar({
               finish.current?.showModal();
             }}
           >
-            {reading("finish.button")}
+            {finishLabel}
           </PrimaryButton>
           <button
             type="button"
@@ -369,7 +405,10 @@ function BottomBar({
           </button>
         </div>
       </Dialog>
-      <Dialog dialogRef={finish} title={reading("finish.title")}>
+      <Dialog
+        dialogRef={finish}
+        title={check ? tCheck("finish.title") : reading("finish.title")}
+      >
         {unanswered > 0 && (
           <p className="mt-2">
             {reading("finish.unanswered", { count: unanswered })}

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { demoTest } from "@/entities/reading/testing";
-import { scoredPositions } from "./scored-positions";
+import { fixtureListeningTest } from "@/entities/listening/testing";
+import { listeningScoredPositions, scoredPositions } from "./scored-positions";
 
 describe("scoredPositions", () => {
   it("pairs every position of the form with its group's type and its outcome, unanswered when none", () => {
@@ -23,5 +24,21 @@ describe("scoredPositions", () => {
     expect(positions.map((p) => p.number)).toEqual(
       Array.from({ length: 40 }, (_, i) => i + 1),
     );
+  });
+});
+
+describe("listeningScoredPositions", () => {
+  it("pairs every position of a Listening form with its type, matching named as the result names it", () => {
+    const positions = listeningScoredPositions(fixtureListeningTest, {
+      1: "correct",
+    });
+    expect(positions).toHaveLength(40);
+    expect(positions[0]).toEqual({
+      number: 1,
+      type: "formCompletion",
+      outcome: "correct",
+    });
+    expect(positions.find((p) => p.number === 23)?.type).toBe("matching");
+    expect(positions[1]?.outcome).toBe("unanswered");
   });
 });

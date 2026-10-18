@@ -145,6 +145,20 @@
       "none": {
         "title": "No starting point on this device yet",
         "body": "The result appears here after you finish the check on this device."
+      },
+      "titleListening": "Your Listening starting point",
+      "listeningRough": "Treat this as a rough starting point: the Listening levels use provisional limits, and this is not a calibrated IELTS band.",
+      "notComparable": "Reading and Listening levels are on separate scales, so they can't be compared with each other.",
+      "withPauses": "<strong>Completed with pauses.</strong> You paused the recording, so this was not a play-once check.",
+      "playbackInterrupted": "The audio stopped because of a playback problem, not because you paused it.",
+      "titleBoth": "Your starting points",
+      "practiseListening": "Practise Listening",
+      "practiseAnyListening": "Any Listening practice is a good next step.",
+      "seeAnswersListening": "See your Listening answers",
+      "retakeListening": "Take the Listening check again",
+      "otherSection": {
+        "reading": "Find your Reading level too",
+        "listening": "Find your Listening level too"
       }
     },
     "levels": {
@@ -156,7 +170,34 @@
       "trueFalseNotGiven": "<en>True / False / Not Given</en> questions",
       "matchingHeadings": "matching headings",
       "sentenceCompletion": "sentence completion",
-      "multipleChoice": "multiple choice"
+      "multipleChoice": "multiple choice",
+      "formCompletion": "form completion",
+      "noteCompletion": "note completion",
+      "matching": "matching",
+      "shortAnswer": "short answers"
+    },
+    "sections": {
+      "reading": "Reading · 2 short texts · 14 questions · about 15 minutes",
+      "listening": "Listening · 2 short recordings · 14 questions · about 15 minutes",
+      "notStarted": "Not started",
+      "inProgress": "In progress: {answered} of {total} answered",
+      "finished": "Finished"
+    },
+    "startSection": {
+      "reading": "Start Reading",
+      "listening": "Start Listening"
+    },
+    "continue": {
+      "reading": "Continue Reading",
+      "listening": "Continue Listening"
+    },
+    "listening": {
+      "playsOnce": "Each recording plays once. You can pause it.",
+      "recordingOf": "Recording {number} of {total}",
+      "play": "Play the recording",
+      "continue": "Continue",
+      "ended": "End of recording {number}",
+      "temporaryAudio": "This check uses temporary recordings with slower speech and only North American voices, so it may be easier than the IELTS Listening test."
     }
   },
   "home": {
@@ -180,7 +221,16 @@
       "seeStartingPoint": "See your starting point",
       "continueCheck": {
         "body": "You stopped partway. Your answers are saved on this device."
-      }
+      },
+      "practiseListening": {
+        "body": "You have a Listening starting point. Keep going with a practice test."
+      },
+      "practiseBoth": {
+        "title": "Practise",
+        "body": "You have starting points in Reading and Listening. Keep going with a practice test."
+      },
+      "openPractice": "Open practice",
+      "seeStartingPoints": "See your starting points"
     }
   },
   "reading": {
@@ -477,7 +527,8 @@
     "start": {
       "audioSize": "Audio: about {size} MB. Wi-Fi is best.",
       "headphones": "Use headphones if you can.",
-      "unsupported": "This device can't play the test's audio."
+      "unsupported": "This device can't play the test's audio.",
+      "dateFormat": "Write numeric dates day first, for example <en>24/04</en> for 24 April."
     },
     "prepare": {
       "title": "Preparing the audio",
