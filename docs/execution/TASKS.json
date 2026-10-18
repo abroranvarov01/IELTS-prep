@@ -3057,7 +3057,8 @@
       "title": "Draft the design values for the shell, navigation, Practice Hub and page compositions",
       "milestone": "M6",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M6-01", "M6-02"],
       "goal": "The visual values the M6 work needs, proposed once, in the design system's own words.",
       "scope": [

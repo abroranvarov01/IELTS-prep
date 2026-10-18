@@ -506,3 +506,78 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 
 ### Tokens this would add
 `--color-status-correct` (`#157A3C`) only. Everything else uses existing or approved values.
+
+## M6 components (navigation, Practice Hub, page compositions)
+
+**DRAFT: awaiting owner approval** (task M6-03, 2026-10-18; decided at M6-04). Visual values for [USER_FLOWS.md, Navigation and Practice Hub (M6)](../product/USER_FLOWS.md#navigation-and-practice-hub-m6) and for the must-fix items of [M6-01-ui-audit.md](../execution/M6-01-ui-audit.md). Reused unchanged: the brand palette, the type scale, spacing, radii, the raised shadow, motion, the focus ring, the breakpoints, the primary button, the quiet button and link, the line icons, `PictureLayout` and the skills picture. Contrast computed with the WCAG 2.x formula. **No new color token**; one layout value is proposed (the task composition's columns, below).
+
+### Navigation (if N1 (b) is approved)
+
+**Phone and tablet below 64rem — the bottom bar** (shell pages only):
+
+| Property | Value | Contrast |
+|---|---|---|
+| Position | Fixed to the bottom of the window, full width, above the page; the device's safe-area inset added below it; page content gets matching bottom padding so nothing hides behind it | |
+| Surface | `surface.base`, a 1 px `border.subtle` line on its top edge (decorative), no shadow | |
+| Layout | 2–4 destinations of equal width; 8 px vertical padding; each destination at least 48 px high | |
+| Destination | A 20 px line icon above its label; label in meta size (0.875rem), weight 500, centered; a long label wraps to a second line and the bar grows (content-driven height, never truncated) | |
+| Inactive | Icon and label in `text.secondary` | 8.2:1 |
+| Current | Icon and label in `ink`, label weight 700, and a 24 × 3 px `brand.primary` bar (`radius.full`) 4 px above the icon; `aria-current="page"`. Current is told by the bar's shape and the weight as well as color (I-8) | `ink` 18.6:1; the bar 4.6:1 against white (non-text, ≥ 3:1) |
+| Pressed | `brand.blushSoft` fill on the destination, `radius.md` | `ink` 15.9:1 |
+| Motion | None (no sliding or bouncing) | |
+
+**From the tablet breakpoint — header links** (all shell pages, including onboarding if N2 (b)): between the logo and the language button, each destination a [quiet button](#quiet-button) with its 16 px icon; current: label weight 700 and a 2 px `brand.primary` underline bar 8 px below the label, plus `aria-current="page"`. The header keeps its approved height; with four destinations and a Russian label it still fits one row at 600 px (to verify in M6-05).
+
+**Icons** (16 px line family, 20 px in the bar): Home: a house; Practice: an open book with a small check; later Progress: three rising bars (reusing the illustration's motif as a line icon); the account: a person.
+
+### Page compositions
+
+Three named compositions, so every later screen picks one instead of inventing its own desktop layout (audit C2). Phones and tablets keep the single 36rem column for all three; the compositions differ from the 64rem breakpoint.
+
+| Composition | Desktop (from 64rem) | Used by |
+|---|---|---|
+| **Picture stage** (existing `PictureLayout`) | Two equal halves 64 px apart: a `brand.blushSoft` picture panel and the content, vertically centered | Onboarding steps, not-found, errors, the level-check page until M7, and (proposed) the test-bar safe and empty states: the retry that cannot start, the review with no results |
+| **Task page** (new) | Within the 1200 px content column: a **main column of 7/12** (about 680 px) holding the page's purpose, start-aligned with the header's logo; a **side column of 4/12** after a 1/12 gap for supporting content; both start at the top. Without supporting content the main column stays start-aligned (never a narrow column centered in an empty canvas) and the page's own width is the main column's | The Reading start screen (main: title, mode choice, Start; side: the test's skill identity and format), results (main: score, honest line, counts, notes, the review action; side: "Mistakes that repeated" and the quiet links), later the level-check intro and result, the mock entry |
+| **List page** (new) | The content column's full width (up to 1200 px); a section heading per group, then its rows in **two columns**, 16 px apart | The Practice Hub; later Progress lists |
+
+The task page's columns are the only new layout value: a 12-column grid with 32 px gaps inside the existing 1200 px column (local to the composition, no new token unless a second component needs it).
+
+Reading order and focus never change with the composition: on desktop the side column comes after the main column in the DOM and for screen readers.
+
+### Practice Hub
+
+| Part | Value | Contrast |
+|---|---|---|
+| H1 | Heading 1, 24 px under the header | |
+| Skill section heading | Heading 2 with the skill's 20 px icon in a 32 px circle of the skill's tint (`skill.reading` tint, `brand.primaryDeep` icon; Listening later: its tint and strong color) | Icon on tint 4.4:1 (non-text) |
+| Test row | One link: `surface.base`, 1 px `border.subtle`, `radius.lg`, 16 px padding, at least 72 px high; title in body weight 700 (`lang="en"`); format in meta `text.secondary`; the state line in meta weight 500 `ink` with a 16 px line icon; a chevron at the end | Title 18.6:1; format 8.2:1 |
+| State icons | Not started: an empty circle; in progress: a circle with a play triangle; finished: a circle with a check, all in the line family and `ink` (not the M5 outcome icons, which mean correctness). The words carry the state | |
+| Row hover / pressed | Boundary `ink` / `surface.warm` fill (as the answer option) | |
+| "See your last results" | The quiet link, 4 px under its row, outside the row's link (no nested interactive elements) | |
+| Storage notice | The M5 note pattern (20 px info icon, body text) under the H1 | |
+| Spacing | 32 px between sections, 12 px between rows on phones, 16 px in the desktop grid | |
+
+### Home (audit C3) — options
+
+Home was recomposed at the owner's request on 2026-10-15 in the onboarding's picture language ([Home: next-action block and goal line](#home-next-action-block-and-goal-line)). The audit's point is that a returning learner sees the same picture and promise as onboarding step 3 and the interim level-check page. Options:
+
+- **(a) Keep the 2026-10-15 composition**, change only the picture: a Home-specific picture of the next step instead of the shared four-skill picture (and beta skills only, audit Q3). Smallest change.
+- **(b) Next action first on phones**: no picture above the action at 320–599 px (the picture stays on desktop), so the action is in the first screen height at 320 px; desktop as (a).
+- **(c) Task page composition on desktop**: the next-action block in the main column, the goal context in the side column.
+
+**Recommendation: (a) + (b)**: it keeps the owner's composition and language, removes the duplication, and brings the action up on small phones. (c) waits for M11, when Home has more than one thing to show.
+
+### Loading, empty and error patterns
+
+- **Loading:** content known at render shows at once; values read from the device after mounting reserve their line (no layout jump) and appear without animation; no spinner for reads under a second; the heading always renders first (as on the M5 results page).
+- **Empty:** a sentence and one action, in the page's own composition; the picture stage only for whole-page empty states.
+- **Errors and notices:** a whole-page error uses the status pages; an inline problem uses the M5 note (20 px `ink` info icon and one sentence), never a red box.
+
+### Motion and pictures
+
+- **Motion** only for state and spatial changes, as approved (≤ 200 ms, off with reduced motion). The navigation never animates.
+- **Pictures** only where they carry meaning: onboarding, whole-page status and empty states, and Home's next action. Never on practice, test, results or review surfaces, never behind text, always decorative and hidden from screen readers. Skill pictures show only skills the product has (audit Q3).
+
+### Tokens this would add
+
+None. The task composition's 12-column grid is a local layout value of the composition; the bottom bar's 3 px indicator follows the M4 current-cell bar.
