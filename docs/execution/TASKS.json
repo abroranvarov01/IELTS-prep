@@ -3824,7 +3824,8 @@
       "title": "Draft the ADR for the Listening content contract and audio assets",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-01"],
       "goal": "Decide how a Listening test, its audio, transcript and images are described and validated, so review (M9) and the content system (M13) need no redesign.",
       "scope": [

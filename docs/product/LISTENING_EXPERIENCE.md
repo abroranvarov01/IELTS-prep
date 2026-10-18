@@ -133,8 +133,9 @@ The stages of a process as boxes joined by arrows, with gaps in some boxes. Desi
 
 A picture (a building plan, a street map, a diagram of a machine or process) with places marked, and questions that name a place or a part. Designed once for both skills: Listening in M8-16, Reading diagram label completion in M8-19.
 
-- **Two answer kinds**, as the content says:
-  - **From a list** (Listening plans and maps; ielts.org: "selecting answers from a list"): the picture shows **letters** at places (A–H); each question names a place ("Café") and is answered with a letter. The control is open question L2's.
+- **Three ways to label**, as the content says:
+  - **Letters on the picture** (Listening plans and maps; ielts.org: "selecting answers from a list"): the picture shows **letters** at places (A–H); each question names a place ("Café") and is answered with a letter. The control is open question L2's.
+  - **Numbers on the picture, answered from a word list**: the picture shows **question numbers** at places, and the group has its own list of words (A–G); each numbered place is answered with a letter from that list, with L2's control.
   - **Typed** (Reading diagram labelling; Listening when the content says so): the picture shows **question numbers** at the labels to complete; each question is a typed field ("Answer 14").
 - **Phone:** the picture at the full width between the gutters, its letters or numbers at least 24 px with a contrasting outline so they read on any image (values M8-05); under it, the questions as a list, each with its control. An **"Enlarge picture"** button opens the picture alone on the full screen, where it can be panned and zoomed with gestures **and** with buttons (zoom in, zoom out, close), so no gesture is required (ACCESSIBILITY.md). The questions stay one tap away (close).
 - **Desktop:** the picture and the questions side by side in the question area (the picture on the start side, the questions on the end side), each scrolling on its own if needed.
