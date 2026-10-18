@@ -6,7 +6,7 @@ Canonical owner of the **Listening interaction model**: the question types the L
 
 General UX rules apply ([UX_PRINCIPLES.md](UX_PRINCIPLES.md)), as do accessibility requirements ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)) and the visual system ([DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md)). The Reading engine this builds on is owned by [READING_EXPERIENCE.md](READING_EXPERIENCE.md); where a Listening type behaves exactly like a Reading type, this file links to it instead of restating it.
 
-**Owned elsewhere:** the content contract and audio assets are M8-03 and M8-04 (ADRs); visual values are M8-05 (DESIGN_SYSTEM.md); flows, step counts and copy are in [USER_FLOWS.md, Listening flows (M8)](USER_FLOWS.md#listening-flows-m8); answer checking, results and review are M9.
+**Owned elsewhere:** the content contract and audio assets are M8-03 and M8-04 (ADRs); visual values are M8-05 (DESIGN_SYSTEM.md); flows, step counts and copy are in [USER_FLOWS.md, Listening flows (M8)](USER_FLOWS.md#listening-flows-m8); answer checking, results and review are M9, drafted in [M9 specifications (drafts)](#m9-specifications-drafts).
 
 ## Decided at the M8-06 gate
 
@@ -76,7 +76,7 @@ Sources checked on 2026-10-18: ielts.org "IELTS Academic format: Listening" and 
 | On computer: how matching and labelling answers are given (clicking a letter, typing it, or dragging) | **Not found** on the pages checked | n/a; this spec does not depend on it (open question L3) |
 | The exact reading time before each part, and the timing of the pauses | **Not found** on the pages checked | M8-02 decides with sources or as product policy |
 
-Spelling, numbers and dates in Listening answers are checking rules, owned by M9 with their sources.
+Spelling, numbers and dates in Listening answers are checking rules, owned by M9 with their sources ([Answer checking (M9)](#answer-checking-m9), draft).
 
 ### Types by interaction
 
@@ -357,3 +357,239 @@ Top to bottom at 360 px:
 9. **P9. Highlighting question text and a note area:** computer-delivered IELTS gives rough paper for notes (IDP); whether it allows highlighting in Listening was not found. Options: (a) neither in M8; (b) highlighting of the question text in both modes; (c) a notes field. **Recommendation: (a)**: the learner can use paper as in the test, and both features need their own design pass; recorded here so a later milestone can add them.
 10. **P10. Exam download before starting:** (a) the whole recording before "Start the recording"; (b) the first part, then the rest while playing. **Recommendation: (a)**: a test of about 30 minutes must not stop because a connection slowed down in Part 3; the wait is shown with its progress, and it happens once. If the size makes the wait too long on 3G, M8-03's bitrate target is the lever, not a mid-exam stop.
 11. **P11. The first audio in Practice:** (a) "Start" opens the screen with the player paused; the learner reads the questions and taps Play; (b) the recording starts with "Start". **Recommendation: (a)**: the recording's own reading pause gives time anyway, but a learner may want to read first, and a page may not start sound reliably after a slow load. This adds one action before the audio (see the step count in USER_FLOWS.md).
+
+## M9 specifications (drafts)
+
+> **STATUS: DRAFT** (M9-01, 2026-10-18). Nothing in this section is approved. The owner answers the decisions in [Decisions for M9-04](#decisions-for-m9-04) at M9-04; until then the recommendations are proposals and no code follows them. Every checking rule below is either sourced or marked **product policy**; every signal describes an observable fact and none states a cause.
+
+**Owned elsewhere:** flows, step counts and copy in uz, ru and en are M9-02 (USER_FLOWS.md, "Listening results and review flows (M9)"); visual values are M9-02 (DESIGN_SYSTEM.md, "M9 components"); the attempt history, its migration and the Listening checking and explanation files are M9-03's ADR (extending [ADR-0008](../architecture/decisions/0008-reading-answer-checking-and-explanations.md) and [ADR-0009](../architecture/decisions/0009-reading-attempts-on-the-device.md)). English strings below are working text for those tasks, as in Reading's M5 section.
+
+**Reading's M5 model is the default.** Where Listening behaves as Reading does after a test, this section links to [READING_EXPERIENCE.md, M5 specifications](READING_EXPERIENCE.md#m5-specifications-drafts) instead of restating it; this section states only what differs and why. The words *answer unit*, *scoring position*, *pre-written* and *first try* mean what they mean there.
+
+**What M8 actually does today** (inspected 2026-10-18):
+- The key (`content/listening/<testId>.key.json`) has `testId`, `version`, `revision`, `review` and per question number `accept` and `evidence` (`{ segment, quote }`, the segment's id in the transcript and the exact phrase in it). The transcript (`<testId>.transcript.json`) has segments with `startMs`, `endMs`, `speaker` and `text`. Neither is loaded by the test screen (ADR-0012 §4, §5).
+- "Choose several" items repeat the same `accept` set under each number (the temporary test: 18–19, 26–27, 39–40; all A and B), as Reading's demo did.
+- A "List TWO …" short-answer question (`numbers` with 2–3 numbers) is stored as **one typed answer per number** (`units.ts`: one `text` unit per number). The temporary test has none: its short answers (9–10, 36–38) are separate questions.
+- A finished session is kept under `listening:<testId>:finished`, one per test, **overwritten** by the next finish; it carries `mode`, `finishReason` (`user`, `timeUp`, `audioFailed`) and, in Exam, `recordingStartedAt`, `pausedMs` and `interruptions` (ADR-0013 §3).
+- The temporary test (`temporary-voa-1`): 40 positions in 37 answer units (34 single units and three "choose two" items); typed answers in Parts 1–4, including two number answers (9: "32", "thirty-two", "thirty two"; 10: "one", "1"); no date, time or money answer.
+
+### Answer checking (M9)
+
+**Official sources checked on 2026-10-18.** Computer delivery is the format simulated ([The IELTS Listening test format](#the-ielts-listening-test-format)), so the rules are read for typed answers.
+- ielts.org "IELTS Academic format: Listening" (the same test as General Training).
+- Cambridge University Press & Assessment, "IELTS Academic FAQs" (cambridgeenglish.org/images/269898-ielts-academic-faqs.pdf), Listening section.
+- IDP, "How to write the date correctly" (ielts.idp.com, IDP staff, 2021-06-28); "How to use numbers in your IELTS test"; "Boost your IELTS Listening score by fixing common punctuation and number mistakes". IDP articles are preparation advice from a test partner, not a marking scheme; they are cited as the best official statement found, and marked so.
+
+| Rule | Status | Source |
+|---|---|---|
+| Each correct answer receives 1 mark; 40 questions | Verified | ielts.org Listening format |
+| Questions are in the order of the recording | Verified | ielts.org; Cambridge FAQs ("true for all question types") |
+| Spelling counts: "You will lose marks for incorrect spelling and grammar." | Verified | Cambridge FAQs (Listening) |
+| British and American spellings are both accepted | Verified | Cambridge FAQs (Listening): "Both UK and US spellings are accepted." |
+| Names of people, places and companies may be spelled out in the recording | Verified | Cambridge FAQs (Listening) |
+| The words to write are usually common words, and need not be changed from the recording | Verified | Cambridge FAQs; ielts.org: "You do not have to change the words in the recording in any way." |
+| An answer over the word limit is marked incorrect | Verified | ielts.org; Cambridge FAQs (Listening): "Answers which are over the word limit will be marked as incorrect." |
+| Hyphenated words count as one word; contractions are not tested | Verified | ielts.org Listening format |
+| Writing more than one answer where one is asked for gets no mark | Verified | Cambridge FAQs (Listening; the M5 Reading rule has the same source) |
+| Numbers may be written in figures or in words; figures are advised to avoid spelling mistakes | Verified (IDP article) | IDP "How to use numbers": "While you can write numbers in all the above formats, it is best to avoid writing the numbers out as words" |
+| Dates: "24th April, April 24 and 24 April are all correct"; numeric dates such as "19/02 or 02/19" are accepted and count as one word | Verified (IDP article) | IDP "How to write the date correctly" |
+| Times: hours and minutes separated by a colon **or** a full stop | Verified (IDP article) | IDP "Fixing common punctuation and number mistakes" |
+| Money: a symbol ($, £) or the word; measurements may be abbreviated when written as numbers | Verified (IDP articles) | IDP "How to use numbers" |
+| **Capital letters** in Listening answers | **Not found** on the official pages checked. IDP states it for Reading (READING_EXPERIENCE.md); Cambridge's statement on capitals is about Writing; preparation sites disagree about names | Product policy (LD3) |
+| **Thousands separators** ("1,500" and "1500") | **Not found** as a marking rule (IDP advises the comma) | Product policy: listed variants (LD4) |
+| **Abbreviations** other than measurement units ("Rd", "St", "Jan") | **Not found** | Product policy: accepted only when listed (LD4) |
+| "List TWO …" typed answers in either order | **Not found** for typed answers; the official keys say "IN EITHER ORDER" for "Choose TWO letters" (M5) | Product policy (LD6) |
+| Articles and the word limit; a trailing full stop | **Not found** (as in Reading) | Product policy, as Reading's D4 and D2 |
+
+**Per type** (each question number is one scoring position worth one mark; outcome per position `correct`, `incorrect` or `unanswered`, as Reading):
+
+| Interaction | Listening types | Correct when |
+|---|---|---|
+| Choose one | Multiple choice (one answer) | The chosen option is the key's option (Reading) |
+| Choose several | Multiple choice with more than one answer | Reading's D5 unchanged: one mark per distinct correct letter, any order, at most `choose`; one answer unit; the learner sees the unit's outcome and each option's correctness |
+| Choose from a list | Matching; plan, map and diagram labelling from letters or a word list; completion gaps with `answer.kind: "choose"` | The chosen option is one of the key's accepted options |
+| Type words | Form, note, sentence, table and flow-chart completion; labelling with typed labels; short answers | The normalized answer equals one normalized accepted variant |
+| Type words, several answers to one question | "List TWO / THREE …" short answers (`numbers`) | LD6 |
+
+**Normalization of typed answers** (LD2): exactly Reading's, in the same function: NFC; case ignored (in Listening product policy, LD3); spaces trimmed and collapsed; typographic apostrophes and the Unicode hyphens U+2010 and U+2011 normalized; **one trailing full stop** ignored; all other punctuation kept; never ignored or corrected: spelling, word form, word order, missing or extra words, articles. Listening gets its own checking-rules version (M9-03's ADR decides where it lives), so a Listening rule change never rechecks Reading attempts.
+
+**Accepted variants are pre-written in full** (Reading's D3): no fuzzy matching, nothing generated when checking. The Listening key lists, where they answer the question:
+- British and American spellings (sourced);
+- a number in figures and in words (sourced), with and without thousands separators ("1,500", "1500"; policy);
+- **dates** in the forms IDP names: "24 April", "24th April", "April 24", "April 24th", and the numeric forms "24/04" and "04/24" (and "24/4", "4/24"); with the year when the answer has one. A numeric form that also reads as another date ("05/04" for 5 April is also 4 May in the other order) is accepted, as IDP accepts both orders; the explanation says which date the recording gives (policy, following the source);
+- **times** with a colon and with a full stop ("6:45", "6.45"); "am" and "pm" only where the question does not already give them and the limit allows them;
+- **money** with the symbol and with the word ("$4.50", "4.50 dollars") as the recording says it;
+- **measurements** with the unit written or abbreviated ("5 kilograms", "5 kg", "5kg") (sourced);
+- **names spelled out in the recording**: only the spelling given (no variants), because the recording spells it (policy);
+- optional words as separate full variants, singular and plural only when both answer the question (Reading).
+The validator rejects a variant that is empty, a duplicate after normalization, or over the word limit (Reading's rule).
+
+**Word limits.** As Reading: every space-separated part is a word, a hyphenated part is one word (sourced), and where the instruction allows "AND/OR A NUMBER", one part that is a number counts as the number. **What a number part is** (LD5): digits, optionally with one leading currency symbol and with the separators `/`, `.`, `:` and `,` between digits ("32", "19/02" (sourced: a numeric date counts as one word), "6:45", "4.50", "$4.50", "1,500"; the last four are policy). A unit written after a number ("5 kg") is a word. Articles count as words (Reading's D4, policy). The Practice warning keeps its separate count (M8).
+
+**"List TWO …" short answers** (LD6, policy): the answers to one question are checked **together, in either order**: each number's key entry lists the accepted variants of one thing, and the marks are the largest number of the learner's answers that can each be matched to a different thing (with 2–3 answers this is checked exhaustively). Like a "choose several" item, the question is **one answer unit** in review, retries and repeated-mistake counts, shown as "1 of 2 correct" when partly correct, never as a positional mark on a particular field. The same answer typed twice earns one mark. Contract change: none to the test or the session; the key's entries for such a question may differ (unlike "choose several"); the validator requires that no variant appears under two of its numbers.
+
+**Unanswered questions, the score and denominators:** exactly Reading's (M5): "No answer" is its own status, 0 marks, in the denominator, in review and retries, out of repeated-mistake counts; "27 of 40 correct" with "Not correct: 9 · No answer: 4"; a retry "9 of 13 now correct", never out of 40 and never combined.
+
+**No band** (LD1): ielts.org publishes average raw-score-to-band tables for Listening, as for Reading, and says they vary by test version; the temporary test is not calibrated, and its recordings are not IELTS recordings (slow Learning English, one accent family, [Known differences](#source-of-the-temporary-test-m8-07-checked-2026-10-18)). So no band and no "Estimated band". The results page labels the score as a practice score; for a temporary test it also says it is a temporary practice test (copy M9-02).
+
+**Where checking runs** (Reading's D7): in the browser, on the results and review pages only; the key and the transcript are never loaded by the test screen (ADR-0012).
+
+### When results are available (M9)
+
+As Reading's table ([When results are available (M5)](READING_EXPERIENCE.md#when-results-are-available-m5)), with these Listening cases:
+
+| Situation | Behavior |
+|---|---|
+| Exam, the 2-minute check ends with the screen open, or while away | Finishes by itself (M8); the results page opens with "Time is up." (on the next visit when away) |
+| Exam, "Finish without the rest" after an audio failure (`finishReason: "audioFailed"`) | The attempt is checked and scored like any other; the results page says the recording was interrupted, so it was not a full exam sitting (LD11); questions after the point the recording reached carry `notReached` |
+| Exam with `interruptions` > 0 that was finished normally | The score as usual and the same "interrupted" line (the learner continued after a stop) |
+| Exam finished early with "Finish test" during the recording | Checked as usual; unanswered questions after the point the recording reached carry `notReached` |
+| An M8 finished session on the device (`listening:<testId>:finished`) | Imported once, without a result, checked when its results are first shown, with the "checked later" note; the test's first try becomes **unknown** (M8 kept only the latest finish), as Reading's D25 |
+| An unfinished M8 session | Resumed unchanged and committed like any M9 attempt when finished |
+| The test link after finishing | The start screen with "See your last results" (Reading's D6) |
+| During a test, either mode | No checking, no explanations, no transcript |
+
+### Results page (M9)
+
+Reading's results page ([Results page (M5)](READING_EXPERIENCE.md#results-page-m5)) at `/{locale}/listening/{testId}/results[?attempt={id}]`, inside the shell, with these differences:
+- the meta line names the mode, and for a temporary test "Temporary practice test";
+- the honest line says it is a practice score on a practice test, not an IELTS band (copy M9-02);
+- for an interrupted Exam, the line "The recording was interrupted, so this was not a full exam sitting." (the M8 finished-page line), under the score;
+- no per-part breakdown on the results page (LD18); the review navigator shows each part's counts.
+Everything else as Reading: the red button that names what it opens, "Mistakes that repeated", "Try again", "Start again", one primary action, no band, gauge, chart or celebration, focus on the H1.
+
+### Evidence-first review (M9)
+
+**Purpose:** for each answer unit, what you answered, what was accepted, **where in the recording it was said, the recording itself at that point, and the words**, and why. Correct and unanswered units are reviewed as well as mistakes (Reading).
+
+**The signature object is the audio timestamp:** "Part 2 · 3:14", the start time of the key's evidence segment (`startMs` of `evidence[].segment`), shown with a **"Play from 3:14"** control. Listening's evidence is something heard, so the review lets the learner hear it again before reading it.
+
+**Phone** (`/{locale}/listening/{testId}/review?attempt={id}&q={n}&set={mistakes|all}`, the test-screen layout with the test bar):
+1. **Test bar:** "Results" on the start side (back to this attempt's results), "Part 2 of 4" in the middle, no timer.
+2. **The review player** (sticky under the test bar, as the test's player): the Practice controls (Play / Pause, Back 5 s, Forward 5 s, the slider with its times, Speed; LD9) for **the current card's part**. It never starts by itself: opening the review or changing card loads the part paused at the card's evidence position. It streams the part's file as Practice does (the Exam download is deleted when the Exam finishes, ADR-0013); while it loads: "Loading the audio…"; if it cannot load: "The audio couldn't load." with "Try again", and the card, timestamp and transcript still work (the review never depends on the audio).
+3. **The review card** (`main`; Listening has no passage to share the screen with, so the card has the page, not a sheet), one per answer unit, in this order:
+   1. "Question 14 of 40" (or "Questions 18–19") and the unit outcome as icon and word (Reading's D11 marks); in a sequence, "To review: 3 of 12".
+   2. **The question in its context**, read-only, as in the test (English): the group's instruction with its word limit; for a completion gap, the line, table row (as the phone row card) or flow-chart step that contains it, with the learner's answer in the gap's place; for labelling, the picture with the markers and "Enlarge picture", the current question's marker outlined (not by color alone); for choice types, the options with Reading's labels ("Your answer, correct", "Your answer, not correct", "Correct answer"). Typed types: "Your answer" (as typed), "Correct answer" (the first variant) and "Also accepted" (the others). An unanswered unit: "You did not answer this question." with its `timeUp` or `notReached` note.
+   3. **Evidence:** "Heard in Part 2 at 3:14" and **"Play from 3:14"** (LD8): plays from 3 seconds before the segment's start to its end, then pauses; the player then continues normally if the learner taps Play. Under it, **the transcript excerpt**: the speaker's role and the segment's text (English, `lang="en"`), with the key's quote **marked** (`<mark>`, an underline and the highlight background, never color alone; the mark has the accessible description "Evidence"). A unit with two evidence entries shows two timestamps and two excerpts, in recording order. For a "choose several" or "List TWO" unit, each accepted answer's evidence is labelled with its letter or answer.
+   4. **"Show the transcript of Part 2"** (a disclosure, LD7): the whole part's transcript, segments with their times, the current evidence segment marked and scrolled into view; each segment's time is a button that plays from there.
+   5. **Why:** the pre-written explanation in the interface language, then "Explain simpler" (Reading's disclosure).
+   6. **Notes:** the unit's observable signals, one sentence each ([Error Intelligence](#error-intelligence-m9)).
+   7. Footer: Previous and Next within the sequence; "All questions" in the test bar's place opens the navigator with outcome badges, grouped by part, each part with its count ("Part 3: 6 of 10 correct").
+- **Sequences:** Reading's D8 unchanged (the red button opens units not fully correct or unanswered, the navigator switches to all).
+- **The screen follows the review, not the audio:** changing card moves the player to that card's evidence position, paused; playing never changes the card (the test's L4 rule, kept).
+
+**Desktop** (from 1024 px; LD10): the test bar; the player as a band under it; **the transcript column** (the start side, 55%) with the current part's whole transcript, the evidence segment marked and scrolled into view on card change (instantly with reduced motion; Reading's D9), each segment's time a play button; **the card column** (45%) with the current card (items 1, 2, 3 without the excerpt, which is in the transcript column, 5, 6); the navigator bar along the bottom with outcome badges, the parts and their counts, Previous and Next, as in M5. Tablet (600–1023 px) keeps the phone layout.
+
+**Languages:** the question, options, answer words, the learner's answer, the accepted answers, the transcript and its speaker roles are English test content (`lang="en"`); labels, notes, the explanation and its simpler version follow the interface language (Reading's D13), with English quotes as `lang="en"` spans.
+
+**Focus and keyboard:** as Reading's review: focus to the card's heading on opening and on every card change; "Play from 3:14" is a button whose name includes the part and time ("Play from Part 2, 3 minutes 14 seconds"), and pressing it keeps focus; the player keeps its M8 order and names; the transcript is one Tab stop for reading, plus one per segment time button inside the disclosure (desktop: in the column); Escape closes the navigator. No keyboard shortcuts (P7). Nothing is announced when the audio plays or stops.
+
+**Empty and error states:** Reading's (no attempt on this device, unknown attempt, earlier content version, unknown question number, storage blocked, unknown test). An earlier content version also covers a changed audio file, because a changed file changes the test's `version` (ADR-0012 §1): stored times would point at the wrong audio, so no review is offered.
+
+**Retries are reviewed the same way.** Exam and Practice attempts are reviewed the same way (Listening has no pins).
+
+**Explanations** (M9-07; Reading's D12 and authoring rules, with these changes): grounded only in **the transcript**, the question and the key; name the words heard (quoted, at most 8 words) and the question words they match; for choice, matching and labelling types, say briefly why a tempting option does not fit when the recording mentions it (the `distractors` data, LD13), with its time; for a typed answer, mention the word limit or a spelled-out name when that is what the question turns on; never a fact or sentence that is not in the transcript. English first, then ru and uz from it, all `aiDraft`; the same character limits (450, 250); the M15 human reviews as for Reading. Evidence times are checked against the audio when the explanations are drafted (M9-07), because the transcript times are hand-authored (ADR-0012).
+
+**Transcripts and accessibility:** ACCESSIBILITY.md leaves whether full transcripts are offered, and when, as a product decision (TBD). LD7 is that decision for **review**; it does not decide transcripts as an alternative for deaf or hard-of-hearing learners **during** a test, which stays TBD.
+
+### Error Intelligence (M9)
+
+**Three layers, never mixed** (Reading's D14): observable signals, content tags (describe the question), learner-confirmed causes (none in M9). Nothing infers the learner's reasoning. Never: "You misheard", "You didn't catch the number", "You were distracted", "Your spelling is weak", "You guessed", "You lost concentration".
+
+**Observable signals** (per answer unit; computed from the answer, the key, the test, the transcript and the attempt's own times; no signal changes a mark; LD12):
+
+| Signal | Detection rule | What the note says (working text) | Example (temporary test) |
+|---|---|---|---|
+| `oneLetterAway` (shown as "Possible spelling issue") | Reading's rule unchanged: typed; incorrect; one letter added, missing or changed from a normalized variant of at least 4 letters | "Your answer is one letter different from the accepted answer." | Question 14 "logistcs" (accepted "logistics") |
+| `wordLimit` | Reading's rule, with the number parts of LD5 | "Your answer has more words than the instruction allows." | Question 3 "big wheels" (ONE WORD AND/OR A NUMBER) |
+| `notInTranscript` | Typed; incorrect; the key marks the question `fromRecording`; a word of the answer (letters only, case ignored) is not in the transcript of the question's part | "The word "car" is not in the transcript of Part 1." | Question 1 "car" (the recording says "bus") |
+| `soundAlikeNumber` | Typed; incorrect; the answer and an accepted variant are numbers that differ only as a "-teen" and a "-ty" number (13 and 30 … 19 and 90), in figures or words | "13 and 30 sound alike. The recording says 30." | A question whose answer is 30, answered 13 (none in the temporary test) |
+| `sameDigitsDifferentForm` | Typed; incorrect; the answer's digits, in order, equal an accepted variant's digits, and the answers differ otherwise | "Your answer has the same digits as the accepted answer, written differently." | "6-45" where "6:45" and "6.45" are accepted |
+| `mentionedOption` | Choice, matching, labelling, or a typed answer; incorrect; the answer is one the key lists in the question's `distractors` (an option id, or a text compared after normalization) | "The recording mentions [option] at 2:40, but the answer is given at 3:14." | Question 7, if the key lists option A as mentioned before the answer B |
+| `timeUp` | Unanswered, in an Exam finished by the end of the check time | Reading's note | Questions 38–40 empty when the check time ran out |
+| `notReached` | Unanswered, in an Exam finished before the recording reached the unit's first evidence segment (the clock at `finishedAt`, from `recordingStartedAt` and `pausedMs`) | "The recording had not reached this question when the test finished." | Questions 31–40 after "Finish without the rest" in Part 3 |
+
+- Reading's `pinnedElsewhere` and the four NOT GIVEN signals do not exist in Listening (no pins, no statement types).
+- `notInTranscript` says "the transcript", not "the recording": the transcript is what the app can compare with, and a transcript can differ from the audio in small ways until it is reviewed against it (ADR-0012 §4).
+- `mentionedOption` describes the recording and the key ("the recording mentions"), never the learner's attention.
+- `soundAlikeNumber` describes the numbers ("sound alike"), never what the learner heard.
+
+**Content tags** (pre-written in the key, describe the question, optional, only where true; an item's numbers carry the same tag; LD14):
+- `paraphrase`: the question expresses what the recording says in other words (Reading's tag);
+- `spelledOut`: the answer is a name or word spelled letter by letter in the recording (sourced: names "may be spelled out");
+- `correction`: a speaker gives one answer and then corrects it ("Tuesday — no, sorry, Wednesday"); the corrected word goes into `distractors`.
+
+**Key additions** (covered by the key revision; the file format is M9-03's ADR): `fromRecording` per typed question (the answer is a word or words from the recording, as Reading's `fromPassage`), the optional content tag, and `distractors`.
+
+**`distractors`** (LD13, a key field covered by the key revision): per question, zero or more `{ option?, text?, segment, quote }`: an option id or a typed text that the recording mentions but is not the answer, with the segment and the exact quote where it is mentioned (validated like evidence). Pre-written with the key (`aiDraft`), never detected by searching the transcript for option words, which would mark coincidences as traps.
+
+**Repeated-mistake categories** (at most 8; counts are answer units; unanswered units belong to none; LD15):
+
+| Category | Counts | Out of ("of N") |
+|---|---|---|
+| Possible spelling issues | `oneLetterAway` | Answered typed units |
+| Too many words | `wordLimit` | Answered typed units |
+| Words not in the transcript | `notInTranscript` | Answered typed units with `fromRecording` |
+| Answers with numbers, dates or times | Units not fully correct | Answered typed units whose accepted answers contain a digit |
+| An option the recording also mentions | `mentionedOption` | Answered units with `distractors` |
+| Answers given after a correction (content tag) | Units tagged `correction` not fully correct | Answered units tagged `correction` |
+| Names spelled out in the recording (content tag) | Units tagged `spelledOut` not fully correct | Answered units tagged `spelledOut` |
+| Questions that use other words (content tag) | Units tagged `paraphrase` not fully correct | Answered units tagged `paraphrase` |
+
+"Answers with numbers, dates or times" is defined by the **key** (an accepted answer contains a digit), not by a guess about the answer, so it is a fact about the questions. `soundAlikeNumber` and `sameDigitsDifferentForm` stay notes on their cards; they fall inside this category when the answer is not correct.
+
+**The first try and when a mistake counts as repeated:** Reading's rules unchanged ([Error Intelligence (M5)](READING_EXPERIENCE.md#error-intelligence-m5)): the first try is stored per test (and per skill; the ADR decides the key), never guessed; unknown after an M8 import or when other entries exist; a category repeats at **≥ 3 answer units from ≥ 2 question groups** of the first try (a **proposed product heuristic, not a validated diagnosis**); at most two shown, with the scope sentence ("this test on this device", "one test is not enough to show a lasting weakness"); "not enough evidence" otherwise; patterns unavailable when the first try's content version is not the current one. In Listening a part often has only two or three groups, so the "≥ 2 groups" condition matters: one group shares one instruction and often one stretch of recording. **Listening and Reading are never combined**: categories are per test and per skill; evidence across tests and skills is M11's.
+
+**Fixed tips** (one per category, catalog copy, restating the instruction or a sourced rule): spelling loses the mark and both UK and US spellings are accepted; the word limit and that going over loses the mark; the words to write are the recording's words; numbers may be written in figures, and the date and time forms that are accepted; the recording may mention other options before or after the answer; listen for corrections; names may be spelled out letter by letter; compare the question's words with the words in the transcript. The only action offered is to practise those questions again.
+
+### Targeted practice (M9)
+
+Reading's D16 unchanged ([Targeted practice (M5)](READING_EXPERIENCE.md#targeted-practice-m5)), at `/{locale}/listening/{testId}/retry?of={id}&q={numbers}` (LD17):
+- every unit of the source test attempt not fully correct or unanswered, or a repeated-mistake card's units, whole and once ("List TWO" questions and "choose several" items count their positions);
+- **Practice** with only those units: the Practice player and its controls, the parts that contain them, answers empty, no timer; the navigator, Previous and Next only within the subset; **no transcript** during the retry (it is a test session; P4);
+- results "Your retry", "9 of 14 now correct", the honest line that these were attempted before, the review, "Back to your test results"; never counted in repeated mistakes, never out of 40, never combined;
+- validated against the source as Reading's (missing source, earlier content version, questions not allowed); one retry in progress per test.
+
+### The level check's Listening section (M9)
+
+Within the approved M7 model ([LEVEL_CHECK.md](LEVEL_CHECK.md), D1–D14), which already has one section per skill and a result record per section ([ADR-0011](../architecture/decisions/0011-level-check-forms-results-and-storage.md)). What M9 decides for Listening:
+
+- **Form** (LD19): **two short recordings of about 4 minutes each**: an everyday conversation (Part 1 style), then a talk or discussion on an educational subject (Part 3 or 4 style), rising in difficulty; **7 questions each, 14 in all**, in 4 to 5 types from: form or note completion, multiple choice (one answer), matching, sentence completion, short answer. Plan, map and diagram labelling are not used in the check (a picture per form and its text alternative cost more than they add to 14 questions). About 15 minutes including reading time. A Listening form in ADR-0012's contract with its own id, version, shape (2 parts × 7), key, transcript and explanations.
+- **Playback** (LD20): each recording plays **once**, started by a tap, with **Pause** (a phone call or a knock at the door must not ruin a first contact with the product) but **no seeking, no Back or Forward, no replay and no speed**; questions stay answerable after the recording ends, untimed, until "Finish" (M7's no time pressure). Hearing it once is what the check measures; replaying would measure something else.
+- **No help during the section:** no feedback, no explanations, no transcript, no "Mark for review" (M7).
+- **Audio** (LD21): original audio production is deferred to M13 (M8-06 amendment), and M9-12 says the items' audio is produced "as decided at M8-06". So the form uses **two more public-domain VOA Learning English recordings, not used in the temporary test**, with original questions written by Claude (`aiDraft`) and checked against the audio, labelled as temporary with the VOA attribution, under the terms recorded in M8-07; replaced by the owner's or original audio in M13 as a new form version.
+- **Scoring and result:** M7's model unchanged: the score with this section's checking rules; the starting level by the same product-policy thresholds (**0–6 / 7–10 / 11–14 of 14**) and level names; "what to practise first" by question type (≥ 3 positions of the type and at least half not correct); no level when more than half is unanswered; the scope sentence; a `skill: "listening"` result record with the form, checking-rules and level-rules versions (ADR-0011). Whether 14 Listening questions support the same thresholds is unknown, as it was for Reading; the thresholds are policy.
+- **Two skills on the result** (LD22): the sections are side by side ("Your Reading starting point", "Your Listening starting point"), never averaged and with no overall level; each section can be taken, left, resumed and retaken on its own; the intro lists both sections with their states and offers the first unfinished one as the primary action. The next action after a finished section stays the Practice Hub (M7's D11), opened at that skill; which skill to practise first across both is M11's.
+- **Review after the section:** the M9 review above, with the excerpt and the transcript (the section is finished, so nothing leaks).
+- **Existing Reading results stay valid** (M9-12 tests it): nothing in the Reading section, its records or its versions changes.
+
+### Decisions for M9-04
+
+Each with its options and a recommendation. Rules marked **policy** have no official source.
+
+| # | Decision | Options | Recommendation |
+|---|---|---|---|
+| LD1 | Band for Listening practice tests | (a) raw score and the honest line, no band; (b) an "Estimated band" from ielts.org's average table | **(a)**: the temporary test is uncalibrated and not IELTS audio; a band would be false precision |
+| LD2 | Normalization | (a) Reading's D2 exactly, one shared function, Listening's own rules version; (b) Listening-specific rules (ignore commas in numbers, unify time separators) | **(a)**: one implementation; number, date and time forms are handled by listed variants (LD4) |
+| LD3 | Capital letters (**policy**) | (a) ignored, as in Reading; (b) required for names | **(a)**: no official Listening source requires them, Reading's verified rule ignores them, and computer-delivered typing makes capitals a keyboard detail |
+| LD4 | Numbers, dates, times, money, measures, abbreviations (**partly policy**) | (a) every accepted form listed in the key, following the sourced forms and the checklist above; abbreviations only when listed; (b) parsers for dates, times and numbers in checking | **(a)**: consistent with Reading's D3 and D22, reviewable, nothing guessed; cost: longer keys, and a missed form is wrong until a key revision |
+| LD5 | What counts as "A NUMBER" in a word limit (**partly policy**) | (a) digits with an optional leading currency symbol and `/ . : ,` between digits, one part; (b) digits only | **(a)**: numeric dates are sourced as one word; times, prices and decimals follow the same logic |
+| LD6 | "List TWO …" typed answers (**policy**) | (a) either order, checked together, one answer unit; (b) each field against its own number's key | **(a)**: the question asks for a list without an order, as "Choose TWO" letters are "in either order" in official keys |
+| LD7 | When transcripts are visible (the ACCESSIBILITY.md TBD, for review) | (a) review only: the evidence excerpt on every card and the whole part's transcript (phone: a disclosure; desktop: a column); never during a test, a retry or the level-check section; (b) also after each part in Practice; (c) none, excerpts only | **(a)**: the transcript is the evidence, and after finishing it gives nothing away; (b) reopens the approved P4; transcripts during a test for deaf or hard-of-hearing learners stay TBD |
+| LD8 | Replaying the evidence | (a) from 3 s before the segment to its end, then pause; (b) the segment exactly; (c) from the start of the part | **(a)**: the lead-in gives the context the learner heard (the 3 s matches Practice's resume rule) and it stops where the evidence ends |
+| LD9 | The review player | (a) the Practice controls for the card's part, never autoplaying, streaming; (b) only "Play from" buttons, no player | **(a)**: one familiar player; the learner can listen around the evidence |
+| LD10 | Desktop review layout | (a) the transcript column (55%) and the card column (45%), as Reading's passage and card; (b) one column as the test | **(a)**: the transcript is Listening's passage in review |
+| LD11 | Interrupted or early-finished Exam attempts | (a) scored as usual with the "interrupted" line and `notReached` notes; (b) no score for an interrupted sitting | **(a)**: the answers given are real; the line keeps the result honest |
+| LD12 | The signals | the eight in the table above | As listed; each is a fact about the answer, the key, the transcript or the times |
+| LD13 | Where "mentioned options" come from | (a) a pre-written `distractors` key field with segment and quote; (b) searching the transcript for option words; (c) no such signal | **(a)**: (b) would mark coincidences as traps |
+| LD14 | Content tags | `paraphrase`, `spelledOut`, `correction` | As listed; they describe the question |
+| LD15 | Repeated-mistake categories and threshold (**policy**) | the eight categories above; ≥ 3 units from ≥ 2 groups of the first try; at most two shown | As listed: Reading's heuristic unchanged, not a diagnosis |
+| LD16 | The first try, M8 finished sessions | Reading's rules; an imported M8 finish makes the first try unknown | As listed (Reading's D15 and D25) |
+| LD17 | Retries | Reading's D16 with the Practice player and no transcript | As listed |
+| LD18 | A per-part breakdown on the results page | (a) none; the review navigator shows each part's counts; (b) "Part 1: 8 of 10" lines under the score | **(a)**: one number and one action on the results page; the parts are one tap away in review |
+| LD19 | The level check's Listening form | (a) two recordings of about 4 minutes, 7 questions each, 4–5 types, no labelling; (b) one Part-length recording with 10 questions; (c) four short recordings | **(a)**: the M7 shape (14 questions, two texts of rising difficulty), so the thresholds and the result model stay the same |
+| LD20 | Playback in the level check | (a) once, with Pause, no seeking, replay or speed, untimed answering; (b) once with no pause (Exam); (c) Practice controls | **(a)**: measures listening once, without M7's time pressure and without punishing an interruption |
+| LD21 | Audio for the level-check form | (a) two more public-domain VOA recordings with original questions, labelled temporary, replaced in M13; (b) a human recording task now (M9-12 adds it) | **(a)**: follows the M8-06 amendment; (b) brings audio production forward from M13 |
+| LD22 | Two skills on the level-check result | (a) side by side, independent sections, no overall level, the next action the Practice Hub at the finished skill; (b) one combined result | **(a)**: M7's "no overall level, ever" |
+
+If an answer changes the milestone's scope (for example LD21 (b), or LD7 (b) or (c)), the later M9 tasks are adjusted before work continues (M9-04).
