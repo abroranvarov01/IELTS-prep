@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { readLevelCheckState } from "@/entities/level-check";
 import { Link } from "@/shared/i18n/navigation";
-import { ReadingIcon } from "@/shared/ui/icons";
+import { ListeningIcon, ReadingIcon } from "@/shared/ui/icons";
 import { Illustration } from "@/shared/ui/illustrations";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
@@ -40,7 +40,7 @@ export async function Home() {
       </div>
       <h2 className="mt-8 text-heading-2 font-bold">{t("home.chooseSkill")}</h2>
       <ul className="mt-4 grid gap-4 desktop:grid-cols-3">
-        {/* Only skills with tests (N3): Reading now, Listening from M8. */}
+        {/* Only skills with tests (N3): Reading and Listening. */}
         <li>
           <Link
             href="/practice"
@@ -56,6 +56,24 @@ export async function Home() {
             </span>
             <span className="text-meta text-text-secondary">
               {t("home.skills.reading")}
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/practice"
+            className="flex h-full flex-col gap-3 rounded-lg border border-border-subtle bg-surface-base p-[1.25rem] shadow-soft transition-colors hover:border-brand-blush active:bg-surface-warm"
+          >
+            <span className="flex items-center gap-3">
+              <span className="flex size-10 items-center justify-center rounded-full bg-skill-listening-tint text-skill-listening">
+                <ListeningIcon />
+              </span>
+              <span className="text-heading-3 font-bold">
+                {t("practice.skill.listening")}
+              </span>
+            </span>
+            <span className="text-meta text-text-secondary">
+              {t("home.skills.listening")}
             </span>
           </Link>
         </li>

@@ -3,7 +3,8 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { useIsDesktop } from "@/shared/ui/use-is-desktop";
-import { HeadphonesIcon, SpeakerIcon } from "./icons";
+import { ListeningIcon } from "@/shared/ui/icons";
+import { SpeakerIcon } from "./icons";
 import { useAudio } from "./use-audio";
 
 export type ExamPlayerProps = {
@@ -79,9 +80,9 @@ export function ExamPlayer({
     >
       {/* eslint-disable-next-line jsx-a11y/media-has-caption -- Captions of a Listening test are its transcript and would give the answers away (LISTENING_EXPERIENCE.md P4); owner exception, 2026-10-18. */}
       <audio ref={ref} src={src} preload="auto" />
-      <div className="mx-auto flex min-h-10 max-w-measure items-center gap-3">
+      <div className="mx-auto flex min-h-[2.5rem] max-w-measure items-center gap-3">
         <span className="text-skill-listening">
-          <HeadphonesIcon />
+          <ListeningIcon />
         </span>
         <p className="font-medium">
           {status === "loading" || status === "buffering"
@@ -111,7 +112,7 @@ export function ExamPlayer({
                 if (ref.current)
                   ref.current.volume = Number(event.target.value);
               }}
-              className="player-slider h-12 w-32"
+              className="player-slider h-12 w-[8rem]"
             />
           </label>
         )}

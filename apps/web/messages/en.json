@@ -434,6 +434,7 @@
     "skipToQuestions": "Skip to the questions",
     "partOf": "Part {number} of {total}",
     "questionsRange": "Questions {from}–{to}",
+    "question": "Question {number}",
     "player": {
       "label": "Audio player",
       "play": "Play",

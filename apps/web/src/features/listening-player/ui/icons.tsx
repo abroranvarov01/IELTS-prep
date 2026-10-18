@@ -44,11 +44,3 @@ export function SpeakerIcon() {
     </LineIcon>
   );
 }
-
-export function HeadphonesIcon() {
-  return (
-    <LineIcon className="size-[1.25rem]">
-      <path d="M2.75 10V8a5.25 5.25 0 0 1 10.5 0v2M2.75 10h2v3.25h-2zM11.25 10h2v3.25h-2z" />
-    </LineIcon>
-  );
-}

@@ -434,6 +434,7 @@
     "skipToQuestions": "Перейти к вопросам",
     "partOf": "Часть {number} из {total}",
     "questionsRange": "Вопросы {from}–{to}",
+    "question": "Вопрос {number}",
     "player": {
       "label": "Аудиоплеер",
       "play": "Воспроизвести",

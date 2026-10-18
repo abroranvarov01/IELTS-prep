@@ -2,17 +2,19 @@
 
 import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useState } from "react";
+import { type ListeningTest, recordingMinutes } from "@/entities/listening";
 import { QUESTION_COUNT, type ReadingTest } from "@/entities/reading";
 import { Link } from "@/shared/i18n/navigation";
 import {
   ChevronIcon,
   InfoIcon,
   LineIcon,
+  ListeningIcon,
   ReadingIcon,
 } from "@/shared/ui/icons";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { TaskLayout } from "@/shared/ui/TaskLayout";
-import { loadStates } from "../api/load-states";
+import { type ListeningState, loadStates } from "../api/load-states";
 import type { TestState } from "../model/test-state";
 
 /**
@@ -22,25 +24,31 @@ import type { TestState } from "../model/test-state";
  * in the task composition (Direction v2). Skills without tests are not shown
  * (decision N3).
  */
-export function PracticeHub({ tests }: { tests: ReadingTest[] }) {
+export function PracticeHub({
+  tests,
+  listeningTests = [],
+}: {
+  tests: ReadingTest[];
+  listeningTests?: ListeningTest[];
+}) {
   const t = useTranslations();
   const [loaded, setLoaded] =
     useState<Awaited<ReturnType<typeof loadStates>>>();
 
   useEffect(() => {
     let active = true;
-    loadStates(tests).then(
+    loadStates(tests, listeningTests).then(
       (result) => {
         if (active) setLoaded(result);
       },
       () => {
-        if (active) setLoaded({ readable: false, states: {} });
+        if (active) setLoaded({ readable: false, states: {}, listening: {} });
       },
     );
     return () => {
       active = false;
     };
-  }, [tests]);
+  }, [tests, listeningTests]);
 
   return (
     <TaskLayout>
@@ -108,6 +116,57 @@ export function PracticeHub({ tests }: { tests: ReadingTest[] }) {
           </ul>
         </section>
       )}
+      {listeningTests.length > 0 && (
+        <section aria-labelledby="practice-listening" className="mt-8">
+          <h2
+            id="practice-listening"
+            className="flex items-center gap-3 text-heading-2 font-bold"
+          >
+            <span className="flex size-8 items-center justify-center rounded-full bg-skill-listening-tint text-skill-listening">
+              <ListeningIcon />
+            </span>
+            {t("practice.skill.listening")}
+          </h2>
+          <ul className="mt-4 grid gap-3 desktop:gap-4">
+            {listeningTests.map((test) => {
+              const state = loaded?.listening[test.id];
+              return (
+                <li key={test.id}>
+                  <Link
+                    href={`/listening/${test.id}`}
+                    className="flex min-h-[4.5rem] items-center gap-3 rounded-lg border border-border-subtle bg-surface-base p-4 shadow-soft transition-colors hover:border-brand-blush active:bg-surface-warm"
+                  >
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-skill-listening-tint text-skill-listening">
+                      <ListeningIcon />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span lang="en" className="block font-bold">
+                        {test.title}
+                      </span>
+                      <span className="block text-meta text-text-secondary">
+                        {t("practice.formatListening", {
+                          parts: test.parts.length,
+                          questions: test.parts.length * 10,
+                          minutes: recordingMinutes(test),
+                        })}
+                      </span>
+                      {test.temporary && (
+                        <span className="block text-meta text-text-secondary">
+                          {t("listening.temporary.label")}
+                        </span>
+                      )}
+                      <span className="mt-1 flex min-h-[1.4em] items-center gap-2 text-meta font-medium">
+                        {state && <ListeningStateLine state={state} />}
+                      </span>
+                    </span>
+                    <ChevronIcon direction="right" />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
     </TaskLayout>
   );
 }
@@ -150,4 +209,30 @@ function StateLine({ state }: { state: TestState }) {
           )
         : null;
   }
+}
+
+function ListeningStateLine({ state }: { state: ListeningState }) {
+  const t = useTranslations();
+  const circle = <circle cx="8" cy="8" r="6.25" />;
+  const icon =
+    state.kind === "inProgress" ? (
+      <path d="M6.75 5.5v5l4-2.5z" />
+    ) : state.kind === "finished" ? (
+      <path d="m5.5 8.25 1.75 1.75 3.25-3.5" />
+    ) : null;
+  return (
+    <>
+      <LineIcon className="size-4">
+        {circle}
+        {icon}
+      </LineIcon>
+      {state.kind === "inProgress"
+        ? t("practice.state.inProgress", {
+            mode: t(`reading.mode.${state.mode}`),
+          })
+        : state.kind === "finished"
+          ? t("practice.state.finishedNoScore")
+          : t("practice.state.notStarted")}
+    </>
+  );
 }

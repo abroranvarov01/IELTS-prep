@@ -434,6 +434,7 @@
     "skipToQuestions": "Savollarga oʻtish",
     "partOf": "{total} tadan {number}-qism",
     "questionsRange": "{from}–{to}-savollar",
+    "question": "{number}-savol",
     "player": {
       "label": "Audio pleyer",
       "play": "Ijro etish",

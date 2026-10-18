@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import {
+  listeningTest,
+  listeningTestIds,
+} from "@/entities/listening/content.server";
 import { readingTest, readingTestIds } from "@/entities/reading/content.server";
 import { PracticeHub } from "@/views/practice";
 
@@ -12,5 +16,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function PracticePage() {
   const tests = readingTestIds().flatMap((id) => readingTest(id) ?? []);
-  return <PracticeHub tests={tests} />;
+  const listening = listeningTestIds().flatMap((id) => listeningTest(id) ?? []);
+  return <PracticeHub tests={tests} listeningTests={listening} />;
 }

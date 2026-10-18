@@ -765,7 +765,7 @@ Type names for the other M4 question types follow the same pattern when a form u
 - **Steps:** 1. Open the test (a Hub row or the link) → the start screen (title, format, Practice preselected, the audio size, the headphones line, the red "Start"). 2. "Start" → the Listening screen with Part 1's first group and the player paused ("Loading the audio…" until it can play). 3. Play → the recording starts.
 - **Step count:** 3 from the Hub row or the link to hearing the recording; from Home: "Practice", the row, "Start", Play: **4**. Justification: the learner chooses when the recording starts, so they can read the first group first (the test's own reading time, P11); the first question is on screen after 3, within the rule.
 - **Empty / error states:** unknown test → the localized not-found page; offline → the M1 error state; the audio cannot load → "The audio couldn't load." with "Try again", answering still works; storage blocked → the one-line notice, the test still works.
-- **Languages checked:** not yet (drafted strings; checked at 320, 390 and 1280 px in M8-12 and M8-13).
+- **Languages checked:** M8-12 (2026-10-18): the start screen and all four parts in en at 360 px and in ru and uz at 320 px (screenshots); 320 px fit and axe in uz, ru and en in `e2e/listening.spec.ts`. Desktop: M8-13.
 
 ### Open a Listening test in Exam
 - **Goal:** take the test as one realistic sitting.

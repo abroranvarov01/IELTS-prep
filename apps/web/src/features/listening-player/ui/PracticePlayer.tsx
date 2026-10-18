@@ -176,20 +176,21 @@ export function PracticePlayer({
             </span>
             <SkipIcon direction="forward" />
           </button>
-          <div className="relative ms-auto tablet:ms-0">
+          <div className="relative ms-auto tablet:ms-[0]">
             <button
               type="button"
               aria-expanded={speedOpen}
               onClick={() => setSpeedOpen((open) => !open)}
-              className={QUIET_BUTTON}
+              aria-label={t("speed", { speed: `${speed}×` })}
+              className={`${QUIET_BUTTON} font-bold`}
             >
-              {t("speed", { speed: `${speed}×` })}
+              {speed}×
               <ChevronIcon direction="down" />
             </button>
             {speedOpen && (
               <ul
                 aria-label={t("speedList")}
-                className="absolute end-0 top-full z-20 min-w-32 rounded-md bg-surface-base p-1 shadow-raised"
+                className="absolute end-[0] top-full z-20 min-w-[8rem] rounded-md bg-surface-base p-1 shadow-raised"
               >
                 {speeds.map((value) => (
                   <li key={value}>

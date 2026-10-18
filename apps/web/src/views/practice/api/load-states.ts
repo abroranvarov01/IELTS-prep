@@ -7,7 +7,17 @@ import {
   latestRecord,
   loadSessions,
 } from "@/entities/reading";
+import {
+  type ListeningTest,
+  loadSessions as loadListeningSessions,
+} from "@/entities/listening";
 import { type TestState, testState } from "../model/test-state";
+
+/** A Listening test on this device: not started, in progress in a mode, or finished (no score until M9). */
+export type ListeningState =
+  | { kind: "notStarted" }
+  | { kind: "inProgress"; mode: "practice" | "exam" }
+  | { kind: "finished" };
 
 /**
  * Each test's state on this device, read only: the Hub never settles,
@@ -17,10 +27,26 @@ import { type TestState, testState } from "../model/test-state";
  */
 export async function loadStates(
   tests: readonly ReadingTest[],
-): Promise<{ readable: boolean; states: Record<string, TestState> }> {
+  listeningTests: readonly ListeningTest[] = [],
+): Promise<{
+  readable: boolean;
+  states: Record<string, TestState>;
+  listening: Record<string, ListeningState>;
+}> {
   const storage = deviceStorage();
   const history = await deviceHistory().catch(() => undefined);
-  if (!storage || !history?.persistent) return { readable: false, states: {} };
+  if (!storage || !history?.persistent)
+    return { readable: false, states: {}, listening: {} };
+
+  const listening: Record<string, ListeningState> = {};
+  for (const test of listeningTests) {
+    const { current, finished } = loadListeningSessions(storage, test);
+    listening[test.id] = current
+      ? { kind: "inProgress", mode: current.mode }
+      : finished
+        ? { kind: "finished" }
+        : { kind: "notStarted" };
+  }
 
   const states: Record<string, TestState> = {};
   for (const test of tests) {
@@ -38,5 +64,5 @@ export async function loadStates(
       latestRecord(records),
     );
   }
-  return { readable: true, states };
+  return { readable: true, states, listening };
 }

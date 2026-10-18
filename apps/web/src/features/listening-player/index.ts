@@ -2,4 +2,3 @@
 // players (LISTENING_EXPERIENCE.md, The player; ADR-0013 §2, §3).
 export { ExamPlayer } from "./ui/ExamPlayer";
 export { PracticePlayer } from "./ui/PracticePlayer";
-export { HeadphonesIcon } from "./ui/icons";

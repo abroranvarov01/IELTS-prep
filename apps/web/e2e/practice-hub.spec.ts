@@ -59,7 +59,7 @@ test("a test not started on this device, opened from the navigation", async ({
   );
   await expect(row(page)).toContainText(en.practice.state.notStarted);
   await expect(
-    page.getByRole("link", { name: en.nav.practice }).first(),
+    page.getByRole("link", { name: en.nav.practice, exact: true }).first(),
   ).toHaveAttribute("aria-current", "page");
 
   await row(page).click();
