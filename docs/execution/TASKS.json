@@ -3352,7 +3352,8 @@
       "title": "Draft the level check: purpose, scope, result and honest wording",
       "milestone": "M7",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": [],
       "goal": "Decide with the owner what the level check measures, what it returns and how that result is worded, before any item or code exists.",
       "scope": [
