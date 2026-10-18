@@ -3748,7 +3748,8 @@
       "title": "Draft the Listening question types and their interactions",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": [],
       "goal": "Decide with the owner which Listening question types the engine renders and how each is answered on a phone and on desktop.",
       "scope": [

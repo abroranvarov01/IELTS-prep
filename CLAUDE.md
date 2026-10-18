@@ -33,6 +33,7 @@ Each topic has exactly **one** owner. Other files link to it instead of restatin
 | UX rules (10-second, 3-click, …) | `docs/product/UX_PRINCIPLES.md` |
 | Feature scope and status | `docs/product/FEATURE_MAP.md` |
 | Reading interaction model (signature experience) | `docs/product/READING_EXPERIENCE.md` |
+| Listening interaction model: question types, player, modes, layouts | `docs/product/LISTENING_EXPERIENCE.md` |
 | Level check: purpose, scope, result model, honest wording | `docs/product/LEVEL_CHECK.md` |
 | Flow specs (where step counts are checked) | `docs/product/USER_FLOWS.md` |
 | Interface languages and localization rules | `docs/product/LOCALIZATION.md` |
