@@ -49,7 +49,8 @@
     {
       "id": "M6",
       "name": "Product UI Foundation + Practice Hub",
-      "status": "active",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "goal": "The existing product shares one deliberate visual language with owner-approved local reference screenshots; navigation and the responsive shell are settled; a Practice Hub is the clear entry to Reading and later Listening. Not a rewrite: a capped audit list with exit criteria."
     },
     {
@@ -3291,7 +3292,8 @@
       "title": "Owner approves the reference screenshots",
       "milestone": "M6",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M6-06", "M6-07", "M6-08"],
       "goal": "The owner chooses which screenshots become the local visual source of truth for later milestones.",
       "scope": [
@@ -3314,7 +3316,8 @@
       "title": "Promote the approved references and close M6",
       "milestone": "M6",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M6-09"],
       "goal": "The approved screenshots are in the repository as references, and the docs say what M6 changed.",
       "scope": [

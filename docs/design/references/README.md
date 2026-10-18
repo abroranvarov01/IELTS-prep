@@ -20,8 +20,10 @@ Canonical owner of the **approved visual reference screenshots** and of the rule
 | Folder | For | Files, and suggested ones |
 |---|---|---|
 | `brand/` | Overall look, logo use | `direction-2026-10-18.png` (the owner's composition image for ten screens, [Direction v2](../DESIGN_CONSTITUTION.md#direction-v2-owner-2026-10-18); its screens for features not built yet are direction, not approved behavior), `logo-reference.png` |
-| `home/` | Home and next action | `home-mobile.png` |
-| `reading/` | Reading test and review | `reading-mobile-practice.png`, `reading-mobile-sheet.png`, `reading-desktop.png`, `reading-review.png` |
+| `home/` | Home and next action | `home-mobile.png`, `home-desktop.png`, `home-mobile-ru-320.png` (M6-09, Direction v2) |
+| `onboarding/` | The onboarding steps | `onboarding-step-1-mobile.png`, `onboarding-step-1-desktop.png` (M6-09) |
+| `practice/` | The Practice Hub | `practice-hub-mobile.png`, `practice-hub-desktop.png`, `practice-hub-mobile-ru-320.png` (M6-09) |
+| `reading/` | Reading test, results and review | `reading-mobile-sheet.png`, `reading-desktop.png`, `results-mobile.png`, `results-desktop.png`, `review-mobile.png`, `review-desktop.png` (M6-09) |
 | `listening/` | Listening practice and review | `listening-practice.png`, `listening-matching.png`, `listening-map.png`, `listening-notes.png`, `listening-review.png` |
 | `progress/` | Progress | `progress-mobile.png` |
 | `mock/` | Mock test results | `mock-result.png` |
