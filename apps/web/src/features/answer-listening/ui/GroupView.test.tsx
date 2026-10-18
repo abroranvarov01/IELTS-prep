@@ -95,3 +95,26 @@ describe("in Russian", () => {
     expect(screen.getByRole("textbox", { name: "Ответ 1" })).toBeTruthy();
   });
 });
+
+describe("tables and flow charts in Listening", () => {
+  it("puts typed gaps in the table's cells, in both layouts", () => {
+    const { latest } = renderGroup(1, 0);
+    // The phone blocks and the wide table hold the same field once each;
+    // only one of them is shown at a time (CSS).
+    const fields = screen.getAllByRole("textbox", {
+      name: "Answer 12",
+      hidden: true,
+    });
+    expect(fields).toHaveLength(2);
+    fireEvent.change(fields[0]!, { target: { value: "nine" } });
+    expect(latest.session?.answers).toEqual({ "12": "nine" });
+    expect((fields[1] as HTMLInputElement).value).toBe("nine");
+  });
+
+  it("answers a flow chart's gaps from its list", () => {
+    const { latest } = renderGroup(1, 1);
+    expect(screen.getByText("(16) ______")).toBeTruthy();
+    fireEvent.click(screen.getAllByRole("radio", { name: "C, Option C" })[1]!);
+    expect(latest.session?.answers).toEqual({ "16": "C" });
+  });
+});

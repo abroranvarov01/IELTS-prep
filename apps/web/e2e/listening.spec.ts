@@ -333,3 +333,23 @@ test("answers each kind of question and the navigator counts them", async ({
       ).toBeVisible();
   }
 });
+
+test("the table is a table on wide screens and row blocks on phones", async ({
+  page,
+}) => {
+  await startPractice(page);
+  await goToQuestion(page, 15);
+  const table = page.getByRole("table");
+  if (desktop(page)) {
+    await expect(table).toBeVisible();
+    await expect(
+      table.getByRole("columnheader", { name: "How to find members" }),
+    ).toBeVisible();
+  } else {
+    await expect(table).toBeHidden();
+    await expect(
+      page.getByRole("listitem").filter({ hasText: "Someone at work" }),
+    ).toBeVisible();
+    await noOverflow(page);
+  }
+});

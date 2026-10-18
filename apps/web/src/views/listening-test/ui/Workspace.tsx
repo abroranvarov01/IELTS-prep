@@ -277,7 +277,7 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
             </button>
           )}
         </div>
-        <div className="grid grid-cols-2 gap-2 tablet:ms-auto tablet:flex">
+        <div className="grid grid-cols-2 gap-2 whitespace-nowrap tablet:ms-auto tablet:flex tablet:shrink-0">
           <SecondaryButton onClick={() => onNavigate(Math.max(1, n - 1))}>
             <ChevronIcon direction="left" />
             {reading("question.previous")}

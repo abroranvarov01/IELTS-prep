@@ -4270,7 +4270,8 @@
       "title": "Shared table and flow-chart completion layouts, in Listening",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-14"],
       "goal": "Table and flow-chart completion work in Listening on layouts built for both skills.",
       "scope": [
