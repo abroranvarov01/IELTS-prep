@@ -22,6 +22,43 @@ async function open(page: Page, query = "") {
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 }
 
+const desktop = (page: Page) => (page.viewportSize()?.width ?? 0) >= 1024;
+
+/** The navigator: the bar's part button and cell on desktop, the "All questions" dialog on phones. */
+async function goToQuestion(page: Page, number: number) {
+  if (desktop(page)) {
+    const part = Math.ceil(number / 10);
+    await page
+      .getByRole("button", { name: new RegExp(`^Part ${part}: `) })
+      .click();
+  } else
+    await page
+      .getByRole("button", { name: en.reading.navigator.open })
+      .first()
+      .click();
+  await page
+    .getByRole("button", { name: new RegExp(`^Question ${number},`) })
+    .click();
+}
+
+async function openFinish(page: Page) {
+  if (desktop(page))
+    await page
+      .getByRole("navigation")
+      .getByRole("button", { name: en.reading.finish.button })
+      .click();
+  else {
+    await page
+      .getByRole("button", { name: en.reading.navigator.open })
+      .first()
+      .click();
+    await page
+      .getByRole("dialog")
+      .getByRole("button", { name: en.reading.finish.button })
+      .click();
+  }
+}
+
 async function startPractice(page: Page) {
   await open(page);
   await page.getByRole("button", { name: en.reading.start }).click();
@@ -88,11 +125,7 @@ test.describe("Listening in Practice", () => {
     page,
   }) => {
     await startPractice(page);
-    await page
-      .getByRole("button", { name: en.reading.navigator.open })
-      .first()
-      .click();
-    await page.getByRole("button", { name: /^Question 21,/ }).click();
+    await goToQuestion(page, 21);
     await expect(
       page.getByText(fill(L.partOf, { number: 3, total: 4 })),
     ).toBeVisible();
@@ -100,15 +133,10 @@ test.describe("Listening in Practice", () => {
       .getByRole("radio", { name: /^A, keeps the bees calm/ })
       .first()
       .check({ force: true });
+    await openFinish(page);
     await page
-      .getByRole("button", { name: en.reading.navigator.open })
-      .first()
+      .getByRole("button", { name: en.reading.finish.confirm, exact: true })
       .click();
-    await page
-      .getByRole("dialog")
-      .getByRole("button", { name: en.reading.finish.button })
-      .click();
-    await page.getByRole("button", { name: en.reading.finish.confirm }).click();
     await expect(
       page.getByRole("heading", { name: L.finished.title }),
     ).toBeVisible();
@@ -229,4 +257,36 @@ test("the Practice Hub lists the Listening test with its state", async ({
   await expect(row).toContainText(L.temporary.label);
   await row.click();
   await expect(page).toHaveURL(/\/en\/listening\/temporary-voa-1$/);
+});
+
+test("on desktop, the navigator bar shows the part's numbers and moves to another part", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop",
+    "the bar is the desktop layout",
+  );
+  await startPractice(page);
+  const bar = page.getByRole("navigation", { name: en.reading.navigator.open });
+  await expect(
+    bar.getByRole("button", { name: /^Question 10,/ }),
+  ).toBeVisible();
+  await expect(
+    bar.getByRole("button", { name: en.reading.navigator.open }),
+  ).toHaveCount(0);
+  await bar
+    .getByRole("button", {
+      name: fill(L.navigator.partProgress, {
+        number: 4,
+        answered: 0,
+        total: 10,
+      }),
+    })
+    .click();
+  await expect(
+    page.getByText(fill(L.partOf, { number: 4, total: 4 })),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("img", { name: "Plan of a home used as a memory palace" }),
+  ).toBeVisible();
 });

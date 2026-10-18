@@ -4194,7 +4194,8 @@
       "title": "Listening screens on desktop",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-12"],
       "goal": "From the desktop breakpoint, Listening uses its approved exam-like layout.",
       "scope": [

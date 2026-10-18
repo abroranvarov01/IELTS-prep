@@ -24,6 +24,7 @@ import { ChevronIcon, GridIcon, InfoIcon, LineIcon } from "@/shared/ui/icons";
 import { PrimaryButton } from "@/shared/ui/PrimaryButton";
 import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { SecondaryButton } from "@/shared/ui/SecondaryButton";
+import { useIsDesktop } from "@/shared/ui/use-is-desktop";
 import { Dialog } from "./Dialog";
 import { clockText } from "./Preparing";
 import { TestBar } from "./TestBar";
@@ -240,6 +241,7 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
   const flagged = session.flagged.includes(n);
   const answered = answeredNumbers(session, test);
   const unanswered = TOTAL - answered.size;
+  const isDesktop = useIsDesktop();
 
   return (
     <nav
@@ -247,7 +249,7 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
       className="fixed inset-x-[0] bottom-[0] z-10 border-t border-border-subtle bg-surface-base px-gutter py-2 shadow-raised"
     >
       <div className="mx-auto flex max-w-measure flex-col gap-1 tablet:flex-row tablet:items-center desktop:max-w-content">
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           <button
             type="button"
             aria-pressed={flagged}
@@ -262,26 +264,31 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
             </LineIcon>
             {flagged ? reading("flag.remove") : reading("flag.add")}
           </button>
-          <button
-            type="button"
-            onClick={() => navigator.current?.showModal()}
-            className={QUIET_BUTTON}
-          >
-            <GridIcon />
-            {reading("navigator.open")}
-          </button>
+          {isDesktop ? (
+            <DesktopParts answered={answered} onNavigate={onNavigate} />
+          ) : (
+            <button
+              type="button"
+              onClick={() => navigator.current?.showModal()}
+              className={QUIET_BUTTON}
+            >
+              <GridIcon />
+              {reading("navigator.open")}
+            </button>
+          )}
         </div>
         <div className="grid grid-cols-2 gap-2 tablet:ms-auto tablet:flex">
           <SecondaryButton onClick={() => onNavigate(Math.max(1, n - 1))}>
             <ChevronIcon direction="left" />
             {reading("question.previous")}
           </SecondaryButton>
-          {n < TOTAL ? (
+          {n < TOTAL && (
             <SecondaryButton onClick={() => onNavigate(n + 1)}>
               {reading("question.next")}
               <ChevronIcon direction="right" />
             </SecondaryButton>
-          ) : (
+          )}
+          {(n === TOTAL || isDesktop) && (
             <PrimaryButton onClick={() => finish.current?.showModal()}>
               {reading("finish.button")}
             </PrimaryButton>
@@ -295,41 +302,18 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
               {t("navigator.part", { number: p.number })}
             </h3>
             <ul className="mt-2 flex flex-wrap gap-1">
-              {p.questionGroups.flatMap(groupNumbers).map((q) => {
-                const states = [
-                  answered.has(q)
-                    ? reading("navigator.answered")
-                    : reading("navigator.unanswered"),
-                  ...(session.flagged.includes(q)
-                    ? [reading("navigator.flagged")]
-                    : []),
-                  ...(q === n ? [reading("navigator.current")] : []),
-                ].join(", ");
-                return (
-                  <li key={q}>
-                    <button
-                      type="button"
-                      aria-label={reading("navigator.item", {
-                        number: q,
-                        states,
-                      })}
-                      onClick={() => {
-                        navigator.current?.close();
-                        onNavigate(q);
-                      }}
-                      className={`relative flex size-[2.75rem] items-center justify-center rounded-sm font-bold tabular-nums ${answered.has(q) ? "bg-ink text-surface-base" : "border border-border-control"} ${q === n ? "underline decoration-2 underline-offset-4" : ""}`}
-                    >
-                      {q}
-                      {session.flagged.includes(q) && (
-                        <span
-                          aria-hidden="true"
-                          className="absolute -end-1 -top-1 size-[0.75rem] rounded-full border border-ink bg-surface-base"
-                        />
-                      )}
-                    </button>
-                  </li>
-                );
-              })}
+              {p.questionGroups.flatMap(groupNumbers).map((q) => (
+                <li key={q}>
+                  <QuestionCell
+                    number={q}
+                    answered={answered.has(q)}
+                    onChoose={() => {
+                      navigator.current?.close();
+                      onNavigate(q);
+                    }}
+                  />
+                </li>
+              ))}
             </ul>
           </section>
         ))}
@@ -373,5 +357,95 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
         </div>
       </Dialog>
     </nav>
+  );
+}
+
+/** A question in the navigator: its number, answered or not, marked, current; all in its name. */
+function QuestionCell({
+  number,
+  answered,
+  onChoose,
+}: {
+  number: number;
+  answered: boolean;
+  onChoose: () => void;
+}) {
+  const reading = useTranslations("reading");
+  const { session } = useListening();
+  const flagged = session.flagged.includes(number);
+  const current = number === session.currentQuestion;
+  const states = [
+    answered ? reading("navigator.answered") : reading("navigator.unanswered"),
+    ...(flagged ? [reading("navigator.flagged")] : []),
+    ...(current ? [reading("navigator.current")] : []),
+  ].join(", ");
+  return (
+    <button
+      type="button"
+      aria-label={reading("navigator.item", { number, states })}
+      onClick={onChoose}
+      className={`relative flex size-[2.75rem] items-center justify-center rounded-sm font-bold tabular-nums ${answered ? "bg-ink text-surface-base" : "border border-border-control"} ${current ? "underline decoration-2 underline-offset-4" : ""}`}
+    >
+      {number}
+      {flagged && (
+        <span
+          aria-hidden="true"
+          className="absolute -end-1 -top-1 size-[0.75rem] rounded-full border border-ink bg-surface-base"
+        />
+      )}
+    </button>
+  );
+}
+
+/**
+ * The desktop navigator bar (LISTENING_EXPERIENCE.md, Desktop): the part on
+ * screen's numbers first, the other parts as quiet buttons with their
+ * progress.
+ */
+function DesktopParts({
+  answered,
+  onNavigate,
+}: {
+  answered: Set<number>;
+  onNavigate: (n: number) => void;
+}) {
+  const t = useTranslations("listening");
+  const { test, session } = useListening();
+  return (
+    <>
+      <ul className="flex flex-wrap gap-1">
+        {test.parts[session.view.part - 1]!.questionGroups.flatMap(
+          groupNumbers,
+        ).map((q) => (
+          <li key={q}>
+            <QuestionCell
+              number={q}
+              answered={answered.has(q)}
+              onChoose={() => onNavigate(q)}
+            />
+          </li>
+        ))}
+      </ul>
+      {test.parts
+        .filter((p) => p.number !== session.view.part)
+        .map((p) => {
+          const numbers = p.questionGroups.flatMap(groupNumbers);
+          return (
+            <button
+              key={p.id}
+              type="button"
+              className={QUIET_BUTTON}
+              onClick={() => onNavigate(numbers[0] ?? 1)}
+            >
+              {t("navigator.partProgress", {
+                number: p.number,
+                answered: numbers.filter((q) => answered.has(q)).length,
+                total: numbers.length,
+              })}
+              <ChevronIcon direction="right" />
+            </button>
+          );
+        })}
+    </>
   );
 }
