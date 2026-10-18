@@ -117,12 +117,14 @@ An IELTS band or range; a percentile or comparison with other learners; decimals
 
 Example English result, Reading section finished with 9 of 14: **"Your Reading starting point: On the way.** 9 of 14 correct. Based on 14 questions in a short check, not a full test. This is where to start on our practice scale, not an IELTS band. **Practise first:** Not Given questions. **[Practise Reading]** See your answers · Take the check again".
 
-### 9.1 The Listening section's qualifications (owner, 2026-10-18)
+### 9.1 The Listening section's qualifications (owner, 2026-10-18, M9-04)
 
 Decided for the Listening section (M9; the section's behavior is in [LISTENING_EXPERIENCE.md, The level check's Listening section (M9)](LISTENING_EXPERIENCE.md#the-level-checks-listening-section-m9)); the model of §5 is otherwise unchanged:
 - **Pauses:** the recording can be paused and resumes from the exact position, with no rewind. The learner's pauses and technical playback interruptions are recorded separately in the result record; a result with pauses is visibly qualified as completed with pauses, and an interruption is named as a playback problem. Neither changes the score or the level.
 - **Temporary audio:** while the form uses the temporary VOA recordings (slower speech, North American voices only), the intro and the result say it may make the check easier, and the result says it is a rough starting point, not a calibrated IELTS band. No confident level claim is made from it anywhere in the product.
-- Copy: [USER_FLOWS.md, Interface copy (M9)](USER_FLOWS.md#interface-copy-m9) (draft).
+- **Thresholds** (M9-04 clarification): the Listening section reuses §5's result structure, but 14 Listening questions do not show that the Reading thresholds (0–6 / 7–10 / 11–14) are valid for Listening; for Listening they are **provisional product heuristics**, labelled so on the result, and revisited with data (M11). The Reading and Listening levels are on separate scales and are never presented as comparable.
+- **Storage** (M9-04 clarification): before Listening records are written to the level-check database without an upgrade, its stores, keys, validators and readers are checked for compatibility; any required schema change is reported to the owner, never made silently.
+- Copy: [USER_FLOWS.md, Interface copy (M9)](USER_FLOWS.md#interface-copy-m9).
 
 ## 10. Decisions for M7-05
 

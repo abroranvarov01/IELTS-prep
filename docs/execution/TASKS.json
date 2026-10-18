@@ -4606,7 +4606,8 @@
       "title": "Owner approves the Listening checking, review, Error Intelligence, copy, design values and the attempt-history ADR",
       "milestone": "M9",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-02", "M9-03"],
       "goal": "One owner gate before M9 product code: Listening checking, review, Error Intelligence, copy, design values and the attempt-history ADR. A wrong decision here would force rework later.",
       "scope": [
@@ -4628,7 +4629,7 @@
         "docs/design/DESIGN_SYSTEM.md",
         "docs/architecture/decisions/README.md"
       ],
-      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01). Partly answered by the owner on 2026-10-18 (LD3, LD4, LD6, LD8, LD13, LD15, LD20, LD21, V1, and ADR-0014's storage approach), applied to the drafts and to M9-05, M9-06, M9-07, M9-12 and M15-09. Still open: LD1, LD2, LD5, LD7, LD9, LD10, LD11, LD12, LD14, LD16, LD17, LD18, LD19, LD22, F1, F2, V2, the copy and design values as a whole, and ADR-0014's §6 to §8 with its acceptance."
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01). Completed by the owner on 2026-10-18 in two rounds: first LD3, LD4, LD6, LD8, LD13, LD15, LD20, LD21, V1 and ADR-0014's storage approach; then every remaining recommendation (LD1, LD2, LD5, LD7, LD9 to LD12, LD14, LD16 to LD19, LD22, F1, F2, V2, the copy and design values, ADR-0014 §6 to §8) with four clarifications (provisional Listening thresholds, signal limits and playback-based notReached, the level-check storage compatibility check, review audio from a valid cache). The worker recorded the owner's instruction, marked the drafts Approved and ADR-0014 Accepted, and closed this task on that instruction."
     },
     {
       "id": "M9-05",
@@ -4646,6 +4647,8 @@
       "outOfScope": ["UI"],
       "acceptanceCriteria": [
         "Every approved rule and signal has boundary tests",
+        "No spelling, word-limit, notInTranscript or number-format signal on an accepted correct answer; notInTranscript only on fromRecording questions, after normalization, never for a word in an accepted variant; number notes describe the difference only (tested)",
+        "notReached only from recorded playback coverage (playedToMs) and the unit's first evidence segment, never from elapsed time; no note when coverage is unknown (tested)",
         "All gates pass"
       ],
       "validation": [
@@ -4671,6 +4674,7 @@
       "goal": "Listening attempts, results and first tries are kept like Reading's, and every existing Reading record survives the upgrade.",
       "scope": [
         "As ADR-0014 (storage approach accepted by the owner, 2026-10-18): a separate `ielts-prep-listening` database in ADR-0009's layout, `ielts-prep-reading` neither upgraded nor written; commit, result records per pair, first try, retention, in-memory fallback for Listening; the import of M8's `listening:<testId>:finished` under the session's id with the first try unknown; shared history code in `shared/lib/` only if behavior-preserving for Reading",
+        "The Exam session's optional playedToMs (per part, the furthest position actually played, saved by the player with the heartbeat and on pause; ADR-0014 §2), copied into the attempt; older sessions read as coverage unknown",
         "The Listening history behind the entity's public API, so the storage-independent interfaces of ADR-0014 §8a can be added later without touching callers; no sync or cross-skill reader is built",
         "Tests: Reading's storage (`ielts-prep-reading` and the `reading:*` entries) unchanged after Listening activity, with real M4/M5 shapes (sessions, imported M4 attempts, highlights, pins, retries, first-try markers); the M8 import with two tabs and interrupted transactions; Listening commits with two tabs"
       ],
@@ -4771,6 +4775,7 @@
       "outOfScope": ["desktop (M9-10)"],
       "acceptanceCriteria": [
         "Every question type can be reviewed as approved on a phone",
+        "Review audio plays from a valid cached copy when there is one, otherwise the network; with neither, the card, excerpt and transcript stay usable and the player says the audio is unavailable; nothing promises offline playback (tested)",
         "All gates pass"
       ],
       "validation": [
@@ -4877,6 +4882,8 @@
       "outOfScope": ["a new scoring model"],
       "acceptanceCriteria": [
         "The level check works with both sections",
+        "Before writing Listening records to ielts-prep-level-check without an upgrade, compatibility with its stores, key paths, validators and readers is verified and recorded in PROGRESS.md; Reading records preserved; any required schema change is reported to the owner, not made",
+        "The Listening thresholds are labelled as provisional on the result; the temporary-audio disclosure is shown; nothing presents the result as a calibrated band or the two skills as comparable",
         "All gates pass"
       ],
       "validation": [

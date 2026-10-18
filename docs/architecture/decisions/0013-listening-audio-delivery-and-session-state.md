@@ -1,6 +1,7 @@
 # ADR-0013: Listening Audio Delivery, Preloading and Session State
 
 - **Status:** Accepted (2026-10-18, owner, task M8-06; drafted in M8-04). §3 states at acceptance, at the owner's request, that background playback is not guaranteed and how a pause the learner did not make is recovered.
+- **Extended:** 2026-10-18 by [ADR-0014](0014-listening-attempts-checking-and-a-multi-skill-history.md) (Accepted): the finished sessions of §3 are imported into the Listening attempt history, and the Exam session gains the optional `playedToMs` field (playback coverage).
 - **Date:** 2026-10-18
 - **Deciders:** Project owner (acceptance), Claude (draft)
 
