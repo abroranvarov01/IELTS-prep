@@ -3962,7 +3962,8 @@
       "title": "Find, verify and record the temporary Listening test's source and terms",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-06"],
       "goal": "One coherent, complete Listening practice set (audio, questions, answer key, transcript, any pictures) whose terms permit this use is chosen, and its source and usage terms are verified and recorded, so M8-08 can prepare it as the temporary test.",
       "scope": [

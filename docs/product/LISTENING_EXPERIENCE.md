@@ -25,6 +25,31 @@ Owner decision, 2026-10-18: the recommendations of **L1–L7** (M8-01) and **P1�
 - The attribution comes from the content's `origin`, never from code. Removing the temporary test and adding the final one is a content change (a new test id, or a new version as ADR-0008 §3 requires), with no change to the engine.
 - Nothing about the temporary test is presented as official IELTS material or as the product's own content.
 
+### Source of the temporary test (M8-07, checked 2026-10-18)
+
+**No complete IELTS-format Listening set with a licence that permits this use was found.** The official sample tests (ielts.org, British Council) and the third-party practice sites found state no licence for reuse, and one is marked all rights reserved; they are not used. So the test uses the **approved fallback**: four permitted recordings, one per part, chosen to match the part types of the format, with questions and answers to be written by Claude in M8-08 and checked against the audio.
+
+**Source: VOA Learning English** (Voice of America, learningenglish.voanews.com). Its "Request Our Content" page (https://learningenglish.voanews.com/p/6861.html, read 2026-10-18) states that "Learning English texts, MP3s, photos and videos are in the public domain" and that they may be reprinted "for educational and commercial purposes, with credit to learningenglish.voanews.com". **Exception:** stories, photos and video images from news agencies (AP, Reuters, AFP) are copyrighted and may not be republished. VOA's usage page (insidevoa.com/p/5719.html) adds that VOA websites "may contain copyright protected material"; this is the exception above. Nothing on either page restricts conversion, excerpting or use in an app; works in the public domain carry no such restriction.
+
+**What this means for the product:** copying, converting to the ADR-0012 format, adding questions and serving the recordings and transcripts to learners are permitted; **credit is required** (the attribution line below); no agency material may be used. Each recording below was checked: it is VOA's own production, written and voiced by VOA staff, with no agency credit or agency text in its transcript, and its photos are not used (the test's pictures are drawn for the product).
+
+| Part | Format role | VOA item | Speakers | Length | MP3 (128 kbps) |
+|---|---|---|---|---|---|
+| 1 | Everyday conversation | Let's Learn English Level 2, Lesson 6: "Will It Float?" (https://learningenglish.voanews.com/a/lesson-6-will-it-float/4064553.html): a city tour by amphibious "duck" boat, with facts about the boat and the White House | Anna, Penelope, a boy guide; Professor Bot (the course's teaching voice) | 4:44 | `voa-audio.voanews.eu/vle/2017/10/10/4814fa95-feaa-447a-a081-499d11b1d5f3_hq.mp3`, sha256 `521d44ef…b65680` |
+| 2 | Everyday monologue | Education Tips: "Learning English with English Clubs: Starting and Organizing Your Club" (https://learningenglish.voanews.com/a/learning-english-with-english-clubs-starting-and-organizing-your-club/3947928.html), by Phil Dierking | Jill Robbins and Phil Dierking, reading in turn | 7:37 | `voa-audio.voanews.eu/vle/2017/07/17/1959ddf4-5d15-462e-a760-55be5bfd5494_hq.mp3`, sha256 `bb6a3459…826354d` |
+| 3 | Educational or training conversation, two main speakers | Let's Learn English Level 2, Lesson 13: "Save the Bees!" (https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-13-save-the-bees/4145716.html): a beekeeper teaches Anna | Caroline, Anna; Professor Bot | 3:51 | `voa-audio.voanews.eu/vle/2017/12/01/104a6627-290a-4472-911e-3bb9349f44f7_hq.mp3`, sha256 `f231fd76…bfa5a1fd0` |
+| 4 | Talk on an educational subject | Education Tips: "Make a Memory Palace to Improve Your English" (https://learningenglish.voanews.com/a/improve-your-english-with-a-memory-palace/5855771.html), by Alice Bryant | John Russell and Alice Bryant, reading in turn | 9:00 | `voa-audio.voanews.eu/vle/2021/04/20/6dffc231-cb3e-4662-afd5-f1208cbffed8_hq.mp3`, sha256 `e646e10f…26bc9463` |
+
+Every file was downloaded on 2026-10-18 and its duration measured with ffprobe: 284.8 s, 457.2 s, 231.5 s and 540.0 s, matching the lengths the pages state. Full hashes are in PROGRESS.md (M8-07).
+
+**Attribution** (the `origin.attribution` text, shown on the start screen): "Recordings and transcripts: VOA Learning English (learningenglish.voanews.com), public domain. Questions written for this app."
+
+**Known differences from a real IELTS test**, stated so the temporary test is not mistaken for one:
+- Every voice has a North American accent, and Learning English is read slowly; IELTS uses several accents at natural speed.
+- Parts 1 and 3 include Professor Bot's short grammar comments between scenes; Parts 2 and 4 are read by two presenters in turn rather than one speaker.
+- The recordings total about 25 minutes, not about 30, and have no IELTS-style spoken instructions or reading pauses. M8-08 may add silence before each part for reading time (allowed: the material is public domain), recorded as a conversion.
+- The questions are written for this product by Claude (`aiDraft`), not by VOA or IELTS.
+
 ## Question types (M8)
 
 **Approved** (M8-01; owner, 2026-10-18, M8-06).
