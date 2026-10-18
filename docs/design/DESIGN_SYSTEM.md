@@ -663,3 +663,53 @@ The task page composition (the list in the main column, start-aligned; no side c
 - Pictures gain depth: each sits on a disc with a radial `brand.blush` glow, and the step 1 scene gets a skyline silhouette in `brand.blush` behind the cap; the target's band values float around it as before. Only Reading and Listening in the skills picture.
 - The Reading start screen's side card is the blush field (`radius.lg`, 24 px padding) with the skill identity and format; the results page keeps the M5 and M6 values.
 - The Reading test and review screens keep their approved M4 and M5 values: the direction image's practice screen has the same structure (bar, passage, questions, numbered navigator); refinements come with M8's content work.
+
+## M7 components (Level check)
+
+> **DRAFT, awaiting owner approval (M7-05).** Drafted in M7-03 (2026-10-18) for [USER_FLOWS.md, Level check flows (M7)](../product/USER_FLOWS.md#level-check-flows-m7) and [LEVEL_CHECK.md](../product/LEVEL_CHECK.md). Reused unchanged: the brand palette, the type scale (with `text.display`), spacing, radii, the three elevation levels, motion, the focus ring, the breakpoints, the primary, secondary and quiet buttons, the line icons, the picture stage and task page compositions, the blush field, the M4 test bar, sheet, navigator and choice controls, the M5 outcome icons and note pattern, and the M6 next-action card. **No new token.** Contrast computed with the WCAG 2.x formula.
+
+### Intro (`/level-check`)
+
+The picture stage (Direction v2): on desktop the blush-field panel with the large skills picture and the step-3 encouragement under it ("Let's find your starting point." and its sentence); on phones the small skills picture on the blush field above the content (as the status pages). It replaces the interim page in the same frame, so nothing moves for a learner who saw the interim page.
+
+| Part | Value | Contrast |
+|---|---|---|
+| H1 | Heading 1: "Find your level"; in progress: "Continue the level check" | `ink` 18.6:1 |
+| Facts | A list 16 px under the H1, three rows 8 px apart, each a 20 px line icon in `text.secondary` and body text `ink`: the book (what it covers), the clock (time), the device (saved on this device) | 18.6:1 |
+| Honest line | The M5 note pattern (20 px `ink` info icon, body text `ink`), 16 px under the facts; the Academic-style line, when shown, a second note 8 px under it | 18.6:1 |
+| In progress | Instead of the facts: the sentence "You answered 6 of 14 questions…" in body text, and under it the M3 step indicator's bar, 14 segments wide, the answered ones in `brand.primary` (decorative; the sentence carries the count) | bar 4.6:1 (non-text) |
+| Finished | The facts, then the retake line and the "same questions" line as two notes | |
+| Storage blocked | One more note under the honest line | |
+| Actions | The primary button 24 px under the last line (32 px on desktop), with a right arrow after "Start" and "Continue"; the quiet link ("Not now", "Start over", "See your starting point") 8 px under it | white on red 4.6:1 |
+
+### Section (`/level-check/reading`)
+
+The M4 reading screen in Practice: the test bar ("Exit" as the quiet button; "Passage 1 of 2" at the end; **no timer**), the passage, the sheet, the navigator, the choice controls and the finish confirmation, all unchanged. Differences, by removal only: no flag toggle in the sheet header (the "All questions" button takes the row alone), no pin action in the sentence action bar (Highlight and Cancel only, one row), no "Your evidence" block. The sheet header counts the form's questions ("Question 3 of 14"); the navigator groups them by passage. The last question's red button reads "Finish" (not "Finish test") and the confirmation heading "Finish the check?". Desktop: the M4 exam layout and navigator bar, with the same removals.
+
+### Result (`/level-check/result`)
+
+Inside the shell, in the task page composition: the main column holds the result, the side column "Practise first" on desktop (phones: in the flow, before the button).
+
+| Part | Value | Contrast |
+|---|---|---|
+| H1 | Heading 1: "Your Reading starting point"; focus moves to it when the page replaces the section | 18.6:1 |
+| Level | The level name in `text.display` weight 800, 16 px under the H1, with a **three-step indicator** 8 px under it: three 32 × 4 px segments 4 px apart, `radius.full`, the first *n* in `brand.primary`, the rest `border.subtle` (decorative: the name is the level; never a gauge, ring or percentage) | name 18.6:1; segments 4.6:1 (non-text) |
+| Score | "9 of 14 correct" in Heading 2 weight 700 with tabular figures, 12 px under the indicator | 18.6:1 |
+| Scope and honest lines | Two notes (the M5 pattern), 16 px under the score, 8 px apart; the Academic-style note third when shown | 18.6:1 |
+| Practise first | A card on `surface.warm`, `radius.lg`, 16 px padding (24 px on desktop): "Practise first:" in meta weight 700 `text.secondary`, then the one or two type names in body text `ink`, each on its own row with a 20 px line icon of the type's family (a list for choice types, a pencil for typed answers), or the single "Any Reading practice…" sentence. Phones: 24 px under the notes; desktop: the side column, top-aligned | 7.8:1 / 17.7:1 on warm |
+| Actions | The red "Practise Reading" 24 px under the notes (phones: under the card), with a right arrow; the quiet links "See your answers" and "Take the check again" 8 px apart, 16 px under the button | 4.6:1 |
+| Insufficient data | H1 "Not enough answers for a starting point"; no level, no indicator; "5 of 14 answered." in Heading 2; the sentence as a note; the red "Take the check again"; the quiet "Practise Reading". No "Practise first" card | |
+| Earlier form version | The level and score as stored; the "check has changed" note replaces "See your answers" | |
+| Nothing finished on this device | The picture stage with the signpost (as the review's empty state): H1 "No starting point on this device yet", the sentence, the red "Find your level" | |
+
+### Home and onboarding step 3 after the check
+
+The M6 next-action card unchanged in shape: the level icon stays its mark; the H2 becomes "Practise Reading" (finished) or "Continue the level check" (in progress), the sentence the matching copy, the red button the matching label with its arrow; when finished, the quiet "See your starting point" link 8 px under the button (the card's only link). The starting-point picture stays on desktop. Onboarding step 3 shows the same H1, sentence and actions in its frame while the check is in progress or finished.
+
+### Motion and pictures
+
+The sheet and the navigator animate as in M4 (200 ms, none with reduced motion); the result page has no animation (no counting up, no reveal). The skills picture on the intro is the only picture of the flow; the section and the result have none ([Direction v2, pictures](#direction-v2-components-owner-mockup-2026-10-18)).
+
+### Tokens this would add
+
+None. The three-step indicator reuses the step indicator's segments; the fact rows reuse the line icons.
