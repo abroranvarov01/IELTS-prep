@@ -89,7 +89,7 @@ export function LevelCheckIntro({
     saveSession(deviceStorage(), session);
     setLevelCheckSectionState("reading", "inProgress")
       .catch(() => undefined)
-      .finally(() => router.push("/level-check/reading"));
+      .finally(() => router.push(`/level-check/reading?start=${Date.now()}`));
   };
 
   const facts = (
@@ -138,7 +138,9 @@ export function LevelCheckIntro({
           <div className="mt-6 desktop:mt-8">
             <button
               type="button"
-              onClick={() => router.push("/level-check/reading")}
+              onClick={() =>
+                router.push(`/level-check/reading?resume=${Date.now()}`)
+              }
               className={PRIMARY_ACTION}
             >
               <span className="inline-flex items-center gap-2">

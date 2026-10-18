@@ -15,6 +15,7 @@ import {
   type ReadingSession,
   type ReadingTest,
   deviceStorage,
+  newSessionId,
   removeSession,
   saveSession,
   storageSnapshot,
@@ -44,9 +45,20 @@ const noSubscription = () => () => {};
  * the form's localStorage entry, started by the intro, kept on the device at
  * every change, and committed once to the level-check history when it
  * finishes, never to the Reading attempt history. The result page replaces
- * the screen; Home learns "done" through the state cookie.
+ * the screen; Home learns "done" through the state cookie. Every visit from
+ * the intro carries a token (`visit`): the screen is kept alive between
+ * visits, with its effects run again when it is shown, so a state of an
+ * earlier visit is ignored (never saved) and the device is read again. With
+ * `start`, and nothing stored, the section starts
+ * a session itself: the device may keep nothing (storage blocked), so the
+ * intro's session never arrives; it then lives in this screen's state for
+ * the tab.
  */
-export function useCheckSession(form: ReadingTest): CheckScreenState {
+export function useCheckSession(
+  form: ReadingTest,
+  visit: string,
+  start: boolean,
+): CheckScreenState {
   const snapshot = useSyncExternalStore(
     noSubscription,
     () => storageSnapshot(form),
@@ -62,14 +74,28 @@ export function useCheckSession(form: ReadingTest): CheckScreenState {
   }, [snapshot]);
   const [state, dispatch] = useReducer(screenReducer, {});
   const router = useRouter();
-  const sessions = stored && (state.local ?? stored);
+  const local = state.visit === visit ? state.local : undefined;
+  const sessions = stored && (local ?? stored);
   const current = sessions?.current;
   const finished = sessions?.finished;
 
   useEffect(() => {
-    const changed = state.local?.current ?? state.local?.finished;
+    const changed = local?.current ?? local?.finished;
     if (changed) saveSession(deviceStorage(), changed);
-  }, [state.local]);
+  }, [local]);
+
+  useEffect(() => {
+    if (!start || !stored || stored.current || stored.finished) return;
+    dispatch({
+      type: "start",
+      visit,
+      test: form,
+      mode: "practice",
+      now: Date.now(),
+      sessionId: newSessionId(),
+      stored,
+    });
+  }, [start, stored, form, visit]);
 
   // The one way out of a finished section: its localStorage copy is written
   // first and removed only after a durable commit; a commit that fails leaves
@@ -110,14 +136,21 @@ export function useCheckSession(form: ReadingTest): CheckScreenState {
   const send = useCallback(
     (event: ReadingEvent) => {
       if (!stored) return;
-      dispatch({ type: "event", test: form, event, now: Date.now(), stored });
+      dispatch({
+        type: "event",
+        visit,
+        test: form,
+        event,
+        now: Date.now(),
+        stored,
+      });
     },
-    [form, stored],
+    [form, stored, visit],
   );
 
   if (!snapshot || !sessions) return { status: "loading" };
   if (finished) return { status: "finishing" };
-  if (!current) return { status: "none" };
+  if (!current) return { status: start ? "loading" : "none" };
   return {
     status: "active",
     session: current,

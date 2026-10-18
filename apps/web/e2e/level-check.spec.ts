@@ -32,7 +32,7 @@ async function startCheck(page: Page, locale: keyof typeof catalogs = "en") {
   await page
     .getByRole("button", { name: messages.levelCheck.intro.start })
     .click();
-  await expect(page).toHaveURL(`/${locale}/level-check/reading`);
+  await expect(page).toHaveURL(/\/level-check\/reading\?start=\d+$/);
   await expect(page.locator("#question-heading:visible")).toHaveText(
     fill(messages.reading.question.of, { number: 1, total: 14 }),
   );
@@ -204,7 +204,7 @@ test("leaving keeps the answers on the device; Home and the intro offer to conti
   await page
     .getByRole("button", { name: en.levelCheck.resume.continue })
     .click();
-  await expect(page).toHaveURL("/en/level-check/reading");
+  await expect(page).toHaveURL(/\/en\/level-check\/reading\?resume=\d+$/);
   await expect(page.locator("#question-heading:visible")).toHaveText(
     fill(en.reading.question.of, { number: 2, total: 14 }),
   );
@@ -227,7 +227,7 @@ test("'Start over' discards the answers and starts from question 1", async ({
   await page
     .getByRole("button", { name: en.levelCheck.resume.startOver })
     .click();
-  await expect(page).toHaveURL("/en/level-check/reading");
+  await expect(page).toHaveURL(/\/en\/level-check\/reading\?start=\d+$/);
   await expect(page.locator("#question-heading:visible")).toHaveText(
     fill(en.reading.question.of, { number: 1, total: 14 }),
   );

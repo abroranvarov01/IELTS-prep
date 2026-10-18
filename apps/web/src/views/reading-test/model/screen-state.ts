@@ -14,11 +14,15 @@ export type Sessions = { current?: ReadingSession; finished?: ReadingSession };
  * The screen's state. `local` is empty until the user acts; until then the
  * sessions come from the device's storage snapshot, which every action
  * carries (ADR-0006: storage is read without setting state in an effect).
+ * `visit` names the visit `local` belongs to: a screen kept alive between
+ * visits ignores a `local` of an earlier visit and reads the device again.
  */
-export type ScreenState = { local?: Sessions };
+export type ScreenState = { local?: Sessions; visit?: string };
+
+type Visit = { visit?: string };
 
 export type ScreenAction =
-  | {
+  | (Visit & {
       type: "start";
       test: ReadingTest;
       mode: Mode;
@@ -28,14 +32,14 @@ export type ScreenAction =
       /** A retry's units (ADR-0009 §8). */
       retry?: { of: string; questions: number[] };
       stored: Sessions;
-    }
-  | {
+    })
+  | (Visit & {
       type: "event";
       test: ReadingTest;
       event: ReadingEvent | { type: "tick" };
       now: number;
       stored: Sessions;
-    };
+    });
 
 /**
  * An event that changes nothing (a refused one, or the Exam clock's tick
@@ -46,10 +50,12 @@ export function screenReducer(
   state: ScreenState,
   action: ScreenAction,
 ): ScreenState {
-  const sessions = state.local ?? action.stored;
+  const sessions =
+    (state.visit === action.visit ? state.local : undefined) ?? action.stored;
   switch (action.type) {
     case "start":
       return {
+        visit: action.visit,
         local: {
           ...sessions,
           current: startSession(
@@ -67,6 +73,7 @@ export function screenReducer(
       const next = apply(current, action.test, action.event, action.now);
       if (next === current) return state;
       return {
+        visit: action.visit,
         local:
           next.status === "finished"
             ? { finished: next }

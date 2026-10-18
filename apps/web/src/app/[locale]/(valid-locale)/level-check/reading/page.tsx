@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import { levelCheckForm } from "@/entities/reading/forms.server";
 import { LevelCheckSection } from "@/views/reading-test";
 
@@ -10,5 +11,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function LevelCheckReadingPage() {
-  return <LevelCheckSection form={levelCheckForm()} />;
+  // Whether to start a session comes from the address (`?start=1`).
+  return (
+    <Suspense>
+      <LevelCheckSection form={levelCheckForm()} />
+    </Suspense>
+  );
 }

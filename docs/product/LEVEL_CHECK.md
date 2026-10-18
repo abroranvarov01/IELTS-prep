@@ -2,7 +2,7 @@
 
 Canonical owner of the **level check's purpose, scope, result model and honest wording**. Flows and copy: [USER_FLOWS.md](USER_FLOWS.md) (M7-02). Design values: [DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md) (M7-03). Items, results and storage in code: the M7 ADR (M7-04). The items themselves: M7-06.
 
-> **STATUS: APPROVED** (owner, 2026-10-18, task M7-05): every decision D1–D14 as recommended; the level thresholds and the "practise first" rule are product policy, not IELTS rules. Drafted by the worker in M7-01. The recommendations below are the decisions; the options stay as the record of what was considered. Implementation: M7-06 to M7-11.
+> **STATUS: APPROVED** (owner, 2026-10-18, task M7-05): every decision D1–D14 as recommended; the level thresholds and the "practise first" rule are product policy, not IELTS rules. Drafted by the worker in M7-01. The recommendations below are the decisions; the options stay as the record of what was considered. **Implemented** (M7-06 to M7-11, 2026-10-18): the Reading section on form A at `/{locale}/level-check` (intro), `/level-check/reading` (section), `/level-check/result` and `/level-check/review`; the Listening section follows in M9.
 
 The learner-facing name is **"Find your level"** ([UX_PRINCIPLES.md, plain language](UX_PRINCIPLES.md#6-plain-language)); "level check" is the product's name for it in the docs and the code. "Diagnostic" never appears in the interface.
 

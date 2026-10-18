@@ -3706,7 +3706,8 @@
       "title": "Level check end to end, accessibility and docs",
       "milestone": "M7",
       "owner": "worker",
-      "status": "in_progress",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M7-10"],
       "goal": "The level check works as one flow from onboarding to the next action, and the docs describe it.",
       "scope": [
