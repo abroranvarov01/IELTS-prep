@@ -718,3 +718,9 @@ Entry format:
 - Changes: Owner instruction of 2026-10-18 in the session: "I approve the replanned roadmap. Set M6 to active in TASKS.json." TASKS.json: M6 `status: "active"`. M7–M15 stay planned.
 - Verification: TASKS.json parses; exactly one milestone is active; no task status changed.
 
+### 2026-10-18: M6-01 Audit every existing surface against the Design Operating System
+- Result: done
+- Changes: New docs/execution/M6-01-ui-audit.md (a snapshot for the M6-04 gate): method, overall judgement, seven cross-cutting findings (no navigation; three unrelated desktop compositions, one of them the "tiny centred form" anti-pattern; Home indistinguishable from onboarding step 3; post-beta skills in the shared picture; English skill names in ru and uz; test-bar empty states without context; the small logo asset), per-surface findings with priorities, a capped fix list of seven items, proposed reference screens, and five questions for the owner.
+- Verification: 156 screenshots of 13 surfaces at 320, 390, 1024 and 1280 px in uz, ru and en from a production build of `68acbb2`, plus the phone sheet states; an automated overflow and clipping check on every capture found none; per-surface contact sheets reviewed. Screenshots stay in the session scratchpad. `pnpm format:check` passes; no file under apps/ or packages/ changed; links in the audit resolve.
+- Notes: The error page shares the not-found layout and was not triggered separately.
+

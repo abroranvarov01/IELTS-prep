@@ -2979,7 +2979,8 @@
       "title": "Audit every existing surface against the Design Operating System",
       "milestone": "M6",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": [],
       "goal": "A recorded, prioritised list of what keeps each existing screen from the approved visual language, so M6 fixes a capped set of real problems instead of redesigning without end.",
       "scope": [
