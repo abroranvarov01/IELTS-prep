@@ -3899,7 +3899,8 @@
       "title": "Draft the Listening design values and the shared completion layouts",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-02", "M8-03"],
       "goal": "The player, Listening screens and the table, flow-chart and labelling layouts are designed once for both skills.",
       "scope": [

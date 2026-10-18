@@ -275,7 +275,7 @@ Top to bottom at 360 px:
 2. **Player** (sticky under the test bar, so it stays reachable while the questions scroll): Practice: Play / Pause, Back 5 s, the slider with its times, Forward 5 s and Speed, in at most two rows at 320 px (the slider gets its own row there). Exam: one row with "Recording: Part 2", the progress line, and the volume note (P5).
 3. **The notice line** when there is one (storage, "Part 2 has started." with "Go to Part 2").
 4. **The questions** (`main`): the current group whole, as M8-01 specifies (instruction, title or picture, every question with its control in place). The page scrolls; groups follow one another down the part, so the learner can scroll on to the next group as in a paper booklet, and "Questions 1–5" headings separate them. A part is one scrolling page; another part is reached by the navigator or Next.
-5. **Bottom bar** (fixed, about 56 px, as compact as Reading's sheet footer): "Mark for review" for the current question, "All questions" (opens the navigator), Previous and Next. On the last question, Next becomes the red "Finish test".
+5. **Bottom bar** (fixed; its height follows its content: two rows on phones, one from the tablet breakpoint; values in DESIGN_SYSTEM.md, M8 components): "Mark for review" for the current question, "All questions" (opens the navigator), Previous and Next. On the last question, Next becomes the red "Finish test".
 
 **Why no bottom sheet:** Reading's sheet exists to keep the passage as the main object; Listening has no passage, so the questions are the main object and get the whole screen under the player. The navigator opens in a sheet (the expanded state of Reading's sheet, with its "Back"), so the pattern stays familiar.
 

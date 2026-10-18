@@ -713,3 +713,110 @@ The sheet and the navigator animate as in M4 (200 ms, none with reduced motion);
 ### Tokens this would add
 
 None. The three-step indicator reuses the step indicator's segments; the fact rows reuse the line icons.
+
+## M8 components (Listening)
+
+**DRAFT** (M8-05, for the owner's gate M8-06). Visual values for [LISTENING_EXPERIENCE.md](../product/LISTENING_EXPERIENCE.md) (question types, the player, resume and weak connections, the phone and desktop screens) and [USER_FLOWS.md, Listening flows (M8)](../product/USER_FLOWS.md#listening-flows-m8). The table, flow-chart and labelling layouts below are **shared with Reading** (M8-17 to M8-19 use them unchanged). Reused unchanged: the brand palette, the type scale, spacing, radii, the three elevation levels, motion, the focus ring, the breakpoints, the primary, secondary and quiet buttons, the line icon family, the confirmation dialog, the task page composition and the Reading start screen, the M4 test bar, timer, option rows, answer button, typed-answer field, word-limit warning, navigator cells and sheet and one-line storage notice, the M5 note pattern. **No new token**: the Listening skill colors already exist (`skill.listening` `#1D5FD1`, `skill.listening.tint` `#EAF1FD`) and are used here for the first time. Contrast computed with the WCAG 2.x formula.
+
+### The Listening skill color: where blue appears
+
+Blue is the restrained secondary accent of the surface direction; red stays the brand and the one primary action.
+
+| Use | Value | Contrast |
+|---|---|---|
+| The headphones line icon (the Listening identity: Hub section, Home card, start screen side card, the Exam player) | `skill.listening` | 5.82:1 on `surface.base` (non-text needs 3:1) |
+| The played part of the player's progress line and slider, the Exam download bar | `skill.listening` fill | 5.82:1 on white; 4.57:1 against the unplayed `border.subtle` track |
+| The "Part 2 has started" notice | `skill.listening.tint` background, `ink` text | `ink` 16.37:1 |
+| Never | Buttons, links, text, selected states, the navigator, answer controls | n/a |
+
+### Player
+
+A band directly under the test bar, `surface.base`, a 1 px `border.subtle` line under it (decorative), sticky with the test bar. 8 px vertical padding, the gutter at the sides; on desktop 16 px vertical, at the question column's width.
+
+**Practice controls:**
+
+| Part | Value | Contrast |
+|---|---|---|
+| Play / Pause | A 48 × 48 px circle, `ink` fill, a 20 px `surface.base` line play or pause icon; hover: `text.secondary` fill; focus: the approved ring. Not red: the screen's red is "Finish test", and play is a tool, not the screen's decision | icon 18.58:1 |
+| Back 5 / Forward 5 | [Quiet buttons](#quiet-button), 48 px, a 20 px line arrow-around icon with the "5" in bold meta text beside it; the accessible name is the full copy ("Back 5 seconds") | `ink` 18.58:1 |
+| Slider | A native range input restyled: a 4 px track, `radius.full`, unplayed `border.subtle`, played `skill.listening`; a 20 px `ink` thumb with a 2 px `surface.base` ring; the hit area 48 px high | thumb 18.58:1 against white |
+| Times | "1:23 / 7:40" in meta text, `text.secondary`, tabular figures | 8.22:1 |
+| Speed | A quiet button "1×" (bold) with a down chevron; the list as the language switcher's (48 px rows, the current one bold with the check) | 18.58:1 |
+
+**Arrangement:** phones: row 1 the slider across the full width with the times under it at its ends; row 2 Back 5, Play / Pause, Forward 5 centered, Speed at the end; about 120 px in all. From the tablet breakpoint one row: Play / Pause, Back 5, Forward 5, the slider (flexible), the times, Speed; 64 px.
+
+**States:**
+
+| State | Shows |
+|---|---|
+| Loading (before it can play) | Play disabled: a `surface.base` circle with a 1 px `border.subtle` line and a `text.tertiary` icon (6.24:1), as disabled options; the times replaced by "Loading the audio…" in meta text |
+| Paused, Playing | The play or pause icon; the slider moves with the audio without a transition |
+| Buffering | As Playing, with "Loading the audio…" replacing the times; no spinner (a static 16 px line clock icon at most) |
+| Ended | "End of Part 2" in meta text weight 700 replacing the times; the main button shows a restart icon and is named "Play again" |
+| Failed | The controls disabled; under them the [M5 note pattern](#m5-components-reading-results-and-review) with the 20 px warning icon: "The audio couldn't load." and the quiet button "Try again" |
+
+**Exam player:** one row, 56 px: the headphones icon in `skill.listening` (20 px), "Recording: Part 2" in body weight 500 `ink`, and a non-interactive 4 px progress line of the current part (played `skill.listening`, unplayed `border.subtle`, decorative: the text carries the state; no times). On desktop a volume control at the end: a 20 px line speaker icon and a slider (the Practice slider's look, 8rem wide, named "Volume"). On phones, in its place, "Use your device's volume buttons." in meta text `text.secondary` under the row.
+
+### Exam: preparing, resuming, interrupted
+
+| Screen | Value |
+|---|---|
+| Preparing the audio | The task page composition: H1 "Preparing the audio"; a progress bar 8 px high, `radius.full`, track `border.subtle`, fill `skill.listening` (decorative; the text carries it), 16 px under the H1; "6 of 14 MB" in body text with tabular figures 8 px under it. Ready: the bar full, the ready sentence, the red "Start the recording" 24 px under it. Failed: the note pattern with the warning icon and the red "Try again" |
+| Continue the test | The same composition: H1, the sentence, the red "Continue" |
+| The audio stopped | The [confirmation dialog](#confirmation-dialog) (modal: the Exam is paused): the heading, the sentence, the red "Try again", the quiet link "Finish without the rest" 8 px under it |
+| Time to check | The test bar's timer as Reading's (weight 700, tabular), weight 800 in the last 30 seconds |
+| "Part 2 has started." | A notice under the player: `skill.listening.tint`, `radius.md`, 12/16 px padding, the 20 px info icon and the sentence in body `ink`, "Go to Part 2" as a quiet button at its end (wrapping under the sentence at 320 px) |
+
+### Questions on the Listening screen
+
+- **The question area:** phones and tablets the gutter and, from the tablet breakpoint, the 40rem reading measure (`container.measure`), centered; desktop the same measure, except labelling groups (below). `surface.base`.
+- **Group heading** "Questions 1–5" in Heading 3; the instruction under it as Reading's (English test content); the group's title (form, table, notes) in body weight 700. 32 px between groups on phones, 48 px on desktop; 24 px between questions in a group.
+- **The current question:** a 4 px `ink` bar along its start edge (the Reading desktop marker), at every width, because every question of the group is on screen.
+- **Choose one, choose several, the answer button:** Reading's option rows and answer button, unchanged.
+- **Letter buttons** (LISTENING_EXPERIENCE.md L2 (b)): 44 × 44 px, 4 px gaps, wrapping; `radius.sm`; the letter in body weight 700. Unchosen: `surface.base`, 1 px `border.control` (3.22:1). Chosen: `ink` fill, `surface.base` letter (18.58:1), a fill change, not a hue (as the navigator's answered cell). Hover: `brand.blushSoft`. Focus: the approved ring. The shared list above the items: one row per option, its letter bold, 8 px apart.
+- **Fields in the text** (L1 (b)): the question number in bold before the field; the field 44 px high (the touch minimum inside running text), at least 7rem and at most the line's width, `radius.sm` (a small element inside text), 1 px `border.control`, 8/12 px padding, body text; focus: the approved ring. Lines that hold fields get 8 px between them so fields never touch.
+- **Form completion:** phones: each line's label in meta weight 700 `text.secondary` (8.22:1) above its value in body text; from the tablet breakpoint two columns, the label 40% and the value 60%, 16 px apart, rows 12 px apart. Given lines (no gap) look the same.
+- **Note completion:** heading lines in body weight 700; note lines with an 8 px `text.secondary` bullet, sub-lines indented 24 px.
+
+### Table completion (shared with Reading)
+
+- **From the tablet breakpoint:** a real table at the column width; the header row on `surface.warm` with header text in body weight 700 `ink` (17.68:1); cells with 12 px padding, top-aligned; rows separated by a 1 px `border.subtle` line, no vertical lines (the columns are separated by space); the row-header column, when the content has one, in weight 700. A gap's field fills its cell's width (at least 7rem; a cell never gets narrower than that, which is why tables are limited to four columns, ADR-0012).
+- **Phones (L5 (a)):** one block per row on `surface.warm`, `radius.md`, 12/16 px padding, 8 px between blocks; the row's first cell as its heading in body weight 700; each other cell as a line with its column heading in meta weight 700 `text.secondary` (7.83:1 on warm) above the content. No card shadow: the blocks are grouping, not objects.
+
+### Flow-chart completion (shared with Reading)
+
+- Steps as boxes at the column width: `surface.base`, 1 px `border.subtle`, the soft shadow (objects on white, Direction v2), `radius.md`, 12/16 px padding, the text in body.
+- Between boxes a 20 px line arrow pointing down in `text.secondary`, centered, with 4 px above and below (decorative; the list order carries the sequence).
+- The title, when the content has one, in body weight 700 above the first box.
+
+### Plan, map and diagram labelling (shared with Reading)
+
+- **The picture:** in a frame with a 1 px `border.subtle` line and `radius.md` (the image clipped to it), on `surface.base`, with its intrinsic aspect ratio; phones the full width between the gutters.
+- **Markers drawn by the app** (ADR-0012), centered on their coordinates: **letters** in a 28 px circle, **question numbers** in a 28 px rounded square (`radius.sm`), so the two kinds differ by shape; both `surface.base` with a 2 px `ink` border and the label in body weight 700 `ink` (18.58:1), plus a 2 px `surface.base` outer ring so the border reads on dark parts of a picture. The current question's marker: `brand.blushSoft` fill and a 3 px `ink` border. Marker sizes are in rem: they grow with the user's font size, not with the picture's zoom in the enlarged view.
+- **"Enlarge picture":** a quiet button with a 16 px line expand icon, 8 px under the picture at its start.
+- **The enlarged view:** a modal over the whole screen, `surface.base`; the picture fills the space above a toolbar; the toolbar at the bottom (top on desktop) with "Zoom in", "Zoom out" (quiet buttons with line plus and minus icons and their labels) and "Close" (the close icon and the label); zoom steps 1×, 1.5×, 2×, 3×; at 1× the picture fits the screen. No animation of the zoom with reduced motion; otherwise the base duration.
+- **Desktop:** the group breaks out of the 40rem measure to the content width: the picture 55% on the start side (sticky at the top of the question area while the questions scroll), the questions 45% on the end side, 32 px apart, as the Reading desktop columns.
+
+### Phone bottom bar and the navigator
+
+- **Bottom bar** (phones and tablets): `surface.base`, a 1 px `border.subtle` line above it, the raised shadow, the gutter at the sides, 8 px vertical padding. **Its height follows its content** (as the Reading desktop navigator bar): phones two rows: "Mark for review" and "All questions" as quiet buttons, then Previous and Next as secondary buttons, each half the width (the last question's red "Finish test" full width under Previous, as Reading's sheet footer); about 112 px. From the tablet breakpoint one row of four. While a field has focus it sits behind the on-screen keyboard (LISTENING_EXPERIENCE.md).
+- **The navigator** in Reading's sheet (expanded state), headed by part ("Part 1" in Heading 3), with Reading's cells, states and badges.
+- **Desktop navigator bar:** Reading's, with parts instead of passages ("Part 3: 4 of 10 answered" as quiet buttons).
+
+### Practice Hub, Home and the start screen
+
+- **Hub:** the Listening section as Reading's (Direction v2 test rows), headed by "Listening" with the headphones icon in `skill.listening`; rows unchanged; "Finished" without a score in the state line.
+- **Home:** the Listening skill card as Reading's, with the headphones icon in `skill.listening` on `skill.listening.tint` (the Reading card's red icon on its tint, in blue).
+- **Start screen:** the Reading start screen composition; the side card (desktop) and the identity line (phones) with the headphones icon and "Listening"; the audio-size and headphones lines as two rows of the intro's fact pattern (20 px line icons: a download arrow and headphones, in `text.secondary`, body text `ink`) under the mode choice. A device that cannot play the audio: the note pattern with the warning icon in place of those lines, and "Start" disabled.
+
+### Motion and pictures
+
+No waveform, equalizer or pulsing play button (LISTENING_EXPERIENCE.md P8). The slider and the progress lines move with the audio but have no transition; the bottom sheet for the navigator animates as in M4; nothing in the player animates with reduced motion. No illustration on the Listening screen; the Hub, Home and the start screen use the existing pictures.
+
+### New icons
+
+Line icons in the approved family (16 px grid, 1.5 px stroke): headphones, play, pause, back 5 (an arrow turning back), forward 5, restart, speaker, download arrow, expand, plus, minus, arrow down. No new icon style.
+
+### Tokens this would add
+
+None. First use of `skill.listening` and `skill.listening.tint`, which `tokens.css` already defines.
