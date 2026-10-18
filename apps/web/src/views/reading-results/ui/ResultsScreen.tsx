@@ -16,6 +16,7 @@ import {
 import { useRouter } from "@/shared/i18n/navigation";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
+import { TaskLayout } from "@/shared/ui/TaskLayout";
 import { type Loaded, loadResult } from "../api/load-result";
 import { OutcomeIcon } from "./OutcomeIcon";
 import { RepeatedMistakes } from "./RepeatedMistakes";
@@ -100,21 +101,17 @@ export function ResultsScreen({
   );
 
   if (!loaded || returning)
-    return (
-      <div className="mx-auto max-w-column py-8">
-        {heading(t("results.title"))}
-      </div>
-    );
+    return <TaskLayout>{heading(t("results.title"))}</TaskLayout>;
 
   if (loaded.kind === "none")
     return (
-      <div className="mx-auto max-w-column py-8">
+      <TaskLayout>
         {heading(t("results.none.title"))}
         <p className="mt-4">{t("results.none.body")}</p>
         <div className="mt-6">
           <PrimaryLink href={startHref}>{t("results.none.start")}</PrimaryLink>
         </div>
-      </div>
+      </TaskLayout>
     );
 
   const { attempt } = loaded;
@@ -139,7 +136,7 @@ export function ResultsScreen({
 
   if (loaded.kind === "earlierVersion")
     return (
-      <div className="mx-auto max-w-column py-8">
+      <TaskLayout>
         {heading(title, attempt.finishReason === "timeUp")}
         {meta}
         {loaded.record && score(loaded.record)}
@@ -149,7 +146,7 @@ export function ResultsScreen({
         <div className="mt-6">
           <PrimaryLink href={startHref}>{t("results.none.start")}</PrimaryLink>
         </div>
-      </div>
+      </TaskLayout>
     );
 
   const { record, correction } = loaded;
@@ -166,7 +163,35 @@ export function ResultsScreen({
   const retry = isRetry ? [] : retryQuestions(test, attempt, record);
 
   return (
-    <div className="mx-auto max-w-column py-8">
+    <TaskLayout
+      side={
+        <div className="mt-8 flex flex-col gap-8 desktop:mt-0">
+          {loaded.patterns && (
+            <RepeatedMistakes testId={test.id} view={loaded.patterns} />
+          )}
+          {isRetry ? (
+            <div>
+              <QuietLink
+                href={`/reading/${test.id}/results?attempt=${encodeURIComponent(attempt.retryOf ?? "")}`}
+              >
+                {t("retry.backToResults")}
+              </QuietLink>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {retry.length > 0 && (
+                <QuietLink
+                  href={`/reading/${test.id}/retry?of=${encodeURIComponent(attempt.id)}&q=${retry.join(",")}`}
+                >
+                  {t("results.tryAgain", { count: retry.length })}
+                </QuietLink>
+              )}
+              <QuietLink href={startHref}>{t("finished.again")}</QuietLink>
+            </div>
+          )}
+        </div>
+      }
+    >
       {heading(title, attempt.finishReason === "timeUp")}
       {meta}
       {score(record)}
@@ -208,29 +233,6 @@ export function ResultsScreen({
       <div className="mt-6">
         <PrimaryLink href={reviewHref}>{reviewLabel}</PrimaryLink>
       </div>
-      {loaded.patterns && (
-        <RepeatedMistakes testId={test.id} view={loaded.patterns} />
-      )}
-      {isRetry ? (
-        <div className="mt-8">
-          <QuietLink
-            href={`/reading/${test.id}/results?attempt=${encodeURIComponent(attempt.retryOf ?? "")}`}
-          >
-            {t("retry.backToResults")}
-          </QuietLink>
-        </div>
-      ) : (
-        <div className="mt-8 flex flex-col gap-2">
-          {retry.length > 0 && (
-            <QuietLink
-              href={`/reading/${test.id}/retry?of=${encodeURIComponent(attempt.id)}&q=${retry.join(",")}`}
-            >
-              {t("results.tryAgain", { count: retry.length })}
-            </QuietLink>
-          )}
-          <QuietLink href={startHref}>{t("finished.again")}</QuietLink>
-        </div>
-      )}
-    </div>
+    </TaskLayout>
   );
 }

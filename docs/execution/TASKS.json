@@ -3251,7 +3251,8 @@
       "title": "Reading surfaces in the same product language",
       "milestone": "M6",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M6-05"],
       "goal": "The Reading start screen, test, results, review and retry close their approved audit items, so they read as one product with the new shell.",
       "scope": [

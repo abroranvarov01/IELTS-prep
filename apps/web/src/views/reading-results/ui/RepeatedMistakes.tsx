@@ -24,7 +24,7 @@ export function RepeatedMistakes({
   const t = useTranslations("reading.patterns");
 
   return (
-    <section aria-labelledby="patterns-title" className="mt-8">
+    <section aria-labelledby="patterns-title">
       <h2 id="patterns-title" className="text-heading-2 font-bold">
         {t("title")}
       </h2>

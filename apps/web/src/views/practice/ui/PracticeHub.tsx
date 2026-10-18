@@ -4,7 +4,12 @@ import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useState } from "react";
 import { QUESTION_COUNT, type ReadingTest } from "@/entities/reading";
 import { Link } from "@/shared/i18n/navigation";
-import { ChevronIcon, InfoIcon, LineIcon } from "@/shared/ui/icons";
+import {
+  ChevronIcon,
+  InfoIcon,
+  LineIcon,
+  ReadingIcon,
+} from "@/shared/ui/icons";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { loadStates } from "../api/load-states";
 import type { TestState } from "../model/test-state";
@@ -140,12 +145,4 @@ function StateLine({ state }: { state: TestState }) {
           )
         : null;
   }
-}
-
-function ReadingIcon() {
-  return (
-    <LineIcon className="size-[1.25rem]">
-      <path d="M8 4.25C6.75 3.25 4.75 2.75 2.25 3v9.5c2.5-.25 4.5.25 5.75 1.25 1.25-1 3.25-1.5 5.75-1.25V3C11.25 2.75 9.25 3.25 8 4.25zM8 4.25v9.5" />
-    </LineIcon>
-  );
 }

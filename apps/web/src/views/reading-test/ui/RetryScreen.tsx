@@ -10,6 +10,7 @@ import {
 } from "@/entities/reading";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
+import { PictureStage, SignpostPicture } from "@/shared/ui/StatusMessage";
 import { TestBar } from "./TestBar";
 import { TestWorkspace } from "./TestWorkspace";
 import { useRetrySession } from "./use-retry-session";
@@ -62,25 +63,29 @@ export function RetryScreen({
         <>
           <TestBar />
           <main id="main" className="px-gutter">
-            <div className="mx-auto max-w-column py-8">
-              <h1
-                ref={headingRef}
-                tabIndex={-1}
-                className="text-heading-1 font-extrabold focus:outline-none"
-              >
-                {t("retry.unavailable")}
-              </h1>
-              <p className="mt-4">{t(`retry.${screen.problem}`)}</p>
-              <div className="mt-6">
-                <PrimaryLink href={`/reading/${test.id}/results`}>
-                  {t("lastResults")}
-                </PrimaryLink>
-              </div>
-              <div className="mt-2">
-                <QuietLink href={`/reading/${test.id}`}>
-                  {t("results.none.start")}
-                </QuietLink>
-              </div>
+            <div className="mx-auto max-w-content">
+              <PictureStage picture={(size) => <SignpostPicture size={size} />}>
+                <h1
+                  ref={headingRef}
+                  tabIndex={-1}
+                  className="text-heading-1 font-extrabold focus:outline-none"
+                >
+                  {t("retry.unavailable")}
+                </h1>
+                <p className="mt-2 text-text-secondary">
+                  {t(`retry.${screen.problem}`)}
+                </p>
+                <div className="mt-6 desktop:mt-8">
+                  <PrimaryLink href={`/reading/${test.id}/results`}>
+                    {t("lastResults")}
+                  </PrimaryLink>
+                </div>
+                <div className="mt-2">
+                  <QuietLink href={`/reading/${test.id}`}>
+                    {t("results.none.start")}
+                  </QuietLink>
+                </div>
+              </PictureStage>
             </div>
           </main>
         </>

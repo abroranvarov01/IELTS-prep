@@ -25,16 +25,7 @@ export function StatusMessage({
   retry,
 }: StatusMessageProps) {
   return (
-    <PictureLayout
-      panel={
-        <div className="flex flex-1 items-center justify-center">
-          {picture("large")}
-        </div>
-      }
-    >
-      <div className="mb-6 flex justify-center rounded-lg bg-brand-blush-soft py-4 desktop:hidden">
-        {picture("small")}
-      </div>
+    <PictureStage picture={picture}>
       <h1 className="text-heading-1 font-extrabold">{title}</h1>
       <p className="mt-2 text-text-secondary">{body}</p>
       <div className="mt-6 flex flex-wrap items-center gap-4 desktop:mt-8">
@@ -60,6 +51,34 @@ export function StatusMessage({
           </Link>
         )}
       </div>
+    </PictureStage>
+  );
+}
+
+/**
+ * A whole-page status or empty state on the picture stage (DESIGN_SYSTEM.md,
+ * M6 page compositions): the picture large in the desktop panel, small above
+ * the content on phones and tablets.
+ */
+export function PictureStage({
+  picture,
+  children,
+}: {
+  picture: (size: "large" | "small") => ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <PictureLayout
+      panel={
+        <div className="flex flex-1 items-center justify-center">
+          {picture("large")}
+        </div>
+      }
+    >
+      <div className="mb-6 flex justify-center rounded-lg bg-brand-blush-soft py-4 desktop:hidden">
+        {picture("small")}
+      </div>
+      {children}
     </PictureLayout>
   );
 }

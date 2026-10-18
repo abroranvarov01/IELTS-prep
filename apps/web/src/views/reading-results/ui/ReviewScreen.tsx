@@ -8,6 +8,7 @@ import { Link } from "@/shared/i18n/navigation";
 import { ChevronIcon, InfoIcon } from "@/shared/ui/icons";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
+import { PictureStage, SignpostPicture } from "@/shared/ui/StatusMessage";
 import { TestBarFrame } from "@/widgets/reading-layout";
 import { type Loaded, loadResult } from "../api/load-result";
 import { ReviewWorkspace } from "./ReviewWorkspace";
@@ -97,7 +98,7 @@ export function ReviewScreen({
     );
 
   const startTest = (
-    <div className="mt-6">
+    <div className="mt-6 desktop:mt-8">
       <PrimaryLink href={`/reading/${test.id}`}>
         {t("results.none.start")}
       </PrimaryLink>
@@ -117,34 +118,38 @@ export function ReviewScreen({
     <>
       {bar()}
       <main id="main" className="px-gutter">
-        <div className="mx-auto max-w-column py-8">
-          {loaded.kind === "none" ? (
-            <>
-              {heading(t("results.none.title"))}
-              <p className="mt-4">{t("results.none.body")}</p>
-            </>
-          ) : (
-            <>
-              {heading(t("results.title"))}
-              {loaded.record && (
-                <p className="mt-6 text-heading-1 font-extrabold tabular-nums">
-                  {t("results.score", {
-                    score: loaded.record.score.marks,
-                    total: loaded.record.score.positions,
-                  })}
+        <div className="mx-auto max-w-content">
+          <PictureStage picture={(size) => <SignpostPicture size={size} />}>
+            {loaded.kind === "none" ? (
+              <>
+                {heading(t("results.none.title"))}
+                <p className="mt-2 text-text-secondary">
+                  {t("results.none.body")}
                 </p>
-              )}
-              <p className="mt-4 flex gap-2">
-                <InfoIcon />
-                <span>
-                  {loaded.record
-                    ? t("results.oldVersion")
-                    : t("results.cannotCheck")}
-                </span>
-              </p>
-            </>
-          )}
-          {startTest}
+              </>
+            ) : (
+              <>
+                {heading(t("results.title"))}
+                {loaded.record && (
+                  <p className="mt-6 text-heading-1 font-extrabold tabular-nums">
+                    {t("results.score", {
+                      score: loaded.record.score.marks,
+                      total: loaded.record.score.positions,
+                    })}
+                  </p>
+                )}
+                <p className="mt-4 flex gap-2">
+                  <InfoIcon />
+                  <span>
+                    {loaded.record
+                      ? t("results.oldVersion")
+                      : t("results.cannotCheck")}
+                  </span>
+                </p>
+              </>
+            )}
+            {startTest}
+          </PictureStage>
         </div>
       </main>
     </>
