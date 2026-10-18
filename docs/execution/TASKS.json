@@ -48,39 +48,63 @@
     },
     {
       "id": "M6",
-      "name": "Listening",
+      "name": "Product UI Foundation + Practice Hub",
       "status": "planned",
-      "goal": "Listening practice with audio and questions, including realistic play-once behavior in Exam Mode, that works on weak mobile connections."
+      "goal": "The existing product shares one deliberate visual language with owner-approved local reference screenshots; navigation and the responsive shell are settled; a Practice Hub is the clear entry to Reading and later Listening. Not a rewrite: a capped audit list with exit criteria."
     },
     {
       "id": "M7",
-      "name": "Accounts + Sync",
+      "name": "Level Check (Diagnostic)",
       "status": "planned",
-      "goal": "Optional accounts so progress carries across devices, without blocking practice before registration."
+      "goal": "The real level check replaces the interim page: short original forms, a versioned result model that gives an honestly labelled starting point (no IELTS band while nothing is calibrated), resume and retake, and one next action. Designed for Reading and Listening; the Reading section ships here, the Listening section in M9."
     },
     {
       "id": "M8",
-      "name": "Progress + Personalization",
+      "name": "Listening Engine",
       "status": "planned",
-      "goal": "'Your progress' (trend and current estimate, honestly labeled) and next-action recommendations based on the user's own history."
+      "goal": "Listening as a full engine like M4: Sections 1–4, every Listening question family, the player in Practice and Exam with realistic restrictions, weak-network loading and resume, phone and desktop layouts, a content contract with audio, transcripts and images, original demo audio; plus Reading table, flow-chart and diagram label completion on the shared layouts."
     },
     {
       "id": "M9",
-      "name": "Content System",
+      "name": "Listening Review + Error Intelligence",
       "status": "planned",
-      "goal": "Authoring, versioning, and review of original passages, questions, answer keys, and explanations."
+      "goal": "Sourced Listening checking, results and evidence-first review (audio timestamp, evidence replay, transcript excerpt, why, Explain simpler, try again), retries and justified repeated mistakes, the attempt history extended to Listening without losing Reading data, and the level check's Listening section. No runtime AI."
     },
     {
       "id": "M10",
-      "name": "PWA + Performance + Reliability",
+      "name": "Accounts + Sync",
       "status": "planned",
-      "goal": "The agreed offline scope, mobile performance budgets enforced in CI, and production reliability (monitoring, error handling)."
+      "goal": "Optional accounts offered only when they give the learner something; the first server product models; guest-to-account migration and multi-device sync of the device history with its meanings unchanged; deletion and export; legal input on data residency and minors before design."
     },
     {
       "id": "M11",
+      "name": "Cross-skill Home + Progress + Personalization",
+      "status": "planned",
+      "goal": "Home answers 'what should I do now?' from real level-check, Reading and Listening data with deterministic, explainable rules; a Progress screen without false precision; new-learner, insufficient-data and stale states."
+    },
+    {
+      "id": "M12",
+      "name": "Mock Experience",
+      "status": "planned",
+      "goal": "Full Listening + Reading mocks with official timing (desktop first), resume rules, calm per-skill results as one measurement, review entry, weak areas, the next action, and history in Progress. No band while content is uncalibrated."
+    },
+    {
+      "id": "M13",
+      "name": "Content System",
+      "status": "planned",
+      "goal": "A content pipeline across skills: lifecycle and review statuses, provenance and licensing records, difficulty metadata, publishing and rollback, compatibility with historical attempts, authoring tools, and the beta content library drafted with its audio."
+    },
+    {
+      "id": "M14",
+      "name": "PWA + Performance + Reliability",
+      "status": "planned",
+      "goal": "Final icons and install, the agreed offline scope and caching, service-worker updates, weak-network resilience, performance budgets in CI, error reporting without personal data, and the production environment prepared by the owner."
+    },
+    {
+      "id": "M15",
       "name": "Beta Hardening",
       "status": "planned",
-      "goal": "Readiness for a beta with real users: security and privacy review, accessibility audit, fluent-speaker translation review, and a launch checklist."
+      "goal": "Every before-beta item done by the right people: legal and privacy, security, accessibility with real TalkBack and iOS checks, human reviews of all keys, evidence and explanations, fluent uz and ru review, provenance review, support and runbooks, then the owner's release approval and launch decision."
     }
   ],
   "tasks": [
@@ -2951,17 +2975,3211 @@
       ]
     },
     {
-      "id": "M10-01",
-      "title": "Replace the placeholder PWA icons with the brand kit's",
-      "milestone": "M10",
+      "id": "M6-01",
+      "title": "Audit every existing surface against the Design Operating System",
+      "milestone": "M6",
       "owner": "worker",
       "status": "todo",
       "dependsOn": [],
+      "goal": "A recorded, prioritised list of what keeps each existing screen from the approved visual language, so M6 fixes a capped set of real problems instead of redesigning without end.",
+      "scope": [
+        "Capture every existing surface with the product-design skill (shell, not-found and error, onboarding steps, home, level-check interim page, Reading start, test phone and desktop with sheet states, finish confirmation, results, review phone and desktop, retry and its safe states) at 320, 390, 1024 and 1280 px in uz, ru and en; screenshots stay in the session scratchpad",
+        "For each surface, findings against DESIGN_CONSTITUTION.md, DESIGN_SYSTEM.md, UI_ANTI_PATTERNS.md and the product-design checklist: composition, hierarchy, consistency between surfaces, desktop use of space, long uz/ru labels, visual debt",
+        "A proposed capped fix list (must, should, later), each item with the surface, the problem and the intended outcome, and which items need a new design value",
+        "A proposed set of reference screens for owner approval (suggested: home, onboarding steps, Practice Hub, Reading test phone and desktop, results, review phone and desktop)",
+        "Write it to docs/execution/M6-01-ui-audit.md (a snapshot like the M5-01 review packet; canonical rules stay in the design docs)"
+      ],
+      "outOfScope": ["code changes", "new design values (M6-03)"],
+      "acceptanceCriteria": [
+        "Every existing surface is covered at the four widths in three languages",
+        "The fix list is capped and prioritised, each item traceable to a design rule"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md"
+      ],
+      "docsToUpdate": ["docs/execution/M6-01-ui-audit.md"]
+    },
+    {
+      "id": "M6-02",
+      "title": "Draft navigation, the responsive shell and the Practice Hub",
+      "milestone": "M6",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner how learners move around the product and where practice starts, before Listening, the level check, progress and mocks add more destinations.",
+      "scope": [
+        "In USER_FLOWS.md, sections 'Navigation and shell (M6)' and 'Practice Hub (M6)' marked 'DRAFT: awaiting owner approval'",
+        "Navigation options with trade-offs (for example header links, a phone bottom bar, a menu) for phone, tablet and desktop, considering future destinations (Practice, Progress, account) without building them; recommendation",
+        "Practice Hub at /{locale}/practice: what it lists (the Reading tests the app ships, each with its state on this device: not started, in progress, last results), how it will list Listening when M8 exists, and whether it shows anything for skills that do not exist yet (recommended: nothing)",
+        "How Home reaches the Hub while keeping one primary action (D18 kept Home unchanged in M5); direct links keep bypassing onboarding",
+        "Step counts against the 3-click rule; empty, loading and error states; interface copy in uz, ru and en with suggested keys",
+        "Open questions with options and a recommendation"
+      ],
+      "outOfScope": ["code", "visual values (M6-03)", "Listening content"],
+      "acceptanceCriteria": [
+        "Navigation, the shell and the Hub are specified with step counts, states and copy in three languages",
+        "Open questions are listed with recommendations"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/product/FEATURE_MAP.md",
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md"
+      ],
+      "docsToUpdate": ["docs/product/USER_FLOWS.md"]
+    },
+    {
+      "id": "M6-03",
+      "title": "Draft the design values for the shell, navigation, Practice Hub and page compositions",
+      "milestone": "M6",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M6-01", "M6-02"],
+      "goal": "The visual values the M6 work needs, proposed once, in the design system's own words.",
+      "scope": [
+        "In DESIGN_SYSTEM.md, 'M6 components' marked 'DRAFT: awaiting owner approval': navigation and shell at each breakpoint, the Practice Hub, the page compositions later milestones reuse (single column, two-column task layout, test-bar layout) at phone and desktop widths, loading, empty and error patterns",
+        "Values the audit's must-fix items need (only those), as changes to existing tokens or components with reasons",
+        "Rules for motion and illustration: where they carry meaning and where they are not used",
+        "No raw values outside the token policy; contrast computed for any new color use"
+      ],
+      "outOfScope": ["code", "a token or type-scale overhaul"],
+      "acceptanceCriteria": [
+        "Every new or changed value has a reason and a contrast check where relevant"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"],
+      "notes": "Also read docs/execution/M6-01-ui-audit.md (created by M6-01)."
+    },
+    {
+      "id": "M6-04",
+      "title": "Owner approves the M6 audit priorities, navigation, Practice Hub and design values",
+      "milestone": "M6",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M6-01", "M6-02", "M6-03"],
+      "goal": "One owner gate before M6 product code: M6 audit priorities, navigation, Practice Hub and design values. A wrong decision here would force rework later.",
+      "scope": [
+        "Approve the capped fix list in docs/execution/M6-01-ui-audit.md (what is in M6, what is deferred and why)",
+        "Approve the navigation model, the Practice Hub and its copy in USER_FLOWS.md, and the M6 design values in DESIGN_SYSTEM.md",
+        "Choose the reference screens that will be approved at M6-09",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md docs/execution/M6-01-ui-audit.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/execution/M6-01-ui-audit.md (created by M6-01)."
+    },
+    {
+      "id": "M6-05",
+      "title": "Navigation and the responsive shell",
+      "milestone": "M6",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M6-04"],
+      "goal": "The approved navigation works on phone, tablet and desktop in every language, without crowding the phone screen.",
+      "scope": [
+        "Implement the approved navigation and shell changes in the right layer (widgets/shell or a new widget per BOUNDARIES.md)",
+        "Test-bar screens (Reading test, review, retry) keep their own bar; the shell's navigation does not appear there unless approved",
+        "Keyboard, focus order, landmarks, 320 px and 200% zoom; copy in uz, ru and en",
+        "Tests: component tests where behavior is non-trivial; e2e for navigation on both projects with axe",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": [
+        "the Practice Hub page (M6-06)",
+        "new destinations' content"
+      ],
+      "acceptanceCriteria": [
+        "Navigation behaves as approved on both projects in three languages",
+        "The visual review is recorded",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        "docs/product/USER_FLOWS.md"
+      ]
+    },
+    {
+      "id": "M6-06",
+      "title": "Practice Hub",
+      "milestone": "M6",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M6-05"],
+      "goal": "Learners find every Reading test in one place, with its state on this device, and the Hub is ready to list Listening later.",
+      "scope": [
+        "/{locale}/practice as approved: the shipped Reading tests from the content registry, each with its device state (not started, in progress, see last results) read from the existing session storage and attempt history without changing them",
+        "Home reaches the Hub as approved; Home keeps one primary action",
+        "Loading, empty and storage-unavailable states; copy in uz, ru and en",
+        "Tests: domain or view-model tests for the per-test state; e2e with seeded sessions and attempts on both projects, axe, 320 px",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["Listening entries (M8)", "recommendations (M11)"],
+      "acceptanceCriteria": [
+        "The Hub shows each test's real state",
+        "No stored session or attempt changes by visiting it",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        "docs/product/USER_FLOWS.md"
+      ]
+    },
+    {
+      "id": "M6-07",
+      "title": "Home and onboarding at the approved visual quality",
+      "milestone": "M6",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M6-05"],
+      "goal": "Home and onboarding close their approved audit items without changing their behavior.",
+      "scope": [
+        "Fix the approved audit items for home, onboarding steps, the level-check interim page, not-found and error pages",
+        "Behavior, routes, cookie and copy unchanged unless an audit item says otherwise and was approved",
+        "Run the existing specs of these screens; add tests only where markup changes affect roles or names",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["the level check itself (M7)", "new behavior"],
+      "acceptanceCriteria": [
+        "Every approved audit item for these screens is closed or recorded as deferred",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/execution/M6-01-ui-audit.md (created by M6-01)."
+    },
+    {
+      "id": "M6-08",
+      "title": "Reading surfaces in the same product language",
+      "milestone": "M6",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M6-05"],
+      "goal": "The Reading start screen, test, results, review and retry close their approved audit items, so they read as one product with the new shell.",
+      "scope": [
+        "Fix the approved audit items for Reading surfaces on phone and desktop; behavior and stored data unchanged",
+        "Shared building blocks changed here are re-checked on every screen that uses them (DEFINITION_OF_DONE.md, Validation by risk)",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["Reading behavior", "the deferred question types (M8)"],
+      "acceptanceCriteria": [
+        "Every approved audit item for Reading is closed or recorded as deferred",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        "docs/product/READING_EXPERIENCE.md"
+      ],
+      "notes": "Also read docs/execution/M6-01-ui-audit.md (created by M6-01)."
+    },
+    {
+      "id": "M6-09",
+      "title": "Owner approves the reference screenshots",
+      "milestone": "M6",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M6-06", "M6-07", "M6-08"],
+      "goal": "The owner chooses which screenshots become the local visual source of truth for later milestones.",
+      "scope": [
+        "Review the worker's screenshots of the reference screens chosen at M6-04, at the agreed widths and languages",
+        "Approve, or list changes; changes go back to M6-06 to M6-08 before approval"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "Each chosen reference screen is approved or has recorded changes"
+      ],
+      "validation": ["grep -n 'reference' docs/execution/PROGRESS.md"],
+      "references": [
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md"
+      ],
+      "notes": "Human task: approval of visual references is the owner's (docs/design/references/README.md)."
+    },
+    {
+      "id": "M6-10",
+      "title": "Promote the approved references and close M6",
+      "milestone": "M6",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M6-09"],
+      "goal": "The approved screenshots are in the repository as references, and the docs say what M6 changed.",
+      "scope": [
+        "Save the approved PNGs under docs/design/references/<area>/ with descriptive names, remove the .gitkeep of folders that now hold images, update the folder table in its README, and record each with its approval in PROGRESS.md",
+        "Update FEATURE_MAP.md and CLAUDE.md (Current state) for navigation and the Practice Hub",
+        "Integration checkpoint: the full suite"
+      ],
+      "outOfScope": ["new design work"],
+      "acceptanceCriteria": [
+        "Every approved reference is committed with its record",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/design/references/README.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/design/references/README.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "M7-01",
+      "title": "Draft the level check: purpose, scope, result and honest wording",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner what the level check measures, what it returns and how that result is worded, before any item or code exists.",
+      "scope": [
+        "Create docs/product/LEVEL_CHECK.md as the canonical owner, its sections marked 'DRAFT: awaiting owner approval', and add it to CLAUDE.md's owner table",
+        "Purpose (a starting point for the next action, not a certificate); skills (recommended: designed for Reading and Listening, Reading section in M7, Listening section in M9 under the same model; alternative: wait until after Listening); length on a phone (for example 15–20 minutes); fixed short forms vs adaptive selection (recommended: fixed)",
+        "The result: what it is (recommended: an honestly labelled starting point or range on our own practice scale per skill, no IELTS band, since no content is calibrated; any band needs the scoring rule's sourcing and calibration); confidence and insufficient-data wording; what is shown for one skill only",
+        "Academic only or also General Training at beta (PRODUCT.md open question; recommended: Academic only)",
+        "Incomplete and resumed checks, retakes (when and why), and what the result hands to Home now and to personalization in M11",
+        "Item requirements: original items, how many per form, which question types, review before beta",
+        "Decisions listed with options and recommendations"
+      ],
+      "outOfScope": ["code", "items (M7-06)", "band conversion"],
+      "acceptanceCriteria": [
+        "Every decision the gate needs is listed with options and a recommendation",
+        "No wording claims an IELTS band or official result"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        "docs/product/FEATURE_MAP.md"
+      ],
+      "docsToUpdate": ["docs/product/LEVEL_CHECK.md", "CLAUDE.md"]
+    },
+    {
+      "id": "M7-02",
+      "title": "Draft the level-check flows and copy",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-01"],
+      "goal": "The level check's flows and words are specified in three languages before they are built.",
+      "scope": [
+        "In USER_FLOWS.md, 'Level check flows (M7)' marked DRAFT: onboarding step 3 → level check → result → next action; leaving and resuming; retaking; direct entry; storage blocked; offline after loading",
+        "Step counts, empty and error states; interface copy in uz, ru and en with suggested keys; honest result wording"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "Every flow has steps, step counts, states and copy in three languages"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md"
+      ],
+      "docsToUpdate": ["docs/product/USER_FLOWS.md"]
+    },
+    {
+      "id": "M7-03",
+      "title": "Draft the level-check design values",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-01", "M7-02"],
+      "goal": "The level check's screens are designed in the M6 language at phone and desktop widths.",
+      "scope": [
+        "In DESIGN_SYSTEM.md, 'M7 components (Level check)' marked DRAFT: intro, section progress, question screens reusing the Reading engine, the result (calm, honest, one next action), resume and retake states",
+        "Reuse M4 and M6 components where they fit; any new value with a reason and a contrast check"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": ["Every level-check screen state has its values"],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"]
+    },
+    {
+      "id": "M7-04",
+      "title": "Draft the ADR for level-check items, results and storage",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-01"],
+      "goal": "Decide how level-check items are described, how results are computed and versioned, and how they are stored on the device compatibly with later sync.",
+      "scope": [
+        "Items: reuse of the Reading content contract (ADR-0005) and its later Listening counterpart; a separate key; forms and their versions",
+        "Scoring: a pure module with its own rules version; result records per form version and rules version, as ADR-0009 does for attempts",
+        "Storage: level-check sessions and results on the device (existing localStorage and IndexedDB patterns or an extension), resume, retake, and how M10 sync will carry them",
+        "Alternatives with trade-offs; status Proposed"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "The ADR answers items, scoring versioning, storage and compatibility, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M7-05",
+      "title": "Owner approves the level-check spec, result model, copy, design values and ADR",
+      "milestone": "M7",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M7-02", "M7-03", "M7-04"],
+      "goal": "One owner gate before M7 product code: level-check spec, result model, copy, design values and ADR. A wrong decision here would force rework later.",
+      "scope": [
+        "Answer the decisions in LEVEL_CHECK.md (skills and sequencing, length, item selection, the result and its wording, Academic or General Training, retakes)",
+        "Confirm any IELTS rule the scoring relies on has an official source, or that it is product policy (ielts-scoring rule)",
+        "Approve the flows and copy, the design values, and set the ADR to Accepted",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/LEVEL_CHECK.md docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/README.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LEVEL_CHECK.md (created by M7-01)."
+    },
+    {
+      "id": "M7-06",
+      "title": "Draft the original Reading items of the level check",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-05"],
+      "goal": "The level check has original Reading items, keys and evidence that fit the approved forms, marked as drafts until people review them.",
+      "scope": [
+        "Original passages and questions (never copied from published IELTS material), with keys, evidence sentences and the approved question types, validated by the content validator",
+        "Explanations only if the approved spec shows them after the check, in en then ru and uz",
+        "Every file `aiDraft`; the human review is a before-beta task (M15)",
+        "Record in PROGRESS.md that the items were drafted by Claude"
+      ],
+      "outOfScope": ["the Listening section (M9)", "human review (M15)"],
+      "acceptanceCriteria": [
+        "The forms validate and match the approved spec",
+        "All files are aiDraft",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/product/PRODUCT.md",
+        ".claude/rules/domain/ielts-scoring.md"
+      ],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01)."
+    },
+    {
+      "id": "M7-07",
+      "title": "Level-check scoring and result model in the domain",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-05"],
+      "goal": "A pure, versioned result model that turns a level check into the approved result, with no band and no false precision.",
+      "scope": [
+        "In the right entity's model/ segment: the result computation, its rules version, insufficient-data and partial (one skill) results, as approved",
+        "Types that cannot hold a band unless a sourced conversion exists (ielts-scoring rule)",
+        "Domain tests at every boundary of the approved rules"
+      ],
+      "outOfScope": ["UI", "storage (M7-08)"],
+      "acceptanceCriteria": [
+        "Every approved rule is covered by a boundary test",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/domain/ielts-scoring.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/BOUNDARIES.md"
+      ],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01)."
+    },
+    {
+      "id": "M7-08",
+      "title": "Level-check sessions and results on the device",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-07"],
+      "goal": "A level check can be left, resumed, finished and retaken, and its results are kept on the device as the ADR decided.",
+      "scope": [
+        "Storage adapters and parsers per the accepted ADR; untrusted-data parsing; no change to Reading sessions or attempts",
+        "Resume, finish, retake and storage-unavailable behavior",
+        "Unit tests including two tabs where the ADR requires atomicity"
+      ],
+      "outOfScope": ["UI (M7-09)"],
+      "acceptanceCriteria": [
+        "Existing Reading data is untouched (tested)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01)."
+    },
+    {
+      "id": "M7-09",
+      "title": "The level check on phone and desktop",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-06", "M7-08"],
+      "goal": "The real level check replaces the interim page at /{locale}/level-check.",
+      "scope": [
+        "Intro, sections, progress, questions (reusing the Reading engine pieces through their public APIs), leaving and resuming, finishing, as approved, on phone and desktop",
+        "Onboarding step 3 and Home lead to it as approved; copy in uz, ru and en",
+        "Keyboard, screen-reader order, 320 px, 200% zoom, reduced motion",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["the result screen (M7-10)", "Listening section (M9)"],
+      "acceptanceCriteria": [
+        "The flow behaves as approved on both projects",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        "docs/product/USER_FLOWS.md"
+      ],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01)."
+    },
+    {
+      "id": "M7-10",
+      "title": "The level-check result and its next action",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-09"],
+      "goal": "The learner sees an honest starting point and one next action, and Home knows the level check is done.",
+      "scope": [
+        "The result screen as approved: wording, what the result covers, one primary next action",
+        "Home's next action changes from 'do the level check' to the approved next step; full personalization stays M11",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": [
+        "recommendation rules beyond the approved next step (M11)"
+      ],
+      "acceptanceCriteria": [
+        "No text claims a band or a true level",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/product/PRODUCT.md"
+      ],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01)."
+    },
+    {
+      "id": "M7-11",
+      "title": "Level check end to end, accessibility and docs",
+      "milestone": "M7",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M7-10"],
+      "goal": "The level check works as one flow from onboarding to the next action, and the docs describe it.",
+      "scope": [
+        "e2e journeys on both projects in uz, ru and en: onboarding → level check → leave → resume → finish → result → next action; retake; storage blocked; axe",
+        "Accessibility pass per ACCESSIBILITY.md, findings fixed or recorded",
+        "Docs: FEATURE_MAP.md (Diagnostic assessment), CLAUDE.md (Current state), LEVEL_CHECK.md status line",
+        "Integration checkpoint: the full suite"
+      ],
+      "outOfScope": ["new features"],
+      "acceptanceCriteria": [
+        "The journeys pass",
+        "The docs describe what exists",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md",
+        "docs/design/ACCESSIBILITY.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md",
+        "docs/product/LEVEL_CHECK.md"
+      ],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01)."
+    },
+    {
+      "id": "M8-01",
+      "title": "Draft the Listening question types and their interactions",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner which Listening question types the engine renders and how each is answered on a phone and on desktop.",
+      "scope": [
+        "Create docs/product/LISTENING_EXPERIENCE.md as the canonical owner of the Listening interaction model, its sections marked DRAFT, and add it to CLAUDE.md's owner table",
+        "The IELTS Listening test format with official sources (four sections, question count, timing); grouped by interaction: multiple choice (one, several), matching, plan/map/diagram labelling, form, note, table, flow-chart and sentence completion, short answer",
+        "Per type: what the learner sees while audio plays, how an answer is given on a phone and with a keyboard, word limits, and the desktop layout; which Reading renderers are reused as they are",
+        "Table, flow-chart and labelling layouts designed as shared with Reading, where the M4 follow-ups (table, flow-chart, diagram label completion) are recorded as required before beta",
+        "Any deferral with its reason and a recorded follow-up task; open questions with recommendations"
+      ],
+      "outOfScope": ["code", "review (M9)"],
+      "acceptanceCriteria": [
+        "Every Listening question type is covered or deferred with a recorded follow-up"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/design/DESIGN_CONSTITUTION.md"
+      ],
+      "docsToUpdate": ["docs/product/LISTENING_EXPERIENCE.md", "CLAUDE.md"]
+    },
+    {
+      "id": "M8-02",
+      "title": "Draft the Listening player, modes, sections and layouts",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-01"],
+      "goal": "Decide the signature Listening surface: the player in Practice and Exam, section progression, resume, and the phone and desktop layouts.",
+      "scope": [
+        "In LISTENING_EXPERIENCE.md (DRAFT): Practice (pause, rewind, speed; transcript only if approved, otherwise review only) and Exam (realistic play restrictions, timing, reading time before sections and section changes as the official format describes, with sources)",
+        "Resume semantics (Practice and Exam, mid-audio), weak connections (preload before a section starts, buffering states, what happens when audio fails mid-exam)",
+        "Phone layout (audio-first order per DESIGN_CONSTITUTION.md, the question sheet, navigator) and desktop layout; keyboard and screen-reader access to the player; reduced motion",
+        "Flows and copy in USER_FLOWS.md ('Listening flows (M8)', DRAFT) in uz, ru and en",
+        "Open questions with recommendations"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "Practice and Exam behavior, resume, weak-network behavior and both layouts are specified with copy"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/product/READING_EXPERIENCE.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/LISTENING_EXPERIENCE.md",
+        "docs/product/USER_FLOWS.md"
+      ]
+    },
+    {
+      "id": "M8-03",
+      "title": "Draft the ADR for the Listening content contract and audio assets",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-01"],
+      "goal": "Decide how a Listening test, its audio, transcript and images are described and validated, so review (M9) and the content system (M13) need no redesign.",
+      "scope": [
+        "Test, sections, groups and question data as in ADR-0005 where it fits; a separate key",
+        "Audio assets: format, bitrate and size targets for weak connections, one file per section or finer, metadata (duration, provenance, licence)",
+        "Transcripts with timestamps per segment and evidence references (stored now, shown in M9)",
+        "Images for maps, plans and diagrams with text alternatives, shared with Reading diagram labelling",
+        "Validation rules and fingerprints as ADR-0008 §3 does; alternatives; status Proposed"
+      ],
+      "outOfScope": ["code", "audio delivery (M8-04)"],
+      "acceptanceCriteria": [
+        "The ADR covers questions, audio, transcripts, images and validation, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M8-04",
+      "title": "Draft the ADR for audio delivery, preloading and Listening session state",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-02", "M8-03"],
+      "goal": "Decide how audio reaches a mid-range phone on a weak connection and how a Listening session is kept, without deciding production hosting.",
+      "scope": [
+        "Delivery during development and the constraints production hosting must meet (decided in M14): static files vs API, range requests, caching headers",
+        "Preloading and buffering strategy, what is cached by the browser vs the service worker (the offline scope stays M14), storage quotas",
+        "Listening session state: the ADR-0006 pattern extended with sections, audio position and play restrictions; timing derived from stored times; resume rules",
+        "Alternatives; status Proposed"
+      ],
+      "outOfScope": ["code", "offline downloads (M14)"],
+      "acceptanceCriteria": [
+        "The ADR answers delivery, preloading, caching boundaries and session state, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M8-05",
+      "title": "Draft the Listening design values and the shared completion layouts",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-02", "M8-03"],
+      "goal": "The player, Listening screens and the table, flow-chart and labelling layouts are designed once for both skills.",
+      "scope": [
+        "In DESIGN_SYSTEM.md, 'M8 components (Listening)' marked DRAFT: the player in both modes and its states (loading, buffering, playing, paused, ended, failed), section progress, the Listening sheet, navigator, and the Listening skill color used as a supporting accent only",
+        "Table, flow-chart and map/plan/diagram labelling layouts at 320 px and desktop, for Listening and Reading",
+        "New values with reasons and contrast checks"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "Every specified Listening state and shared layout has its values"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md"
+      ],
+      "docsToUpdate": ["docs/design/DESIGN_SYSTEM.md"]
+    },
+    {
+      "id": "M8-06",
+      "title": "Owner approves the Listening specs, player behavior, content and audio ADRs, design values, and the source of original audio",
+      "milestone": "M8",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M8-04", "M8-05"],
+      "goal": "One owner gate before M8 product code: Listening specs, player behavior, content and audio ADRs, design values, and the source of original audio. A wrong decision here would force rework later.",
+      "scope": [
+        "Answer the open questions in LISTENING_EXPERIENCE.md and USER_FLOWS.md; approve the question-type scope, the player in both modes, resume and weak-network behavior, and the copy",
+        "Approve the M8 design values and the shared layouts, which replace the design passes the Reading follow-ups M8-17 to M8-19 would otherwise need",
+        "Set the two ADRs to Accepted",
+        "Decide who produces original audio and how it is licensed (people's voices or synthetic voices, accents, provenance records); this is the first real content-sourcing decision (PRODUCT.md open question) and decides M8-08",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/LISTENING_EXPERIENCE.md docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/product/PRODUCT.md",
+        "docs/architecture/decisions/README.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-07",
+      "title": "Draft the original demo Listening test scripts",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-06"],
+      "goal": "An original four-section demo test exists as scripts, questions, keys and timestamps to record, covering every approved question type.",
+      "scope": [
+        "Original scripts for Sections 1–4 (never copied or adapted from published IELTS material), with questions of every approved type, keys, evidence segments and images with text alternatives where labelling needs them",
+        "Valid against the accepted content contract (with placeholder audio references until M8-08)",
+        "Marked `aiDraft`; record in PROGRESS.md that Claude drafted them"
+      ],
+      "outOfScope": ["audio (M8-08)", "explanations (M9)"],
+      "acceptanceCriteria": [
+        "The scripts validate and cover every approved type",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/architecture/INVARIANTS.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-08",
+      "title": "Produce the demo test's audio and its provenance record",
+      "milestone": "M8",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M8-07"],
+      "goal": "The demo test has original audio, produced as the owner decided at M8-06, with a provenance and licence record.",
+      "scope": [
+        "Record or generate the audio of the M8-07 scripts as decided (voices, accents), to the format targets of the accepted ADR",
+        "Record provenance and licence (who, how, rights) in PROGRESS.md; a worker adds the files and their metadata to the repository",
+        "No secret or paid-service key enters the repository"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The audio files and a provenance record exist for every section"
+      ],
+      "validation": ["grep -n 'audio' docs/execution/PROGRESS.md"],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/architecture/INVARIANTS.md"
+      ],
+      "notes": "Human task: producing or licensing audio needs people or a paid service the owner sets up."
+    },
+    {
+      "id": "M8-09",
+      "title": "Listening content contract and validator in the domain",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-06"],
+      "goal": "Listening tests and keys are parsed and validated as untrusted data, as Reading content is.",
+      "scope": [
+        "Types, parser and validator per the accepted ADR in the right entity (a new Listening entity or a shared one, per BOUNDARIES.md); fingerprint tests; fixtures with short generated test audio",
+        "Shared image and labelling data usable by Reading",
+        "Domain tests for every validation rule"
+      ],
+      "outOfScope": ["UI", "session (M8-10)"],
+      "acceptanceCriteria": [
+        "Every contract rule has a test",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0010-feature-sliced-design-in-apps-web.md"
+      ]
+    },
+    {
+      "id": "M8-10",
+      "title": "Listening session model and storage",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-09"],
+      "goal": "A Listening session in Practice or Exam follows the approved play, section and timing rules and survives reloads.",
+      "scope": [
+        "A pure session model with one transition function (ADR-0006 pattern): sections, answers, audio position, play restrictions, timing, finish and time-out",
+        "Device storage per the accepted ADR; untrusted-data parsing; Reading storage untouched",
+        "Domain and storage tests, including resume and Exam restrictions"
+      ],
+      "outOfScope": ["UI"],
+      "acceptanceCriteria": [
+        "Every approved rule is enforced in the model and tested",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0006-reading-session-state.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-11",
+      "title": "The audio player",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-10"],
+      "goal": "The signature player loads, buffers and plays audio as approved in both modes, and is fully operable by keyboard and screen reader.",
+      "scope": [
+        "Practice controls (pause, rewind, speed) and Exam restrictions as approved; loading, buffering, ended and failed states; preloading per the ADR",
+        "Keyboard operation, accessible names and announcements, reduced motion",
+        "Tests: component tests for each state; e2e with test audio including a throttled connection",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["question screens (M8-12)"],
+      "acceptanceCriteria": [
+        "The player behaves as approved in both modes",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-12",
+      "title": "Listening screens on phones",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-11"],
+      "goal": "Learners start, practise and take a Listening test on a phone with the player, question sheet and navigator.",
+      "scope": [
+        "Start screen with mode choice, the phone layout, sections, navigator, finish and time-out, as approved; reuse of the bottom sheet and test bar widget",
+        "The Practice Hub lists the Listening test (M6)",
+        "Copy in uz, ru and en; English content marked lang=en",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["desktop (M8-13)", "checking and review (M9)"],
+      "acceptanceCriteria": [
+        "A Listening test can be practised and taken as an exam on a phone",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-13",
+      "title": "Listening screens on desktop",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-12"],
+      "goal": "From the desktop breakpoint, Listening uses its approved exam-like layout.",
+      "scope": [
+        "The approved desktop layout, navigator and keyboard order",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["review (M9)"],
+      "acceptanceCriteria": [
+        "The desktop layout behaves as approved in both modes",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-14",
+      "title": "Listening choice, matching and typed question types",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-12"],
+      "goal": "Multiple choice (one and several), matching, form, note and sentence completion and short answers work in Listening, reusing the Reading answer controls where they fit.",
+      "scope": [
+        "Renderers through the answer-question feature's public API or Listening-specific ones where the interaction differs; word limits shown as test content",
+        "Component tests per type; e2e on both projects",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["table, flow-chart and labelling (M8-15, M8-16)"],
+      "acceptanceCriteria": [
+        "Every listed type works in both modes on both layouts",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-15",
+      "title": "Shared table and flow-chart completion layouts, in Listening",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-14"],
+      "goal": "Table and flow-chart completion work in Listening on layouts built for both skills.",
+      "scope": [
+        "The approved table and flow-chart layouts as shared components (features layer), working at 320 px and on desktop",
+        "Listening content using them; component and e2e tests",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["Reading adoption (M8-17, M8-18)"],
+      "acceptanceCriteria": [
+        "Both layouts work in Listening in both modes",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-16",
+      "title": "Shared plan, map and diagram labelling, in Listening",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-14"],
+      "goal": "Plan, map and diagram labelling work in Listening with images that have text alternatives, on a component Reading can use.",
+      "scope": [
+        "Images per the accepted content contract (sizes, text alternatives), the labelling interaction on phone and desktop, keyboard and screen-reader access",
+        "Component and e2e tests",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["Reading diagram label completion (M8-19)"],
+      "acceptanceCriteria": [
+        "Labelling works in Listening in both modes",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M8-17",
+      "title": "Required before beta: Reading table completion",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-22", "M8-15"],
+      "goal": "Table completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "scope": [
+        "Reading uses the shared table layout built and approved in M8 (M8-05, M8-06 replace this task's own design pass and owner approval)",
+        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), answer checking and review support as in M5, tests at every level, demo or real content using it",
+        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate"
+      ],
+      "outOfScope": ["changes to the other question types"],
+      "acceptanceCriteria": [
+        "Table completion works on phone and desktop in both modes, in results and review, approved and tested",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ],
+      "notes": "Formerly M11-01; moved to M8 in the 2026-10-17 replanning because it shares its layout with Listening (the owner allowed moving it earlier when content needs it)."
+    },
+    {
+      "id": "M8-18",
+      "title": "Required before beta: Reading flow-chart completion",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-22", "M8-15"],
+      "goal": "Flow-chart completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "scope": [
+        "Reading uses the shared flow-chart layout built and approved in M8 (M8-05, M8-06 replace this task's own design pass and owner approval)",
+        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), answer checking and review support as in M5, tests at every level, demo or real content using it",
+        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate"
+      ],
+      "outOfScope": ["changes to the other question types"],
+      "acceptanceCriteria": [
+        "Flow-chart completion works on phone and desktop in both modes, in results and review, approved and tested",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ],
+      "notes": "Formerly M11-02; moved to M8 in the 2026-10-17 replanning because it shares its layout with Listening (the owner allowed moving it earlier when content needs it)."
+    },
+    {
+      "id": "M8-19",
+      "title": "Required before beta: Reading diagram label completion",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M4-22", "M8-16"],
+      "goal": "Diagram label completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "scope": [
+        "Reading uses the shared diagram label layout built and approved in M8 (M8-05, M8-06 replace this task's own design pass and owner approval)",
+        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), answer checking and review support as in M5, tests at every level, demo or real content using it",
+        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate"
+      ],
+      "outOfScope": ["changes to the other question types"],
+      "acceptanceCriteria": [
+        "Diagram label completion works on phone and desktop in both modes, in results and review, approved and tested",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ],
+      "notes": "Formerly M11-03; moved to M8 in the 2026-10-17 replanning because it shares its layout with Listening (the owner allowed moving it earlier when content needs it)."
+    },
+    {
+      "id": "M8-20",
+      "title": "Listening demo content, end to end, and docs",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "M8-08",
+        "M8-13",
+        "M8-15",
+        "M8-16",
+        "M8-17",
+        "M8-18",
+        "M8-19"
+      ],
+      "goal": "The original demo test with its real audio works end to end, and the docs describe the Listening engine.",
+      "scope": [
+        "Add the M8-08 audio and metadata; the demo test validates with real audio",
+        "The finished page states honestly that checking comes with review (M9) unless M9 follows immediately and the owner prefers otherwise",
+        "e2e journeys on both projects in uz, ru and en for Practice and Exam, including a throttled connection, reload and resume; axe; 320 px and 200% zoom; reduced motion",
+        "Docs: FEATURE_MAP.md (Listening practice), CLAUDE.md (Current state), LISTENING_EXPERIENCE.md status line",
+        "Integration checkpoint: the full suite"
+      ],
+      "outOfScope": ["review (M9)"],
+      "acceptanceCriteria": [
+        "The journeys pass",
+        "The docs describe what exists",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md",
+        "docs/product/LISTENING_EXPERIENCE.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-01",
+      "title": "Draft Listening answer checking, review and Error Intelligence",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner how Listening answers are checked, what review shows, and which Listening mistakes the data can honestly describe.",
+      "scope": [
+        "In LISTENING_EXPERIENCE.md, 'M9 specifications' marked DRAFT",
+        "Checking rules per type with official sources (spelling, numbers, dates and times, word limits, accepted variants), marking unsourced rules as product policy, as READING_EXPERIENCE.md's M5 section does",
+        "Results (no band; the M5 results pattern), evidence-first review whose signature object is the audio timestamp, replay of the evidence segment, the transcript excerpt with the evidence phrase highlighted, why, Explain simpler, and try again; when transcripts are visible",
+        "Listening signals (observable facts only, for example an answer one letter away, a distractor option heard before the answer, a number format) and repeated-mistake categories with thresholds, reusing the M5 first-try rules; no inferred causes",
+        "Retries as in M5; the level check's Listening section within the approved M7 model",
+        "Decisions with options and recommendations"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "Every rule is sourced or marked as product policy",
+        "No signal claims a cause"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/product/READING_EXPERIENCE.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ],
+      "docsToUpdate": ["docs/product/LISTENING_EXPERIENCE.md"],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01)."
+    },
+    {
+      "id": "M9-02",
+      "title": "Draft the Listening review copy and design values",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-01"],
+      "goal": "The Listening results and review screens are specified in three languages and the M6 visual language.",
+      "scope": [
+        "In USER_FLOWS.md, 'Listening results and review flows (M9)' with copy in uz, ru and en (DRAFT)",
+        "In DESIGN_SYSTEM.md, 'M9 components' (DRAFT): the timestamp and replay control, transcript excerpt and highlight, review card and navigator on phone and desktop, reusing the M5 components"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": ["Every review state has flows, copy and values"],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md"
+      ]
+    },
+    {
+      "id": "M9-03",
+      "title": "Draft the ADR for a multi-skill attempt history and Listening checking",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-01"],
+      "goal": "Decide how the device's attempt history holds Listening next to Reading, with a migration that keeps every Reading record.",
+      "scope": [
+        "Extending ADR-0009: database version upgrade, record shapes per skill, first-try markers per test and skill, retention; the migration of existing version 1 data and its tests with real M4/M5 shapes",
+        "Listening checking and explanation files as ADR-0008 does for Reading (rules version, key revision, review status)",
+        "How M10 sync will carry both skills",
+        "Alternatives; status Proposed"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "The ADR covers the upgrade, migration, shapes and checking, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M9-04",
+      "title": "Owner approves the Listening checking, review, Error Intelligence, copy, design values and the attempt-history ADR",
+      "milestone": "M9",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M9-02", "M9-03"],
+      "goal": "One owner gate before M9 product code: Listening checking, review, Error Intelligence, copy, design values and the attempt-history ADR. A wrong decision here would force rework later.",
+      "scope": [
+        "Answer the decisions in LISTENING_EXPERIENCE.md's M9 section, including any unsourced checking rule and the signal thresholds",
+        "Approve copy and design values; set the ADR to Accepted",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/LISTENING_EXPERIENCE.md docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/README.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-05",
+      "title": "Listening answer checking and signals in the domain",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-04"],
+      "goal": "Every Listening question type is checked by one versioned domain module with the approved signals.",
+      "scope": [
+        "Checking per the approved rules with a rules version; sources cited in comments; signals as observable facts",
+        "Domain tests at every boundary, including each unsourced product-policy rule"
+      ],
+      "outOfScope": ["UI"],
+      "acceptanceCriteria": [
+        "Every approved rule and signal has boundary tests",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/domain/ielts-scoring.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-06",
+      "title": "Listening attempts in the device history, with the migration",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-04"],
+      "goal": "Listening attempts, results and first tries are kept like Reading's, and every existing Reading record survives the upgrade.",
+      "scope": [
+        "The accepted database upgrade and migration; commit, result records per pair, first try, retention, in-memory fallback for Listening",
+        "Tests: migration with real M4/M5 shapes (sessions, imported M4 attempts, highlights, pins, retries, first-try markers), two tabs, interrupted upgrades"
+      ],
+      "outOfScope": ["UI"],
+      "acceptanceCriteria": [
+        "Every Reading record is unchanged after the upgrade (tested)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ]
+    },
+    {
+      "id": "M9-07",
+      "title": "AI-drafted Listening explanations in uz, ru and en",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-04"],
+      "goal": "Every answer unit of the demo Listening test has an explanation and a simpler version, drafted in English first, then ru and uz.",
+      "scope": [
+        "Grounded only in the transcript, the question and the key; evidence timestamps checked against the audio",
+        "Files `aiDraft`; record in PROGRESS.md that Claude drafted them; the human reviews are M15 tasks"
+      ],
+      "outOfScope": ["human review (M15)"],
+      "acceptanceCriteria": [
+        "Every unit has validated explanations in three languages",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/LOCALIZATION.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-08",
+      "title": "Listening results",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-05", "M9-06"],
+      "goal": "Finishing a Listening test shows its practice score, counts and the review the button names, as the Reading results do.",
+      "scope": [
+        "Results as approved (no band), corrections and storage notices, the retry link and repeated mistakes",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["review (M9-09)"],
+      "acceptanceCriteria": ["Results behave as approved", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-09",
+      "title": "Evidence-first Listening review on phones",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-07", "M9-08"],
+      "goal": "Every answer unit can be reviewed with its timestamp, replayable evidence segment, highlighted transcript excerpt, why and Explain simpler on a phone.",
+      "scope": [
+        "The approved review card, sequences, navigator, replay of the evidence segment, transcript excerpt with the highlighted phrase",
+        "Keyboard, screen readers (the replay control and the transcript), reduced motion",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["desktop (M9-10)"],
+      "acceptanceCriteria": [
+        "Every question type can be reviewed as approved on a phone",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-10",
+      "title": "Listening review on desktop",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-09"],
+      "goal": "From the desktop breakpoint, Listening review uses its approved layout.",
+      "scope": [
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["new review behavior"],
+      "acceptanceCriteria": [
+        "The desktop review behaves as approved",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-11",
+      "title": "Listening retries and repeated mistakes",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-09"],
+      "goal": "Learners retry Listening questions they did not get right, and repeated Listening mistakes appear only when the approved rule says so.",
+      "scope": [
+        "Retries as in M5 (whole units, own results, never combined with the original); the approved Listening categories from the first try only",
+        "Domain tests at every threshold boundary; e2e"
+      ],
+      "outOfScope": ["cross-skill patterns (M11)"],
+      "acceptanceCriteria": [
+        "Retries and repeated mistakes behave as approved",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/product/READING_EXPERIENCE.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-12",
+      "title": "The level check's Listening section",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-05", "M7-11"],
+      "goal": "The level check covers Listening under the model approved in M7, and its result says which skills it covers.",
+      "scope": [
+        "Original Listening items (aiDraft) and their audio produced as decided at M8-06 (human audio task added if needed), the section in the level-check flow, results for one or both skills",
+        "Existing level-check results stay valid (tested)",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["a new scoring model"],
+      "acceptanceCriteria": [
+        "The level check works with both sections",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md"
+      ],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01), docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M9-13",
+      "title": "Listening loop end to end, accessibility and docs",
+      "milestone": "M9",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M9-10", "M9-11", "M9-12"],
+      "goal": "Practise, finish, review, retry and come back works as one Listening flow, and the docs describe it.",
+      "scope": [
+        "e2e journeys on both projects in uz, ru and en, with reloads, an Exam time-out, and two tabs",
+        "Accessibility pass per ACCESSIBILITY.md, findings fixed or recorded",
+        "Docs: FEATURE_MAP.md (Error review, Error Intelligence, Targeted practice for Listening), CLAUDE.md, LISTENING_EXPERIENCE.md status",
+        "Integration checkpoint: the full suite"
+      ],
+      "outOfScope": ["new features"],
+      "acceptanceCriteria": [
+        "The journeys pass",
+        "The docs describe what exists",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md",
+        "docs/design/ACCESSIBILITY.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md",
+        "docs/product/LISTENING_EXPERIENCE.md"
+      ],
+      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M10-01",
+      "title": "Legal input on personal data, data residency and minors",
+      "milestone": "M10",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Before accounts are designed, the owner has legal advice on where Uzbek users' personal data may be stored and what minors' use requires.",
+      "scope": [
+        "Data localization requirements of Uzbekistan's personal-data law for an account system, consent and age requirements for users under 18, what counts as personal data here (phone numbers, emails, attempts)",
+        "Record the advice and its consequences for the design in PROGRESS.md"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The legal input is recorded and usable by M10-02 to M10-04"
+      ],
+      "validation": ["grep -n 'legal' docs/execution/PROGRESS.md"],
+      "references": [
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/product/PRODUCT.md",
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md"
+      ],
+      "notes": "Human task: legal advice. The worker may prepare questions but never answers them."
+    },
+    {
+      "id": "M10-02",
+      "title": "Draft the authentication ADR and when sign-in is offered",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-01"],
+      "goal": "Decide how learners sign in, when the product offers it, and how sessions and recovery work, with practice before registration kept.",
+      "scope": [
+        "Methods and providers (phone/SMS, Telegram, Google, email) with cost, reach in Uzbekistan, privacy and minors' implications; sessions and cookies; recovery; security (security rule)",
+        "When registration is offered (only when it gives the learner something, PRODUCT.md) as a product proposal for the gate",
+        "Alternatives; status Proposed"
+      ],
+      "outOfScope": ["code", "provider setup (M10-06)"],
+      "acceptanceCriteria": [
+        "The ADR covers methods, sessions, recovery and the offer moments, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        ".claude/rules/security/security.md",
+        "docs/product/PRODUCT.md",
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M10-03",
+      "title": "Draft the sync ADR and the first server product models",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-01"],
+      "goal": "Decide what moves to the server, how a guest's device history becomes an account's, and how devices stay consistent without losing the first committed attempt.",
+      "scope": [
+        "Data minimization: which data is stored server-side at all (profile and goal, Reading and Listening attempts and results, level-check results, retries) and what stays on the device",
+        "The first Prisma models at ADR level (no final schema), the API contracts (ADR-0002), how the web gets API types (ADR-0002 §6) and the apps/api feature structure (ARCHITECTURE.md TBDs)",
+        "Guest → account migration of the IndexedDB history, M4 sessions and M5 attempts with their meanings unchanged; conflict rules across devices (first committed attempt, first-try markers, result records per pair); offline interplay; idempotency",
+        "Deletion and export; hosting constraints from M10-01 (production hosting itself is M14)",
+        "Alternatives; status Proposed"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "The ADR covers minimization, models, migration, conflicts, deletion and export, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        ".claude/rules/backend/database.md",
+        ".claude/rules/security/security.md",
+        "docs/architecture/decisions/0002-api-contracts-and-validation.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M10-04",
+      "title": "Draft the account flows, copy and design values",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-02"],
+      "goal": "Signing in, syncing, exporting and deleting are specified in three languages before they are built.",
+      "scope": [
+        "In USER_FLOWS.md, 'Account flows (M10)' (DRAFT): the offer moments, sign-in and sign-up, first sync of a guest's history, a second device, sync errors, sign-out, export, deletion; step counts; copy in uz, ru and en",
+        "In DESIGN_SYSTEM.md, 'M10 components' (DRAFT)"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "Every flow has steps, states and copy; no flow requires sign-up before practice"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md"
+      ]
+    },
+    {
+      "id": "M10-05",
+      "title": "Owner approves the authentication and sync ADRs, providers, account flows, copy and design values",
+      "milestone": "M10",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M10-02", "M10-03", "M10-04"],
+      "goal": "One owner gate before M10 product code: authentication and sync ADRs, providers, account flows, copy and design values. A wrong decision here would force rework later.",
+      "scope": [
+        "Choose the sign-in methods and providers and the offer moments; set the authentication and sync ADRs to Accepted",
+        "Confirm what is stored server-side and the deletion and export behavior",
+        "Approve the flows, copy and design values",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/README.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it."
+    },
+    {
+      "id": "M10-06",
+      "title": "Set up the sign-in providers for development",
+      "milestone": "M10",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M10-05"],
+      "goal": "The chosen providers have development credentials, kept outside the repository.",
+      "scope": [
+        "Create the provider apps or accounts (OAuth clients, an SMS or Telegram bot account) for development; store secrets only in local, untracked environment files",
+        "A worker adds placeholder entries to .env.example only"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "Development sign-in works locally with secrets outside the repository"
+      ],
+      "validation": ["git grep -n 'SECRET' -- '*.env.example'"],
+      "references": [".claude/rules/security/security.md"],
+      "notes": "Human task: accounts and secrets are the owner's (AUTONOMOUS_WORKFLOW.md hard limits)."
+    },
+    {
+      "id": "M10-07",
+      "title": "Accounts and sessions in the API",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-06"],
+      "goal": "The API has its first feature modules: users, sign-in with the chosen methods, and sessions, secure by default.",
+      "scope": [
+        "Prisma models and migrations for the accepted user and session models; feature modules in the accepted apps/api structure; DTOs and one error format (ADR-0002)",
+        "Sign-in flows with the providers (test doubles in automated tests), session handling, rate limiting, no personal data in logs",
+        "API e2e and security tests"
+      ],
+      "outOfScope": ["sync (M10-08)", "web UI (M10-09)"],
+      "acceptanceCriteria": [
+        "Sign-in and sessions work as accepted",
+        "Security tests pass",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/backend/database.md",
+        ".claude/rules/security/security.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0002-api-contracts-and-validation.md",
+        "docs/architecture/BOUNDARIES.md"
+      ]
+    },
+    {
+      "id": "M10-08",
+      "title": "Sync endpoints for profile and history",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-07"],
+      "goal": "The API stores and returns a learner's profile, attempts, results and level-check results with the accepted conflict rules.",
+      "scope": [
+        "Endpoints and models per the sync ADR; idempotent by attempt id; validation of untrusted payloads with the same domain rules; first committed attempt kept",
+        "API e2e tests including conflicting uploads from two devices"
+      ],
+      "outOfScope": ["web client (M10-10)"],
+      "acceptanceCriteria": [
+        "Conflicts resolve as accepted (tested)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/backend/database.md",
+        ".claude/rules/security/security.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0002-api-contracts-and-validation.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ]
+    },
+    {
+      "id": "M10-09",
+      "title": "Sign-in, account and offer moments in the web app",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-07"],
+      "goal": "Learners can sign in when the product offers it, see their account, and sign out, without anything blocking practice.",
+      "scope": [
+        "The approved flows and offer moments; the web's first API consumer, typed per the accepted decision",
+        "Copy in uz, ru and en; keyboard and screen readers",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["sync client (M10-10)"],
+      "acceptanceCriteria": [
+        "Practice still needs no account (tested)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/rules/security/security.md",
+        "docs/product/USER_FLOWS.md"
+      ]
+    },
+    {
+      "id": "M10-10",
+      "title": "Sync of the device history",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-08", "M10-09"],
+      "goal": "A guest's history moves into the account intact, and a second device receives it, with every stored meaning unchanged.",
+      "scope": [
+        "Upload of local attempts, results, retries, first-try markers and level-check results; download and merge into IndexedDB per the accepted rules; the goal cookie's values",
+        "Offline and failed-sync behavior; storage-unavailable behavior",
+        "Tests with real M4/M5 data shapes; two browser contexts as two devices; interrupted syncs"
+      ],
+      "outOfScope": ["deletion and export (M10-11)"],
+      "acceptanceCriteria": [
+        "History survives migration and appears on a second device (tested)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md",
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md"
+      ]
+    },
+    {
+      "id": "M10-11",
+      "title": "Account export and deletion",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-10"],
+      "goal": "A learner can export their data and delete their account, and deletion removes their server data.",
+      "scope": [
+        "API and web flows as approved; what remains on the device after deletion is stated",
+        "Tests: deletion removes server data; export contains exactly the learner's data"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "Export and deletion behave as approved",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/security/security.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/product/USER_FLOWS.md"
+      ]
+    },
+    {
+      "id": "M10-12",
+      "title": "Accounts end to end, security pass and docs",
+      "milestone": "M10",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M10-11"],
+      "goal": "Accounts and sync work as one flow across two devices, and the docs describe what exists.",
+      "scope": [
+        "e2e journeys: guest practice → sign-in → second device → conflicting finishes → deletion; uz, ru and en; axe",
+        "Security pass against the security rule (sessions, input, logs); findings fixed or recorded",
+        "Docs: ARCHITECTURE.md (decided items), BOUNDARIES.md (new modules), FEATURE_MAP.md, CLAUDE.md",
+        "Integration checkpoint: the full suite and the API e2e"
+      ],
+      "outOfScope": ["new features"],
+      "acceptanceCriteria": ["The journeys pass", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/security/security.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "M11-01",
+      "title": "Draft the recommendation rules and the progress model",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner how the product chooses the next action and what progress it shows, from real data, with honest states when data is thin.",
+      "scope": [
+        "Create docs/product/PERSONALIZATION.md as the canonical owner (DRAFT) and add it to CLAUDE.md's owner table",
+        "Inputs (level-check results, Reading and Listening attempts, retries, repeated mistakes, target band, exam date); deterministic, explainable rules with a 'why this' for every recommendation; skill balance; continue-where-you-left-off; today's suggestion",
+        "Progress: what 'current performance' is (honest ranges or none), trend only with enough attempts, weak areas from repeated evidence, recent activity, target band context",
+        "New-learner, insufficient-data and stale-data states; what is never claimed (a band, a true level, improvement from repeated questions)",
+        "Decisions with options and recommendations"
+      ],
+      "outOfScope": ["code", "AI recommendations"],
+      "acceptanceCriteria": [
+        "Every rule is explainable from the learner's data",
+        "Every insufficient-data case has a state"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/product/READING_EXPERIENCE.md"
+      ],
+      "docsToUpdate": ["docs/product/PERSONALIZATION.md", "CLAUDE.md"],
+      "notes": "Also read docs/product/LEVEL_CHECK.md (created by M7-01), docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+    },
+    {
+      "id": "M11-02",
+      "title": "Draft the ADR for where Home and Progress get their data",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M11-01"],
+      "goal": "Decide how a server-rendered Home and a Progress screen read device and account history, and whether any progress model is stored server-side.",
+      "scope": [
+        "Today Home is rendered on the server from the goal cookie and cannot read device storage (ADR-0003, ADR-0006 §4): options such as a client-rendered part of Home, server data for signed-in learners, or both",
+        "Where derivations run (shared domain code), whether progress is stored or derived, consistency with sync",
+        "Alternatives; status Proposed"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "The ADR answers data sources for guests and signed-in learners, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md",
+        "docs/architecture/decisions/0006-reading-session-state.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M11-03",
+      "title": "Draft the Home and Progress flows, copy and design values",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M11-01"],
+      "goal": "Cross-skill Home and the Progress screen are specified in three languages and the M6 language, without a dashboard.",
+      "scope": [
+        "USER_FLOWS.md 'Home and progress (M11)' (DRAFT) with copy in uz, ru and en; DESIGN_SYSTEM.md 'M11 components' (DRAFT)",
+        "One primary action on Home; progress answers: am I improving, what is weak, what next"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": ["Every state has flows, copy and values"],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md"
+      ]
+    },
+    {
+      "id": "M11-04",
+      "title": "Owner approves the recommendation rules, progress model, data-source ADR, copy and design values",
+      "milestone": "M11",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M11-02", "M11-03"],
+      "goal": "One owner gate before M11 product code: recommendation rules, progress model, data-source ADR, copy and design values. A wrong decision here would force rework later.",
+      "scope": [
+        "Answer the decisions in PERSONALIZATION.md, including what current performance is shown as and the thresholds",
+        "Set the ADR to Accepted; approve copy and design values",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/PERSONALIZATION.md docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/README.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/PERSONALIZATION.md (created by M11-01)."
+    },
+    {
+      "id": "M11-05",
+      "title": "Recommendation rules and progress derivations in the domain",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M11-04"],
+      "goal": "The approved rules choose the next action and derive progress, testably and explainably.",
+      "scope": [
+        "Pure rules with a 'why' for each result; progress derivations; insufficient-data and stale states",
+        "Domain tests at every boundary, including retries and rechecks never counted as new evidence"
+      ],
+      "outOfScope": ["UI"],
+      "acceptanceCriteria": ["Every rule has boundary tests", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/domain/ielts-scoring.md"
+      ],
+      "notes": "Also read docs/product/PERSONALIZATION.md (created by M11-01)."
+    },
+    {
+      "id": "M11-06",
+      "title": "Progress inputs from the device and the account",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M11-05"],
+      "goal": "Home and Progress read their inputs as the ADR decided, for guests and signed-in learners.",
+      "scope": [
+        "Data access per the accepted ADR; no change to stored records",
+        "Tests with seeded histories of both skills and level-check results"
+      ],
+      "outOfScope": ["UI"],
+      "acceptanceCriteria": [
+        "Inputs are read as accepted (tested)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ]
+    },
+    {
+      "id": "M11-07",
+      "title": "Cross-skill Home",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M11-06"],
+      "goal": "Home answers 'what should I do now?' with one next action and why, continue-where-you-left-off, and a compact progress preview.",
+      "scope": [
+        "As approved; new-learner and insufficient-data states; copy in uz, ru and en",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["the Progress screen (M11-08)"],
+      "acceptanceCriteria": ["Home keeps one primary action", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/product/PERSONALIZATION.md (created by M11-01)."
+    },
+    {
+      "id": "M11-08",
+      "title": "The Progress screen",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M11-06"],
+      "goal": "Learners see whether they are improving, what is weak and what to do next, without false precision.",
+      "scope": [
+        "Phone and desktop as approved; trends only with enough data; weak areas linked to practice and retries",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["mock history (M12)"],
+      "acceptanceCriteria": ["No band or true-level claim", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/rules/domain/ielts-scoring.md"
+      ],
+      "notes": "Also read docs/product/PERSONALIZATION.md (created by M11-01)."
+    },
+    {
+      "id": "M11-09",
+      "title": "Personalization end to end and docs",
+      "milestone": "M11",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M11-07", "M11-08"],
+      "goal": "Recommendations follow real histories end to end, and the docs describe what exists.",
+      "scope": [
+        "e2e journeys with seeded histories: new learner, after the level check, after Reading and Listening practice, stale data, signed in on a second device; uz, ru and en; axe",
+        "Docs: FEATURE_MAP.md (Personalized next action, Progress tracking), CLAUDE.md, PERSONALIZATION.md status",
+        "Integration checkpoint: the full suite"
+      ],
+      "outOfScope": ["new features"],
+      "acceptanceCriteria": ["The journeys pass", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md",
+        "docs/product/PERSONALIZATION.md"
+      ],
+      "notes": "Also read docs/product/PERSONALIZATION.md (created by M11-01)."
+    },
+    {
+      "id": "M12-01",
+      "title": "Draft the mock experience",
+      "milestone": "M12",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner what a mock is, how it runs and how its result is worded: measurement, not judgment.",
+      "scope": [
+        "Create docs/product/MOCK_EXPERIENCE.md as the canonical owner (DRAFT) and add it to CLAUDE.md's owner table",
+        "Formats (a full Listening + Reading mock; skill mocks; Practice Mock vs Realistic Mock only if justified); official timing and order with sources; desktop realism and the phone policy",
+        "Resume rules; review entry; optional review before the score; weak areas and the next action; history and trend in Progress",
+        "Result language: practice scores per skill on our own content; no band while content is uncalibrated (any band needs a sourced conversion and calibration, ielts-scoring rule); never 'your true level'; no leaderboards or public scores",
+        "Content needed (recommended: the demo tests make the first mock; more come with M13)",
+        "Decisions with options and recommendations"
+      ],
+      "outOfScope": ["code", "Writing and Speaking"],
+      "acceptanceCriteria": [
+        "Every decision is listed with options and a recommendation",
+        "No wording claims an official result or true level"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        ".claude/rules/domain/ielts-scoring.md",
+        "docs/design/DESIGN_CONSTITUTION.md"
+      ],
+      "docsToUpdate": ["docs/product/MOCK_EXPERIENCE.md", "CLAUDE.md"],
+      "notes": "Also read docs/product/PERSONALIZATION.md (created by M11-01)."
+    },
+    {
+      "id": "M12-02",
+      "title": "Draft the mock flows, copy and design values",
+      "milestone": "M12",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M12-01"],
+      "goal": "The mock is specified in three languages and the M6 language, calm in results.",
+      "scope": [
+        "USER_FLOWS.md 'Mock flows (M12)' (DRAFT) with copy in uz, ru and en; DESIGN_SYSTEM.md 'M12 components' (DRAFT): entry, instructions, section transitions, timer, results, history"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": ["Every state has flows, copy and values"],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/skills/product-design/SKILL.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md"
+      ]
+    },
+    {
+      "id": "M12-03",
+      "title": "Draft the ADR for mock attempts",
+      "milestone": "M12",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M12-01"],
+      "goal": "Decide how a mock's sections, attempts and results are kept on the device and in the account.",
+      "scope": [
+        "A composite attempt of Listening and Reading sections in the attempt history and sync model; resume; versions; how mock results feed Progress",
+        "Alternatives; status Proposed"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "The ADR covers storage, sync, resume and versions, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M12-04",
+      "title": "Owner approves the mock formats, result language, flows, copy, design values and the mock-attempt ADR",
+      "milestone": "M12",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M12-02", "M12-03"],
+      "goal": "One owner gate before M12 product code: mock formats, result language, flows, copy, design values and the mock-attempt ADR. A wrong decision here would force rework later.",
+      "scope": [
+        "Answer the decisions in MOCK_EXPERIENCE.md, including the result language and any band question",
+        "Set the ADR to Accepted; approve copy and design values",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/product/MOCK_EXPERIENCE.md docs/product/USER_FLOWS.md docs/design/DESIGN_SYSTEM.md"
+      ],
+      "references": [
+        "docs/product/USER_FLOWS.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/architecture/decisions/README.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/MOCK_EXPERIENCE.md (created by M12-01)."
+    },
+    {
+      "id": "M12-05",
+      "title": "Mock sessions and results in the domain and storage",
+      "milestone": "M12",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M12-04"],
+      "goal": "A mock runs its sections in order with official timing, resumes as approved, and produces versioned results.",
+      "scope": [
+        "Orchestration over the Listening and Reading session models; composite results; storage and sync per the accepted ADR",
+        "Domain and storage tests (timing, resume, time-outs, two tabs)"
+      ],
+      "outOfScope": ["UI"],
+      "acceptanceCriteria": ["Every approved rule is tested", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/domain/ielts-scoring.md"
+      ],
+      "notes": "Also read docs/product/MOCK_EXPERIENCE.md (created by M12-01)."
+    },
+    {
+      "id": "M12-06",
+      "title": "The mock on desktop and phone",
+      "milestone": "M12",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M12-05"],
+      "goal": "Learners start, take and resume a full mock with realistic transitions and timing.",
+      "scope": [
+        "Entry, instructions, section transitions and timer as approved; desktop first for realism, phone per the approved policy",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["results (M12-07)"],
+      "acceptanceCriteria": [
+        "A full mock can be taken and resumed as approved",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md"
+      ],
+      "notes": "Also read docs/product/MOCK_EXPERIENCE.md (created by M12-01)."
+    },
+    {
+      "id": "M12-07",
+      "title": "Mock results, review entry and the next action",
+      "milestone": "M12",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M12-06"],
+      "goal": "After a mock, the learner sees calm per-skill results, can review, sees weak areas and one next action, and the mock appears in Progress.",
+      "scope": [
+        "Results as approved (no band unless approved with a sourced conversion), review entry into both skills' reviews, weak areas, next action from the M11 rules, history and trend in Progress",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["new review behavior"],
+      "acceptanceCriteria": ["No text claims a true level", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/DESIGN_CONSTITUTION.md",
+        "docs/design/DESIGN_SYSTEM.md",
+        "docs/design/references/README.md",
+        ".claude/rules/domain/ielts-scoring.md"
+      ],
+      "notes": "Also read docs/product/MOCK_EXPERIENCE.md (created by M12-01), docs/product/PERSONALIZATION.md (created by M11-01)."
+    },
+    {
+      "id": "M12-08",
+      "title": "Mock end to end and docs",
+      "milestone": "M12",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M12-07"],
+      "goal": "A full mock works end to end with reloads and resumes, and the docs describe it.",
+      "scope": [
+        "e2e journeys on both projects in uz, ru and en (start, leave, resume, time-out, results, review, Progress); axe",
+        "Docs: FEATURE_MAP.md (Full mock tests), CLAUDE.md, MOCK_EXPERIENCE.md status",
+        "Integration checkpoint: the full suite"
+      ],
+      "outOfScope": ["new features"],
+      "acceptanceCriteria": ["The journeys pass", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md",
+        "docs/product/MOCK_EXPERIENCE.md"
+      ],
+      "notes": "Also read docs/product/MOCK_EXPERIENCE.md (created by M12-01)."
+    },
+    {
+      "id": "M13-01",
+      "title": "Draft the content system: lifecycle, storage, delivery and provenance",
+      "milestone": "M13",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner how content is authored, reviewed, versioned, published and rolled back across Reading, Listening, the level check and mocks.",
+      "scope": [
+        "Lifecycle and statuses (draft → AI-assisted draft if used → validated → content review → answer and evidence review → localization review → approved → published), extending the M5 review statuses",
+        "Where content lives and how it is delivered (files in the repository, database and API, or another tool) as an ADR draft with alternatives; compatibility with historical attempts (content versions, key revisions)",
+        "Metadata: difficulty, skill, question types, provenance and licence records, reviewer and dates; publishing, rollback and corrections",
+        "Reviewer workflow and checklists; validators; the beta library's target size as a proposal",
+        "Runtime AI stays out; AI-assisted drafts always need human review"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "The lifecycle, storage and delivery options, metadata and workflow are drafted with recommendations"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        "docs/product/PRODUCT.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M13-02",
+      "title": "Owner approves the content system ADR, the content sourcing and review team, and the beta library size",
+      "milestone": "M13",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M13-01"],
+      "goal": "One owner gate before M13 product code: content system ADR, the content sourcing and review team, and the beta library size. A wrong decision here would force rework later.",
+      "scope": [
+        "Set the content-system ADR to Accepted",
+        "Decide who writes and reviews content (PRODUCT.md open question) and the beta library's size per skill, level-check forms and mocks",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": [
+        "grep -n 'Approved' docs/architecture/ARCHITECTURE.md docs/architecture/decisions/README.md"
+      ],
+      "references": [
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/product/PRODUCT.md",
+        "docs/architecture/decisions/README.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it."
+    },
+    {
+      "id": "M13-03",
+      "title": "Content metadata, review status and provenance validation",
+      "milestone": "M13",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M13-02"],
+      "goal": "Every content file carries the accepted metadata, and validators refuse content without it.",
+      "scope": [
+        "Metadata and status fields across Reading, Listening, level-check and mock content; validators and fingerprint updates; existing content migrated without changing its meaning",
+        "Tests for every validation rule"
+      ],
+      "outOfScope": ["publishing (M13-05)"],
+      "acceptanceCriteria": [
+        "Every shipped content file validates with metadata",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0005-reading-content-contract.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ]
+    },
+    {
+      "id": "M13-04",
+      "title": "Authoring and review tooling",
+      "milestone": "M13",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M13-03"],
+      "goal": "Authors and reviewers can validate, preview and track content through its statuses with the accepted tools.",
+      "scope": [
+        "The accepted tooling (for example validation and preview commands, review checklists generated per item); no runtime AI",
+        "Tests for the tooling"
+      ],
+      "outOfScope": ["publishing (M13-05)"],
+      "acceptanceCriteria": ["Tooling works as accepted", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ]
+    },
+    {
+      "id": "M13-05",
+      "title": "Publishing, delivery and rollback",
+      "milestone": "M13",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M13-04"],
+      "goal": "Only approved content is published, delivered as accepted, and can be rolled back.",
+      "scope": [
+        "Publishing gate on review status; delivery per the ADR (server models and API if accepted); rollback; corrections increase the right version numbers",
+        "Tests including rollback and attempts on unpublished content"
+      ],
+      "outOfScope": ["content production (M13-07)"],
+      "acceptanceCriteria": [
+        "Unapproved content cannot reach learners (tested)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        ".claude/rules/backend/database.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ]
+    },
+    {
+      "id": "M13-06",
+      "title": "Historical attempts across content changes",
+      "milestone": "M13",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M13-05"],
+      "goal": "Corrections and new versions of content never invalidate or rewrite learners' attempts, results, highlights, pins or retries.",
+      "scope": [
+        "Tests with real M4/M5 and Listening shapes across version changes, key revisions and rollbacks, on the device and after sync"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "Every historical record keeps its meaning (tested)",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0009-reading-attempts-on-the-device.md"
+      ]
+    },
+    {
+      "id": "M13-07",
+      "title": "Draft the beta content library",
+      "milestone": "M13",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M13-05"],
+      "goal": "The beta library's original content exists as AI-assisted drafts, validated and ready for human review.",
+      "scope": [
+        "The approved number of Reading and Listening tests (scripts), level-check forms and mock sets: original, with keys, evidence, explanations in en then ru and uz",
+        "Status `aiDraft`; provenance recorded"
+      ],
+      "outOfScope": ["audio (M13-08)", "human reviews (M15)"],
+      "acceptanceCriteria": [
+        "The library validates and matches the approved size",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/architecture/INVARIANTS.md",
+        "docs/product/LOCALIZATION.md"
+      ]
+    },
+    {
+      "id": "M13-08",
+      "title": "Produce the beta library's audio",
+      "milestone": "M13",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M13-07"],
+      "goal": "Every Listening script in the beta library has original audio with a provenance record.",
+      "scope": [
+        "As decided at M8-06 and M13-02; provenance and licence recorded; a worker adds the files"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": ["Every script has audio and a provenance record"],
+      "validation": ["grep -n 'audio' docs/execution/PROGRESS.md"],
+      "references": ["docs/product/PRODUCT.md"],
+      "notes": "Human task."
+    },
+    {
+      "id": "M13-09",
+      "title": "Content system end to end and docs",
+      "milestone": "M13",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M13-06", "M13-08"],
+      "goal": "The library flows through the pipeline to publishing in development, and the docs describe the content system.",
+      "scope": [
+        "Add the audio; publish the library in development; e2e over published content",
+        "Docs: ARCHITECTURE.md (content model decided), FEATURE_MAP.md, CLAUDE.md",
+        "Integration checkpoint: the full suite"
+      ],
+      "outOfScope": ["human reviews (M15)"],
+      "acceptanceCriteria": ["The pipeline works end to end", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "M14-01",
+      "title": "Draft the offline scope, PWA behavior and performance budgets",
+      "milestone": "M14",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide with the owner what works offline, how the app installs and updates, and the budgets it must meet on mid-range phones.",
+      "scope": [
+        "Offline scope options (ARCHITECTURE.md TBD): loaded tests only, downloaded Reading sets, Listening audio caching, results sync after reconnecting; storage quotas and invalidation; service-worker update experience",
+        "Install experience; budgets for phone and desktop (load, interaction, bundle sizes, audio start) with how CI measures them",
+        "Loading, retry and error-recovery patterns across the app"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "Options and recommendations for offline scope, updates, install and budgets"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/product/UX_PRINCIPLES.md",
+        "docs/product/USER_FLOWS.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/design/UI_ANTI_PATTERNS.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
+      ],
+      "docsToUpdate": ["docs/architecture/ARCHITECTURE.md"]
+    },
+    {
+      "id": "M14-02",
+      "title": "Draft the ADR for error reporting, observability and analytics",
+      "milestone": "M14",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Decide what is measured and reported, with which tools, and how personal data and minors' data stay out.",
+      "scope": [
+        "Error reporting and observability options for web and API; analytics (none, or privacy-preserving) with consent implications (ARCHITECTURE.md TBD); data scrubbing; retention; cost",
+        "Alternatives; status Proposed"
+      ],
+      "outOfScope": ["code"],
+      "acceptanceCriteria": [
+        "The ADR covers tools, data handling and consent, with alternatives"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/decisions/ADR-TEMPLATE.md",
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/INVARIANTS.md",
+        ".claude/skills/architecture-decision/SKILL.md",
+        ".claude/rules/security/security.md",
+        "docs/product/PRODUCT.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/decisions/README.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ]
+    },
+    {
+      "id": "M14-03",
+      "title": "Owner approves the offline scope, budgets, observability and analytics decisions, and production hosting",
+      "milestone": "M14",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M14-01", "M14-02"],
+      "goal": "One owner gate before M14 product code: offline scope, budgets, observability and analytics decisions, and production hosting. A wrong decision here would force rework later.",
+      "scope": [
+        "Decide the offline scope, budgets and the service-worker update behavior",
+        "Set the observability ADR to Accepted (tools and data handling)",
+        "Decide production hosting and data residency if M10 left it open (legal input M10-01)",
+        "If an answer changes the milestone's scope, say so; the later tasks of the milestone are adjusted before work continues",
+        "Activating the milestone (its status in TASKS.json) remains a separate owner action"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The drafts are marked Approved (or changed and approved) in their canonical documents, and the ADRs are Accepted or returned with changes",
+        "No open question blocks the milestone's implementation tasks"
+      ],
+      "validation": ["grep -n 'Approved' docs/architecture/ARCHITECTURE.md"],
+      "references": [
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/decisions/README.md"
+      ],
+      "notes": "Human task: a worker may prepare material for it but never completes it."
+    },
+    {
+      "id": "M14-04",
+      "title": "Replace the placeholder PWA icons with the brand kit's",
+      "milestone": "M14",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M14-03"],
       "goal": "The installed app and browser tabs show the real brand icons instead of plain red squares.",
       "scope": [
         "Copy pwa/icon-192.png, icon-512.png, maskable-512.png, apple-touch-icon-180.png and favicon.ico from the owner's brand kit (kept outside the repository at /var/www/IELTS_Prep_Brand_Kit.zip) into apps/web; only these files are tracked",
         "Remove apps/web/public/icons/placeholder-*.png and update the paths in apps/web/src/app/manifest.ts; add the apple-touch-icon and favicon the way the installed Next.js version documents",
-        "Update the manifest e2e test if it names the placeholder files"
+        "Update the manifest e2e test if it names the placeholder files",
+        "The install experience as decided at M14-03"
       ],
       "outOfScope": ["editing the brand assets", "other PWA changes"],
       "acceptanceCriteria": [
@@ -2969,29 +6187,33 @@
         "The manifest references existing files with the right sizes and purposes",
         "All gates pass"
       ],
-      "validation": ["pnpm check", "pnpm build", "pnpm test:e2e"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
       "references": [
         "docs/architecture/decisions/0001-initial-application-foundation.md",
         "docs/execution/PROGRESS.md"
       ],
-      "notes": "Follow-up created at the owner's request on 2026-10-10. Kept out of M2; the owner may move it to the active milestone at any time."
+      "notes": "Formerly M10-01 (follow-up created at the owner's request on 2026-10-10); renumbered in the 2026-10-17 replanning. The owner may move it to the active milestone at any time."
     },
     {
-      "id": "M11-01",
-      "title": "Required before beta: Reading table completion",
-      "milestone": "M11",
+      "id": "M14-05",
+      "title": "Caching, the agreed offline scope and service-worker updates",
+      "milestone": "M14",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": ["M4-22"],
-      "goal": "Table completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "dependsOn": ["M14-03"],
+      "goal": "The service worker caches what was agreed, respects storage quotas, invalidates correctly, and updates without breaking a session in progress.",
       "scope": [
-        "Design pass for table completion on phone and desktop (it needs a two-dimensional table layout that works at 320 px) and owner approval of it",
-        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), tests at every level, demo or real content using it",
-        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate; may move to an earlier milestone when content needs it"
+        "Per the decisions: caches, Listening audio policy, quotas, invalidation, update prompts; never interrupting a running test",
+        "Tests including updates during a session and full storage"
       ],
-      "outOfScope": ["changes to the other question types"],
+      "outOfScope": ["error reporting (M14-08)"],
       "acceptanceCriteria": [
-        "Table completion works on phone and desktop in both modes, approved and tested",
+        "Offline and update behavior match the decisions (tested)",
         "All gates pass"
       ],
       "validation": [
@@ -3001,26 +6223,27 @@
         "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
       ],
       "references": [
-        "docs/product/READING_EXPERIENCE.md",
-        "docs/architecture/decisions/0005-reading-content-contract.md"
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md",
+        "docs/architecture/decisions/0001-initial-application-foundation.md"
       ]
     },
     {
-      "id": "M11-02",
-      "title": "Required before beta: Reading flow-chart completion",
-      "milestone": "M11",
+      "id": "M14-06",
+      "title": "Weak-network resilience across the app",
+      "milestone": "M14",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": ["M4-22"],
-      "goal": "Flow-chart completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "dependsOn": ["M14-05"],
+      "goal": "Every screen loads, fails and retries understandably on slow and dropped connections.",
       "scope": [
-        "Design pass for flow-chart completion on phone and desktop (it needs a flow-chart layout that works at 320 px) and owner approval of it",
-        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), tests at every level, demo or real content using it",
-        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate; may move to an earlier milestone when content needs it"
+        "The approved loading, retry and error-recovery patterns on every route; audio edge cases",
+        "Throttled and offline e2e on both projects",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
       ],
-      "outOfScope": ["changes to the other question types"],
+      "outOfScope": [],
       "acceptanceCriteria": [
-        "Flow-chart completion works on phone and desktop in both modes, approved and tested",
+        "No screen is blank or stuck on a slow or dropped connection (tested)",
         "All gates pass"
       ],
       "validation": [
@@ -3030,26 +6253,54 @@
         "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
       ],
       "references": [
-        "docs/product/READING_EXPERIENCE.md",
-        "docs/architecture/decisions/0005-reading-content-contract.md"
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
       ]
     },
     {
-      "id": "M11-03",
-      "title": "Required before beta: Reading diagram label completion",
-      "milestone": "M11",
+      "id": "M14-07",
+      "title": "Performance budgets in CI",
+      "milestone": "M14",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": ["M4-22"],
-      "goal": "Diagram label completion, deferred from M4 by the owner (2026-10-10), works before beta like the other Reading question types.",
+      "dependsOn": ["M14-03"],
+      "goal": "The approved budgets are measured in CI and fail the build when exceeded.",
       "scope": [
-        "Design pass for diagram label completion on phone and desktop (it needs images with text alternatives and an image pipeline in the content contract) and owner approval of it",
-        "Content contract addition (ADR-0005: a new question-type value), renderer, session answers (the existing \"type words\" shape), tests at every level, demo or real content using it",
-        "Recorded as a required pre-beta Reading follow-up by the owner at the M4-09 gate; may move to an earlier milestone when content needs it"
+        "Measurement as decided (any new dev dependency was approved at M14-03 and is recorded); fixes for current violations",
+        "QUALITY_GATES.md lists the new gate"
       ],
-      "outOfScope": ["changes to the other question types"],
+      "outOfScope": [],
+      "acceptanceCriteria": ["Budgets pass and are enforced", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": ["docs/engineering/QUALITY_GATES.md"],
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
+    },
+    {
+      "id": "M14-08",
+      "title": "Error reporting and observability",
+      "milestone": "M14",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M14-03"],
+      "goal": "Client and API errors are reported with the accepted tool, never with personal data.",
+      "scope": [
+        "Integration per the ADR in web and API; scrubbing tests proving no personal data or answers leave; configuration through environment variables with placeholders in .env.example"
+      ],
+      "outOfScope": [],
       "acceptanceCriteria": [
-        "Diagram label completion works on phone and desktop in both modes, approved and tested",
+        "Errors are reported without personal data (tested)",
         "All gates pass"
       ],
       "validation": [
@@ -3059,26 +6310,272 @@
         "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
       ],
       "references": [
-        "docs/product/READING_EXPERIENCE.md",
-        "docs/architecture/decisions/0005-reading-content-contract.md"
+        ".claude/rules/security/security.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
       ]
     },
     {
-      "id": "M11-04",
-      "title": "Required before beta: English accuracy review of the Reading key and explanations",
-      "milestone": "M11",
+      "id": "M14-09",
+      "title": "Set up the production environment",
+      "milestone": "M14",
       "owner": "human",
       "status": "todo",
-      "dependsOn": ["M5-11"],
+      "dependsOn": ["M14-03"],
+      "goal": "Production hosting, database, domains and secrets exist as decided, outside the repository.",
+      "scope": [
+        "Provision hosting and the database as decided (data residency), domains and TLS, secrets in the host's secret store; the worker provides configuration documentation and .env.example entries only"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The production environment exists; no secret is in the repository"
+      ],
+      "validation": ["git grep -n -i 'password' -- '*.env.example'"],
+      "references": [
+        ".claude/rules/security/security.md",
+        "docs/architecture/ARCHITECTURE.md"
+      ],
+      "notes": "Human task: provisioning and secrets are the owner's (AUTONOMOUS_WORKFLOW.md hard limits). No deployment by a worker."
+    },
+    {
+      "id": "M14-10",
+      "title": "Production configuration, runbooks and the reliability checkpoint",
+      "milestone": "M14",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M14-04", "M14-06", "M14-07", "M14-08"],
+      "goal": "The repository documents how the app is configured and operated in production, and the reliability work is checked as a whole.",
+      "scope": [
+        "Configuration and environment documentation, health checks, backup and restore policy (documented, executed by the owner), rollback steps",
+        "Docs: ARCHITECTURE.md (offline scope, observability decided), FEATURE_MAP.md (Offline / PWA), CLAUDE.md",
+        "Integration checkpoint: the full suite"
+      ],
+      "outOfScope": ["deployment"],
+      "acceptanceCriteria": ["The runbooks exist", "All gates pass"],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ],
+      "docsToUpdate": [
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/product/FEATURE_MAP.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "M15-01",
+      "title": "Build the beta checklist from the record",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "Every before-beta item recorded since M3 is in one checklist with its owner and evidence, so nothing is forgotten.",
+      "scope": [
+        "Create docs/execution/BETA_CHECKLIST.md from PROGRESS.md, the specs, LOCALIZATION.md rule 7, ACCESSIBILITY.md and the M15 tasks: each item with its owner (human or worker), its task and the evidence that closes it",
+        "Beta Definition of Done at a high level, matching ROADMAP.md"
+      ],
+      "outOfScope": ["fixing items"],
+      "acceptanceCriteria": [
+        "Every recorded before-beta item is listed with an owner"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/execution/PROGRESS.md",
+        "docs/execution/ROADMAP.md",
+        "docs/product/LOCALIZATION.md",
+        "docs/design/ACCESSIBILITY.md"
+      ],
+      "docsToUpdate": ["docs/execution/BETA_CHECKLIST.md"]
+    },
+    {
+      "id": "M15-02",
+      "title": "Legal and privacy review",
+      "milestone": "M15",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
+      "goal": "Legal review confirms data localization, minors' consent, the privacy notice and terms before real users arrive.",
+      "scope": [
+        "Review of what is stored where, consent and age handling, the privacy notice and terms of use, the goal cookie (ADR-0003), analytics and error reporting",
+        "Record the outcome and required changes in PROGRESS.md"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The legal outcome is recorded with any required changes"
+      ],
+      "validation": ["grep -n 'legal' docs/execution/PROGRESS.md"],
+      "references": [
+        "docs/architecture/ARCHITECTURE.md",
+        "docs/architecture/decisions/0003-guest-state-on-the-device.md",
+        "docs/product/PRODUCT.md"
+      ],
+      "notes": "Human task."
+    },
+    {
+      "id": "M15-03",
+      "title": "Privacy notice, terms and consent as the legal review requires",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M15-02"],
+      "goal": "The product shows the privacy notice, terms and any consent the legal review requires, in three languages.",
+      "scope": [
+        "Pages and flows as required, with texts provided or approved by the owner; copy in uz, ru and en",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": ["writing legal texts"],
+      "acceptanceCriteria": [
+        "Every legal requirement recorded at M15-02 is implemented",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md"
+      ]
+    },
+    {
+      "id": "M15-04",
+      "title": "Security review and fixes",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
+      "goal": "The application is reviewed against the security rule and the findings are fixed or accepted by the owner.",
+      "scope": [
+        "Threat model of accounts, sync, content delivery and the PWA; sessions, input validation, headers and CSP, dependency audit, secrets, logs",
+        "Fixes with tests; findings needing owner acceptance recorded in BETA_CHECKLIST.md"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "Every finding is fixed or recorded for owner acceptance",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/security/security.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ]
+    },
+    {
+      "id": "M15-05",
+      "title": "Accessibility audit of every screen",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
+      "goal": "Every screen meets WCAG 2.2 AA as checked by automation and a manual keyboard, zoom and reduced-motion pass.",
+      "scope": [
+        "Per ACCESSIBILITY.md on the production build: keyboard, screen-reader order, announcements, 200% zoom, 320 px, reduced motion, not by color alone, for every screen in uz, ru and en",
+        "Fixes with tests; findings recorded"
+      ],
+      "outOfScope": ["real-device checks (M15-06)"],
+      "acceptanceCriteria": [
+        "The audit is recorded and every finding fixed or accepted",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/design/ACCESSIBILITY.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ]
+    },
+    {
+      "id": "M15-06",
+      "title": "Real-device checks",
+      "milestone": "M15",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
+      "goal": "People check the product on real phones and laptops where automation cannot: screen readers, keyboards, install and networks.",
+      "scope": [
+        "Android with TalkBack (priority), iPhone Safari with VoiceOver, on-screen keyboards with the Reading and Listening sheets, install and update of the PWA, weak and dropped mobile networks, audio on real devices, cross-device sync",
+        "Findings recorded in PROGRESS.md; a worker fixes them"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": ["The device checks are recorded with findings"],
+      "validation": ["grep -n 'TalkBack' docs/execution/PROGRESS.md"],
+      "references": ["docs/design/ACCESSIBILITY.md"],
+      "notes": "Human task: real devices."
+    },
+    {
+      "id": "M15-07",
+      "title": "Browser and device matrix and the regression suite",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
+      "goal": "The supported browsers are named and tested, and the regression suite covers every product loop.",
+      "scope": [
+        "Agree the browser matrix with the owner (recorded); extend Playwright projects where needed (for example WebKit); journeys for every loop and cross-device sync",
+        "QUALITY_GATES.md updated"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The matrix is recorded and passes",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/engineering/QUALITY_GATES.md",
+        ".claude/rules/testing/test-code.md",
+        "docs/engineering/TESTING_STRATEGY.md"
+      ],
+      "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
+    },
+    {
+      "id": "M15-08",
+      "title": "English accuracy review of the Reading keys and explanations",
+      "milestone": "M15",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
       "goal": "A person with strong English and IELTS Reading knowledge, not the drafting AI, confirms that every Reading answer key and English explanation is accurate before beta.",
       "scope": [
-        "For every shipped Reading test: check each accepted answer and variant against the passage, each cited evidence sentence, each NOT GIVEN judgment, each content tag and `fromPassage`, and the questions and passages as far as they affect the answers",
+        "For every shipped Reading test (the demo and the beta library): check each accepted answer and variant against the passage, each cited evidence sentence, each NOT GIVEN judgment, each content tag and `fromPassage`, and the questions and passages as far as they affect the answers",
         "Check each English explanation and simpler version: grounded only in the passage, accurate, plain; NOT GIVEN explained as neither agreement nor contradiction, in facts or the writer's views",
         "Report corrections; a worker applies them (key corrections increase the key revision) and records the review in PROGRESS.md (reviewer's role, date, what was checked, what changed), then sets the reviewed files to `reviewed`"
       ],
       "outOfScope": [
-        "ru and uz texts (M11-05, M11-06)",
-        "release approval (M11-07)"
+        "ru and uz texts (M15-10, M15-11)",
+        "release approval (M15-16)"
       ],
       "acceptanceCriteria": [
         "A recorded human review exists in PROGRESS.md for every key and English explanation file",
@@ -3089,18 +6586,42 @@
         "docs/product/READING_EXPERIENCE.md",
         "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
       ],
-      "notes": "Owner amendment 7 at M5-01 (2026-10-11). Human task: a worker may prepare material for it but never completes it."
+      "notes": "Formerly M11-04 (owner amendment 7 at M5-01, 2026-10-11); renumbered and widened to every shipped Reading test in the 2026-10-17 replanning. Human task: a worker may prepare material for it but never completes it."
     },
     {
-      "id": "M11-05",
-      "title": "Required before beta: reconcile ru and uz explanations with the reviewed English",
-      "milestone": "M11",
+      "id": "M15-09",
+      "title": "English review of Listening, level-check and mock content",
+      "milestone": "M15",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
+      "goal": "A person, not the drafting AI, confirms every Listening key, evidence timestamp, transcript and explanation, and every level-check and mock item, before beta.",
+      "scope": [
+        "Keys and accepted variants against the audio; timestamps and transcripts; explanations and simpler versions; level-check items and their result wording; mock sets",
+        "A worker applies corrections (version numbers increase as required) and records the review in PROGRESS.md, then sets the reviewed files to `reviewed`"
+      ],
+      "outOfScope": ["ru and uz (M15-10, M15-11)"],
+      "acceptanceCriteria": [
+        "A recorded human review exists for every such file",
+        "No worker marks this task done without it"
+      ],
+      "validation": ["grep -n 'review' docs/execution/PROGRESS.md"],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ],
+      "notes": "Human task."
+    },
+    {
+      "id": "M15-10",
+      "title": "Reconcile ru and uz explanations with the reviewed English",
+      "milestone": "M15",
       "owner": "worker",
       "status": "todo",
-      "dependsOn": ["M11-04"],
-      "goal": "The ru and uz explanation drafts match the reviewed English, ready for fluent-speaker review.",
+      "dependsOn": ["M15-08", "M15-09"],
+      "goal": "The ru and uz explanation drafts of every skill match the reviewed English, ready for fluent-speaker review.",
       "scope": [
-        "Update every ru and uz explanation and simpler version to every correction made in M11-04; they stay `aiDraft`",
+        "Update every ru and uz explanation and simpler version (Reading, Listening, the level check and mocks) to every correction made in M15-08 and M15-09; they stay `aiDraft`",
         "Record in PROGRESS.md which items changed"
       ],
       "outOfScope": [
@@ -3116,23 +6637,25 @@
       "references": [
         "docs/product/READING_EXPERIENCE.md",
         "docs/product/LOCALIZATION.md"
-      ]
+      ],
+      "notes": "Formerly M11-05; renumbered and widened to every skill in the 2026-10-17 replanning."
     },
     {
-      "id": "M11-06",
-      "title": "Required before beta: fluent-speaker review of the ru and uz explanations",
-      "milestone": "M11",
+      "id": "M15-11",
+      "title": "Fluent-speaker review of ru and uz explanations and interface copy",
+      "milestone": "M15",
       "owner": "human",
       "status": "todo",
-      "dependsOn": ["M11-05"],
-      "goal": "Fluent speakers confirm that every ru and uz explanation and simpler version says the same as the reviewed English, plainly and correctly.",
+      "dependsOn": ["M15-10"],
+      "goal": "Fluent speakers confirm that every ru and uz explanation and all interface copy say the same as the English, plainly and correctly.",
       "scope": [
-        "Check each text against the English: same meaning, plain language, consistent terms, English quotes untouched, Uzbek orthography (U+02BB, U+02BC)",
+        "Explanations and simpler versions of every skill against the reviewed English: same meaning, plain language, consistent terms, English quotes untouched, Uzbek orthography (U+02BB, U+02BC)",
+        "All uz and ru interface strings (LOCALIZATION.md rule 7), checked in context on screenshots",
         "A worker applies the corrections, records the review in PROGRESS.md (reviewer's role, date, what changed) and sets the reviewed files to `reviewed`"
       ],
-      "outOfScope": ["release approval (M11-07)"],
+      "outOfScope": ["release approval (M15-16)"],
       "acceptanceCriteria": [
-        "A recorded fluent-speaker review exists in PROGRESS.md for every ru and uz explanation file",
+        "A recorded fluent-speaker review exists for every ru and uz explanation file and the interface catalogs",
         "No worker marks this task done without it"
       ],
       "validation": ["grep -n 'review' docs/execution/PROGRESS.md"],
@@ -3140,26 +6663,188 @@
         "docs/product/LOCALIZATION.md",
         "docs/product/READING_EXPERIENCE.md"
       ],
-      "notes": "Owner amendment 7 at M5-01 (2026-10-11). Human task."
+      "notes": "Formerly M11-06 (owner amendment 7 at M5-01); renumbered and widened to every skill and the interface copy in the 2026-10-17 replanning. Human task."
     },
     {
-      "id": "M11-07",
-      "title": "Required before beta: owner release approval of the Reading keys and explanations",
-      "milestone": "M11",
+      "id": "M15-12",
+      "title": "Content copyright and provenance review",
+      "milestone": "M15",
       "owner": "human",
       "status": "todo",
-      "dependsOn": ["M11-04", "M11-06"],
-      "goal": "The owner approves the reviewed Reading keys and explanations for release.",
+      "dependsOn": ["M15-01"],
+      "goal": "Every shipped passage, script, recording, image and item is confirmed original or licensed, with its record.",
+      "scope": [
+        "Check the provenance records against the content; confirm nothing is copied or adapted from published IELTS material; confirm audio and image rights",
+        "Record the outcome in PROGRESS.md"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "Every shipped content item has a confirmed provenance record"
+      ],
+      "validation": ["grep -n 'provenance' docs/execution/PROGRESS.md"],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/architecture/INVARIANTS.md"
+      ],
+      "notes": "Human task: legal and copyright judgment."
+    },
+    {
+      "id": "M15-13",
+      "title": "Support, contact and error-recovery basics",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
+      "goal": "Learners can reach the team and recover from errors, without exposing personal data.",
+      "scope": [
+        "A contact route as the owner decides (recorded); clear recovery from every error page; no personal data in error messages",
+        "Copy in uz, ru and en",
+        "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "Contact and recovery work in three languages",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        ".claude/rules/frontend/react.md",
+        ".claude/rules/styling/visual-implementation.md",
+        ".claude/skills/ui-implementation/SKILL.md",
+        ".claude/skills/product-design/SKILL.md",
+        "docs/architecture/BOUNDARIES.md",
+        "docs/design/ACCESSIBILITY.md",
+        "docs/product/LOCALIZATION.md",
+        ".claude/rules/security/security.md"
+      ]
+    },
+    {
+      "id": "M15-14",
+      "title": "Launch and incident runbooks",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M15-01"],
+      "goal": "The owner has written launch, rollback and incident steps to follow, without the worker deploying anything.",
+      "scope": [
+        "Launch checklist steps, rollback, incident response basics, who does what; linked from BETA_CHECKLIST.md"
+      ],
+      "outOfScope": ["deployment"],
+      "acceptanceCriteria": ["The runbooks exist and are linked"],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/execution/ROADMAP.md",
+        "docs/execution/AUTONOMOUS_WORKFLOW.md"
+      ],
+      "docsToUpdate": ["docs/execution/BETA_CHECKLIST.md"]
+    },
+    {
+      "id": "M15-15",
+      "title": "Release-candidate checkpoint",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": [
+        "M15-03",
+        "M15-04",
+        "M15-05",
+        "M15-06",
+        "M15-07",
+        "M15-11",
+        "M15-12",
+        "M15-13",
+        "M15-14"
+      ],
+      "goal": "The release candidate passes the full suite with every worker-closable checklist item closed.",
+      "scope": [
+        "Apply the remaining fixes from the human checks; update BETA_CHECKLIST.md with evidence; the full suite on the release candidate"
+      ],
+      "outOfScope": ["new features"],
+      "acceptanceCriteria": [
+        "Every worker item in the checklist is closed with evidence",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": ["docs/execution/ROADMAP.md"],
+      "docsToUpdate": ["docs/execution/BETA_CHECKLIST.md"]
+    },
+    {
+      "id": "M15-16",
+      "title": "Owner release approval of the content",
+      "milestone": "M15",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M15-08", "M15-09", "M15-11", "M15-12"],
+      "goal": "The owner approves the reviewed keys, explanations and content for release.",
       "scope": [
         "Review the recorded reviews; approve, and a worker sets the files to `approved` on that instruction"
       ],
       "outOfScope": [],
       "acceptanceCriteria": [
-        "Every Reading key and explanation file is `approved` on the owner's recorded instruction"
+        "Every shipped key, explanation and content file is `approved` on the owner's recorded instruction"
       ],
-      "validation": ["grep -rn '\"status\"' apps/web/content/reading"],
+      "validation": ["grep -rn '\"status\"' apps/web/content"],
       "references": ["docs/product/READING_EXPERIENCE.md"],
-      "notes": "Owner amendment 7 at M5-01 (2026-10-11). Human task."
+      "notes": "Formerly M11-07 (owner amendment 7 at M5-01); renumbered and widened to all shipped content in the 2026-10-17 replanning. Human task."
+    },
+    {
+      "id": "M15-17",
+      "title": "Set the approved content statuses and record the release candidate",
+      "milestone": "M15",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M15-15", "M15-16"],
+      "goal": "The repository reflects the owner's release approval exactly.",
+      "scope": [
+        "Set the approved files to `approved` as instructed; fingerprints and versions updated as required; record in PROGRESS.md and BETA_CHECKLIST.md"
+      ],
+      "outOfScope": ["approving anything not instructed"],
+      "acceptanceCriteria": [
+        "Statuses match the owner's instruction",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"
+      ]
+    },
+    {
+      "id": "M15-18",
+      "title": "Owner's beta launch decision",
+      "milestone": "M15",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": ["M15-17"],
+      "goal": "The owner decides go or no-go for the beta from the completed checklist.",
+      "scope": [
+        "Review BETA_CHECKLIST.md; accept or reject open items; decide launch; the owner deploys (workers never deploy)"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": ["The launch decision is recorded in PROGRESS.md"],
+      "validation": ["grep -n 'launch' docs/execution/PROGRESS.md"],
+      "references": [
+        "docs/execution/ROADMAP.md",
+        "docs/execution/AUTONOMOUS_WORKFLOW.md"
+      ],
+      "notes": "Human task."
     }
   ]
 }

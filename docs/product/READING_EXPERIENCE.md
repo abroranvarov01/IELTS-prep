@@ -2,7 +2,7 @@
 
 Canonical owner of the **Reading interaction model**, the product's signature experience.
 
-> **STATUS: APPROVED PRODUCT/UX DIRECTION.** The interaction model below is decided. The [M4 specifications](#m4-specifications-drafts) are **implemented** (M4 Reading engine, 2026-10-11): the phone and desktop layouts, the question types of the M4 scope, highlighting, Pin Evidence, and Practice and Exam Mode. The [M5 specifications](#m5-specifications-drafts), approved with amendments (owner, 2026-10-11, M5-01), are **implemented** (M5 Reading review + Error Intelligence, 2026-10-17): answer checking and the practice score, the attempt history on the device, results, the evidence-first review on phones, tablets and desktop, retries and repeated mistakes. The explanations and the key stay `aiDraft` until the human reviews before beta (M11-04 to M11-07).
+> **STATUS: APPROVED PRODUCT/UX DIRECTION.** The interaction model below is decided. The [M4 specifications](#m4-specifications-drafts) are **implemented** (M4 Reading engine, 2026-10-11): the phone and desktop layouts, the question types of the M4 scope, highlighting, Pin Evidence, and Practice and Exam Mode. The [M5 specifications](#m5-specifications-drafts), approved with amendments (owner, 2026-10-11, M5-01), are **implemented** (M5 Reading review + Error Intelligence, 2026-10-17): answer checking and the practice score, the attempt history on the device, results, the evidence-first review on phones, tablets and desktop, retries and repeated mistakes. The explanations and the key stay `aiDraft` until the human reviews before beta (M15-08 to M15-11 and M15-16).
 
 General UX rules still apply ([UX_PRINCIPLES.md](UX_PRINCIPLES.md)), as do accessibility requirements ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)) and the visual system ([DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md)).
 
@@ -54,7 +54,7 @@ If the user pinned evidence, review compares it with the actual evidence. Review
 **Owner decisions these specs implement (2026-10-10):** mobile-first; the passage is the main visual object; the current question lives in a persistent bottom sheet with collapsed / partial / expanded states if needed; a question navigator for the full Reading test; question UI adapts by IELTS question type; highlighting; Pin Evidence associates passage text with the current question; Practice Mode may provide help; Exam Mode removes learning assistance and follows realistic IELTS constraints; desktop Exam Mode may use passage and questions side by side; only small original demo content.
 
 **Decided at the M4-09 gate (owner, 2026-10-10):**
-- **Scope:** the four interaction families as specified. Table, flow-chart and diagram label completion are deferred and recorded as **required pre-beta Reading follow-ups** (TASKS.json M11-01 to M11-03).
+- **Scope:** the four interaction families as specified. Table, flow-chart and diagram label completion are deferred and recorded as **required pre-beta Reading follow-ups** (TASKS.json M8-17 to M8-19, moved into the Listening engine milestone on 2026-10-17 because they share its layouts).
 - **Answer checking is M5, not M4.** M4 shows no score, correctness or band.
 - **M4 demo content is Academic only.** The engine must not prevent General Training content later, but nothing General-specific is built now.
 - **Reading is reachable only by its direct route in M4.** Home is not changed.
@@ -80,7 +80,7 @@ If the user pinned evidence, review compares it with the actual evidence. Review
 | **Type words, special layout** | Table completion; flow-chart completion | **Deferred** |
 | **Type words, on an image** | Diagram label completion | **Deferred** |
 
-**Why the deferrals:** table and flow-chart completion need a two-dimensional layout that does not fit 320 px without its own design pass, and diagram labelling needs images with text alternatives and an image pipeline the content contract does not have yet. None of them adds a new way to answer: each is "type words" in another layout, so the engine (data contract, session, navigator) covers them, and they can be added with their first content set without engine changes. Proposed: when real content needs them (content sourcing, M9), each with one design pass.
+**Why the deferrals:** table and flow-chart completion need a two-dimensional layout that does not fit 320 px without its own design pass, and diagram labelling needs images with text alternatives and an image pipeline the content contract does not have yet. None of them adds a new way to answer: each is "type words" in another layout, so the engine (data contract, session, navigator) covers them, and they can be added with their first content set without engine changes. Proposed: when real content needs them, each with one design pass (now planned in M8, with Listening).
 
 **What every question shows in the sheet:** its number, the group's instruction (English test content, including the word limit, e.g. "Write NO MORE THAN TWO WORDS from the passage for each answer"), the prompt, the answer control, and the sheet's own controls (M4-02). Answer words such as TRUE, FALSE, NOT GIVEN are written in full exactly as in the test, never abbreviated.
 
@@ -292,7 +292,7 @@ Owner decision, 2026-10-11, on the review packet at commit 069877e: the recommen
 - **Coherent result records:** one record per key-revision and rules-version pair even when unchanged, all kept; a correction notice only for learner-visible changes; feedback metadata such as `fromPassage` covered by the existing version numbers; the first try refreshed before patterns are derived; patterns unavailable when the matching content is not.
 - **Claims within the evidence:** "Possible spelling issue"; a neutral "not enough evidence" state; tags describe questions; pin comparisons describe agreement with the key's cited sentences; NOT GIVEN feedback separates absent information from contradiction and facts from the writer's views.
 - **Copy corrections:** "Your retry"; no claim that answers were viewed or that a retry measures memory; the score may wrap; no empty evidence block for NOT GIVEN; in en, ru and uz.
-- **Explanations:** English drafted first, then ru and uz from it, all `aiDraft` in M5; before beta, English review, then reconciling translations, then fluent review, then owner approval, as M11 tasks that only people can complete.
+- **Explanations:** English drafted first, then ru and uz from it, all `aiDraft` in M5; before beta, English review, then reconciling translations, then fluent review, then owner approval, as M15 tasks that only people can complete.
 
 ### Content versions and M4 data (M5)
 
@@ -414,7 +414,7 @@ The unit outcome is: **Correct** when marks = `choose`; **No answer** when nothi
 - A retry: "9 of 13 now correct", out of the retried positions (whole units, not-correct and unanswered ones alike; 22–23 counts 2); never shown out of 40 and never combined with the original score.
 - Both are counts of correct answers on our own content, labeled as a practice score.
 
-**Raw score is not a band** (D1). ielts.org publishes the average marks per band for official test versions and says they vary between versions; standards are fixed per version. Our demo test is original and has never been calibrated, so a band read from those averages would claim a precision we do not have. **Decided: no band and no "Estimated band" in M5**, for Academic or General Training; the results page says "A practice score on our own practice test. It is not an IELTS band score." Band conversion returns only with calibrated content (content sourcing, M9) and the Academic / General Training decision ([PRODUCT.md](PRODUCT.md#open-questions)). INVARIANTS I-2 stays without an implementation until then.
+**Raw score is not a band** (D1). ielts.org publishes the average marks per band for official test versions and says they vary between versions; standards are fixed per version. Our demo test is original and has never been calibrated, so a band read from those averages would claim a precision we do not have. **Decided: no band and no "Estimated band" in M5**, for Academic or General Training; the results page says "A practice score on our own practice test. It is not an IELTS band score." Band conversion returns only with calibrated content (content system, M13, or later) and the Academic / General Training decision ([PRODUCT.md](PRODUCT.md#open-questions)). INVARIANTS I-2 stays without an implementation until then.
 
 ### When results are available (M5)
 
@@ -488,7 +488,7 @@ Decided as drafted (D21). All pages are prerendered per test and locale; the att
 
 ### Home in M5
 
-**Decided (D18): no change.** Reading stays reachable by its direct link (M4 decision), the level check stays the next action (rule 1), and home, rendered on the server from the goal cookie, cannot read the device's attempts (ADR-0006 §4). Next-action rules that use history belong to M8. The options considered were a cookie pointer and a quiet link on home.
+**Decided (D18): no change.** Reading stays reachable by its direct link (M4 decision), the level check stays the next action (rule 1), and home, rendered on the server from the goal cookie, cannot read the device's attempts (ADR-0006 §4). Next-action rules that use history belong to M11. The options considered were a cookie pointer and a quiet link on home.
 
 ### Error Intelligence (M5)
 
@@ -556,13 +556,13 @@ Unanswered questions belong to no category (see [Answer checking](#answer-checki
 
 **When the first try is unknown:** no repeated-mistake detection for that test, and the results page says "We can't tell which was your first try at this test on this device, so we don't look for repeated mistakes in it." Each unit's own notes still appear in review, because they describe only that attempt.
 
-**When a mistake counts as repeated** (D15; a **proposed product heuristic, not a validated diagnosis**): the same category on **at least 3 different answer units** from **at least 2 different question groups** of the first try (one group shares one instruction, so a single group could reflect one misread instruction). The numbers are a starting point to be checked against real use (M8); the copy never calls the result a diagnosis or a weakness.
+**When a mistake counts as repeated** (D15; a **proposed product heuristic, not a validated diagnosis**): the same category on **at least 3 different answer units** from **at least 2 different question groups** of the first try (one group shares one instruction, so a single group could reflect one misread instruction). The numbers are a starting point to be checked against real use (M11); the copy never calls the result a diagnosis or a weakness.
 
 **What the learner sees** (only on a test attempt's results, never on a retry's):
 - The scope, in words the evidence supports: on the first try itself, "In this attempt at this test. One test is not enough to show a lasting weakness."; on a later attempt, "From your first attempt at this test on this device. Later attempts repeat questions you have worked on before, so they are not used. One test is not enough to show a lasting weakness."
 - Up to two categories, most occurrences first (ties in table order), each with its count out of its opportunities and the question numbers ("3 of 5 questions whose answer was NOT GIVEN, FALSE or NO (questions 2, 3, 30)"), one tip, and "Practise these questions again".
 - No repeated category (whether too few units or too few groups): "Not enough evidence to show a repeated pattern in this attempt." (on the first try) or "…in your first attempt at this test." (on a later attempt). Single occurrences stay as notes on their cards in review.
-- With one demo test, nothing claims a pattern across tests, a lasting weakness, improvement, a level or a band. Evidence across tests and rates belong to M8.
+- With one demo test, nothing claims a pattern across tests, a lasting weakness, improvement, a level or a band. Evidence across tests and rates belong to M11.
 
 **Feedback the content can support:** the per-unit explanation (pre-written), the observable note, and per category one fixed tip (catalog copy) that restates the test's own instruction or a verified rule: what FALSE, NO and NOT GIVEN mean (the instructions' wording), that misspelt answers and answers over the limit lose the mark (verified above), that "from the passage" means the passage's words, where the key's evidence is (review), and to compare the question's words with the evidence (paraphrase) or check limiting words (qualifier). The only action offered is to practise those same questions again, labeled as questions attempted before.
 
@@ -577,7 +577,7 @@ Unanswered questions belong to no category (see [Answer checking](#answer-checki
   - source from an earlier content version: "This test has changed since that attempt, so its questions can't be practised again.";
   - questions not allowed for that source: "These questions can't be practised from that attempt."
 - **What it is not:** independent evidence of ability (never counted in repeated mistakes, never shown out of 40, never combined with the original score, never called improvement); a new test; a content library.
-- **Unseen practice** (new questions on a weak point) needs new content: only one demo test exists, and adding content sets is content sourcing (M9). A short original drill set would also need the content contract to allow tests shorter than 3 passages and 40 questions (ADR-0005). Not in M5.
+- **Unseen practice** (new questions on a weak point) needs new content: only one demo test exists, and adding content sets is the content system (M13). A short original drill set would also need the content contract to allow tests shorter than 3 passages and 40 questions (ADR-0005). Not in M5.
 - One retry in progress per test, kept apart from the test's session (ADR-0009 §8): the same retry link resumes it; starting a different retry replaces an unfinished one.
 
 ### Explanations and the AI decision (M5)
@@ -592,11 +592,11 @@ Unanswered questions belong to no category (see [Answer checking](#answer-checki
 | `reviewed` | A person has checked it as described below; the review is recorded in PROGRESS.md (reviewer's role, date, what was checked, what changed) | A worker, on the owner's instruction after the recorded review; never without one |
 | `approved` | The owner approves it for release | The owner |
 
-**Before beta** (D20; M11-04 to M11-07), every Reading key and explanation file must be `approved`, in this order:
-1. **English accuracy review (M11-04, people):** a person with strong English and IELTS Reading knowledge, not the drafting AI, checks every accepted answer and variant against the passage, every cited evidence sentence, every NOT GIVEN judgment, every content tag and `fromPassage`, the questions and passages as far as they affect the answers, and every English explanation and simpler version (grounded only in the passage, accurate, plain, the simpler one saying the same thing more simply). Corrections increase the key revision where the key changes.
-2. **Reconcile translations (M11-05, worker):** the ru and uz drafts are updated to every English correction; they stay drafts.
-3. **Fluent-speaker review (M11-06, people):** fluent speakers check every ru and uz explanation and simpler version against the reviewed English: same meaning, plain language, consistent terms, English quotes untouched, Uzbek orthography (U+02BB, U+02BC) ([LOCALIZATION.md](LOCALIZATION.md), rule 7). Not raw machine translation.
-4. **Owner release approval (M11-07):** the owner sets the files to `approved`.
+**Before beta** (D20; M15-08 to M15-11 and M15-16), every Reading key and explanation file must be `approved`, in this order:
+1. **English accuracy review (M15-08, people):** a person with strong English and IELTS Reading knowledge, not the drafting AI, checks every accepted answer and variant against the passage, every cited evidence sentence, every NOT GIVEN judgment, every content tag and `fromPassage`, the questions and passages as far as they affect the answers, and every English explanation and simpler version (grounded only in the passage, accurate, plain, the simpler one saying the same thing more simply). Corrections increase the key revision where the key changes.
+2. **Reconcile translations (M15-10, worker):** the ru and uz drafts are updated to every English correction; they stay drafts.
+3. **Fluent-speaker review (M15-11, people):** fluent speakers check every ru and uz explanation and simpler version against the reviewed English: same meaning, plain language, consistent terms, English quotes untouched, Uzbek orthography (U+02BB, U+02BC) ([LOCALIZATION.md](LOCALIZATION.md), rule 7). Not raw machine translation.
+4. **Owner release approval (M15-16):** the owner sets the files to `approved`.
 
 M5 finishes with `aiDraft` files and does not wait for any of these: nothing is released to real users before beta. The status is not shown in the interface in M5.
 
@@ -642,7 +642,7 @@ Owner decision, 2026-10-11: **approved as recommended for D1 and D3 to D25; D2 a
 | D17 | Checking during a test | None in either mode | No instant feedback while practising | |
 | D18 | Home | Unchanged | Results are reached only through the test link | |
 | D19 | Attempt storage | ADR-0009 (amended 2026-10-11): sessions in `localStorage`; committed attempts, result records and first-try markers in IndexedDB transactions that keep the first committed attempt across tabs; a random id per session; sources removed only after their transaction has completed; result records per key revision and rules version, all kept; 20 attempts kept; no reset control; unknown schemas never overwritten | Up to about 100 KB per test; clearing site data is the only reset | |
-| D20 | Review status and pre-beta review | `aiDraft` / `reviewed` / `approved`; M5 finishes with `aiDraft`; before beta: English review, reconciling ru and uz, fluent review, owner approval (M11-04 to M11-07) | AI drafts are visible in development builds until reviewed (no interface label) | Only people complete the reviews |
+| D20 | Review status and pre-beta review | `aiDraft` / `reviewed` / `approved`; M5 finishes with `aiDraft`; before beta: English review, reconciling ru and uz, fluent review, owner approval (M11-04 to M11-07; since the 2026-10-17 replanning M15-08 to M15-11 and M15-16) | AI drafts are visible in development builds until reviewed (no interface label) | Only people complete the reviews |
 | D21 | Routes and navigation | `/results`, `/review`, `/retry` under the test; finishing and card changes replace the address; review and retry in the test-bar layout, results in the shell | Four addresses per test | |
 | D22 | Date formats | No date parsing; each accepted date form is its own pre-written variant; the demo test has no date answers | Every accepted form must be listed; a missing one is marked wrong until a key revision | **No official source** for Reading |
 | D23 | The demo test's content version | Keep `version: 1` while the test file stays byte-identical and the session envelope stays at schema 1 | Relies on the fingerprint test | See Content versions and M4 data |

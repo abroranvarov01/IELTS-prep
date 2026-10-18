@@ -141,7 +141,7 @@ FirstTry (store "firstTry")
 
 ### 12. Not decided here
 - Home showing a Reading activity (ADR-0006 §4): not in M5 (owner, M5-01).
-- Server storage and moving the history to an account (M7); progress over time and evidence across tests (M8).
+- Server storage and moving the history to an account (M10, formerly M7); progress over time and evidence across tests (M11, formerly M8).
 
 ## Alternatives considered
 
@@ -153,7 +153,7 @@ FirstTry (store "firstTry")
 | D. Everything in IndexedDB, including in-progress sessions | One store | Asynchronous writes while answering may not complete when the tab closes (ADR-0006's reason to use `localStorage`) |
 | E. Ids from start time plus kind | Deterministic | Two distinct sessions of one kind started in the same millisecond would share an id |
 | F. An IndexedDB wrapper library | Less code | A runtime dependency for a few transactions |
-| G. Server storage | Survives devices | Needs accounts (M7) and the open hosting and data-residency decision |
+| G. Server storage | Survives devices | Needs accounts (M10, formerly M7) and the open hosting and data-residency decision |
 
 ## Why this decision
 

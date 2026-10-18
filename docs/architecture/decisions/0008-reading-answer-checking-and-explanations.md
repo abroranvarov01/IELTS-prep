@@ -69,13 +69,13 @@ Segment = { "text": "…" } | { "en": "…" }
 - **`aiDraft`**: drafted by Claude (AI), including any text a worker task writes. Never described as written by a person. In M5 the English explanations are drafted first, then the ru and uz drafts from the English draft; all stay `aiDraft`.
 - **`reviewed`**: a person has checked it (the English key and explanations against the passage by someone with strong English and IELTS Reading knowledge; ru and uz, after they are reconciled with any English corrections, by fluent speakers), recorded in PROGRESS.md with the reviewer's role and date. A worker never sets it without such a recorded review.
 - **`approved`**: the owner has approved it for release.
-- M5 finishes with `aiDraft` files; nothing is released to real users before beta. The pre-beta sequence (English review, reconciling ru and uz, fluent review, owner approval) is M11-04 to M11-07 (READING_EXPERIENCE.md, Explanations (M5), decision D20). The status is not shown in the interface in M5.
+- M5 finishes with `aiDraft` files; nothing is released to real users before beta. The pre-beta sequence (English review, reconciling ru and uz, fluent review, owner approval) is M11-04 to M11-07, now M15-08 to M15-11 and M15-16 (renumbered in the 2026-10-17 replanning) (READING_EXPERIENCE.md, Explanations (M5), decision D20). The status is not shown in the interface in M5.
 
 ### 7. "Explain simpler" is pre-written, not generated at runtime
 The simpler version is the `simpler` text of §5. No runtime AI. Generated explanations would first need an AI provider ADR (ARCHITECTURE.md open decision; the decisions it needs are listed in READING_EXPERIENCE.md, Explanations and the AI decision (M5)).
 
 ### 8. Not decided here
-Band conversion and calibration; AI; authoring tools and the review workflow beyond the status field (M9); server-side checking or storage (M7 and later).
+Band conversion and calibration; AI; authoring tools and the review workflow beyond the status field (M13, formerly M9); server-side checking or storage (M10 and later, formerly M7).
 
 ## Alternatives considered
 
@@ -102,5 +102,5 @@ Band conversion and calibration; AI; authoring tools and the review workflow bey
 
 ## Follow-up / migration notes
 
-- **Implementation:** M5-02 (key additions, validator, fingerprint tests), M5-03 (`scoring.ts` and its rules version), M5-05 (explanation files, their validator, AI drafts marked `aiDraft`), M5-06 and M5-07 (loading on the results and review pages); the pre-beta reviews are M11-04 to M11-07.
+- **Implementation:** M5-02 (key additions, validator, fingerprint tests), M5-03 (`scoring.ts` and its rules version), M5-05 (explanation files, their validator, AI drafts marked `aiDraft`), M5-06 and M5-07 (loading on the results and review pages); the pre-beta reviews are M11-04 to M11-07, now M15-08 to M15-11 and M15-16 (renumbered in the 2026-10-17 replanning).
 - **Docs on acceptance:** the ADR index; ADR-0005's status line ("§2 amended by ADR-0008"); ARCHITECTURE.md (content model: checking and explanations decided); LOCALIZATION.md (explanations are localized content files, not catalog strings).

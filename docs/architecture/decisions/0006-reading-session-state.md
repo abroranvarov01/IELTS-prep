@@ -43,7 +43,7 @@ ReadingSession
 - Value: an envelope `{ "schema": 1, "session": { … } }` as JSON.
 - **Written after every transition** (a few kilobytes; synchronous and immediate, so closing the tab right after answering loses nothing).
 - **Read as untrusted input** by a validator next to the model: an unknown `schema`, a malformed value, unknown question numbers or sentence ids, or more pins than allowed make it read as "no session". Never a crash.
-- **Stale content:** if `testVersion` differs from the test's current `version`, the stored session is not used (its numbers and anchors may no longer match); the start screen opens. (Rare while content is hand-made; M9 handles content updates for real.)
+- **Stale content:** if `testVersion` differs from the test's current `version`, the stored session is not used (its numbers and anchors may no longer match); the start screen opens. (Rare while content is hand-made; the content system, M13, formerly M9, handles content updates for real.)
 - **Storage unavailable** (blocked, full, or throwing): the session runs in memory and the screen shows the notice from the M4-02 draft ("Your answers can't be saved on this device. Don't close this page.").
 - Private windows keep `localStorage` for the window's lifetime, which matches what users expect there.
 
@@ -54,7 +54,7 @@ ReadingSession
 
 ### 4. Not decided here
 - **"Continue previous activity" on home.** Home is rendered on the server from the goal cookie (ADR-0003) and cannot read `localStorage`. When home should show it, the smallest fit is a cookie holding only a pointer (test id, mode, in progress), written when a session starts or finishes, which ADR-0003 allows as a small preference. Not built in M4 unless approved.
-- Moving sessions to an account and syncing across devices (M7), offline use beyond a loaded test (M10), and server-side storage of results for review statistics (M5 or later).
+- Moving sessions to an account and syncing across devices (M10, formerly M7), offline use beyond a loaded test (M14, formerly M10), and server-side storage of results for review statistics (M5 or later).
 
 ## Alternatives considered
 

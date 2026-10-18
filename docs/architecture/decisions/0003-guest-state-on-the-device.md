@@ -68,6 +68,6 @@ What has to be stored in M3 is small: the exam type (Academic, General Training,
 ## Follow-up / migration notes
 
 - **Implementation:** M3-06 (domain definitions, the parser, the cookie writes and reads, unit tests), M3-07 (Server Actions behind the onboarding forms), M3-08 (the proxy redirect and home).
-- **Still open:** where practice state lives (M4), the offline scope (if pages are ever cached by the service worker, server-rendered personalization needs another look), and moving the goal into an account (M7, Authentication ADR).
-- **Legal:** the cookie is strictly functional, holds no personal data and does no tracking. It is listed for the legal review before beta (M11).
+- **Still open:** where practice state lives (M4), the offline scope (if pages are ever cached by the service worker, server-rendered personalization needs another look), and moving the goal into an account (M10, formerly M7, Authentication ADR).
+- **Legal:** the cookie is strictly functional, holds no personal data and does no tracking. It is listed for the legal review before beta (M15, formerly M11).
 - **Security:** Next.js Server Actions accept only POST and check the request's origin. The cookie value is never logged.
