@@ -3785,7 +3785,8 @@
       "title": "Draft the Listening player, modes, sections and layouts",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-01"],
       "goal": "Decide the signature Listening surface: the player in Practice and Exam, section progression, resume, and the phone and desktop layouts.",
       "scope": [

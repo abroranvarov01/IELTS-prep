@@ -6,7 +6,7 @@ Canonical owner of the **Listening interaction model**: the question types the L
 
 General UX rules apply ([UX_PRINCIPLES.md](UX_PRINCIPLES.md)), as do accessibility requirements ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)) and the visual system ([DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md)). The Reading engine this builds on is owned by [READING_EXPERIENCE.md](READING_EXPERIENCE.md); where a Listening type behaves exactly like a Reading type, this file links to it instead of restating it.
 
-**Not in this file yet:** the player, Practice and Exam Mode, section progression, resume, weak connections and the screen layout around the questions are M8-02 (this file, a later section). The content contract and audio assets are M8-03 and M8-04 (ADRs). Visual values are M8-05 (DESIGN_SYSTEM.md). Answer checking, results and review are M9.
+**Owned elsewhere:** the content contract and audio assets are M8-03 and M8-04 (ADRs); visual values are M8-05 (DESIGN_SYSTEM.md); flows, step counts and copy are in [USER_FLOWS.md, Listening flows (M8)](USER_FLOWS.md#listening-flows-m8); answer checking, results and review are M9.
 
 ## Question types (M8)
 
@@ -144,12 +144,12 @@ A picture (a building plan, a street map, a diagram of a machine or process) wit
 
 ### Highlighting, notes and Pin Evidence
 
-Reading's sentence highlighting and Pin Evidence work on a passage, which Listening does not have. Whether the question text can be highlighted, and whether Listening has a note area (computer-delivered IELTS gives rough paper for notes, IDP), is decided with the player and modes in M8-02. Listening's evidence (a timestamp and a transcript excerpt) is M9's review.
+Reading's sentence highlighting and Pin Evidence work on a passage, which Listening does not have. Whether the question text can be highlighted, and whether Listening has a note area (computer-delivered IELTS gives rough paper for notes, IDP), is open question P9 below. Listening's evidence (a timestamp and a transcript excerpt) is M9's review.
 
 ### Accessibility notes for every type
 
 - Every control has an accessible name with its question number; option letters carry their text; nothing is by color alone (Reading's rules).
-- **A screen reader speaks over the recording.** A learner who uses one hears both at once. This file does not solve it: M8-02 states how the player helps (pause and rewind in Practice), and the Exam Mode limitation is stated up front, not hidden. Transcripts as an alternative for deaf or hard-of-hearing learners are TBD (ACCESSIBILITY.md, Audio and media).
+- **A screen reader speaks over the recording.** A learner who uses one hears both at once. Practice lets them pause and go back; the Exam Mode limitation is stated up front, not hidden ([The player](#the-player-m8)). Transcripts as an alternative for deaf or hard-of-hearing learners are TBD (ACCESSIBILITY.md, Audio and media).
 - Fields, letter buttons and option rows meet the 44 px minimum (48 px for rows); at 320 px and 200% zoom nothing is clipped and nothing scrolls sideways (except the enlarged picture, which pans by design).
 
 ### Open questions (M8-01)
@@ -161,3 +161,156 @@ Reading's sentence highlighting and Pin Evidence work on a passage, which Listen
 5. **L5. Tables on phones:** options (a) one card per row with headed lines; (b) the table with horizontal scroll inside its box. **Recommendation: (a)**, since 320 px without horizontal scroll is a requirement.
 6. **L6. Branching flow charts?** Options: (a) linear only in M8; the validator refuses branches; a later content need adds them with their own design pass; (b) design branches now. **Recommendation: (a)**: a flow chart is described as the stages of a process (ielts.org), no content planned in M8 needs a branch, and a branch has no layout at 320 px without its own design pass. If the owner prefers to keep branching as a recorded follow-up, a task is added to TASKS.json for it.
 7. **L7. "Choose from a list" gaps in forms, notes and tables:** options: (a) supported in M8 with L2's control; (b) typed gaps only in M8. **Recommendation: (a)**: ielts.org names both answer kinds for these tasks, and the control exists anyway for matching.
+
+## Player, modes and sections (M8)
+
+**DRAFT** (M8-02, for the M8-06 gate). Flows, step counts and copy: [USER_FLOWS.md, Listening flows (M8)](USER_FLOWS.md#listening-flows-m8).
+
+### What the official format says about playing
+
+Sources as in [The IELTS Listening test format](#the-ielts-listening-test-format), checked on 2026-10-18.
+
+| Fact | Status | Used for |
+|---|---|---|
+| The recording is heard once only | Verified (ielts.org) | Exam Mode plays once, without pause or seeking |
+| There is time to read the questions before each recording | Verified (IDP "IELTS on computer: Listening preparation") | The reading time is **inside the recording** (below) |
+| On computer, no transfer time; 2 minutes to check answers at the end | Verified (IDP) | Exam Mode's 2-minute check after the recording |
+| About 30 minutes in total | Verified (ielts.org) | The start screen's time |
+| Answers can be changed at any time before the test is submitted; a navigator of all 40 questions; a review mark; a volume control | Verified (IDP) | Navigation and "Mark for review" in both modes; volume (open question P5) |
+| How long each reading pause is, and where the pauses fall within a part | **Not found** on official pages (unofficial guides disagree) | Product policy, decided per recording in the content (M8-07) |
+
+**The reading time and the part changes are part of the audio**, as in the real test: each part's recording starts with its spoken introduction and a silence for reading the questions ("You now have some time to look at questions 1 to 5"), and may have a second pause before its second group. The app does not add its own pauses or countdowns between parts. So Practice and Exam play the same recording, and the scripts (M8-07) decide the pause lengths as product policy, stated in the content's provenance record. One file or one stretch of audio per part is M8-03's decision; this spec only needs to know where each part starts.
+
+### The player (M8)
+
+One player for the test, always visible under the test bar (phone and desktop). It plays the part of the questions on screen in Practice, and the whole recording in order in Exam.
+
+**Practice Mode** (learning help, no time limit):
+- **Play / Pause** (the player's main button, 48 px).
+- **Back 5 seconds** and **Forward 5 seconds** (open question P2).
+- **A position slider** with the elapsed and total time of the part ("1:23 / 7:40"); dragging or the arrow keys move it.
+- **Speed:** 0.75×, 1× (default) and 1.25× (open question P3), chosen from a small menu; the choice is kept for the session.
+- **At the end of a part:** the player stops and says "End of Part 2"; "Play again" restarts the part. It never moves to the next part by itself.
+- **No transcript during practice** (open question P4): the transcript is the evidence of M9's review; shown while answering, it would give the answers away.
+- **No timer** (as Reading Practice).
+
+**Exam Mode** (realistic, no help):
+- **No controls except volume** (open question P5): no pause, no seeking, no speed. The player shows its state as text and a non-interactive progress line: "Recording: Part 2", the part's progress, and in the test bar the overall "Part 2 of 4".
+- **The recording plays once, from Part 1 to Part 4, without stopping.** Parts follow each other inside the recording; nothing waits for the learner.
+- **The 2-minute check:** when the recording ends, the test bar shows "Time to check: 2:00" counting down, and a polite announcement says "The recording has ended. You have 2 minutes to check your answers." At 0:00 the answers are final and the test finishes by itself without the confirmation, and the finished page says "Time is up." (as Reading's Exam time-out). "Finish test" is available throughout, with the confirmation.
+- **The learner moves freely** between all 40 questions at any time, as on computer-delivered IELTS: the navigator, Previous and Next work during the recording. **The screen never follows the recording** (M8-01 L4): when a new part starts and the learner is looking at another part, a quiet notice "Part 2 has started." with "Go to Part 2" appears above the questions, and a polite announcement says the same; the learner decides.
+- Stated up front on the start screen: the recording plays once without stopping, and the time keeps running if you leave ([Resume](#resume-and-weak-connections-m8)).
+
+**Practice vs Exam, per feature:**
+
+| | Practice | Exam |
+|---|---|---|
+| Scope | All four parts, in any order, at the learner's pace | The whole test as one sitting, in order |
+| The recording | Per part; play, pause, back, forward, slider, speed, play again | Once, Parts 1–4 without stopping |
+| Reading time before a group | In the recording; the learner may also pause | In the recording |
+| Changing part | Choosing a question of another part switches the player to that part (paused at the position it was left) | The recording decides; the questions of every part are always reachable |
+| Timing | None | The recording's length, then 2 minutes to check; auto-finish at 0:00 |
+| Mark for review, navigator | Yes | Yes |
+| Word-limit warning | Yes (as Reading Practice) | No |
+| Transcript | No (M9 review only; P4) | No |
+| Highlighting, notes | Open question P9 | Open question P9 |
+| "Exit" | As Reading's "Exit"; everything kept, the player paused at its position | Asks first: "Leave the test? The recording keeps going while you are away." |
+| After finishing | The finished page | The finished page |
+
+**The finished page in M8** (both modes, until M9 adds checking): as Reading's in M4: "Test finished" (and "Time is up." after a time-out), "You answered {answered} of {total} questions.", the honest line "Checking answers and explanations will come in a later version.", the red "Go to home page" and a quiet "Start again". No score: nothing in M8 computes one.
+
+**Sound check:** none in M8 (open question P6). Each part's recording starts with spoken instructions, which serve as the sound check in Practice; the Exam start screen asks the learner to set the volume and use headphones if they can.
+
+**Audio focus on the device:** when the browser pauses the audio itself (a phone call, another app taking the audio, the system stopping background playback), Practice shows the player paused at that position. Exam treats it as an interruption ([Resume](#resume-and-weak-connections-m8)).
+
+### Keyboard, screen readers and motion (player)
+
+- **Order:** skip link "Skip to the questions" (first focusable), the test bar (Exit, part, check timer), the player (a `region` named "Audio player"), the questions (`main`), the bottom bar.
+- **Practice controls are native buttons** with accessible names that change with the state ("Play" / "Pause"); the slider is a native range input whose value is read as words ("1 minute 23 seconds of 7 minutes 40 seconds"); speed is a button that opens a short list of radio options ("Speed: 1×").
+- **No global keyboard shortcuts** (open question P7): Space and the arrow keys type and move inside answer fields, and a shortcut there would change the audio by accident. Every control is reachable by Tab.
+- **Exam:** the player's state is text in the region, not a live region; only three things are announced politely: a new part has started, the recording has ended with the check time, and 30 seconds of check time left. The check timer is in the test bar as Reading's timer is (`mm:ss`, bolder in the last 30 seconds, nothing blinks).
+- **A screen reader speaks over the recording** ([Accessibility notes](#accessibility-notes-for-every-type)): Practice is the mode that works with one (pause, back); the Exam start screen says plainly that the recording does not stop. Transcripts for deaf or hard-of-hearing learners stay TBD (ACCESSIBILITY.md).
+- **Motion:** no waveform and no animated equalizer (open question P8); the progress line moves with the audio but has no transition; with reduced motion nothing in the player animates. Buffering is shown by text ("Loading the audio…"), with at most a static icon.
+
+## Resume and weak connections (M8)
+
+**DRAFT** (M8-02). How sessions and audio are stored and fetched is M8-04's ADR; this section is the behavior it must give.
+
+### Leave and come back
+
+**Practice:** everything is kept on the device as in Reading (answers, marks, the question on screen) plus **each part's audio position**. Coming back opens the screen where the learner left, with the player **paused** at the saved position minus 3 seconds (so the learner hears the end of the last sentence again); the learner taps Play. Browsers do not let a page start sound before the learner taps, so a paused player is also the only reliable state.
+
+**Exam:** the sitting is like the real one: **the recording keeps going while the learner is away**, as Reading's Exam time keeps running (open question P1).
+- While the page stays open (another tab, a locked screen), the audio keeps playing if the browser allows it; if the browser pauses it, it is an interruption (below).
+- When the learner comes back to a closed page, the position is the recording's start time plus the time that has passed (minus the time lost to buffering and interruptions, which the session records). The screen shows "Continue the test", the sentence "The recording kept going while you were away. It continues from Part 3, 4:12.", and the red "Continue", which starts the audio at that position (the tap the browser needs). If the recording has ended in the meantime, the screen opens in the check time with what is left of it; if the check time is over too, the test is finished ("Time is up.").
+- "Exit" asks first: "Leave the test? The recording keeps going while you are away." ("Leave" / "Stay").
+
+### Weak connections
+
+The learners use mid-range phones on variable mobile connections (PRODUCT.md). A recording of about 30 minutes is several megabytes (M8-03 sets the target), so:
+
+- **Before starting, the start screen states the audio's size** ("Audio: about {size} MB. Wi-Fi is best.") and recommends headphones.
+- **Exam: the whole recording is downloaded before it starts** (open question P10). After "Start", the "Preparing the audio" screen shows the progress ("6 of 14 MB"); when everything is on the device it says "The audio is ready. The recording plays once and starts when you tap the button." with the red "Start the recording". Downloading first means a slow connection never stops the exam halfway, and the exam then works offline. The tap also gives the browser the permission to play sound.
+- **Practice: a part can start once enough of it has loaded** to play without stopping at the current speed (the browser's own estimate), and the other parts load in the background in order. The player shows "Loading the audio…" while it waits, and Play is unavailable until it can play.
+- **Buffering in Practice** (the connection is slower than the audio): the player pauses itself with "Loading the audio…" and continues by itself when enough has loaded; the position is never lost.
+- **Download failure before starting** (both modes): "The audio couldn't be downloaded. Check your connection and try again." with "Try again"; what has been downloaded is kept, so a retry continues.
+- **Failure mid-exam** (the audio stops and cannot continue: a stored file was evicted, a decoding error, the browser stopped playback): this is the **only time an Exam pauses**. The screen shows "The audio stopped", "The recording is paused at Part 3, 4:12, and your answers are saved.", the red "Try again" (continues from that position once the audio can play) and a quiet "Finish without the rest". The time the audio was stopped does not count against the learner, and the session records that the sitting was interrupted (M8-04), so M9 and mock history can say so honestly. The finished page of an interrupted Exam adds: "The recording was interrupted, so this was not a full exam sitting."
+- **Failure in Practice:** the player shows "The audio couldn't load." and "Try again"; answering and navigating keep working.
+- **Offline:** once the audio a mode needs is on the device, answering, navigating and playing work offline. Opening a test while offline shows the M1 error state (the offline scope is M14).
+- **Storage blocked or full** (sessions cannot be kept): the one-line notice as in Reading: "Your answers can't be saved on this device. Don't close this page." The audio download needs storage only for the session's duration (M8-04 decides where it lives).
+
+## Listening screen: phone and desktop (M8)
+
+**DRAFT** (M8-02). The audio-first order from [DESIGN_CONSTITUTION.md, Surface direction](../design/DESIGN_CONSTITUTION.md#surface-direction): a compact top bar, progress, the player, the current question, its answer controls, then compact navigation. Visual values are M8-05's.
+
+### Start screen
+
+At the test's address `/{locale}/listening/{testId}` (as Reading's): the test's title (English test content), the format line ("4 parts · 40 questions · about 30 minutes"), the mode as two option rows, **Practice** ("Pause, go back and change the speed. No time limit.") and **Exam** ("The recording plays once without stopping, about {minutes} minutes, then 2 minutes to check. No help. The time keeps running if you leave."), the audio-size line, the headphones line, and the red "Start". On desktop the Reading start screen's composition (`TaskLayout`, the side card with the Listening identity). A link may preselect the mode (`?mode=exam`). A test with an unfinished session skips the start screen and resumes.
+
+### Phone (below 600 px) and tablet (600–1023 px)
+
+Top to bottom at 360 px:
+1. **Test bar** (the screen's `header`, about 48 px, as Reading's): "Exit" on the start side, "Part 2 of 4" in the middle, the check timer on the end side only during Exam's check time.
+2. **Player** (sticky under the test bar, so it stays reachable while the questions scroll): Practice: Play / Pause, Back 5 s, the slider with its times, Forward 5 s and Speed, in at most two rows at 320 px (the slider gets its own row there). Exam: one row with "Recording: Part 2", the progress line, and the volume note (P5).
+3. **The notice line** when there is one (storage, "Part 2 has started." with "Go to Part 2").
+4. **The questions** (`main`): the current group whole, as M8-01 specifies (instruction, title or picture, every question with its control in place). The page scrolls; groups follow one another down the part, so the learner can scroll on to the next group as in a paper booklet, and "Questions 1–5" headings separate them. A part is one scrolling page; another part is reached by the navigator or Next.
+5. **Bottom bar** (fixed, about 56 px, as compact as Reading's sheet footer): "Mark for review" for the current question, "All questions" (opens the navigator), Previous and Next. On the last question, Next becomes the red "Finish test".
+
+**Why no bottom sheet:** Reading's sheet exists to keep the passage as the main object; Listening has no passage, so the questions are the main object and get the whole screen under the player. The navigator opens in a sheet (the expanded state of Reading's sheet, with its "Back"), so the pattern stays familiar.
+
+**The navigator:** Reading's navigator, grouped by part ("Part 1" … "Part 4", ten numbers each), with the same states never by color alone and the same accessible names. Choosing a number shows its part and scrolls its question into view with focus on its heading. In Practice this also switches the player to that part.
+
+**Previous / Next:** move the current question by one, scrolling it into view and moving focus to its heading ("Question 6"); crossing into another part shows that part. They never touch the audio in Exam; in Practice crossing into another part switches the player to it, paused.
+
+**Phone keyboard:** when a field has focus, the player stays docked under the test bar, the bottom bar hides behind the on-screen keyboard, and the field is scrolled into view above the keyboard (the visible viewport). When the keyboard closes, the bottom bar returns.
+
+**Tablet (600–1023 px):** the same layout, the questions centered at a comfortable measure, the player and the bottom bar as wide as the question column.
+
+### Desktop (from 1024 px)
+
+- **Test bar** across the top (Exit, "Part 2 of 4", the check timer in Exam's check time).
+- **Player** as a band under the test bar across the question area's width; Practice controls in one row; in Exam the state, the progress line and the volume slider (P5).
+- **Questions** in one column at a comfortable measure (no passage column), the current group whole; labelling groups use the picture-and-questions two-column layout of M8-01 within the area, and tables show as tables.
+- **Navigator bar** along the bottom as Reading's: the part on screen's numbers first, the other parts as quiet buttons with their progress ("Part 3: 4 of 10 answered"), "Mark for review", Previous, Next and "Finish test" (with Reading's confirmation dialog).
+- **Same layout in both modes** (as Reading's desktop); the player's controls differ.
+- **Keyboard:** Tab moves skip link → test bar → player → questions → navigator bar.
+
+### Empty and error states
+
+- **Unknown test address:** the localized not-found page.
+- **The learner's device cannot play the audio format** (very old browsers): the start screen says "This device can't play the test's audio." and Start is unavailable (M8-04 picks a format every supported browser plays, so this is a safety state).
+- The download, buffering, interruption, offline and storage states are in [Weak connections](#weak-connections).
+
+### Open questions (M8-02)
+
+1. **P1. Exam resume:** options: (a) the recording keeps going while the learner is away, as Reading's Exam time; (b) the recording pauses when the page closes and continues where it stopped; (c) an Exam cannot be resumed: leaving finishes it. **Recommendation: (a)**: it is the real condition, it matches the approved Reading rule, and it is stated twice before it can surprise anyone (the start screen and the "Exit" confirmation). Interruptions the learner did not cause (the audio failing) are the exception that pauses.
+2. **P2. How far Back and Forward jump in Practice:** (a) 5 seconds; (b) 10 seconds; (c) back to the previous sentence (needs the transcript's timing). **Recommendation: (a)**: a missed phrase is usually within 5 seconds, and two taps give 10. (c) could come with M9's transcript timings.
+3. **P3. Speeds in Practice:** (a) 0.75×, 1×, 1.25×; (b) also 0.5× and 1.5×; (c) none. **Recommendation: (a)**: slower helps a learner catch a phrase, faster helps build tolerance; more steps distort the voice and add choices.
+4. **P4. A transcript in Practice while answering?** The task allows it only if the owner approves. Options: (a) no: the transcript belongs to M9's review; (b) after a part ends, in Practice; (c) at any time in Practice. **Recommendation: (a)**: reading the transcript turns listening practice into reading practice and shows the answers; M9's review shows the evidence excerpt with its timestamp.
+5. **P5. Volume in Exam:** IDP says computer-delivered IELTS has a volume control. On phones, browsers mostly ignore a page's volume setting (iOS does not allow it), so the device's buttons are what works. Options: (a) a volume slider on desktop, and on phones the line "Use your device's volume buttons."; (b) no volume control anywhere; (c) a slider everywhere. **Recommendation: (a).**
+6. **P6. Sound check before Exam:** (a) none; the start screen asks the learner to set the volume, and Part 1's spoken introduction comes first; (b) a short sample with "Play sample" on the "Preparing the audio" screen. **Recommendation: (a)** for M8; (b) needs its own recorded sample, which M8-08 could add if the owner wants it.
+7. **P7. Keyboard shortcuts for the player** (for example Space to pause): (a) none in M8; (b) shortcuts with a modifier key, outside answer fields only. **Recommendation: (a)**: every control is a Tab stop already, and a shortcut that fires while typing an answer would lose audio in Practice.
+8. **P8. A waveform in the player?** The surface direction says "the player (or waveform)". Options: (a) a plain progress line; (b) a static waveform drawn from the audio. **Recommendation: (a)**: a waveform adds a data file per part and decoration that answers no question (UI_ANTI_PATTERNS.md, decorative charts).
+9. **P9. Highlighting question text and a note area:** computer-delivered IELTS gives rough paper for notes (IDP); whether it allows highlighting in Listening was not found. Options: (a) neither in M8; (b) highlighting of the question text in both modes; (c) a notes field. **Recommendation: (a)**: the learner can use paper as in the test, and both features need their own design pass; recorded here so a later milestone can add them.
+10. **P10. Exam download before starting:** (a) the whole recording before "Start the recording"; (b) the first part, then the rest while playing. **Recommendation: (a)**: a test of about 30 minutes must not stop because a connection slowed down in Part 3; the wait is shown with its progress, and it happens once. If the size makes the wait too long on 3G, M8-03's bitrate target is the lever, not a mid-exam stop.
+11. **P11. The first audio in Practice:** (a) "Start" opens the screen with the player paused; the learner reads the questions and taps Play; (b) the recording starts with "Start". **Recommendation: (a)**: the recording's own reading pause gives time anyway, but a learner may want to read first, and a page may not start sound reliably after a slow load. This adds one action before the audio (see the step count in USER_FLOWS.md).

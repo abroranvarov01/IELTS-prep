@@ -753,3 +753,107 @@ Reused: `levelCheck.*`, `home.goal.targetBandNotSet`, `home.goal.change`, `examT
 | `home.nextAction.continueCheck.body` | Home card while the check is in progress | You stopped partway. Your answers are saved on this device. | Вы остановились на середине. Ответы сохранены на этом устройстве. | Siz oʻrtasida toʻxtadingiz. Javoblaringiz shu qurilmada saqlangan. |
 
 Type names for the other M4 question types follow the same pattern when a form uses them (M7-06 adds the keys it needs). "Reading" stays in English in the level-check copy because it names the IELTS part being checked (N5: English inside test content and the level check; translated in navigation and the Hub).
+
+## Listening flows (M8)
+
+**DRAFT** (M8-02, for the M8-06 gate). The screen and its behavior are in [LISTENING_EXPERIENCE.md](LISTENING_EXPERIENCE.md): question types (M8-01), [the player and modes](LISTENING_EXPERIENCE.md#player-modes-and-sections-m8), [resume and weak connections](LISTENING_EXPERIENCE.md#resume-and-weak-connections-m8), and [the phone and desktop layouts](LISTENING_EXPERIENCE.md#listening-screen-phone-and-desktop-m8). The open questions are P1–P11 and L1–L7 there.
+
+### Open a Listening test in Practice
+- **Goal:** start listening and answering with the help Practice gives.
+- **Entry point:** the Practice Hub's Listening section, or the test's direct link `/{locale}/listening/{testId}` (direct entry, no onboarding).
+- **Primary action:** "Start" on the start screen; then Play.
+- **Steps:** 1. Open the test (a Hub row or the link) → the start screen (title, format, Practice preselected, the audio size, the headphones line, the red "Start"). 2. "Start" → the Listening screen with Part 1's first group and the player paused ("Loading the audio…" until it can play). 3. Play → the recording starts.
+- **Step count:** 3 from the Hub row or the link to hearing the recording; from Home: "Practice", the row, "Start", Play: **4**. Justification: the learner chooses when the recording starts, so they can read the first group first (the test's own reading time, P11); the first question is on screen after 3, within the rule.
+- **Empty / error states:** unknown test → the localized not-found page; offline → the M1 error state; the audio cannot load → "The audio couldn't load." with "Try again", answering still works; storage blocked → the one-line notice, the test still works.
+- **Languages checked:** not yet (drafted strings; checked at 320, 390 and 1280 px in M8-12 and M8-13).
+
+### Open a Listening test in Exam
+- **Goal:** take the test as one realistic sitting.
+- **Primary action:** "Start", then "Start the recording".
+- **Steps:** 1. Open the test → the start screen. 2. Choose Exam (the line says the recording plays once without stopping, about 30 minutes, then 2 minutes to check, and that the time keeps running if you leave). 3. "Start" → "Preparing the audio" with the download's progress ("6 of 14 MB"). 4. When the audio is on the device, "Start the recording" → the recording starts with Part 1.
+- **Step count:** 4 (3 with `?mode=exam`). Justification: the whole recording must be on the device before an exam that cannot stop (P10), and the browser needs a tap to start sound; the download wait is not a user action.
+- **Empty / error states:** the download fails → "The audio couldn't be downloaded. Check your connection and try again." with "Try again" (what has downloaded is kept); a device that can't play the format → "This device can't play the test's audio." and no Start.
+
+### Answer and move between questions
+- **Steps:** 1. Answer in place (a tap, a letter, or typing; every question of the group is on screen, M8-01). 2. The next question is usually already on screen; another part or a far question: "All questions", then the number.
+- **Step count:** 1 per question within a group; any question is 2 actions away through the navigator. Previous / Next move by one question.
+- **Exam:** a new part starting while the learner looks at another part shows "Part 2 has started." with "Go to Part 2" (1 action); the screen never moves by itself.
+
+### Finish a test
+- **Steps:** 1. "Finish test" (on the last question or at the end of the navigator) → Reading's confirmation ("Finish the test?", the unanswered count, the red "Finish", the quiet "Keep working"). 2. "Finish" → the finished page.
+- **Step count:** 2. In Exam, the end of the 2-minute check finishes without the confirmation ("Time is up.").
+- **The finished page (M8):** "Test finished", "You answered {answered} of {total} questions.", the honest line that checking comes later, the red "Go to home page", the quiet "Start again". M9 replaces it with results.
+
+### Leave and come back
+- **Practice:** opening the test again (link, Hub row "In progress · Practice", or the browser) → the screen where the learner left it, the player paused 3 seconds before the saved position. 1 action to resume, 2 to hear the audio again.
+- **Exam:** "Exit" asks "Leave the test? The recording keeps going while you are away." Opening the test again → "Continue the test" with the position the recording has reached ("It continues from Part 3, 4:12.") → "Continue" (1 action). If the recording ended meanwhile, the check time continues; if that is over, the test is finished.
+- **The audio stopped mid-exam** (not the learner's doing): "The audio stopped", where it paused, "Try again" (red) or "Finish without the rest" (quiet); the time stopped does not count, and the finished page says the sitting was interrupted.
+
+### Listening in the Practice Hub and on Home
+- **Practice Hub:** a Listening section after Reading (the M6 order), headed "Listening" in the interface language (N5) with its icon; one row per Listening test with its format ("4 parts · 40 questions · about 30 minutes") and its state: "Not started", "In progress · Practice" / "In progress · Exam", or "Finished" (no score until M9). The row opens the test's address, as Reading's rows do.
+- **Home:** "Choose a skill" gains the Listening card (as USER_FLOWS.md Home v2 planned "Listening from M8"), linking to the Hub. Home's next action does not change in M8 (M11 decides cross-skill next actions).
+- **Step count:** Home → "Practice" → the row → "Start": 3 to the first question.
+
+### Interface copy (M8)
+
+**DRAFT**, proposed for the M8-06 gate. Keys are suggestions. Interface strings only: test content (instructions, questions, options, the recording's own spoken instructions) stays in English from the content. Uzbek uses U+02BB for oʻ and gʻ. "Part" is the IELTS name of a Listening section. A fluent-speaker review of uz and ru is required before beta (M15-11). Reused without change: `reading.exit`, `reading.start`, `reading.mode.legend`, `reading.mode.practice`, `reading.mode.exam`, the question, navigator, flag and answer strings (`reading.question.*`, `reading.navigator.*`, `reading.flag.*`, `reading.answer.*`, `reading.sheet.back`), `reading.finish.*`, `reading.timer.label`, `reading.exitExam.title`, `.leave`, `.stay`, `reading.finished.timeUp`, `reading.finished.again`, `reading.wordLimit`, `reading.storage.unavailable`, `common.goHome`, `practice.state.notStarted`, `practice.state.inProgress`, `skills.listening`. Where the implementation shares a Reading key with Listening it may move it to a shared namespace (M8-12).
+
+| Key (suggested) | Used in | en | ru | uz |
+|---|---|---|---|---|
+| `listening.skipToQuestions` | Skip link on the Listening screen | Skip to the questions | Перейти к вопросам | Savollarga oʻtish |
+| `listening.partOf` | Test bar | Part {number} of {total} | Часть {number} из {total} | {total} tadan {number}-qism |
+| `listening.questionsRange` | Heading of a group | Questions {from}–{to} | Вопросы {from}–{to} | {from}–{to}-savollar |
+| `listening.player.label` | Accessible name of the player region | Audio player | Аудиоплеер | Audio pleyer |
+| `listening.player.play` | Practice, the player's main button | Play | Воспроизвести | Ijro etish |
+| `listening.player.pause` | Practice, the player's main button while playing | Pause | Пауза | Pauza |
+| `listening.player.back` | Practice; ICU plural | {seconds, plural, one {Back # second} other {Back # seconds}} | {seconds, plural, one {Назад на # секунду} few {Назад на # секунды} many {Назад на # секунд} other {Назад на # секунды}} | {seconds} soniya orqaga |
+| `listening.player.forward` | Practice; ICU plural | {seconds, plural, one {Forward # second} other {Forward # seconds}} | {seconds, plural, one {Вперёд на # секунду} few {Вперёд на # секунды} many {Вперёд на # секунд} other {Вперёд на # секунды}} | {seconds} soniya oldinga |
+| `listening.player.position` | Accessible name of the slider | Position in the recording | Позиция в записи | Yozuvdagi joy |
+| `listening.player.time` | Elapsed and total under the slider | {elapsed} / {total} | {elapsed} / {total} | {elapsed} / {total} |
+| `listening.player.speed` | Practice, the speed button | Speed: {speed} | Скорость: {speed} | Tezlik: {speed} |
+| `listening.player.loading` | Player while loading or buffering | Loading the audio… | Загрузка аудио… | Audio yuklanmoqda… |
+| `listening.player.failed` | Player, Practice failure | The audio couldn't load. | Не удалось загрузить аудио. | Audioni yuklab boʻlmadi. |
+| `listening.player.retry` | Player and failure screens | Try again | Попробовать снова | Qayta urinish |
+| `listening.player.ended` | Practice, end of a part | End of Part {number} | Конец части {number} | {number}-qism tugadi |
+| `listening.player.playAgain` | Practice, after the end of a part | Play again | Воспроизвести снова | Qayta ijro etish |
+| `listening.exam.playing` | Exam, the player's state | Recording: Part {number} | Запись: часть {number} | Yozuv: {number}-qism |
+| `listening.exam.volume` | Exam on desktop, the slider's name | Volume | Громкость | Ovoz balandligi |
+| `listening.exam.deviceVolume` | Exam on phones (P5) | Use your device's volume buttons. | Используйте кнопки громкости устройства. | Qurilmangizning ovoz tugmalaridan foydalaning. |
+| `listening.partStarted` | Exam notice and announcement | Part {number} has started. | Началась часть {number}. | {number}-qism boshlandi. |
+| `listening.goToPart` | Exam notice button | Go to Part {number} | Перейти к части {number} | {number}-qismga oʻtish |
+| `listening.check.announcement` | Exam, when the recording ends; ICU plural | The recording has ended. You have {minutes, plural, one {# minute} other {# minutes}} to check your answers. | Запись закончилась. У вас {minutes, plural, one {# минута} few {# минуты} many {# минут} other {# минуты}} на проверку ответов. | Yozuv tugadi. Javoblarni tekshirish uchun {minutes} daqiqangiz bor. |
+| `listening.check.timer` | Exam test bar during the check | Time to check: {time} | Время на проверку: {time} | Tekshirish vaqti: {time} |
+| `listening.check.warning` | Exam, 30 seconds of check time left | 30 seconds left | Осталось 30 секунд | 30 soniya qoldi |
+| `listening.mode.practiceDetail` | Start screen option detail | Pause, go back and change the speed. No time limit. | Пауза, перемотка назад и выбор скорости. Без ограничения времени. | Pauza, orqaga qaytarish va tezlikni tanlash. Vaqt cheklanmagan. |
+| `listening.mode.examDetail` | Start screen option detail | The recording plays once without stopping, about {minutes} minutes, then 2 minutes to check. No help. The time keeps running if you leave. | Запись звучит один раз без остановки, около {minutes} минут, затем 2 минуты на проверку. Без подсказок. Если выйти, время продолжает идти. | Yozuv bir marta toʻxtovsiz ijro etiladi, taxminan {minutes} daqiqa, keyin tekshirish uchun 2 daqiqa. Yordamsiz. Chiqib ketsangiz ham vaqt davom etadi. |
+| `listening.start.audioSize` | Start screen | Audio: about {size} MB. Wi-Fi is best. | Аудио: около {size} МБ. Лучше через Wi-Fi. | Audio: taxminan {size} MB. Wi-Fi orqali yaxshiroq. |
+| `listening.start.headphones` | Start screen | Use headphones if you can. | По возможности используйте наушники. | Imkon boʻlsa, quloqchindan foydalaning. |
+| `listening.start.unsupported` | Start screen, safety state | This device can't play the test's audio. | Это устройство не может воспроизвести аудио теста. | Bu qurilma test audiosini ijro eta olmaydi. |
+| `listening.prepare.title` | Exam, the download screen heading | Preparing the audio | Подготовка аудио | Audio tayyorlanmoqda |
+| `listening.prepare.progress` | Exam, download progress | {loaded} of {total} MB | {loaded} из {total} МБ | {total} MB dan {loaded} MB |
+| `listening.prepare.ready` | Exam, when downloaded | The audio is ready. The recording plays once and starts when you tap the button. | Аудио готово. Запись прозвучит один раз и начнётся, когда вы нажмёте кнопку. | Audio tayyor. Yozuv bir marta ijro etiladi va tugmani bosganingizda boshlanadi. |
+| `listening.prepare.start` | Exam, red | Start the recording | Включить запись | Yozuvni boshlash |
+| `listening.prepare.failed` | Download failure before starting | The audio couldn't be downloaded. Check your connection and try again. | Не удалось скачать аудио. Проверьте подключение и попробуйте снова. | Audioni yuklab olib boʻlmadi. Internetni tekshirib, qayta urinib koʻring. |
+| `listening.resume.title` | Exam resume heading | Continue the test | Продолжить тест | Testni davom ettirish |
+| `listening.resume.body` | Exam resume; `{time}` is m:ss | The recording kept going while you were away. It continues from Part {part}, {time}. | Пока вас не было, запись продолжалась. Она продолжится с части {part}, {time}. | Siz yoʻqligingizda yozuv davom etdi. U {part}-qism, {time} dan davom etadi. |
+| `listening.resume.continue` | Exam resume, red | Continue | Продолжить | Davom etish |
+| `listening.exitExam.body` | Exam "Exit" confirmation | The recording keeps going while you are away. | Пока вас нет, запись продолжается. | Siz yoʻqligingizda yozuv davom etadi. |
+| `listening.interrupted.title` | Mid-exam audio failure | The audio stopped | Аудио остановилось | Audio toʻxtadi |
+| `listening.interrupted.body` | Mid-exam audio failure | The recording is paused at Part {part}, {time}, and your answers are saved. | Запись остановлена на части {part}, {time}, ответы сохранены. | Yozuv {part}-qism, {time} da toʻxtatildi, javoblaringiz saqlangan. |
+| `listening.interrupted.finish` | Mid-exam audio failure, quiet | Finish without the rest | Завершить без оставшейся части | Qolgan qismisiz yakunlash |
+| `listening.finished.title` | Finished page heading | Test finished | Тест завершён | Test yakunlandi |
+| `listening.finished.answered` | Finished page | You answered {answered} of {total} questions. | Вы ответили на {answered} из {total} вопросов. | {total} ta savoldan {answered} tasiga javob berdingiz. |
+| `listening.finished.notChecked` | Finished page, honest note (until M9) | Checking answers and explanations will come in a later version. | Проверка ответов и разборы появятся в следующей версии. | Javoblarni tekshirish va izohlar keyingi versiyada paydo boʻladi. |
+| `listening.finished.interrupted` | Finished page of an interrupted Exam | The recording was interrupted, so this was not a full exam sitting. | Запись прерывалась, поэтому это не было полноценным экзаменом. | Yozuv uzilib qoldi, shuning uchun bu toʻliq imtihon boʻlmadi. |
+| `listening.navigator.part` | Navigator group heading | Part {number} | Часть {number} | {number}-qism |
+| `listening.navigator.partProgress` | Desktop navigator button for another part | Part {number}: {answered} of {total} answered | Часть {number}: отвечено {answered} из {total} | {number}-qism: {total} tadan {answered} tasiga javob berilgan |
+| `listening.picture.enlarge` | Labelling picture (M8-01) | Enlarge picture | Увеличить рисунок | Rasmni kattalashtirish |
+| `listening.picture.zoomIn` | Enlarged picture | Zoom in | Приблизить | Yaqinlashtirish |
+| `listening.picture.zoomOut` | Enlarged picture | Zoom out | Отдалить | Uzoqlashtirish |
+| `listening.picture.close` | Enlarged picture | Close | Закрыть | Yopish |
+| `practice.skill.listening` | Hub section heading (N5) | Listening | Аудирование | Tinglash |
+| `practice.formatListening` | Hub row meta text | {parts} parts · {questions} questions · about {minutes} minutes | Частей: {parts} · вопросов: {questions} · около {minutes} минут | {parts} ta qism · {questions} ta savol · taxminan {minutes} daqiqa |
+| `practice.state.finishedNoScore` | Hub row state of a finished Listening test (until M9) | Finished | Завершён | Yakunlangan |
+| `home.skills.listening` | Home's Listening card | Build your listening skills. | Развивайте навыки аудирования. | Tinglash koʻnikmalarini rivojlantiring. |
+
+The picture strings are shared with Reading's diagram labelling (M8-19), which may move them to a shared namespace.
