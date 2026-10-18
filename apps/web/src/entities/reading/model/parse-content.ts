@@ -21,14 +21,25 @@ import { fitsWordLimit } from "./word-limit";
 export type Parsed<T> =
   { ok: true; value: T } | { ok: false; errors: string[] };
 
+/** How many passages and questions a file must have: a test, or a level-check form (ADR-0011 §1). */
+export type ContentShape = { passages: number; questions: number };
+
+export const TEST_SHAPE: ContentShape = {
+  passages: PASSAGE_COUNT,
+  questions: QUESTION_COUNT,
+};
+
 /**
  * Turns unknown JSON into a ReadingTest, or lists every problem with its path
  * (ADR-0005). Content is untrusted: nothing malformed gets past this.
  */
-export function parseReadingTest(input: unknown): Parsed<ReadingTest> {
+export function parseReadingTest(
+  input: unknown,
+  shape: ContentShape = TEST_SHAPE,
+): Parsed<ReadingTest> {
   const errors: string[] = [];
   const test = readTest(errors, input);
-  if (test) checkTest(errors, test);
+  if (test) checkTest(errors, test, shape);
   return test && errors.length === 0
     ? { ok: true, value: test }
     : { ok: false, errors };
@@ -734,9 +745,9 @@ function readOptionalTitle(errors: string[], path: string, value: unknown) {
 
 // --- Cross-references ------------------------------------------------------
 
-function checkTest(errors: string[], test: ReadingTest) {
-  if (test.passages.length !== PASSAGE_COUNT)
-    errors.push(`passages: a Reading test has ${PASSAGE_COUNT} passages`);
+function checkTest(errors: string[], test: ReadingTest, shape: ContentShape) {
+  if (test.passages.length !== shape.passages)
+    errors.push(`passages: expected ${shape.passages} passages`);
 
   const ids = new Set<string>();
   const unique = (id: string, path: string) => {
@@ -776,10 +787,10 @@ function checkTest(errors: string[], test: ReadingTest) {
     });
   });
 
-  const expected = Array.from({ length: QUESTION_COUNT }, (_, i) => i + 1);
+  const expected = Array.from({ length: shape.questions }, (_, i) => i + 1);
   if (numbers.join() !== expected.join())
     errors.push(
-      `questions: numbers must run 1 to ${QUESTION_COUNT} once each, in order (found ${numbers.join(", ")})`,
+      `questions: numbers must run 1 to ${shape.questions} once each, in order (found ${numbers.join(", ")})`,
     );
 }
 

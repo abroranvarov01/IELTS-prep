@@ -263,9 +263,7 @@ describe("parseReadingTest", () => {
 
     const short = validTest();
     short.passages.pop();
-    expect(errorsOf(short)).toContain(
-      "passages: a Reading test has 3 passages",
-    );
+    expect(errorsOf(short)).toContain("passages: expected 3 passages");
   });
 
   it("rejects an id used twice, because highlights and pins refer to ids", () => {

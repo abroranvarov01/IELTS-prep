@@ -3522,7 +3522,8 @@
       "title": "Draft the original Reading items of the level check",
       "milestone": "M7",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M7-05"],
       "goal": "The level check has original Reading items, keys and evidence that fit the approved forms, marked as drafts until people review them.",
       "scope": [
@@ -3555,7 +3556,7 @@
       "title": "Level-check scoring and result model in the domain",
       "milestone": "M7",
       "owner": "worker",
-      "status": "todo",
+      "status": "in_progress",
       "dependsOn": ["M7-05"],
       "goal": "A pure, versioned result model that turns a level check into the approved result, with no band and no false precision.",
       "scope": [

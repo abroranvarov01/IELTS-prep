@@ -1,0 +1,370 @@
+{
+  "testId": "level-check-reading-a",
+  "version": 1,
+  "locale": "uz",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "Matnda qalin devorlar kunduzi issiqlikni sekin "
+        },
+        {
+          "en": "absorbed the heat of the day"
+        },
+        {
+          "text": " va "
+        },
+        {
+          "en": "released it at night"
+        },
+        {
+          "text": " deyilgan. «Kechasi uni chiqarib bergan» — «release heat during the night» bilan bir xil fikr, shuning uchun gap matnga mos: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Devorlar kunduzi issiqlikni yutadi, kechasi chiqaradi. Gap ham shuni aytadi, shuning uchun "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "text": "Matnda hovli "
+        },
+        {
+          "en": "a shaded place to sit"
+        },
+        {
+          "text": " sifatida tilga olingan, lekin daraxtlar yoki oʻsimliklar haqida hech narsa deyilmagan. Soyani devor ham berishi mumkin. Daraxtlar haqida maʼlumot yoʻq, shuning uchun javob "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda soya haqida gap bor, daraxtlar haqida emas. Daraxtlar ekilgani aytilmagan, shuning uchun "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "Matnda baʼzi konstruksiyalarda avval "
+        },
+        {
+          "en": "the air passes over a pool of water"
+        },
+        {
+          "text": " va shuning uchun salqinroq keladi, deyilgan. Bu havo xonalarga yetguncha suv ustidan oʻtadi degan gapga mos: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Baʼzi shamol tutgichlarda havo avval suv ustidan oʻtadi. Gap ham shuni aytadi, shuning uchun "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "text": "Matnda shamol tutgichlar bugun ham Yaqin Sharq va Markaziy Osiyoning baʼzi joylarida "
+        },
+        {
+          "en": "still used in parts of the Middle East"
+        },
+        {
+          "text": " deyilgan. Gapda ular hech qayerda ishlatilmaydi deyilgan, bu matnga zid: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": ". «Anywhere» soʻziga eʼtibor bering."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Ular hozir ham baʼzi joylarda ishlatiladi. Gapda «hech qayerda» deyilgan, bu teskarisi: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "Matnda konditsioner "
+        },
+        {
+          "en": "uses more electricity than any other household appliance"
+        },
+        {
+          "text": " deyilgan. Gap shu soʻzlarni takrorlaydi, shuning uchun tushib qolgan soʻz — "
+        },
+        {
+          "en": "appliance"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda «household appliance» deb yozilgan. Javob: "
+        },
+        {
+          "en": "appliance"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "Matnda shakli va materiallari tufayli salqin qoladigan bino "
+        },
+        {
+          "en": "needs less power"
+        },
+        {
+          "text": " deyilgan. Tushib qolgan soʻz — "
+        },
+        {
+          "en": "power"
+        },
+        {
+          "text": ". «Electricity» soʻzi bu gapda yoʻq va u matndan olingan boʻlmas edi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda «needs less power» deb yozilgan. Javob: "
+        },
+        {
+          "en": "power"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "Matnda shamol tutgich "
+        },
+        {
+          "en": "only works when there is wind"
+        },
+        {
+          "text": " deyilgan. «Shamol boʻlmasa foydasiz» — xuddi shu fikr, faqat inkor shaklida. Javob: "
+        },
+        {
+          "en": "wind"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "U faqat shamolda ishlaydi, demak shamolsiz foydasiz. Javob: "
+        },
+        {
+          "en": "wind"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "B xatboshi tajribalarni tasvirlaydi: psixologlar vazifalar orasida oʻtadigan odamlarning vaqtini oʻlchab va xatolarini sanab "
+        },
+        {
+          "en": "measure this price"
+        },
+        {
+          "text": ". ii sarlavha, «Measuring the cost of switching», shuni boshqa soʻzlar bilan aytadi. vii sarlavha tarix haqida, xatboshida bu yoʻq."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "B xatboshi oʻtish narxini oʻlchaydigan tajribalar haqida. Bu ii sarlavha."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "C xatboshi uzilishlar chuqur ishga zarar berishini tushuntiradi: uzilish "
+        },
+        {
+          "en": "empties this mental workspace"
+        },
+        {
+          "text": " va uni tiklash koʻp daqiqa oladi. iv sarlavha, «The damage to difficult thinking», shuni umumlashtiradi. ii sarlavha vaqtni oʻlchash haqida, u B xatboshiga tegishli."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "C xatboshi uzilishlar murakkab fikrlashga zarar berishini aytadi. Bu iv sarlavha."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "D xatboshi "
+        },
+        {
+          "en": "There are exceptions"
+        },
+        {
+          "text": " soʻzlari bilan boshlanadi va fikrlash bilan deyarli yoʻqotishsiz birga bajarsa boʻladigan vazifalarni sanaydi. i sarlavha, «Why some tasks can safely be combined», mos keladi. Xatboshi istisnolar haqida, oʻtishni kamaytirish haqida emas."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "D xatboshi xavfsiz birga bajarsa boʻladigan vazifalar haqida. Bu i sarlavha."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "E xatboshi maslahat beradi: oʻxshash vazifalarni guruhlash, bildirishnomalarni oʻchirish, bitta qiyin vazifani kunning eng yaxshi vaqtiga qoldirish — bularning hammasi "
+        },
+        {
+          "en": "all reduce switching"
+        },
+        {
+          "text": ". iii sarlavha, «How to reduce switching in a working day», mos keladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "E xatboshi kun davomida kamroq oʻtish uchun maslahat beradi. Bu iii sarlavha."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "Matnda koʻp vazifalilikka oʻxshagan narsa "
+        },
+        {
+          "en": "is usually rapid switching between tasks"
+        },
+        {
+          "text": " deyilgan. B varianti — bir vazifadan boshqasiga tez oʻtish — shuni boshqa soʻzlar bilan aytadi. A varianti tezlik haqida, matn bu haqda keyinroq gapiradi, bu yerda emas."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Matnda odamlar vazifalar orasida tez oʻtadi deyilgan. Bu "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": " varianti."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "text": "Matnda har safar vazifa oʻzgarganda odamlar "
+        },
+        {
+          "en": "make more errors for a short period"
+        },
+        {
+          "text": ", hatto oʻzgarish kelishini bilganda ham, deyilgan. Demak, C varianti toʻgʻri. A varianti notoʻgʻri, chunki xatolar oʻzgarish kutilgan paytda ham boʻladi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Har bir oʻzgarishdan keyin qisqa vaqt xatolar koʻpayadi. Bu "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": " varianti. Odamlar oʻzgarishni kutganda ham shunday."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "Haydovchi — yaxshi oʻrganilgan koʻnikmalar "
+        },
+        {
+          "en": "become partly automatic"
+        },
+        {
+          "text": " boʻlishiga misol: tajribali haydovchi tinch yoʻlda suhbatlasha oladi. B varianti shu umumiy fikrni aytadi. Matn haydashni oʻqish bilan solishtirmaydi."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Haydovchi oʻrganilgan koʻnikmalar kam eʼtibor talab qilishini koʻrsatadi. Bu "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": " varianti."
+        }
+      ]
+    }
+  }
+}

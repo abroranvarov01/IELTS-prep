@@ -1,0 +1,403 @@
+{
+  "id": "level-check-reading-a",
+  "version": 1,
+  "title": "Level check: Reading (form A)",
+  "examType": "academic",
+  "durationMinutes": 15,
+  "origin": {
+    "kind": "original",
+    "author": "IELTS Prep project",
+    "note": "Form A of the Reading level check (LEVEL_CHECK.md §8), written for this project. Not taken or adapted from any published IELTS material; the facts are simplified for practice. Drafted by Claude (M7-06); human review before beta (M15)."
+  },
+  "passages": [
+    {
+      "id": "lc-p1",
+      "number": 1,
+      "title": "Keeping Cool Without Air Conditioning",
+      "paragraphs": [
+        {
+          "id": "lc-p1-1",
+          "sentences": [
+            {
+              "id": "lc-p1-1-s1",
+              "text": "For thousands of years, people in hot regions kept their homes cool without electricity."
+            },
+            {
+              "id": "lc-p1-1-s2",
+              "text": "Thick walls of mud or stone absorbed the heat of the day slowly and released it at night, when the air was cooler."
+            },
+            {
+              "id": "lc-p1-1-s3",
+              "text": "Small windows let in light but kept out the sun, and a courtyard in the middle of the house gave the family a shaded place to sit."
+            }
+          ]
+        },
+        {
+          "id": "lc-p1-2",
+          "sentences": [
+            {
+              "id": "lc-p1-2-s1",
+              "text": "One of the oldest cooling devices is the wind catcher, a tall tower built above a house."
+            },
+            {
+              "id": "lc-p1-2-s2",
+              "text": "Openings at the top catch the breeze and guide it down into the rooms below."
+            },
+            {
+              "id": "lc-p1-2-s3",
+              "text": "In some designs the air passes over a pool of water first, so it arrives cooler and slightly damp."
+            },
+            {
+              "id": "lc-p1-2-s4",
+              "text": "Wind catchers are still used in parts of the Middle East and Central Asia today."
+            }
+          ]
+        },
+        {
+          "id": "lc-p1-3",
+          "sentences": [
+            {
+              "id": "lc-p1-3-s1",
+              "text": "Modern architects have started to study these old methods again."
+            },
+            {
+              "id": "lc-p1-3-s2",
+              "text": "Air conditioning is expensive to run, and in many cities it now uses more electricity than any other household appliance."
+            },
+            {
+              "id": "lc-p1-3-s3",
+              "text": "A building that stays cool because of its shape and materials needs less power, which lowers bills and reduces pollution."
+            },
+            {
+              "id": "lc-p1-3-s4",
+              "text": "Some new office blocks in hot countries combine thick walls, shaded windows and towers that work like wind catchers."
+            }
+          ]
+        },
+        {
+          "id": "lc-p1-4",
+          "sentences": [
+            {
+              "id": "lc-p1-4-s1",
+              "text": "These methods have limits."
+            },
+            {
+              "id": "lc-p1-4-s2",
+              "text": "Thick walls take up space and cost more to build, and a wind catcher only works when there is wind."
+            },
+            {
+              "id": "lc-p1-4-s3",
+              "text": "For this reason most designers do not expect to replace air conditioning completely."
+            },
+            {
+              "id": "lc-p1-4-s4",
+              "text": "Instead they aim to use it less often, for fewer hours each day, and only in the hottest weeks of the year."
+            }
+          ]
+        }
+      ],
+      "questionGroups": [
+        {
+          "id": "lc-p1-g1",
+          "type": "trueFalseNotGiven",
+          "instruction": "Do the following statements agree with the information given in Reading Passage 1? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, NOT GIVEN if there is no information on this.",
+          "questions": [
+            {
+              "number": 1,
+              "statement": "Thick walls release heat during the night."
+            },
+            {
+              "number": 2,
+              "statement": "Courtyards were usually planted with trees."
+            },
+            {
+              "number": 3,
+              "statement": "In some wind catchers, the air passes over water before it reaches the rooms."
+            },
+            {
+              "number": 4,
+              "statement": "Wind catchers are no longer used anywhere today."
+            }
+          ]
+        },
+        {
+          "id": "lc-p1-g2",
+          "type": "sentenceCompletion",
+          "instruction": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+          "wordLimit": {
+            "words": 2,
+            "numbers": false
+          },
+          "sentences": [
+            [
+              {
+                "text": "In many cities, air conditioning uses more electricity than any other household "
+              },
+              {
+                "gap": 5
+              },
+              {
+                "text": "."
+              }
+            ],
+            [
+              {
+                "text": "A building that stays cool because of its shape and materials needs less "
+              },
+              {
+                "gap": 6
+              },
+              {
+                "text": "."
+              }
+            ],
+            [
+              {
+                "text": "A wind catcher is useless when there is no "
+              },
+              {
+                "gap": 7
+              },
+              {
+                "text": "."
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lc-p2",
+      "number": 2,
+      "title": "The Myth of Multitasking",
+      "paragraphs": [
+        {
+          "id": "lc-p2-a",
+          "letter": "A",
+          "sentences": [
+            {
+              "id": "lc-p2-a-s1",
+              "text": "Many people believe they can do two demanding things at once: write a report while following a meeting, or study while replying to messages."
+            },
+            {
+              "id": "lc-p2-a-s2",
+              "text": "The feeling of doing more is real, but the research tells a different story."
+            },
+            {
+              "id": "lc-p2-a-s3",
+              "text": "What looks like multitasking is usually rapid switching between tasks, and each switch has a price."
+            }
+          ]
+        },
+        {
+          "id": "lc-p2-b",
+          "letter": "B",
+          "sentences": [
+            {
+              "id": "lc-p2-b-s1",
+              "text": "Psychologists measure this price in experiments where volunteers move between two simple tasks, such as sorting numbers and sorting letters."
+            },
+            {
+              "id": "lc-p2-b-s2",
+              "text": "Every time the task changes, people slow down and make more errors for a short period, even when they know the change is coming."
+            },
+            {
+              "id": "lc-p2-b-s3",
+              "text": "These delays seem tiny, a fraction of a second each, but over an hour of constant switching they add up to a large loss of working time."
+            }
+          ]
+        },
+        {
+          "id": "lc-p2-c",
+          "letter": "C",
+          "sentences": [
+            {
+              "id": "lc-p2-c-s1",
+              "text": "The cost is not only time."
+            },
+            {
+              "id": "lc-p2-c-s2",
+              "text": "Deep work, such as understanding a difficult text or solving an unfamiliar problem, depends on holding several ideas in mind at once."
+            },
+            {
+              "id": "lc-p2-c-s3",
+              "text": "An interruption empties this mental workspace, and rebuilding it can take many minutes."
+            },
+            {
+              "id": "lc-p2-c-s4",
+              "text": "Studies of office workers suggest that after a single message, people often need a quarter of an hour to return fully to what they were doing."
+            }
+          ]
+        },
+        {
+          "id": "lc-p2-d",
+          "letter": "D",
+          "sentences": [
+            {
+              "id": "lc-p2-d-s1",
+              "text": "There are exceptions."
+            },
+            {
+              "id": "lc-p2-d-s2",
+              "text": "Tasks that need little attention, such as walking or folding clothes, can be combined with thinking without much loss."
+            },
+            {
+              "id": "lc-p2-d-s3",
+              "text": "Highly practised skills also become partly automatic: an experienced driver can hold a conversation on a quiet road."
+            },
+            {
+              "id": "lc-p2-d-s4",
+              "text": "The trouble begins when both activities compete for the same limited attention, as reading and listening to speech do."
+            }
+          ]
+        },
+        {
+          "id": "lc-p2-e",
+          "letter": "E",
+          "sentences": [
+            {
+              "id": "lc-p2-e-s1",
+              "text": "The practical lesson is not to give up on busy days but to arrange them differently."
+            },
+            {
+              "id": "lc-p2-e-s2",
+              "text": "Grouping similar tasks together, turning off notifications for set periods, and keeping one difficult task for the time of day when attention is strongest all reduce switching."
+            },
+            {
+              "id": "lc-p2-e-s3",
+              "text": "People who try this often report that they finish sooner, and that the work they produce is better."
+            }
+          ]
+        }
+      ],
+      "questionGroups": [
+        {
+          "id": "lc-p2-g1",
+          "type": "matchingHeadings",
+          "instruction": "Reading Passage 2 has five paragraphs, A–E. Choose the correct heading for paragraphs B–E from the list of headings below.",
+          "options": [
+            {
+              "id": "i",
+              "text": "Why some tasks can safely be combined"
+            },
+            {
+              "id": "ii",
+              "text": "Measuring the cost of switching"
+            },
+            {
+              "id": "iii",
+              "text": "How to reduce switching in a working day"
+            },
+            {
+              "id": "iv",
+              "text": "The damage to difficult thinking"
+            },
+            {
+              "id": "v",
+              "text": "A common belief that research does not support"
+            },
+            {
+              "id": "vi",
+              "text": "Why messages are becoming more frequent"
+            },
+            {
+              "id": "vii",
+              "text": "The history of attention research"
+            }
+          ],
+          "questions": [
+            {
+              "number": 8,
+              "paragraphId": "lc-p2-b"
+            },
+            {
+              "number": 9,
+              "paragraphId": "lc-p2-c"
+            },
+            {
+              "number": 10,
+              "paragraphId": "lc-p2-d"
+            },
+            {
+              "number": 11,
+              "paragraphId": "lc-p2-e"
+            }
+          ]
+        },
+        {
+          "id": "lc-p2-g2",
+          "type": "multipleChoice",
+          "instruction": "Choose the correct letter, A, B, C or D.",
+          "questions": [
+            {
+              "number": 12,
+              "stem": "According to the passage, what usually happens when people think they are multitasking?",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "They complete both tasks more slowly than usual."
+                },
+                {
+                  "id": "B",
+                  "text": "They move quickly from one task to the other."
+                },
+                {
+                  "id": "C",
+                  "text": "They forget one of the two tasks."
+                },
+                {
+                  "id": "D",
+                  "text": "They do the easier task first."
+                }
+              ]
+            },
+            {
+              "number": 13,
+              "stem": "In the experiments described, people made more errors",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "only when the change of task was unexpected."
+                },
+                {
+                  "id": "B",
+                  "text": "when the two tasks were very different."
+                },
+                {
+                  "id": "C",
+                  "text": "for a short time after each change of task."
+                },
+                {
+                  "id": "D",
+                  "text": "after about an hour of work."
+                }
+              ]
+            },
+            {
+              "number": 14,
+              "stem": "The writer mentions an experienced driver to show that",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "driving needs less attention than reading."
+                },
+                {
+                  "id": "B",
+                  "text": "some skills need little attention once they are well practised."
+                },
+                {
+                  "id": "C",
+                  "text": "conversations are safer on quiet roads."
+                },
+                {
+                  "id": "D",
+                  "text": "attention is unlimited for some people."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

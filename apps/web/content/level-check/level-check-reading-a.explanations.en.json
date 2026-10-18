@@ -1,0 +1,370 @@
+{
+  "testId": "level-check-reading-a",
+  "version": 1,
+  "locale": "en",
+  "review": {
+    "status": "aiDraft"
+  },
+  "items": {
+    "1": {
+      "explanation": [
+        {
+          "text": "The passage says thick walls "
+        },
+        {
+          "en": "absorbed the heat of the day"
+        },
+        {
+          "text": " slowly and "
+        },
+        {
+          "en": "released it at night"
+        },
+        {
+          "text": ". 'Released it at night' is the same idea as 'release heat during the night', so the statement agrees: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The walls take in heat by day and give it out at night. That is what the statement says, so "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "2": {
+      "explanation": [
+        {
+          "text": "The passage mentions a courtyard as "
+        },
+        {
+          "en": "a shaded place to sit"
+        },
+        {
+          "text": ", but it says nothing about trees or plants. Shade could come from walls. With no information on trees, the answer is "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage talks about shade, not trees. Nothing says trees were planted, so "
+        },
+        {
+          "en": "NOT GIVEN"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "3": {
+      "explanation": [
+        {
+          "text": "The passage says that in some designs "
+        },
+        {
+          "en": "the air passes over a pool of water"
+        },
+        {
+          "text": " first, so it arrives cooler. That matches the statement about air passing over water before it reaches the rooms: "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Some wind catchers send the air over water first. The statement says the same, so "
+        },
+        {
+          "en": "TRUE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "4": {
+      "explanation": [
+        {
+          "text": "The passage says wind catchers "
+        },
+        {
+          "en": "still used in parts of the Middle East"
+        },
+        {
+          "text": " and Central Asia today. The statement says they are used nowhere, which contradicts this: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": ". Watch the word 'anywhere'."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "They are still used in some places today. The statement says nowhere, which is the opposite: "
+        },
+        {
+          "en": "FALSE"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "5": {
+      "explanation": [
+        {
+          "text": "The passage says air conditioning "
+        },
+        {
+          "en": "uses more electricity than any other household appliance"
+        },
+        {
+          "text": ". The sentence copies this wording, so the missing word is "
+        },
+        {
+          "en": "appliance"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says 'household appliance'. The answer is "
+        },
+        {
+          "en": "appliance"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "6": {
+      "explanation": [
+        {
+          "text": "The passage says a building that stays cool because of its shape and materials "
+        },
+        {
+          "en": "needs less power"
+        },
+        {
+          "text": ". The missing word is "
+        },
+        {
+          "en": "power"
+        },
+        {
+          "text": ". 'Electricity' is not in that sentence and would not be taken from the passage."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says 'needs less power'. The answer is "
+        },
+        {
+          "en": "power"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "7": {
+      "explanation": [
+        {
+          "text": "The passage says a wind catcher "
+        },
+        {
+          "en": "only works when there is wind"
+        },
+        {
+          "text": ". 'Useless when there is no wind' says the same thing in a negative form. The answer is "
+        },
+        {
+          "en": "wind"
+        },
+        {
+          "text": "."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "It works only with wind, so with no wind it is useless. The answer is "
+        },
+        {
+          "en": "wind"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "8": {
+      "explanation": [
+        {
+          "text": "Paragraph B describes experiments: psychologists "
+        },
+        {
+          "en": "measure this price"
+        },
+        {
+          "text": " by timing people who move between tasks and counting their errors. Heading ii, 'Measuring the cost of switching', says this in other words. Heading vii is about history, which the paragraph does not cover."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph B is about experiments that measure how much switching costs. That is heading ii."
+        }
+      ]
+    },
+    "9": {
+      "explanation": [
+        {
+          "text": "Paragraph C explains that interruptions harm deep work: an interruption "
+        },
+        {
+          "en": "empties this mental workspace"
+        },
+        {
+          "text": " and rebuilding it takes many minutes. Heading iv, 'The damage to difficult thinking', sums this up. Heading ii is about measuring time, which belongs to paragraph B."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph C says interruptions damage difficult thinking. That is heading iv."
+        }
+      ]
+    },
+    "10": {
+      "explanation": [
+        {
+          "text": "Paragraph D begins "
+        },
+        {
+          "en": "There are exceptions"
+        },
+        {
+          "text": " and lists tasks that can be combined with thinking without much loss. Heading i, 'Why some tasks can safely be combined', matches this. The paragraph is about exceptions, not about reducing switching."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph D is about tasks that can be done together safely. That is heading i."
+        }
+      ]
+    },
+    "11": {
+      "explanation": [
+        {
+          "text": "Paragraph E gives advice: group similar tasks, turn off notifications, keep one difficult task for the best time of day, which "
+        },
+        {
+          "en": "all reduce switching"
+        },
+        {
+          "text": ". Heading iii, 'How to reduce switching in a working day', matches."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Paragraph E gives advice on how to switch less during the day. That is heading iii."
+        }
+      ]
+    },
+    "12": {
+      "explanation": [
+        {
+          "text": "The passage says what looks like multitasking "
+        },
+        {
+          "en": "is usually rapid switching between tasks"
+        },
+        {
+          "text": ". Option B, moving quickly from one task to the other, says this in other words. Option A is about speed, which the passage discusses later, not here."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The passage says people quickly switch between tasks. That is option "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    },
+    "13": {
+      "explanation": [
+        {
+          "text": "The passage says that every time the task changes, people "
+        },
+        {
+          "en": "make more errors for a short period"
+        },
+        {
+          "text": ", even when they know the change is coming. So option C is correct. Option A is wrong because the errors happen even when the change is expected."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "Errors rise for a short time after each change. That is option "
+        },
+        {
+          "en": "C"
+        },
+        {
+          "text": ". It happens even when people expect the change."
+        }
+      ]
+    },
+    "14": {
+      "explanation": [
+        {
+          "text": "The driver is an example of highly practised skills that "
+        },
+        {
+          "en": "become partly automatic"
+        },
+        {
+          "text": ": an experienced driver can talk while driving on a quiet road. Option B states this general point. The passage does not compare driving with reading."
+        }
+      ],
+      "simpler": [
+        {
+          "text": "The driver shows that well-practised skills need little attention. That is option "
+        },
+        {
+          "en": "B"
+        },
+        {
+          "text": "."
+        }
+      ]
+    }
+  }
+}
