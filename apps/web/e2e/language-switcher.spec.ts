@@ -187,6 +187,44 @@ test("the open list fits 320 px without horizontal scroll", async ({
 });
 
 for (const locale of routing.locales) {
+  test(`/${locale} at 200% text size in a 640 px window keeps the switcher on screen`, async ({
+    page,
+  }) => {
+    // Text-only enlargement: the page's text doubles while the breakpoints
+    // stay at the browser's 16 px, so the tablet header gets twice as wide.
+    // A narrower viewport alone does not reproduce this.
+    await page.setViewportSize({ width: 640, height: 400 });
+    await page.addInitScript(() =>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.documentElement.style.fontSize = "200%";
+      }),
+    );
+    await page.goto(`/${locale}`);
+    await untilInteractive(page);
+    expect(
+      await page.evaluate(
+        () => getComputedStyle(document.documentElement).fontSize,
+      ),
+    ).toBe("32px");
+    const button = switcherButton(page, locale);
+    await tabTo(page, button);
+    await page.keyboard.press("Enter");
+    const list = page.getByRole("list", {
+      name: catalogs[locale].languageSwitcher.listLabel,
+    });
+    await expect(list).toBeVisible();
+
+    const box = await list.boundingBox();
+    expect(box?.x).toBeGreaterThanOrEqual(0);
+    expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(640);
+    const overflow = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+    );
+    expect(overflow).toBe(0);
+  });
+
   test(`/${locale} with the list open has no WCAG 2.2 AA violations`, async ({
     page,
   }) => {

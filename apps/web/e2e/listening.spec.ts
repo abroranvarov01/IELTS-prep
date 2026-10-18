@@ -236,6 +236,14 @@ for (const locale of routing.locales) {
     await expect(
       page.getByRole("button", { name: m.reading.start }),
     ).toBeVisible();
+    // The day-first date rule is product policy (LD4), so the start screen says it.
+    await expect(
+      page.getByText(m.listening.start.dateFormat.replace(/<\/?en>/g, "")),
+    ).toBeVisible();
+    await expect(page.getByText("24/04", { exact: true })).toHaveAttribute(
+      "lang",
+      "en",
+    );
     expect((await axe(page)).violations).toEqual([]);
     await noOverflow(page);
     await page.getByRole("button", { name: m.reading.start }).click();

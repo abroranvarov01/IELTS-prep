@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import {
   type ListeningTest,
   type Mode,
@@ -19,10 +19,13 @@ import { TestBar } from "./TestBar";
 // Where the attribution goes in the localized sentence.
 const MARK = "\u0000";
 
+const en = (chunks: ReactNode) => <span lang="en">{chunks}</span>;
+
 /**
  * The Listening start screen (LISTENING_EXPERIENCE.md, Start screen): the
  * title, the format, a temporary test's label and attribution, the two
- * modes, the audio size and the headphones line, then Start.
+ * modes, the audio size, the headphones and day-first date lines, then
+ * Start.
  */
 export function StartScreen({
   test,
@@ -143,6 +146,15 @@ export function StartScreen({
                 <ListeningIcon />
               </span>
               {t("start.headphones")}
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-text-secondary">
+                <LineIcon className="size-[1.25rem]">
+                  <rect x="2.5" y="3.5" width="11" height="10" rx="1.5" />
+                  <path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" />
+                </LineIcon>
+              </span>
+              <span>{t.rich("start.dateFormat", { en })}</span>
             </li>
           </ul>
           <div className="mt-6">

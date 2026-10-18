@@ -52,9 +52,11 @@ export function Shell({
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <header className="flex items-center justify-between gap-4 px-gutter py-2 desktop:px-8">
+          {/* Enlarged text wraps the header's parts instead of widening the page; */}
+          {/* below desktop they stay at the end, so the language list opens on screen. */}
+          <header className="flex flex-wrap items-center justify-between gap-x-4 px-gutter py-2 desktop:px-8">
             <div className={navigation ? "desktop:hidden" : ""}>{logo}</div>
-            <div className="flex items-center gap-2">
+            <div className="ms-auto flex flex-wrap items-center justify-end gap-x-2 desktop:ms-[0]">
               {navigation && <MainNavigation placement="header" />}
               <LanguageSwitcher />
             </div>
