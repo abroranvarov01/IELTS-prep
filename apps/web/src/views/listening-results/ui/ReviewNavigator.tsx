@@ -64,43 +64,19 @@ export function ReviewNavigator({
             <ul className="mt-2 flex flex-wrap gap-2">
               {numbers.map((n) => {
                 const card = cardOf(n);
-                if (!card) return null;
-                const isCurrent = card === current;
-                const states = [
-                  t(STATE_WORD[card.outcome]),
-                  ...(isCurrent ? [t("navigator.current")] : []),
-                ].join(", ");
-                return (
-                  <li key={n} className="relative">
-                    <button
-                      type="button"
-                      aria-label={
-                        card.unit.numbers.length > 1
-                          ? t("navigator.itemRange", {
-                              from: card.unit.numbers[0] ?? 0,
-                              to: card.unit.numbers.at(-1) ?? 0,
-                              states,
-                            })
-                          : t("navigator.item", { number: n, states })
-                      }
-                      aria-current={isCurrent ? "true" : undefined}
-                      onClick={() => {
+                return card ? (
+                  <li key={n}>
+                    <ReviewCell
+                      number={n}
+                      card={card}
+                      isCurrent={card === current}
+                      onChoose={(number) => {
                         dialogRef.current?.close();
-                        onChoose(n);
+                        onChoose(number);
                       }}
-                      className={`relative flex size-[2.75rem] items-center justify-center rounded-sm border bg-surface-base font-bold tabular-nums ${
-                        card.outcome === "unanswered"
-                          ? "border-border-control"
-                          : "border-ink"
-                      } ${isCurrent ? "after:absolute after:-bottom-[7px] after:inset-x-[0] after:h-[3px] after:bg-ink" : ""}`}
-                    >
-                      {n}
-                    </button>
-                    <span className="pointer-events-none absolute -top-1 -right-1 rounded-full bg-surface-base">
-                      <OutcomeIcon outcome={card.outcome} size={16} />
-                    </span>
+                    />
                   </li>
-                );
+                ) : null;
               })}
             </ul>
           </section>
@@ -116,5 +92,53 @@ export function ReviewNavigator({
         </button>
       </div>
     </dialog>
+  );
+}
+
+/**
+ * One 44 px question cell with its unit's outcome badge, named in words;
+ * every number of a several-answer unit carries the unit's badge and name.
+ */
+export function ReviewCell({
+  number,
+  card,
+  isCurrent,
+  onChoose,
+}: {
+  number: number;
+  card: ReviewCard;
+  isCurrent: boolean;
+  onChoose: (number: number) => void;
+}) {
+  const t = useTranslations("reading");
+  const states = [
+    t(STATE_WORD[card.outcome]),
+    ...(isCurrent ? [t("navigator.current")] : []),
+  ].join(", ");
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        aria-label={
+          card.unit.numbers.length > 1
+            ? t("navigator.itemRange", {
+                from: card.unit.numbers[0] ?? 0,
+                to: card.unit.numbers.at(-1) ?? 0,
+                states,
+              })
+            : t("navigator.item", { number, states })
+        }
+        aria-current={isCurrent ? "true" : undefined}
+        onClick={() => onChoose(number)}
+        className={`relative flex size-[2.75rem] items-center justify-center rounded-sm border bg-surface-base font-bold tabular-nums ${
+          card.outcome === "unanswered" ? "border-border-control" : "border-ink"
+        } ${isCurrent ? "after:absolute after:-bottom-[7px] after:inset-x-[0] after:h-[3px] after:bg-ink" : ""}`}
+      >
+        {number}
+      </button>
+      <span className="pointer-events-none absolute -top-1 -right-1 rounded-full bg-surface-base">
+        <OutcomeIcon outcome={card.outcome} size={16} />
+      </span>
+    </div>
   );
 }

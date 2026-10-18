@@ -159,3 +159,50 @@ test("without a network or a cached copy, the review stays readable and says the
     page.getByRole("button", { name: en.listening.player.play, exact: true }),
   ).toHaveCount(0);
 });
+
+for (const locale of routing.locales) {
+  const m = catalogs[locale];
+  test(`the desktop review shows the part's transcript beside the card in /${locale}`, async ({
+    page,
+  }) => {
+    test.skip(!desktop(page), "the phone review is tested above");
+    await seed(page, locale);
+    await page.goto(
+      `/${locale}/listening/${TEST}/review?attempt=${ID}&q=2&set=mistakes`,
+    );
+    const column = page.getByRole("region", {
+      name: fill(m.listening.review.transcriptTitle, { part: 1 }),
+    });
+    await expect(column.locator("mark")).toHaveText(
+      "goes along the river in a boat",
+    );
+    await expect(column.locator("mark")).toBeInViewport();
+    // The card does not repeat the excerpt; the transcript is the column.
+    await expect(page.getByRole("main").locator("mark")).toHaveCount(0);
+    await expect(
+      page.getByRole("button", { name: playFromName(m, 1) }),
+    ).toBeVisible();
+
+    // The bar: the part's cells with their outcomes, the other parts by count.
+    const bar = page.getByRole("navigation", {
+      name: m.reading.navigator.open,
+    });
+    await bar
+      .getByRole("button", {
+        name: fill(m.listening.navigator.partResult, {
+          number: 4,
+          correct: 0,
+          total: 10,
+        }),
+      })
+      .click();
+    await expect(page).toHaveURL(/q=31/);
+    await expect(
+      page.getByRole("region", {
+        name: fill(m.listening.review.transcriptTitle, { part: 4 }),
+      }),
+    ).toBeVisible();
+    await page.evaluate(() => window.scrollTo(0, 0));
+    expect((await axe(page)).violations).toEqual([]);
+  });
+}

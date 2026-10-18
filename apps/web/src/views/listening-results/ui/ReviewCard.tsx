@@ -124,6 +124,7 @@ export function ReviewCard({
   audioAvailable,
   onPlay,
   onPause,
+  desktop = false,
 }: {
   test: ListeningTest;
   card: Card;
@@ -137,6 +138,8 @@ export function ReviewCard({
   audioAvailable: boolean;
   onPlay: (stretch: { fromMs: number; toMs?: number }, id: string) => void;
   onPause: () => void;
+  /** On desktop the transcript is a column of its own: no excerpt, no disclosure. */
+  desktop?: boolean;
 }) {
   const t = useTranslations("reading");
   const l = useTranslations("listening");
@@ -464,6 +467,7 @@ export function ReviewCard({
             {heard.map((h) => (
               <li key={h.segment.id}>
                 <EvidenceItem
+                  excerpt={!desktop}
                   heard={h}
                   partNumber={unit.partNumber}
                   playing={playing === h.segment.id}
@@ -477,7 +481,7 @@ export function ReviewCard({
               </li>
             ))}
           </ul>
-          <div className="mt-4">
+          <div className={desktop ? "hidden" : "mt-4"}>
             <button
               type="button"
               aria-expanded={showTranscript}
@@ -491,7 +495,7 @@ export function ReviewCard({
               <ChevronGlyph up={showTranscript} />
             </button>
           </div>
-          {showTranscript && (
+          {showTranscript && !desktop && (
             <section
               id="part-transcript"
               aria-label={l("review.transcriptTitle", {
@@ -584,6 +588,7 @@ function unitOptions(unit: Card["unit"]): Option[] {
 
 /** "Heard in Part 2 at 3:14", "Play from 3:14" and the excerpt with the evidence marked. */
 function EvidenceItem({
+  excerpt,
   heard,
   partNumber,
   playing,
@@ -592,6 +597,8 @@ function EvidenceItem({
   onPlay,
   onPause,
 }: {
+  /** The transcript excerpt under the button (phones; desktop shows the column). */
+  excerpt: boolean;
   heard: HeardEvidence;
   partNumber: number;
   playing: boolean;
@@ -643,15 +650,17 @@ function EvidenceItem({
           {l("review.audioUnavailable")}
         </p>
       )}
-      <blockquote className="mt-3 rounded-md bg-surface-warm px-4 py-3">
-        <p className="text-meta font-bold text-text-secondary">
-          <span lang="en">{segment.speaker}</span>
-          <span className="font-normal tabular-nums"> · {time}</span>
-        </p>
-        <p lang="en" className="mt-1 font-passage text-passage">
-          <Marked text={segment.text} quotes={heard.quotes} />
-        </p>
-      </blockquote>
+      {excerpt && (
+        <blockquote className="mt-3 rounded-md bg-surface-warm px-4 py-3">
+          <p className="text-meta font-bold text-text-secondary">
+            <span lang="en">{segment.speaker}</span>
+            <span className="font-normal tabular-nums"> · {time}</span>
+          </p>
+          <p lang="en" className="mt-1 font-passage text-passage">
+            <Marked text={segment.text} quotes={heard.quotes} />
+          </p>
+        </blockquote>
+      )}
     </>
   );
 }
@@ -674,7 +683,7 @@ function Marked({ text, quotes }: { text: string; quotes: string[] }) {
   );
 }
 
-function TranscriptRows({
+export function TranscriptRows({
   segments,
   evidence,
   evidenceIds,
@@ -696,6 +705,7 @@ function TranscriptRows({
         return (
           <li
             key={segment.id}
+            data-segment={segment.id}
             className={`grid grid-cols-[4.5rem_1fr] gap-2 ${isEvidence ? "border-s-4 border-ink ps-2" : ""}`}
           >
             <button

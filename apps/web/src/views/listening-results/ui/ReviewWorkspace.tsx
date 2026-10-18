@@ -12,6 +12,7 @@ import {
   SPEEDS,
   type Transcript,
   cachedPartUrl,
+  groupNumbers,
   mediaUrl,
 } from "@/entities/listening";
 import { PracticePlayer } from "@/features/listening-player";
@@ -19,14 +20,16 @@ import { usePathname, useRouter } from "@/shared/i18n/navigation";
 import { ChevronIcon, InfoIcon, LineIcon } from "@/shared/ui/icons";
 import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { SecondaryButton } from "@/shared/ui/SecondaryButton";
+import { useIsDesktop } from "@/shared/ui/use-is-desktop";
 import {
+  type ReviewCard as ReviewCardModel,
   evidenceOf,
   reviewAudioSource,
   reviewCards,
   reviewPosition,
 } from "../model/review";
-import { ReviewCard, ReviewHeading } from "./ReviewCard";
-import { ReviewNavigator } from "./ReviewNavigator";
+import { ReviewCard, ReviewHeading, TranscriptRows } from "./ReviewCard";
+import { ReviewCell, ReviewNavigator } from "./ReviewNavigator";
 
 type Cue = {
   id: number;
@@ -71,6 +74,8 @@ export function ReviewWorkspace({
   const card = position.cards[position.index] ?? all[0];
   const headingRef = useRef<HTMLHeadingElement>(null);
   const allQuestions = useRef<HTMLDialogElement>(null);
+  const isDesktop = useIsDesktop();
+  const transcriptRef = useRef<HTMLElement>(null);
 
   const go = (number: number, set = position.set) => {
     const next = new URLSearchParams({
@@ -81,13 +86,29 @@ export function ReviewWorkspace({
     router.replace(`${pathname}?${next}`, { scroll: false });
   };
 
-  // Every card change: the heading takes the focus, the page starts at the top.
+  // Every card change: the heading takes the focus and the page starts at
+  // the top; on desktop the transcript column brings the first evidence row
+  // into view, instantly with reduced motion.
   const key = card?.unit.key;
+  const firstEvidence = card
+    ? evidenceOf(card.unit, answerKey, transcript)[0]?.segment.id
+    : undefined;
   useEffect(() => {
     if (key === undefined) return;
     window.scrollTo({ top: 0 });
-    headingRef.current?.focus();
-  }, [key]);
+    headingRef.current?.focus({ preventScroll: true });
+    if (!isDesktop || !firstEvidence) return;
+    const row = transcriptRef.current?.querySelector(
+      `[data-segment="${firstEvidence}"]`,
+    );
+    const instant = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    row?.scrollIntoView({
+      block: "center",
+      behavior: instant ? "instant" : "smooth",
+    });
+  }, [key, isDesktop, firstEvidence]);
 
   // The part's audio: a valid cached copy, else the network, else none.
   const part = card ? test.parts[card.unit.partNumber - 1] : undefined;
@@ -139,71 +160,145 @@ export function ReviewWorkspace({
   const index = position.index;
   const explanation = explanations?.items[card.unit.key];
   const signals = record.signals[card.unit.key] ?? [];
+  const segments = transcript.parts[part.number - 1]?.segments ?? [];
+  const play = (stretch: { fromMs: number; toMs?: number }, id: string) => {
+    nextCue({ kind: "play", ...stretch });
+    setPlayingSegment(id);
+  };
+
+  const player = src ? (
+    <PracticePlayer
+      src={src}
+      partNumber={part.number}
+      savedPositionMs={0}
+      speed={speed}
+      speeds={SPEEDS}
+      onPosition={() => {}}
+      onSpeed={setSpeed}
+      cue={cue}
+      onCuePlaying={(id) => {
+        setPlayingId(id);
+        if (id === undefined) setPlayingSegment(undefined);
+      }}
+      marksMs={heard.map((h) => h.segment.startMs)}
+    />
+  ) : src === null ? (
+    <p className="sticky top-12 z-10 flex items-start gap-2 border-b border-border-subtle bg-surface-base px-gutter py-3">
+      <InfoIcon />
+      <span>{l("review.audioUnavailable")}</span>
+    </p>
+  ) : (
+    <p className="sticky top-12 z-10 border-b border-border-subtle bg-surface-base px-gutter py-3 text-meta text-text-secondary">
+      {l("player.loading")}
+    </p>
+  );
+  const cardArea = (
+    <>
+      {notice}
+      <ReviewHeading
+        card={card}
+        headingRef={headingRef}
+        progress={
+          position.set === "mistakes"
+            ? t("review.toReview", {
+                current: index + 1,
+                total: sequence.length,
+              })
+            : undefined
+        }
+      />
+      <div className="mt-6">
+        <ReviewCard
+          key={card.unit.key}
+          test={test}
+          card={card}
+          attempt={attempt}
+          answerKey={answerKey}
+          transcript={transcript}
+          signals={signals}
+          explanation={explanation}
+          playing={playingId !== undefined ? playingSegment : undefined}
+          audioAvailable={src !== null}
+          onPlay={play}
+          onPause={() => nextCue({ kind: "pause" })}
+          desktop={isDesktop}
+        />
+      </div>
+    </>
+  );
+  const previous = () => {
+    const card = sequence[index - 1];
+    if (card) go(card.unit.numbers[0] ?? 1);
+  };
+  const next = () => {
+    const card = sequence[index + 1];
+    if (card) go(card.unit.numbers[0] ?? 1);
+  };
+  const navigatorDialog = (
+    <ReviewNavigator
+      dialogRef={allQuestions}
+      test={test}
+      cards={all}
+      current={card}
+      onChoose={(n) => go(n, "all")}
+    />
+  );
+
+  // Desktop: the part's transcript and the current card side by side, each
+  // scrolling on its own, the navigator bar along the bottom (DESIGN_SYSTEM.md,
+  // M9: review on phone, tablet and desktop).
+  if (isDesktop)
+    return (
+      <div className="flex h-dvh flex-col">
+        {bar(part.number)}
+        {player}
+        <div className="grid min-h-[0] flex-1 grid-cols-[55fr_45fr] grid-rows-[minmax(0,1fr)] gap-8">
+          <section
+            ref={transcriptRef}
+            aria-label={l("review.transcriptTitle", { part: part.number })}
+            className="overflow-y-auto ps-gutter"
+          >
+            <div className="mx-auto max-w-measure pb-6">
+              <h2 className="sticky top-[0] z-[1] bg-surface-base py-4 text-heading-3 font-bold">
+                {l("review.transcriptTitle", { part: part.number })}
+              </h2>
+              <TranscriptRows
+                segments={segments}
+                evidence={heard}
+                evidenceIds={new Set(heard.map((h) => h.segment.id))}
+                available={src !== null}
+                onPlay={(segment) =>
+                  play({ fromMs: segment.startMs }, segment.id)
+                }
+              />
+            </div>
+          </section>
+          {/* A new element per card, so each one starts at its top. */}
+          <main
+            key={card.unit.key}
+            id="main"
+            className="overflow-y-auto border-s border-border-subtle px-8 py-6"
+          >
+            <div className="max-w-column">{cardArea}</div>
+          </main>
+        </div>
+        <DesktopBar
+          test={test}
+          cards={all}
+          current={card}
+          onChoose={(n) => go(n, "all")}
+          onPrevious={previous}
+          onNext={next}
+        />
+      </div>
+    );
 
   return (
     <>
       {bar(part.number)}
-      {src ? (
-        <PracticePlayer
-          src={src}
-          partNumber={part.number}
-          savedPositionMs={0}
-          speed={speed}
-          speeds={SPEEDS}
-          onPosition={() => {}}
-          onSpeed={setSpeed}
-          cue={cue}
-          onCuePlaying={(id) => {
-            setPlayingId(id);
-            if (id === undefined) setPlayingSegment(undefined);
-          }}
-          marksMs={heard.map((h) => h.segment.startMs)}
-        />
-      ) : src === null ? (
-        <p className="sticky top-12 z-10 flex items-start gap-2 border-b border-border-subtle bg-surface-base px-gutter py-3">
-          <InfoIcon />
-          <span>{l("review.audioUnavailable")}</span>
-        </p>
-      ) : (
-        <p className="sticky top-12 z-10 border-b border-border-subtle bg-surface-base px-gutter py-3 text-meta text-text-secondary">
-          {l("player.loading")}
-        </p>
-      )}
+      {player}
       <main id="main" className="px-gutter pb-40 tablet:pb-28">
-        <div className="mx-auto max-w-measure pt-4">
-          {notice}
-          <ReviewHeading
-            card={card}
-            headingRef={headingRef}
-            progress={
-              position.set === "mistakes"
-                ? t("review.toReview", {
-                    current: index + 1,
-                    total: sequence.length,
-                  })
-                : undefined
-            }
-          />
-          <div className="mt-6">
-            <ReviewCard
-              key={card.unit.key}
-              test={test}
-              card={card}
-              attempt={attempt}
-              answerKey={answerKey}
-              transcript={transcript}
-              signals={signals}
-              explanation={explanation}
-              playing={playingId !== undefined ? playingSegment : undefined}
-              audioAvailable={src !== null}
-              onPlay={(stretch, segmentId) => {
-                nextCue({ kind: "play", ...stretch });
-                setPlayingSegment(segmentId);
-              }}
-              onPause={() => nextCue({ kind: "pause" })}
-            />
-          </div>
-        </div>
+        <div className="mx-auto max-w-measure pt-4">{cardArea}</div>
       </main>
       <nav
         aria-label={t("navigator.open")}
@@ -221,34 +316,102 @@ export function ReviewWorkspace({
             {t("navigator.open")}
           </button>
           <div className="grid grid-cols-2 gap-2 whitespace-nowrap tablet:ms-auto tablet:flex">
-            <SecondaryButton
-              onClick={() => {
-                const previous = sequence[index - 1];
-                if (previous) go(previous.unit.numbers[0] ?? 1);
-              }}
-            >
+            <SecondaryButton onClick={previous}>
               <ChevronIcon direction="left" />
               {t("question.previous")}
             </SecondaryButton>
-            <SecondaryButton
-              onClick={() => {
-                const next = sequence[index + 1];
-                if (next) go(next.unit.numbers[0] ?? 1);
-              }}
-            >
+            <SecondaryButton onClick={next}>
               {t("question.next")}
               <ChevronIcon direction="right" />
             </SecondaryButton>
           </div>
         </div>
       </nav>
-      <ReviewNavigator
-        dialogRef={allQuestions}
-        test={test}
-        cards={all}
-        current={card}
-        onChoose={(n) => go(n, "all")}
-      />
+      {navigatorDialog}
     </>
+  );
+}
+
+/**
+ * The desktop navigator bar (DESIGN_SYSTEM.md, M9: navigator in review): the
+ * current part's cells with their outcome badges, the other parts as quiet
+ * buttons with their count of correct answers, Previous and Next.
+ */
+function DesktopBar({
+  test,
+  cards,
+  current,
+  onChoose,
+  onPrevious,
+  onNext,
+}: {
+  test: ListeningTest;
+  cards: ReviewCardModel[];
+  current: ReviewCardModel;
+  onChoose: (number: number) => void;
+  onPrevious: () => void;
+  onNext: () => void;
+}) {
+  const t = useTranslations("reading");
+  const l = useTranslations("listening");
+  return (
+    <nav
+      aria-label={t("navigator.open")}
+      className="border-t border-border-subtle bg-surface-base px-gutter py-2"
+    >
+      <div className="mx-auto flex max-w-content flex-wrap items-center gap-x-3 gap-y-2">
+        <ul className="flex flex-wrap gap-2 pt-1">
+          {test.parts[current.unit.partNumber - 1]!.questionGroups.flatMap(
+            groupNumbers,
+          ).map((n) => {
+            const card = cards.find((c) => c.unit.numbers.includes(n));
+            return card ? (
+              <li key={n}>
+                <ReviewCell
+                  number={n}
+                  card={card}
+                  isCurrent={card === current}
+                  onChoose={onChoose}
+                />
+              </li>
+            ) : null;
+          })}
+        </ul>
+        {test.parts
+          .filter((p) => p.number !== current.unit.partNumber)
+          .map((p) => {
+            const numbers = p.questionGroups.flatMap(groupNumbers);
+            const correct = numbers.filter((n) => {
+              const card = cards.find((c) => c.unit.numbers.includes(n));
+              return card && card.unit.numbers.indexOf(n) < card.marks;
+            }).length;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                className={QUIET_BUTTON}
+                onClick={() => onChoose(numbers[0] ?? 1)}
+              >
+                {l("navigator.partResult", {
+                  number: p.number,
+                  correct,
+                  total: numbers.length,
+                })}
+                <ChevronIcon direction="right" />
+              </button>
+            );
+          })}
+        <div className="ms-auto flex shrink-0 gap-2 whitespace-nowrap">
+          <SecondaryButton onClick={onPrevious}>
+            <ChevronIcon direction="left" />
+            {t("question.previous")}
+          </SecondaryButton>
+          <SecondaryButton onClick={onNext}>
+            {t("question.next")}
+            <ChevronIcon direction="right" />
+          </SecondaryButton>
+        </div>
+      </div>
+    </nav>
   );
 }

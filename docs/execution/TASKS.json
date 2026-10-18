@@ -4808,7 +4808,8 @@
       "title": "Listening review on desktop",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-09"],
       "goal": "From the desktop breakpoint, Listening review uses its approved layout.",
       "scope": [
