@@ -8,7 +8,10 @@ import type { GapAnswer } from "@/shared/content/shapes";
 import type { GapSegment, WordLimit } from "@/shared/content/types";
 import { OptionRow } from "@/shared/ui/OptionRow";
 
-/** The stored answer of a question, as text. */
+/**
+ * The stored answer of a question, as text. A question outside the session's
+ * units (a retry shows the rest of a group around its own) is locked.
+ */
 export function useAnswer(number: number) {
   const { session, units, send } = useListening();
   const unit = units.find((u) => u.numbers.includes(number));
@@ -16,6 +19,7 @@ export function useAnswer(number: number) {
   return {
     unit,
     stored,
+    locked: !unit,
     send: (answer: Answer) => send({ type: "answer", number, answer }),
   };
 }
@@ -59,10 +63,10 @@ export function ChoiceRows({
   options: { id: string; text: string }[];
 }) {
   const t = useTranslations("reading");
-  const { stored, send } = useAnswer(number);
+  const { stored, send, locked } = useAnswer(number);
   return (
     <QuestionBlock numbers={[number]}>
-      <fieldset>
+      <fieldset disabled={locked}>
         <legend lang="en" className="font-bold">
           {legend}
         </legend>
@@ -105,7 +109,7 @@ export function MultiRows({
   options: { id: string; text: string }[];
 }) {
   const t = useTranslations("reading");
-  const { stored, send } = useAnswer(numbers[0] ?? 0);
+  const { stored, send, locked } = useAnswer(numbers[0] ?? 0);
   const chosen = Array.isArray(stored) ? stored : [];
   const full = chosen.length >= numbers.length;
   return (
@@ -130,7 +134,7 @@ export function MultiRows({
                 name={`q${numbers[0]}`}
                 value={o.id}
                 checked={on}
-                disabled={!on && full}
+                disabled={locked || (!on && full)}
                 onChange={() =>
                   send(
                     on ? chosen.filter((id) => id !== o.id) : [...chosen, o.id],
@@ -181,10 +185,10 @@ export function LetterChoice({
   options: { id: string; text: string }[];
 }) {
   const t = useTranslations("reading");
-  const { stored, send } = useAnswer(number);
+  const { stored, send, locked } = useAnswer(number);
   return (
     <QuestionBlock numbers={[number]}>
-      <fieldset>
+      <fieldset disabled={locked}>
         <legend lang="en">
           <span className="font-bold">{number}</span> {label}
         </legend>
@@ -192,7 +196,7 @@ export function LetterChoice({
           {options.map((o) => (
             <label
               key={o.id}
-              className="flex size-[2.75rem] cursor-pointer items-center justify-center rounded-sm border border-border-control bg-surface-base font-bold transition-colors hover:bg-brand-blush-soft has-checked:border-ink has-checked:bg-ink has-checked:text-surface-base has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink"
+              className="flex size-[2.75rem] cursor-pointer items-center justify-center rounded-sm border border-border-control bg-surface-base font-bold transition-colors hover:bg-brand-blush-soft has-checked:border-ink has-checked:bg-ink has-checked:text-surface-base has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink has-disabled:cursor-default has-disabled:border-border-subtle has-disabled:text-text-tertiary has-disabled:hover:bg-surface-base"
             >
               <input
                 type="radio"
@@ -235,7 +239,7 @@ export function GapField({
 }) {
   const t = useTranslations("reading");
   const { session, send: sendEvent } = useListening();
-  const { stored, send } = useAnswer(number);
+  const { stored, send, locked } = useAnswer(number);
   const value = typeof stored === "string" ? stored : "";
   const current = session.currentQuestion === number;
   const warn = session.mode === "practice" && exceedsWordLimit(value, limit);
@@ -250,6 +254,7 @@ export function GapField({
           lang="en"
           aria-label={t("answer.label", { number })}
           value={value}
+          disabled={locked}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
@@ -262,7 +267,7 @@ export function GapField({
           onBlur={() => {
             if (value.trim() !== value) send(value.trim());
           }}
-          className={`h-[2.75rem] w-[7rem] max-w-full rounded-sm border px-3 ${current ? "border-ink bg-brand-blush-soft" : "border-border-control bg-surface-base"}`}
+          className={`h-[2.75rem] w-[7rem] max-w-full rounded-sm border px-3 ${current ? "border-ink bg-brand-blush-soft" : "border-border-control bg-surface-base"} disabled:border-dashed`}
         />
       </span>
       {warn && (

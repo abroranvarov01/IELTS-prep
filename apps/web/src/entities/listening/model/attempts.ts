@@ -1,7 +1,17 @@
 import { isRecord } from "@/shared/content/parse";
 import { type ListeningTest, groupNumbers } from "./content";
-import { isSessionId, parseAnswers, parsePlayedToMs } from "./parse-session";
-import type { Outcome, PracticeRawScore, Signal } from "./scoring";
+import {
+  isSessionId,
+  parseAnswers,
+  parsePlayedToMs,
+  parseRetry,
+} from "./parse-session";
+import {
+  type Outcome,
+  type PracticeRawScore,
+  type Signal,
+  checkUnits,
+} from "./scoring";
 import type { Answer, ListeningSession, Mode } from "./session";
 
 // Committed Listening attempts, their result records and the first-try
@@ -27,7 +37,10 @@ export type ListeningAttempt = {
   id: string;
   testId: string;
   testVersion: number;
-  kind: "test";
+  kind: "test" | "retry";
+  /** A retry's source test attempt and its question numbers (whole units). */
+  retryOf?: string;
+  questions?: number[];
   mode: Mode;
   startedAt: number;
   finishedAt: number;
@@ -81,7 +94,11 @@ export function attemptFromSession(
     id: session.sessionId,
     testId: session.testId,
     testVersion: session.testVersion,
-    kind: "test",
+    kind: session.retry ? "retry" : "test",
+    ...(session.retry && {
+      retryOf: session.retry.of,
+      questions: [...session.retry.questions],
+    }),
     mode: session.mode,
     startedAt: session.startedAt,
     finishedAt: session.finishedAt,
@@ -122,8 +139,7 @@ export function parseAttempt(
   if (schema === "none" || !isRecord(input)) return { kind: "invalid" };
   const a = input;
   const invalid = { kind: "invalid" } as const;
-  if (!isSessionId(a.id) || a.testId !== test.id || a.kind !== "test")
-    return invalid;
+  if (!isSessionId(a.id) || a.testId !== test.id) return invalid;
   if (!Number.isInteger(a.testVersion) || (a.testVersion as number) < 1)
     return invalid;
   if (a.mode !== "practice" && a.mode !== "exam") return invalid;
@@ -150,13 +166,31 @@ export function parseAttempt(
       : parseExamRecord(a.exam, test, sameContent);
   if (a.exam !== undefined && !exam) return invalid;
 
+  let retry: { retryOf: string; questions: number[] } | undefined;
+  if (a.kind === "retry") {
+    if (a.mode !== "practice") return invalid;
+    const parsed = sameContent
+      ? parseRetry({ of: a.retryOf, questions: a.questions }, checkUnits(test))
+      : isSessionId(a.retryOf) && isNumberList(a.questions)
+        ? { of: a.retryOf, questions: [...a.questions] }
+        : null;
+    if (!parsed) return invalid;
+    retry = { retryOf: parsed.of, questions: parsed.questions };
+  } else if (
+    a.kind !== "test" ||
+    a.retryOf !== undefined ||
+    a.questions !== undefined
+  )
+    return invalid;
+
   return {
     kind: "valid",
     value: {
       id: a.id,
       testId: test.id,
       testVersion: a.testVersion as number,
-      kind: "test",
+      kind: a.kind,
+      ...retry,
       mode: a.mode,
       startedAt: a.startedAt,
       finishedAt: a.finishedAt,
@@ -212,7 +246,8 @@ const SIGNAL_CODES = new Set<string>([
 
 /**
  * Reads a stored result record of `attempt`. Its outcomes must cover exactly
- * the test's scoring positions and agree with its score.
+ * the attempt's scoring positions (a retry's questions, otherwise the
+ * test's) and agree with its score.
  */
 export function parseResultRecord(
   input: unknown,
@@ -229,9 +264,9 @@ export function parseResultRecord(
     return invalid;
   if (!isTime(r.checkedAt)) return invalid;
 
-  const positions = test.parts.flatMap((p) =>
-    p.questionGroups.flatMap(groupNumbers),
-  );
+  const positions =
+    attempt.questions ??
+    test.parts.flatMap((p) => p.questionGroups.flatMap(groupNumbers));
   if (!isRecord(r.outcomes)) return invalid;
   const outcomes: Record<number, Outcome> = {};
   for (const number of positions) {
@@ -302,7 +337,8 @@ export function parseFirstTry(
 
 /**
  * The first-try marker to write when `attempt` is committed, or undefined to
- * leave it (ADR-0009 §5): only while no marker exists, its own id when no
+ * leave it (ADR-0009 §5): a retry never sets it; a test attempt only while
+ * no marker exists, its own id when no
  * other attempt of the test exists, otherwise "unknown". A marker that
  * cannot be read becomes "unknown".
  */
@@ -311,6 +347,7 @@ export function firstTryOnCommit(
   attempt: ListeningAttempt,
   otherAttempts: number,
 ): FirstTry | undefined {
+  if (attempt.kind !== "test") return undefined;
   if (marker?.kind === "valid" || marker?.kind === "unknownSchema")
     return undefined;
   if (marker?.kind === "invalid") return UNKNOWN_FIRST_TRY;
@@ -371,6 +408,14 @@ function shapeOfCounts(value: unknown): Record<string, number> | undefined {
     counts[key] = n;
   }
   return counts;
+}
+
+function isNumberList(value: unknown): value is number[] {
+  return (
+    Array.isArray(value) &&
+    value.length > 0 &&
+    value.every((n) => Number.isInteger(n) && n > 0)
+  );
 }
 
 function isTime(value: unknown): value is number {

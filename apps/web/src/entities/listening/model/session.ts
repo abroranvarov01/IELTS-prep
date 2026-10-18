@@ -54,6 +54,8 @@ export type ListeningSession = {
   /** Practice only: where each part's audio was left, by part id, and the speed. */
   practice?: { positions: Record<string, number>; speed: Speed };
   exam?: ExamState;
+  /** A retry of whole answer units of a committed test attempt (ADR-0014 §3, as ADR-0009 §8). */
+  retry?: { of: string; questions: number[] };
 };
 
 export type ListeningEvent =
@@ -74,24 +76,38 @@ export type ListeningEvent =
   | { type: "heartbeat" }
   | { type: "played"; part: number; positionMs: number };
 
+/**
+ * A new session. With `retry`, a Practice session of those whole units only
+ * (LISTENING_EXPERIENCE.md, Targeted practice (M9)), starting at the first of
+ * them with every answer empty.
+ */
 export function startSession(
   test: ListeningTest,
   mode: Mode,
   now: number,
   sessionId: string,
+  retry?: { of: string; questions: number[] },
 ): ListeningSession {
+  const first = retry ? Math.min(...retry.questions) : 1;
+  const practice = mode === "practice" || retry !== undefined;
   return {
     sessionId,
     testId: test.id,
     testVersion: test.version,
-    mode,
+    mode: practice ? "practice" : "exam",
     status: "inProgress",
     startedAt: now,
-    currentQuestion: 1,
+    currentQuestion: first,
     answers: {},
     flagged: [],
-    view: { part: 1, scroll: {} },
-    ...(mode === "practice"
+    view: {
+      part: unitOf(questionUnits(test), first)?.partNumber ?? 1,
+      scroll: {},
+    },
+    ...(retry && {
+      retry: { of: retry.of, questions: [...retry.questions] },
+    }),
+    ...(practice
       ? { practice: { positions: {}, speed: 1 } }
       : {
           exam: {
@@ -101,6 +117,16 @@ export function startSession(
           },
         }),
   };
+}
+
+/** The question numbers a session works on: a retry's units, otherwise all of them. */
+export function sessionNumbers(
+  session: Pick<ListeningSession, "retry">,
+  test: ListeningTest,
+): number[] {
+  return session.retry
+    ? [...session.retry.questions].sort((a, b) => a - b)
+    : questionUnits(test).flatMap((unit) => unit.numbers);
 }
 
 export type ExamClock =
@@ -151,6 +177,13 @@ export function apply(
   if (timed.status === "finished" || event.type === "tick") return timed;
   const units = questionUnits(test);
   const exam = timed.exam;
+  // A retry moves, answers and flags only within its own units.
+  if (
+    "number" in event &&
+    timed.retry &&
+    !timed.retry.questions.includes(event.number)
+  )
+    return timed;
 
   switch (event.type) {
     case "answer": {

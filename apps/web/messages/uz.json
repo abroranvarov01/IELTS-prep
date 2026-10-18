@@ -535,6 +535,46 @@
       "sameDigits": "Javobingizda qabul qilingan javobdagi raqamlar bor, lekin ular boshqacha yozilgan.",
       "mentionedOption": "Yozuvda <en>{option}</en> {mentionedAt} da tilga olinadi, lekin javob {answerAt} da aytiladi.",
       "notReached": "Test yakunlanganda yozuv hali bu savolga yetib kelmagan edi."
+    },
+    "patterns": {
+      "oneLetterAway": {
+        "tip": "Bitta harf farqi imlo xatosi ham, boshqa soʻz ham boʻlishi mumkin. Imtihonda xato yozilgan javob uchun ball berilmaydi. Britancha va amerikancha yozilish ikkalasi ham qabul qilinadi."
+      },
+      "wordLimit": {
+        "tip": "Imtihonda ruxsat etilganidan koʻp soʻzli javob uchun ball berilmaydi. Topshiriqdagi cheklovni, masalan <en>ONE WORD AND/OR A NUMBER</en>, yozuv boshlanishidan oldin tekshiring."
+      },
+      "notInTranscript": {
+        "title": "Yozuvda yoʻq soʻzlar",
+        "count": "Yozilgan {total} ta javobdan {count} tasida yozuv matnida yoʻq soʻz bor edi ({numbers}-savollar)",
+        "tip": "Eshitgan soʻzlaringizni yozing. Sinonimni bilsangiz ham, ularni oʻzgartirish shart emas."
+      },
+      "numbers": {
+        "title": "Raqam, sana yoki vaqtli javoblar",
+        "count": "Javobida raqam bor {total} ta savoldan {count} tasi notoʻgʻri ({numbers}-savollar)",
+        "tip": "Raqamlarni son bilan yozish mumkin, bu imlo xatosidan saqlaydi. Sanani raqamlar bilan kunidan boshlab yozing: <en>24/04</en> — 24-aprel. Vaqtda ikki nuqta yoki nuqta qoʻyish mumkin, masalan <en>6:45</en> yoki <en>6.45</en>."
+      },
+      "heuristic": "Taxminiy qoida: xato kamida 2 ta savol guruhidagi kamida 3 ta savolda uchrasa, takrorlangan deb koʻrsatiladi.",
+      "noneThisTry": "Bu urinishda takrorlanuvchi qonuniyatni koʻrsatish uchun maʼlumot yetarli emas. Bu ustida ishlaydigan narsa yoʻq degani emas: har bir javobni koʻrib chiqing.",
+      "noneFirstTry": "Bu testdagi birinchi urinishingizda takrorlanuvchi qonuniyatni koʻrsatish uchun maʼlumot yetarli emas. Bu ustida ishlaydigan narsa yoʻq degani emas: har bir javobni koʻrib chiqing.",
+      "mentionedOption": {
+        "title": "Yozuvda tilga olingan boshqa variant",
+        "count": "{total} ta javobdan {count} tasida yozuvda tilga olingan, lekin javob boʻlmagan narsa tanlangan ({numbers}-savollar)",
+        "tip": "Soʻzlovchilar koʻpincha javobni aytishdan oldin bir nechta variantni tilga oladi. Tanlashdan oldin fikrni oxirigacha tinglang. Tahlilda ikkala joyni ham tinglang."
+      },
+      "correction": {
+        "title": "Tuzatishdan keyin aytilgan javoblar",
+        "count": "Soʻzlovchi oʻzini tuzatgan {total} ta savoldan {count} tasi toʻliq toʻgʻri emas ({numbers}-savollar)",
+        "tip": "Soʻzlovchi <en>no, sorry</en> yoki <en>actually</en> desa, javob koʻpincha shundan keyin keladi. Tuzatishdan keyingi soʻzni yozing."
+      },
+      "spelledOut": {
+        "title": "Yozuvda harfma-harf aytilgan nomlar",
+        "count": "Harfma-harf aytilgan {total} ta javobdan {count} tasi notoʻgʻri ({numbers}-savollar)",
+        "tip": "Odamlar, joylar va kompaniyalar nomlari harfma-harf aytilishi mumkin. Har bir harfni eshitganingizdek yozing. <en>A</en>, <en>E</en>, <en>I</en>, <en>G</en> va <en>J</en> kabi harflarning inglizcha nomlarini mashq qiling."
+      },
+      "paraphrase": {
+        "count": "Yozuvdagi fikr boshqa soʻzlar bilan berilgan {total} ta savoldan {count} tasi toʻliq toʻgʻri emas ({numbers}-savollar)",
+        "tip": "Bir xil soʻzlarni emas, bir xil fikrni tinglang. Tahlilda savoldagi soʻzlarni yozuv matnidagi soʻzlar bilan solishtiring."
+      }
     }
   }
 }

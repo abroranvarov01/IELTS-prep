@@ -35,6 +35,7 @@ export {
   answeredNumbers,
   apply,
   examClock,
+  sessionNumbers,
   startSession,
 } from "./model/session";
 export { loadSessions, saveSession } from "./api/session-storage";
@@ -57,6 +58,17 @@ export {
   unitOutcomes,
   wasInterrupted,
 } from "./model/results";
+export {
+  type Pattern,
+  type PatternCategory,
+  type PatternsView,
+  patternsView,
+} from "./model/patterns";
+export {
+  type RetryProblem,
+  retryQuestions,
+  validateRetry,
+} from "./model/retry";
 export {
   type FirstTry,
   type ListeningAttempt,

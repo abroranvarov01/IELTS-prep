@@ -898,7 +898,7 @@ As M5: 1 step, on every card.
 - **Steps:** 1. "Try 14 questions again: not correct or no answer" (or "Practise these questions again" on a repeated-mistake card) → the Listening screen in Practice with only those questions, the player paused at the start of the first of their parts, answers empty, no start screen. 2. Answer and move as in M8; "All questions" lists only these; choosing a question of another part switches the player to that part (M8). 3. "Finish test", "Finish" → "Your retry", "9 of 14 now correct", the honest line, the review button, "Back to your test results".
 - **Step count:** 1 to start; 2 to hear the recording (start, Play).
 - **Empty / error states:** as M5's retry ("This practice can't be started" with the reason).
-- **Languages checked:** not yet (M9-11).
+- **Languages checked:** uz, ru, en (M9-11: e2e at phone and desktop widths, screenshots at 390 and 1280 px).
 
 ### Come back to results later (Listening)
 As M5: the test link opens the start screen with "See your last results" under "Start"; 2 steps. The Practice Hub row of a finished Listening test shows "Last result: 27 of 40 correct" instead of M8's "Finished" (M6's N4), and its quiet "See your last results".

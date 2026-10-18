@@ -4845,7 +4845,8 @@
       "title": "Listening retries and repeated mistakes",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-09"],
       "goal": "Learners retry Listening questions they did not get right, and repeated Listening mistakes appear only when the approved rule says so.",
       "scope": [

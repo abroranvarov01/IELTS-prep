@@ -77,17 +77,22 @@ export function unitOutcome(outcomes: Outcome[]): UnitOutcome {
   return correct === 0 ? "incorrect" : "partlyCorrect";
 }
 
-/** The test's answer units (a "List TWO" question once) with their outcomes, in question order. */
+/**
+ * The record's answer units (a "List TWO" question once; a retry's units
+ * only) with their outcomes, in question order.
+ */
 export function unitOutcomes(
   test: ListeningTest,
   record: ResultRecord,
 ): { unit: QuestionUnit; outcome: UnitOutcome }[] {
-  return checkUnits(test).map((unit) => ({
-    unit,
-    outcome: unitOutcome(
-      unit.numbers.map((n) => record.outcomes[n] ?? ("unanswered" as Outcome)),
-    ),
-  }));
+  return checkUnits(test)
+    .filter((unit) => unit.numbers.every((n) => n in record.outcomes))
+    .map((unit) => ({
+      unit,
+      outcome: unitOutcome(
+        unit.numbers.map((n) => record.outcomes[n] ?? "unanswered"),
+      ),
+    }));
 }
 
 /** Which review the results page offers; its button names it (as Reading's D8). */

@@ -9,16 +9,19 @@ import {
   type ResultRecord,
   type Transcript,
   positionCounts,
+  retryQuestions,
   reviewOffer,
   unitOutcomes,
   wasInterrupted,
 } from "@/entities/listening";
+import { useRouter } from "@/shared/i18n/navigation";
 import { InfoIcon } from "@/shared/ui/icons";
 import { OutcomeIcon } from "@/shared/ui/OutcomeIcon";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
 import { TaskLayout } from "@/shared/ui/TaskLayout";
 import { type Loaded, loadResult } from "../api/load-result";
+import { RepeatedMistakes } from "./RepeatedMistakes";
 
 /** A short note on the result (DESIGN_SYSTEM.md, M5 and M9 results page). */
 function Note({ children }: { children: ReactNode }) {
@@ -34,7 +37,9 @@ function Note({ children }: { children: ReactNode }) {
  * The Listening results page (LISTENING_EXPERIENCE.md, Results page (M9)):
  * the practice score out of 40, never a band, the counts of answers not
  * correct and not given, notes (temporary test, interrupted sitting, checked
- * later, correction, storage), and one red action into the review.
+ * later, correction, storage), and one red action into the review; beside
+ * it, "Mistakes that repeated" and the questions to try again. A retry's
+ * results are its own (Targeted practice (M9)).
  */
 export function ResultsScreen({
   test,
@@ -47,9 +52,18 @@ export function ResultsScreen({
 }) {
   const t = useTranslations("reading");
   const listening = useTranslations("listening");
-  const attemptId = useSearchParams().get("attempt");
+  const params = useSearchParams();
+  const attemptId = params.get("attempt");
+  // Sent by a retry whose source had no record for the current key revision:
+  // loading writes it, then the retry continues (use-retry-session.ts).
+  const retryRequest = params.get("retry");
+  const router = useRouter();
   const [loaded, setLoaded] = useState<Loaded>();
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const returning =
+    retryRequest !== null &&
+    loaded?.kind === "result" &&
+    loaded.attempt.kind === "test";
 
   useEffect(() => {
     let active = true;
@@ -63,10 +77,20 @@ export function ResultsScreen({
     };
   }, [test, answerKey, transcript, attemptId]);
 
+  useEffect(() => {
+    if (!returning || !loaded || retryRequest === null) return;
+    const address = new URLSearchParams({
+      of: loaded.attempt.id,
+      q: retryRequest,
+      rechecked: "1",
+    });
+    router.replace(`/listening/${test.id}/retry?${address}`);
+  }, [returning, loaded, retryRequest, router, test.id]);
+
   // Arriving from the test, the page says what happened.
   useEffect(() => {
-    if (loaded) headingRef.current?.focus();
-  }, [loaded]);
+    if (loaded && !returning) headingRef.current?.focus();
+  }, [loaded, returning]);
 
   const startHref = `/listening/${test.id}`;
   const heading = (title: string, timeUp = false) => (
@@ -84,7 +108,8 @@ export function ResultsScreen({
     </h1>
   );
 
-  if (!loaded) return <TaskLayout>{heading(t("results.title"))}</TaskLayout>;
+  if (!loaded || returning)
+    return <TaskLayout>{heading(t("results.title"))}</TaskLayout>;
 
   if (loaded.kind === "none")
     return (
@@ -99,6 +124,10 @@ export function ResultsScreen({
 
   const { attempt } = loaded;
   const timeUp = attempt.finishReason === "timeUp";
+  // A retry is shown on its own terms: out of its own questions, never out
+  // of 40 and never with the test's score.
+  const isRetry = attempt.kind === "retry";
+  const title = isRetry ? t("retry.title") : t("results.title");
   const meta = (
     <p className="mt-2 text-meta text-text-secondary">
       <span lang="en">{test.title}</span> · {t(`mode.${attempt.mode}`)}
@@ -107,7 +136,7 @@ export function ResultsScreen({
   );
   const score = (record: ResultRecord) => (
     <p className="mt-6 text-heading-1 font-extrabold tabular-nums">
-      {t("results.score", {
+      {t(isRetry ? "retry.score" : "results.score", {
         score: record.score.marks,
         total: record.score.positions,
       })}
@@ -117,7 +146,7 @@ export function ResultsScreen({
   if (loaded.kind === "earlierVersion")
     return (
       <TaskLayout>
-        {heading(t("results.title"), timeUp)}
+        {heading(title, timeUp)}
         {meta}
         {loaded.record && score(loaded.record)}
         <Note>
@@ -139,33 +168,66 @@ export function ResultsScreen({
     answers: t("results.reviewAll"),
   }[offer];
   const reviewHref = `/listening/${test.id}/review?attempt=${encodeURIComponent(attempt.id)}&set=${offer === "answers" ? "all" : "mistakes"}`;
+  // Every unit not fully correct or unanswered, whole and once (positions).
+  const retry = isRetry ? [] : retryQuestions(test, record);
 
   return (
-    // "Start again" stays with the result: the side column is for
-    // "Mistakes that repeated" and the retry link (M9-11).
-    <TaskLayout>
-      {heading(t("results.title"), timeUp)}
+    // "Start again" stays with the result; the side column holds
+    // "Mistakes that repeated" and the questions to try again.
+    <TaskLayout
+      side={
+        <div className="mt-8 flex flex-col gap-8 desktop:mt-0">
+          {loaded.patterns && (
+            <RepeatedMistakes testId={test.id} view={loaded.patterns} />
+          )}
+          {isRetry ? (
+            <div>
+              <QuietLink
+                href={`/listening/${test.id}/results?attempt=${encodeURIComponent(attempt.retryOf ?? "")}`}
+              >
+                {t("retry.backToResults")}
+              </QuietLink>
+            </div>
+          ) : (
+            retry.length > 0 && (
+              <div>
+                <QuietLink
+                  href={`/listening/${test.id}/retry?of=${encodeURIComponent(attempt.id)}&q=${retry.join(",")}`}
+                >
+                  {t("results.tryAgain", { count: retry.length })}
+                </QuietLink>
+              </div>
+            )
+          )}
+        </div>
+      }
+    >
+      {heading(title, timeUp)}
       {meta}
       {score(record)}
-      <p className="mt-2">{listening("results.honest")}</p>
-      <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-text-secondary">
-        {t.rich("results.breakdown", {
-          incorrect: counts.incorrect,
-          unanswered: counts.unanswered,
-          notCorrect: (chunks) => (
-            <span className="inline-flex items-center gap-1">
-              <OutcomeIcon outcome="incorrect" />
-              {chunks}
-            </span>
-          ),
-          noAnswer: (chunks) => (
-            <span className="inline-flex items-center gap-1">
-              <OutcomeIcon outcome="unanswered" />
-              {chunks}
-            </span>
-          ),
-        })}
+      <p className="mt-2">
+        {isRetry ? t("retry.honest") : listening("results.honest")}
       </p>
+      {!isRetry && (
+        <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-text-secondary">
+          {t.rich("results.breakdown", {
+            incorrect: counts.incorrect,
+            unanswered: counts.unanswered,
+            notCorrect: (chunks) => (
+              <span className="inline-flex items-center gap-1">
+                <OutcomeIcon outcome="incorrect" />
+                {chunks}
+              </span>
+            ),
+            noAnswer: (chunks) => (
+              <span className="inline-flex items-center gap-1">
+                <OutcomeIcon outcome="unanswered" />
+                {chunks}
+              </span>
+            ),
+          })}
+        </p>
+      )}
       {wasInterrupted(attempt) && (
         <Note>{listening("finished.interrupted")}</Note>
       )}
@@ -184,9 +246,11 @@ export function ResultsScreen({
       <div className="mt-6">
         <PrimaryLink href={reviewHref}>{reviewLabel}</PrimaryLink>
       </div>
-      <div className="mt-4">
-        <QuietLink href={startHref}>{t("finished.again")}</QuietLink>
-      </div>
+      {!isRetry && (
+        <div className="mt-4">
+          <QuietLink href={startHref}>{t("finished.again")}</QuietLink>
+        </div>
+      )}
     </TaskLayout>
   );
 }

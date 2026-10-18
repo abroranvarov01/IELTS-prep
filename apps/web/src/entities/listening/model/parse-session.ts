@@ -8,7 +8,8 @@ import {
   type Speed,
   isValidAnswer,
 } from "./session";
-import { questionUnits, unitOf } from "./units";
+import { checkUnits } from "./scoring";
+import { type QuestionUnit, questionUnits, unitOf } from "./units";
 
 /** The version of the stored envelope `{ schema, session }` (ADR-0013 §3). */
 export const SESSION_SCHEMA = 1;
@@ -94,6 +95,8 @@ export function parseStoredSession(
 
   const answers = parseAnswers(test, s.answers);
   if (!answers) return undefined;
+  const retry = parseRetry(s.retry, checkUnits(test));
+  if (retry === null || (retry && s.mode !== "practice")) return undefined;
 
   const partIds = new Set(test.parts.map((p) => p.id));
   const view = s.view;
@@ -127,6 +130,7 @@ export function parseStoredSession(
       part: view.part as number,
       scroll: { ...(view.scroll as Record<string, number>) },
     },
+    ...(retry && { retry }),
   } satisfies Partial<ListeningSession>;
 
   if (s.mode === "practice") {
@@ -137,6 +141,36 @@ export function parseStoredSession(
   if (s.practice !== undefined) return undefined;
   const exam = parseExam(test, s.exam);
   return exam && { ...base, exam };
+}
+
+/**
+ * A stored retry's source and question numbers: whole answer units of
+ * checking (`checkUnits`), each number once. Undefined when absent, null
+ * when present but invalid.
+ */
+export function parseRetry(
+  value: unknown,
+  units: QuestionUnit[],
+): ListeningSession["retry"] | null {
+  if (value === undefined) return undefined;
+  if (!isRecord(value) || !isSessionId(value.of)) return null;
+  const questions = value.questions;
+  if (
+    !Array.isArray(questions) ||
+    !questions.every((n) => typeof n === "number") ||
+    new Set(questions).size !== questions.length
+  )
+    return null;
+  const chosen = new Set(questions as number[]);
+  // Whole answer units only: every number of a several-answer unit or none.
+  const covered = units.filter((u) => u.numbers.some((n) => chosen.has(n)));
+  if (
+    chosen.size === 0 ||
+    covered.some((u) => !u.numbers.every((n) => chosen.has(n))) ||
+    covered.reduce((count, u) => count + u.numbers.length, 0) !== chosen.size
+  )
+    return null;
+  return { of: value.of, questions: [...(questions as number[])] };
 }
 
 function parsePractice(

@@ -431,8 +431,9 @@ export async function commitFinishedSession(
 
 /**
  * Settles what a page load finds in localStorage (ADR-0014 §3, §5): imports
- * M8's finished session, commits a finished session that was not committed
- * yet, and removes an in-progress copy of a session already committed.
+ * M8's finished session, commits a finished test or retry session that was
+ * not committed yet, and removes an in-progress copy of a session already
+ * committed.
  */
 export async function settleStoredSessions(
   storage: KeyValueStore | undefined,
@@ -440,17 +441,22 @@ export async function settleStoredSessions(
   test: ListeningTest,
   now: number,
 ): Promise<void> {
-  const { current, finished, legacyFinished } = loadSessions(storage, test);
+  const { current, finished, legacyFinished, retry } = loadSessions(
+    storage,
+    test,
+  );
   if (legacyFinished) {
     const imported = await history.importM8Finished(test, legacyFinished, now);
     if (imported && history.persistent) removeLegacyFinished(storage, test.id);
   }
-  if (finished && finished !== legacyFinished)
-    await commitFinishedSession(storage, history, test, finished, now);
-  if (current) {
+  for (const session of [finished, retry])
+    if (session?.status === "finished" && session !== legacyFinished)
+      await commitFinishedSession(storage, history, test, session, now);
+  for (const session of [current, retry]) {
+    if (session?.status !== "inProgress") continue;
     const committed = (await history.read(test)).attempts;
-    if (committed.some((a) => a.id === current.sessionId) && history.persistent)
-      removeSession(storage, test, current);
+    if (committed.some((a) => a.id === session.sessionId) && history.persistent)
+      removeSession(storage, test, session);
   }
 }
 
@@ -489,6 +495,7 @@ export async function recordResult(
       answers: attempt.answers,
       mode: attempt.mode,
       finishReason: attempt.finishReason,
+      ...(attempt.questions && { questions: attempt.questions }),
       ...(attempt.exam?.playedToMs && { playedToMs: attempt.exam.playedToMs }),
     }),
   });

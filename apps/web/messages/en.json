@@ -535,6 +535,46 @@
       "sameDigits": "Your answer has the same digits as the accepted answer, written differently.",
       "mentionedOption": "The recording mentions <en>{option}</en> at {mentionedAt}, but the answer is given at {answerAt}.",
       "notReached": "The recording had not reached this question when the test finished."
+    },
+    "patterns": {
+      "oneLetterAway": {
+        "tip": "One letter away may be a spelling slip or a different word. In the test, a misspelt answer loses the mark. British and American spellings are both accepted."
+      },
+      "wordLimit": {
+        "tip": "In the test, an answer with more words than allowed loses the mark. Check the limit in the instruction, for example <en>ONE WORD AND/OR A NUMBER</en>, before the recording starts."
+      },
+      "notInTranscript": {
+        "title": "Words not in the transcript",
+        "count": "{count} of {total} typed answers used a word that is not in the transcript (questions {numbers})",
+        "tip": "Write the words you hear. You don't need to change them, even if you know a synonym."
+      },
+      "numbers": {
+        "title": "Answers with numbers, dates or times",
+        "count": "{count} of {total} questions whose answer has a number were not correct (questions {numbers})",
+        "tip": "Numbers can be written in figures, which avoids spelling mistakes. Write numeric dates day first: <en>24/04</en> is 24 April. Times can use a colon or a full stop, such as <en>6:45</en> or <en>6.45</en>."
+      },
+      "heuristic": "A rough rule: we show a mistake as repeated when it happens in at least 3 questions from at least 2 question groups.",
+      "noneThisTry": "Not enough evidence to show a repeated pattern in this attempt. That doesn't mean there is nothing to work on: review each answer.",
+      "noneFirstTry": "Not enough evidence to show a repeated pattern in your first attempt at this test. That doesn't mean there is nothing to work on: review each answer.",
+      "mentionedOption": {
+        "title": "An option the recording also mentions",
+        "count": "{count} of {total} answers were something the recording mentions that is not the answer (questions {numbers})",
+        "tip": "Speakers often mention several options before they give the answer. Listen to the end of the idea before you choose. In the review, play both moments."
+      },
+      "correction": {
+        "title": "Answers given after a correction",
+        "count": "{count} of {total} questions where a speaker corrects themselves were not fully correct (questions {numbers})",
+        "tip": "When a speaker says <en>no, sorry</en> or <en>actually</en>, the answer often follows. Write the word after the correction."
+      },
+      "spelledOut": {
+        "title": "Names spelled out in the recording",
+        "count": "{count} of {total} answers spelled out letter by letter were not correct (questions {numbers})",
+        "tip": "Names of people, places and companies may be spelled out letter by letter. Write each letter as you hear it. Practise the English names of letters, such as <en>A</en>, <en>E</en>, <en>I</en>, <en>G</en> and <en>J</en>."
+      },
+      "paraphrase": {
+        "count": "{count} of {total} questions that say the recording's idea in other words were not fully correct (questions {numbers})",
+        "tip": "Listen for the same idea, not the same words. In the review, compare the question's words with the words in the transcript."
+      }
     }
   }
 }

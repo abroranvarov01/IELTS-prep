@@ -4,14 +4,17 @@ import {
   type ListeningAttempt,
   type ListeningKey,
   type ListeningTest,
+  type PatternsView,
   type ResultRecord,
   type Transcript,
+  UNKNOWN_FIRST_TRY,
   attemptFromSession,
   checkAttempt,
   currentResult,
   deviceHistory,
   latestRecord,
   loadSessions,
+  patternsView,
   recordResult,
   settleStoredSessions,
 } from "@/entities/listening";
@@ -27,6 +30,8 @@ export type Loaded =
       correction?: Correction;
       /** False when the result lives only in this tab (ADR-0009 §9). */
       saved: boolean;
+      /** "Mistakes that repeated": test attempts only, never a retry. */
+      patterns?: PatternsView;
     }
   | {
       kind: "earlierVersion";
@@ -35,7 +40,7 @@ export type Loaded =
     };
 
 /**
- * Finds the attempt (the one asked for, or the latest), settles what the
+ * Finds the attempt (the one asked for, or the latest test attempt), settles what the
  * device holds, and makes sure the attempt has a result record for the
  * current key revision and rules version (ADR-0014 §3, ADR-0009 §7).
  */
@@ -57,18 +62,21 @@ export async function loadResult(
     (h) => h.attempts,
     () => [] as ListeningAttempt[],
   );
-  const left = loadSessions(storage, test).finished;
-  const uncommitted =
-    left && !attempts.some((a) => a.id === left.sessionId)
-      ? attemptFromSession(left, now)
-      : undefined;
-  const all = uncommitted ? [...attempts, uncommitted] : attempts;
+  const { finished, retry } = loadSessions(storage, test);
+  const uncommitted = [finished, retry].flatMap((left) =>
+    left?.status === "finished" &&
+    !attempts.some((a) => a.id === left.sessionId)
+      ? (attemptFromSession(left, now) ?? [])
+      : [],
+  );
+  const all = [...attempts, ...uncommitted];
+  const tests = all.filter((a) => a.kind === "test");
   const attempt = attemptId
     ? all.find((a) => a.id === attemptId)
-    : all[all.length - 1];
+    : tests[tests.length - 1];
   if (!attempt) return { kind: "none" };
 
-  const committed = attempt !== uncommitted;
+  const committed = !uncommitted.includes(attempt);
   if (attempt.testVersion !== test.version) {
     const records = committed
       ? await history.results(test, attempt).catch(() => [])
@@ -88,24 +96,96 @@ export async function loadResult(
   const shown = currentResult(records, pair);
   // Not stored: checked for this tab only.
   const result = shown ?? {
-    record: {
-      attemptId: attempt.id,
-      ...pair,
-      checkedAt: now,
-      ...checkAttempt(test, key, transcript, {
-        answers: attempt.answers,
-        mode: attempt.mode,
-        finishReason: attempt.finishReason,
-        ...(attempt.exam?.playedToMs && {
-          playedToMs: attempt.exam.playedToMs,
-        }),
-      }),
-    },
+    record: checked(test, key, transcript, attempt, now),
   };
   return {
     kind: "result",
     attempt,
     ...result,
     saved: Boolean(shown) && history.persistent,
+    ...(attempt.kind === "test" && {
+      patterns: await firstTryPatterns(
+        history,
+        test,
+        key,
+        transcript,
+        attempt,
+        result.record,
+        all,
+        now,
+      ),
+    }),
   };
+}
+
+/** A record for the current pair, checked for this tab only. */
+function checked(
+  test: ListeningTest,
+  key: ListeningKey,
+  transcript: Transcript,
+  attempt: ListeningAttempt,
+  now: number,
+): ResultRecord {
+  return {
+    attemptId: attempt.id,
+    keyRevision: key.revision,
+    rulesVersion: LISTENING_SCORING_RULES_VERSION,
+    checkedAt: now,
+    ...checkAttempt(test, key, transcript, {
+      answers: attempt.answers,
+      mode: attempt.mode,
+      finishReason: attempt.finishReason,
+      ...(attempt.questions && { questions: attempt.questions }),
+      ...(attempt.exam?.playedToMs && {
+        playedToMs: attempt.exam.playedToMs,
+      }),
+    }),
+  };
+}
+
+/**
+ * Repeated mistakes come from the test's first try only (ADR-0014 §3, as
+ * ADR-0009 §5, §7): its marker, and its record for the current pair, written
+ * first if needed.
+ */
+async function firstTryPatterns(
+  history: Awaited<ReturnType<typeof deviceHistory>>,
+  test: ListeningTest,
+  key: ListeningKey,
+  transcript: Transcript,
+  shown: ListeningAttempt,
+  shownRecord: ResultRecord,
+  attempts: ListeningAttempt[],
+  now: number,
+): Promise<PatternsView> {
+  const firstTry = await history.read(test).then(
+    (h) => h.firstTry,
+    () => undefined,
+  );
+  if (!firstTry || firstTry === UNKNOWN_FIRST_TRY)
+    return patternsView(test, key, shown.id, undefined);
+  if (firstTry === shown.id)
+    return patternsView(test, key, shown.id, {
+      attempt: shown,
+      record: shownRecord,
+    });
+  const first = attempts.find((a) => a.id === firstTry);
+  if (!first || first.testVersion !== test.version)
+    return patternsView(test, key, shown.id, first && { attempt: first });
+  const records = await recordResult(
+    history,
+    test,
+    key,
+    transcript,
+    first,
+    now,
+  ).catch(() => []);
+  return patternsView(test, key, shown.id, {
+    attempt: first,
+    record:
+      currentResult(records, {
+        keyRevision: key.revision,
+        rulesVersion: LISTENING_SCORING_RULES_VERSION,
+      })?.record ?? checked(test, key, transcript, first, now),
+  });
 }

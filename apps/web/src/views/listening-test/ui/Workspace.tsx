@@ -16,6 +16,7 @@ import {
   groupNumbers,
   mediaUrl,
   questionUnits,
+  sessionNumbers,
   useListening,
 } from "@/entities/listening";
 import { GroupView } from "@/features/answer-listening";
@@ -29,13 +30,12 @@ import { Dialog } from "./Dialog";
 import { clockText } from "./Preparing";
 import { TestBar } from "./TestBar";
 
-const TOTAL = 40;
-
 /**
  * The Listening screen (LISTENING_EXPERIENCE.md, Listening screen: phone and
  * desktop): the test bar, the player, the notices, the part's questions
  * whole, the bottom bar and the navigator. The screen never moves by itself
- * because the recording did (L4).
+ * because the recording did (L4). A retry (Targeted practice (M9)) shows only
+ * the groups with its questions, and moves and counts within them.
  */
 export function Workspace({
   test,
@@ -52,7 +52,10 @@ export function Workspace({
   audio?: DownloadedAudio;
   canSave: boolean;
 }) {
-  const units = questionUnits(test);
+  const retried = session.retry?.questions;
+  const units = questionUnits(test).filter(
+    (unit) => !retried || unit.numbers.every((n) => retried.includes(n)),
+  );
   return (
     <ListeningContext.Provider value={{ test, units, session, send }}>
       <Screen now={now} audio={audio} canSave={canSave} />
@@ -77,6 +80,7 @@ function Screen({
       ? examClock(session, test, now)
       : { phase: "notStarted" };
   const part = test.parts[session.view.part - 1] ?? test.parts[0]!;
+  const numbers = sessionNumbers(session, test);
   const paused = session.exam?.pause?.kind === "audioFailed";
 
   const navigate = (number: number) => {
@@ -154,6 +158,14 @@ function Screen({
         className="px-gutter pb-[10rem] tablet:pb-[7rem]"
       >
         <div className="mx-auto flex max-w-measure flex-col gap-8 py-6 desktop:max-w-content desktop:gap-12">
+          {session.retry && (
+            <p className="text-meta text-text-secondary desktop:mx-auto desktop:w-full desktop:max-w-measure">
+              {reading("retry.progress", {
+                current: numbers.indexOf(session.currentQuestion) + 1,
+                total: numbers.length,
+              })}
+            </p>
+          )}
           {!canSave && (
             <p className="flex items-start gap-2">
               <InfoIcon />
@@ -173,21 +185,25 @@ function Screen({
               </button>
             </p>
           )}
-          {part.questionGroups.map((group) => (
-            <div
-              key={group.id}
-              className={
-                group.type === "labelling"
-                  ? ""
-                  : "desktop:mx-auto desktop:w-full desktop:max-w-measure"
-              }
-            >
-              <GroupView group={group} />
-            </div>
-          ))}
+          {part.questionGroups
+            .filter((group) =>
+              groupNumbers(group).some((n) => numbers.includes(n)),
+            )
+            .map((group) => (
+              <div
+                key={group.id}
+                className={
+                  group.type === "labelling"
+                    ? ""
+                    : "desktop:mx-auto desktop:w-full desktop:max-w-measure"
+                }
+              >
+                <GroupView group={group} />
+              </div>
+            ))}
         </div>
       </main>
-      <BottomBar onNavigate={navigate} />
+      <BottomBar numbers={numbers} onNavigate={navigate} />
       {paused && clock.phase === "recording" && (
         <Dialog title={t("interrupted.title")} open>
           <p className="mt-2">
@@ -234,7 +250,14 @@ function announcement(
   return "";
 }
 
-function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
+function BottomBar({
+  numbers,
+  onNavigate,
+}: {
+  /** The session's question numbers, in order. */
+  numbers: number[];
+  onNavigate: (n: number) => void;
+}) {
   const t = useTranslations("listening");
   const reading = useTranslations("reading");
   const { test, session, send } = useListening();
@@ -243,7 +266,9 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
   const n = session.currentQuestion;
   const flagged = session.flagged.includes(n);
   const answered = answeredNumbers(session, test);
-  const unanswered = TOTAL - answered.size;
+  const unanswered = numbers.filter((q) => !answered.has(q)).length;
+  const at = numbers.indexOf(n);
+  const last = at === numbers.length - 1;
   const isDesktop = useIsDesktop();
 
   return (
@@ -268,7 +293,11 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
             {flagged ? reading("flag.remove") : reading("flag.add")}
           </button>
           {isDesktop ? (
-            <DesktopParts answered={answered} onNavigate={onNavigate} />
+            <DesktopParts
+              numbers={numbers}
+              answered={answered}
+              onNavigate={onNavigate}
+            />
           ) : (
             <button
               type="button"
@@ -281,17 +310,19 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
           )}
         </div>
         <div className="grid grid-cols-2 gap-2 whitespace-nowrap tablet:ms-auto tablet:flex tablet:shrink-0">
-          <SecondaryButton onClick={() => onNavigate(Math.max(1, n - 1))}>
+          <SecondaryButton
+            onClick={() => onNavigate(numbers[Math.max(0, at - 1)] ?? n)}
+          >
             <ChevronIcon direction="left" />
             {reading("question.previous")}
           </SecondaryButton>
-          {n < TOTAL && (
-            <SecondaryButton onClick={() => onNavigate(n + 1)}>
+          {!last && (
+            <SecondaryButton onClick={() => onNavigate(numbers[at + 1] ?? n)}>
               {reading("question.next")}
               <ChevronIcon direction="right" />
             </SecondaryButton>
           )}
-          {(n === TOTAL || isDesktop) && (
+          {(last || isDesktop) && (
             <PrimaryButton onClick={() => finish.current?.showModal()}>
               {reading("finish.button")}
             </PrimaryButton>
@@ -299,13 +330,13 @@ function BottomBar({ onNavigate }: { onNavigate: (n: number) => void }) {
         </div>
       </div>
       <Dialog dialogRef={navigator} title={reading("navigator.open")}>
-        {test.parts.map((p) => (
+        {partsWith(test, numbers).map(({ part: p, inPart }) => (
           <section key={p.id} className="mt-4">
             <h3 className="font-bold">
               {t("navigator.part", { number: p.number })}
             </h3>
             <ul className="mt-2 flex flex-wrap gap-1">
-              {p.questionGroups.flatMap(groupNumbers).map((q) => (
+              {inPart.map((q) => (
                 <li key={q}>
                   <QuestionCell
                     number={q}
@@ -406,19 +437,23 @@ function QuestionCell({
  * progress.
  */
 function DesktopParts({
+  numbers,
   answered,
   onNavigate,
 }: {
+  numbers: number[];
   answered: Set<number>;
   onNavigate: (n: number) => void;
 }) {
   const t = useTranslations("listening");
   const { test, session } = useListening();
+  const parts = partsWith(test, numbers);
   return (
     <>
       <ul className="flex flex-wrap gap-1">
-        {test.parts[session.view.part - 1]!.questionGroups.flatMap(
-          groupNumbers,
+        {(
+          parts.find(({ part }) => part.number === session.view.part)?.inPart ??
+          []
         ).map((q) => (
           <li key={q}>
             <QuestionCell
@@ -429,21 +464,20 @@ function DesktopParts({
           </li>
         ))}
       </ul>
-      {test.parts
-        .filter((p) => p.number !== session.view.part)
-        .map((p) => {
-          const numbers = p.questionGroups.flatMap(groupNumbers);
+      {parts
+        .filter(({ part }) => part.number !== session.view.part)
+        .map(({ part: p, inPart }) => {
           return (
             <button
               key={p.id}
               type="button"
               className={QUIET_BUTTON}
-              onClick={() => onNavigate(numbers[0] ?? 1)}
+              onClick={() => onNavigate(inPart[0] ?? 1)}
             >
               {t("navigator.partProgress", {
                 number: p.number,
-                answered: numbers.filter((q) => answered.has(q)).length,
-                total: numbers.length,
+                answered: inPart.filter((q) => answered.has(q)).length,
+                total: inPart.length,
               })}
               <ChevronIcon direction="right" />
             </button>
@@ -451,4 +485,16 @@ function DesktopParts({
         })}
     </>
   );
+}
+
+/** The parts with any of the session's numbers, each with its own of them. */
+function partsWith(test: ListeningTest, numbers: number[]) {
+  return test.parts
+    .map((part) => ({
+      part,
+      inPart: part.questionGroups
+        .flatMap(groupNumbers)
+        .filter((q) => numbers.includes(q)),
+    }))
+    .filter(({ inPart }) => inPart.length > 0);
 }

@@ -380,7 +380,11 @@ function DesktopBar({
         {test.parts
           .filter((p) => p.number !== current.unit.partNumber)
           .map((p) => {
-            const numbers = p.questionGroups.flatMap(groupNumbers);
+            // A retry's review has cards for its own questions only.
+            const numbers = p.questionGroups
+              .flatMap(groupNumbers)
+              .filter((n) => cards.some((c) => c.unit.numbers.includes(n)));
+            if (numbers.length === 0) return null;
             const correct = numbers.filter((n) => {
               const card = cards.find((c) => c.unit.numbers.includes(n));
               return card && card.unit.numbers.indexOf(n) < card.marks;

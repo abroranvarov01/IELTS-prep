@@ -116,6 +116,59 @@ describe("committing a finished Listening session across tabs", () => {
   });
 });
 
+describe("a Listening retry", () => {
+  it("is kept apart from the test session, committed as its own attempt over its questions only, and never becomes the first try", async () => {
+    const { tabA } = await twoTabs();
+    const storage = memoryStorage();
+    const source = (await tabA.commit(
+      test,
+      finished(1, "here", T0 + 60_000),
+      T0 + 1,
+    ))!;
+    const inProgress = startSession(test, "practice", T0, id(2));
+    storage.setItem(CURRENT, envelope(inProgress));
+
+    let retry = startSession(test, "exam", T0 + 2, id(3), {
+      of: source.id,
+      questions: [2, 37, 38],
+    });
+    expect(retry).toMatchObject({ mode: "practice", currentQuestion: 2 });
+    retry = apply(retry, test, { type: "answer", number: 1, answer: "x" }, T0);
+    retry = apply(retry, test, { type: "answer", number: 2, answer: "x" }, T0);
+    retry = apply(retry, test, { type: "finish" }, T0 + 90_000);
+    expect(retry.answers).toEqual({ "2": "x" });
+    storage.setItem(`${CURRENT}:retry`, envelope(retry));
+    expect(loadSessions(storage, test)).toMatchObject({
+      current: { sessionId: id(2) },
+      retry: { sessionId: id(3) },
+    });
+
+    await settleStoredSessions(storage, tabA, test, T0 + 100_000);
+    expect(storage.values.has(`${CURRENT}:retry`)).toBe(false);
+    expect(storage.values.has(CURRENT)).toBe(true);
+    const { attempts, firstTry } = await tabA.read(test);
+    const committed = attempts.find((a) => a.id === id(3))!;
+    expect(committed).toMatchObject({
+      kind: "retry",
+      retryOf: source.id,
+      questions: [2, 37, 38],
+    });
+    expect(firstTry).toBe(source.id);
+
+    const [record] = await recordResult(
+      tabA,
+      test,
+      key,
+      transcript,
+      committed,
+      T0 + 100_001,
+    );
+    expect(Object.keys(record!.outcomes)).toEqual(["2", "37", "38"]);
+    expect(record!.score.positions).toBe(3);
+    expect(await tabA.results(test, committed)).toEqual([record]);
+  });
+});
+
 describe("settling Listening sessions on load", () => {
   it("removes the finished session's copy only after a persistent commit", async () => {
     const { tabA } = await twoTabs();

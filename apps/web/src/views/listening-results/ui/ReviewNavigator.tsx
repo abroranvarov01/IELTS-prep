@@ -47,7 +47,11 @@ export function ReviewNavigator({
         {t("navigator.open")}
       </h2>
       {test.parts.map((part) => {
-        const numbers = part.questionGroups.flatMap(groupNumbers);
+        // A retry's review has cards for its own questions only.
+        const numbers = part.questionGroups
+          .flatMap(groupNumbers)
+          .filter((n) => cardOf(n));
+        if (numbers.length === 0) return null;
         const correct = numbers.filter((n) => {
           const card = cardOf(n);
           return card && card.unit.numbers.indexOf(n) < card.marks;

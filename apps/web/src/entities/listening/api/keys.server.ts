@@ -6,8 +6,9 @@ import { listeningTest } from "./content.server";
 
 // The answer keys and transcripts of the Listening tests (ADR-0012 §4, §5),
 // validated against their tests when this module loads, so an invalid file
-// fails the build. Only the results and review pages import this module
-// (ADR-0014 §6): the test screen never carries a key or a transcript.
+// fails the build. Only the results, review and retry pages import this
+// module, and the retry page passes on only the key's revision (ADR-0014
+// §6): a screen where learners answer never carries a key or a transcript.
 const FILES: Record<string, { key: unknown; transcript: unknown }> = {
   "temporary-voa-1": {
     key: temporaryVoa1Key,
