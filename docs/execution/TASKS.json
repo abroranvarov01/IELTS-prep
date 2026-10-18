@@ -4080,7 +4080,8 @@
       "title": "Listening session model and storage",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-09"],
       "goal": "A Listening session in Practice or Exam follows the approved play, section and timing rules and survives reloads.",
       "scope": [

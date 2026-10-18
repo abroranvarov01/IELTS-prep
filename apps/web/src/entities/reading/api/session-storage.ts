@@ -1,42 +1,24 @@
+import { type KeyValueStore, deviceStorage } from "@/shared/lib/device-storage";
 import type { ReadingTest } from "../model/content";
 import { SESSION_SCHEMA, parseStoredSession } from "../model/parse-session";
 import type { ReadingSession } from "../model/session";
+
+export {
+  type KeyValueStore,
+  deviceStorage,
+  newSessionId,
+} from "@/shared/lib/device-storage";
 
 // Reading sessions live on the device, in localStorage (ADR-0006): the
 // current test session and the current retry, each in progress or finished
 // and not yet committed to the attempt history (ADR-0009 §2, §4). M4's
 // finished entry is only read, to be imported, and then removed.
 
-export type KeyValueStore = Pick<Storage, "getItem" | "setItem" | "removeItem">;
-
 const currentKey = (testId: string) => `reading:${testId}`;
 const retryKey = (testId: string) => `reading:${testId}:retry`;
 const legacyFinishedKey = (testId: string) => `reading:${testId}:finished`;
 const keyOf = (session: ReadingSession) =>
   session.retry ? retryKey(session.testId) : currentKey(session.testId);
-
-/**
- * A new session id (ADR-0009 §3): "s-" and a random version 4 UUID. Built
- * from `crypto.getRandomValues`, which, unlike `randomUUID`, also works
- * outside secure contexts.
- */
-export function newSessionId(): string {
-  const bytes = crypto.getRandomValues(new Uint8Array(16));
-  bytes[6] = ((bytes[6] ?? 0) & 0x0f) | 0x40;
-  bytes[8] = ((bytes[8] ?? 0) & 0x3f) | 0x80;
-  const hex = [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
-  return `s-${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
-}
-
-/** The browser's localStorage, or undefined where it is blocked. */
-export function deviceStorage(): KeyValueStore | undefined {
-  try {
-    return window.localStorage;
-  } catch {
-    // Some browsers throw on access when site data is blocked.
-    return undefined;
-  }
-}
 
 export type StoredSessions = {
   /** The test session, in progress or finished and not yet committed. */
