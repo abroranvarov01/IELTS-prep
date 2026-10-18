@@ -3452,7 +3452,8 @@
       "title": "Draft the ADR for level-check items, results and storage",
       "milestone": "M7",
       "owner": "worker",
-      "status": "in_progress",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M7-01"],
       "goal": "Decide how level-check items are described, how results are computed and versioned, and how they are stored on the device compatibly with later sync.",
       "scope": [

@@ -41,6 +41,7 @@ Do not invent answers to these in code. Each one is a candidate ADR.
 - **Offline scope.** What works offline (for example downloaded Reading sets) and how results sync.
 - **Content model and authoring.** How passages, questions, answer keys, and explanations are authored, versioned, and reviewed. The Reading content contract is decided in [ADR-0005](decisions/0005-reading-content-contract.md) (accepted); answer checking and explanation files: [ADR-0008](decisions/0008-reading-answer-checking-and-explanations.md) (accepted); authoring, review and delivery stay with the content system (M13).
 - **Analytics and privacy.** What is measured, with what tool, and the consent requirements (including for minors).
+- **Level-check forms, results and storage.** Proposed in [ADR-0011](decisions/0011-level-check-forms-results-and-storage.md) (M7-04): a form in the Reading content contract under its own id and version, the Reading session model in a separate `localStorage` entry, a separate IndexedDB database with append-only attempts and result records keyed by form, key, checking-rules and level-rules versions, a pure level module, and a state-only cookie for Home. Awaiting the owner's M7-05 decision.
 - **Feature folder structure inside `apps/api`.** Decide with its first feature module. (`apps/web`: [ADR-0010](decisions/0010-feature-sliced-design-in-apps-web.md), accepted.)
 
 ## Related

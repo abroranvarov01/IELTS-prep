@@ -46,5 +46,6 @@ Split a choice into its own ADR only when it independently meets the criteria ab
 | [0008](0008-reading-answer-checking-and-explanations.md) | Reading Answer Checking, Explanations and Review Content | Accepted |
 | [0009](0009-reading-attempts-on-the-device.md) | Reading Attempts and Results on the Device | Accepted |
 | [0010](0010-feature-sliced-design-in-apps-web.md) | Feature-Sliced Design in apps/web | Accepted |
+| [0011](0011-level-check-forms-results-and-storage.md) | Level-Check Forms, Results and Storage | Proposed |
 
 Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).

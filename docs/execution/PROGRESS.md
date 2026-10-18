@@ -37,6 +37,7 @@ Which checks cover which work, so unchanged work is not checked again ([DEFINITI
 | 2026-10-18 | M7-01 level-check draft | docs only (`docs/product/LEVEL_CHECK.md`, CLAUDE.md) | Working tree on `3261082` | `pnpm format:check` → pass. `test -z "$(git status --porcelain -- apps packages)"` → pass (no app files changed) |
 | 2026-10-18 | M7-02 level-check flows and copy | docs only (USER_FLOWS.md) | Working tree on `e1fb1a2` | `pnpm format:check` → pass. `test -z "$(git status --porcelain -- apps packages)"` → pass |
 | 2026-10-18 | M7-03 level-check design values | docs only (DESIGN_SYSTEM.md) | Working tree on `2974467` | `pnpm format:check` → pass. `test -z "$(git status --porcelain -- apps packages)"` → pass |
+| 2026-10-18 | M7-04 level-check ADR | docs only (ADR-0011, decisions README, ARCHITECTURE.md) | Working tree on `8a17938` | `pnpm format:check` → pass. `test -z "$(git status --porcelain -- apps packages)"` → pass |
 
 ## Log
 
@@ -828,4 +829,14 @@ Entry format:
 - Changes: DESIGN_SYSTEM.md "M7 components (Level check)", marked DRAFT: the intro on the picture stage with the skills picture (facts as icon rows, the honest line as a note, the in-progress form with a 14-segment bar, the finished form, storage blocked, actions); the section as the M4 reading screen by removal only (no timer, flag, pin or evidence block; "Finish" and "Finish the check?"); the result in the task composition (the level name in `text.display` with a three-step segment indicator, never a gauge; the score in Heading 2; scope and honest notes; a "Practise first" card on `surface.warm`, in the side column on desktop; the red "Practise Reading" and the quiet links; the insufficient-data, earlier-form and nothing-finished states); Home's and step 3's card after the check; motion and pictures. No new token; contrast from the existing values.
 - Verification: `pnpm format:check`; no app or package files changed.
 - Notes: The three-step indicator is proposed as decorative with the level name as the meaning; the owner may drop it at M7-05 if it reads as a gauge.
+
+### 2026-10-18: M7-04 Draft the ADR for level-check items, results and storage
+- Result: done (Proposed, awaiting the M7-05 gate)
+- Changes: New ADR-0011 "Level-Check Forms, Results and Storage" (Proposed): a form is a Reading content-contract file under its own id and version with a separate key and explanations, kept out of the Reading catalog; the section runs on the Reading session model (removals by not rendering) in `localStorage` `levelCheck:reading`; finished sections commit atomically (as ADR-0009 §4) to a separate IndexedDB database `ielts-prep-level-check` (`attempts`, `results` keyed by attempt, key revision, checking-rules version and level-rules version), result records as ADR-0009 §7, retention 10 per skill, the starting point derived as the latest finished attempt at the current form; a pure level module with `LEVEL_RULES_VERSION` and types that cannot hold a band; a state-only cookie `ielts-prep-level-check` written by Server Actions so Home knows find / continue / practise; untrusted data, unavailable storage and M10 sync by union; five alternatives with trade-offs. Decisions README index and ARCHITECTURE.md (Open decisions) list it.
+- Verification: `pnpm format:check`; no app or package files changed.
+- Notes: The ADR keeps the Reading stores untouched by design (alternative B rejected); the owner may prefer B at M7-05 if one history is wanted, at the cost of a Reading schema bump.
+
+### 2026-10-18: M7 stops at the M7-05 owner gate
+- Result: waiting for the owner
+- Changes: none. M7-01 to M7-04 are done; M7-05 (human) needs the owner's answers to LEVEL_CHECK.md D1–D14, the approval of the M7 flows and copy (USER_FLOWS.md), the design values (DESIGN_SYSTEM.md, M7 components) and ADR-0011 (set to Accepted), and confirmation that the level thresholds and the "practise first" rule are product policy (ielts-scoring rule). M7-06 to M7-11 wait on it.
 
