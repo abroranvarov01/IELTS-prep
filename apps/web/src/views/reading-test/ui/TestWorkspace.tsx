@@ -24,7 +24,7 @@ import { usePassagePosition } from "./use-passage-position";
  */
 export function TestWorkspace({ canSave }: { canSave: boolean }) {
   const t = useTranslations("reading");
-  const { test, session, send } = useReading();
+  const { test, session, send, variant } = useReading();
   const isDesktop = useIsDesktop();
   // The passage scrolls in its column on desktop, with the page on phones.
   const columnRef = useRef<HTMLElement>(null);
@@ -44,7 +44,15 @@ export function TestWorkspace({ canSave }: { canSave: boolean }) {
   if (!passage) return null;
   const skipLink = <SkipToQuestion />;
   const testBar = (
-    <TestBar confirmExit={session.mode === "exam"}>
+    <TestBar
+      confirmExit={
+        session.mode === "exam"
+          ? "exam"
+          : variant === "check" && !canSave
+            ? "unsaved"
+            : undefined
+      }
+    >
       <span className="font-medium">
         {t("passageOf", {
           number: passage.number,

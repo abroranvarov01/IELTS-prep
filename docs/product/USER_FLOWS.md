@@ -682,7 +682,7 @@ Reused: `levelCheck.*`, `home.goal.targetBandNotSet`, `home.goal.change`, `examT
   - **Offline after loading:** the section works to the end (content and checking are in the page); the result opens; nothing needs the network until the Hub. Opening offline → the M1 error state.
   - **Without JavaScript:** the intro and the result's safe states are plain pages; the section needs JavaScript (as the Reading screen does).
 - **Accessibility:** the intro's H1 labels the page; the section's skip link, sheet, navigator and finish confirmation are the Reading screen's; the result's H1 takes focus when it replaces the section; the level name, the score and "Practise first" are text, never color or a gauge; the question-type names in English are marked `lang="en"`.
-- **Languages checked:** not yet. To verify in M7-09 and M7-10 at 320 px: the Russian intro facts, the Uzbek result H1 "Oʻqish boʻyicha boshlangʻich nuqtangiz" and the "Practise first" line with two English type names.
+- **Languages checked:** M7-09 (2026-10-18): the intro in its three forms, the section and the continue cards at 320, 390 and 1280 px in uz, ru and en (screenshots; the e2e fit and axe checks on the intro at 320 and 360 px). The result page: M7-10.
 
 ### Leave and come back
 - **Goal:** nothing is lost when the phone locks, the tab closes, or the learner taps "Exit"; the check is finished in a later sitting.

@@ -91,9 +91,66 @@
     "title": "Find your level",
     "body": "A short level check shows where you are now and what to practice first.",
     "start": "Start the level check",
-    "comingSoon": {
-      "title": "The level check is being prepared",
-      "body": "It will be available here soon. Your goal is saved on this device."
+    "intro": {
+      "covers": "Reading · {passages} short texts · {questions} questions",
+      "time": "About {minutes} minutes. No time limit.",
+      "saved": "Your answers are saved on this device, so you can stop and continue later.",
+      "honest": "You get a starting point on our practice scale, not an IELTS band.",
+      "academicNote": "The texts are Academic-style. The reading skills it checks are the same.",
+      "start": "Start",
+      "storageUnavailable": "Your answers can't be saved on this device. Don't close the page while you take the check."
+    },
+    "resume": {
+      "title": "Continue the level check",
+      "body": "You answered {answered} of {total} questions. Pick up where you left off.",
+      "continue": "Continue",
+      "startOver": "Start over"
+    },
+    "retake": {
+      "body": "You took this check on {date}. Your starting point: {level}.",
+      "sameQuestions": "It has the same questions as before. Practice tells you more than repeating a check.",
+      "start": "Take the check again"
+    },
+    "section": {
+      "title": "Level check: Reading"
+    },
+    "finish": {
+      "button": "Finish",
+      "title": "Finish the check?"
+    },
+    "exitUnsaved": {
+      "title": "Leave the check?",
+      "body": "Your answers can't be saved on this device."
+    },
+    "result": {
+      "title": "Your Reading starting point",
+      "scope": "Based on {questions} questions in a short check, not a full test.",
+      "honest": "This is where to start on our practice scale. It is not an IELTS band.",
+      "practiseFirst": "Practise first:",
+      "practiseAny": "Any Reading practice is a good next step.",
+      "practise": "Practise Reading",
+      "seeAnswers": "See your answers",
+      "insufficient": {
+        "title": "Not enough answers for a starting point",
+        "answered": "{answered} of {total} answered.",
+        "body": "Answer at least half of the questions to get a starting point."
+      },
+      "oldForm": "The check has changed since you took it, so your answers can't be reviewed.",
+      "none": {
+        "title": "No starting point on this device yet",
+        "body": "The result appears here after you finish the check on this device."
+      }
+    },
+    "levels": {
+      "1": "Starting out",
+      "2": "On the way",
+      "3": "Strong start"
+    },
+    "types": {
+      "trueFalseNotGiven": "<en>True / False / Not Given</en> questions",
+      "matchingHeadings": "matching headings",
+      "sentenceCompletion": "sentence completion",
+      "multipleChoice": "multiple choice"
     }
   },
   "home": {
@@ -108,6 +165,15 @@
     "chooseSkill": "Choose a skill",
     "skills": {
       "reading": "Build your reading skills."
+    },
+    "nextAction": {
+      "practiseReading": {
+        "body": "You have a Reading starting point. Keep going with a practice test."
+      },
+      "seeStartingPoint": "See your starting point",
+      "continueCheck": {
+        "body": "You stopped partway. Your answers are saved on this device."
+      }
     }
   },
   "reading": {

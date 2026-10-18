@@ -12,6 +12,7 @@ export {
   type QuestionGroup,
   type ReadingTest,
   STATEMENT_ANSWERS,
+  positionCount,
 } from "./model/content";
 export type { AnswerKey, AnswerKeyEntry } from "./model/parse-content";
 export { type QuestionUnit, questionUnits, unitOf } from "./model/units";
@@ -69,6 +70,7 @@ export {
   deviceStorage,
   loadSessions,
   newSessionId,
+  removeSession,
   saveSession,
   storageSnapshot,
 } from "./api/session-storage";

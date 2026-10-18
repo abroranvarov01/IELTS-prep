@@ -24,3 +24,4 @@ export {
 } from "./model/state";
 export { type LevelCheckHistory, deviceLevelCheckHistory } from "./api/history";
 export { readLevelCheckState, saveLevelCheckState } from "./api/state-cookie";
+export { setLevelCheckSectionState } from "./api/actions";

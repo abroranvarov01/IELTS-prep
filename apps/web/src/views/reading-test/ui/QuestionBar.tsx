@@ -22,7 +22,9 @@ import { visibleElementById } from "@/shared/ui/visible-element";
  */
 export function QuestionBar({ goTo }: { goTo: (number: number) => void }) {
   const t = useTranslations("reading");
-  const { test, units, session, send } = useReading();
+  const tCheck = useTranslations("levelCheck");
+  const { test, units, session, send, variant } = useReading();
+  const isCheck = variant === "check";
   const dialogRef = useRef<HTMLDialogElement>(null);
   const finishHeadingRef = useRef<HTMLHeadingElement>(null);
   const answered = answeredNumbers(session, test);
@@ -95,15 +97,17 @@ export function QuestionBar({ goTo }: { goTo: (number: number) => void }) {
       {/* The current question's controls stay together at the bar's end. */}
       <div className="ms-auto flex flex-wrap items-center gap-x-2 gap-y-2">
         <RetryProgress />
-        <button
-          type="button"
-          aria-pressed={isFlagged}
-          onClick={() => send({ type: "toggleFlag", number })}
-          className={`${QUIET_BUTTON} group`}
-        >
-          <FlagIcon className="size-4 group-aria-pressed:fill-current" />
-          {isFlagged ? t("flag.remove") : t("flag.add")}
-        </button>
+        {!isCheck && (
+          <button
+            type="button"
+            aria-pressed={isFlagged}
+            onClick={() => send({ type: "toggleFlag", number })}
+            className={`${QUIET_BUTTON} group`}
+          >
+            <FlagIcon className="size-4 group-aria-pressed:fill-current" />
+            {isFlagged ? t("flag.remove") : t("flag.add")}
+          </button>
+        )}
         {previous && (
           <SecondaryButton onClick={() => goTo(previous.numbers[0] ?? 1)}>
             <ChevronIcon direction="left" />
@@ -122,7 +126,7 @@ export function QuestionBar({ goTo }: { goTo: (number: number) => void }) {
             finishHeadingRef.current?.focus();
           }}
         >
-          {t("finish.button")}
+          {isCheck ? tCheck("finish.button") : t("finish.button")}
         </PrimaryButton>
       </div>
       <ConfirmDialog dialogRef={dialogRef} labelledBy={FINISH_TITLE_ID}>

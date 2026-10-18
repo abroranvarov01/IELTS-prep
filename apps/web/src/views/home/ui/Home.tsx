@@ -1,5 +1,7 @@
+import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { readLevelCheckState } from "@/entities/level-check";
 import { Link } from "@/shared/i18n/navigation";
 import { ReadingIcon } from "@/shared/ui/icons";
 import { Illustration } from "@/shared/ui/illustrations";
@@ -23,7 +25,10 @@ export async function Home() {
       <p className="mt-1 text-text-secondary">{t("home.subtitle")}</p>
       <div className="mt-6 grid gap-4 desktop:grid-cols-12 desktop:gap-6">
         <div className="desktop:col-span-7">
-          <NextActionBlock action={nextAction()} />
+          {/* The next action depends on the level check's state cookie. */}
+          <Suspense>
+            <NextActionCard />
+          </Suspense>
         </div>
         <div className="desktop:col-span-5">
           {/* The goal needs the request's cookie; everything else is static. */}
@@ -58,11 +63,20 @@ export async function Home() {
   );
 }
 
+async function NextActionCard() {
+  return (
+    <NextActionBlock
+      action={nextAction(readLevelCheckState(await cookies()).reading)}
+    />
+  );
+}
+
 /** The next action is the screen's only primary action, whatever its kind. */
 async function NextActionBlock({ action }: { action: NextAction }) {
-  const t = await getTranslations("levelCheck");
+  const t = await getTranslations();
   switch (action.kind) {
     case "levelCheck":
+    case "continueLevelCheck":
       return (
         <section
           aria-labelledby="next-action"
@@ -78,13 +92,21 @@ async function NextActionBlock({ action }: { action: NextAction }) {
               </Illustration>
             </span>
             <h2 id="next-action" className="mt-4 text-heading-2 font-bold">
-              {t("title")}
+              {action.kind === "continueLevelCheck"
+                ? t("levelCheck.resume.title")
+                : t("levelCheck.title")}
             </h2>
-            <p className="mt-2 text-text-secondary">{t("body")}</p>
+            <p className="mt-2 text-text-secondary">
+              {action.kind === "continueLevelCheck"
+                ? t("home.nextAction.continueCheck.body")
+                : t("levelCheck.body")}
+            </p>
             <div className="mt-6">
               <PrimaryLink href="/level-check">
                 <span className="inline-flex items-center gap-2">
-                  {t("start")}
+                  {action.kind === "continueLevelCheck"
+                    ? t("levelCheck.resume.continue")
+                    : t("levelCheck.start")}
                   <ArrowIcon />
                 </span>
               </PrimaryLink>

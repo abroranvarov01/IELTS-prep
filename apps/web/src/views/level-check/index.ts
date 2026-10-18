@@ -1,1 +1,1 @@
-export { LevelCheckComingSoon } from "./ui/LevelCheckComingSoon";
+export { LevelCheckIntro } from "./ui/LevelCheckIntro";

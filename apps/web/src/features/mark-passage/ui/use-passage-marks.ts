@@ -11,7 +11,7 @@ import { MAX_PINS, type Passage, unitOf, useReading } from "@/entities/reading";
  */
 export function usePassageMarks(passage: Passage | undefined) {
   const t = useTranslations("reading");
-  const { units, session, send } = useReading();
+  const { units, session, send, variant } = useReading();
   const passageElement = useRef<HTMLElement>(null);
   const firstAction = useRef<HTMLButtonElement>(null);
   const sentenceIds = useMemo(
@@ -114,10 +114,11 @@ export function usePassageMarks(passage: Passage | undefined) {
     };
   }, [selected]);
 
-  // Pin Evidence (Practice only) goes to the current question; a "choose
-  // several" item keeps its pins under its first number.
+  // Pin Evidence (Practice only, never in a level-check section) goes to the
+  // current question; a "choose several" item keeps its pins under its first
+  // number.
   const pinNumber =
-    session.mode === "practice"
+    session.mode === "practice" && variant !== "check"
       ? unitOf(units, session.currentQuestion)?.numbers[0]
       : undefined;
   const pinned = pinNumber === undefined ? [] : (session.pins[pinNumber] ?? []);

@@ -3,9 +3,9 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import {
-  QUESTION_COUNT,
   type SheetState,
   answeredNumbers,
+  positionCount,
   unitOf,
   useReading,
 } from "@/entities/reading";
@@ -37,7 +37,10 @@ export function QuestionSheet({
   showSentence: (sentenceId: string) => void;
 }) {
   const t = useTranslations("reading");
-  const { test, units, session, send } = useReading();
+  const tCheck = useTranslations("levelCheck");
+  const { test, units, session, send, variant } = useReading();
+  const isCheck = variant === "check";
+  const finishLabel = isCheck ? tCheck("finish.button") : t("finish.button");
   const state = session.view.sheet;
   const number = session.currentQuestion;
   const unit = unitOf(units, number);
@@ -135,7 +138,7 @@ export function QuestionSheet({
           from: unit.numbers[0] ?? 0,
           to: unit.numbers.at(-1) ?? 0,
         })
-      : t("question.of", { number, total: QUESTION_COUNT });
+      : t("question.of", { number, total: positionCount(test) });
   const isAnswered = answeredNumbers(session, test).has(number);
   const isFlagged = session.flagged.includes(number);
   const isOpen = state !== "collapsed";
@@ -161,7 +164,7 @@ export function QuestionSheet({
               · {t("navigator.answered")}
             </span>
           )}
-          {!isOpen && isFlagged && (
+          {!isOpen && isFlagged && !isCheck && (
             <span className="text-meta text-text-secondary">
               · <FlagIcon className="inline size-3" /> {t("navigator.flagged")}
             </span>
@@ -177,20 +180,22 @@ export function QuestionSheet({
       {isOpen && panel === "question" && (
         // One row: a long label wraps inside its own button.
         <div className="flex shrink-0 px-gutter">
-          <button
-            type="button"
-            aria-pressed={isFlagged}
-            onClick={() => send({ type: "toggleFlag", number })}
-            className={`${QUIET_BUTTON} group -ms-3`}
-          >
-            <FlagIcon className="size-4 group-aria-pressed:fill-current" />
-            {isFlagged ? t("flag.remove") : t("flag.add")}
-          </button>
+          {!isCheck && (
+            <button
+              type="button"
+              aria-pressed={isFlagged}
+              onClick={() => send({ type: "toggleFlag", number })}
+              className={`${QUIET_BUTTON} group -ms-3`}
+            >
+              <FlagIcon className="size-4 group-aria-pressed:fill-current" />
+              {isFlagged ? t("flag.remove") : t("flag.add")}
+            </button>
+          )}
           <button
             ref={navigatorButtonRef}
             type="button"
             onClick={() => openPanel("navigator")}
-            className={QUIET_BUTTON}
+            className={`${QUIET_BUTTON}${isCheck ? " -ms-3" : ""}`}
           >
             <GridIcon />
             {t("navigator.open")}
@@ -227,7 +232,7 @@ export function QuestionSheet({
               </div>
               <div className="mt-6">
                 <PrimaryButton onClick={() => openFinish("navigatorButton")}>
-                  {t("finish.button")}
+                  {finishLabel}
                 </PrimaryButton>
               </div>
             </>
@@ -265,7 +270,7 @@ export function QuestionSheet({
                 onChoose={() => openPanel("options")}
               />
             </div>
-            {session.mode === "practice" && (
+            {session.mode === "practice" && !isCheck && (
               <EvidenceList
                 number={unit.numbers[0] ?? number}
                 onShow={showSentence}
@@ -291,7 +296,7 @@ export function QuestionSheet({
                 ref={finishButtonRef}
                 onClick={() => openFinish("finishButton")}
               >
-                {t("finish.button")}
+                {finishLabel}
               </PrimaryButton>
             )}
           </div>

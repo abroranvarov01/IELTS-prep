@@ -123,6 +123,19 @@ export const STATEMENT_ANSWERS = {
   yesNoNotGiven: ["YES", "NO", "NOT GIVEN"],
 } as const;
 
+/** The scoring positions of a test or form: 40 for a test, 14 for the level-check form. */
+export function positionCount(test: ReadingTest): number {
+  return test.passages.reduce(
+    (count, passage) =>
+      count +
+      passage.questionGroups.reduce(
+        (n, group) => n + groupNumbers(group).length,
+        0,
+      ),
+    0,
+  );
+}
+
 /** The question numbers of a group, in order. */
 export function groupNumbers(group: QuestionGroup): number[] {
   switch (group.type) {

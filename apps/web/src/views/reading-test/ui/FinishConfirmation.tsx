@@ -23,7 +23,8 @@ export function FinishConfirmation({
   onCancel: () => void;
 }) {
   const t = useTranslations("reading");
-  const { test, session } = useReading();
+  const tCheck = useTranslations("levelCheck");
+  const { test, session, variant } = useReading();
   // A retry counts only its own questions.
   const unanswered =
     sessionNumbers(session).length - answeredNumbers(session, test).size;
@@ -36,7 +37,7 @@ export function FinishConfirmation({
         tabIndex={-1}
         className="text-heading-3 font-bold focus:outline-none"
       >
-        {t("finish.title")}
+        {variant === "check" ? tCheck("finish.title") : t("finish.title")}
       </h2>
       {unanswered > 0 && (
         <p className="mt-2">{t("finish.unanswered", { count: unanswered })}</p>

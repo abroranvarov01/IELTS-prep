@@ -3,8 +3,8 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import {
-  QUESTION_COUNT,
   type QuestionUnit,
+  positionCount,
   unitOf,
   useReading,
 } from "@/entities/reading";
@@ -31,7 +31,7 @@ export function QuestionColumn({
   showSentence: (sentenceId: string) => void;
 }) {
   const t = useTranslations("reading");
-  const { test, units, session, send } = useReading();
+  const { test, units, session, send, variant } = useReading();
   const passage = test.passages[session.view.passage - 1];
   const current = unitOf(units, session.currentQuestion);
   // The "choose from a list" question whose option list is open, by unit key.
@@ -94,7 +94,10 @@ export function QuestionColumn({
           from: numbers[0] ?? 0,
           to: numbers.at(-1) ?? 0,
         })
-      : t("question.of", { number: numbers[0] ?? 0, total: QUESTION_COUNT });
+      : t("question.of", {
+          number: numbers[0] ?? 0,
+          total: positionCount(test),
+        });
 
   if (!passage) return null;
   return (
@@ -158,7 +161,7 @@ export function QuestionColumn({
                           />
                         )}
                       </div>
-                      {session.mode === "practice" && (
+                      {session.mode === "practice" && variant !== "check" && (
                         <EvidenceList
                           number={unit.numbers[0] ?? 0}
                           onShow={showSentence}

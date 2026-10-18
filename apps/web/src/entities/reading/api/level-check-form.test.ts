@@ -5,15 +5,12 @@ import { describe, expect, it } from "vitest";
 import { routing } from "@/shared/i18n/routing";
 import { groupNumbers } from "../model/content";
 import { parseExplanations } from "../model/explanations";
-import {
-  type ContentShape,
-  parseAnswerKey,
-  parseReadingTest,
-} from "../model/parse-content";
+import { parseAnswerKey, parseReadingTest } from "../model/parse-content";
 import { checkAttempt } from "../model/scoring";
 import type { Answer } from "../model/session";
 import { questionUnits } from "../model/units";
 import { readingTestIds } from "./content.server";
+import { LEVEL_CHECK_FORM_SHAPE as FORM_SHAPE } from "../forms.server";
 
 // The level-check forms (ADR-0011 §1; LEVEL_CHECK.md §3, §8): files in the
 // Reading content contract with their own shape, kept out of the Reading
@@ -22,7 +19,6 @@ const FORM_DIR = path.join(
   import.meta.dirname,
   "../../../../content/level-check",
 );
-const FORM_SHAPE: ContentShape = { passages: 2, questions: 14 };
 const formFiles = readdirSync(FORM_DIR).filter(
   (file) =>
     file.endsWith(".json") &&

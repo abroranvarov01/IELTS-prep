@@ -9,18 +9,20 @@ import { TestBarFrame } from "@/widgets/reading-layout";
 import { ConfirmDialog } from "./ConfirmDialog";
 
 /**
- * The test screen's bar, with "Exit" on the start side. With `confirmExit` (a
- * running Exam), "Exit" asks first in a modal dialog (ADR-0007), because the
- * time keeps running.
+ * The test screen's bar, with "Exit" on the start side. With `confirmExit`,
+ * "Exit" asks first in a modal dialog (ADR-0007): in a running Exam, because
+ * the time keeps running; in a level-check section the device cannot save,
+ * because the answers would be lost (USER_FLOWS.md, Level check flows).
  */
 export function TestBar({
-  confirmExit = false,
+  confirmExit,
   children,
 }: {
-  confirmExit?: boolean;
+  confirmExit?: "exam" | "unsaved";
   children?: ReactNode;
 }) {
   const t = useTranslations("reading");
+  const tCheck = useTranslations("levelCheck");
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
@@ -48,10 +50,14 @@ export function TestBar({
           describedBy="exit-exam-body"
         >
           <h2 id="exit-exam-title" className="text-heading-3 font-bold">
-            {t("exitExam.title")}
+            {confirmExit === "exam"
+              ? t("exitExam.title")
+              : tCheck("exitUnsaved.title")}
           </h2>
           <p id="exit-exam-body" className="mt-2">
-            {t("exitExam.body")}
+            {confirmExit === "exam"
+              ? t("exitExam.body")
+              : tCheck("exitUnsaved.body")}
           </p>
           <div className="mt-6">
             <PrimaryButton onClick={() => dialogRef.current?.close()}>

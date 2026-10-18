@@ -10,6 +10,11 @@ export type ReadingContextValue = {
   units: QuestionUnit[];
   session: ReadingSession;
   send: (event: ReadingEvent) => void;
+  /**
+   * A level-check section (ADR-0011 §2) is the Practice screen by removal:
+   * no flag, no pins, no evidence block, its own finish labels.
+   */
+  variant?: "test" | "check";
 };
 
 /** The running session, shared by the passage, the sheet and the navigator (ADR-0006). */

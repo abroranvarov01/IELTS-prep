@@ -91,9 +91,66 @@
     "title": "Darajangizni aniqlang",
     "body": "Qisqa daraja tekshiruvi hozirgi darajangizni va avval nimani mashq qilish kerakligini koʻrsatadi.",
     "start": "Daraja tekshiruvini boshlash",
-    "comingSoon": {
-      "title": "Daraja tekshiruvi tayyorlanmoqda",
-      "body": "Tez orada shu yerda paydo boʻladi. Maqsadingiz shu qurilmada saqlangan."
+    "intro": {
+      "covers": "Reading · {passages} ta qisqa matn · {questions} ta savol",
+      "time": "Taxminan {minutes} daqiqa. Vaqt cheklanmagan.",
+      "saved": "Javoblaringiz shu qurilmada saqlanadi: toʻxtab, keyinroq davom etishingiz mumkin.",
+      "honest": "Siz IELTS balini emas, bizning mashq shkalamiz boʻyicha boshlangʻich nuqtani olasiz.",
+      "academicNote": "Matnlar Academic uslubida. Tekshiriladigan oʻqish koʻnikmalari bir xil.",
+      "start": "Boshlash",
+      "storageUnavailable": "Javoblaringiz bu qurilmada saqlanmaydi. Tekshiruv davomida sahifani yopmang."
+    },
+    "resume": {
+      "title": "Daraja tekshiruvini davom ettirish",
+      "body": "Siz {total} tadan {answered} ta savolga javob berdingiz. Toʻxtagan joyingizdan davom eting.",
+      "continue": "Davom etish",
+      "startOver": "Qaytadan boshlash"
+    },
+    "retake": {
+      "body": "Siz bu tekshiruvni {date} kuni oʻtgansiz. Boshlangʻich nuqtangiz: {level}.",
+      "sameQuestions": "Savollar avvalgidek. Tekshiruvni takrorlashdan koʻra mashq koʻproq narsani koʻrsatadi.",
+      "start": "Tekshiruvni qayta oʻtish"
+    },
+    "section": {
+      "title": "Daraja tekshiruvi: Reading"
+    },
+    "finish": {
+      "button": "Yakunlash",
+      "title": "Tekshiruv yakunlansinmi?"
+    },
+    "exitUnsaved": {
+      "title": "Tekshiruvdan chiqasizmi?",
+      "body": "Javoblaringiz bu qurilmada saqlanmaydi."
+    },
+    "result": {
+      "title": "Reading boʻyicha boshlangʻich nuqtangiz",
+      "scope": "Toʻliq test emas, qisqa tekshiruvdagi {questions} ta savol asosida.",
+      "honest": "Bu bizning mashq shkalamiz boʻyicha boshlangʻich nuqta, IELTS bali emas.",
+      "practiseFirst": "Avval mashq qiling:",
+      "practiseAny": "Har qanday Reading mashqi yaxshi keyingi qadam.",
+      "practise": "Reading mashq qilish",
+      "seeAnswers": "Javoblarni koʻrish",
+      "insufficient": {
+        "title": "Boshlangʻich nuqta uchun javoblar yetarli emas",
+        "answered": "{total} tadan {answered} tasiga javob berilgan.",
+        "body": "Boshlangʻich nuqtani olish uchun kamida yarim savolga javob bering."
+      },
+      "oldForm": "Siz oʻtganingizdan keyin tekshiruv oʻzgargan, shuning uchun javoblarni koʻrib boʻlmaydi.",
+      "none": {
+        "title": "Bu qurilmada hali boshlangʻich nuqta yoʻq",
+        "body": "Natija shu qurilmada tekshiruvni yakunlaganingizdan keyin shu yerda paydo boʻladi."
+      }
+    },
+    "levels": {
+      "1": "Boshlanish",
+      "2": "Yoʻlda",
+      "3": "Ishonchli boshlanish"
+    },
+    "types": {
+      "trueFalseNotGiven": "<en>True / False / Not Given</en> savollari",
+      "matchingHeadings": "sarlavhalarni moslashtirish (<en>matching headings</en>)",
+      "sentenceCompletion": "gaplarni toʻldirish (<en>sentence completion</en>)",
+      "multipleChoice": "javobni tanlash (<en>multiple choice</en>)"
     }
   },
   "home": {
@@ -108,6 +165,15 @@
     "chooseSkill": "Koʻnikmani tanlang",
     "skills": {
       "reading": "Oʻqish koʻnikmalarini rivojlantiring."
+    },
+    "nextAction": {
+      "practiseReading": {
+        "body": "Sizda Reading boʻyicha boshlangʻich nuqta bor. Mashq testi bilan davom eting."
+      },
+      "seeStartingPoint": "Boshlangʻich nuqtani koʻrish",
+      "continueCheck": {
+        "body": "Siz oʻrtasida toʻxtadingiz. Javoblaringiz shu qurilmada saqlangan."
+      }
     }
   },
   "reading": {
