@@ -803,3 +803,8 @@ Entry format:
 - Verification: The integration checkpoint is the M6-10 run on this tree (validation record above): `pnpm db:up`, `pnpm check` (web unit 303, api 16), `pnpm build`, and `pnpm test:e2e` (api 16, web 560, both projects, all specs) all passed.
 - Notes: Open items for the owner from M6: the illustrations from the direction image (open question above); the logo asset (audit Q5); the Practice Hub shows an expired Exam session as "In progress" until the test page settles it (M6-07 entry); a fluent-speaker review of the Home v2 uz and ru strings (M15-11). Deferred audit items: onboarding's 1280 px balance, the 320 px tool row in ru, the review sheet's partial height, the test bar's context (M6-01-ui-audit.md).
 
+### 2026-10-18: Owner activates M7 (not a task)
+- Result: recorded
+- Changes: Owner instruction of 2026-10-18 in the session: "Активирую M7. Поставь M7 в active в TASKS.json, запиши моё одобрение в PROGRESS.md, закоммить локально (не пушить) и запусти следующую задачу." TASKS.json: M7 `status: "active"`; M6 stays done. Exactly one milestone is active.
+- Verification: n/a (owner decision).
+
