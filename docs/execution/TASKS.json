@@ -4569,7 +4569,8 @@
       "title": "Draft the ADR for a multi-skill attempt history and Listening checking",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-01"],
       "goal": "Decide how the device's attempt history holds Listening next to Reading, with a migration that keeps every Reading record.",
       "scope": [

@@ -49,5 +49,6 @@ Split a choice into its own ADR only when it independently meets the criteria ab
 | [0011](0011-level-check-forms-results-and-storage.md) | Level-Check Forms, Results and Storage | Accepted |
 | [0012](0012-listening-content-contract-and-audio-assets.md) | Listening Content Contract and Audio Assets | Accepted |
 | [0013](0013-listening-audio-delivery-and-session-state.md) | Listening Audio Delivery, Preloading and Session State | Accepted |
+| [0014](0014-listening-attempts-checking-and-a-multi-skill-history.md) | Listening Attempts, Checking and a Multi-Skill History on the Device | Proposed |
 
 Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).
