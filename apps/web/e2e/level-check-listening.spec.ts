@@ -293,3 +293,28 @@ test("the Listening result is qualified and labelled rough; with Reading too, bo
     page.getByRole("link", { name: en.home.nextAction.openPractice }),
   ).toHaveAttribute("href", "/en/practice");
 });
+
+test("at the end of a recording the button gives way to 'End of recording 1', which takes the focus", async ({
+  page,
+}) => {
+  await seedListening(page, 0);
+  // Two seconds before the end of recording 1.
+  await page.evaluate((key) => {
+    const stored = JSON.parse(localStorage.getItem(key) ?? "{}");
+    stored.session.view.part = 1;
+    stored.session.currentQuestion = 1;
+    stored.session.practice.positions = { p1: 279_300 };
+    localStorage.setItem(key, JSON.stringify(stored));
+  }, `listening:${FORM}`);
+  await page.goto("/en/level-check/listening?resume=3");
+  await page
+    .getByRole("button", { name: en.levelCheck.listening.continue })
+    .click();
+  const ended = page.getByRole("status").filter({
+    hasText: fill(en.levelCheck.listening.ended, { number: 1 }),
+  });
+  await expect(ended).toBeFocused({ timeout: 15_000 });
+  await expect(
+    page.getByRole("button", { name: en.levelCheck.listening.continue }),
+  ).toHaveCount(0);
+});

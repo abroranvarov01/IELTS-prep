@@ -6,7 +6,8 @@ import { catalogs, fill, noOverflow } from "./reading";
 // The temporary Listening test end to end (M8-20), in every interface
 // language: a learner finds it, practises with the real audio, answers in
 // each part, finishes and sees the results; the Exam's clock reaches its
-// check time.
+// check time, finishes by itself, and its review says so (M9-13). The rest
+// of the M9 loop is in listening-loop.spec.ts.
 
 const TEST = "temporary-voa-1";
 const desktop = (page: Page) => (page.viewportSize()?.width ?? 0) >= 1024;
@@ -192,4 +193,16 @@ test("an Exam reaches its 2 minutes to check when the recording is over, and the
   await expect(page.getByText(catalogs.en.reading.finished.timeUp)).toBeVisible(
     { timeout: 15_000 },
   );
+  // Its results (M9): nothing answered, and the review says why.
+  await expect(
+    page.getByText(
+      fill(catalogs.en.reading.results.score, { score: 0, total: 40 }),
+    ),
+  ).toBeVisible();
+  await page
+    .getByRole("link", { name: catalogs.en.reading.results.reviewUnanswered })
+    .click();
+  await expect(
+    page.getByText(catalogs.en.reading.signals.timeUp),
+  ).toBeVisible();
 });

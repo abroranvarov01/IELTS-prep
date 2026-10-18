@@ -360,7 +360,7 @@ Top to bottom at 360 px:
 
 ## M9 specifications (drafts)
 
-> **STATUS: APPROVED** (owner, 2026-10-18, task M9-04). The owner decided LD3, LD4, LD6, LD8, LD13, LD15, LD20, LD21, V1 and ADR-0014's storage approach first ([Decided by the owner before the M9-04 gate closed](#decided-by-the-owner-before-the-m9-04-gate-closed)), then approved every other recommendation (LD1, LD2, LD5, LD7, LD9 to LD12, LD14, LD16 to LD19, LD22) with four clarifications ([Clarified at the M9-04 approval](#clarified-at-the-m9-04-approval)). Everything below is the decided behavior. Every checking rule below is either sourced or marked **product policy**; every signal describes an observable fact and none states a cause.
+> **STATUS: APPROVED** (owner, 2026-10-18, task M9-04). The owner decided LD3, LD4, LD6, LD8, LD13, LD15, LD20, LD21, V1 and ADR-0014's storage approach first ([Decided by the owner before the M9-04 gate closed](#decided-by-the-owner-before-the-m9-04-gate-closed)), then approved every other recommendation (LD1, LD2, LD5, LD7, LD9 to LD12, LD14, LD16 to LD19, LD22) with four clarifications ([Clarified at the M9-04 approval](#clarified-at-the-m9-04-approval)). Everything below is the decided behavior. Every checking rule below is either sourced or marked **product policy**; every signal describes an observable fact and none states a cause. **Implemented** (M9, 2026-10-18): checking and its notes, results, the evidence-first review on phone and desktop, explanations, repeated mistakes, retries and the level check's Listening section; `mentionedOption` shows nothing until key entries are verified (M15-09).
 
 ### Decided by the owner before the M9-04 gate closed
 

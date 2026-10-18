@@ -4918,7 +4918,8 @@
       "title": "Listening loop end to end, accessibility and docs",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-10", "M9-11", "M9-12"],
       "goal": "Practise, finish, review, retry and come back works as one Listening flow, and the docs describe it.",
       "scope": [

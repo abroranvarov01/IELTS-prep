@@ -119,6 +119,17 @@ export function CheckPlayer({
     };
   }, [ref, pause]);
 
+  // At the end the button is replaced by "End of recording N": when the
+  // learner was on the button, the focus moves to the message, not the page.
+  const buttonFocused = useRef(false);
+  const endRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (heard && buttonFocused.current) {
+      buttonFocused.current = false;
+      endRef.current?.focus({ preventScroll: true });
+    }
+  }, [heard]);
+
   const label = playing
     ? tPlayer("pause")
     : started
@@ -134,13 +145,20 @@ export function CheckPlayer({
       <audio ref={ref} src={src} preload="auto" />
       <div className="mx-auto flex min-h-[3.5rem] max-w-measure flex-wrap items-center gap-x-3 gap-y-1">
         {heard ? (
-          <p className="text-meta font-bold">
+          <p
+            ref={endRef}
+            role="status"
+            tabIndex={-1}
+            className="text-meta font-bold focus:outline-none"
+          >
             {t("ended", { number: recordingNumber })}
           </p>
         ) : (
           <button
             type="button"
             disabled={status === "loading" || status === "failed"}
+            onFocus={() => (buttonFocused.current = true)}
+            onBlur={() => (buttonFocused.current = false)}
             onClick={() => {
               if (playing) {
                 pause();
