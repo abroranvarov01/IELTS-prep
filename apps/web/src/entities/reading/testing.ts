@@ -2,6 +2,7 @@
 export {
   demoKey,
   demoTest,
+  demoTestWithFlowChart,
   demoTestWithTable,
   testSessionId,
 } from "./model/demo-test.fixture";

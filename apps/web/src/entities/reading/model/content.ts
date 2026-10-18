@@ -3,7 +3,12 @@
  * renders it. Content is untrusted data; parse it with `parseReadingTest`.
  */
 
-import { type TableShape, tableNumbers } from "@/shared/content/shapes";
+import {
+  type FlowChartShape,
+  type TableShape,
+  flowChartNumbers,
+  tableNumbers,
+} from "@/shared/content/shapes";
 import {
   type GapSegment,
   type Option,
@@ -101,6 +106,12 @@ export type QuestionGroup =
         /** The shared table layout (ADR-0012 §2), typed gaps in its cells. */
         type: "tableCompletion";
         wordLimit: WordLimit;
+      })
+  | (GroupBase &
+      FlowChartShape & {
+        /** The shared flow-chart layout (ADR-0012 §2), typed gaps in its steps. */
+        type: "flowChartCompletion";
+        wordLimit: WordLimit;
       });
 
 export type QuestionType = QuestionGroup["type"];
@@ -160,6 +171,8 @@ export function groupNumbers(group: QuestionGroup): number[] {
       return group.lines.flatMap(gapNumbers);
     case "tableCompletion":
       return tableNumbers(group);
+    case "flowChartCompletion":
+      return flowChartNumbers(group);
     default:
       return group.questions.map((question) => question.number);
   }

@@ -13,7 +13,12 @@ import {
   readText,
   readWordLimit,
 } from "@/shared/content/parse";
-import { checkTable, readTable } from "@/shared/content/shapes";
+import {
+  checkFlowChart,
+  checkTable,
+  readFlowChart,
+  readTable,
+} from "@/shared/content/shapes";
 import {
   type ExamType,
   PASSAGE_COUNT,
@@ -640,6 +645,13 @@ function readGroup(
         ? { ...base, ...table, type: "tableCompletion", wordLimit: limit }
         : undefined;
     }
+    case "flowChartCompletion": {
+      const limit = wordLimit();
+      const chart = readFlowChart(errors, path, value);
+      return limit && chart
+        ? { ...base, ...chart, type: "flowChartCompletion", wordLimit: limit }
+        : undefined;
+    }
     default:
       errors.push(
         `${path}.type: unknown question type ${JSON.stringify(value.type)}`,
@@ -762,6 +774,9 @@ function checkGroup(
       return;
     case "tableCompletion":
       checkTable(errors, path, group);
+      return;
+    case "flowChartCompletion":
+      checkFlowChart(errors, path, group);
       return;
     case "sentenceCompletion":
       group.sentences.forEach((s, i) => {

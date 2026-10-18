@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { demoKey, demoTest, demoTestWithTable } from "./demo-test.fixture";
+import {
+  demoKey,
+  demoTest,
+  demoTestWithFlowChart,
+  demoTestWithTable,
+} from "./demo-test.fixture";
 import type { AnswerKey } from "./parse-content";
 import {
   type CheckedAnswers,
@@ -427,5 +432,17 @@ describe("checking a table gap (M8-17)", () => {
     expect(result.outcomes[7]).toBe("correct");
     expect(result.outcomes[8]).toBe("incorrect");
     expect(result.outcomes[9]).toBe("unanswered");
+  });
+});
+
+describe("checking a flow-chart gap (M8-18)", () => {
+  it("checks a typed answer in a step like any typed answer", () => {
+    const result = checkAttempt(
+      demoTestWithFlowChart(),
+      demoKey,
+      attempt({ "8": "STATION", "9": "clean air" }),
+    );
+    expect(result.outcomes[8]).toBe("correct");
+    expect(result.outcomes[9]).toBe("incorrect");
   });
 });

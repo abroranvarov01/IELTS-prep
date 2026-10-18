@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { type QuestionType, QUESTION_COUNT } from "./content";
-import { demoTestWithTable } from "./demo-test.fixture";
+import { demoTestWithFlowChart, demoTestWithTable } from "./demo-test.fixture";
 import { parseAnswerKey, parseReadingTest } from "./parse-content";
 
 // Minimal original fixtures, written for these tests (INVARIANTS I-5).
@@ -592,6 +592,38 @@ describe("table completion in Reading (M8-17)", () => {
     const parsed = parseReadingTest(test);
     expect(parsed.ok ? [] : parsed.errors).toContainEqual(
       expect.stringContaining("cells: expected one cell per column (2)"),
+    );
+  });
+});
+
+describe("flow-chart completion in Reading (M8-18)", () => {
+  it("accepts a linear flow chart on the shared layout", () => {
+    expect(demoTestWithFlowChart().passages[0]!.questionGroups[2]!.type).toBe(
+      "flowChartCompletion",
+    );
+  });
+
+  it("rejects a flow chart of one step", () => {
+    const test = validTest() as unknown as {
+      passages: { questionGroups: Record<string, unknown>[] }[];
+    };
+    const groups = test.passages.find((p) =>
+      p.questionGroups.some((g) => g.type === "shortAnswer"),
+    )!.questionGroups;
+    const index = groups.findIndex((g) => g.type === "shortAnswer");
+    const numbers = (groups[index]!.questions as { number: number }[]).map(
+      (q) => q.number,
+    );
+    groups[index] = {
+      id: groups[index]!.id,
+      type: "flowChartCompletion",
+      instruction: "Complete the flow chart.",
+      wordLimit: limit,
+      steps: [numbers.map((n) => [{ text: "Step " }, { gap: n }])],
+    };
+    const parsed = parseReadingTest(test);
+    expect(parsed.ok ? [] : parsed.errors).toContainEqual(
+      expect.stringContaining("steps: expected a list with at least 2 items"),
     );
   });
 });

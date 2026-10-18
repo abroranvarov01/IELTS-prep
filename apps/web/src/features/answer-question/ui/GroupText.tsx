@@ -2,6 +2,7 @@
 
 import { type QuestionGroup, useReading } from "@/entities/reading";
 import { CompletionTable } from "@/shared/ui/CompletionTable";
+import { FlowChart } from "@/shared/ui/FlowChart";
 import { GapText } from "./GapText";
 
 /**
@@ -38,6 +39,22 @@ export function GroupTextView({
   answerOf: (number: number) => string | undefined;
 }) {
   if (!hasGroupText(group)) return null;
+  if (group.type === "flowChartCompletion")
+    return (
+      <div lang="en">
+        {group.title && <p className="mb-2 font-bold">{group.title}</p>}
+        <FlowChart
+          chart={group}
+          line={(segments) => (
+            <GapText
+              segments={segments}
+              current={current}
+              answerOf={answerOf}
+            />
+          )}
+        />
+      </div>
+    );
   if (group.type === "tableCompletion")
     return (
       <div lang="en">
@@ -79,7 +96,7 @@ export function GroupTextView({
   );
 }
 
-/** Groups whose questions share one text: summaries, notes, word boxes and tables. */
+/** Groups whose questions share one text: summaries, notes, word boxes, tables and flow charts. */
 export function hasGroupText(group: QuestionGroup): group is Extract<
   QuestionGroup,
   {
@@ -87,13 +104,15 @@ export function hasGroupText(group: QuestionGroup): group is Extract<
       | "summaryCompletion"
       | "summaryWordBox"
       | "noteCompletion"
-      | "tableCompletion";
+      | "tableCompletion"
+      | "flowChartCompletion";
   }
 > {
   return (
     group.type === "summaryCompletion" ||
     group.type === "summaryWordBox" ||
     group.type === "noteCompletion" ||
-    group.type === "tableCompletion"
+    group.type === "tableCompletion" ||
+    group.type === "flowChartCompletion"
   );
 }

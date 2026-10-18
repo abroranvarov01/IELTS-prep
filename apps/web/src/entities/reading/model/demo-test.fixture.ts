@@ -63,3 +63,26 @@ export function demoTestWithTable(): ReadingTest {
   if (!result.ok) throw new Error(result.errors.join("\n"));
   return result.value;
 }
+
+/** The demo test with questions 7–9 as a flow chart on the shared layout (M8-18). */
+export function demoTestWithFlowChart(): ReadingTest {
+  const json = structuredClone(demo) as unknown as {
+    passages: { questionGroups: Record<string, unknown>[] }[];
+  };
+  json.passages[0]!.questionGroups[2] = {
+    id: "p1-g3",
+    type: "flowChartCompletion",
+    instruction:
+      "Complete the flow chart below. Choose ONE WORD ONLY from the passage for each answer.",
+    wordLimit: { words: 1, numbers: false },
+    title: "A shared-bicycle trip",
+    steps: [
+      [[{ text: "Unlock the bicycle with a " }, { gap: 7 }]],
+      [[{ text: "Leave it at any marked " }, { gap: 8 }]],
+      [[{ text: "Result: cleaner " }, { gap: 9 }]],
+    ],
+  };
+  const result = parseReadingTest(json);
+  if (!result.ok) throw new Error(result.errors.join("\n"));
+  return result.value;
+}
