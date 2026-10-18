@@ -2,7 +2,7 @@
 
 Canonical owner of the **Listening interaction model**: the question types the Listening engine renders and how each is answered, the player, modes, sections and layouts.
 
-> **STATUS: APPROVED** (owner, 2026-10-18, task M8-06), with the amendment in [Decided at the M8-06 gate](#decided-at-the-m8-06-gate). Drafted in M8-01 and M8-02. The surface direction it follows: "Listening is audio-first" ([DESIGN_CONSTITUTION.md, Surface direction](../design/DESIGN_CONSTITUTION.md#surface-direction)).
+> **STATUS: APPROVED** (owner, 2026-10-18, task M8-06), with the amendment in [Decided at the M8-06 gate](#decided-at-the-m8-06-gate). Drafted in M8-01 and M8-02. **Implemented** (M8 Listening engine, 2026-10-18): every section below, with the temporary test; checking, results and review are M9. The surface direction it follows: "Listening is audio-first" ([DESIGN_CONSTITUTION.md, Surface direction](../design/DESIGN_CONSTITUTION.md#surface-direction)).
 
 General UX rules apply ([UX_PRINCIPLES.md](UX_PRINCIPLES.md)), as do accessibility requirements ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)) and the visual system ([DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md)). The Reading engine this builds on is owned by [READING_EXPERIENCE.md](READING_EXPERIENCE.md); where a Listening type behaves exactly like a Reading type, this file links to it instead of restating it.
 

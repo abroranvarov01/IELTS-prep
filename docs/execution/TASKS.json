@@ -4442,7 +4442,8 @@
       "title": "Listening demo content, end to end, and docs",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": [
         "M8-08",
         "M8-13",
