@@ -560,7 +560,7 @@ Reused without change: "Time is up.", "Start again", "Show in passage", "Your ev
 
 ## Navigation and Practice Hub (M6)
 
-**DRAFT: awaiting owner approval** (task M6-02, 2026-10-18; decided at M6-04). The findings behind it are in [M6-01-ui-audit.md](../execution/M6-01-ui-audit.md) (C1: no product navigation; Reading reachable only by a direct link). Visual values follow in DESIGN_SYSTEM.md (M6-03). **This changes an approved M1 decision**: the [app shell](#app-shell-phone-and-desktop) says "No product navigation until real destinations and screens exist for it". The Practice Hub is the first such destination; Progress (M11) and an optional account (M10) follow, so the navigation is chosen now for up to four destinations, while only two exist.
+**Approved** (owner, 2026-10-18, task M6-04, as recommended; drafted in M6-02). Decided: N1 (b) the phone bottom bar with header links from the tablet breakpoint; N2 (a) no navigation on the onboarding steps; N3 (a) skills without tests are not shown; N4 (a) "Last result: … correct" in the Hub; N5 skill names translated in the navigation, the Hub and Home, kept in English inside test content and the level check. The findings behind it are in [M6-01-ui-audit.md](../execution/M6-01-ui-audit.md) (C1: no product navigation; Reading reachable only by a direct link). Visual values follow in DESIGN_SYSTEM.md (M6-03). **This changes an approved M1 decision**: the [app shell](#app-shell-phone-and-desktop) says "No product navigation until real destinations and screens exist for it". The Practice Hub is the first such destination; Progress (M11) and an optional account (M10) follow, so the navigation is chosen now for up to four destinations, while only two exist.
 
 ### Navigation and shell (M6)
 
@@ -616,9 +616,9 @@ Reused without change: "Time is up.", "Start again", "Show in passage", "Your ev
 - **N4 The finished state's score in the Hub:** (a) "Last result: 27 of 40 correct" (the M5 practice-score wording); (b) only "Finished". **Recommendation: (a)**: the learner's own fact, worded as in M5, never a band.
 - **N5 Skill names in the navigation and the Hub** (audit Q4): translated in these interface places ("Чтение", "Oʻqish") or kept as the IELTS module names in English. **Recommendation: translated here**, kept in English inside test content.
 
-### Interface copy (M6, proposed)
+### Interface copy (M6)
 
-Proposed for the M6-04 gate; keys are suggestions. Uzbek uses U+02BB for oʻ and gʻ. A fluent-speaker review of uz and ru is required before beta (M15-11).
+Approved for implementation (owner, 2026-10-18, task M6-04); keys are suggestions. Uzbek uses U+02BB for oʻ and gʻ. A fluent-speaker review of uz and ru is required before beta (M15-11).
 
 | Key (suggested) | Used in | en | ru | uz |
 |---|---|---|---|---|

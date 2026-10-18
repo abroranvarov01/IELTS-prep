@@ -3089,7 +3089,8 @@
       "title": "Owner approves the M6 audit priorities, navigation, Practice Hub and design values",
       "milestone": "M6",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M6-01", "M6-02", "M6-03"],
       "goal": "One owner gate before M6 product code: M6 audit priorities, navigation, Practice Hub and design values. A wrong decision here would force rework later.",
       "scope": [

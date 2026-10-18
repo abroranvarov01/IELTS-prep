@@ -509,7 +509,7 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 
 ## M6 components (navigation, Practice Hub, page compositions)
 
-**DRAFT: awaiting owner approval** (task M6-03, 2026-10-18; decided at M6-04). Visual values for [USER_FLOWS.md, Navigation and Practice Hub (M6)](../product/USER_FLOWS.md#navigation-and-practice-hub-m6) and for the must-fix items of [M6-01-ui-audit.md](../execution/M6-01-ui-audit.md). Reused unchanged: the brand palette, the type scale, spacing, radii, the raised shadow, motion, the focus ring, the breakpoints, the primary button, the quiet button and link, the line icons, `PictureLayout` and the skills picture. Contrast computed with the WCAG 2.x formula. **No new color token**; one layout value is proposed (the task composition's columns, below).
+**Approved** (owner, 2026-10-18, task M6-04, as recommended; drafted in M6-03), including Home options (a) and (b). Visual values for [USER_FLOWS.md, Navigation and Practice Hub (M6)](../product/USER_FLOWS.md#navigation-and-practice-hub-m6) and for the must-fix items of [M6-01-ui-audit.md](../execution/M6-01-ui-audit.md). Reused unchanged: the brand palette, the type scale, spacing, radii, the raised shadow, motion, the focus ring, the breakpoints, the primary button, the quiet button and link, the line icons, `PictureLayout` and the skills picture. Contrast computed with the WCAG 2.x formula. **No new color token**; one layout value is proposed (the task composition's columns, below).
 
 ### Navigation (if N1 (b) is approved)
 

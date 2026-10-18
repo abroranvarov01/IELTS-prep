@@ -1,6 +1,6 @@
 # M6-01 UI audit (snapshot)
 
-A snapshot for the M6-04 owner gate, like the M5-01 review packet. It records what keeps each existing screen from the approved visual language and proposes a **capped** fix list. The rules themselves stay in their canonical documents ([DESIGN_CONSTITUTION.md](../design/DESIGN_CONSTITUTION.md), [DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md), [UI_ANTI_PATTERNS.md](../design/UI_ANTI_PATTERNS.md), the [`product-design` skill](../../.claude/skills/product-design/SKILL.md)); where this file and those documents differ, they win.
+A snapshot for the M6-04 owner gate (**decided 2026-10-18: the capped fix list and the reference screens approved as proposed; Q3 beta skills only in pictures; Q4 skill names translated in interface places, English in test content and the level check; Q5 the owner handles the logo asset later**), like the M5-01 review packet. It records what keeps each existing screen from the approved visual language and proposes a **capped** fix list. The rules themselves stay in their canonical documents ([DESIGN_CONSTITUTION.md](../design/DESIGN_CONSTITUTION.md), [DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md), [UI_ANTI_PATTERNS.md](../design/UI_ANTI_PATTERNS.md), the [`product-design` skill](../../.claude/skills/product-design/SKILL.md)); where this file and those documents differ, they win.
 
 ## Method
 
