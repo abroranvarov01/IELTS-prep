@@ -2,9 +2,9 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
 import { QuietLink } from "@/shared/ui/QuietLink";
-import { SkillsPicture } from "@/shared/ui/SkillsPicture";
 import { type NextAction, nextAction } from "../model/next-action";
 import { GoalLine } from "./GoalLine";
+import { StartingPointPicture } from "./StartingPointPicture";
 
 /** Answers "What should I do now to improve IELTS?" with one action (USER_FLOWS.md). */
 export async function Home() {
@@ -40,9 +40,6 @@ async function NextActionBlock({ action }: { action: NextAction }) {
           aria-labelledby="next-action"
           className="rounded-xl bg-brand-blush-soft p-4 tablet:p-8 desktop:grid desktop:grid-cols-2 desktop:items-center desktop:gap-12 desktop:p-12"
         >
-          <div className="mb-4 desktop:hidden">
-            <SkillsPicture size="small" />
-          </div>
           <div>
             <h2 id="next-action" className="text-heading-1 font-extrabold">
               {t("title")}
@@ -52,8 +49,10 @@ async function NextActionBlock({ action }: { action: NextAction }) {
               <PrimaryLink href="/level-check">{t("start")}</PrimaryLink>
             </div>
           </div>
+          {/* The action comes first on phones and tablets; the picture is
+              desktop's (owner, M6-04: Home options (a) and (b)). */}
           <div className="hidden desktop:block">
-            <SkillsPicture size="large" />
+            <StartingPointPicture />
           </div>
         </section>
       );

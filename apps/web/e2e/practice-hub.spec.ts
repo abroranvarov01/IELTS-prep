@@ -72,7 +72,12 @@ test("a test not started on this device, opened from the navigation", async ({
 test("a test in progress shows its mode and resumes from the Hub", async ({
   page,
 }) => {
-  await seed(page, session("inProgress", "exam"));
+  // Started now, so the exam's time is not already up when it resumes.
+  const exam = session("inProgress", "exam");
+  await seed(page, {
+    ...exam,
+    session: { ...exam.session, startedAt: Date.now() },
+  });
   const before = await page.evaluate(() => JSON.stringify(localStorage));
   await page.goto("/en/practice");
   await expect(row(page)).toContainText(

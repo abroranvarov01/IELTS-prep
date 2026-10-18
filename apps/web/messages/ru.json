@@ -333,9 +333,7 @@
   },
   "skills": {
     "reading": "Reading",
-    "listening": "Listening",
-    "writing": "Writing",
-    "speaking": "Speaking"
+    "listening": "Listening"
   },
   "nav": {
     "label": "Основная навигация",

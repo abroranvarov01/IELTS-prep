@@ -8,7 +8,7 @@ import { OnboardingStep } from "./OnboardingStep";
 
 /**
  * Step 3: the invitation to find one's level. Not a question. The picture
- * shows what the check looks at: the four skills around one level.
+ * shows what the check looks at: the product's skills around one level.
  */
 export async function LevelCheckInvitation() {
   const t = await getTranslations();

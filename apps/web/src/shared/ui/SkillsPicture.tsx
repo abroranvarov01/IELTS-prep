@@ -1,28 +1,26 @@
 import { useTranslations } from "next-intl";
 import { Illustration } from "./illustrations";
 
-const SKILLS = ["reading", "listening", "writing", "speaking"] as const;
+// Only the skills the product has (owner, M6-04: audit Q3).
+const SKILLS = ["reading", "listening"] as const;
 
 /**
- * The four IELTS skills around one level: what the level check looks at
- * (onboarding step 3, home, the level check's page). Large: the skills named
- * on their tiles; small, for phones: the icons only. Decorative.
+ * The skills the product has around one level: what the level check looks at
+ * (onboarding step 3, the level check's page). Large: the skills named on
+ * their tiles, in English as IELTS names them (owner, M6-04: audit Q4);
+ * small, for phones: the icons only. Decorative.
  */
 export function SkillsPicture({ size }: { size: "large" | "small" }) {
   const t = useTranslations("skills");
   const large = size === "large";
   const spots = large
     ? {
-        reading: "top-[8%] left-[0]",
-        listening: "top-[0] right-[6%]",
-        writing: "bottom-[0] left-[6%]",
-        speaking: "right-[0] bottom-[8%]",
+        reading: "top-[14%] left-[0]",
+        listening: "right-[0] bottom-[14%]",
       }
     : {
         reading: "top-[0] left-[0]",
-        listening: "top-[0] right-[0]",
-        writing: "bottom-[0] left-[0]",
-        speaking: "right-[0] bottom-[0]",
+        listening: "right-[0] bottom-[0]",
       };
 
   return (
@@ -67,10 +65,6 @@ const SKILL_ICONS = {
   ),
   listening: (
     <path d="M4.75 15v-3a7.25 7.25 0 0 1 14.5 0v3M4.75 14.5h1.5a1.5 1.5 0 0 1 1.5 1.5v2.5a1.5 1.5 0 0 1-1.5 1.5h-1.5zM19.25 14.5h-1.5a1.5 1.5 0 0 0-1.5 1.5v2.5a1.5 1.5 0 0 0 1.5 1.5h1.5z" />
-  ),
-  writing: <path d="m15.5 5.5 3 3L9 18l-4 1 1-4zM13.5 7.5l3 3" />,
-  speaking: (
-    <path d="M5 5.75h14c.69 0 1.25.56 1.25 1.25v9c0 .69-.56 1.25-1.25 1.25h-9l-4 3v-3H5c-.69 0-1.25-.56-1.25-1.25V7c0-.69.56-1.25 1.25-1.25zM8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01" />
   ),
 };
 

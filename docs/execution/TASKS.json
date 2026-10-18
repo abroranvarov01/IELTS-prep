@@ -3211,7 +3211,8 @@
       "title": "Home and onboarding at the approved visual quality",
       "milestone": "M6",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M6-05"],
       "goal": "Home and onboarding close their approved audit items without changing their behavior.",
       "scope": [
