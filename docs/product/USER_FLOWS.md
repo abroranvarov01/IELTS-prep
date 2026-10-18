@@ -756,7 +756,7 @@ Type names for the other M4 question types follow the same pattern when a form u
 
 ## Listening flows (M8)
 
-**DRAFT** (M8-02, for the M8-06 gate). The screen and its behavior are in [LISTENING_EXPERIENCE.md](LISTENING_EXPERIENCE.md): question types (M8-01), [the player and modes](LISTENING_EXPERIENCE.md#player-modes-and-sections-m8), [resume and weak connections](LISTENING_EXPERIENCE.md#resume-and-weak-connections-m8), and [the phone and desktop layouts](LISTENING_EXPERIENCE.md#listening-screen-phone-and-desktop-m8). The open questions are P1–P11 and L1–L7 there.
+**Approved** (owner, 2026-10-18, task M8-06; drafted in M8-02). The screen and its behavior are in [LISTENING_EXPERIENCE.md](LISTENING_EXPERIENCE.md): question types (M8-01), [the player and modes](LISTENING_EXPERIENCE.md#player-modes-and-sections-m8), [resume and weak connections](LISTENING_EXPERIENCE.md#resume-and-weak-connections-m8), and [the phone and desktop layouts](LISTENING_EXPERIENCE.md#listening-screen-phone-and-desktop-m8). The open questions are P1–P11 and L1–L7 there.
 
 ### Open a Listening test in Practice
 - **Goal:** start listening and answering with the help Practice gives.
@@ -796,7 +796,7 @@ Type names for the other M4 question types follow the same pattern when a form u
 
 ### Interface copy (M8)
 
-**DRAFT**, proposed for the M8-06 gate. Keys are suggestions. Interface strings only: test content (instructions, questions, options, the recording's own spoken instructions) stays in English from the content. Uzbek uses U+02BB for oʻ and gʻ. "Part" is the IELTS name of a Listening section. A fluent-speaker review of uz and ru is required before beta (M15-11). Reused without change: `reading.exit`, `reading.start`, `reading.mode.legend`, `reading.mode.practice`, `reading.mode.exam`, the question, navigator, flag and answer strings (`reading.question.*`, `reading.navigator.*`, `reading.flag.*`, `reading.answer.*`, `reading.sheet.back`), `reading.finish.*`, `reading.timer.label`, `reading.exitExam.title`, `.leave`, `.stay`, `reading.finished.timeUp`, `reading.finished.again`, `reading.wordLimit`, `reading.storage.unavailable`, `common.goHome`, `practice.state.notStarted`, `practice.state.inProgress`, `skills.listening`. Where the implementation shares a Reading key with Listening it may move it to a shared namespace (M8-12).
+**Approved for implementation** (owner, 2026-10-18, task M8-06), except the two `listening.temporary.*` keys, added after the gate at the owner's instruction (temporary practice content) and confirmed in the screenshot review. Keys are suggestions. Interface strings only: test content (instructions, questions, options, the recording's own spoken instructions) stays in English from the content. Uzbek uses U+02BB for oʻ and gʻ. "Part" is the IELTS name of a Listening section. A fluent-speaker review of uz and ru is required before beta (M15-11). Reused without change: `reading.exit`, `reading.start`, `reading.mode.legend`, `reading.mode.practice`, `reading.mode.exam`, the question, navigator, flag and answer strings (`reading.question.*`, `reading.navigator.*`, `reading.flag.*`, `reading.answer.*`, `reading.sheet.back`), `reading.finish.*`, `reading.timer.label`, `reading.exitExam.title`, `.leave`, `.stay`, `reading.finished.timeUp`, `reading.finished.again`, `reading.wordLimit`, `reading.storage.unavailable`, `common.goHome`, `practice.state.notStarted`, `practice.state.inProgress`, `skills.listening`. Where the implementation shares a Reading key with Listening it may move it to a shared namespace (M8-12).
 
 | Key (suggested) | Used in | en | ru | uz |
 |---|---|---|---|---|
@@ -854,6 +854,8 @@ Type names for the other M4 question types follow the same pattern when a form u
 | `practice.skill.listening` | Hub section heading (N5) | Listening | Аудирование | Tinglash |
 | `practice.formatListening` | Hub row meta text | {parts} parts · {questions} questions · about {minutes} minutes | Частей: {parts} · вопросов: {questions} · около {minutes} минут | {parts} ta qism · {questions} ta savol · taxminan {minutes} daqiqa |
 | `practice.state.finishedNoScore` | Hub row state of a finished Listening test (until M9) | Finished | Завершён | Yakunlangan |
+| `listening.temporary.label` | Start screen note and Hub row line for a test marked temporary | Temporary practice test | Временный тест для практики | Vaqtinchalik mashq testi |
+| `listening.temporary.source` | Start screen; `{attribution}` is the content's attribution text (English) | Source: {attribution} | Источник: {attribution} | Manba: {attribution} |
 | `home.skills.listening` | Home's Listening card | Build your listening skills. | Развивайте навыки аудирования. | Tinglash koʻnikmalarini rivojlantiring. |
 
 The picture strings are shared with Reading's diagram labelling (M8-19), which may move them to a shared namespace.

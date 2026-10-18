@@ -1,6 +1,6 @@
 # ADR-0012: Listening Content Contract and Audio Assets
 
-- **Status:** Proposed (drafted in M8-03 for the owner's gate M8-06)
+- **Status:** Accepted (2026-10-18, owner, task M8-06; drafted in M8-03), with the owner's amendment applied in §1, §3 and §8: original audio production is deferred, and the first working test is one temporary test from existing material whose terms permit this use.
 - **Date:** 2026-10-18
 - **Deciders:** Project owner (acceptance), Claude (draft)
 
@@ -9,7 +9,7 @@
 The Listening engine (M8) renders tests of the question types in [LISTENING_EXPERIENCE.md, Question types (M8)](../../product/LISTENING_EXPERIENCE.md#question-types-m8) (draft), played by the player in [Player, modes and sections (M8)](../../product/LISTENING_EXPERIENCE.md#player-modes-and-sections-m8) (draft). Before the first Listening test is written (M8-07, M8-08), the shape of that content must be fixed: the screens render from it, the session stores answers and audio positions against it (M8-04), review (M9) shows a timestamp and a transcript excerpt as each answer's evidence, and the content system (M13) will author, review and publish it.
 
 Forces (facts):
-- **Content integrity (INVARIANTS I-5):** content is original or licensed. Audio adds voices: synthetic voices have tool licences, recorded people need consent. Who produces the audio is the owner's decision at M8-06; the contract must record it whichever way it goes.
+- **Content integrity (INVARIANTS I-5):** content is original or licensed. Audio adds voices: synthetic voices have tool licences, recorded people need consent. Who produces the audio was the owner's decision at M8-06: original production is deferred, and the first test uses existing permitted material (amendment); the contract records either case.
 - **Weak connections and mid-range phones** (PRODUCT.md): a test is about 30 minutes of audio. Its size decides the wait before an Exam (LISTENING_EXPERIENCE.md P10) and the learner's data cost.
 - **The format** (ielts.org, checked 2026-10-18): 4 parts, 10 questions each, 40 questions; questions follow the order of the recording; the same Listening test for Academic and General Training.
 - **Reading's contract exists and is accepted** ([ADR-0005](0005-reading-content-contract.md)): JSON files, explicit stable ids, structured gap texts, word limits as data, a separate key, one validator, fingerprints and a key revision ([ADR-0008](0008-reading-answer-checking-and-explanations.md) §3). Several Listening question types are Reading types (M8-01), and three layouts are shared with Reading (table, flow chart, labelling; Reading adopts them in M8-17 to M8-19 as new type values, as ADR-0005 §1 foresaw).
@@ -33,7 +33,8 @@ Question       number (1–40), + the fields of its type
 - **No duration field:** the test's length is the sum of its parts' audio durations; the 2-minute check time is a rule in code (sourced, LISTENING_EXPERIENCE.md), not content.
 - **Explicit ids** for parts, groups, transcript segments, images and markers, never derived from positions or text (ADR-0005 §1).
 - **`version`** increases with any change to the test file or to an audio file once sessions or results may exist (ADR-0008 §3): audio positions, numbering and options are stored against it. A changed audio file always changes the version, because every stored position and transcript time would shift.
-- **`origin`** as ADR-0005 (required) for the test as a whole; each audio file and image has its own provenance (§3, §6).
+- **`origin`** as ADR-0005 (required) for the test as a whole; each audio file and image has its own provenance (§3, §6). For licensed material `origin` is `{ "kind": "licensed", "source", "license", "url"?, "attribution"? }`: `attribution`, when present, is the exact text the terms require and is shown on the start screen. These two optional fields extend the shared origin shape; Reading files are unaffected.
+- **`temporary`** (optional, `true`): the test is temporary practice content (the M8-06 amendment). The interface labels it as such ([LISTENING_EXPERIENCE.md, Temporary practice content](../../product/LISTENING_EXPERIENCE.md#temporary-practice-content-m8)); nothing else changes. For a temporary test the validator requires `origin.kind` `licensed` with `source` and `license`; whether the terms require an attribution text is verified and recorded in M8-07.
 - **The validator takes a shape** (parts, questions per part) as ADR-0011 §1 lets the Reading validator take one, so the level check's Listening section (M9) is a form in this contract with its own id and version. The default shape is 4 parts × 10 questions.
 
 ### 2. Question types: Reading's where they are the same, new shared types where the layout is new
@@ -69,16 +70,16 @@ Question       number (1–40), + the fields of its type
 ```
 AudioAsset   src (file name in the test's asset folder, ADR-0013), mimeType ("audio/mp4"),
              durationMs, bytes, sha256, provenance
-Provenance   producedBy, method ("synthetic" | "recorded"), tool?, voices[], license, consentRef?, producedAt, note?
+Provenance   producedBy, method ("synthetic" | "recorded"), tool?, voices[], license, sourceUrl?, attribution?, consentRef?, producedAt, note?
 ```
 
 - **One file per part** (4 files per test). The player and the session work per part; Practice can start a part when that file can play; Exam downloads all four first (ADR-0013 decides how).
 - **Format: AAC-LC in an MP4 container (`.m4a`), mono, 44.1 or 48 kHz.** One format, no fallback chain.
-- **Bitrate target: 48 kbps** (about 11 MB for 30 minutes); **ceiling 64 kbps** (about 14.5 MB). The validator rejects a file whose `bytes / durationMs` exceeds the ceiling plus 10% for the container. The target is confirmed by the owner's listening check of the demo audio at M8-08: if 48 kbps does not keep the voices clear, the target moves within the ceiling without a new ADR.
+- **Bitrate target: 48 kbps** (about 11 MB for 30 minutes); **ceiling 64 kbps** (about 14.5 MB). The validator rejects a file whose `bytes / durationMs` exceeds the ceiling plus 10% for the container. The target applies to the temporary test's files as transcoded in M8-08 (never upscaled: a source below the target keeps its own bitrate) and is confirmed by the owner when they first listen to it: if 48 kbps does not keep the voices clear, the target moves within the ceiling without a new ADR.
 - **The reading pauses are silence inside the recording** (LISTENING_EXPERIENCE.md); the app adds no pauses, so the files are the whole timeline.
 - **Part boundaries:** each file starts at its part's spoken introduction; Exam plays the four files in order.
-- **Provenance** is required on every file: who produced it (a role or organisation, **no personal data** of voice talent in content files: `consentRef` is the reference to a consent or release record kept outside the repository), synthetic or recorded, the tool and its licence terms for synthetic voices, the accents (`voices[]`: role, accent: "British", "Australian", "New Zealand", "North American", others allowed), the licence under which the product uses the file, and the date. What the owner decides at M8-06 fills these fields; the contract does not presume the answer.
-- **Files are stored in the repository** for M8 (one demo test, about 11–15 MB). Moving assets to object storage is the content system's (M13) or ADR-0013's decision.
+- **Provenance** is required on every file: who produced it (a role or organisation, **no personal data** of voice talent in content files: `consentRef` is the reference to a consent or release record kept outside the repository), synthetic or recorded, the tool and its licence terms for synthetic voices, the accents (`voices[]`: role, accent: "British", "Australian", "New Zealand", "North American", others allowed), the licence under which the product uses the file, and the date. For **existing third-party material** (the M8-06 amendment): `producedBy` is the publisher, `method` is how they made it, `license` names the licence or permission and the terms that apply, `sourceUrl` where it was obtained, and `attribution` the exact text the terms require, when they require one; a permission granted by email or contract is referenced, never copied, when it contains personal data.
+- **Files are stored in the repository** for M8 (one test, about 11–15 MB), **only when the material's terms allow copying, conversion to this format and serving to learners from the product** (M8-07 verifies this). Moving assets to object storage is the content system's (M13) or ADR-0013's decision.
 
 ### 4. The transcript is a separate file, not loaded during a test
 
@@ -123,7 +124,7 @@ Image        src, mimeType ("image/svg+xml" | "image/webp"), width, height (intr
 
 ### 8. Not decided here
 
-Audio delivery, caching, preloading and the Listening session (ADR-0013, M8-04); Listening answer checking, explanations and the attempt history (M9); authoring tools, review workflow and publishing (M13); who produces the audio and under which licence (the owner at M8-06, recorded in the provenance fields).
+Audio delivery, caching, preloading and the Listening session (ADR-0013, M8-04); Listening answer checking, explanations and the attempt history (M9); authoring tools, review workflow and publishing (M13); original audio production (deferred by the owner at M8-06 to the content system, M13-07 and M13-08; the owner's final materials replace the temporary test in M13-10 and M13-11).
 
 ## Alternatives considered
 

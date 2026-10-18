@@ -64,7 +64,7 @@
       "id": "M8",
       "name": "Listening Engine",
       "status": "active",
-      "goal": "Listening as a full engine like M4: Sections 1–4, every Listening question family, the player in Practice and Exam with realistic restrictions, weak-network loading and resume, phone and desktop layouts, a content contract with audio, transcripts and images, original demo audio; plus Reading table, flow-chart and diagram label completion on the shared layouts."
+      "goal": "Listening as a full engine like M4: Sections 1–4, every Listening question family, the player in Practice and Exam with realistic restrictions, weak-network loading and resume, phone and desktop layouts, a content contract with audio, transcripts and images, one complete temporary test from existing permitted material, labelled with its attribution (owner, 2026-10-18: original audio deferred); plus Reading table, flow-chart and diagram label completion on the shared layouts."
     },
     {
       "id": "M9",
@@ -3929,7 +3929,7 @@
       "title": "Owner approves the Listening specs, player behavior, content and audio ADRs, design values, and the source of original audio",
       "milestone": "M8",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
       "dependsOn": ["M8-04", "M8-05"],
       "goal": "One owner gate before M8 product code: Listening specs, player behavior, content and audio ADRs, design values, and the source of original audio. A wrong decision here would force rework later.",
       "scope": [
@@ -3954,24 +3954,72 @@
         "docs/product/PRODUCT.md",
         "docs/architecture/decisions/README.md"
       ],
-      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01). Completed by the owner on 2026-10-18 with an amendment: original audio production is deferred; one coherent temporary test from existing material whose terms permit this use supplies the first working test (M8-07, M8-08 amended); replacement with the owner's final materials is tracked in M13-10 and M13-11.",
+      "completedAt": "2026-10-18"
     },
     {
       "id": "M8-07",
-      "title": "Draft the original demo Listening test scripts",
+      "title": "Find, verify and record the temporary Listening test's source and terms",
       "milestone": "M8",
       "owner": "worker",
       "status": "todo",
       "dependsOn": ["M8-06"],
-      "goal": "An original four-section demo test exists as scripts, questions, keys and timestamps to record, covering every approved question type.",
+      "goal": "One coherent, complete Listening practice set (audio, questions, answer key, transcript, any pictures) whose terms permit this use is chosen, and its source and usage terms are verified and recorded, so M8-08 can prepare it as the temporary test.",
       "scope": [
-        "Original scripts for Sections 1–4 (never copied or adapted from published IELTS material), with questions of every approved type, keys, evidence segments and images with text alternatives where labelling needs them",
-        "Valid against the accepted content contract (with placeholder audio references until M8-08)",
-        "Marked `aiDraft`; record in PROGRESS.md that Claude drafted them"
+        "Search for one complete Listening practice set in the IELTS format (4 parts, 40 questions) whose licence or published terms explicitly permit copying, converting and serving it to learners in this product; prefer one existing coherent set over assembling unrelated recordings",
+        "Never assume that publicly accessible material is reusable: read the terms on the source's own pages, record the URL, the licence or permission text, the date checked, the required attribution text (if any) and any condition (non-commercial, share-alike, no derivatives) and what it means for this product",
+        "Fallback the owner approved: if no complete set is available with permission, choose permitted recordings (one per part, matching the part types of the format) for which questions and answers will be authored in M8-08 and checked against the audio",
+        "Download only data files (audio, transcripts, keys, pictures) into a new empty folder in the scratchpad; nothing is executed; nothing enters the repository in this task",
+        "Record the choice and the evidence in PROGRESS.md and in LISTENING_EXPERIENCE.md, Temporary practice content (the source, licence, attribution, conditions)"
       ],
-      "outOfScope": ["audio (M8-08)", "explanations (M9)"],
+      "outOfScope": [
+        "code",
+        "content files in the repository (M8-08)",
+        "contacting third parties or accepting terms on the owner's behalf"
+      ],
       "acceptanceCriteria": [
-        "The scripts validate and cover every approved type",
+        "A source is recorded with its URL, terms, the date checked, the attribution text and the conditions, and why they permit this use",
+        "Or the task is blocked with the candidates found and why none qualifies, as a question for the owner"
+      ],
+      "validation": [
+        "pnpm format:check",
+        "test -z \"$(git status --porcelain -- apps packages)\""
+      ],
+      "references": [
+        "docs/product/PRODUCT.md",
+        "docs/architecture/INVARIANTS.md",
+        "docs/architecture/decisions/0012-listening-content-contract-and-audio-assets.md"
+      ],
+      "notes": "Amended by the owner at M8-06 (2026-10-18); previously 'Draft the original demo Listening test scripts'. Stop conditions: terms that are unclear, that require an agreement, payment or contact with the rights holder, or that forbid derivatives the contract needs (transcoding, transcripts) mean stop and ask the owner. Also read docs/product/LISTENING_EXPERIENCE.md.",
+      "docsToUpdate": [
+        "docs/product/LISTENING_EXPERIENCE.md",
+        "docs/execution/PROGRESS.md"
+      ]
+    },
+    {
+      "id": "M8-08",
+      "title": "Prepare the temporary Listening test in the content contract and verify it against its audio",
+      "milestone": "M8",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M8-07", "M8-09"],
+      "goal": "The M8-07 material is a valid Listening test in the accepted content contract, labelled as temporary with its attribution, whose questions, answers and transcript match its audio.",
+      "scope": [
+        "Audio: convert each part with ffmpeg to the ADR-0012 format (AAC-LC .m4a, mono, the 48 kbps target within the 64 kbps ceiling, never upscaled), one file per part, with hashed names in the ADR-0013 asset folder; record duration, bytes, sha256 and provenance",
+        "Test, key and transcript files per ADR-0012 under a test id of their own, `temporary: true`, `origin` licensed with source, licence, URL and attribution; pictures with text alternatives where labelling needs them",
+        "Transcript segment times: from the source's timings where it has them; otherwise derived from the source transcript and ffmpeg silence detection, with every segment boundary checked against the audio around it; if the times cannot be verified this way without installing a speech-recognition tool, stop and ask (an environment change)",
+        "Verification against the audio: every answer in the key has its evidence quote in the transcript at its segment; for the fallback, questions and answers are authored by Claude from the verified transcript, of the approved types, with every answer traceable to a quote",
+        "Anything Claude converted, transcribed or authored is `aiDraft` and recorded in PROGRESS.md as such; the source's own key keeps its source noted",
+        "No answer, file path or part count in UI code: the test reaches the screens only through the content loaders"
+      ],
+      "outOfScope": [
+        "engine and UI changes (other tasks)",
+        "explanations and checking (M9)",
+        "original audio (deferred, M13)"
+      ],
+      "acceptanceCriteria": [
+        "The temporary test validates with its real audio, key and transcript, and its fingerprint and asset-hash tests pass",
+        "Every key answer has a transcript quote that was checked against the audio",
         "All gates pass"
       ],
       "validation": [
@@ -3982,33 +4030,13 @@
       ],
       "references": [
         "docs/product/PRODUCT.md",
-        "docs/architecture/INVARIANTS.md"
+        "docs/architecture/INVARIANTS.md",
+        "docs/architecture/decisions/0012-listening-content-contract-and-audio-assets.md",
+        "docs/architecture/decisions/0013-listening-audio-delivery-and-session-state.md",
+        "docs/product/LISTENING_EXPERIENCE.md"
       ],
-      "notes": "Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
-    },
-    {
-      "id": "M8-08",
-      "title": "Produce the demo test's audio and its provenance record",
-      "milestone": "M8",
-      "owner": "human",
-      "status": "todo",
-      "dependsOn": ["M8-07"],
-      "goal": "The demo test has original audio, produced as the owner decided at M8-06, with a provenance and licence record.",
-      "scope": [
-        "Record or generate the audio of the M8-07 scripts as decided (voices, accents), to the format targets of the accepted ADR",
-        "Record provenance and licence (who, how, rights) in PROGRESS.md; a worker adds the files and their metadata to the repository",
-        "No secret or paid-service key enters the repository"
-      ],
-      "outOfScope": [],
-      "acceptanceCriteria": [
-        "The audio files and a provenance record exist for every section"
-      ],
-      "validation": ["grep -n 'audio' docs/execution/PROGRESS.md"],
-      "references": [
-        "docs/product/PRODUCT.md",
-        "docs/architecture/INVARIANTS.md"
-      ],
-      "notes": "Human task: producing or licensing audio needs people or a paid service the owner sets up."
+      "notes": "Amended by the owner at M8-06 (2026-10-18); previously the human task 'Produce the demo test's audio and its provenance record'. ffmpeg is installed on the development machine; no speech-recognition tool is.",
+      "docsToUpdate": ["docs/execution/PROGRESS.md"]
     },
     {
       "id": "M8-09",
@@ -4021,7 +4049,8 @@
       "scope": [
         "Types, parser and validator per the accepted ADR in the right entity (a new Listening entity or a shared one, per BOUNDARIES.md); fingerprint tests; fixtures with short generated test audio",
         "Shared image and labelling data usable by Reading",
-        "Domain tests for every validation rule"
+        "Domain tests for every validation rule",
+        "The optional `temporary` flag and the licensed `origin` with `url` and `attribution` (ADR-0012 §1, owner amendment at M8-06)"
       ],
       "outOfScope": ["UI", "session (M8-10)"],
       "acceptanceCriteria": [
@@ -4040,7 +4069,8 @@
         "docs/architecture/BOUNDARIES.md",
         "docs/architecture/decisions/0005-reading-content-contract.md",
         "docs/architecture/decisions/0010-feature-sliced-design-in-apps-web.md"
-      ]
+      ],
+      "docsToUpdate": ["docs/architecture/BOUNDARIES.md"]
     },
     {
       "id": "M8-10",
@@ -4409,9 +4439,9 @@
         "M8-18",
         "M8-19"
       ],
-      "goal": "The original demo test with its real audio works end to end, and the docs describe the Listening engine.",
+      "goal": "The temporary Listening test with its real audio works end to end, so the owner can open and complete it on phone and desktop, and the docs describe the Listening engine.",
       "scope": [
-        "Add the M8-08 audio and metadata; the demo test validates with real audio",
+        "The M8-08 temporary test validates with its real audio, shows its temporary label and attribution on the start screen and in the Practice Hub, and can be opened and completed in Practice and Exam",
         "The finished page states honestly that checking comes with review (M9) unless M9 follows immediately and the owner prefers otherwise",
         "e2e journeys on both projects in uz, ru and en for Practice and Exam, including a throttled connection, reload and resume; axe; 320 px and 200% zoom; reduced motion",
         "Docs: FEATURE_MAP.md (Listening practice), CLAUDE.md (Current state), LISTENING_EXPERIENCE.md status line",
@@ -6100,6 +6130,62 @@
         "docs/product/FEATURE_MAP.md",
         "CLAUDE.md"
       ]
+    },
+    {
+      "id": "M13-10",
+      "title": "Owner provides the final Listening materials and their rights",
+      "milestone": "M13",
+      "owner": "human",
+      "status": "todo",
+      "dependsOn": [],
+      "goal": "The owner's final Listening materials (audio, questions, keys, transcripts, pictures) and the rights to use them are available, to replace the temporary test from M8.",
+      "scope": [
+        "Provide the files and a record of the rights (who made them, licence or ownership, attribution if any)",
+        "Say whether the temporary test is removed or kept alongside until a date"
+      ],
+      "outOfScope": [],
+      "acceptanceCriteria": [
+        "The materials and their rights record are available to the worker"
+      ],
+      "validation": [
+        "grep -n 'final Listening materials' docs/execution/PROGRESS.md"
+      ],
+      "references": [
+        "docs/product/LISTENING_EXPERIENCE.md",
+        "docs/architecture/decisions/0012-listening-content-contract-and-audio-assets.md"
+      ],
+      "notes": "Human task, added at M8-06 (owner, 2026-10-18). It may be done before M13 is active; the worker task waits for M13."
+    },
+    {
+      "id": "M13-11",
+      "title": "Replace the temporary Listening test with the owner's final materials",
+      "milestone": "M13",
+      "owner": "worker",
+      "status": "todo",
+      "dependsOn": ["M13-10"],
+      "goal": "The owner's final materials are the Listening content; the temporary test from M8 is retired as the owner decided, with no engine change.",
+      "scope": [
+        "The final materials in the content contract (new test id or new version per ADR-0008 §3), validated with their audio, key and transcript",
+        "Retire the temporary test as decided in M13-10, keeping stored attempts readable as the contract's version rules say",
+        "Record provenance; remove the temporary label only from content that is no longer temporary"
+      ],
+      "outOfScope": ["engine changes"],
+      "acceptanceCriteria": [
+        "The final test validates and works end to end",
+        "No test marked temporary remains unless the owner decided to keep it",
+        "All gates pass"
+      ],
+      "validation": [
+        "pnpm db:up",
+        "pnpm check",
+        "pnpm build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      ],
+      "references": [
+        "docs/architecture/decisions/0012-listening-content-contract-and-audio-assets.md",
+        "docs/product/LISTENING_EXPERIENCE.md"
+      ],
+      "notes": "Added at M8-06 (owner, 2026-10-18): tracks the replacement of the temporary test separately from M8."
     },
     {
       "id": "M14-01",

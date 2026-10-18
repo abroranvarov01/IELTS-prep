@@ -74,5 +74,5 @@ These are deliberately unresolved. Do not settle them silently in code. Raise th
 - Accounts: at which moment registration is offered or required, and which sign-in methods to use (phone/SMS, Telegram, Google, email). Practice before registration is already decided (see [Approved product principles](#approved-product-principles)).
 - What exactly is "free core", and what (if anything) is paid?
 - Minors: consent and data-handling requirements for users under 18.
-- Content sourcing: who writes the practice content, and how is it reviewed?
+- Content sourcing: who writes the practice content, and how is it reviewed? (Owner, 2026-10-18, M8-06: original Listening audio production is deferred; one temporary Listening test from existing material whose terms permit this use supplies the first working test, labelled as temporary with its attribution, until the owner's final materials replace it. The question stays open for the beta library, M13.)
 - How AI estimates are validated against real examiner bands before launch.

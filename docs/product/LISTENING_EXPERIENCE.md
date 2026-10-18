@@ -2,15 +2,32 @@
 
 Canonical owner of the **Listening interaction model**: the question types the Listening engine renders and how each is answered, the player, modes, sections and layouts.
 
-> **STATUS: DRAFT.** Every section below is a draft for the owner's gate (TASKS.json M8-06). Nothing here is decided until then. The surface direction it follows is approved: "Listening is audio-first" ([DESIGN_CONSTITUTION.md, Surface direction](../design/DESIGN_CONSTITUTION.md#surface-direction)).
+> **STATUS: APPROVED** (owner, 2026-10-18, task M8-06), with the amendment in [Decided at the M8-06 gate](#decided-at-the-m8-06-gate). Drafted in M8-01 and M8-02. The surface direction it follows: "Listening is audio-first" ([DESIGN_CONSTITUTION.md, Surface direction](../design/DESIGN_CONSTITUTION.md#surface-direction)).
 
 General UX rules apply ([UX_PRINCIPLES.md](UX_PRINCIPLES.md)), as do accessibility requirements ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)) and the visual system ([DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md)). The Reading engine this builds on is owned by [READING_EXPERIENCE.md](READING_EXPERIENCE.md); where a Listening type behaves exactly like a Reading type, this file links to it instead of restating it.
 
 **Owned elsewhere:** the content contract and audio assets are M8-03 and M8-04 (ADRs); visual values are M8-05 (DESIGN_SYSTEM.md); flows, step counts and copy are in [USER_FLOWS.md, Listening flows (M8)](USER_FLOWS.md#listening-flows-m8); answer checking, results and review are M9.
 
+## Decided at the M8-06 gate
+
+Owner decision, 2026-10-18: the recommendations of **L1–L7** (M8-01) and **P1–P11** (M8-02) are approved as written below; so are the Listening flows and copy (USER_FLOWS.md), the M8 design values (DESIGN_SYSTEM.md), [ADR-0012](../architecture/decisions/0012-listening-content-contract-and-audio-assets.md) and [ADR-0013](../architecture/decisions/0013-listening-audio-delivery-and-session-state.md) (Accepted). **Amendment:**
+- **Original audio production is deferred.** M8 does not record or generate original audio. The first working Listening test is **one coherent temporary test from existing material whose terms permit this use**: matching audio, questions, answer key, transcript and any pictures, prepared through the normal content contract (TASKS.json M8-07 and M8-08). An existing complete set is preferred over unrelated recordings; if none is available with permission, permitted recordings with questions and answers authored by Claude and checked against the audio. Its source and usage terms are verified and recorded; publicly accessible material is never assumed to be reusable.
+- **It is labelled as temporary practice content and keeps its attribution** ([Temporary practice content](#temporary-practice-content-m8)). It replaces nothing in the engine: no answer, file path or part count is written into UI code.
+- **The test follows the format above** (4 parts, 40 questions); nothing in the owner's instruction changes the exam format.
+- **Replacing it with the owner's final materials** is tracked separately (TASKS.json M13-10, M13-11). Original audio for the beta library stays with M13-07 and M13-08.
+- The scope of M8 and the milestone boundaries are unchanged.
+
+## Temporary practice content (M8)
+
+**Approved direction** (owner, 2026-10-18, M8-06 amendment); copy and values were added after the gate at the owner's instruction and are confirmed in the screenshot review of the screens (M8-12, M8-13).
+
+- A test marked temporary in its content (ADR-0012 §1, `temporary: true`) shows, on its start screen, a note "Temporary practice test" and its attribution line ("Source: …", the text its licence requires, English, `lang="en"`), and in the Practice Hub the line "Temporary practice test" under its format.
+- The attribution comes from the content's `origin`, never from code. Removing the temporary test and adding the final one is a content change (a new test id, or a new version as ADR-0008 §3 requires), with no change to the engine.
+- Nothing about the temporary test is presented as official IELTS material or as the product's own content.
+
 ## Question types (M8)
 
-**DRAFT** (M8-01, for the M8-06 gate).
+**Approved** (M8-01; owner, 2026-10-18, M8-06).
 
 ### The IELTS Listening test format
 
@@ -165,7 +182,7 @@ Reading's sentence highlighting and Pin Evidence work on a passage, which Listen
 
 ## Player, modes and sections (M8)
 
-**DRAFT** (M8-02, for the M8-06 gate). Flows, step counts and copy: [USER_FLOWS.md, Listening flows (M8)](USER_FLOWS.md#listening-flows-m8).
+**Approved** (M8-02; owner, 2026-10-18, M8-06). Flows, step counts and copy: [USER_FLOWS.md, Listening flows (M8)](USER_FLOWS.md#listening-flows-m8).
 
 ### What the official format says about playing
 
@@ -235,14 +252,14 @@ One player for the test, always visible under the test bar (phone and desktop). 
 
 ## Resume and weak connections (M8)
 
-**DRAFT** (M8-02). How sessions and audio are stored and fetched is M8-04's ADR; this section is the behavior it must give.
+**Approved** (M8-02; owner, 2026-10-18, M8-06). How sessions and audio are stored and fetched is M8-04's ADR; this section is the behavior it must give.
 
 ### Leave and come back
 
 **Practice:** everything is kept on the device as in Reading (answers, marks, the question on screen) plus **each part's audio position**. Coming back opens the screen where the learner left, with the player **paused** at the saved position minus 3 seconds (so the learner hears the end of the last sentence again); the learner taps Play. Browsers do not let a page start sound before the learner taps, so a paused player is also the only reliable state.
 
 **Exam:** the sitting is like the real one: **the recording keeps going while the learner is away**, as Reading's Exam time keeps running (open question P1).
-- While the page stays open (another tab, a locked screen), the audio keeps playing if the browser allows it; if the browser pauses it, it is an interruption (below).
+- **Background playback is not guaranteed and the app never claims it.** While the page stays open in another tab or behind a locked screen, some browsers keep playing and others pause or stop the audio. A pause the learner did not make (the browser, the system, a phone call) is an interruption with the documented recovery (below): the Exam pauses, and the learner continues with one tap when they come back.
 - When the learner comes back to a closed page, the position is the recording's start time plus the time that has passed (minus the time lost to buffering and interruptions, which the session records). The screen shows "Continue the test", the sentence "The recording kept going while you were away. It continues from Part 3, 4:12.", and the red "Continue", which starts the audio at that position (the tap the browser needs). If the recording has ended in the meantime, the screen opens in the check time with what is left of it; if the check time is over too, the test is finished ("Time is up.").
 - "Exit" asks first: "Leave the test? The recording keeps going while you are away." ("Leave" / "Stay").
 
@@ -262,7 +279,7 @@ The learners use mid-range phones on variable mobile connections (PRODUCT.md). A
 
 ## Listening screen: phone and desktop (M8)
 
-**DRAFT** (M8-02). The audio-first order from [DESIGN_CONSTITUTION.md, Surface direction](../design/DESIGN_CONSTITUTION.md#surface-direction): a compact top bar, progress, the player, the current question, its answer controls, then compact navigation. Visual values are M8-05's.
+**Approved** (M8-02; owner, 2026-10-18, M8-06). The audio-first order from [DESIGN_CONSTITUTION.md, Surface direction](../design/DESIGN_CONSTITUTION.md#surface-direction): a compact top bar, progress, the player, the current question, its answer controls, then compact navigation. Visual values are M8-05's.
 
 ### Start screen
 
