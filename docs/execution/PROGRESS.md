@@ -11,6 +11,8 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 - **`apps/api/.env`.** Workers may not create real `.env` files (AUTONOMOUS_WORKFLOW hard limits, `.claude/settings.json`). For local `pnpm --filter api dev` and `pnpm test:e2e` without exporting `DATABASE_URL`, copy `apps/api/.env.example` to `apps/api/.env`.
 
+- **Illustrations from the direction image** (owner, 2026-10-18). The owner asked for richer pictures than the hand-drawn SVGs and decided to keep the SVGs for now. When the owner provides the image's illustrations as files (PNG or WebP with a transparent background, about twice the shown size), a task replaces the SVG pictures with them through `next/image` (sized, lazy below the fold), keeping the "original or licensed" invariant. Not before.
+
 ## Validation record
 
 Which checks cover which work, so unchanged work is not checked again ([DEFINITION_OF_DONE.md, Validation by risk](../engineering/DEFINITION_OF_DONE.md#validation-by-risk)). One line per checkpoint, newest last. A line holds until a later change touches its scope.
