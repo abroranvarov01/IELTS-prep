@@ -3663,7 +3663,8 @@
       "title": "The level-check result and its next action",
       "milestone": "M7",
       "owner": "worker",
-      "status": "in_progress",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M7-09"],
       "goal": "The learner sees an honest starting point and one next action, and Home knows the level check is done.",
       "scope": [
@@ -3705,7 +3706,7 @@
       "title": "Level check end to end, accessibility and docs",
       "milestone": "M7",
       "owner": "worker",
-      "status": "todo",
+      "status": "in_progress",
       "dependsOn": ["M7-10"],
       "goal": "The level check works as one flow from onboarding to the next action, and the docs describe it.",
       "scope": [

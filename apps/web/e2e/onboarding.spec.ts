@@ -35,7 +35,9 @@ for (const locale of routing.locales) {
       context,
     }) => {
       await page.goto(`/${locale}/start/exam`);
-      await expect(page.getByText(stepText(locale, 1))).toBeVisible();
+      await expect(
+        page.getByRole("main").getByText(stepText(locale, 1)),
+      ).toBeVisible();
       await expect(
         page.getByRole("heading", {
           level: 1,
@@ -46,11 +48,15 @@ for (const locale of routing.locales) {
 
       await answer(page, messages.examType.academic).click();
       await expect(page).toHaveURL(`/${locale}/start/band`);
-      await expect(page.getByText(stepText(locale, 2))).toBeVisible();
+      await expect(
+        page.getByRole("main").getByText(stepText(locale, 2)),
+      ).toBeVisible();
 
       await answer(page, "7.0").click();
       await expect(page).toHaveURL(`/${locale}/start/level-check`);
-      await expect(page.getByText(stepText(locale, 3))).toBeVisible();
+      await expect(
+        page.getByRole("main").getByText(stepText(locale, 3)),
+      ).toBeVisible();
       await expect(
         page.getByRole("heading", {
           level: 1,

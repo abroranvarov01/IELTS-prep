@@ -251,3 +251,239 @@ test("the Reading history stays empty after a level-check session is kept on the
   ).toContainText(en.practice.state.notStarted);
   await expect(page.getByRole("link", { name: /Level check/ })).toHaveCount(0);
 });
+
+// --- The result (M7-10) -----------------------------------------------------
+
+const KEY: Record<number, string> = {
+  1: "TRUE",
+  2: "NOT GIVEN",
+  3: "TRUE",
+  4: "FALSE",
+  5: "appliance",
+  6: "power",
+  7: "wind",
+  8: "ii",
+  9: "iv",
+  10: "i",
+  11: "iii",
+  12: "B",
+  13: "C",
+  14: "B",
+};
+
+/** A section in progress with the first `correct` answers right, kept on the device as the engine keeps it. */
+async function seedSection(page: Page, correct: number) {
+  await page.goto("/en");
+  const answers: Record<string, string> = {};
+  for (let n = 1; n <= correct; n++) answers[String(n)] = KEY[n] ?? "";
+  await page.evaluate(([key, json]) => localStorage.setItem(key, json), [
+    `reading:${FORM}`,
+    JSON.stringify({
+      schema: 1,
+      session: {
+        sessionId: "s-00000000-0000-4000-8000-00000000c0de",
+        testId: FORM,
+        testVersion: 1,
+        mode: "practice",
+        status: "inProgress",
+        startedAt: Date.now() - 600_000,
+        currentQuestion: 14,
+        answers,
+        flagged: [],
+        highlights: [],
+        pins: {},
+        view: { sheet: "partial", passage: 2, scroll: {} },
+      },
+    }),
+  ] as const);
+}
+
+async function finishSection(page: Page) {
+  await page.goto("/en/level-check/reading");
+  await expect(page.locator("#question-heading:visible")).toBeVisible();
+  await page.getByRole("button", { name: en.reading.navigator.open }).click();
+  await page
+    .getByRole("button", { name: en.levelCheck.finish.button, exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: en.reading.finish.confirm, exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/en\/level-check\/result\?attempt=/);
+}
+
+test("finishing shows the starting point on our scale, the score, the honest lines and what to practise first; Home moves on to practice", async ({
+  page,
+  context,
+  baseURL,
+}) => {
+  await saveGoal(context, baseURL, "v1|general|6.5");
+  await seedSection(page, 11);
+  await finishSection(page);
+  await expect(
+    page.getByRole("heading", { level: 1, name: en.levelCheck.result.title }),
+  ).toBeFocused();
+  await expect(page.getByText(en.levelCheck.levels[3])).toBeVisible();
+  await expect(
+    page.getByText(fill(en.reading.results.score, { score: 11, total: 14 })),
+  ).toBeVisible();
+  await expect(
+    page.getByText(fill(en.levelCheck.result.scope, { questions: 14 })),
+  ).toBeVisible();
+  await expect(page.getByText(en.levelCheck.result.honest)).toBeVisible();
+  await expect(page.getByText(en.levelCheck.intro.academicNote)).toBeVisible();
+  // Multiple choice: 3 of 3 not correct, the only type to practise first.
+  await expect(
+    page
+      .getByText(en.levelCheck.result.practiseFirst)
+      .filter({ visible: true }),
+  ).toBeVisible();
+  await expect(
+    page
+      .getByText("multiple choice", { exact: true })
+      .filter({ visible: true }),
+  ).toBeVisible();
+  // The only "band" on the page is the honest line saying it is not one.
+  await expect(page.getByText(/band/i).filter({ visible: true })).toHaveCount(
+    1,
+  );
+  await expect(page.getByText(/\d\.\d/)).toHaveCount(0);
+
+  // The stored record carries the level and the versions, never a band.
+  const records = await page.evaluate(
+    () =>
+      new Promise<Record<string, unknown>[]>((resolve) => {
+        const open = indexedDB.open("ielts-prep-level-check");
+        open.onsuccess = () => {
+          const req = open.result
+            .transaction("results")
+            .objectStore("results")
+            .getAll();
+          req.onsuccess = () =>
+            resolve(req.result as Record<string, unknown>[]);
+        };
+      }),
+  );
+  expect(records).toHaveLength(1);
+  expect(records[0]).toMatchObject({
+    level: 3,
+    score: 11,
+    total: 14,
+    keyRevision: 1,
+    rulesVersion: 1,
+    levelRulesVersion: 1,
+    practiseFirst: ["multipleChoice"],
+  });
+
+  await page.getByRole("link", { name: en.levelCheck.result.practise }).click();
+  await expect(page).toHaveURL("/en/practice");
+
+  await page.goto("/en");
+  await expect(
+    page.getByRole("heading", {
+      level: 2,
+      name: en.levelCheck.result.practise,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: en.home.nextAction.seeStartingPoint }),
+  ).toHaveAttribute("href", "/en/level-check/result");
+  await page.goto("/en/start/level-check");
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: en.levelCheck.result.practise,
+    }),
+  ).toBeVisible();
+});
+
+test("with more than half unanswered there is no starting point, only the way to take it again", async ({
+  page,
+}) => {
+  await seedSection(page, 5);
+  await finishSection(page);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: en.levelCheck.result.insufficient.title,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      fill(en.levelCheck.result.insufficient.answered, {
+        answered: 5,
+        total: 14,
+      }),
+    ),
+  ).toBeVisible();
+  await expect(page.getByText(en.levelCheck.result.practiseFirst)).toHaveCount(
+    0,
+  );
+  await expect(
+    page.getByRole("link", { name: en.levelCheck.retake.start }),
+  ).toHaveAttribute("href", "/en/level-check");
+});
+
+test("'See your answers' opens the review of the check's attempt, and the result can be reopened later", async ({
+  page,
+}) => {
+  await seedSection(page, 9);
+  await finishSection(page);
+  await page
+    .getByRole("link", { name: en.levelCheck.result.seeAnswers })
+    .click();
+  await expect(page).toHaveURL(/\/en\/level-check\/review\?attempt=/);
+  await expect(page.locator("#question-heading:visible")).toBeVisible();
+  await expect(
+    page.getByText(en.reading.review.correctAnswer).first(),
+  ).toBeVisible();
+  await page.getByRole("link", { name: en.levelCheck.result.title }).click();
+  await expect(page).toHaveURL(/\/en\/level-check\/result/);
+  await expect(page.getByText(en.levelCheck.levels[2])).toBeVisible();
+
+  // The intro now offers to take it again, naming the starting point.
+  await page.goto("/en/level-check");
+  await expect(
+    page.getByRole("button", { name: en.levelCheck.retake.start }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(en.levelCheck.retake.sameQuestions),
+  ).toBeVisible();
+  await expect(page.getByText(/On the way/)).toBeVisible();
+});
+
+test("the result page with nothing finished on this device says so", async ({
+  page,
+}) => {
+  await page.goto("/en/level-check/result");
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: en.levelCheck.result.none.title,
+    }),
+  ).toBeVisible();
+  await page.getByRole("link", { name: en.levelCheck.title }).click();
+  await expect(page).toHaveURL("/en/level-check");
+});
+
+for (const locale of routing.locales)
+  test(`the result fits 320 px in /${locale} and has no WCAG 2.2 AA violations`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await seedSection(page, 9);
+    await finishSection(page);
+    await page.goto(`/${locale}/level-check/result`);
+    await expect(
+      page.getByText(catalogs[locale].levelCheck.levels[2]),
+    ).toBeVisible();
+    const overflow = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+    );
+    expect(overflow).toBe(0);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });

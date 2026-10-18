@@ -6,6 +6,7 @@ import { Link } from "@/shared/i18n/navigation";
 import { ReadingIcon } from "@/shared/ui/icons";
 import { Illustration } from "@/shared/ui/illustrations";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
+import { QuietLink } from "@/shared/ui/QuietLink";
 import { type NextAction, nextAction } from "../model/next-action";
 import { GoalCard } from "./GoalCard";
 import { StartingPointPicture } from "./StartingPointPicture";
@@ -74,51 +75,66 @@ async function NextActionCard() {
 /** The next action is the screen's only primary action, whatever its kind. */
 async function NextActionBlock({ action }: { action: NextAction }) {
   const t = await getTranslations();
-  switch (action.kind) {
-    case "levelCheck":
-    case "continueLevelCheck":
-      return (
-        <section
-          aria-labelledby="next-action"
-          className="flex h-full items-center gap-6 rounded-lg bg-blush-field p-6 desktop:p-8"
+  const copy = {
+    levelCheck: {
+      title: t("levelCheck.title"),
+      body: t("levelCheck.body"),
+      button: t("levelCheck.start"),
+      href: "/level-check",
+    },
+    continueLevelCheck: {
+      title: t("levelCheck.resume.title"),
+      body: t("home.nextAction.continueCheck.body"),
+      button: t("levelCheck.resume.continue"),
+      href: "/level-check",
+    },
+    practiseReading: {
+      title: t("levelCheck.result.practise"),
+      body: t("home.nextAction.practiseReading.body"),
+      button: t("levelCheck.result.practise"),
+      href: "/practice",
+    },
+  }[action.kind];
+  return (
+    <section
+      aria-labelledby="next-action"
+      className="flex h-full items-center gap-6 rounded-lg bg-blush-field p-6 desktop:p-8"
+    >
+      <div className="flex-1">
+        <span
+          aria-hidden="true"
+          className="flex size-12 items-center justify-center rounded-full bg-surface-base text-brand-primary-deep"
         >
-          <div className="flex-1">
-            <span
-              aria-hidden="true"
-              className="flex size-12 items-center justify-center rounded-full bg-surface-base text-brand-primary-deep"
-            >
-              <Illustration className="size-6">
-                <path d="M5.25 19.25v-5.5M12 19.25v-9.5M18.75 19.25V4.75M3.75 19.25h16.5" />
-              </Illustration>
+          <Illustration className="size-6">
+            <path d="M5.25 19.25v-5.5M12 19.25v-9.5M18.75 19.25V4.75M3.75 19.25h16.5" />
+          </Illustration>
+        </span>
+        <h2 id="next-action" className="mt-4 text-heading-2 font-bold">
+          {copy.title}
+        </h2>
+        <p className="mt-2 text-text-secondary">{copy.body}</p>
+        <div className="mt-6">
+          <PrimaryLink href={copy.href}>
+            <span className="inline-flex items-center gap-2">
+              {copy.button}
+              <ArrowIcon />
             </span>
-            <h2 id="next-action" className="mt-4 text-heading-2 font-bold">
-              {action.kind === "continueLevelCheck"
-                ? t("levelCheck.resume.title")
-                : t("levelCheck.title")}
-            </h2>
-            <p className="mt-2 text-text-secondary">
-              {action.kind === "continueLevelCheck"
-                ? t("home.nextAction.continueCheck.body")
-                : t("levelCheck.body")}
-            </p>
-            <div className="mt-6">
-              <PrimaryLink href="/level-check">
-                <span className="inline-flex items-center gap-2">
-                  {action.kind === "continueLevelCheck"
-                    ? t("levelCheck.resume.continue")
-                    : t("levelCheck.start")}
-                  <ArrowIcon />
-                </span>
-              </PrimaryLink>
-            </div>
+          </PrimaryLink>
+        </div>
+        {action.kind === "practiseReading" && (
+          <div className="mt-2">
+            <QuietLink href="/level-check/result">
+              {t("home.nextAction.seeStartingPoint")}
+            </QuietLink>
           </div>
-          {/* The picture is desktop's; phones put the action first. */}
-          <div className="hidden shrink-0 desktop:block">
-            <StartingPointPicture />
-          </div>
-        </section>
-      );
-  }
+        )}
+      </div>
+      {/* The picture is desktop's; phones put the action first. */}
+      <div className="hidden shrink-0 desktop:block">
+        <StartingPointPicture />
+      </div>
+    </section>
+  );
 }
 
 function ArrowIcon() {

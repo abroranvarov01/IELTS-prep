@@ -9,4 +9,8 @@ describe("next action", () => {
   it("is continuing the level check while one is in progress", () => {
     expect(nextAction("inProgress")).toEqual({ kind: "continueLevelCheck" });
   });
+
+  it("is Reading practice once the Reading section is done", () => {
+    expect(nextAction("done")).toEqual({ kind: "practiseReading" });
+  });
 });

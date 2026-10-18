@@ -8,7 +8,11 @@ import {
   useRef,
   useState,
 } from "react";
-import type { ReadingTest, SheetState } from "@/entities/reading";
+import {
+  type ReadingTest,
+  type SheetState,
+  positionCount,
+} from "@/entities/reading";
 import { ChevronIcon, GridIcon } from "@/shared/ui/icons";
 import { QUIET_BUTTON } from "@/shared/ui/quiet-action";
 import { SecondaryButton } from "@/shared/ui/SecondaryButton";
@@ -94,7 +98,13 @@ export function ReviewSheet({
         onStateChange(sheet);
       }}
       bodyId="question-body"
-      header={<ReviewHeading card={card} headingRef={headingRef} />}
+      header={
+        <ReviewHeading
+          card={card}
+          total={positionCount(test)}
+          headingRef={headingRef}
+        />
+      }
     >
       {isOpen && !showsNavigator && (
         // One row under the heading: the sequence's progress, then the navigator.

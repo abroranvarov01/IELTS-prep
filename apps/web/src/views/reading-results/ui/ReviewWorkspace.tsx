@@ -3,13 +3,14 @@
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import type {
-  AnswerKey,
-  Explanations,
-  ReadingAttempt,
-  ReadingTest,
-  ResultRecord,
-  SheetState,
+import {
+  type AnswerKey,
+  type Explanations,
+  type ReadingAttempt,
+  type ReadingTest,
+  type ResultRecord,
+  type SheetState,
+  positionCount,
 } from "@/entities/reading";
 import { PassageView } from "@/features/mark-passage";
 import { useIsDesktop } from "@/shared/ui/use-is-desktop";
@@ -179,7 +180,11 @@ export function ReviewWorkspace({
             className="overflow-y-auto border-s border-border-subtle px-8 py-6"
           >
             <div className="max-w-column">
-              <ReviewHeading card={card} headingRef={headingRef} />
+              <ReviewHeading
+                card={card}
+                total={positionCount(test)}
+                headingRef={headingRef}
+              />
               {position.set === "mistakes" && (
                 <p className="mt-1 text-meta text-text-secondary">
                   {t("review.toReview", {

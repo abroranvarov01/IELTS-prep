@@ -30,16 +30,31 @@ async function InvitationFromCookie() {
 
 async function Invitation({ state }: { state: SectionState }) {
   const t = await getTranslations();
-  const inProgress = state === "inProgress";
+  const copy = {
+    none: {
+      title: t("levelCheck.title"),
+      body: t("levelCheck.body"),
+      button: t("levelCheck.start"),
+      href: "/level-check",
+    },
+    inProgress: {
+      title: t("levelCheck.resume.title"),
+      body: t("home.nextAction.continueCheck.body"),
+      button: t("levelCheck.resume.continue"),
+      href: "/level-check",
+    },
+    done: {
+      title: t("levelCheck.result.practise"),
+      body: t("home.nextAction.practiseReading.body"),
+      button: t("levelCheck.result.practise"),
+      href: "/practice",
+    },
+  }[state];
   return (
     <OnboardingStep
       step={3}
-      title={inProgress ? t("levelCheck.resume.title") : t("levelCheck.title")}
-      description={
-        inProgress
-          ? t("home.nextAction.continueCheck.body")
-          : t("levelCheck.body")
-      }
+      title={copy.title}
+      description={copy.body}
       art={{
         picture: <SkillsPicture size="large" />,
         title: t("onboarding.art.levelCheck.title"),
@@ -52,11 +67,9 @@ async function Invitation({ state }: { state: SectionState }) {
       }
     >
       <div className="flex flex-col items-start gap-2">
-        <PrimaryLink href="/level-check">
+        <PrimaryLink href={copy.href}>
           <span className="inline-flex items-center gap-2">
-            {inProgress
-              ? t("levelCheck.resume.continue")
-              : t("levelCheck.start")}
+            {copy.button}
             <LineIcon className="size-4">
               <path d="M2.75 8h10.5M9 3.75 13.25 8 9 12.25" />
             </LineIcon>

@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import type { RefObject } from "react";
-import { QUESTION_COUNT, type UnitOutcome } from "@/entities/reading";
+import type { UnitOutcome } from "@/entities/reading";
 import type { ReviewCard } from "../model/review";
 import { OutcomeIcon } from "./OutcomeIcon";
 
@@ -29,9 +29,12 @@ const STATE_WORD = {
  */
 export function ReviewHeading({
   card,
+  total,
   headingRef,
 }: {
   card: ReviewCard;
+  /** The test's or form's positions (40, or 14 for the level check). */
+  total: number;
   headingRef: RefObject<HTMLHeadingElement | null>;
 }) {
   const t = useTranslations("reading");
@@ -48,7 +51,7 @@ export function ReviewHeading({
             from: unit.numbers[0] ?? 0,
             to: unit.numbers.at(-1) ?? 0,
           })
-        : t("question.of", { number: unit.key, total: QUESTION_COUNT })}
+        : t("question.of", { number: unit.key, total })}
       <span className="mt-1 flex items-center gap-2 text-body">
         <OutcomeIcon outcome={outcome} />
         {outcome === "partlyCorrect"
