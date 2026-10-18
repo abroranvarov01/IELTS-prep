@@ -261,6 +261,16 @@ export function fixtureTranscript() {
   };
 }
 
+/** Typed answers that differ from the default: one-word gaps, a "List TWO" question. */
+const TYPED_ANSWERS: Record<number, string[]> = {
+  27: ["here"],
+  28: ["here"],
+  29: ["here"],
+  30: ["here"],
+  37: ["bread"],
+  38: ["milk"],
+};
+
 const OPTION_ANSWERS: Record<number, string> = {
   5: "A",
   6: "B",
@@ -292,7 +302,7 @@ export function fixtureKey() {
           ? ["A", "C"]
           : OPTION_ANSWERS[n]
             ? [OPTION_ANSWERS[n]]
-            : ["right here", "here"],
+            : (TYPED_ANSWERS[n] ?? ["right here", "here"]),
       evidence: [{ segment: `${part}-s2`, quote: "right here" }],
     };
   }
@@ -300,6 +310,7 @@ export function fixtureKey() {
     testId: "fixture-listening",
     version: 1,
     revision: 1,
+    transcriptRevision: 1,
     review: { status: "aiDraft" },
     answers,
   };

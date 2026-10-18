@@ -488,4 +488,120 @@ describe("an answer key", () => {
       expect.stringContaining("key.answers.1.evidence: expected a list"),
     );
   });
+
+  it("names the transcript revision it was checked against", () => {
+    expect(keyErrors((k) => (k.transcriptRevision = 2))).toContainEqual(
+      "key.transcriptRevision: expected 1, the transcript's revision",
+    );
+    expect(
+      keyErrors(
+        (k) => delete (k as { transcriptRevision?: number }).transcriptRevision,
+      ),
+    ).toContainEqual(
+      expect.stringContaining(
+        "key.transcriptRevision: expected a whole number",
+      ),
+    );
+  });
+
+  it("compares typed variants after normalization and keeps them within the word limit", () => {
+    expect(
+      keyErrors((k) => (entry(k, 1).accept = ["Right here.", "right  here"])),
+    ).toContainEqual(
+      'key.answers.1.accept: "right  here" repeats another accepted answer',
+    );
+    expect(
+      keyErrors((k) => (entry(k, 27).accept = ["here", "right here"])),
+    ).toContainEqual(
+      'key.answers.27.accept: "right here" is over the word limit',
+    );
+  });
+
+  const extra = (k: ReturnType<typeof fixtureKey>, n: number) =>
+    k.answers[String(n)] as Record<string, unknown>;
+  const said = { segment: "p1-s2", quote: "right here", review: "verified" };
+
+  it("allows fromRecording on typed answers only", () => {
+    expect(keyErrors((k) => (extra(k, 1).fromRecording = true))).toEqual([]);
+    expect(keyErrors((k) => (extra(k, 8).fromRecording = true))).toContainEqual(
+      "key.answers.8.fromRecording: only typed answers can have it",
+    );
+  });
+
+  it("allows only the content tags of the spec, the same on every number of an item", () => {
+    expect(keyErrors((k) => (extra(k, 1).tag = "correction"))).toEqual([]);
+    expect(keyErrors((k) => (extra(k, 1).tag = "weakListener"))).toContainEqual(
+      "key.answers.1.tag: expected one of paraphrase, spelledOut, correction",
+    );
+    expect(keyErrors((k) => (extra(k, 21).tag = "paraphrase"))).toContainEqual(
+      "key.answers.21-22: every number needs the same tag",
+    );
+  });
+
+  it("checks a distractor like evidence, with a review status per entry", () => {
+    expect(
+      keyErrors((k) => (extra(k, 8).distractors = [{ option: "B", ...said }])),
+    ).toEqual([]);
+    expect(
+      keyErrors(
+        (k) => (extra(k, 1).distractors = [{ text: "there", ...said }]),
+      ),
+    ).toEqual([]);
+    expect(
+      keyErrors(
+        (k) =>
+          (extra(k, 8).distractors = [
+            { option: "B", ...said, review: "reviewed" },
+          ]),
+      ),
+    ).toContainEqual(
+      "key.answers.8.distractors[0].review: expected one of aiDraft, verified",
+    );
+    expect(
+      keyErrors(
+        (k) =>
+          (extra(k, 8).distractors = [
+            { option: "B", ...said, quote: "not said" },
+          ]),
+      ),
+    ).toContainEqual(
+      'key.answers.8.distractors[0].quote: not found in segment "p1-s2"',
+    );
+  });
+
+  it("never lists an accepted answer, or something the question cannot take, as a distractor", () => {
+    expect(
+      keyErrors((k) => (extra(k, 8).distractors = [{ option: "A", ...said }])),
+    ).toContainEqual(
+      'key.answers.8.distractors[0].option: "A" is an accepted answer',
+    );
+    expect(
+      keyErrors((k) => (extra(k, 8).distractors = [{ option: "D", ...said }])),
+    ).toContainEqual(
+      'key.answers.8.distractors[0].option: "D" is not an option of the question',
+    );
+    expect(
+      keyErrors(
+        (k) => (extra(k, 1).distractors = [{ text: "Here.", ...said }]),
+      ),
+    ).toContainEqual(
+      'key.answers.1.distractors[0].text: "Here." is an accepted answer',
+    );
+    expect(
+      keyErrors((k) => (extra(k, 8).distractors = [{ text: "B", ...said }])),
+    ).toContainEqual(
+      "key.answers.8.distractors[0].text: a chosen answer's distractor is an option",
+    );
+  });
+
+  it("keeps the answers of a List TWO question apart, and orders only such a question", () => {
+    expect(
+      keyErrors((k) => (entry(k, 38).accept = ["milk", "Bread"])),
+    ).toContainEqual('key.answers.37-38: "bread" is listed under two numbers');
+    expect(keyErrors((k) => (extra(k, 37).ordered = true))).toEqual([]);
+    for (const n of [36, 38])
+      expect(keyErrors((k) => (extra(k, n).ordered = true))).toContainEqual(
+        `key.answers.${n}.ordered: only the first number of a question with several answers can be ordered`,
+      );
+  });
 });

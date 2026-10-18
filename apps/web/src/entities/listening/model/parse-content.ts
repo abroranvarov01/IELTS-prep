@@ -25,10 +25,15 @@ import {
   readSha256,
   readTable,
 } from "@/shared/content/shapes";
-import { gapNumbers } from "@/shared/content/types";
+import { normalizeTypedAnswer } from "@/shared/content/normalize";
+import { type WordLimit, gapNumbers } from "@/shared/content/types";
 import {
   type AudioAsset,
+  CONTENT_TAGS,
+  type ContentTag,
+  type Distractor,
   type Evidence,
+  type KeyEntry,
   type ListeningKey,
   type ListeningTest,
   type NoteLine,
@@ -39,7 +44,9 @@ import {
   type Segment,
   type Transcript,
   groupNumbers,
+  typedWordLimit,
 } from "./content";
+import { fitsListeningWordLimit } from "./word-limit";
 
 /** How many parts and questions per part a file must have: a test, or a level-check form (ADR-0012 §1). */
 export type ContentShape = { parts: number; questionsPerPart: number };
@@ -130,8 +137,9 @@ export function parseTranscript(
 /**
  * Checks a key against its test and transcript: every question has accepted
  * answers and evidence, a quote found in a segment of its own part
- * (ADR-0012 §5). Checking rules (spelling, numbers, word limits of typed
- * variants) are M9's.
+ * (ADR-0012 §5), and the M9 additions of ADR-0014 §7: the transcript revision
+ * it was checked against, typed variants within the word limit, optional
+ * `fromRecording`, tags, distractors and `ordered`.
  */
 export function parseListeningKey(
   test: ListeningTest,
@@ -143,6 +151,20 @@ export function parseListeningKey(
     return { ok: false, errors: ["key: expected an object"] };
   checkOwner(errors, "key", test, input);
   const revision = readInteger(errors, "key.revision", input.revision, 1);
+  const transcriptRevision = readInteger(
+    errors,
+    "key.transcriptRevision",
+    input.transcriptRevision,
+    1,
+  );
+  // A transcript correction cannot ship without a key revision (ADR-0014 §7).
+  if (
+    transcriptRevision !== undefined &&
+    transcriptRevision !== transcript.revision
+  )
+    errors.push(
+      `key.transcriptRevision: expected ${transcript.revision}, the transcript's revision`,
+    );
   const review = readReview(errors, "key.review", input.review);
   const entries = isRecord(input.answers) ? input.answers : undefined;
   if (!entries) errors.push("key.answers: expected an object");
@@ -177,28 +199,53 @@ export function parseListeningKey(
               errors.push(
                 `${path}.accept: "${value}" is not an option of question ${number}`,
               );
-        if (accept && !allowed) checkVariants(errors, `${path}.accept`, accept);
+        const limit = typedWordLimit(group);
+        if (accept && !allowed && limit)
+          checkVariants(errors, `${path}.accept`, accept, limit);
         const evidence = allDefined(
           readList(errors, `${path}.evidence`, entry.evidence)?.map((v, i) =>
             readEvidence(errors, `${path}.evidence[${i}]`, v, segments, part),
           ),
         );
-        if (accept && evidence) answers[number] = { accept, evidence };
+        const extras = readExtras(errors, path, entry, {
+          typed: !allowed,
+          options: allowed,
+          accept: accept ?? [],
+          segments,
+          part,
+        });
+        if (accept && evidence)
+          answers[number] = { accept, evidence, ...extras };
       }
       if (group.type === "multipleChoiceMulti")
-        for (const item of group.items)
+        for (const item of group.items) {
           checkItem(errors, answers, item.numbers);
+          checkSameTag(errors, answers, item.numbers);
+        }
+      for (const question of group.type === "shortAnswer"
+        ? group.questions
+        : [])
+        checkList(errors, answers, question.numbers);
+      for (const number of groupNumbers(group))
+        if (answers[number]?.ordered && !isListStart(group, number))
+          errors.push(
+            `key.answers.${number}.ordered: only the first number of a question with several answers can be ordered`,
+          );
     }
   });
   for (const key of Object.keys(entries ?? {}))
     if (!numbers.has(key)) errors.push(`key.answers.${key}: no such question`);
-  return errors.length === 0 && revision !== undefined && review
+  return errors.length === 0 &&
+    revision !== undefined &&
+    transcriptRevision !== undefined &&
+    review
     ? {
         ok: true,
         value: {
           testId: test.id,
           version: test.version,
           revision,
+          transcriptRevision,
           review,
           answers,
         },
@@ -207,6 +254,151 @@ export function parseListeningKey(
 }
 
 // --- Key ---------------------------------------------------------------------
+
+type ExtrasContext = {
+  typed: boolean;
+  /** The option ids the question accepts, for a chosen answer. */
+  options: string[] | undefined;
+  accept: string[];
+  segments: Map<string, string>;
+  part: Part;
+};
+
+/** The optional M9 fields of an entry (ADR-0014 §7). */
+function readExtras(
+  errors: string[],
+  path: string,
+  entry: Record<string, unknown>,
+  context: ExtrasContext,
+): Omit<KeyEntry, "accept" | "evidence"> {
+  const extras: Omit<KeyEntry, "accept" | "evidence"> = {};
+  if (entry.fromRecording !== undefined) {
+    if (entry.fromRecording !== true)
+      errors.push(`${path}.fromRecording: expected true or nothing`);
+    else if (!context.typed)
+      errors.push(`${path}.fromRecording: only typed answers can have it`);
+    else extras.fromRecording = true;
+  }
+  if (entry.tag !== undefined) {
+    if (CONTENT_TAGS.includes(entry.tag as ContentTag))
+      extras.tag = entry.tag as ContentTag;
+    else errors.push(`${path}.tag: expected one of ${CONTENT_TAGS.join(", ")}`);
+  }
+  if (entry.ordered !== undefined) {
+    if (entry.ordered === true) extras.ordered = true;
+    else errors.push(`${path}.ordered: expected true or nothing`);
+  }
+  if (entry.distractors !== undefined) {
+    const distractors = allDefined(
+      readList(errors, `${path}.distractors`, entry.distractors)?.map((v, i) =>
+        readDistractor(errors, `${path}.distractors[${i}]`, v, context),
+      ),
+    );
+    if (distractors) extras.distractors = distractors;
+  }
+  return extras;
+}
+
+const DISTRACTOR_REVIEWS = ["aiDraft", "verified"] as const;
+
+/** Exactly one of an option or a typed text, where it is said, and who checked it. */
+function readDistractor(
+  errors: string[],
+  path: string,
+  value: unknown,
+  context: ExtrasContext,
+): Distractor | undefined {
+  if (!isRecord(value)) {
+    errors.push(
+      `${path}: expected { "option" or "text", "segment", "quote", "review" }`,
+    );
+    return undefined;
+  }
+  const evidence = readEvidence(
+    errors,
+    path,
+    { segment: value.segment, quote: value.quote },
+    context.segments,
+    context.part,
+  );
+  const review = DISTRACTOR_REVIEWS.find((r) => r === value.review);
+  if (!review)
+    errors.push(
+      `${path}.review: expected one of ${DISTRACTOR_REVIEWS.join(", ")}`,
+    );
+  let said: { option: string } | { text: string } | undefined;
+  if (context.typed) {
+    if (value.option !== undefined)
+      errors.push(`${path}.option: a typed answer's distractor is a text`);
+    const text = readText(errors, `${path}.text`, value.text);
+    if (
+      text &&
+      context.accept.some(
+        (v) => normalizeTypedAnswer(v) === normalizeTypedAnswer(text),
+      )
+    )
+      errors.push(`${path}.text: "${text}" is an accepted answer`);
+    else if (text) said = { text };
+  } else {
+    if (value.text !== undefined)
+      errors.push(`${path}.text: a chosen answer's distractor is an option`);
+    const option = readText(errors, `${path}.option`, value.option);
+    if (option && !context.options?.includes(option))
+      errors.push(
+        `${path}.option: "${option}" is not an option of the question`,
+      );
+    else if (option && context.accept.includes(option))
+      errors.push(`${path}.option: "${option}" is an accepted answer`);
+    else if (option) said = { option };
+  }
+  return evidence && review && said
+    ? { ...said, segment: evidence.segment, quote: evidence.quote, review }
+    : undefined;
+}
+
+/** The numbers of an item or a "List TWO" question carry the same tag or none. */
+function checkSameTag(
+  errors: string[],
+  answers: ListeningKey["answers"],
+  numbers: number[],
+) {
+  if (new Set(numbers.map((n) => answers[n]?.tag)).size > 1)
+    errors.push(
+      `key.answers.${numbers.join("-")}: every number needs the same tag`,
+    );
+}
+
+/**
+ * The numbers of a "List TWO" question name different things, so no variant
+ * is listed under two of them (ADR-0014 §7).
+ */
+function checkList(
+  errors: string[],
+  answers: ListeningKey["answers"],
+  numbers: number[],
+) {
+  if (numbers.length < 2) return;
+  checkSameTag(errors, answers, numbers);
+  const seen = new Set<string>();
+  for (const n of numbers) {
+    const variants = new Set(
+      (answers[n]?.accept ?? []).map(normalizeTypedAnswer),
+    );
+    for (const v of variants)
+      if (seen.has(v))
+        errors.push(
+          `key.answers.${numbers.join("-")}: "${v}" is listed under two numbers`,
+        );
+    for (const v of variants) seen.add(v);
+  }
+}
+
+function isListStart(group: QuestionGroup, number: number): boolean {
+  return (
+    group.type === "shortAnswer" &&
+    group.questions.some((q) => q.numbers.length > 1 && q.numbers[0] === number)
+  );
+}
 
 function checkOwner(
   errors: string[],
@@ -245,17 +437,24 @@ function readEvidence(
 }
 
 /**
- * Typed answers are listed in full, each non-empty and different from the
- * others. How they are normalized and counted against the word limit is
- * M9's checking decision (ADR-0012 §5).
+ * Typed answers are listed in full, each different from the others after
+ * normalization and within the word limit, so an answer over the limit can
+ * never be correct (ADR-0008 §3, ADR-0014 §7).
  */
-function checkVariants(errors: string[], path: string, accept: string[]) {
+function checkVariants(
+  errors: string[],
+  path: string,
+  accept: string[],
+  limit: WordLimit,
+) {
   const seen = new Set<string>();
   for (const value of accept) {
-    const plain = value.trim().toLowerCase();
-    if (seen.has(plain))
+    const normalized = normalizeTypedAnswer(value);
+    if (seen.has(normalized))
       errors.push(`${path}: "${value}" repeats another accepted answer`);
-    seen.add(plain);
+    else if (!fitsListeningWordLimit(normalized, limit))
+      errors.push(`${path}: "${value}" is over the word limit`);
+    seen.add(normalized);
   }
 }
 

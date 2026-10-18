@@ -11,6 +11,15 @@ export {
 export { audioBytes, mediaUrl, recordingMinutes } from "./model/media";
 export { type QuestionUnit, questionUnits, unitOf } from "./model/units";
 export {
+  type CheckResult,
+  type CheckedAnswers,
+  LISTENING_SCORING_RULES_VERSION,
+  type Outcome,
+  type Signal,
+  checkAttempt,
+  checkUnits,
+} from "./model/scoring";
+export {
   type Answer,
   CHECK_MS,
   type ExamClock,

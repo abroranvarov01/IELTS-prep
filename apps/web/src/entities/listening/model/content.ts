@@ -120,17 +120,53 @@ export type Transcript = {
 /** The phrase in a transcript segment that gives the answer (ADR-0012 §5). */
 export type Evidence = { segment: string; quote: string };
 
+/** What a question tests, never a judgment of the learner (LISTENING_EXPERIENCE.md, Error Intelligence (M9)). */
+export const CONTENT_TAGS = ["paraphrase", "spelledOut", "correction"] as const;
+export type ContentTag = (typeof CONTENT_TAGS)[number];
+
+/**
+ * Something the recording mentions that is not the answer, where it is said
+ * (ADR-0014 §7). Shown to learners only once a person has verified the claim
+ * and its timestamp against the recording (owner decision LD13).
+ */
+export type Distractor = ({ option: string } | { text: string }) & {
+  segment: string;
+  quote: string;
+  review: "aiDraft" | "verified";
+};
+
+export type KeyEntry = {
+  accept: string[];
+  evidence: Evidence[];
+  /** The instruction requires the recording's own words (`notInTranscript`). */
+  fromRecording?: true;
+  tag?: ContentTag;
+  distractors?: Distractor[];
+  /** On a "List TWO" question's first number: its answers count in order (LD6). */
+  ordered?: true;
+};
+
 export type ListeningKey = {
   testId: string;
   version: number;
   revision: number;
+  /** The transcript revision the key was checked against (ADR-0014 §7). */
+  transcriptRevision: number;
   review: { status: ReviewStatus };
-  answers: Record<number, { accept: string[]; evidence: Evidence[] }>;
+  answers: Record<number, KeyEntry>;
 };
 
 /** A Listening test has 4 parts of 10 questions (IELTS test format). */
 export const PART_COUNT = 4;
 export const QUESTIONS_PER_PART = 10;
+
+/** The word limit of a group's typed answers, or undefined when its answers are chosen. */
+export function typedWordLimit(group: QuestionGroup): WordLimit | undefined {
+  if (group.type === "shortAnswer") return group.wordLimit;
+  if ("answer" in group && group.answer.kind === "typed")
+    return group.answer.wordLimit;
+  return undefined;
+}
 
 /** The question numbers of a group, in order. */
 export function groupNumbers(group: QuestionGroup): number[] {

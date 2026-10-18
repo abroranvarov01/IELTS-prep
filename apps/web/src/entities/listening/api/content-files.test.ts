@@ -34,8 +34,8 @@ const FINGERPRINTS: Record<string, { number: number; sha256: string }> = {
     sha256: "8a25788a8f6d53d299805ee50f17099d4341d3ffefa7a009d430382b14a9e128",
   },
   "temporary-voa-1.key.json": {
-    number: 1,
-    sha256: "f115844fd770f96ee9db87bd78351c862e258043905cec0d58fdafe6dd12b643",
+    number: 2,
+    sha256: "d78ed12c20bf597433cfd3928adae7d26cb9accb2bf993d30b54f4222e138327",
   },
   "temporary-voa-1.transcript.json": {
     number: 1,

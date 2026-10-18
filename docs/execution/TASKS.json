@@ -4636,7 +4636,8 @@
       "title": "Listening answer checking and signals in the domain",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-04"],
       "goal": "Every Listening question type is checked by one versioned domain module with the approved signals.",
       "scope": [
