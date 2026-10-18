@@ -20,17 +20,17 @@ Canonical owner of the **approved visual direction** (what the product should lo
 
 ## Target feeling
 
-**Approved** (owner, 2026-10-12). Calm, premium, focused, modern, trustworthy, educational and mobile-native. Simple without looking empty, and visibly designed on purpose. It must never read as generic AI-generated SaaS, default shadcn, raw HTML forms, a component-library demo, or a desktop interface scaled down to a phone ([UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md)).
+**Approved** (owner, 2026-10-12; depth and warmth added by [Direction v2](#direction-v2-owner-2026-10-18), 2026-10-18). Calm, premium, focused, modern, trustworthy, educational and mobile-native. Simple without looking empty, visibly designed on purpose, and warm: soft blush fields, depth and rich illustrations where a screen sets direction (onboarding, Home, status pages), calm surfaces where the learner works. It must never read as generic AI-generated SaaS, default shadcn, raw HTML forms, a component-library demo, or a desktop interface scaled down to a phone ([UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md)).
 
 ## Visual language
 
 **Approved** (owner, 2026-10-12). Exact values are in [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
 
-- **Color balance:** white surfaces, `ink` text, subtle neutral boundaries, and restrained pale tints that carry meaning. Red guides attention to what matters most and never floods the interface. Shadows are very soft and rare.
+- **Color balance:** white surfaces, `ink` text, subtle neutral boundaries, and restrained pale tints that carry meaning. Red guides attention to what matters most and never floods the interface. Shadows are very soft: a card on white may float a little ([Direction v2](#direction-v2-owner-2026-10-18)); overlays are raised.
 - **Typography:** "bold" means weight, not size. The type scale is deliberately compact, and mobile headings stay within it. Hierarchy runs metadata < instructions < question or content < the screen's main purpose. Long-form Reading text is set for comfort: a reading size (never tiny, never like browser zoom), clear paragraph rhythm, and a controlled line length.
 - **Spacing:** breathable, not empty. One consistent vertical rhythm from the spacing scale, with no giant gaps, random margins, or padding that only adds bulk.
 - **Cards are not the default layout primitive.** Use one only to group, show a state, make a distinct interactive unit, or add emphasis. A card is quiet: a soft radius, a subtle boundary or tint, and no shadow beyond the approved elevation. Cards are not nested.
-- **Buttons:** the primary button is red, with a clear label and strong contrast. It is compact and dominant only when it really is the screen's primary action. No gradients and no giant CTA blocks.
+- **Buttons:** the primary button is red, with a clear label and strong contrast. It is compact and dominant only when it really is the screen's primary action. No gradients on buttons and no giant CTA blocks.
 - **Answer controls:** one clean boundary, a soft radius, a compact but comfortable height, and a clear selected state that does not rely on color alone. The approved focus ring is the only extra line. Minimal visual noise.
 - **Icons:** one coherent line-icon language, with consistent stroke weight and size. Visually light and never emoji-like, and no 3D artwork for functional controls. A filled shape is used only where the fill carries meaning (as in the approved M5 outcome and evidence marks), never as a random mix of families. Use icon and text together when the meaning is not immediately clear.
 
@@ -38,12 +38,25 @@ Canonical owner of the **approved visual direction** (what the product should lo
 
 **Approved** (owner, 2026-10-12). How each area should feel. Behavior is owned by the feature specs. For surfaces without a spec yet (Listening, mocks, progress), this guides design until the spec exists and does not decide anything marked TBD.
 
-- **Home** answers "What should I do next?" One obvious next action. The goal and target band stay quiet, and progress stays compact. No dashboard, no hero text, no oversized CTA, and no corporate-SaaS look.
+- **Home** answers "What should I do next?" One obvious next action in its own card, a compact goal card, and the skills the product has as quiet entries into practice ([Direction v2](#direction-v2-owner-2026-10-18)). Progress stays compact and appears only with real data (M11). No wall of tiles, no hero text, no oversized CTA.
 - **Listening is audio-first.** Typical order: a compact top bar, progress, the player (or waveform), the current question, its answer controls, then compact navigation. Practice may offer learning help (rewind, speed, transcript, evidence timestamps, explanations). Exam Mode removes it. Restrained blue, the Listening skill color, may be a secondary accent, and red stays the brand. **Listening review's signature evidence** is the exact timestamp, a transcript excerpt with the evidence phrase highlighted, replay, and the explanation.
 - **Mocks measure, they do not judge.** Present the result calmly as one snapshot, with a range or trend once enough data exists ([honest feedback](../product/PRODUCT.md#honest-feedback-non-negotiable)), then what went wrong and what to do next. No large red failure screens, no shame language, and no public comparison by default.
 - **Progress** answers three questions: Am I improving? What is weak? What should I do next? Show a trend or range only when real data supports it. No vanity metrics, no meaningless dashboard cards, no false precision, no clutter.
 
 Reading is covered in [Reading is the signature experience](#reading-is-the-signature-experience) below.
+
+## Direction v2 (owner, 2026-10-18)
+
+**Approved** (owner, 2026-10-18, in the M6-09 review: the M6 reference screenshots were rejected as too plain, and the owner provided a composition image for ten screens, saved as [references/brand/direction-2026-10-18.png](references/brand/direction-2026-10-18.png)). It is the visual north star for every milestone from here. It keeps the approved core (white-first, red accent, bold type, strong contrast, mobile-first) and adds:
+
+- **Blush gradient fields.** Panels that set direction (the onboarding stage, Home's goal and next-action cards, the start screen's side card, status pages) are a soft `brand.blush` gradient with faint radial glows, not a flat tint. Only the brand's reds and white, never another hue; never behind running text.
+- **Depth.** Cards on white carry a soft shadow and a `border.subtle` line, so lists and option cards read as objects, not outlines. Three elevation levels: none, soft (cards), raised (overlays).
+- **Rich illustrations.** Flat shapes with gradient depth and a scene (a skyline behind the cap, floating band values around the target, the skills around the level), on a glowing disc. Decorative, hidden from screen readers, and only the skills the product has (Reading, Listening; owner, M6-04 Q3).
+- **Desktop sidebar.** From the desktop breakpoint, the product navigation is a white sidebar with the logo at its top; the header keeps only the language switcher. Phones keep the bottom bar, tablets the header links ([USER_FLOWS.md, Navigation](../product/USER_FLOWS.md#navigation-and-practice-hub-m6)).
+- **Home as a compact dashboard.** A welcome, the goal, one next action with its own card, and the skills the product has. No analytics without data.
+- **One display size** for the figure a card is about (the target band, a score).
+
+What the image shows but the product does not build yet (Mock Tests, Progress, Materials, Listening, Settings and an account, per-type practice) is the direction for M7–M15, not scope now; a mock result's "Overall Band" ships as "Estimated band" ([honest feedback](../product/PRODUCT.md#honest-feedback-non-negotiable)). Exact values: [DESIGN_SYSTEM.md, Direction v2 components](DESIGN_SYSTEM.md#direction-v2-components-owner-mockup-2026-10-18).
 
 ## Supporting color
 

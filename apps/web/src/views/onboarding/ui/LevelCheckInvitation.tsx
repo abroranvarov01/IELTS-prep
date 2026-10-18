@@ -23,7 +23,7 @@ export async function LevelCheckInvitation() {
         body: t("onboarding.art.levelCheck.body"),
       }}
       mobilePicture={
-        <div className="rounded-lg bg-brand-blush-soft py-4">
+        <div className="rounded-lg bg-blush-field py-4">
           <SkillsPicture size="small" />
         </div>
       }

@@ -8,15 +8,11 @@ import { saveGoal } from "./goal";
 
 const catalogs = { uz, ru, en };
 
-// Next.js keeps routes visited earlier in the DOM, hidden, so only visible
-// paragraphs count.
-function goalLine(page: Page) {
-  return page.getByRole("main").locator("p").filter({ visible: true }).last();
-}
-
-// The approved goal-line strings mark the band with <b>; the visible text has no tag.
-function targetBandText(template: string, band: string) {
-  return template.replace("<b>{band}</b>", band);
+// The goal card (USER_FLOWS.md, Home v2), named by its heading.
+function goalCard(page: Page, locale: keyof typeof catalogs) {
+  return page.getByRole("region", {
+    name: catalogs[locale].home.goal.title,
+  });
 }
 
 for (const locale of routing.locales) {
@@ -45,8 +41,9 @@ for (const locale of routing.locales) {
       await expect(
         page.getByRole("link", { name: messages.levelCheck.start }),
       ).toHaveAttribute("href", `/${locale}/level-check`);
-      await expect(goalLine(page)).toHaveText(
-        `${targetBandText(messages.home.goal.targetBand, "6.5")} · ${messages.examType.general}`,
+      await expect(goalCard(page, locale)).toContainText("6.5");
+      await expect(goalCard(page, locale)).toContainText(
+        messages.examType.general,
       );
       await expect(
         page.getByRole("link", { name: messages.home.goal.change }),
@@ -96,7 +93,7 @@ for (const locale of routing.locales) {
         await saveGoal(context, baseURL, "v1|general|8+");
         await page.setViewportSize({ width, height: 800 });
         await page.goto(`/${locale}`);
-        await expect(goalLine(page)).toContainText("8+");
+        await expect(goalCard(page, locale)).toContainText("8+");
 
         const overflow = await page.evaluate(
           () =>
@@ -131,9 +128,8 @@ test.describe("entering home", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: en.home.title }),
     ).toBeVisible();
-    await expect(goalLine(page)).toHaveText(
-      `${targetBandText(en.home.goal.targetBand, "7.0")} · ${en.examType.academic}`,
-    );
+    await expect(goalCard(page, "en")).toContainText("7.0");
+    await expect(goalCard(page, "en")).toContainText(en.examType.academic);
 
     // Later visits open home directly.
     await page.goto("/en");
@@ -167,7 +163,10 @@ test.describe("entering home", () => {
   }) => {
     await saveGoal(context, baseURL, "v1|unknown|unknown");
     await page.goto("/en");
-    await expect(goalLine(page)).toHaveText(en.home.goal.targetBandNotSet);
+    await expect(goalCard(page, "en")).toContainText(
+      en.home.goal.targetBandNotSet,
+    );
+    await expect(goalCard(page, "en")).not.toContainText(en.examType.academic);
   });
 
   test("'Not now' never loops back into onboarding, even when no goal was kept", async ({
@@ -178,7 +177,9 @@ test.describe("entering home", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: en.home.title }),
     ).toBeVisible();
-    await expect(goalLine(page)).toHaveText(en.home.goal.targetBandNotSet);
+    await expect(goalCard(page, "en")).toContainText(
+      en.home.goal.targetBandNotSet,
+    );
   });
 
   test("'Change goal' reruns the questions with the current answers marked", async ({

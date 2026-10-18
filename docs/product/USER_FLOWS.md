@@ -577,7 +577,7 @@ Reused without change: "Time is up.", "Start again", "Show in passage", "Your ev
 
   **Recommendation: (b).** Each destination is an icon with a visible label (never icon-only), the current one marked by more than color and by `aria-current="page"`, inside a `nav` landmark named "Main". It appears on shell pages only.
 - **Where navigation does not appear:** test-bar screens (Reading test, review, retry: they keep their own bar with "Exit" or "Results"), and onboarding steps (a three-step focused flow; recommended, open question N2). Not-found and error pages show it, so a lost learner has a way on.
-- **Header:** unchanged from M1 on phones (logo, language). From the tablet breakpoint: logo, the destinations, language. The header still scrolls away; the phone bar stays fixed at the bottom and respects the device's safe area and the on-screen keyboard (it hides while a text field has focus).
+- **Header:** unchanged from M1 on phones (logo, language). From the tablet breakpoint: logo, the destinations, language. The header still scrolls away; the phone bar stays fixed at the bottom and respects the device's safe area and the on-screen keyboard (it hides while a text field has focus). **Direction v2 (owner, 2026-10-18):** from the desktop breakpoint the destinations are a sidebar at the start of the window, with the logo at its top; the header keeps only the language switcher. Below it, unchanged.
 - **Steps:** 1. Tap "Practice" → the Practice Hub. 1. Tap "Home" → Home.
 - **Step count:** 1 to either destination from any shell page.
 - **Keyboard and screen readers:** the skip link stays first; the navigation comes after the header in the reading order on desktop and after `main` on phones (bottom bar), so screen readers reach the page content first; every destination is a link reachable by Tab.
@@ -635,3 +635,22 @@ Approved for implementation (owner, 2026-10-18, task M6-04); keys are suggestion
 | `practice.empty` | No tests (safety state) | No practice tests yet. | Пока нет тестов для практики. | Hozircha mashq testlari yoʻq. |
 
 Reused without change: "See your last results" (`reading.lastResults`), "Practice" and "Exam" (`reading.mode.*`), the skip link.
+
+### Home v2 (Direction v2, owner 2026-10-18)
+
+**Approved** (owner, 2026-10-18: the composition image [references/brand/direction-2026-10-18.png](../design/references/brand/direction-2026-10-18.png) and the session decisions). It replaces the layout of [Returning user → home](#returning-user--home); the next-action rules, the goal cookie, "Change goal" and every state stay as approved there.
+
+- **What it shows at 360 px, top to bottom:** H1 "Welcome!" with one sentence; the **next-action card** (H2 "Find your level", the sentence, the red button): the one primary action, first; the **goal card** ("Goal", the target band large, the exam type as a chip, "Change goal"); **"Choose a skill"** with one card per skill that has tests (Reading now; Listening from M8), each a link to the Practice Hub. Nothing for data the device does not have (no progress, no estimate).
+- **Desktop:** the sidebar; the goal card and the next-action card side by side (the action the wider), then the skill cards in a row. Visual values: [DESIGN_SYSTEM.md, Home v2](../design/DESIGN_SYSTEM.md#home-v2).
+- **UX check:** 10-second rule: the welcome and the red button say what to do; one primary action: one red button, the skill card and "Change goal" are links; progressive disclosure unchanged.
+- **Copy** (approved with the image; the Russian strings are the image's; a fluent-speaker review of uz and ru stays required before beta, M15-11):
+
+| Key | Used in | en | ru | uz |
+|---|---|---|---|---|
+| `home.title` (changed) | Home H1 and page title | Welcome! | Добро пожаловать! | Xush kelibsiz! |
+| `home.subtitle` | The sentence under the H1 | Keep going toward the band you need. | Продолжайте путь к желаемому баллу. | Kerakli ballingiz sari davom eting. |
+| `home.goal.title` | The goal card's label | Goal | Цель | Maqsad |
+| `home.chooseSkill` | H2 above the skill cards | Choose a skill | Выберите навык | Koʻnikmani tanlang |
+| `home.skills.reading` | The Reading card's sentence | Build your reading skills. | Развивайте навыки чтения. | Oʻqish koʻnikmalarini rivojlantiring. |
+
+Reused: `levelCheck.*`, `home.goal.targetBandNotSet`, `home.goal.change`, `examType.*`, `practice.skill.reading`.

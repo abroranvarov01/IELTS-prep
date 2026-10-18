@@ -89,7 +89,7 @@ export function AnswerList({
           <li key={answer.value} className="flex">
             {button(
               answer,
-              `relative flex w-full items-center gap-4 rounded-lg border p-4 text-start desktop:flex-col desktop:items-start desktop:gap-6 desktop:p-6 ${
+              `relative flex w-full items-center gap-4 rounded-lg border p-4 text-start shadow-soft desktop:flex-col desktop:items-start desktop:gap-6 desktop:p-6 ${
                 isSelected(answer)
                   ? "border-brand-primary bg-brand-blush-soft"
                   : "border-border-subtle bg-surface-base hover:border-brand-blush active:bg-brand-blush-soft"
@@ -137,7 +137,7 @@ export function AnswerList({
           <li key={answer.value} className="flex">
             {button(
               answer,
-              `relative flex min-h-[3.5rem] w-full items-center justify-center rounded-md border text-heading-2 font-bold tabular-nums ${
+              `relative flex min-h-[3.5rem] w-full items-center justify-center rounded-md border text-heading-2 font-bold tabular-nums shadow-soft ${
                 isSelected(answer)
                   ? "border-brand-primary bg-brand-primary text-surface-base"
                   : "border-border-subtle bg-surface-base hover:border-brand-blush active:bg-brand-blush-soft"

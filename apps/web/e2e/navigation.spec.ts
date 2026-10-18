@@ -6,9 +6,10 @@ import uz from "../messages/uz.json";
 import { routing } from "../src/shared/i18n/routing";
 import { saveGoal } from "./goal";
 
-// The product navigation (USER_FLOWS.md, Navigation and Practice Hub (M6)):
-// a bar at the bottom on phones, links in the header from the tablet
-// breakpoint (600 px), on shell pages only.
+// The product navigation (USER_FLOWS.md, Navigation and Practice Hub (M6);
+// Direction v2): a bar at the bottom on phones, links in the header from the
+// tablet breakpoint (600 px), a sidebar from the desktop breakpoint
+// (1024 px), on shell pages only.
 
 const catalogs = { uz, ru, en };
 
@@ -41,22 +42,36 @@ test("on phones the navigation is a bar at the bottom, Home marked as the curren
   expect(goalBox && box && goalBox.y + goalBox.height <= box.y).toBe(true);
 });
 
-for (const width of [600, 1280])
-  test(`from the tablet breakpoint the navigation is in the header (${width} px)`, async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width, height: 800 });
-    await page.goto("/en");
-    const nav = navigation(page);
-    await expect(nav).toHaveCount(1);
-    await expect(
-      page.getByRole("banner").getByRole("navigation"),
-    ).toBeVisible();
-    await expect(nav.getByRole("link", { name: en.nav.home })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
-  });
+test("from the tablet breakpoint the navigation is in the header (600 px)", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 600, height: 800 });
+  await page.goto("/en");
+  const nav = navigation(page);
+  await expect(nav).toHaveCount(1);
+  await expect(page.getByRole("banner").getByRole("navigation")).toBeVisible();
+  await expect(nav.getByRole("link", { name: en.nav.home })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
+});
+
+test("from the desktop breakpoint the navigation is a sidebar with the logo, before the header (1280 px)", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/en");
+  const nav = navigation(page);
+  await expect(nav).toHaveCount(1);
+  await expect(page.getByRole("banner").getByRole("navigation")).toHaveCount(0);
+  const box = await nav.boundingBox();
+  expect(box && box.x < 240 && box.y < 200).toBe(true);
+  await expect(page.getByRole("link", { name: en.app.name })).toHaveCount(1);
+  await expect(nav.getByRole("link", { name: en.nav.home })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
+});
 
 test("onboarding and the Reading test screen have no product navigation; not-found has it", async ({
   page,

@@ -4,11 +4,11 @@ Canonical owner of the **list of forbidden visual and interaction patterns**. Th
 
 | Anti-pattern | Why it fails here | Do instead |
 |---|---|---|
-| Generic AI-SaaS look (hero gradients, sparkles, floating blobs) | Feels templated and untrustworthy. It is not an education product. | White surfaces, bold type, red accent used with intent |
-| Random purple/blue gradients, or gradients as decoration anywhere (buttons, backgrounds, cards) | Off-brand noise | Flat brand and skill colors from tokens |
+| Generic AI-SaaS look (sparkles, floating blobs, purple glows, stock 3D) | Feels templated and untrustworthy. It is not an education product. | White surfaces, bold type, red accent used with intent; the brand's own blush gradient fields only where a screen sets direction ([Direction v2](DESIGN_CONSTITUTION.md#direction-v2-owner-2026-10-18)) |
+| Purple/blue or multi-hue gradients; gradients on buttons, controls or behind running text | Off-brand noise, unreadable | Flat brand and skill colors from tokens; the one blush gradient token on direction-setting panels |
 | Excessive glassmorphism / blur | Low contrast and slow on mid-range phones | Solid surfaces |
 | Every element wrapped in a rounded card | Flattens hierarchy and wastes phone width | Use spacing, headings, and dividers. Card only when something is a distinct, tappable unit. |
-| Dashboard overload (many tiles, many numbers, a wall of cards) | Breaks the 10-second rule | One clear next action, then a small amount of progress context |
+| Dashboard overload (many tiles, many numbers, a wall of cards, metrics without data) | Breaks the 10-second rule | One clear next action in its own card, the goal, and only context with real data behind it |
 | A desktop interface shrunk onto a phone (dense columns, small targets, hover-only affordances) | Breaks mobile-first and is hard to use with a thumb | Phone layout first. Desktop gets its own layout. |
 | Huge mobile headings | Push the content and the action below the fold, and shout | The approved type scale. Hierarchy from weight and spacing. |
 | Giant CTA blocks (oversized buttons, banner-like CTA panels) | Shout instead of guiding, and waste phone height | The approved primary button, dominant through color, not size |
@@ -17,7 +17,7 @@ Canonical owner of the **list of forbidden visual and interaction patterns**. Th
 | Low-contrast gray on gray | Unreadable outdoors, fails accessibility | Neutral tokens with verified contrast |
 | Icon-only actions with unclear meaning | Users must guess, and translations cannot help | Icon + label. Icon-only only for universal actions (close, back, play), and even then with an accessible name. |
 | Inconsistent icon families (mixed stroke weights, random filled and outline icons, emoji-like or 3D icons on controls) | Looks assembled, not designed | One line family with consistent stroke and size. Fill only where it carries meaning. |
-| Heavy or many shadows | Visual noise, dated look | At most the two elevation levels in the design system |
+| Heavy or many shadows | Visual noise, dated look | The three elevation levels in the design system: none, soft (cards), raised (overlays) |
 | Excessive borders (every section outlined, thick or dark lines where space would do) | Busy, dated, form-like | Spacing and surface color first. `border.subtle` for decoration, `border.control` only for essential boundaries. |
 | Stacked boundaries: double borders, or a border, ring and outline showing as separate lines on one element, or a focus ring on top of another ring | Visual noise. Focus becomes hard to read. | One boundary per state (heavier or darker when selected), plus only the approved focus ring for keyboard focus |
 | Large empty hero sections inside the app | Pushes the action below the fold on phones | Start with the action |

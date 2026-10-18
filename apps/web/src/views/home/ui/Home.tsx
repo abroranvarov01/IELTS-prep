@@ -1,31 +1,59 @@
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { Link } from "@/shared/i18n/navigation";
+import { ReadingIcon } from "@/shared/ui/icons";
+import { Illustration } from "@/shared/ui/illustrations";
 import { PrimaryLink } from "@/shared/ui/PrimaryLink";
-import { QuietLink } from "@/shared/ui/QuietLink";
 import { type NextAction, nextAction } from "../model/next-action";
-import { GoalLine } from "./GoalLine";
+import { GoalCard } from "./GoalCard";
 import { StartingPointPicture } from "./StartingPointPicture";
 
-/** Answers "What should I do now to improve IELTS?" with one action (USER_FLOWS.md). */
+/**
+ * Answers "What should I do now to improve IELTS?" with one action
+ * (USER_FLOWS.md, Home v2): a welcome, the next action in its own card
+ * (first on phones), the goal card, and the skills the product has as quiet
+ * ways into practice.
+ */
 export async function Home() {
   const t = await getTranslations();
 
   return (
     <div className="mx-auto max-w-column pt-6 pb-12 desktop:max-w-none desktop:pt-8">
-      {/* The page's name is a quiet label; the next action is what it shows. */}
-      <h1 className="text-meta font-bold text-brand-primary-deep">
-        {t("home.title")}
-      </h1>
-      <div className="mt-3">
-        <NextActionBlock action={nextAction()} />
+      <h1 className="text-heading-1 font-extrabold">{t("home.title")}</h1>
+      <p className="mt-1 text-text-secondary">{t("home.subtitle")}</p>
+      <div className="mt-6 grid gap-4 desktop:grid-cols-12 desktop:gap-6">
+        <div className="desktop:col-span-7">
+          <NextActionBlock action={nextAction()} />
+        </div>
+        <div className="desktop:col-span-5">
+          {/* The goal needs the request's cookie; everything else is static. */}
+          <Suspense>
+            <GoalCard />
+          </Suspense>
+        </div>
       </div>
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-x-4">
-        {/* The goal needs the request's cookie; everything above is static. */}
-        <Suspense>
-          <GoalLine />
-        </Suspense>
-        <QuietLink href="/start/exam">{t("home.goal.change")}</QuietLink>
-      </div>
+      <h2 className="mt-8 text-heading-2 font-bold">{t("home.chooseSkill")}</h2>
+      <ul className="mt-4 grid gap-4 desktop:grid-cols-3">
+        {/* Only skills with tests (N3): Reading now, Listening from M8. */}
+        <li>
+          <Link
+            href="/practice"
+            className="flex h-full flex-col gap-3 rounded-lg border border-border-subtle bg-surface-base p-[1.25rem] shadow-soft transition-colors hover:border-brand-blush active:bg-surface-warm"
+          >
+            <span className="flex items-center gap-3">
+              <span className="flex size-10 items-center justify-center rounded-full bg-skill-reading-tint text-brand-primary-deep">
+                <ReadingIcon />
+              </span>
+              <span className="text-heading-3 font-bold">
+                {t("practice.skill.reading")}
+              </span>
+            </span>
+            <span className="text-meta text-text-secondary">
+              {t("home.skills.reading")}
+            </span>
+          </Link>
+        </li>
+      </ul>
     </div>
   );
 }
@@ -38,23 +66,52 @@ async function NextActionBlock({ action }: { action: NextAction }) {
       return (
         <section
           aria-labelledby="next-action"
-          className="rounded-xl bg-brand-blush-soft p-4 tablet:p-8 desktop:grid desktop:grid-cols-2 desktop:items-center desktop:gap-12 desktop:p-12"
+          className="flex h-full items-center gap-6 rounded-lg bg-blush-field p-6 desktop:p-8"
         >
-          <div>
-            <h2 id="next-action" className="text-heading-1 font-extrabold">
+          <div className="flex-1">
+            <span
+              aria-hidden="true"
+              className="flex size-12 items-center justify-center rounded-full bg-surface-base text-brand-primary-deep"
+            >
+              <Illustration className="size-6">
+                <path d="M5.25 19.25v-5.5M12 19.25v-9.5M18.75 19.25V4.75M3.75 19.25h16.5" />
+              </Illustration>
+            </span>
+            <h2 id="next-action" className="mt-4 text-heading-2 font-bold">
               {t("title")}
             </h2>
             <p className="mt-2 text-text-secondary">{t("body")}</p>
-            <div className="mt-6 desktop:mt-8">
-              <PrimaryLink href="/level-check">{t("start")}</PrimaryLink>
+            <div className="mt-6">
+              <PrimaryLink href="/level-check">
+                <span className="inline-flex items-center gap-2">
+                  {t("start")}
+                  <ArrowIcon />
+                </span>
+              </PrimaryLink>
             </div>
           </div>
-          {/* The action comes first on phones and tablets; the picture is
-              desktop's (owner, M6-04: Home options (a) and (b)). */}
-          <div className="hidden desktop:block">
+          {/* The picture is desktop's; phones put the action first. */}
+          <div className="hidden shrink-0 desktop:block">
             <StartingPointPicture />
           </div>
         </section>
       );
   }
+}
+
+function ArrowIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      className="size-4 shrink-0"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2.75 8h10.5M9 3.75 13.25 8 9 12.25" />
+    </svg>
+  );
 }

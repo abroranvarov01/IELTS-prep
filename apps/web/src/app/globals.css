@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "../shared/ui/tokens.css";
 
+/* The blush field (DESIGN_SYSTEM.md, Direction v2): the gradient token as a
+   background. Tailwind has no theme namespace for background images. */
+@utility bg-blush-field {
+  background-image: var(--gradient-blush);
+}
+
 @layer base {
   html {
     background-color: var(--color-surface-base);

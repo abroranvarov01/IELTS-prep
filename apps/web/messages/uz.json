@@ -97,11 +97,17 @@
     }
   },
   "home": {
-    "title": "Keyingi qadamingiz",
+    "title": "Xush kelibsiz!",
+    "subtitle": "Kerakli ballingiz sari davom eting.",
     "goal": {
+      "title": "Maqsad",
       "targetBand": "Maqsadli ball: <b>{band}</b>",
       "targetBandNotSet": "Maqsadli ball: hali tanlanmagan",
       "change": "Maqsadni oʻzgartirish"
+    },
+    "chooseSkill": "Koʻnikmani tanlang",
+    "skills": {
+      "reading": "Oʻqish koʻnikmalarini rivojlantiring."
     }
   },
   "reading": {

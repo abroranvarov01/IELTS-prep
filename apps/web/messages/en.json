@@ -97,11 +97,17 @@
     }
   },
   "home": {
-    "title": "Your next step",
+    "title": "Welcome!",
+    "subtitle": "Keep going toward the band you need.",
     "goal": {
+      "title": "Goal",
       "targetBand": "Target band: <b>{band}</b>",
       "targetBandNotSet": "Target band: not set yet",
       "change": "Change goal"
+    },
+    "chooseSkill": "Choose a skill",
+    "skills": {
+      "reading": "Build your reading skills."
     }
   },
   "reading": {

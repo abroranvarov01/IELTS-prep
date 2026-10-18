@@ -8,7 +8,8 @@ import { saveGoal } from "./goal";
 
 /** Presses Tab until `target` has focus: a few stops at most (skip link, logo, navigation). */
 async function tabTo(page: Page, target: Locator) {
-  for (let i = 0; i < 6; i++) {
+  // Without CSS the page also shows every navigation placement and both logos.
+  for (let i = 0; i < 10; i++) {
     await page.keyboard.press("Tab");
     if (await target.evaluate((e) => e === document.activeElement)) return;
   }
@@ -144,7 +145,7 @@ test("Escape closes a list that was opened before the page finished loading", as
   await page.goto("/uz", { waitUntil: "commit" });
   const button = switcherButton(page, "uz");
   await expect(button).toBeVisible();
-  // Without its CSS yet, the page may also show the header's navigation links.
+  // Without its CSS yet, the page may also show every navigation placement.
   await tabTo(page, button);
   await page.keyboard.press("Enter");
   await expect(languageLink(page, "uz", "en")).toBeVisible();

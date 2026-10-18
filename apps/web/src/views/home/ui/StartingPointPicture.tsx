@@ -2,14 +2,14 @@
  * Home's own picture for the level check (owner, M6-04: Home option (a)):
  * a path from where the learner starts, through their level, to the target.
  * Not the onboarding's skills picture, so a returning learner sees their home,
- * not step 3 again. Desktop only; decorative.
+ * not step 3 again. In the next-action card on desktop only; decorative.
  */
 export function StartingPointPicture() {
   return (
     <svg
       aria-hidden="true"
       viewBox="0 0 352 352"
-      className="mx-auto block size-[22rem]"
+      className="mx-auto block size-[12rem]"
     >
       <path
         d="M64 288C112 214 136 272 176 208S232 132 268 104"

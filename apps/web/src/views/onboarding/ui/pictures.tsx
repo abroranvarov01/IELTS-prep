@@ -15,12 +15,33 @@ export function PathsPicture() {
       viewBox="0 0 360 260"
       className="w-full max-w-[26rem]"
     >
-      <circle cx="180" cy="140" r="120" className="fill-surface-warm" />
-      <g className="fill-brand-blush" opacity="0.7">
+      <defs>
+        <radialGradient id="paths-glow">
+          <stop offset="0" style={{ stopColor: "var(--color-brand-blush)" }} />
+          <stop
+            offset="1"
+            style={{ stopColor: "var(--color-surface-base)", stopOpacity: 0 }}
+          />
+        </radialGradient>
+      </defs>
+      <circle cx="180" cy="140" r="130" fill="url(#paths-glow)" opacity="0.8" />
+      <circle cx="180" cy="146" r="104" className="fill-surface-base" />
+      {/* The town: a skyline behind the books, the clock tower in it. */}
+      <g className="fill-brand-blush" opacity="0.55">
+        <rect x="8" y="150" width="26" height="70" rx="2" />
         <path d="M70 72 87 34l17 38v148H70z" />
         <rect x="38" y="138" width="34" height="82" rx="2" />
         <path d="M104 120l20-20 20 20v100h-40z" />
+        <rect x="300" y="128" width="30" height="92" rx="2" />
+        <path d="M332 150l14-16 14 16v70h-28z" />
       </g>
+      <path
+        d="M4 220h352"
+        strokeWidth="2"
+        strokeLinecap="round"
+        className="stroke-brand-blush"
+        opacity="0.7"
+      />
       <circle cx="87" cy="96" r="9" className="fill-surface-warm" />
       {BOOKS.map(({ x, y, w, h, cover }) => (
         <g key={y}>
@@ -96,6 +117,22 @@ export function TargetPicture({ band }: { band?: TargetBand }) {
       viewBox="0 0 380 300"
       className="w-full max-w-[26rem]"
     >
+      <defs>
+        <radialGradient id="target-glow">
+          <stop offset="0" style={{ stopColor: "var(--color-brand-blush)" }} />
+          <stop
+            offset="1"
+            style={{ stopColor: "var(--color-surface-base)", stopOpacity: 0 }}
+          />
+        </radialGradient>
+      </defs>
+      <circle
+        cx="190"
+        cy="170"
+        r="150"
+        fill="url(#target-glow)"
+        opacity="0.7"
+      />
       <circle cx="170" cy="196" r="98" className="fill-brand-blush" />
       <circle cx="170" cy="196" r="78" className="fill-surface-base" />
       <circle cx="170" cy="196" r="58" className="fill-brand-blush" />

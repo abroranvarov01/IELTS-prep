@@ -55,6 +55,9 @@
   --text-passage--line-height: 1.6;
   --text-meta: 0.875rem;
   --text-meta--line-height: 1.4;
+  /* The one figure a card is about (Direction v2): the target band, a score */
+  --text-display: 2.5rem;
+  --text-display--line-height: 1.1;
   --font-weight-*: initial;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -93,10 +96,40 @@
   --radius-xl: 28px;
   --radius-full: 9999px;
 
-  /* Elevation: none (the default) and raised */
+  /* Elevation: none (the default), soft (cards on white) and raised (overlays) */
   --shadow-*: initial;
+  --shadow-soft: 0 4px 16px 0
+    color-mix(in srgb, var(--color-ink) 6%, transparent);
   --shadow-raised: 0 2px 12px 0
     color-mix(in srgb, var(--color-ink) 12%, transparent);
+
+  /* The blush field (Direction v2): faint brand.blush glows over a soft
+     gradient to white, for panels that set direction. Used by the
+     bg-blush-field utility in globals.css. */
+  --gradient-blush:
+    radial-gradient(
+      circle at 85% 15%,
+      color-mix(
+        in srgb,
+        var(--color-brand-blush) 70%,
+        var(--color-surface-base)
+      ),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      color-mix(
+        in srgb,
+        var(--color-brand-blush) 45%,
+        var(--color-surface-base)
+      ),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      var(--color-brand-blush-soft),
+      var(--color-surface-base)
+    );
   --inset-shadow-*: initial;
   --drop-shadow-*: initial;
   --text-shadow-*: initial;

@@ -55,7 +55,7 @@ export function StartScreen({
       <main id="main" className="px-gutter">
         <TaskLayout
           side={
-            <div className="hidden rounded-lg bg-surface-warm p-6 desktop:block">
+            <div className="hidden rounded-lg bg-blush-field p-6 desktop:block">
               <p className="flex items-center gap-3 text-heading-3 font-bold">
                 {skill}
                 {skillName}

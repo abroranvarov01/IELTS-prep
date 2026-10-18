@@ -22,13 +22,11 @@ for (const locale of routing.locales) {
       await expect(page.getByRole("main")).toHaveCount(1);
     });
 
-    test("the header logo loads and links to the home page", async ({
-      page,
-    }) => {
+    test("the logo loads and links to the home page", async ({ page }) => {
       await page.goto(`/${locale}`);
-      const logoLink = page
-        .getByRole("banner")
-        .getByRole("link", { name: messages.app.name });
+      // In the header below the desktop breakpoint, in the sidebar from it;
+      // only the visible one has a role.
+      const logoLink = page.getByRole("link", { name: messages.app.name });
       await expect(logoLink).toHaveAttribute("href", `/${locale}`);
       const logo = logoLink.getByRole("img", { name: messages.app.name });
       await expect
@@ -80,7 +78,7 @@ for (const locale of routing.locales) {
       });
     }
 
-    test("centers the content in a 1200 px column at 1280 px", async ({
+    test("the content column fills the space beside the sidebar at 1280 px (and never more than 1200 px)", async ({
       page,
     }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
@@ -90,14 +88,18 @@ for (const locale of routing.locales) {
         .locator("> div")
         .evaluate((element) => {
           const { left, width } = element.getBoundingClientRect();
+          const nav = document.querySelector("nav")?.closest("div");
           return {
             left,
             width,
+            sidebarRight: nav ? nav.getBoundingClientRect().right : 0,
             viewport: document.documentElement.clientWidth,
           };
         });
-      expect(column.width).toBe(1200);
-      expect(column.left).toBe((column.viewport - 1200) / 2);
+      // The 15rem sidebar, then 32 px of padding on each side of the column.
+      expect(column.sidebarRight).toBe(240);
+      expect(column.left).toBe(240 + 32);
+      expect(column.width).toBe(Math.min(1200, column.viewport - 240 - 64));
     });
   });
 }

@@ -11,14 +11,16 @@ import {
   ReadingIcon,
 } from "@/shared/ui/icons";
 import { QuietLink } from "@/shared/ui/QuietLink";
+import { TaskLayout } from "@/shared/ui/TaskLayout";
 import { loadStates } from "../api/load-states";
 import type { TestState } from "../model/test-state";
 
 /**
  * The Practice Hub (USER_FLOWS.md, Practice Hub (M6); DESIGN_SYSTEM.md, M6
  * components): every shipped test by skill, each row one link to the test's
- * own address with its state on this device, read after mounting. Skills
- * without tests are not shown (decision N3).
+ * own address with its state on this device, read after mounting, as cards
+ * in the task composition (Direction v2). Skills without tests are not shown
+ * (decision N3).
  */
 export function PracticeHub({ tests }: { tests: ReadingTest[] }) {
   const t = useTranslations();
@@ -41,7 +43,7 @@ export function PracticeHub({ tests }: { tests: ReadingTest[] }) {
   }, [tests]);
 
   return (
-    <div className="mx-auto max-w-column py-8 desktop:max-w-none">
+    <TaskLayout>
       <h1 className="text-heading-1 font-extrabold">{t("practice.title")}</h1>
       {loaded && !loaded.readable && (
         <p className="mt-4 flex gap-2">
@@ -65,15 +67,18 @@ export function PracticeHub({ tests }: { tests: ReadingTest[] }) {
             </span>
             {t("practice.skill.reading")}
           </h2>
-          <ul className="mt-4 grid gap-3 desktop:grid-cols-2 desktop:gap-4">
+          <ul className="mt-4 grid gap-3 desktop:gap-4">
             {tests.map((test) => {
               const state = loaded?.states[test.id];
               return (
                 <li key={test.id}>
                   <Link
                     href={`/reading/${test.id}`}
-                    className="flex min-h-[4.5rem] items-center gap-3 rounded-lg border border-border-subtle bg-surface-base p-4 transition-colors hover:border-ink active:bg-surface-warm"
+                    className="flex min-h-[4.5rem] items-center gap-3 rounded-lg border border-border-subtle bg-surface-base p-4 shadow-soft transition-colors hover:border-brand-blush active:bg-surface-warm"
                   >
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-skill-reading-tint text-brand-primary-deep">
+                      <ReadingIcon />
+                    </span>
                     <span className="min-w-0 flex-1">
                       <span lang="en" className="block font-bold">
                         {test.title}
@@ -103,7 +108,7 @@ export function PracticeHub({ tests }: { tests: ReadingTest[] }) {
           </ul>
         </section>
       )}
-    </div>
+    </TaskLayout>
   );
 }
 

@@ -14,19 +14,59 @@ const DESTINATIONS = [
  * The product navigation (USER_FLOWS.md, Navigation and Practice Hub (M6);
  * DESIGN_SYSTEM.md, M6 components): labelled destinations, the current one
  * marked by weight, an indicator bar and `aria-current`, never by color alone.
- * `placement` is where it sits: the header from the tablet breakpoint, or the
- * bar at the bottom of the window below it. The shell renders both; CSS shows
- * one, so screen readers meet only the visible one.
+ * `placement` is where it sits: the sidebar from the desktop breakpoint
+ * (DESIGN_SYSTEM.md, Direction v2), the header from the tablet breakpoint
+ * below it, or the bar at the bottom of the window on phones. The shell
+ * renders all three; CSS shows one, so screen readers meet only the visible
+ * one.
  */
-export function MainNavigation({ placement }: { placement: "header" | "bar" }) {
+export function MainNavigation({
+  placement,
+}: {
+  placement: "sidebar" | "header" | "bar";
+}) {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const isCurrent = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  if (placement === "sidebar")
+    return (
+      <nav aria-label={t("label")} className="px-4">
+        <ul className="flex flex-col gap-2">
+          {DESTINATIONS.map(({ href, key, icon: Icon }) => {
+            const current = isCurrent(href);
+            return (
+              <li key={key}>
+                <Link
+                  href={href}
+                  aria-current={current ? "page" : undefined}
+                  className="relative flex min-h-12 items-center gap-3 rounded-md px-3 font-medium text-text-secondary transition-colors hover:bg-brand-blush-soft active:bg-brand-blush-soft aria-[current=page]:bg-brand-blush-soft aria-[current=page]:font-bold aria-[current=page]:text-ink"
+                >
+                  {current && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-y-3 start-[0] w-[3px] rounded-full bg-brand-primary"
+                    />
+                  )}
+                  <Icon
+                    className={`size-[1.25rem] ${current ? "text-brand-primary-deep" : ""}`}
+                  />
+                  {t(key)}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    );
+
   if (placement === "header")
     return (
-      <nav aria-label={t("label")} className="hidden tablet:block">
+      <nav
+        aria-label={t("label")}
+        className="hidden tablet:block desktop:hidden"
+      >
         <ul className="flex items-center gap-1">
           {DESTINATIONS.map(({ href, key, icon: Icon }) => {
             const current = isCurrent(href);

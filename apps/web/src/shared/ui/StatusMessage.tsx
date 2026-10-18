@@ -75,7 +75,7 @@ export function PictureStage({
         </div>
       }
     >
-      <div className="mb-6 flex justify-center rounded-lg bg-brand-blush-soft py-4 desktop:hidden">
+      <div className="mb-6 flex justify-center rounded-lg bg-blush-field py-4 desktop:hidden">
         {picture("small")}
       </div>
       {children}
@@ -96,7 +96,23 @@ export function SignpostPicture({ size }: { size: "large" | "small" }) {
       viewBox="0 0 320 260"
       className={PICTURE_SIZE[size]}
     >
-      <circle cx="160" cy="130" r="112" className="fill-surface-warm" />
+      <defs>
+        <radialGradient id="signpost-glow">
+          <stop offset="0" style={{ stopColor: "var(--color-brand-blush)" }} />
+          <stop
+            offset="1"
+            style={{ stopColor: "var(--color-surface-base)", stopOpacity: 0 }}
+          />
+        </radialGradient>
+      </defs>
+      <circle
+        cx="160"
+        cy="130"
+        r="128"
+        fill="url(#signpost-glow)"
+        opacity="0.8"
+      />
+      <circle cx="160" cy="130" r="100" className="fill-surface-base" />
       <path
         d="M60 232q60-30 100-6t100-10"
         fill="none"
@@ -133,7 +149,16 @@ export function RetryPicture({ size }: { size: "large" | "small" }) {
       viewBox="0 0 320 260"
       className={PICTURE_SIZE[size]}
     >
-      <circle cx="160" cy="130" r="112" className="fill-surface-warm" />
+      <defs>
+        <radialGradient id="retry-glow">
+          <stop offset="0" style={{ stopColor: "var(--color-brand-blush)" }} />
+          <stop
+            offset="1"
+            style={{ stopColor: "var(--color-surface-base)", stopOpacity: 0 }}
+          />
+        </radialGradient>
+      </defs>
+      <circle cx="160" cy="130" r="128" fill="url(#retry-glow)" opacity="0.8" />
       <circle cx="160" cy="130" r="72" className="fill-surface-base" />
       <path
         d="M204 130A44 44 0 1 1 188.3 96.3"

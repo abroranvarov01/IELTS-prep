@@ -3,6 +3,7 @@
 Canonical owner of **design token values, the token policy, and component state conventions**.
 
 > **STATUS:**
+>
 > - **Core brand palette: APPROVED.** Change it only with explicit product approval.
 > - **Everything else** (neutrals, skill shades, type sizes, spacing, radii, shadows, breakpoints): **INITIAL DIRECTION / SUBJECT TO DESIGN REVIEW**, unless a section marks a value Approved.
 >
@@ -15,14 +16,17 @@ Canonical owner of **design token values, the token policy, and component state 
 Tokens exist to hold **design decisions**, not to give every number a name.
 
 **Must use tokens:**
+
 - **All colors.** No raw color values (hex, rgb, hsl, named colors) appear outside the token definitions. The only exception is platform metadata that cannot read CSS variables (the web app manifest and the `theme-color` meta tag). It must mirror token values exactly, and the token check allowlists it explicitly.
 - Typography (families, sizes, weights, line heights), the spacing scale, radii, shadows, and motion durations.
 - Any value that is repeated or carries semantic meaning (e.g. "page gutter", "touch target minimum"), and reusable component states.
 
 **May stay local:**
+
 - A genuinely local structural dimension. For example, the fixed aspect of one illustration, or the width of a specific layout column that only this component uses. It may stay in the component when a global token would add indirection without reusable or semantic meaning.
 
 **Never:**
+
 - Use a local value to bypass the system, for example an "almost-16" padding, an off-scale font size, or a one-off radius. If a design needs a value the scale lacks, either use the nearest scale value or propose a scale change here.
 - Add tokens "for completeness". Every token exists because it is used.
 
@@ -32,26 +36,26 @@ Contrast values below were computed with the WCAG 2.x formula. Re-verify them wh
 
 ### Core brand palette (APPROVED)
 
-| Token | Value | Role | Contrast notes |
-|---|---|---|---|
-| `brand.primary` | `#E51F3A` | Primary brand and action color: primary CTAs, key brand moments | White text on it: 4.6:1 (passes AA). As text on `surface.warm`: 4.4:1, **fails** for small text. Use `brand.primaryDeep` there. |
-| `brand.primaryDeep` | `#D90D31` | Pressed/hover state, red text on light surfaces | White text on it: 5.2:1. On `surface.warm`: 4.9:1. |
-| `brand.highlight` | `#FF5268` | Non-text accents: indicators, progress fills, small graphic details | 3.15:1 on white. Meets 3:1 for non-text UI only. **Never** use it for text, and never with white text on it. |
-| `brand.blush` | `#F7C7CA` | Soft brand surfaces, selected/emphasis backgrounds | Use only `ink` text on it (12.4:1). Red text on blush fails. |
-| `ink` | `#111318` | Primary text, headings | 18.6:1 on white, 17.7:1 on `surface.warm` |
-| `surface.warm` | `#FFF8F4` | Warm background: page backgrounds behind white surfaces, quiet grouping | n/a |
-| `surface.base` | `#FFFFFF` | Default surface. The interface is white-first. | n/a |
+| Token               | Value     | Role                                                                    | Contrast notes                                                                                                                  |
+| ------------------- | --------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `brand.primary`     | `#E51F3A` | Primary brand and action color: primary CTAs, key brand moments         | White text on it: 4.6:1 (passes AA). As text on `surface.warm`: 4.4:1, **fails** for small text. Use `brand.primaryDeep` there. |
+| `brand.primaryDeep` | `#D90D31` | Pressed/hover state, red text on light surfaces                         | White text on it: 5.2:1. On `surface.warm`: 4.9:1.                                                                              |
+| `brand.highlight`   | `#FF5268` | Non-text accents: indicators, progress fills, small graphic details     | 3.15:1 on white. Meets 3:1 for non-text UI only. **Never** use it for text, and never with white text on it.                    |
+| `brand.blush`       | `#F7C7CA` | Soft brand surfaces, selected/emphasis backgrounds                      | Use only `ink` text on it (12.4:1). Red text on blush fails.                                                                    |
+| `ink`               | `#111318` | Primary text, headings                                                  | 18.6:1 on white, 17.7:1 on `surface.warm`                                                                                       |
+| `surface.warm`      | `#FFF8F4` | Warm background: page backgrounds behind white surfaces, quiet grouping | n/a                                                                                                                             |
+| `surface.base`      | `#FFFFFF` | Default surface. The interface is white-first.                          | n/a                                                                                                                             |
 
 Red is the application's **unmistakable** primary action color. No other color (including skill colors) is used for a primary CTA.
 
 ### Neutrals (proposal)
 
-| Token | Proposed value | Use | Contrast |
-|---|---|---|---|
-| `text.secondary` | `#4A4F59` | Supporting text | 8.2:1 white, 7.8:1 warm |
-| `text.tertiary` | `#5B616B` | Minimum for small meta text | 6.2:1 white, 5.9:1 warm |
-| `border.subtle` | `#E2E4E8` | Decorative dividers only | 1.3:1 (not for essential boundaries) |
-| `border.control` | `#8A9099` | Input and control boundaries | 3.2:1 white, 3.1:1 warm (meets 3:1 for non-text UI) |
+| Token            | Proposed value | Use                          | Contrast                                            |
+| ---------------- | -------------- | ---------------------------- | --------------------------------------------------- |
+| `text.secondary` | `#4A4F59`      | Supporting text              | 8.2:1 white, 7.8:1 warm                             |
+| `text.tertiary`  | `#5B616B`      | Minimum for small meta text  | 6.2:1 white, 5.9:1 warm                             |
+| `border.subtle`  | `#E2E4E8`      | Decorative dividers only     | 1.3:1 (not for essential boundaries)                |
+| `border.control` | `#8A9099`      | Input and control boundaries | 3.2:1 white, 3.1:1 warm (meets 3:1 for non-text UI) |
 
 **Approved** (owner, 2026-10-10, task M3-05; proposed in M3-02): `text.secondary` (the "You can change this later." line and the step indicator text), `border.control` (the answer option's boundary), and `border.subtle` (the progress track, decorative). `text.tertiary` remains a proposal until used.
 
@@ -61,8 +65,8 @@ Red is the application's **unmistakable** primary action color. No other color (
 
 **Visual overhaul** (owner request, 2026-10-12; values to confirm in the owner's screenshot review). The owner asked for a subtle selected background: `brand.blush` was too loud on rows that are chosen often.
 
-| Token | Value | Use | Contrast |
-|---|---|---|---|
+| Token             | Value                                                      | Use                                                                                                              | Contrast                                                                                                                               |
+| ----------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | `brand.blushSoft` | `#FCE9EA` (`brand.blush` mixed 40% into white: no new hue) | Selected answers and options, the selected sentence, the current gap, and hover and open states of quiet buttons | `ink` 15.9:1, `text.secondary` 7.0:1. Never the only sign of a state: a selected answer also has the 2 px `ink` boundary and the check |
 
 `brand.blush` itself is unchanged and stays in the palette for later emphasis surfaces.
@@ -70,6 +74,7 @@ Red is the application's **unmistakable** primary action color. No other color (
 ### Status colors
 
 Status colors (correct, incorrect, warning, info) are **TBD** and will be set at implementation. Constraints:
+
 - "Incorrect" must stay clearly distinguishable from the brand red and from Reading's red family.
 - Status is never conveyed by color alone (see [ACCESSIBILITY.md](ACCESSIBILITY.md)).
 
@@ -77,12 +82,12 @@ Status colors (correct, incorrect, warning, info) are **TBD** and will be set at
 
 **Families: APPROVED. Exact shades: proposal.** Skill colors are supporting only. They help users recognize a skill. They never act as a CTA color and never appear in gradients.
 
-| Skill | Family | Strong (icon/marker) | Tint (background) | Notes |
-|---|---|---|---|---|
-| Reading | Red | `#D90D31` (`brand.primaryDeep`) | `#FDE8EA` | Strong on tint is 4.4:1. Use `ink` labels on the tint, and use the strong color for icons/markers. |
-| Listening | Blue | `#1D5FD1` | `#EAF1FD` | Strong on tint 5.1:1 |
-| Speaking | Green | `#0F7A5A` | `#E8F6F0` | Strong on tint 4.8:1 |
-| Writing | Warm orange | `#C2410C` | `#FFEDDF` | Strong on tint 4.5:1 (borderline; prefer `ink` labels) |
+| Skill     | Family      | Strong (icon/marker)            | Tint (background) | Notes                                                                                              |
+| --------- | ----------- | ------------------------------- | ----------------- | -------------------------------------------------------------------------------------------------- |
+| Reading   | Red         | `#D90D31` (`brand.primaryDeep`) | `#FDE8EA`         | Strong on tint is 4.4:1. Use `ink` labels on the tint, and use the strong color for icons/markers. |
+| Listening | Blue        | `#1D5FD1`                       | `#EAF1FD`         | Strong on tint 5.1:1                                                                               |
+| Speaking  | Green       | `#0F7A5A`                       | `#E8F6F0`         | Strong on tint 4.8:1                                                                               |
+| Writing   | Warm orange | `#C2410C`                       | `#FFEDDF`         | Strong on tint 4.5:1 (borderline; prefer `ink` labels)                                             |
 
 Because Reading shares the brand's red family, Reading identity must rely on the **skill name and icon** as well as color. A Reading tag must never look like a button.
 
@@ -92,14 +97,14 @@ Because Reading shares the brand's red family, Reading identity must rely on the
 
 ## Typography
 
-| Role | Proposal |
-|---|---|
-| UI font | **Onest** (owner decision 2026-10-09, replacing Manrope, which has no U+02BB/U+02BC glyphs). Weights 400, 500, 700, 800. |
-| Passage font | **Literata** (approved direction), subject to real readability and font-coverage testing on phones. Weights 400, 700. |
-| Body size (mobile) | 16 px minimum. Never smaller for running text. |
-| Passage size (mobile) | 17–18 px, line height ~1.6, measure ≤ ~70 characters on desktop |
-| Headings | Bold/extra-bold. Hierarchy through size and weight. |
-| Small meta text | 13–14 px minimum, `text.tertiary` or darker |
+| Role                  | Proposal                                                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| UI font               | **Onest** (owner decision 2026-10-09, replacing Manrope, which has no U+02BB/U+02BC glyphs). Weights 400, 500, 700, 800. |
+| Passage font          | **Literata** (approved direction), subject to real readability and font-coverage testing on phones. Weights 400, 700.    |
+| Body size (mobile)    | 16 px minimum. Never smaller for running text.                                                                           |
+| Passage size (mobile) | 17–18 px, line height ~1.6, measure ≤ ~70 characters on desktop                                                          |
+| Headings              | Bold/extra-bold. Hierarchy through size and weight.                                                                      |
+| Small meta text       | 13–14 px minimum, `text.tertiary` or darker                                                                              |
 
 - **Required verification before adoption:** both fonts render Cyrillic and U+02BB/U+02BC correctly, and they load acceptably on slow mobile connections (subsetting, `font-display`).
 - Text must respect the user's font-size settings. Use relative units.
@@ -108,14 +113,14 @@ Because Reading shares the brand's red family, Reading identity must rely on the
 
 **Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02), with Heading 1 and Heading 2 **revised in the visual overhaul** (owner request, 2026-10-12: mobile headings felt oversized; previously 1.75rem/1.2 and 1.375rem/1.3). Sizes are in rem (16 px = 1rem at the default browser setting), so text follows the user's font-size setting. Line heights are unitless. One scale for every width: on desktop, hierarchy comes from layout and spacing, not from bigger type.
 
-| Role | Size | Line height | Weight | Rationale |
-|---|---|---|---|---|
-| Heading 1 (page title) | 1.5rem (24 px) | 1.25 | 800 | Bold and clear at the top of a phone screen without shouting; the weight carries it. A long Russian or Uzbek title fits in two lines at 320 px. |
-| Heading 2 (section) | 1.25rem (20 px) | 1.3 | 700 | Between H1 and H3; with its weight, clearly above body (the passage title, the next action on home). |
-| Heading 3 (subsection) | 1.125rem (18 px) | 1.4 | 700 | The smallest heading. It is told apart from body by weight. |
-| Body | 1rem (16 px, unchanged) | 1.5 | 400 | The existing minimum body size. 1.5 is the line height Tailwind's base styles already apply; this makes it explicit. |
-| Small meta text | 0.875rem (14 px) | 1.4 | 400 or 500 | The top of the allowed 13–14 px range, for reading outdoors. Color `text.tertiary` or darker: 6.2:1 on `surface.base`, 5.9:1 on `surface.warm`. |
-| Passage (Literata) | 1.0625rem (17 px) | 1.6 | 400 | Larger than body for long reading. 17 px rather than 18 px keeps more words per line on a 320–360 px phone, where Literata sets wide. The user's font-size setting can enlarge it. |
+| Role                   | Size                    | Line height | Weight     | Rationale                                                                                                                                                                          |
+| ---------------------- | ----------------------- | ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Heading 1 (page title) | 1.5rem (24 px)          | 1.25        | 800        | Bold and clear at the top of a phone screen without shouting; the weight carries it. A long Russian or Uzbek title fits in two lines at 320 px.                                    |
+| Heading 2 (section)    | 1.25rem (20 px)         | 1.3         | 700        | Between H1 and H3; with its weight, clearly above body (the passage title, the next action on home).                                                                               |
+| Heading 3 (subsection) | 1.125rem (18 px)        | 1.4         | 700        | The smallest heading. It is told apart from body by weight.                                                                                                                        |
+| Body                   | 1rem (16 px, unchanged) | 1.5         | 400        | The existing minimum body size. 1.5 is the line height Tailwind's base styles already apply; this makes it explicit.                                                               |
+| Small meta text        | 0.875rem (14 px)        | 1.4         | 400 or 500 | The top of the allowed 13–14 px range, for reading outdoors. Color `text.tertiary` or darker: 6.2:1 on `surface.base`, 5.9:1 on `surface.warm`.                                    |
+| Passage (Literata)     | 1.0625rem (17 px)       | 1.6         | 400        | Larger than body for long reading. 17 px rather than 18 px keeps more words per line on a 320–360 px phone, where Literata sets wide. The user's font-size setting can enlarge it. |
 
 All headings and body text use `ink` (18.6:1 on `surface.base`, 17.7:1 on `surface.warm`). Heading levels below H3 are not needed yet.
 
@@ -129,13 +134,13 @@ A 4 px base unit. Proposed scale: 4, 8, 12, 16, 24, 32, 48, 64. Mobile page gutt
 
 Soft, modern surfaces with moderately generous corners, applied **systematically by element size**, so the result does not look like "everything is a pill".
 
-| Token | Proposed value | Use |
-|---|---|---|
-| `radius.sm` | 8 px | Small elements: tags, checkboxes, inline highlights |
-| `radius.md` | 14 px | Buttons, inputs, answer options |
-| `radius.lg` | 20 px | Cards and content surfaces |
-| `radius.xl` | 28 px | Bottom sheets (top corners), dialogs |
-| `radius.full` | 9999 px | **Only** avatars, toggles, progress tracks, and small status chips |
+| Token         | Proposed value | Use                                                                |
+| ------------- | -------------- | ------------------------------------------------------------------ |
+| `radius.sm`   | 8 px           | Small elements: tags, checkboxes, inline highlights                |
+| `radius.md`   | 14 px          | Buttons, inputs, answer options                                    |
+| `radius.lg`   | 20 px          | Cards and content surfaces                                         |
+| `radius.xl`   | 28 px          | Bottom sheets (top corners), dialogs                               |
+| `radius.full` | 9999 px        | **Only** avatars, toggles, progress tracks, and small status chips |
 
 Primary buttons use `radius.md`. They are not pills. Nested surfaces use a smaller radius than their container.
 
@@ -147,7 +152,8 @@ Primary buttons use `radius.md`. They are not pills. Nested surfaces use a small
 
 Minimal. Proposal: **two levels at most**: none (default) and a subtle raised level for overlays, bottom sheets, and sticky elements. Separation comes from spacing and surface color (`surface.base` on `surface.warm`) first.
 
-**Raised level: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). One shadow: `0 2px 12px 0` in `ink` at 12% opacity. The only other level is none.
+**Raised level: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). One shadow: `0 2px 12px 0` in `ink` at 12% opacity. **Soft level** (Direction v2, owner 2026-10-18): `0 4px 16px 0` in `ink` at 6% opacity, for cards that are objects on white (option cards, test rows, skill cards, the next-action card). The third level is none.
+
 - Rationale: a soft, short shadow lifts overlays, bottom sheets, and sticky elements without looking dated. With a small vertical offset and a larger blur, it also shows along the top edge of a bottom sheet. Deriving it from `ink` keeps it inside the palette.
 - Contrast: the shadow is supporting depth, not an essential boundary, so it has no contrast requirement. Where an edge is essential to understand the component, it also needs a boundary of at least 3:1 (`border.control`) or a scrim.
 
@@ -157,11 +163,11 @@ Short (≤ 200 ms) and functional: it shows a state change or a spatial relation
 
 **Durations and easing: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02).
 
-| Token | Value | Use | Rationale |
-|---|---|---|---|
-| Duration fast | 120 ms | Small state changes: color, opacity, pressed state, a list opening | Feels immediate, but still shows that something changed. |
-| Duration base | 200 ms | Spatial changes: a bottom sheet expanding, a panel sliding in | The documented maximum. Larger movements need slightly more time to follow. |
-| Easing | `cubic-bezier(0.2, 0, 0, 1)` | All transitions | Starts fast and settles gently, so a response begins at once and never feels like a delay. |
+| Token         | Value                        | Use                                                                | Rationale                                                                                  |
+| ------------- | ---------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| Duration fast | 120 ms                       | Small state changes: color, opacity, pressed state, a list opening | Feels immediate, but still shows that something changed.                                   |
+| Duration base | 200 ms                       | Spatial changes: a bottom sheet expanding, a panel sliding in      | The documented maximum. Larger movements need slightly more time to follow.                |
+| Easing        | `cubic-bezier(0.2, 0, 0, 1)` | All transitions                                                    | Starts fast and settles gently, so a response begins at once and never feels like a delay. |
 
 With `prefers-reduced-motion: reduce`, transitions and animations are effectively off (the base styles in `globals.css` already do this).
 
@@ -170,6 +176,7 @@ With `prefers-reduced-motion: reduce`, transitions and animations are effectivel
 Every interactive component defines: default, hover (pointer devices), focus-visible, pressed, disabled, loading. Where it applies, also selected, error, and correct/incorrect (answer states). The focus-visible state is never removed.
 
 **Focus-visible style: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). A 2 px solid `ink` outline, offset 2 px from the element, on every focusable element. This is the style F-09 implemented as an assumption, approved unchanged.
+
 - Rationale: `ink` is the highest-contrast token and does not compete with the red primary action or look like an error. The offset puts the ring on the surface around the element, so it stays visible on red buttons too. An outline (not a box shadow) also stays visible in Windows forced-colors mode.
 - Contrast of the ring against the surface around it: 18.6:1 on `surface.base`, 17.7:1 on `surface.warm`, 12.4:1 on `brand.blush`, and 15.8:1 or more on every skill tint. All meet the 3:1 minimum for non-text UI. The ring is 2 px thick and fully surrounds the element, as WCAG 2.2's focus appearance criterion (2.4.13) describes.
 - Limit: against `brand.primary` the ring would be only 4.1:1, and 3.6:1 against `brand.primaryDeep`. Both still pass 3:1, with less margin.
@@ -182,12 +189,12 @@ Every interactive component defines: default, hover (pointer devices), focus-vis
 
 For tool actions in bars, headers and panels: the test bar's "Exit", "Mark for review", "All questions", "Back", the sentence actions, the other passages in the desktop navigator bar, and the language switcher.
 
-| Property | Value |
-|---|---|
-| Look | A 16 px line icon and the label in `ink`, weight 500; no fill, no boundary, no underline |
-| Size | At least 48 px high, 12 px side padding (pulled back by 12 px where it starts or ends a row, so its text lines up with the gutter), 8 px between icon and label; a long label wraps inside the button |
-| Hover, pressed, open | `brand.blushSoft` fill, `radius.md` (`ink` 15.9:1) |
-| Focus | The approved ring |
+| Property             | Value                                                                                                                                                                                                 |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Look                 | A 16 px line icon and the label in `ink`, weight 500; no fill, no boundary, no underline                                                                                                              |
+| Size                 | At least 48 px high, 12 px side padding (pulled back by 12 px where it starts or ends a row, so its text lines up with the gutter), 8 px between icon and label; a long label wraps inside the button |
+| Hover, pressed, open | `brand.blushSoft` fill, `radius.md` (`ink` 15.9:1)                                                                                                                                                    |
+| Focus                | The approved ring                                                                                                                                                                                     |
 
 The underlined [quiet link](#quiet-secondary-action-text-link) stays for a secondary choice under a primary button ("Not now", "Keep working", "Leave", "Start again") and for actions inside content ("Clear answer", "Show in passage", "Remove from evidence"), now with a 4 px underline offset.
 
@@ -205,19 +212,19 @@ The header's quiet button: a 20 px line globe, the language code and a down chev
 
 ## Responsive behavior
 
-| Range | Treatment |
-|---|---|
-| 320–359 px | Must work: no horizontal scroll, no clipped actions |
-| 360–599 px | **Primary design target** |
-| 600–1023 px | Tablet: phone layout given more room, or two columns where that is meaningful |
-| ≥ 1024 px | Desktop layout of its own where it helps (e.g. realistic Exam Mode with passage and questions side by side, see [READING_EXPERIENCE.md](../product/READING_EXPERIENCE.md)) |
+| Range       | Treatment                                                                                                                                                                  |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 320–359 px  | Must work: no horizontal scroll, no clipped actions                                                                                                                        |
+| 360–599 px  | **Primary design target**                                                                                                                                                  |
+| 600–1023 px | Tablet: phone layout given more room, or two columns where that is meaningful                                                                                              |
+| ≥ 1024 px   | Desktop layout of its own where it helps (e.g. realistic Exam Mode with passage and questions side by side, see [READING_EXPERIENCE.md](../product/READING_EXPERIENCE.md)) |
 
 **Breakpoints: Approved** (owner, 2026-10-10, task M1-03; proposed in M1-02). Two breakpoints, as minimum widths. They are written in rem, so a user with a larger default font size gets the roomier layout later, which keeps text from being squeezed.
 
-| Breakpoint | Value | Starts the range |
-|---|---|---|
-| Tablet | 37.5rem (600 px) | 600–1023 px |
-| Desktop | 64rem (1024 px) | ≥ 1024 px |
+| Breakpoint | Value            | Starts the range |
+| ---------- | ---------------- | ---------------- |
+| Tablet     | 37.5rem (600 px) | 600–1023 px      |
+| Desktop    | 64rem (1024 px)  | ≥ 1024 px        |
 
 - Rationale: they match the documented range boundaries exactly. 320–599 px is one phone layout, so there is no breakpoint at 360 px. 360 px is a design target, not a layout change. Tailwind's default breakpoints would be reset like the other token namespaces, so only these two exist.
 - Today, Tailwind's default breakpoints still apply, because no approved values existed when the foundation was built (ADR-0001 did not decide them).
@@ -232,17 +239,17 @@ The header's quiet button: a 20 px line globe, the language code and a down chev
 
 The one red action per screen ("Start the level check"). It formalizes the style M1 already uses for its red action (`StatusMessage.tsx`), so the app has one primary button.
 
-| Property | Proposed value | Rationale |
-|---|---|---|
-| Height | at least 48 px (`spacing` 48); grows when the label wraps | ACCESSIBILITY.md prefers 48 px for primary actions |
-| Padding | 12 px vertical, 24 px horizontal | Room for a two-line Russian or Uzbek label without touching the edges |
-| Radius | `radius.md` (14 px) | Not a pill (Radii section) |
-| Type | Body size (1rem), weight 700, centered; the label wraps and is never truncated | Bold carries the emphasis; the size stays readable at 200% zoom |
-| Default | `surface.base` text on `brand.primary` | 4.58:1 (AA for 16 px bold) |
-| Hover (pointer) and pressed | `brand.primaryDeep` background | 5.18:1. The palette names `primaryDeep` as the hover and pressed color. Background change in 120 ms (motion "fast") |
-| Focus-visible | The approved 2 px `ink` ring, offset 2 px | Approved style, 4.1:1 against the red |
-| Width | Full column width below the tablet breakpoint (600 px); its natural width from 600 px, aligned with the column's start | A full-width target is easiest to hit with a thumb; on wide screens a stretched button looks like a banner |
-| Disabled, loading | Not proposed: no M3 screen has a disabled or loading primary button | No speculative states (Token policy) |
+| Property                    | Proposed value                                                                                                         | Rationale                                                                                                           |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Height                      | at least 48 px (`spacing` 48); grows when the label wraps                                                              | ACCESSIBILITY.md prefers 48 px for primary actions                                                                  |
+| Padding                     | 12 px vertical, 24 px horizontal                                                                                       | Room for a two-line Russian or Uzbek label without touching the edges                                               |
+| Radius                      | `radius.md` (14 px)                                                                                                    | Not a pill (Radii section)                                                                                          |
+| Type                        | Body size (1rem), weight 700, centered; the label wraps and is never truncated                                         | Bold carries the emphasis; the size stays readable at 200% zoom                                                     |
+| Default                     | `surface.base` text on `brand.primary`                                                                                 | 4.58:1 (AA for 16 px bold)                                                                                          |
+| Hover (pointer) and pressed | `brand.primaryDeep` background                                                                                         | 5.18:1. The palette names `primaryDeep` as the hover and pressed color. Background change in 120 ms (motion "fast") |
+| Focus-visible               | The approved 2 px `ink` ring, offset 2 px                                                                              | Approved style, 4.1:1 against the red                                                                               |
+| Width                       | Full column width below the tablet breakpoint (600 px); its natural width from 600 px, aligned with the column's start | A full-width target is easiest to hit with a thumb; on wide screens a stretched button looks like a banner          |
+| Disabled, loading           | Not proposed: no M3 screen has a disabled or loading primary button                                                    | No speculative states (Token policy)                                                                                |
 
 The M1 status pages keep their approved inline button layout unless the owner wants them to adopt the full-width rule.
 
@@ -250,23 +257,23 @@ The M1 status pages keep their approved inline button layout unless the owner wa
 
 "Not now" (onboarding step 3) and "Change goal" (home). It formalizes M1's quieter "Go to home page" link.
 
-| Property | Proposed value | Rationale |
-|---|---|---|
-| Look | `ink` text, weight 500, always underlined; no fill, no border | Clearly an action, clearly quieter than the red button; underline means it is not told apart by color |
-| Tap area | At least 48 px high (the text sits in a 48 px tall link) | Touch target |
-| Hover, pressed | No change other than the browser default cursor | Nothing to compete with the primary button |
-| Contrast | 18.58:1 on `surface.base` | |
+| Property       | Proposed value                                                | Rationale                                                                                             |
+| -------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Look           | `ink` text, weight 500, always underlined; no fill, no border | Clearly an action, clearly quieter than the red button; underline means it is not told apart by color |
+| Tap area       | At least 48 px high (the text sits in a 48 px tall link)      | Touch target                                                                                          |
+| Hover, pressed | No change other than the browser default cursor               | Nothing to compete with the primary button                                                            |
+| Contrast       | 18.58:1 on `surface.base`                                     |                                                                                                       |
 
 ### Answer option (single-choice answer button)
 
 The answers on onboarding steps 1 and 2. Each is a button that saves and advances (USER_FLOWS.md: answering rules).
 
-| State | Proposed treatment | Contrast |
-|---|---|---|
-| Default | `surface.base` fill, 1 px `border.control` boundary, `radius.md`, `ink` text at body size weight 500, left-aligned; at least 48 px high with 12 px vertical and 16 px horizontal padding; full column width | Boundary 3.22:1 against white (meets 3:1 for an essential boundary); text 18.58:1 |
-| Hover (pointer) | Boundary becomes `ink` | 18.58:1 |
-| Pressed | `surface.warm` fill | Text 17.68:1 |
-| Focus-visible | The approved ring | |
+| State                                                  | Proposed treatment                                                                                                                                                                                                             | Contrast                                                                                                                          |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| Default                                                | `surface.base` fill, 1 px `border.control` boundary, `radius.md`, `ink` text at body size weight 500, left-aligned; at least 48 px high with 12 px vertical and 16 px horizontal padding; full column width                    | Boundary 3.22:1 against white (meets 3:1 for an essential boundary); text 18.58:1                                                 |
+| Hover (pointer)                                        | Boundary becomes `ink`                                                                                                                                                                                                         | 18.58:1                                                                                                                           |
+| Pressed                                                | `surface.warm` fill                                                                                                                                                                                                            | Text 17.68:1                                                                                                                      |
+| Focus-visible                                          | The approved ring                                                                                                                                                                                                              |                                                                                                                                   |
 | Selected (the earlier answer when returning to a step) | `brand.blushSoft` fill (visual overhaul, 2026-10-12; was `brand.blush`), a 2 px `ink` boundary, and a 20 px `ink` check mark at the end (the shared line check, hidden from screen readers, with the text "Selected" for them) | Text and check 15.9:1 on the soft tint. Selected is shown by the check mark and the heavier boundary, not by the fill alone (I-8) |
 
 - **Arrangement:** one vertical list with 8 px between answers (visual overhaul, 2026-10-12; was 12 px), the same on step 1 and step 2 and in every option list. The five band values are a list too, not a grid: one scan direction, the same component on both steps, and it works at 320 px and at 200% zoom. Six 48 px answers with 8 px gaps take about 330 px, so the whole step still fits a 360 × 800 screen without scrolling.
@@ -276,9 +283,9 @@ The answers on onboarding steps 1 and 2. Each is a button that saves and advance
 
 "Step 1 of 3" above the question on every onboarding step.
 
-| Part | Proposed treatment | Contrast |
-|---|---|---|
-| Text | Small meta text (0.875rem), weight 500, `text.secondary` | 8.22:1. The text alone carries the meaning |
+| Part                    | Proposed treatment                                                                                                                                                      | Contrast                                                                                                                                                                                                           |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Text                    | Small meta text (0.875rem), weight 500, `text.secondary`                                                                                                                | 8.22:1. The text alone carries the meaning                                                                                                                                                                         |
 | Progress bar (optional) | A 4 px high track in `border.subtle` with `radius.full`, filled one third per step in `brand.highlight`, 8 px under the text; decorative and hidden from screen readers | Fill against track 2.48:1, below 3:1. Acceptable only because the text carries the meaning (WCAG 1.4.11 applies to graphics needed for understanding). `brand.highlight` is the palette's color for progress fills |
 
 **Option:** drop the bar and keep the text only. **Recommendation: keep the bar.** It shows at a glance that the flow is short, which matters on the first screen a new user sees.
@@ -290,6 +297,7 @@ The answers on onboarding steps 1 and 2. Each is a button that saves and advance
 **Owner reference, 2026-10-15** (the owner's composition image for the three steps, desktop and phone; it replaces the 2026-10-12 "stage" composition. Behavior, order, choices, routes and the cookie are unchanged). Each step is the question on white and, on desktop, a picture panel beside it. The answers stay submit buttons in one group named by the question.
 
 **Composition.**
+
 - **Desktop (from the 64rem breakpoint):** two equal halves across the content column (up to 1200 px), 64 px apart, filling the window under the header. Start side: a **picture panel**, `brand.blushSoft`, `radius.xl`, 48 px padding; the step's picture centered in it, and at its bottom the step's encouragement: two short sentences, one per line, in Heading 1 size weight 800, then one sentence in `text.secondary`. End side: the question (step indicator, H1, the sentence in `text.secondary`) and its answers or actions, vertically centered.
 - **Phones and tablets:** the question on white in the 36rem column, then the answers or actions. No panel. Step 3 alone has a small picture between the step indicator and the H1.
 - **Pictures** (`views/onboarding/ui/pictures.tsx`): flat shapes in `brand.primary`, `brand.primaryDeep`, `brand.highlight`, `brand.blush` and white, decorative and hidden from screen readers. Step 1: a graduation cap on three books, a town with a clock tower behind, on a `surface.warm` disc. Step 2: a target (`brand.blush` and white rings, red center) with an arrow, the five band values around it in Literata italic, the chosen band circled in `brand.primaryDeep`. Step 3: the [skills picture](#pictures); on phones, its small form on a `brand.blushSoft` field.
@@ -328,10 +336,10 @@ Spot illustrations in the line-icon style, drawn on a 24 px grid with the same 1
 
 ### Column width for onboarding and home
 
-| Property | Proposed value | Rationale |
-|---|---|---|
+| Property      | Proposed value                                                                  | Rationale                                                                                                                                                |
+| ------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Maximum width | 36rem (576 px at the default font size), centered in the 1200 px content column | About 65 characters of body text per line, and answers and buttons do not stretch across a desktop screen. In rem, so it grows with the user's font size |
-| Below 600 px | The full width between the 16 px gutters | |
+| Below 600 px  | The full width between the 16 px gutters                                        |                                                                                                                                                          |
 
 This would be one new layout token (a container width) used by onboarding and home only.
 
@@ -345,34 +353,39 @@ This would be one new layout token (a container width) used by onboarding and ho
 
 ### New color: passage highlight
 
-| Token | Proposed value | Use | Contrast |
-|---|---|---|---|
+| Token       | Proposed value          | Use                                            | Contrast                                        |
+| ----------- | ----------------------- | ---------------------------------------------- | ----------------------------------------------- |
 | `highlight` | `#FFEFA3` (soft yellow) | Background of highlighted sentences (`<mark>`) | `ink` text on it 16.04:1. Against white 1.16:1. |
 
 - Yellow is what readers expect from a highlighter (computer-delivered IELTS uses it too), and it is clearly not the red of actions or the blush of selection (blush against it 1.30:1, plus selection has its own underline below).
 - **Plus a subtle bottom border** (owner decision at approval, 2026-10-10): a 2 px bottom border in `border.control` (3.22:1 against white), so a highlight stays visible against white without relying on the light fill alone. The fill keeps the text easy to read (`ink` 16.04:1); screen readers get the highlight from `<mark>`.
 
 ### Test bar
+
 - 48 px high, `surface.base`, a 1 px `border.subtle` line under it (decorative).
 - "Exit" as a [quiet button](#quiet-button) with the close icon (visual overhaul, 2026-10-12; was the underlined quiet link), 12 px between the bar's items; "Passage 1 of 3" in body text, weight 500; the timer in body text, weight 700, with tabular figures so it does not jiggle, weight 800 from 5 minutes left.
 
 ### Passage
+
 - The approved passage size (Literata 17 px, line height 1.6), `ink` (18.58:1). Paragraph spacing 16 px.
 - Width: the full width between the gutters on phones; from the tablet breakpoint a reading measure of **40rem** (about 70 characters of Literata at 17 px).
 - Passage title: Heading 2 (Onest). Paragraph letters: bold Onest in `text.secondary` (8.22:1) at the start of the paragraph, followed by a space; not a separate column, so phones lose no width.
 
 ### Sentences: keyboard focus, selection, highlight, pin marker
+
 - **Keyboard focus** on a sentence: the approved focus ring.
 - **Selected** (action bar open): `brand.blushSoft` background (visual overhaul, 2026-10-12; `ink` 15.9:1) with a 2 px `ink` underline, `radius.sm` corners, so selection is not shown by color alone.
 - **Highlighted:** the `highlight` background above.
 - **Pin marker** (the current question's pins): an inline chip before the sentence, `radius.full`, 1 px `ink` border, a 14 px line pin icon and the question number in bold meta text, `ink` on `surface.base` (18.58:1).
 
 ### Sentence action bar
+
 - Floats 8 px above the sheet, the full width between the gutters on phones (at most 36rem), `surface.base`, `radius.md`, the approved raised shadow, 4 px inner padding; its actions are [quiet buttons](#quiet-button) with a line icon and a label (no underline), each at least 48 px.
 - **Height follows the content** (owner, 2026-10-11, replacing the earlier 56 px): compact on phones, **at most two rows**, no horizontal clipping, no critical action hidden, and understandable in uz, ru and en. Where the labels would need a third row, shorter approved labels or icons are used, with the full label kept as the accessible name.
 - **Arrangement** (M4-24): Highlight (or Remove highlight) and Cancel share the first row, Cancel as a 48 px × icon button named "Cancel"; Pin (or Unpin), where offered, takes the second row. A label too long for its row wraps inside its own button rather than adding a row. The refused-pin message is contextual feedback above the actions, shown only after a refused pin; it does not count as one of the two rows (owner, 2026-10-11).
 
 ### Question sheet (phone and tablet)
+
 - `surface.base`, `radius.xl` top corners, the approved raised shadow; 16 px side padding.
 - **Handle:** a 32 × 4 px bar in `border.control` (3.22:1 on white), 8 px from the top. The handle button covers the bar and the question's title row (about 52 px), so the title shares the grab area instead of sitting under a 48 px row of its own (visual overhaul, 2026-10-12).
 - **Heights:** collapsed = its content (handle and title, 80 px; 96 px before the visual overhaul); partial = 45% of the visible viewport height, at least 240 px; expanded = the visible height below the test bar. State changes animate height with the approved "base" duration (200 ms) and easing, none with reduced motion.
@@ -380,9 +393,11 @@ This would be one new layout token (a container width) used by onboarding and ho
 - **Footer row:** Previous and Next as **secondary buttons** (new component, below) with a left or right chevron; the red primary button only for "Finish test". On phones "Finish test" is full width, as the primary button is there, on its own row under Previous (owner, 2026-10-11).
 
 ### Secondary button (new)
+
 - For Previous / Next and similar navigation that must look like buttons but not compete with the red action: 48 px minimum height, 12/16 px padding (visual overhaul, 2026-10-12; was 12/24 px), an optional 16 px line chevron 8 px from the label, `radius.md`, 1 px `border.control` boundary (3.22:1), `ink` text weight 500 on `surface.base`; hover: `ink` boundary; pressed: `surface.warm` fill (`ink` 17.68:1); focus: the approved ring.
 
 ### Choice controls in the sheet
+
 - **Option rows** reuse the M3 answer option (default, hover, pressed, focus, selected with `brand.blushSoft`, the 2 px `ink` boundary and the 20 px check mark at the end) over a visually hidden native radio or checkbox. **No radio or checkbox indicator is drawn inside the row** (visual overhaul, owner request 2026-10-12: a circle or square inside a bordered row read as a nested, form-like double boundary). The check's room is kept when unchosen, so choosing never moves the text. "Choose several" is explained by its instruction and the "1 of 2 chosen" line. The option letter is bold before the text.
 - **Disabled** (the limit of "choose several" reached): text in `text.tertiary` (6.24:1 on white), boundary `border.subtle`, no hover.
 - **Answer button** ("choose from a list"): the option-row look with a trailing chevron; "Choose an answer" in `text.secondary` (8.22:1) when empty, the chosen option's letter and text in `ink` when filled.
@@ -391,41 +406,46 @@ This would be one new layout token (a container width) used by onboarding and ho
 - **Word-limit warning** (Practice): body text in `ink` with a 20 px warning icon (a circle with "!"), not a status color.
 
 ### "Your evidence" block
+
 - Each pinned sentence as a quote on `surface.warm` with `radius.md`, 12/16 px padding: the paragraph label in meta text `text.secondary` (7.83:1 on warm), the sentence in the approved passage typography (`ink`, 17.68:1 on warm), then "Show in passage" and "Remove from evidence" as quiet links.
 
 ### Question navigator
+
 - Cells 44 × 44 px with 4 px gaps, `radius.sm`, the number in body text weight 700 with tabular figures.
 - **Unanswered:** `surface.base` with a 1 px `border.control` boundary (3.22:1). **Answered:** `ink` fill with a `surface.base` number (18.58:1). **Current:** a 3 px `ink` bar 4 px under the cell, in addition to its fill or outline. **Marked for review:** a 16 px badge in the top corner: a `surface.base` circle with a 1 px `ink` border and an `ink` flag. Each state is a shape, so none relies on color.
 - Group headings ("Passage 1") in Heading 3.
 
 ### Desktop exam layout (from 64rem / 1024 px)
+
 - Columns: passage 55%, questions 45%, separated by a 1 px `border.subtle` line (decorative: the columns are also separated by space and scroll on their own); both on `surface.base`; the passage at the 40rem measure inside its column. The question column has 32 px side padding, its content at most the 36rem column width, and 48 px between question groups (visual overhaul, 2026-10-12).
 - The current question in the question column: a 4 px `ink` bar along its start edge.
 - Navigator bar: a 1 px `border.subtle` line above it; the same 44 px cells; other passages as [quiet buttons](#quiet-button) with their progress and a right chevron (visual overhaul, 2026-10-12; were secondary buttons); "Mark for review" as a quiet button with the flag icon. **Its height follows its content** (owner, 2026-10-11, replacing the fixed 64 px): 64 px is the preferred compact height when everything fits one row; two rows at 1280 px and up to three rows at 1024 px are acceptable. Previous, Next and "Mark for review" keep their text labels; they are not made icon-only to save space.
 
 ### Tokens this would add
-`--color-highlight`, `--container-measure` (40rem), `--breakpoint-desktop` (the approved 64rem, first use), and the approved "base" duration (200 ms) for the sheet. Everything else uses existing or approved values.
 
+`--color-highlight`, `--container-measure` (40rem), `--breakpoint-desktop` (the approved 64rem, first use), and the approved "base" duration (200 ms) for the sheet. Everything else uses existing or approved values.
 
 ## M5 components (Reading results and review)
 
 **Approved with amendments** (owner, 2026-10-11, task M5-01). Visual values for the M5 drafts ([READING_EXPERIENCE.md, M5 specifications](../product/READING_EXPERIENCE.md#m5-specifications-drafts)). Reused unchanged: the brand palette, the type scale, the focus style, motion, the breakpoints, the M3 primary button and quiet link, the M4 secondary button, option rows, test bar, sheet, navigator cells, "Your evidence" quote style and desktop columns, including the approved desktop navigator bar (content-driven height: two rows at 1280 px and up to three at 1024 px acceptable; Previous, Next and "Mark for review" keep their text labels). Contrast computed with the WCAG 2.x formula.
 
 ### Status: correct, not correct, no answer
+
 The [Status colors](#status-colors) are TBD and M5 is the first milestone that shows correctness. **Every outcome is an icon plus a word** ("Correct", "Not correct", "No answer", and for a "choose several" item "1 of 2 correct"), never color alone (I-8); color only supports "correct". "No answer" is its own state, never drawn as "not correct".
 
-| Outcome | Icon (20 px; 16 px in navigator badges) | Color | Contrast |
-|---|---|---|---|
-| Correct | A check mark in a filled circle | **New token `status.correct` `#157A3C`** (green) for the circle; white check | 5.41:1 on `surface.base`, 5.15:1 on `surface.warm`; white on it 5.41:1. Usable for text too (AA) |
-| Not correct | A cross in an outlined circle | `ink` (no new color) | 18.58:1 |
-| No answer | A dash in a dashed-outline circle | `text.secondary` | 8.22:1 |
-| Partly correct ("choose several" item only) | A circle whose start half is filled | `status.correct` fill, `ink` outline | Fill 5.41:1, outline 18.58:1 on `surface.base`; the words "1 of 2 correct" carry the meaning |
+| Outcome                                     | Icon (20 px; 16 px in navigator badges) | Color                                                                        | Contrast                                                                                         |
+| ------------------------------------------- | --------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Correct                                     | A check mark in a filled circle         | **New token `status.correct` `#157A3C`** (green) for the circle; white check | 5.41:1 on `surface.base`, 5.15:1 on `surface.warm`; white on it 5.41:1. Usable for text too (AA) |
+| Not correct                                 | A cross in an outlined circle           | `ink` (no new color)                                                         | 18.58:1                                                                                          |
+| No answer                                   | A dash in a dashed-outline circle       | `text.secondary`                                                             | 8.22:1                                                                                           |
+| Partly correct ("choose several" item only) | A circle whose start half is filled     | `status.correct` fill, `ink` outline                                         | Fill 5.41:1, outline 18.58:1 on `surface.base`; the words "1 of 2 correct" carry the meaning     |
 
 - **Why "not correct" gets no color (decided, D11):** red is the brand's action color and this document requires "incorrect" to stay distinct from it and from Reading's red family; a second hue (orange, amber, purple) would collide with a skill color or read as a warning. The cross and the word carry the meaning; the screen stays calm, as review should.
 - **Not chosen:** a dedicated "incorrect" hue outside the red family (for example a dark amber `#9A5B00`, 5.43:1 on white): amber reads as "warning", and Writing's orange is close.
 - `status.correct` is a yellower green than Speaking's teal (`#0F7A5A`); the two never appear together without their labels.
 
 ### Results page
+
 - Inside the shell (header with the language switcher), in the approved onboarding and home column (36rem).
 - "Time is up." (when the Exam timed out) in Heading 3 above the H1, as on the M4 finished page.
 - **Score:** "27 of 40 correct" in Heading 1 size, weight 800, the score in tabular figures, prominent but **allowed to wrap** at narrow widths and at 200% zoom (never forced onto one line, never truncated). No ring, gauge, chart, percentage, confetti or color fill ([UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md)).
@@ -435,39 +455,42 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 
 **Result states** (each is the same page; only the listed parts change):
 
-| State | Score line | Note | Red button | Repeated mistakes | Quiet links |
-|---|---|---|---|---|---|
-| Finished, mistakes and unanswered | "27 of 40 correct" | none | "Review mistakes and unanswered questions" | Cards, or the "none" text, with the scope line | Try again, Start again |
-| Finished, mistakes only | as above | none | "Review mistakes" | as above | as above |
-| Finished, unanswered only | as above | none | "Review unanswered questions" | as above | as above |
-| Everything correct | "40 of 40 correct" | none | "Review answers" | the "none" text | Start again |
-| Exam time-out | as above, "Time is up." above the H1 | none | as above | as above | as above |
-| Rechecked, score changed | the new score | "Rechecked… Your earlier result was 27 of 40." | as above | from the first attempt's current record | as above |
-| Rechecked, score unchanged but outcomes or notes changed | the score | "Rechecked… Your score is the same; some answers or notes changed." | as above | as above | as above |
-| Rechecked, nothing visible changed | the score | none | as above | as above | as above |
-| Imported from M4 | as above | "You finished this test before the app checked answers…" | as above | "We can't tell which was your first try…" | as above |
-| First attempt from an earlier content version | as above | none | as above | "Repeated mistakes can't be shown because this test has changed…" | as above |
-| Earlier content version, result stored | the stored score | "This test has changed since you took it, so a detailed review is not available." | none; "Start the test" becomes the red button | none | none |
-| Earlier content version, no result | none | "…so your answers can't be checked." | "Start the test" | none | none |
-| No attempt on this device | none; H1 "No results on this device yet" and its sentence | none | "Start the test" | none | none |
-| Storage blocked or full | as in the matching state | the storage notice | as above | as above | as above |
-| Loading (the history is read after the page mounts, usually within a moment) | none | none | none | none | none; the shell and the H1 only, so nothing jumps or announces twice |
-| A retry's results | H1 "Your retry", "9 of 14 now correct" and "These are questions you have attempted before…" | none | the review button for the retry | never | "Back to your test results" |
-| A retry that can't be started | H1 "This practice can't be started" and the reason (source missing, earlier content version, questions not allowed) | none | "See your last results" | never | "Start the test" |
+| State                                                                        | Score line                                                                                                          | Note                                                                              | Red button                                    | Repeated mistakes                                                 | Quiet links                                                          |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Finished, mistakes and unanswered                                            | "27 of 40 correct"                                                                                                  | none                                                                              | "Review mistakes and unanswered questions"    | Cards, or the "none" text, with the scope line                    | Try again, Start again                                               |
+| Finished, mistakes only                                                      | as above                                                                                                            | none                                                                              | "Review mistakes"                             | as above                                                          | as above                                                             |
+| Finished, unanswered only                                                    | as above                                                                                                            | none                                                                              | "Review unanswered questions"                 | as above                                                          | as above                                                             |
+| Everything correct                                                           | "40 of 40 correct"                                                                                                  | none                                                                              | "Review answers"                              | the "none" text                                                   | Start again                                                          |
+| Exam time-out                                                                | as above, "Time is up." above the H1                                                                                | none                                                                              | as above                                      | as above                                                          | as above                                                             |
+| Rechecked, score changed                                                     | the new score                                                                                                       | "Rechecked… Your earlier result was 27 of 40."                                    | as above                                      | from the first attempt's current record                           | as above                                                             |
+| Rechecked, score unchanged but outcomes or notes changed                     | the score                                                                                                           | "Rechecked… Your score is the same; some answers or notes changed."               | as above                                      | as above                                                          | as above                                                             |
+| Rechecked, nothing visible changed                                           | the score                                                                                                           | none                                                                              | as above                                      | as above                                                          | as above                                                             |
+| Imported from M4                                                             | as above                                                                                                            | "You finished this test before the app checked answers…"                          | as above                                      | "We can't tell which was your first try…"                         | as above                                                             |
+| First attempt from an earlier content version                                | as above                                                                                                            | none                                                                              | as above                                      | "Repeated mistakes can't be shown because this test has changed…" | as above                                                             |
+| Earlier content version, result stored                                       | the stored score                                                                                                    | "This test has changed since you took it, so a detailed review is not available." | none; "Start the test" becomes the red button | none                                                              | none                                                                 |
+| Earlier content version, no result                                           | none                                                                                                                | "…so your answers can't be checked."                                              | "Start the test"                              | none                                                              | none                                                                 |
+| No attempt on this device                                                    | none; H1 "No results on this device yet" and its sentence                                                           | none                                                                              | "Start the test"                              | none                                                              | none                                                                 |
+| Storage blocked or full                                                      | as in the matching state                                                                                            | the storage notice                                                                | as above                                      | as above                                                          | as above                                                             |
+| Loading (the history is read after the page mounts, usually within a moment) | none                                                                                                                | none                                                                              | none                                          | none                                                              | none; the shell and the H1 only, so nothing jumps or announces twice |
+| A retry's results                                                            | H1 "Your retry", "9 of 14 now correct" and "These are questions you have attempted before…"                         | none                                                                              | the review button for the retry               | never                                                             | "Back to your test results"                                          |
+| A retry that can't be started                                                | H1 "This practice can't be started" and the reason (source missing, earlier content version, questions not allowed) | none                                                                              | "See your last results"                       | never                                                             | "Start the test"                                                     |
 
 ### Pattern card ("Mistakes that repeated")
+
 - At most two cards. A card is allowed here because each is one distinct unit with its own action ([UI_ANTI_PATTERNS.md](UI_ANTI_PATTERNS.md)): `surface.warm`, `radius.lg`, 16 px padding, no shadow, no border.
 - The scope line ("In this attempt at this test…" or "From your first attempt…") in body text `text.secondary` under the section heading, before the cards.
 - Title in Heading 3; the count line in body text; the tip in body text `text.secondary` (7.83:1 on warm); the action "Practise these questions again" as a quiet link (48 px tap area). English answer words (TRUE, NOT GIVEN) inside are `lang="en"`, not styled differently.
 - The "not enough evidence", "first try unknown" and "unavailable" texts are plain body text, not cards.
 
 ### Review: passage marks
+
 - **Evidence of the current question:** an inline chip before the sentence, like the M4 pin marker (`radius.full`, 1 px `ink` border, `surface.base`), with a 14 px quote-mark icon and the question number in bold meta text, plus a 2 px **dotted** `ink` underline under the sentence (18.58:1). Accessible name: "Evidence for question 5".
 - **NOT GIVEN "related" sentences:** the same chip with an outlined (not filled) quote icon and the accessible name "Related to question 3"; the underline is dashed, so "related" and "evidence" differ by shape, not color.
 - **The user's own marks:** highlights keep the approved `highlight` tint and border; the current question's pins keep the M4 pin chip. A sentence can carry both chips; the chips sit side by side and wrap with the text.
 - Selection (blush) is not used in review: sentences are not selectable there.
 
 ### Review card (phone sheet and desktop column)
+
 - **One card per answer unit** ("Questions 22–23" is one card). **Header row:** "Question 5 of 40" in Heading 3, then the unit outcome (icon and word, body weight 700) on its own line; on phones, "All questions" stays in the header as in M4. In the review sequence, "To review: 3 of 12" (cards) in meta text `text.secondary` under the heading.
 - **Answers:**
   - Choice and list types (including "choose several"): the question's option rows, read-only (no hover, no pressed state; they are a list, not controls), each labeled on its own: "Your answer, correct" (correct icon, 2 px `status.correct` boundary), "Your answer, not correct" (cross icon, 2 px `ink` dashed boundary), or "Correct answer" for an accepted option the learner did not choose (correct icon, 2 px `status.correct` boundary). Other options stay plain. Labels are text, so nothing depends on the boundary color, and no label ties a positional mark to a letter.
@@ -480,21 +503,23 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 - Spacing between blocks 24 px; inside a block 8 px. Previous / Next as in M4.
 
 ### Review: navigator outcome badges
+
 - The M4 cells (44 × 44 px, number in the cell). In review: a correct question's cell gets the 16 px correct badge in the top corner (where M4 shows the flag); a not-correct question's cell the cross badge; an unanswered question keeps the M4 "unanswered" outline style plus the dash badge. Both cells of a "choose several" item show **the unit's** badge (including "partly correct") and open the same card. Fills: none (all cells are outlined), so the badge shapes carry the outcome. The current cell keeps the M4 3 px `ink` bar. Flags are not shown in review.
 - Accessible names: "Question 5, not correct, current"; "Question 38, no answer"; "Questions 22–23, partly correct".
 - **In a retry**, the navigator lists only the retried units (as in the test screen, without badges).
 
 ### Review on phone, tablet and desktop
 
-| | Phone (320–599 px) | Tablet (600–1023 px) | Desktop (from 1024 px) |
-|---|---|---|---|
-| Frame | Test bar ("Results", passage, no timer) | Same | Same |
-| Passage | Full width between the gutters, read-only, marks as above | Centered at the 40rem measure | Start column, 55%, at the 40rem measure |
-| Review card | In the M4 sheet: partial by default, expanded for long cards and the navigator, collapsed to read; the card scrolls inside the sheet | The phone sheet, as wide as the passage | End column, 45%: the current question's card only, scrolling on its own |
-| Navigator | "All questions" opens it in the expanded sheet | Same | The M4 bottom bar with outcome badges, Previous and Next, content-driven height, text labels |
-| Question change | The passage scrolls so the first evidence sentence sits above the sheet; focus to the card heading | Same | The passage column scrolls the evidence into view; focus to the card heading |
+|                 | Phone (320–599 px)                                                                                                                   | Tablet (600–1023 px)                    | Desktop (from 1024 px)                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Frame           | Test bar ("Results", passage, no timer)                                                                                              | Same                                    | Same                                                                                         |
+| Passage         | Full width between the gutters, read-only, marks as above                                                                            | Centered at the 40rem measure           | Start column, 55%, at the 40rem measure                                                      |
+| Review card     | In the M4 sheet: partial by default, expanded for long cards and the navigator, collapsed to read; the card scrolls inside the sheet | The phone sheet, as wide as the passage | End column, 45%: the current question's card only, scrolling on its own                      |
+| Navigator       | "All questions" opens it in the expanded sheet                                                                                       | Same                                    | The M4 bottom bar with outcome badges, Previous and Next, content-driven height, text labels |
+| Question change | The passage scrolls so the first evidence sentence sits above the sheet; focus to the card heading                                   | Same                                    | The passage column scrolls the evidence into view; focus to the card heading                 |
 
 ### Accessibility treatment (M5 screens)
+
 - **Not by color alone (I-8):** outcomes are icon plus word; answer rows carry text labels; evidence and related marks differ by icon and underline style; navigator badges differ by shape (check, cross, dash, half-filled circle) and are named in words.
 - **Focus:** results H1 on arrival from the test; the review card's heading on opening and on every question change; "Show in passage" moves focus to the sentence; the navigator returns focus to "All questions" on Escape. The approved focus ring everywhere.
 - **Announcements:** the focused headings announce the outcome; nothing else uses a live region except the storage notice (polite, once).
@@ -505,9 +530,12 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 - **Reduced motion:** the passage jumps to the evidence instead of scrolling smoothly; the sheet does not animate.
 
 ### Tokens this would add
+
 `--color-status-correct` (`#157A3C`) only. Everything else uses existing or approved values.
 
 ## M6 components (navigation, Practice Hub, page compositions)
+
+> **Direction v2** (owner, 2026-10-18) changes the desktop navigation (a sidebar instead of header links), Home and the Hub's rows, and adds depth to every surface below. Where this section and [Direction v2 components](#direction-v2-components-owner-mockup-2026-10-18) differ, v2 wins.
 
 **Approved** (owner, 2026-10-18, task M6-04, as recommended; drafted in M6-03), including Home options (a) and (b). Visual values for [USER_FLOWS.md, Navigation and Practice Hub (M6)](../product/USER_FLOWS.md#navigation-and-practice-hub-m6) and for the must-fix items of [M6-01-ui-audit.md](../execution/M6-01-ui-audit.md). Reused unchanged: the brand palette, the type scale, spacing, radii, the raised shadow, motion, the focus ring, the breakpoints, the primary button, the quiet button and link, the line icons, `PictureLayout` and the skills picture. Contrast computed with the WCAG 2.x formula. **No new color token**; one layout value is proposed (the task composition's columns, below).
 
@@ -515,16 +543,16 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 
 **Phone and tablet below 64rem — the bottom bar** (shell pages only):
 
-| Property | Value | Contrast |
-|---|---|---|
-| Position | Fixed to the bottom of the window, full width, above the page; the device's safe-area inset added below it; page content gets matching bottom padding so nothing hides behind it | |
-| Surface | `surface.base`, a 1 px `border.subtle` line on its top edge (decorative), no shadow | |
-| Layout | 2–4 destinations of equal width; 8 px vertical padding; each destination at least 48 px high | |
-| Destination | A 20 px line icon above its label; label in meta size (0.875rem), weight 500, centered; a long label wraps to a second line and the bar grows (content-driven height, never truncated) | |
-| Inactive | Icon and label in `text.secondary` | 8.2:1 |
-| Current | Icon and label in `ink`, label weight 700, and a 24 × 3 px `brand.primary` bar (`radius.full`) 4 px above the icon; `aria-current="page"`. Current is told by the bar's shape and the weight as well as color (I-8) | `ink` 18.6:1; the bar 4.6:1 against white (non-text, ≥ 3:1) |
-| Pressed | `brand.blushSoft` fill on the destination, `radius.md` | `ink` 15.9:1 |
-| Motion | None (no sliding or bouncing) | |
+| Property    | Value                                                                                                                                                                                                               | Contrast                                                    |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Position    | Fixed to the bottom of the window, full width, above the page; the device's safe-area inset added below it; page content gets matching bottom padding so nothing hides behind it                                    |                                                             |
+| Surface     | `surface.base`, a 1 px `border.subtle` line on its top edge (decorative), no shadow                                                                                                                                 |                                                             |
+| Layout      | 2–4 destinations of equal width; 8 px vertical padding; each destination at least 48 px high                                                                                                                        |                                                             |
+| Destination | A 20 px line icon above its label; label in meta size (0.875rem), weight 500, centered; a long label wraps to a second line and the bar grows (content-driven height, never truncated)                              |                                                             |
+| Inactive    | Icon and label in `text.secondary`                                                                                                                                                                                  | 8.2:1                                                       |
+| Current     | Icon and label in `ink`, label weight 700, and a 24 × 3 px `brand.primary` bar (`radius.full`) 4 px above the icon; `aria-current="page"`. Current is told by the bar's shape and the weight as well as color (I-8) | `ink` 18.6:1; the bar 4.6:1 against white (non-text, ≥ 3:1) |
+| Pressed     | `brand.blushSoft` fill on the destination, `radius.md`                                                                                                                                                              | `ink` 15.9:1                                                |
+| Motion      | None (no sliding or bouncing)                                                                                                                                                                                       |                                                             |
 
 **From the tablet breakpoint — header links** (all shell pages, including onboarding if N2 (b)): between the logo and the language button, each destination a [quiet button](#quiet-button) with its 16 px icon; current: label weight 700 and a 2 px `brand.primary` underline bar 8 px below the label, plus `aria-current="page"`. The header keeps its approved height; with four destinations and a Russian label it still fits one row at 600 px (to verify in M6-05).
 
@@ -534,11 +562,11 @@ The [Status colors](#status-colors) are TBD and M5 is the first milestone that s
 
 Three named compositions, so every later screen picks one instead of inventing its own desktop layout (audit C2). Phones and tablets keep the single 36rem column for all three; the compositions differ from the 64rem breakpoint.
 
-| Composition | Desktop (from 64rem) | Used by |
-|---|---|---|
-| **Picture stage** (existing `PictureLayout`; `PictureStage` in `StatusMessage.tsx` adds the phone picture) | Two equal halves 64 px apart: a `brand.blushSoft` picture panel and the content, vertically centered | Onboarding steps, not-found, errors, the level-check page until M7, and the test-bar safe and empty states, with the signpost: the retry that cannot start, the review with nothing to show (M6-08) |
-| **Task page** (`apps/web/src/shared/ui/TaskLayout.tsx`) | Within the 1200 px content column: a **main column of 7/12** (about 680 px) holding the page's purpose, start-aligned with the header's logo; a **side column of 4/12** after a 1/12 gap for supporting content; both start at the top. Without supporting content the main column stays start-aligned (never a narrow column centered in an empty canvas) and the page's own width is the main column's | The Reading start screen (main: title, mode choice, Start; side: the test's skill identity and format on a `surface.warm` card, `radius.lg`, 24 px padding: the skill's 32 px icon circle and name in Heading 3, the format in `text.secondary` under it, 7.8:1 on the card; on phones and tablets the identity is a meta-bold line with the icon circle above the title and the format in meta `text.secondary` under it), results (main: score, honest line, counts, notes, the review action, also for the states without a result; side: "Mistakes that repeated" and the quiet links), later the level-check intro and result, the mock entry |
-| **List page** (new) | The content column's full width (up to 1200 px); a section heading per group, then its rows in **two columns**, 16 px apart | The Practice Hub; later Progress lists |
+| Composition                                                                                                | Desktop (from 64rem)                                                                                                                                                                                                                                                                                                                                                                                     | Used by                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Picture stage** (existing `PictureLayout`; `PictureStage` in `StatusMessage.tsx` adds the phone picture) | Two equal halves 64 px apart: a `brand.blushSoft` picture panel and the content, vertically centered                                                                                                                                                                                                                                                                                                     | Onboarding steps, not-found, errors, the level-check page until M7, and the test-bar safe and empty states, with the signpost: the retry that cannot start, the review with nothing to show (M6-08)                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **Task page** (`apps/web/src/shared/ui/TaskLayout.tsx`)                                                    | Within the 1200 px content column: a **main column of 7/12** (about 680 px) holding the page's purpose, start-aligned with the header's logo; a **side column of 4/12** after a 1/12 gap for supporting content; both start at the top. Without supporting content the main column stays start-aligned (never a narrow column centered in an empty canvas) and the page's own width is the main column's | The Reading start screen (main: title, mode choice, Start; side: the test's skill identity and format on a `surface.warm` card, `radius.lg`, 24 px padding: the skill's 32 px icon circle and name in Heading 3, the format in `text.secondary` under it, 7.8:1 on the card; on phones and tablets the identity is a meta-bold line with the icon circle above the title and the format in meta `text.secondary` under it), results (main: score, honest line, counts, notes, the review action, also for the states without a result; side: "Mistakes that repeated" and the quiet links), later the level-check intro and result, the mock entry |
+| **List page** (new)                                                                                        | The content column's full width (up to 1200 px); a section heading per group, then its rows in **two columns**, 16 px apart                                                                                                                                                                                                                                                                              | The Practice Hub; later Progress lists                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 The task page's columns are the only new layout value: a 12-column grid with 32 px gaps inside the existing 1200 px column (local to the composition, no new token unless a second component needs it).
 
@@ -546,16 +574,16 @@ Reading order and focus never change with the composition: on desktop the side c
 
 ### Practice Hub
 
-| Part | Value | Contrast |
-|---|---|---|
-| H1 | Heading 1, 24 px under the header | |
-| Skill section heading | Heading 2 with the skill's 20 px icon in a 32 px circle of the skill's tint (`skill.reading` tint, `brand.primaryDeep` icon; Listening later: its tint and strong color) | Icon on tint 4.4:1 (non-text) |
-| Test row | One link: `surface.base`, 1 px `border.subtle`, `radius.lg`, 16 px padding, at least 72 px high; title in body weight 700 (`lang="en"`); format in meta `text.secondary`; the state line in meta weight 500 `ink` with a 16 px line icon; a chevron at the end | Title 18.6:1; format 8.2:1 |
-| State icons | Not started: an empty circle; in progress: a circle with a play triangle; finished: a circle with a check, all in the line family and `ink` (not the M5 outcome icons, which mean correctness). The words carry the state | |
-| Row hover / pressed | Boundary `ink` / `surface.warm` fill (as the answer option) | |
-| "See your last results" | The quiet link, 4 px under its row, outside the row's link (no nested interactive elements) | |
-| Storage notice | The M5 note pattern (20 px info icon, body text) under the H1 | |
-| Spacing | 32 px between sections, 12 px between rows on phones, 16 px in the desktop grid | |
+| Part                    | Value                                                                                                                                                                                                                                                          | Contrast                      |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| H1                      | Heading 1, 24 px under the header                                                                                                                                                                                                                              |                               |
+| Skill section heading   | Heading 2 with the skill's 20 px icon in a 32 px circle of the skill's tint (`skill.reading` tint, `brand.primaryDeep` icon; Listening later: its tint and strong color)                                                                                       | Icon on tint 4.4:1 (non-text) |
+| Test row                | One link: `surface.base`, 1 px `border.subtle`, `radius.lg`, 16 px padding, at least 72 px high; title in body weight 700 (`lang="en"`); format in meta `text.secondary`; the state line in meta weight 500 `ink` with a 16 px line icon; a chevron at the end | Title 18.6:1; format 8.2:1    |
+| State icons             | Not started: an empty circle; in progress: a circle with a play triangle; finished: a circle with a check, all in the line family and `ink` (not the M5 outcome icons, which mean correctness). The words carry the state                                      |                               |
+| Row hover / pressed     | Boundary `ink` / `surface.warm` fill (as the answer option)                                                                                                                                                                                                    |                               |
+| "See your last results" | The quiet link, 4 px under its row, outside the row's link (no nested interactive elements)                                                                                                                                                                    |                               |
+| Storage notice          | The M5 note pattern (20 px info icon, body text) under the H1                                                                                                                                                                                                  |                               |
+| Spacing                 | 32 px between sections, 12 px between rows on phones, 16 px in the desktop grid                                                                                                                                                                                |                               |
 
 ### Home (audit C3) — options
 
@@ -581,3 +609,57 @@ Home was recomposed at the owner's request on 2026-10-15 in the onboarding's pic
 ### Tokens this would add
 
 None. The task composition's 12-column grid is a local layout value of the composition; the bottom bar's 3 px indicator follows the M4 current-cell bar.
+
+## Direction v2 components (owner mockup, 2026-10-18)
+
+**Approved** (owner, 2026-10-18: the composition image [references/brand/direction-2026-10-18.png](references/brand/direction-2026-10-18.png) and, in the session, the desktop sidebar, the rework of the M6 screens in its language, and Reading and Listening only in the pictures). Values derived from the image by the worker; the owner reviews them in the screenshots at M6-09. Reused unchanged: the brand palette, the type scale, spacing, radii, motion, the focus ring, the breakpoints, the primary and quiet buttons, the line icons, the task page composition. Contrast computed with the WCAG 2.x formula.
+
+### Tokens added
+
+| Token                                 | Value                                                                                                                                                                 | Use                                                                                                                                                                                                                           | Contrast                                                                                                                                                               |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--gradient-blush` (`bg-blush-field`) | Two faint radial glows of `brand.blush` (70% and 45% into white, at the top end and bottom start corners) over a 135° linear gradient from `brand.blushSoft` to white | Direction-setting panels: the onboarding stage, the status pages' panel and phone field, Home's goal and next-action cards, the start screen's side card. Never behind running text longer than a sentence, never on controls | At the darkest point (70% blush, `#F9D8DA`): `ink` 14.0:1, `text.secondary` 6.2:1; red text 3.9:1, so **red is never text on the field**, only icons (non-text, ≥ 3:1) |
+| `shadow.soft`                         | `0 4px 16px 0` `ink` at 6%                                                                                                                                            | Cards that are objects on white, always with a 1 px `border.subtle` line                                                                                                                                                      | Supporting depth, no requirement                                                                                                                                       |
+| `text.display`                        | 2.5rem (40 px), line height 1.1, weight 800, tabular figures                                                                                                          | The one figure a card is about: the target band on Home; later a score, an estimated band                                                                                                                                     | `ink`, as the headings                                                                                                                                                 |
+
+The gradient is a theme variable whose utility (`bg-blush-field`) is defined once in `globals.css`; its colors are only tokens.
+
+### Desktop sidebar (from 64rem)
+
+| Part              | Value                                                                                                                                                                                                                                                    | Contrast                                |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| Column            | 15rem wide (a local layout value of the shell), `surface.base`, a 1 px `border.subtle` line on its end edge, sticky and as tall as the window; the content column takes the rest, 32 px from the sidebar                                                 |                                         |
+| Logo              | At the top, 24 px padding, the approved 48 px height; it links Home                                                                                                                                                                                      |                                         |
+| Destinations      | A list 8 px apart under the logo, 16 px side padding; each a row at least 48 px high, 12 px padding, `radius.md`: a 20 px line icon and the label, weight 500, `text.secondary`                                                                          | 8.2:1                                   |
+| Current           | `brand.blushSoft` fill, the label `ink` weight 700, the icon `brand.primaryDeep`, a 3 × 24 px `brand.primary` bar at the row's start edge (inside, `radius.full`), `aria-current="page"`. Told by the bar, the weight and the fill, never by color alone | `ink` 15.9:1; the icon 4.4:1 (non-text) |
+| Hover, pressed    | `brand.blushSoft` fill                                                                                                                                                                                                                                   |                                         |
+| Header on desktop | Only the language switcher at the end (the logo moved into the sidebar); the skip link stays first in the reading order, then the sidebar, then `main`                                                                                                   |                                         |
+| Below 64rem       | Unchanged: header links from the tablet breakpoint, the bottom bar on phones ([M6 components](#navigation-if-n1-b-is-approved))                                                                                                                          |                                         |
+
+The sidebar appears on shell pages only, never on test-bar screens or onboarding. Beside it, the content column keeps its 1200 px maximum, centered in the remaining width (at 1280 px it fills that width, 976 px, after 32 px of padding on each side).
+
+### Home v2
+
+Phones: one column, the next action first. Desktop: a 12-column grid, 24 px gaps.
+
+| Part                                             | Value                                                                                                                                                                                                                                                                                                                                                               | Contrast                            |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| Welcome                                          | H1 "Welcome!" in Heading 1, the sentence in `text.secondary` 4 px under it                                                                                                                                                                                                                                                                                          |                                     |
+| Next-action card (desktop 7/12, first on phones) | 24 px under the sentence; the blush field, `radius.lg`, 24 px padding (32 px on desktop); a 48 px white circle with the level icon in `brand.primaryDeep`; the H2 (Heading 2), the sentence in `text.secondary` 8 px under, the primary button with a right arrow 24 px under; on desktop the [starting-point picture](#pictures) at the end, 12rem wide            | `ink` and `text.secondary` as above |
+| Goal card (desktop 5/12)                         | The blush field, `radius.lg`, 24 px padding: "Goal" in meta weight 700 `text.secondary`; the target band in `text.display`, or the "not set yet" sentence in body; the exam type as a white chip (meta weight 700, `radius.full`, 4 × 12 px padding) when known; "Change goal" as the quiet link at the bottom; a small document illustration at the end on desktop | chip text `ink` 18.6:1              |
+| "Choose a skill"                                 | H2 in Heading 2, 32 px under the cards; the skill cards 16 px under it, three per row on desktop                                                                                                                                                                                                                                                                    |                                     |
+| Skill card                                       | One link: `surface.base`, 1 px `border.subtle`, `shadow.soft`, `radius.lg`, 20 px padding; a 40 px circle of the skill's tint with its 20 px icon in the strong color, the skill's name in Heading 3 beside it, one sentence in meta `text.secondary` under; hover: the boundary turns `brand.blush`. Only skills with tests (N3): Reading now, Listening from M8   | icon 4.4:1 (non-text)               |
+
+The next action stays the page's one red button; the skill card and "Change goal" are links.
+
+### Practice Hub v2
+
+The task page composition (the list in the main column, start-aligned; no side column until there is real supporting content). Each row becomes a card: `surface.base`, 1 px `border.subtle`, `shadow.soft`, `radius.lg`, 16 px padding, at least 72 px high; a 40 px circle of the skill's tint with the skill's icon at the start; the title, format and state line as in M6; the chevron at the end. Hover: the boundary turns `brand.blush`.
+
+### Onboarding, status pages and the start screen
+
+- The picture panel of `PictureLayout` and the phone picture field are the blush field; the panel keeps `radius.xl` and 48 px padding.
+- The onboarding path cards and the band values gain `shadow.soft` (with their `border.subtle` line); selected states are unchanged.
+- Pictures gain depth: each sits on a disc with a radial `brand.blush` glow, and the step 1 scene gets a skyline silhouette in `brand.blush` behind the cap; the target's band values float around it as before. Only Reading and Listening in the skills picture.
+- The Reading start screen's side card is the blush field (`radius.lg`, 24 px padding) with the skill identity and format; the results page keeps the M5 and M6 values.
+- The Reading test and review screens keep their approved M4 and M5 values: the direction image's practice screen has the same structure (bar, passage, questions, numbered navigator); refinements come with M8's content work.
