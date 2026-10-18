@@ -821,3 +821,120 @@ Line icons in the approved family (16 px grid, 1.5 px stroke): headphones, play,
 ### Tokens this would add
 
 None. First use of `skill.listening` and `skill.listening.tint`, which `tokens.css` already defines.
+
+## M9 components (Listening results and review)
+
+> **STATUS: DRAFT** (M9-02, 2026-10-18). Visual values for [LISTENING_EXPERIENCE.md, M9 specifications (drafts)](../product/LISTENING_EXPERIENCE.md#m9-specifications-drafts) and [USER_FLOWS.md, Listening results and review flows (M9)](../product/USER_FLOWS.md#listening-results-and-review-flows-m9), assuming the recommendations of LD1–LD22; the owner decides at M9-04. Reused unchanged: everything the M5, M7 and M8 sections list, in particular the M5 results page, outcome icons, option labels, label-value rows, "Explain simpler", the note pattern, navigator badges and the pattern card; the M8 player, question layouts (fields in the text, form lines, table and flow-chart blocks, labelling picture and markers), bottom bar and navigator by part; the M7 result composition. **No new token.** Contrast computed with the WCAG 2.x formula.
+
+The direction this follows: the surface direction's "Listening review's signature evidence is the exact timestamp, a transcript excerpt with the evidence phrase highlighted, replay, and the explanation" ([DESIGN_CONSTITUTION.md](DESIGN_CONSTITUTION.md#surface-direction)); the product-design skill's "avoid turning review into a giant stack of bordered cards"; and the owner's composition image (screen 07, Listening practice) for a transcript as lines with their times at the start. No approved Listening reference screenshot exists yet (`references/listening/` is empty), so M9-09 and M9-10 compare with the Reading review references and the image.
+
+### Results page (Listening)
+
+The M5 results page and its state table unchanged, with:
+- the meta line under the H1: the test title (English), the mode, and for a temporary test "Temporary practice test", in meta text `text.secondary`;
+- the notes, in the M5 note pattern and order: "Temporary practice test" (info icon), the interrupted-sitting line (info icon), then M5's notes. A note is information, not a warning: no warning icon and no color;
+- the Practice Hub row of a finished Listening test: "Last result: 27 of 40 correct" (M6's finished state) replaces M8's "Finished".
+
+| Extra state | Score line | Note | Red button | Repeated mistakes | Quiet links |
+|---|---|---|---|---|---|
+| Exam, check time ended | as M5, "Time is up." above the H1 | none | as M5 | as M5 | as M5 |
+| Exam with an audio failure ("Finish without the rest", or continued after "Try again") | as M5 | "The recording was interrupted, so this was not a full exam sitting." | as M5 | as M5 (an interrupted first try still counts; the questions not reached are unanswered and belong to no category) | as M5 |
+| Imported M8 finished session | as M5 | M5's "checked later" note | as M5 | M5's "We can't tell which was your first try…" | as M5 |
+
+### The evidence block: timestamp and replay
+
+The signature object of the review card, after the answers.
+
+| Part | Value | Contrast |
+|---|---|---|
+| Heading | "Evidence in the recording" in Heading 3 | `ink` 18.58:1 |
+| Timestamp | "Heard in Part 2 at 3:14": a 20 px line headphones icon in `skill.listening` (the Listening identity; M8 lists it), then the sentence in body weight 700 `ink`, the time in tabular figures; 8 px under the heading | icon 5.82:1 (non-text); text 18.58:1 |
+| "Play from 3:14" | The M4 [secondary button](#secondary-button-new), 48 px high, its width from its label, a 20 px line play icon before the label, the time in tabular figures; 8 px under the timestamp. While the evidence plays: the pause icon and "Pause"; when it ends, back to "Play from 3:14". Focus stays on it | as the secondary button |
+| Audio unavailable | The button in the secondary button's disabled style; under it, the reason sentence in meta text `text.secondary` | 8.22:1 |
+| Several evidence entries | One timestamp, button and excerpt per entry, 16 px apart, in recording order; for a unit with several answers, "For B" in meta weight 700 `text.secondary` above each | 8.22:1 |
+
+Not chosen: a red replay button (red is the screen's decision, and review's only decision is to move on); a blue button (M8: blue is never a button); a waveform with the evidence region (M8 P8).
+
+### Transcript excerpt and the evidence mark
+
+| Part | Value | Contrast |
+|---|---|---|
+| Excerpt | The M4 "Your evidence" quote style: `surface.warm`, `radius.md`, 12/16 px padding, 8 px under "Play from"; no border, no shadow (grouping, not an object) | |
+| Speaker line | The speaker's role (English, `lang="en"`) in meta weight 700 `text.secondary`, then "· 3:14" in meta tabular | 7.83:1 on warm |
+| Text | Passage typography (Literata, `text.passage`), `ink`, `lang="en"` | 17.68:1 on warm |
+| Evidence phrase | A `<mark>` with the [passage highlight](#new-color-passage-highlight) `highlight` fill and, instead of the highlight's bottom border, the M5 evidence underline (2 px dotted `ink`); its accessible description "Evidence" | `ink` on `highlight` 16.04:1; the fill against warm is 1.10:1, so the dotted underline carries the boundary |
+
+- **Why the highlighter here and not Reading's chip:** Listening has no learner highlights (P9), so yellow cannot be confused with the learner's own marks, and a marked phrase (not a whole sentence) is what the direction asks for. Reading's review keeps its chips and underlines.
+- The quote shows the whole segment; it is never cut to the quote, so the phrase is read in its sentence.
+
+### The whole transcript
+
+- **Phones and tablets:** the disclosure "Show the transcript of Part 2" as a [quiet button](#quiet-button) with a 16 px chevron (down closed, up open, `aria-expanded`), 16 px under the excerpt; the transcript follows it in the reading order, as a region named "Transcript of Part 2". It stays open across cards of the same part and closes when the card's part changes.
+- **Desktop:** the transcript is the start column (below).
+- **Rows** (both): a two-column grid, 12 px between rows. Start column 4.5rem: the time as a quiet button 44 px high ("3:14" in meta tabular `text.secondary` with a 16 px line play icon), named "Play from 3:14". End column: the speaker in meta weight 700 `text.secondary`, the text in passage typography `ink`. Narrator lines ("You now have some time…") in `text.secondary` (8.22:1), so instructions read as quieter than speech.
+- **The current card's evidence rows:** the approved 4 px `ink` current bar along the start edge of the row, and the evidence phrase marked as above. Other cards' evidence is not marked (one question at a time).
+- **No following of the audio:** the row being played is not highlighted and the transcript does not scroll with the audio (motion, and the test's L4 principle); the player's times say where it is.
+
+### The review player
+
+The M8 Practice player, unchanged in values and arrangement, under the test bar, with one addition: an **evidence tick** above the slider's track at the current card's evidence start, a 2 × 12 px `ink` mark (decorative, hidden from screen readers; the card's timestamp carries the meaning). With two evidence entries, two ticks. Its states (loading, failed) are M8's.
+
+### Review card (Listening)
+
+- **Phones:** no sheet: the card is the page's `main` under the player, at the gutter; from the tablet breakpoint centered at the 40rem measure. 24 px between blocks, 8 px inside a block (M5).
+- **Header:** M5's ("Question 14 of 40" in Heading 3, the outcome icon and word on its own line, "To review: 3 of 12" in meta text).
+- **The question in its context:** the group's instruction as in the test (English), then only the context of this unit:
+  - **Completion gaps** (form, note, sentence): the line that contains the gap, with the M8 line values; the gap shows **the answer in place**: an inline box (`radius.sm`, 8/12 px padding, body text) with the question number in bold and a 16 px outcome icon before the answer as typed (`lang="en"`); its boundary as the M5 option labels: correct 2 px `status.correct`, not correct 2 px `ink` dashed, no answer 1 px `text.secondary` dashed with the dash icon and the words "No answer". Other gaps on the line show their number and an empty `border.subtle` line, quietly.
+  - **Table gaps:** the gap's row only, as the M8 phone row block (on desktop too: the card column is narrow), with the answer in place in its cell.
+  - **Flow-chart gaps:** the title and the step that contains the gap, as the M8 box, without the arrows.
+  - **Labelling:** the M8 picture frame at the card's width with the markers, the current question's marker in its M8 current style, and "Enlarge picture".
+  - **Choice types:** the M5 read-only option rows and labels. **Matching and letter answers:** the item's prompt, then two M5 label-value rows "Your answer" and "Correct answer" with the letter and its text (the letter-button row is a control and is not shown in review).
+- **Answers** (typed): the M5 label-value rows "Your answer", "Correct answer", "Also accepted", under the context.
+- **Then:** the evidence block, the excerpt, the transcript disclosure (phones), "Why" and "Explain simpler", the notes (M5 pattern, info icon).
+- **Footer (phones and tablets):** the M8 bottom bar without "Mark for review": "All questions" as a quiet button, Previous and Next as secondary buttons; content-driven height (two rows at 320 px, one from the tablet breakpoint). No red button: review has no decision to make.
+
+### Navigator in review
+
+The M8 navigator by part with the M5 outcome badges and accessible names; each part's heading in Heading 3 followed by "6 of 10 correct" in meta text `text.secondary`. Desktop navigator bar: the current part's cells with badges; the other parts as quiet buttons "Part 3: 6 of 10 correct" with a right chevron.
+
+### Review on phone, tablet and desktop (Listening)
+
+| | Phone (320–599 px) | Tablet (600–1023 px) | Desktop (from 1024 px) |
+|---|---|---|---|
+| Frame | Test bar ("Results", "Part 2 of 4", no timer) | Same | Same |
+| Player | M8 phone player, sticky under the test bar, with the evidence tick | M8 one-row player | M8 player band across the content width |
+| Transcript | The excerpt in the card; the whole part behind the disclosure | Same | Start column, 55%, at the 40rem measure, the heading "Transcript of Part 2" (Heading 3) sticky at its top; scrolls on its own; on card change it scrolls the first evidence row into view (instantly with reduced motion) |
+| Review card | `main`, the gutter | Centered, 40rem | End column, 45%, 32 px from the transcript; the excerpt is not repeated in the card (the column shows it); scrolls on its own |
+| Navigator | "All questions" opens it in the M8 sheet | Same | The bar along the bottom |
+| Card change | Focus to the card heading; the player moves to the evidence, paused | Same | Same, and the transcript column scrolls |
+
+### Level check: two sections
+
+**Intro.** The M7 intro composition; the facts become **two section rows**, 16 px under the H1, separated by a 1 px `border.subtle` line (rows, not cards): each a 20 px line skill icon (Reading's book in `brand.primary`, as on Home's Reading card; Listening's headphones in `skill.listening`), the facts line in body text `ink`, and the state in meta text `text.secondary` (8.22:1); a section in progress adds M7's 14-segment bar under its state. The Listening row adds the two notes ("Each recording plays once. You can pause it.", "Use headphones if you can.") in the note pattern. The red button names the section; the other section's action is a quiet link 8 px under it.
+
+**The check's player** (`/level-check/listening`): one row under the bar, 56 px (as M8's Exam player): the M8 main button (48 px `ink` circle) with its label beside it in body weight 500 ("Play the recording", then "Pause" / "Continue"), the non-interactive 4 px progress line of the recording (played `skill.listening`, unplayed `border.subtle`) and "1:23 / 4:10" in meta tabular `text.secondary`. No Back, Forward, slider or speed. Ended: the button is removed and "End of recording 1" in meta weight 700 takes its place. Loading and failure: M8's player states. The bar reads "Exit" and "Recording 1 of 2"; the questions, bottom bar (without "Mark for review") and navigator are the Listening screen's.
+
+**Result.**
+- One section finished: the M7 result unchanged, with the Listening title and copy.
+- Both finished: H1 "Your starting points"; **two section blocks**, each the M7 result's level part: the skill name in Heading 2 with its 20 px skill icon, the level name in Heading 1 size weight 800 (not `text.display`: two display-size names would compete), the three-step indicator, "9 of 14 correct" in Heading 3 weight 700 tabular, and its "Practise first" card (M7 values). Phones: stacked, the section just finished first, 32 px apart with a 1 px `border.subtle` line between them. Desktop: side by side, 50% each, 32 px apart, top-aligned (equal width because neither skill ranks above the other). The scope and honest notes once, under the blocks; then the red button and the quiet links (M7 spacing).
+- Insufficient data in one section: that block shows M7's insufficient-data content (no level, no indicator); the other block is unchanged.
+
+### Accessibility treatment (M9 screens)
+
+- **Not by color alone:** the evidence phrase has the dotted underline and an accessible description, not only the yellow fill; answers in place carry an icon and, for no answer, the words; outcome badges and labels as M5; the current transcript row has the bar.
+- **Names:** "Play from Part 2, 3 minutes 14 seconds" for the evidence button; "Play from 3:14" for each transcript time (inside the named region, so the part is known); the review player keeps its M8 names.
+- **Focus:** the card heading on opening and on every card change; "Play from" and the transcript times keep focus while playing; the disclosure keeps focus and toggles `aria-expanded`.
+- **Announcements:** none for playing, pausing or the end of the evidence (the button's name changes); the storage notice as M5.
+- **Language:** the transcript, speaker roles, the question, options, answers and accepted answers carry `lang="en"`.
+- **Targets:** every control at least 44 × 44 px (48 px for buttons), including the transcript times at 320 px.
+- **320 px and 200% zoom:** no horizontal scroll; the transcript rows' start column stays 4.5rem and the text wraps; at 200% the player keeps its two rows and the card scrolls under it.
+- **Reduced motion:** the desktop transcript jumps to the evidence instead of scrolling smoothly; nothing else moves.
+
+### Open questions (M9-02)
+
+- **V1. The evidence mark:** (a) the `highlight` fill with the dotted evidence underline; (b) Reading's evidence chip before the segment and the dotted underline, no fill. **Recommendation: (a)**: the direction asks for the phrase highlighted, and Listening has no learner highlights to confuse it with.
+- **V2. Desktop transcript column:** (a) the whole part, scrolled to the evidence (as Reading's passage); (b) only the excerpt, in a wider single column. **Recommendation: (a)** (LD10).
+
+### Tokens this would add
+
+None.

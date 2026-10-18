@@ -4533,7 +4533,8 @@
       "title": "Draft the Listening review copy and design values",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-01"],
       "goal": "The Listening results and review screens are specified in three languages and the M6 visual language.",
       "scope": [
