@@ -824,7 +824,7 @@ None. First use of `skill.listening` and `skill.listening.tint`, which `tokens.c
 
 ## M9 components (Listening results and review)
 
-> **STATUS: DRAFT** (M9-02, 2026-10-18). Visual values for [LISTENING_EXPERIENCE.md, M9 specifications (drafts)](../product/LISTENING_EXPERIENCE.md#m9-specifications-drafts) and [USER_FLOWS.md, Listening results and review flows (M9)](../product/USER_FLOWS.md#listening-results-and-review-flows-m9), assuming the recommendations of LD1–LD22; the owner decides at M9-04. Reused unchanged: everything the M5, M7 and M8 sections list, in particular the M5 results page, outcome icons, option labels, label-value rows, "Explain simpler", the note pattern, navigator badges and the pattern card; the M8 player, question layouts (fields in the text, form lines, table and flow-chart blocks, labelling picture and markers), bottom bar and navigator by part; the M7 result composition. **No new token.** Contrast computed with the WCAG 2.x formula.
+> **STATUS: DRAFT, partly decided** (M9-02, 2026-10-18). **V1 approved** by the owner on 2026-10-18 (the yellow evidence highlight with a non-color cue and accessible contrast; Reading's review unchanged), and the values below follow the owner's other decisions of that day (LD4, LD15, LD20, LD21). V2 and the rest are decided at M9-04. Visual values for [LISTENING_EXPERIENCE.md, M9 specifications (drafts)](../product/LISTENING_EXPERIENCE.md#m9-specifications-drafts) and [USER_FLOWS.md, Listening results and review flows (M9)](../product/USER_FLOWS.md#listening-results-and-review-flows-m9), assuming the recommendations of LD1–LD22; the owner decides at M9-04. Reused unchanged: everything the M5, M7 and M8 sections list, in particular the M5 results page, outcome icons, option labels, label-value rows, "Explain simpler", the note pattern, navigator badges and the pattern card; the M8 player, question layouts (fields in the text, form lines, table and flow-chart blocks, labelling picture and markers), bottom bar and navigator by part; the M7 result composition. **No new token.** Contrast computed with the WCAG 2.x formula.
 
 The direction this follows: the surface direction's "Listening review's signature evidence is the exact timestamp, a transcript excerpt with the evidence phrase highlighted, replay, and the explanation" ([DESIGN_CONSTITUTION.md](DESIGN_CONSTITUTION.md#surface-direction)); the product-design skill's "avoid turning review into a giant stack of bordered cards"; and the owner's composition image (screen 07, Listening practice) for a transcript as lines with their times at the start. No approved Listening reference screenshot exists yet (`references/listening/` is empty), so M9-09 and M9-10 compare with the Reading review references and the image.
 
@@ -833,7 +833,10 @@ The direction this follows: the surface direction's "Listening review's signatur
 The M5 results page and its state table unchanged, with:
 - the meta line under the H1: the test title (English), the mode, and for a temporary test "Temporary practice test", in meta text `text.secondary`;
 - the notes, in the M5 note pattern and order: "Temporary practice test" (info icon), the interrupted-sitting line (info icon), then M5's notes. A note is information, not a warning: no warning icon and no color;
-- the Practice Hub row of a finished Listening test: "Last result: 27 of 40 correct" (M6's finished state) replaces M8's "Finished".
+- the Practice Hub row of a finished Listening test: "Last result: 27 of 40 correct" (M6's finished state) replaces M8's "Finished";
+- under "Mistakes that repeated", after the scope line, the heuristic line (LD15) in body text `text.secondary` (8.22:1); the "not enough evidence" text keeps M5's plain body style with its added sentence.
+
+**Start screen addition** (LD4): the day-first date line as one more row of the start screen's fact pattern, under the headphones row, with the 20 px info icon (no new icon).
 
 | Extra state | Score line | Note | Red button | Repeated mistakes | Quiet links |
 |---|---|---|---|---|---|
@@ -862,7 +865,7 @@ Not chosen: a red replay button (red is the screen's decision, and review's only
 | Excerpt | The M4 "Your evidence" quote style: `surface.warm`, `radius.md`, 12/16 px padding, 8 px under "Play from"; no border, no shadow (grouping, not an object) | |
 | Speaker line | The speaker's role (English, `lang="en"`) in meta weight 700 `text.secondary`, then "· 3:14" in meta tabular | 7.83:1 on warm |
 | Text | Passage typography (Literata, `text.passage`), `ink`, `lang="en"` | 17.68:1 on warm |
-| Evidence phrase | A `<mark>` with the [passage highlight](#new-color-passage-highlight) `highlight` fill and, instead of the highlight's bottom border, the M5 evidence underline (2 px dotted `ink`); its accessible description "Evidence" | `ink` on `highlight` 16.04:1; the fill against warm is 1.10:1, so the dotted underline carries the boundary |
+| Evidence phrase (**V1 approved**, owner, 2026-10-18) | A `<mark>` with the [passage highlight](#new-color-passage-highlight) `highlight` fill and, instead of the highlight's bottom border, the M5 evidence underline (2 px dotted `ink`) as the non-color cue; its accessible description "Evidence" | `ink` on `highlight` 16.04:1; the fill against warm is 1.10:1, so the dotted underline carries the boundary |
 
 - **Why the highlighter here and not Reading's chip:** Listening has no learner highlights (P9), so yellow cannot be confused with the learner's own marks, and a marked phrase (not a whole sentence) is what the direction asks for. Reading's review keeps its chips and underlines.
 - The quote shows the whole segment; it is never cut to the quote, so the phrase is read in its sentence.
@@ -910,7 +913,7 @@ The M8 navigator by part with the M5 outcome badges and accessible names; each p
 
 ### Level check: two sections
 
-**Intro.** The M7 intro composition; the facts become **two section rows**, 16 px under the H1, separated by a 1 px `border.subtle` line (rows, not cards): each a 20 px line skill icon (Reading's book in `brand.primary`, as on Home's Reading card; Listening's headphones in `skill.listening`), the facts line in body text `ink`, and the state in meta text `text.secondary` (8.22:1); a section in progress adds M7's 14-segment bar under its state. The Listening row adds the two notes ("Each recording plays once. You can pause it.", "Use headphones if you can.") in the note pattern. The red button names the section; the other section's action is a quiet link 8 px under it.
+**Intro.** The M7 intro composition; the facts become **two section rows**, 16 px under the H1, separated by a 1 px `border.subtle` line (rows, not cards): each a 20 px line skill icon (Reading's book in `brand.primary`, as on Home's Reading card; Listening's headphones in `skill.listening`), the facts line in body text `ink`, and the state in meta text `text.secondary` (8.22:1); a section in progress adds M7's 14-segment bar under its state. The Listening row adds its notes in the note pattern, 8 px apart: "Each recording plays once. You can pause it.", "Use headphones if you can.", the temporary-audio disclosure (LD21) and the day-first date line (LD4). The red button names the section; the other section's action is a quiet link 8 px under it.
 
 **The check's player** (`/level-check/listening`): one row under the bar, 56 px (as M8's Exam player): the M8 main button (48 px `ink` circle) with its label beside it in body weight 500 ("Play the recording", then "Pause" / "Continue"), the non-interactive 4 px progress line of the recording (played `skill.listening`, unplayed `border.subtle`) and "1:23 / 4:10" in meta tabular `text.secondary`. No Back, Forward, slider or speed. Ended: the button is removed and "End of recording 1" in meta weight 700 takes its place. Loading and failure: M8's player states. The bar reads "Exit" and "Recording 1 of 2"; the questions, bottom bar (without "Mark for review") and navigator are the Listening screen's.
 
@@ -918,6 +921,7 @@ The M8 navigator by part with the M5 outcome badges and accessible names; each p
 - One section finished: the M7 result unchanged, with the Listening title and copy.
 - Both finished: H1 "Your starting points"; **two section blocks**, each the M7 result's level part: the skill name in Heading 2 with its 20 px skill icon, the level name in Heading 1 size weight 800 (not `text.display`: two display-size names would compete), the three-step indicator, "9 of 14 correct" in Heading 3 weight 700 tabular, and its "Practise first" card (M7 values). Phones: stacked, the section just finished first, 32 px apart with a 1 px `border.subtle` line between them. Desktop: side by side, 50% each, 32 px apart, top-aligned (equal width because neither skill ranks above the other). The scope and honest notes once, under the blocks; then the red button and the quiet links (M7 spacing).
 - Insufficient data in one section: that block shows M7's insufficient-data content (no level, no indicator); the other block is unchanged.
+- **Listening qualifications** (LD20, LD21): inside the Listening block, 12 px under its score, as M5 notes with the 20 px info icon, in this order: "Completed with pauses…" (when the learner paused; its first two words in body weight 700, so the qualification reads at a glance), "The audio stopped because of a playback problem…" (a technical interruption), the temporary-audio disclosure and "Treat this as a rough starting point…". Information, not warnings: no warning icon, no color, nothing on the level name or indicator. With one section the same notes sit under the score of the M7 result.
 
 ### Accessibility treatment (M9 screens)
 
@@ -932,7 +936,7 @@ The M8 navigator by part with the M5 outcome badges and accessible names; each p
 
 ### Open questions (M9-02)
 
-- **V1. The evidence mark:** (a) the `highlight` fill with the dotted evidence underline; (b) Reading's evidence chip before the segment and the dotted underline, no fill. **Recommendation: (a)**: the direction asks for the phrase highlighted, and Listening has no learner highlights to confuse it with.
+- **V1. The evidence mark:** (a) the `highlight` fill with the dotted evidence underline; (b) Reading's evidence chip before the segment and the dotted underline, no fill. **Decided (owner, 2026-10-18): (a)**, with the dotted underline as the non-color cue and `ink` on `highlight` at 16.04:1; Reading's review keeps its chips and underlines.
 - **V2. Desktop transcript column:** (a) the whole part, scrolled to the evidence (as Reading's passage); (b) only the excerpt, in a wider single column. **Recommendation: (a)** (LD10).
 
 ### Tokens this would add

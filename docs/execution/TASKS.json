@@ -4628,7 +4628,7 @@
         "docs/design/DESIGN_SYSTEM.md",
         "docs/architecture/decisions/README.md"
       ],
-      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01)."
+      "notes": "Human task: a worker may prepare material for it but never completes it. Also read docs/product/LISTENING_EXPERIENCE.md (created by M8-01). Partly answered by the owner on 2026-10-18 (LD3, LD4, LD6, LD8, LD13, LD15, LD20, LD21, V1, and ADR-0014's storage approach), applied to the drafts and to M9-05, M9-06, M9-07, M9-12 and M15-09. Still open: LD1, LD2, LD5, LD7, LD9, LD10, LD11, LD12, LD14, LD16, LD17, LD18, LD19, LD22, F1, F2, V2, the copy and design values as a whole, and ADR-0014's §6 to §8 with its acceptance."
     },
     {
       "id": "M9-05",
@@ -4640,6 +4640,7 @@
       "goal": "Every Listening question type is checked by one versioned domain module with the approved signals.",
       "scope": [
         "Checking per the approved rules with a rules version; sources cited in comments; signals as observable facts",
+        "Owner decisions of 2026-10-18: capitals ignored (LD3); only listed variants accepted, numeric dates day first, no automatic acceptance of both readings of an ambiguous date, recorded as product policy (LD4); 'List TWO' in either order unless the key marks the question `ordered` (LD6); `mentionedOption` only from distractor entries whose `review` is `verified`, `aiDraft` entries ignored (LD13); the repeated-mistake threshold as a labelled heuristic (LD15)",
         "Domain tests at every boundary, including each unsourced product-policy rule"
       ],
       "outOfScope": ["UI"],
@@ -4669,12 +4670,13 @@
       "dependsOn": ["M9-04"],
       "goal": "Listening attempts, results and first tries are kept like Reading's, and every existing Reading record survives the upgrade.",
       "scope": [
-        "The accepted database upgrade and migration; commit, result records per pair, first try, retention, in-memory fallback for Listening",
-        "Tests: migration with real M4/M5 shapes (sessions, imported M4 attempts, highlights, pins, retries, first-try markers), two tabs, interrupted upgrades"
+        "As ADR-0014 (storage approach accepted by the owner, 2026-10-18): a separate `ielts-prep-listening` database in ADR-0009's layout, `ielts-prep-reading` neither upgraded nor written; commit, result records per pair, first try, retention, in-memory fallback for Listening; the import of M8's `listening:<testId>:finished` under the session's id with the first try unknown; shared history code in `shared/lib/` only if behavior-preserving for Reading",
+        "The Listening history behind the entity's public API, so the storage-independent interfaces of ADR-0014 §8a can be added later without touching callers; no sync or cross-skill reader is built",
+        "Tests: Reading's storage (`ielts-prep-reading` and the `reading:*` entries) unchanged after Listening activity, with real M4/M5 shapes (sessions, imported M4 attempts, highlights, pins, retries, first-try markers); the M8 import with two tabs and interrupted transactions; Listening commits with two tabs"
       ],
       "outOfScope": ["UI"],
       "acceptanceCriteria": [
-        "Every Reading record is unchanged after the upgrade (tested)",
+        "Every Reading record is unchanged after Listening activity and the M8 import (tested)",
         "All gates pass"
       ],
       "validation": [
@@ -4699,7 +4701,8 @@
       "goal": "Every answer unit of the demo Listening test has an explanation and a simpler version, drafted in English first, then ru and uz.",
       "scope": [
         "Grounded only in the transcript, the question and the key; evidence timestamps checked against the audio",
-        "Files `aiDraft`; record in PROGRESS.md that Claude drafted them; the human reviews are M15 tasks"
+        "Files `aiDraft`; record in PROGRESS.md that Claude drafted them; the human reviews are M15 tasks",
+        "Distractor (mentioned-option) entries in the key drafted with `review: \"aiDraft\"`, which keeps them hidden until verified (LD13); explanations never state a mentioned option's time"
       ],
       "outOfScope": ["human review (M15)"],
       "acceptanceCriteria": [
@@ -4866,7 +4869,8 @@
       "dependsOn": ["M9-05", "M7-11"],
       "goal": "The level check covers Listening under the model approved in M7, and its result says which skills it covers.",
       "scope": [
-        "Original Listening items (aiDraft) and their audio produced as decided at M8-06 (human audio task added if needed), the section in the level-check flow, results for one or both skills",
+        "Original Listening items (aiDraft) on two more public-domain VOA recordings, as decided at M8-06 and kept by the owner on 2026-10-18 (LD21: no human audio task), the section in the level-check flow, results for one or both skills",
+        "Owner decisions of 2026-10-18: the disclosure that the temporary audio uses slower speech and North American voices and may make the check easier, and no presentation as a calibrated band (LD21); Pause allowed, resuming from the exact position with no rewind, the learner's pauses and technical interruptions recorded apart and the result qualified as completed with pauses (LD20)",
         "Existing level-check results stay valid (tested)",
         "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
       ],
@@ -6730,6 +6734,7 @@
       "goal": "A person, not the drafting AI, confirms every Listening key, evidence timestamp, transcript and explanation, and every level-check and mock item, before beta.",
       "scope": [
         "Keys and accepted variants against the audio; timestamps and transcripts; explanations and simpler versions; level-check items and their result wording; mock sets",
+        "Every distractor (mentioned-option) entry of the Listening keys: the claim and its timestamp against the recording; a worker sets each checked entry to `verified` only on this recorded review (owner, 2026-10-18, LD13)",
         "A worker applies corrections (version numbers increase as required) and records the review in PROGRESS.md, then sets the reviewed files to `reviewed`"
       ],
       "outOfScope": ["ru and uz (M15-10, M15-11)"],
