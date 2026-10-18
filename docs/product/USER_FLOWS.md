@@ -657,7 +657,7 @@ Reused: `levelCheck.*`, `home.goal.targetBandNotSet`, `home.goal.change`, `examT
 
 ## Level check flows (M7)
 
-> **DRAFT, awaiting owner approval (M7-05).** Drafted in M7-02 (2026-10-18) on [LEVEL_CHECK.md](LEVEL_CHECK.md) (purpose, scope, the result model and its decisions D1–D14). Visual values follow in DESIGN_SYSTEM.md (M7-03); the data in the M7 ADR (M7-04). The copy is in [Interface copy (M7)](#interface-copy-m7). Steps count from onboarding step 3 or Home; the level check replaces the interim page at `/{locale}/level-check` ([open question 1 of M3](#open-questions-m3)).
+**Approved** (owner, 2026-10-18, task M7-05; drafted in M7-02) with [LEVEL_CHECK.md](LEVEL_CHECK.md) (purpose, scope, the result model and its decisions D1–D14, all as recommended). Visual values follow in DESIGN_SYSTEM.md (M7-03); the data in the M7 ADR (M7-04). The copy is in [Interface copy (M7)](#interface-copy-m7). Steps count from onboarding step 3 or Home; the level check replaces the interim page at `/{locale}/level-check` ([open question 1 of M3](#open-questions-m3)).
 
 **Screens:** the **intro** (`/{locale}/level-check`), the **section** (`/{locale}/level-check/reading`: the Reading engine with the check's own bar), and the **result** (`/{locale}/level-check/result`). The section and the result are the shell-less test-screen layout with their own bar, like Reading; the intro and the result are inside the shell. Only the Reading section exists in M7 (D1); M9 adds `/level-check/listening` and its result.
 
@@ -705,7 +705,7 @@ Reused: `levelCheck.*`, `home.goal.targetBandNotSet`, `home.goal.change`, `examT
 
 ### Interface copy (M7)
 
-**DRAFT.** Keys are suggestions; `levelCheck.*` extends the M3 namespace. Uzbek uses U+02BB for oʻ and gʻ; band values and the English test terms (question types, TRUE / FALSE / NOT GIVEN) stay in English in every language (`lang="en"`). A fluent-speaker review of uz and ru is required before beta (M15-11). Reused without change: `levelCheck.title` ("Find your level"), `levelCheck.start` ("Start the level check"), `onboarding.notNow`, `reading.exit`, `reading.passageOf`, the sheet, navigator and answer strings, `reading.finish.unanswered`, `reading.finish.confirm`, `reading.finish.cancel`, `reading.results.storageUnavailable`, `reading.results.score` ("{score} of {total} correct"), `common.goHome`, `nav.practice`.
+**Approved for implementation** (owner, 2026-10-18, task M7-05). Keys are suggestions; `levelCheck.*` extends the M3 namespace. Uzbek uses U+02BB for oʻ and gʻ; band values and the English test terms (question types, TRUE / FALSE / NOT GIVEN) stay in English in every language (`lang="en"`). A fluent-speaker review of uz and ru is required before beta (M15-11). Reused without change: `levelCheck.title` ("Find your level"), `levelCheck.start` ("Start the level check"), `onboarding.notNow`, `reading.exit`, `reading.passageOf`, the sheet, navigator and answer strings, `reading.finish.unanswered`, `reading.finish.confirm`, `reading.finish.cancel`, `reading.results.storageUnavailable`, `reading.results.score` ("{score} of {total} correct"), `common.goHome`, `nav.practice`.
 
 | Key (suggested) | Used in | en | ru | uz |
 |---|---|---|---|---|

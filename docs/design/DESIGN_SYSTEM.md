@@ -666,7 +666,7 @@ The task page composition (the list in the main column, start-aligned; no side c
 
 ## M7 components (Level check)
 
-> **DRAFT, awaiting owner approval (M7-05).** Drafted in M7-03 (2026-10-18) for [USER_FLOWS.md, Level check flows (M7)](../product/USER_FLOWS.md#level-check-flows-m7) and [LEVEL_CHECK.md](../product/LEVEL_CHECK.md). Reused unchanged: the brand palette, the type scale (with `text.display`), spacing, radii, the three elevation levels, motion, the focus ring, the breakpoints, the primary, secondary and quiet buttons, the line icons, the picture stage and task page compositions, the blush field, the M4 test bar, sheet, navigator and choice controls, the M5 outcome icons and note pattern, and the M6 next-action card. **No new token.** Contrast computed with the WCAG 2.x formula.
+**Approved** (owner, 2026-10-18, task M7-05; drafted in M7-03). Visual values for [USER_FLOWS.md, Level check flows (M7)](../product/USER_FLOWS.md#level-check-flows-m7) and [LEVEL_CHECK.md](../product/LEVEL_CHECK.md). Reused unchanged: the brand palette, the type scale (with `text.display`), spacing, radii, the three elevation levels, motion, the focus ring, the breakpoints, the primary, secondary and quiet buttons, the line icons, the picture stage and task page compositions, the blush field, the M4 test bar, sheet, navigator and choice controls, the M5 outcome icons and note pattern, and the M6 next-action card. **No new token.** Contrast computed with the WCAG 2.x formula.
 
 ### Intro (`/level-check`)
 

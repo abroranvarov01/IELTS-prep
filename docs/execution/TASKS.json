@@ -3491,7 +3491,8 @@
       "title": "Owner approves the level-check spec, result model, copy, design values and ADR",
       "milestone": "M7",
       "owner": "human",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M7-02", "M7-03", "M7-04"],
       "goal": "One owner gate before M7 product code: level-check spec, result model, copy, design values and ADR. A wrong decision here would force rework later.",
       "scope": [

@@ -1,8 +1,8 @@
 # ADR-0011: Level-Check Forms, Results and Storage
 
-- **Status:** Proposed
-- **Date:** 2026-10-18
-- **Deciders:** owner (at M7-05); drafted by the worker in M7-04
+- **Status:** Accepted
+- **Date:** 2026-10-18 (accepted 2026-10-18 at M7-05)
+- **Deciders:** owner; drafted by the worker in M7-04
 
 ## Context
 

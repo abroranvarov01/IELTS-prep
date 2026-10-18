@@ -2,13 +2,13 @@
 
 Canonical owner of the **level check's purpose, scope, result model and honest wording**. Flows and copy: [USER_FLOWS.md](USER_FLOWS.md) (M7-02). Design values: [DESIGN_SYSTEM.md](../design/DESIGN_SYSTEM.md) (M7-03). Items, results and storage in code: the M7 ADR (M7-04). The items themselves: M7-06.
 
-> **STATUS: DRAFT, awaiting owner approval (M7-05).** Drafted by the worker in M7-01 (2026-10-18). Every section is a proposal with its options and a recommendation until the owner decides; the decisions are listed together at the end. Nothing here is implemented.
+> **STATUS: APPROVED** (owner, 2026-10-18, task M7-05): every decision D1–D14 as recommended; the level thresholds and the "practise first" rule are product policy, not IELTS rules. Drafted by the worker in M7-01. The recommendations below are the decisions; the options stay as the record of what was considered. Implementation: M7-06 to M7-11.
 
 The learner-facing name is **"Find your level"** ([UX_PRINCIPLES.md, plain language](UX_PRINCIPLES.md#6-plain-language)); "level check" is the product's name for it in the docs and the code. "Diagnostic" never appears in the interface.
 
 ## 1. Purpose
 
-**DRAFT.** The level check gives a learner who has just set a goal a **starting point**: where they stand now in the skills the product teaches, and what to practise first. It feeds Home's next action (M7-10) and, later, cross-skill personalization (M11).
+**Approved** (M7-05). The level check gives a learner who has just set a goal a **starting point**: where they stand now in the skills the product teaches, and what to practise first. It feeds Home's next action (M7-10) and, later, cross-skill personalization (M11).
 
 It is **not** a certificate, a prediction of an IELTS result, or a judgement of the learner. It measures only what the product practises, on the product's own scale, with original items (never published IELTS material, [PRODUCT.md](PRODUCT.md#content-integrity-and-brand)). It is optional ("Not now" stays, [USER_FLOWS.md](USER_FLOWS.md#open-questions-m3)); practice is never locked behind it.
 
@@ -16,7 +16,7 @@ What it must do well, in this order: be honest about what it can tell; be short 
 
 ## 2. Skills and sequencing
 
-**DRAFT.** Options:
+**Approved** (M7-05). Options:
 
 | | (a) Designed for Reading and Listening; the Reading section ships in M7, the Listening section in M9 | (b) Wait until after Listening and ship both sections at once (M9) | (c) Reading only, for good |
 |---|---|---|---|
@@ -28,7 +28,7 @@ What it must do well, in this order: be honest about what it can tell; be short 
 
 ## 3. Length and form
 
-**DRAFT.**
+**Approved** (M7-05).
 
 - **Length on a phone: about 15 minutes per section.** Options for the Reading section: (a) **two short original passages (250–350 words each) with 7 questions each, 14 in all**; (b) one full-length passage (700–900 words, 13 questions, as one third of a Reading test); (c) a whole 40-question test. **Recommendation: (a).** Two passages of rising difficulty measure more than one long passage with the same number of questions, 300-word passages read comfortably on a phone, and 14 questions over 4–5 question types are enough for a three-step result ([§5](#5-the-result)) without pretending to more. (c) is a mock, not a check.
 - **Fixed forms, not adaptive selection.** Options: (a) **fixed, versioned forms** (`formVersion`), one form at M7, a second form when the content system exists (M13); (b) adaptive selection from an item bank. **Recommendation: (a).** Adaptive testing needs calibrated item parameters from real learners, which do not exist; a fixed form is honest about that, is testable, and keeps results comparable between learners and over time.
@@ -38,7 +38,7 @@ What it must do well, in this order: be honest about what it can tell; be short 
 
 ## 4. Academic or General Training
 
-**DRAFT.** [PRODUCT.md](PRODUCT.md#open-questions) leaves "Academic only, or both at launch" open. For the check at beta:
+**Approved** (M7-05). [PRODUCT.md](PRODUCT.md#open-questions) leaves "Academic only, or both at launch" open. For the check at beta:
 
 | | (a) Academic-style passages only | (b) Two forms, one per exam type |
 |---|---|---|
@@ -50,7 +50,7 @@ What it must do well, in this order: be honest about what it can tell; be short 
 
 ## 5. The result
 
-**DRAFT.** The result is a **starting point on the product's own practice scale, per skill**. It is never an IELTS band, a band range or a percentile: no content is calibrated against real IELTS results, so any band would be invented ([honest feedback](PRODUCT.md#honest-feedback-non-negotiable); [`ielts-scoring` rule](../../.claude/rules/domain/ielts-scoring.md)).
+**Approved** (M7-05). The result is a **starting point on the product's own practice scale, per skill**. It is never an IELTS band, a band range or a percentile: no content is calibrated against real IELTS results, so any band would be invented ([honest feedback](PRODUCT.md#honest-feedback-non-negotiable); [`ielts-scoring` rule](../../.claude/rules/domain/ielts-scoring.md)).
 
 Options for what the learner sees per section:
 
@@ -78,7 +78,7 @@ An IELTS band or range; a percentile or comparison with other learners; decimals
 
 ## 6. Incomplete, resumed and retaken checks
 
-**DRAFT.**
+**Approved** (M7-05).
 
 - **Leaving:** the check keeps its session on the device (as Reading sessions do, [ADR-0006](../architecture/decisions/0006-reading-session-state.md); the M7 ADR decides the exact store). Nothing is lost; no result exists until the section is finished.
 - **Resuming:** onboarding step 3 and Home say **"Continue the level check"** instead of "Start the level check" while a section is in progress, and open it at the question where the learner left. The intro is skipped. No expiry in M7; the intro offers "Start over" for a stale session.
@@ -89,7 +89,7 @@ An IELTS band or range; a percentile or comparison with other learners; decimals
 
 ## 7. What the result hands on
 
-**DRAFT.**
+**Approved** (M7-05).
 
 - **To Home, in M7 (M7-10):** the next action changes once a section is finished. Options for the next action after the Reading section: (a) **"Practise Reading"** opening the Practice Hub's Reading tests (the first test preselected on the start screen is M11's rule, not M7's); (b) the first Reading test directly. **Recommendation: (a)**: the Hub is the entry the product already has, and M11 decides which test. While a section is in progress: "Continue the level check". Home is rendered from a cookie and cannot read the device's storage ([ADR-0006](../architecture/decisions/0006-reading-session-state.md) §4, READING_EXPERIENCE.md, Home in M5), so M7 needs a way for Home to know the check's **state only**. Options: (a) **a server-managed cookie flag with the state per section (not started / in progress / finished) and nothing else**, like the goal cookie ([ADR-0003](../architecture/decisions/0003-guest-state-on-the-device.md)); (b) Home reads the device after mounting. **Recommendation: (a)** for M7 (the result itself stays on the device; the flag carries no score); M11 decides Home's full data path. The M7 ADR records it.
 - **To Home, later (M11):** the result records (per skill: score, level, type outcomes, form version, rules versions, when finished, time taken) are inputs to the recommendation rules and the progress screen, with their insufficient-data and stale-data states. The check makes no recommendation beyond its own next action.
@@ -97,7 +97,7 @@ An IELTS band or range; a percentile or comparison with other learners; decimals
 
 ## 8. Item requirements (for M7-06)
 
-**DRAFT.**
+**Approved** (M7-05).
 
 - **Original** passages and questions, written for the check, never adapted from published IELTS material; Academic-style ([§4](#4-academic-or-general-training)); topics neutral and familiar to learners in Uzbekistan without local knowledge; British spelling as in the test.
 - **Form A (M7):** two passages of 250–350 words, rising in difficulty; 14 questions in 4–5 approved types ([§3](#3-length-and-form)); the Reading content contract ([ADR-0005](../architecture/decisions/0005-reading-content-contract.md)) and its validator; a separate key with evidence sentences and tags, as the M5 key.
@@ -107,7 +107,7 @@ An IELTS band or range; a percentile or comparison with other learners; decimals
 
 ## 9. Honest wording
 
-**DRAFT.** Principles for every string (copy in M7-02, [LOCALIZATION.md](LOCALIZATION.md) rule 7 for uz and ru):
+**Approved** (M7-05). Principles for every string (copy in M7-02, [LOCALIZATION.md](LOCALIZATION.md) rule 7 for uz and ru):
 
 - Name what it is: "starting point", "our practice scale", "a short check". Name the skill: "Reading".
 - Say what it is not, once, plainly: "not an IELTS band".
@@ -136,6 +136,6 @@ Each with the recommendation above; answering them is the gate.
 | D11 | Next action after the Reading section | (a) the Practice Hub; (b) the first Reading test | (a) |
 | D12 | How Home learns the check's state | (a) a state-only cookie flag per section; (b) Home reads the device after mounting | (a) |
 | D13 | Explanations after the check | (a) the M5 review with explanations; (b) none | (a) |
-| D14 | Level names | plain, neutral, about where to start (working: Starting out / On the way / Strong start); the copy task proposes the final names in three languages | the constraints |
+| D14 | Level names | plain, neutral, about where to start: Starting out / On the way / Strong start (ru and uz in USER_FLOWS.md, Interface copy (M7)) | as proposed |
 
-If an answer changes the milestone's scope (for example D1 (b) or D13 (b)), the later M7 tasks are adjusted before work continues (M7-05).
+Decided as recommended (owner, 2026-10-18); the milestone's scope is unchanged.

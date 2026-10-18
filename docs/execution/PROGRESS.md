@@ -840,3 +840,8 @@ Entry format:
 - Result: waiting for the owner
 - Changes: none. M7-01 to M7-04 are done; M7-05 (human) needs the owner's answers to LEVEL_CHECK.md D1–D14, the approval of the M7 flows and copy (USER_FLOWS.md), the design values (DESIGN_SYSTEM.md, M7 components) and ADR-0011 (set to Accepted), and confirmation that the level thresholds and the "practise first" rule are product policy (ielts-scoring rule). M7-06 to M7-11 wait on it.
 
+### 2026-10-18: M7-05 Owner approves the level-check spec, result model, copy, design values and ADR (owner task)
+- Result: done
+- Changes: Owner instruction of 2026-10-18 in the session: "M7-05: утверждаю черновики M7 как рекомендовано: D1–D14 по рекомендациям, пороги уровней и правило «с чего начать» — продуктовая политика, флоу и копи M7, значения дизайна, ADR-0011 — Accepted." Recorded: LEVEL_CHECK.md status Approved (D1–D14 as recommended; thresholds and the "practise first" rule as product policy, no IELTS source claimed); USER_FLOWS.md "Level check flows (M7)" and its copy Approved; DESIGN_SYSTEM.md "M7 components" Approved; ADR-0011 Accepted (README index, ARCHITECTURE.md confirmed decisions). TASKS.json: M7-05 done. The milestone's scope is unchanged.
+- Verification: n/a (owner decision).
+
