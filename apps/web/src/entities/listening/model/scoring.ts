@@ -272,7 +272,7 @@ function signalsFor(
     if (limit && !fitsListeningWordLimit(text, limit)) add("wordLimit");
     if (
       entries.some((e) => e.fromRecording) &&
-      hasWordNotHeard(context.transcript, unit, text, variants)
+      wordNotInTranscript(context.transcript, unit, text, variants)
     )
       add("notInTranscript");
     if (variants.some((v) => isTeenTyPair(text, v))) add("teenTyNumber");
@@ -337,22 +337,23 @@ function isOneLetterAway(given: string, variant: string): boolean {
 }
 
 /**
- * Whether a word of the answer (letters only, case ignored) is in neither
- * the transcript of the question's part nor any accepted variant. Applies
- * only where the instruction requires the recording's words (`fromRecording`).
+ * The first word of the answer (letters only, case ignored) that is in
+ * neither the transcript of the question's part nor any accepted variant,
+ * or undefined. Applies only where the instruction requires the recording's
+ * words (`fromRecording`); the review names the word.
  */
-function hasWordNotHeard(
+export function wordNotInTranscript(
   transcript: Transcript,
   unit: QuestionUnit,
   given: string,
   variants: string[],
-): boolean {
+): string | undefined {
   const words = (text: string) => text.toLowerCase().match(/\p{L}+/gu) ?? [];
   const known = new Set([
     ...partSegments(transcript, unit).flatMap((s) => words(s.text)),
     ...variants.flatMap(words),
   ]);
-  return words(given).some((w) => !known.has(w));
+  return words(given).find((w) => !known.has(w));
 }
 
 const TEENS = [

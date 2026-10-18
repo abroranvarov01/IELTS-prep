@@ -48,7 +48,7 @@ function renderPlayer(
 ) {
   const onPosition = vi.fn();
   const onSpeed = vi.fn();
-  render(
+  const view = (p: Partial<PracticePlayerProps>) => (
     <NextIntlClientProvider locale={locale} messages={{ en, ru }[locale]}>
       <PracticePlayer
         src="/media/part-1.m4a"
@@ -58,10 +58,13 @@ function renderPlayer(
         speeds={[0.75, 1, 1.25]}
         onPosition={onPosition}
         onSpeed={onSpeed}
-        {...props}
+        {...p}
       />
-    </NextIntlClientProvider>,
+    </NextIntlClientProvider>
   );
+  const rendered = render(view(props));
+  const rerender = (p: Partial<PracticePlayerProps>) =>
+    act(() => rendered.rerender(view({ ...props, ...p })));
   const audio = document.querySelector("audio") as HTMLAudioElement;
   const ready = (seconds = 120) => {
     Object.defineProperty(audio, "duration", {
@@ -73,7 +76,7 @@ function renderPlayer(
       audio.dispatchEvent(new Event("canplay"));
     });
   };
-  return { audio, ready, onPosition, onSpeed };
+  return { audio, ready, onPosition, onSpeed, rerender };
 }
 
 const button = (name: string | RegExp) => screen.getByRole("button", { name });
@@ -173,5 +176,43 @@ describe("the Practice player", () => {
     renderPlayer({}, "ru");
     expect(screen.getByRole("region", { name: "Аудиоплеер" })).toBeTruthy();
     expect(button("Назад на 5 секунд")).toBeTruthy();
+  });
+});
+
+describe("the review cue", () => {
+  const timeTo = (audio: HTMLAudioElement, seconds: number) =>
+    act(() => {
+      audio.currentTime = seconds;
+      audio.dispatchEvent(new Event("timeupdate"));
+    });
+
+  it("plays the evidence from its start and pauses where it ends, reporting it while it plays", () => {
+    const onCuePlaying = vi.fn();
+    const { audio, ready } = renderPlayer({
+      cue: { id: 1, kind: "play", fromMs: 48_000, toMs: 56_000 },
+      onCuePlaying,
+    });
+    ready();
+    expect(audio.currentTime).toBe(48);
+    expect(playing).toBe(true);
+    expect(onCuePlaying).toHaveBeenLastCalledWith(1);
+    timeTo(audio, 52);
+    expect(playing).toBe(true);
+    timeTo(audio, 56.1);
+    expect(playing).toBe(false);
+    expect(onCuePlaying).toHaveBeenLastCalledWith(undefined);
+  });
+
+  it("moves to a card's evidence paused, and pauses when asked", () => {
+    const { audio, ready, rerender } = renderPlayer({
+      cue: { id: 1, kind: "show", fromMs: 7000 },
+    });
+    ready();
+    expect(audio.currentTime).toBe(7);
+    expect(playing).toBe(false);
+    rerender({ cue: { id: 2, kind: "play", fromMs: 7000 } });
+    expect(playing).toBe(true);
+    rerender({ cue: { id: 3, kind: "pause" } });
+    expect(playing).toBe(false);
   });
 });

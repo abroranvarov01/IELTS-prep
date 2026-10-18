@@ -116,6 +116,31 @@ export async function downloadTestAudio(
 }
 
 /**
+ * A part's file from Cache Storage, as a blob: URL, when a copy that matches
+ * its sha256 is there (left by an Exam download); otherwise undefined. The
+ * review plays it before asking the network (owner, M9-04 clarification).
+ */
+export async function cachedPartUrl(
+  test: ListeningTest,
+  part: ListeningTest["parts"][number],
+): Promise<string | undefined> {
+  try {
+    if (!("caches" in globalThis)) return undefined;
+    const cache = await caches.open(CACHE);
+    const cached = await cache.match(mediaUrl(test, part.audio.src));
+    if (!cached) return undefined;
+    const buffer = await cached.arrayBuffer();
+    if ((await sha256(buffer)) !== part.audio.sha256) return undefined;
+    return URL.createObjectURL(
+      new Blob([buffer], { type: part.audio.mimeType }),
+    );
+  } catch {
+    // Storage blocked or unreadable: the network is asked instead.
+    return undefined;
+  }
+}
+
+/**
  * Keeps at most the files of tests with an Exam in progress (ADR-0013 §2):
  * everything else in the cache is removed.
  */

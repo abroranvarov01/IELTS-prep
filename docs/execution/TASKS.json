@@ -4768,7 +4768,8 @@
       "title": "Evidence-first Listening review on phones",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-07", "M9-08"],
       "goal": "Every answer unit can be reviewed with its timestamp, replayable evidence segment, highlighted transcript excerpt, why and Explain simpler on a phone.",
       "scope": [

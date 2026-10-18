@@ -504,7 +504,8 @@
     },
     "navigator": {
       "part": "Part {number}",
-      "partProgress": "Part {number}: {answered} of {total} answered"
+      "partProgress": "Part {number}: {answered} of {total} answered",
+      "partResult": "Part {number}: {correct} of {total} correct"
     },
     "temporary": {
       "label": "Temporary practice test",
@@ -512,6 +513,28 @@
     },
     "results": {
       "honest": "A practice score on a practice test. It is not an IELTS band score."
+    },
+    "review": {
+      "toResults": "Results",
+      "evidenceTitle": "Evidence in the recording",
+      "heardAt": "Heard in Part {part} at {time}",
+      "playFrom": "Play from {time}",
+      "playFromName": "Play from Part {part}, {time}",
+      "playingEvidence": "Pause",
+      "evidenceMark": "Evidence",
+      "transcriptShow": "Show the transcript of Part {part}",
+      "transcriptHide": "Hide the transcript",
+      "transcriptTitle": "Transcript of Part {part}",
+      "segmentPlay": "Play from {time}",
+      "audioUnavailable": "The recording isn't available right now. You can still read the transcript.",
+      "yourAnswerInPlace": "Your answer to question {number}: {answer}"
+    },
+    "signals": {
+      "notInTranscript": "The word <en>{word}</en> in your answer is not in the transcript of Part {part}.",
+      "teenTyNumber": "Your answer is <en>{yours}</en> and the accepted answer is <en>{answer}</en>. These numbers differ only in <en>-teen</en> and <en>-ty</en>.",
+      "sameDigits": "Your answer has the same digits as the accepted answer, written differently.",
+      "mentionedOption": "The recording mentions <en>{option}</en> at {mentionedAt}, but the answer is given at {answerAt}.",
+      "notReached": "The recording had not reached this question when the test finished."
     }
   }
 }

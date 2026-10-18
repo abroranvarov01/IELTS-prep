@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ListeningTest } from "../model/content";
 import { fixtureTest } from "../model/listening-test.fixture";
 import { parseListeningTest } from "../model/parse-content";
-import { downloadTestAudio } from "./audio-download";
+import { cachedPartUrl, downloadTestAudio } from "./audio-download";
 
 // Four tiny "recordings" whose hashes the test file records.
 const bodies = ["one", "two", "three", "four"].map((s) =>
@@ -105,5 +105,32 @@ describe("the Exam download", () => {
     await expect(downloadTestAudio(testWithBodies(), () => {})).rejects.toThrow(
       "503",
     );
+  });
+});
+
+describe("review audio from the cache", () => {
+  it("plays a part from a valid cached copy, without the network", async () => {
+    const test = testWithBodies();
+    await downloadTestAudio(test, () => {});
+    fetched = [];
+    expect(await cachedPartUrl(test, test.parts[1]!)).toMatch(/^blob:/);
+    expect(fetched).toEqual([]);
+  });
+
+  it("finds nothing when the part is not cached, or its copy does not match its hash", async () => {
+    const test = testWithBodies();
+    expect(await cachedPartUrl(test, test.parts[0]!)).toBeUndefined();
+    const part = test.parts[0]!;
+    cache.entries.set(
+      `/media/listening/${test.id}/${part.audio.src}`,
+      new Response("tampered"),
+    );
+    expect(await cachedPartUrl(test, part)).toBeUndefined();
+  });
+
+  it("finds nothing where Cache Storage is missing", async () => {
+    delete (globalThis as { caches?: unknown }).caches;
+    const test = testWithBodies();
+    expect(await cachedPartUrl(test, test.parts[0]!)).toBeUndefined();
   });
 });

@@ -504,7 +504,8 @@
     },
     "navigator": {
       "part": "{number}-qism",
-      "partProgress": "{number}-qism: {total} tadan {answered} tasiga javob berilgan"
+      "partProgress": "{number}-qism: {total} tadan {answered} tasiga javob berilgan",
+      "partResult": "{number}-qism: {total} tadan {correct} tasi toʻgʻri"
     },
     "temporary": {
       "label": "Vaqtinchalik mashq testi",
@@ -512,6 +513,28 @@
     },
     "results": {
       "honest": "Bu mashq testidagi natija, IELTS bali emas."
+    },
+    "review": {
+      "toResults": "Natijalar",
+      "evidenceTitle": "Yozuvdagi dalil",
+      "heardAt": "{part}-qismda, {time} da eshitiladi",
+      "playFrom": "{time} dan tinglash",
+      "playFromName": "{part}-qism, {time} dan tinglash",
+      "playingEvidence": "Pauza",
+      "evidenceMark": "Dalil",
+      "transcriptShow": "{part}-qism yozuvining matnini koʻrsatish",
+      "transcriptHide": "Yozuv matnini yashirish",
+      "transcriptTitle": "{part}-qism yozuvining matni",
+      "segmentPlay": "{time} dan tinglash",
+      "audioUnavailable": "Yozuv hozir mavjud emas. Uning matnini oʻqishingiz mumkin.",
+      "yourAnswerInPlace": "{number}-savolga javobingiz: {answer}"
+    },
+    "signals": {
+      "notInTranscript": "Javobingizdagi <en>{word}</en> soʻzi {part}-qism yozuvining matnida yoʻq.",
+      "teenTyNumber": "Javobingiz: <en>{yours}</en>, qabul qilingan javob: <en>{answer}</en>. Bu sonlar faqat <en>-teen</en> va <en>-ty</en> qoʻshimchalari bilan farq qiladi.",
+      "sameDigits": "Javobingizda qabul qilingan javobdagi raqamlar bor, lekin ular boshqacha yozilgan.",
+      "mentionedOption": "Yozuvda <en>{option}</en> {mentionedAt} da tilga olinadi, lekin javob {answerAt} da aytiladi.",
+      "notReached": "Test yakunlanganda yozuv hali bu savolga yetib kelmagan edi."
     }
   }
 }

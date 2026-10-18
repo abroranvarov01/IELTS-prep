@@ -504,7 +504,8 @@
     },
     "navigator": {
       "part": "Часть {number}",
-      "partProgress": "Часть {number}: отвечено {answered} из {total}"
+      "partProgress": "Часть {number}: отвечено {answered} из {total}",
+      "partResult": "Часть {number}: верно {correct} из {total}"
     },
     "temporary": {
       "label": "Временный тест для практики",
@@ -512,6 +513,28 @@
     },
     "results": {
       "honest": "Это результат практики на практическом тесте, а не балл IELTS."
+    },
+    "review": {
+      "toResults": "Результаты",
+      "evidenceTitle": "Подтверждение в записи",
+      "heardAt": "Звучит в части {part} на {time}",
+      "playFrom": "Слушать с {time}",
+      "playFromName": "Слушать с части {part}, {time}",
+      "playingEvidence": "Пауза",
+      "evidenceMark": "Подтверждение",
+      "transcriptShow": "Показать текст записи части {part}",
+      "transcriptHide": "Скрыть текст записи",
+      "transcriptTitle": "Текст записи части {part}",
+      "segmentPlay": "Слушать с {time}",
+      "audioUnavailable": "Запись сейчас недоступна. Текст записи можно прочитать.",
+      "yourAnswerInPlace": "Ваш ответ на вопрос {number}: {answer}"
+    },
+    "signals": {
+      "notInTranscript": "Слова <en>{word}</en> из вашего ответа нет в тексте записи части {part}.",
+      "teenTyNumber": "Ваш ответ: <en>{yours}</en>, принятый ответ: <en>{answer}</en>. Эти числа различаются только окончаниями <en>-teen</en> и <en>-ty</en>.",
+      "sameDigits": "В вашем ответе те же цифры, что и в принятом ответе, но записаны они иначе.",
+      "mentionedOption": "В записи <en>{option}</en> упоминается на {mentionedAt}, но ответ звучит на {answerAt}.",
+      "notReached": "Когда тест завершился, запись ещё не дошла до этого вопроса."
     }
   }
 }

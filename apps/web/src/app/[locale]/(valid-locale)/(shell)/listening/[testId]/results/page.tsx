@@ -21,9 +21,21 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("title") };
 }
 
-export default async function ListeningResultsPage({
+// The params are read inside the Suspense boundary, so a navigation to the
+// results stays instant (as the test route).
+export default function ListeningResultsPage({
   params,
 }: PageProps<"/[locale]/listening/[testId]/results">) {
+  return (
+    <Suspense>
+      <Results params={params} />
+    </Suspense>
+  );
+}
+
+async function Results({
+  params,
+}: Pick<PageProps<"/[locale]/listening/[testId]/results">, "params">) {
   const { testId } = await params;
   const test = listeningTest(testId);
   const checking = listeningChecking(testId);
@@ -31,12 +43,10 @@ export default async function ListeningResultsPage({
 
   // The attempt is chosen by the address and read from the device.
   return (
-    <Suspense>
-      <ResultsScreen
-        test={test}
-        answerKey={checking.key}
-        transcript={checking.transcript}
-      />
-    </Suspense>
+    <ResultsScreen
+      test={test}
+      answerKey={checking.key}
+      transcript={checking.transcript}
+    />
   );
 }

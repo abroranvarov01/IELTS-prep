@@ -22,6 +22,21 @@ export type PracticePlayerProps = {
   speeds: readonly number[];
   onPosition: (ms: number) => void;
   onSpeed: (speed: number) => void;
+  /**
+   * The review's request (LISTENING_EXPERIENCE.md, Evidence-first review
+   * (M9)): "show" moves to `fromMs`, paused; "play" plays from `fromMs` and
+   * pauses at `toMs`; "pause" pauses. A new `id` is a new request.
+   */
+  cue?: {
+    id: number;
+    kind: "show" | "play" | "pause";
+    fromMs?: number;
+    toMs?: number;
+  };
+  /** The id of the "play" cue while it plays, undefined otherwise. */
+  onCuePlaying?: (id: number | undefined) => void;
+  /** Review: where the evidence starts, ticked above the track (decorative). */
+  marksMs?: number[];
 };
 
 /**
@@ -37,6 +52,9 @@ export function PracticePlayer({
   speeds,
   onPosition,
   onSpeed,
+  cue,
+  onCuePlaying,
+  marksMs = [],
 }: PracticePlayerProps) {
   const t = useTranslations("listening.player");
   const audio = useAudio({ src, rate: speed });
@@ -75,6 +93,53 @@ export function PracticePlayer({
     };
   }, [status, src, ref]);
 
+  // A review cue is applied once the part can play; a "play" cue pauses
+  // itself where its stretch ends, then the player is the learner's again.
+  const cueReport = useRef(onCuePlaying);
+  useEffect(() => {
+    cueReport.current = onCuePlaying;
+  }, [onCuePlaying]);
+  const applied = useRef<number | undefined>(undefined);
+  const stopAt = useRef<{ id: number; ms: number; started: boolean }>(
+    undefined,
+  );
+  const endCue = () => {
+    if (!stopAt.current) return;
+    stopAt.current = undefined;
+    cueReport.current?.(undefined);
+  };
+  useEffect(() => {
+    if (!cue || applied.current === cue.id) return;
+    if (status === "loading" || status === "failed") return;
+    applied.current = cue.id;
+    endCue();
+    if (cue.kind === "pause") {
+      pause();
+      return;
+    }
+    seek(cue.fromMs ?? 0);
+    if (cue.kind === "show") {
+      pause();
+      return;
+    }
+    if (cue.toMs !== undefined) {
+      stopAt.current = { id: cue.id, ms: cue.toMs, started: false };
+      cueReport.current?.(cue.id);
+    }
+    void play();
+  }, [cue, status, seek, play, pause]);
+  useEffect(() => {
+    const stop = stopAt.current;
+    if (!stop) return;
+    if (status === "playing") {
+      stop.started = true;
+      if (positionMs >= stop.ms) {
+        endCue();
+        pause();
+      }
+    } else if (stop.started && status !== "buffering") endCue();
+  }, [status, positionMs, pause]);
+
   const total = durationMs || 0;
   const words = (ms: number) => t("duration", minutesAndSeconds(ms));
   const waiting = status === "loading" || status === "buffering";
@@ -87,7 +152,16 @@ export function PracticePlayer({
       {/* eslint-disable-next-line jsx-a11y/media-has-caption -- Captions of a Listening test are its transcript and would give the answers away (LISTENING_EXPERIENCE.md P4); owner exception, 2026-10-18. */}
       <audio ref={ref} src={src} preload="auto" />
       <div className="mx-auto flex max-w-measure flex-col gap-1 tablet:flex-row-reverse tablet:items-center tablet:gap-3">
-        <div className="flex flex-1 flex-col">
+        <div className="relative flex flex-1 flex-col">
+          {total > 0 &&
+            marksMs.map((ms) => (
+              <span
+                key={ms}
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0.5 h-3 w-0.5 bg-ink"
+                style={{ left: `${(100 * Math.min(ms, total)) / total}%` }}
+              />
+            ))}
           <input
             type="range"
             min={0}
