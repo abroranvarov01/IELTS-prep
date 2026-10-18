@@ -39,9 +39,12 @@ Follow the `implement-feature` skill, plus `ui-implementation` / `testing` where
 - Use current stable versions. Check official documentation for version-specific setup. Do not rely on memory.
 
 ### 5. Validate
-Run every command in the task's `validation` list, plus the gates [DEFINITION_OF_DONE.md, Validation by risk](../engineering/DEFINITION_OF_DONE.md#validation-by-risk) requires for the task's change class (commands: [QUALITY_GATES.md](../engineering/QUALITY_GATES.md)). All must pass. The task is one checkpoint; completing the milestone is an integration checkpoint. Add a line to the validation record in PROGRESS.md.
+Validation follows [DEFINITION_OF_DONE.md, Validation by risk](../engineering/DEFINITION_OF_DONE.md#validation-by-risk), the only validation policy (commands: [QUALITY_GATES.md](../engineering/QUALITY_GATES.md)). The task is one checkpoint; the full suite runs only at the integration checkpoint (the milestone's last task, or a cross-cutting risk that policy names).
+- Run the task's `validation` list. It names the checks of the task's change class for that task; where it says `<the specs of …>`, run the browser specs of what the task actually changed, and an entry ending in `(only when …)` runs only when that holds. If the change turns out riskier than the list assumes (e.g. it touches a shared component most screens use), run the checks of the riskier class and say why.
+- Reuse: a command whose passing result in the validation record still covers unchanged code, dependencies and configuration is cited, not run again.
+- All checks run must pass. Add a line to the validation record in PROGRESS.md: what ran, what was reused and from which line.
 - If a gate does not exist yet, record "not available yet" instead of claiming it passed.
-- To fix a failure, apply the `fix-bug` skill within the task's scope. See the failure budget below.
+- To fix a failure, apply the `fix-bug` skill within the task's scope, then rerun only the checks the fix invalidates. Never rerun a failing test just to get a green result (policy, Failures and flaky tests). See the failure budget below.
 
 ### 6. Review the diff
 Run `git diff` (and `git status` for new files). Apply the `review-change` skill and the self-review in `.claude/rules/01-change-discipline.md`. Check [DEFINITION_OF_DONE.md](../engineering/DEFINITION_OF_DONE.md). Fix what you find, then re-run the step 5 checks that the fixes invalidate.

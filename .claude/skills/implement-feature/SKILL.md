@@ -16,7 +16,7 @@ Follow these steps in order. Keep notes short. The output is working code and an
 7. **Implement.** Domain logic first, with its tests (use the `testing` skill). Then wiring, then UI (use the `ui-implementation` skill for any user-facing surface).
 8. **Review the diff.** Apply the self-review in `.claude/rules/01-change-discipline.md`.
 9. **Remove accidental complexity.** Check every new abstraction, parameter, file, and dependency against `docs/engineering/CODE_QUALITY.md` § Abstraction threshold. Inline or delete what does not qualify.
-10. **Validate.** Run the gates from `docs/engineering/QUALITY_GATES.md` that are relevant to the change. If a gate does not exist, say so.
+10. **Validate.** Run the checks of the change's class (`docs/engineering/DEFINITION_OF_DONE.md` § Validation by risk; commands in `docs/engineering/QUALITY_GATES.md`). If a gate does not exist, say so.
 11. **Verify the acceptance criteria** one by one against actual behavior, not against the code you intended to write.
 12. **Update docs only if needed.** Feature status in FEATURE_MAP.md, flow spec, tokens. Propose an ADR only if the ADR criteria are met.
 13. **Summarize:** what changed, how it was verified, the assumptions made, any follow-ups noticed but not done.

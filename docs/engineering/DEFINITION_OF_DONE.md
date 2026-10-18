@@ -48,44 +48,51 @@ User-facing UI only: anything a user sees or operates. Backend and other non-UI 
 
 | Change | Expected validation |
 |---|---|
-| Typo in a doc | Read it back. Nothing else. |
+| Typo in a doc | Read it back. `pnpm check:docs` when a link changed. Nothing else. |
 | Copy change in a component | Localization entries for all three languages, layout check with the longest string (a screenshot of the affected state at 320 px, per `product-design`) |
 | Bug fix in answer checking | A regression test that fails first, the domain test suite, typecheck |
 | New screen | Everything in the UI and text sections, plus relevant tests |
 
 ## Validation by risk
 
-Owner decision, 2026-10-15. Checks follow the **risk** of a change, not the number of edits. They run at checkpoints, not after every adjustment. This decides **when** a check runs, never **whether** a required check runs.
+Owner decisions, 2026-10-15 and 2026-10-18. **This section is the only validation policy.** Other documents, skills and task entries link here instead of restating it. Checks follow the **risk** of a change, not the number of edits, and run at checkpoints, not after every adjustment. This decides **which** checks a change needs and **when**. It never relaxes the items under [Never relaxed](#never-relaxed).
 
 ### Checkpoints
 
 | Level | When | What runs |
 |---|---|---|
-| **Iteration** | Each small adjustment inside a batch of related visual work | Render and look: screenshots of the affected screen, its widths and the states touched (the dev server is fine, [QUALITY_GATES.md](QUALITY_GATES.md), Screenshots). **No automated suites.** |
-| **Checkpoint** | A coherent batch is finished, e.g. one screen's redesign at all its widths, or one task before its commit | The checks for the batch's change class (table below), once. Record them in the [validation record](../execution/PROGRESS.md#validation-record). |
-| **Integration checkpoint** | The end of an agreed scope: a redesign scope, a milestone, or before the owner reviews a batch of screens | The full required suite once: `pnpm check`, `pnpm build`, `pnpm --filter web test:e2e` (both projects), and the API e2e when `apps/api` changed. Repeat only what a later change invalidates. |
+| **Iteration** | Each small adjustment inside a batch of related work | For visual work, render and look: screenshots of the affected screen, its widths and the states touched (the dev server is fine, [QUALITY_GATES.md](QUALITY_GATES.md), Screenshots). **No automated suites.** |
+| **Checkpoint** | A coherent batch is finished, e.g. one screen at all its widths, or one task before its commit | The checks of the batch's change class (table below), once, minus what the validation record already covers. Record them in the [validation record](../execution/PROGRESS.md#validation-record). |
+| **Integration checkpoint** | A milestone's completion, or a **concrete cross-cutting risk** named in the record: a dependency, framework or build-configuration change, the service worker, `proxy.ts` or i18n routing, a token or shared component that most screens use, a change to stored data formats read across features | The full suite once: `pnpm check`, `pnpm build`, `pnpm --filter web test:e2e` (both projects), and the API e2e when `apps/api` changed since the last full run. Reuse still applies: at a milestone's end, rerun only what the record does not already cover on the current tree. |
 
 ### Checks by change class
 
-A batch takes the checks of its riskiest change.
+A batch takes the checks of its riskiest change. "Affected" means the screens, flows or modules whose behavior the change can alter; name them in the record. Commands: [QUALITY_GATES.md](QUALITY_GATES.md).
 
 | Change class | Checks at the checkpoint |
 |---|---|
-| **Styling only:** classes, layout, composition, visual-only markup (wrappers, decorative SVG with `aria-hidden`) inside one screen's `ui/`. No change to text, roles, names, focus order, state or behavior | Screenshots of the affected screens per `product-design` (widths, locales, interaction states). `pnpm check`. The browser specs of the affected screens, both projects (they hold axe contrast and the 320/360 px fit). |
-| **Screen markup or copy:** headings, roles, labels, element structure, messages | The above, plus layout with the longest translation. |
-| **Shared visual building blocks:** an existing component in `shared/ui/` or `widgets/`, an existing token's value, layouts | `pnpm check`, then the browser specs of every screen that uses them. When that is most screens, the whole web e2e suite. A **new** token or component used by one screen counts as that screen's change. |
-| **Routing, state, persistence, server code, application behavior:** routes, `proxy.ts`, cookies, device storage, sessions, actions, `*.server.*`, `apps/api` | `pnpm check`, `pnpm build`, the whole web e2e suite, the API e2e when `apps/api` changed, and new behavior covered by a test ([TESTING_STRATEGY.md](TESTING_STRATEGY.md)). |
-| **Domain rules:** scoring, answer checking, recommendations | Domain tests with boundary cases (a failing-first regression test for a bug), `pnpm check`. |
-| **Docs or governance only** | Read it back, check the links. |
+| **Documentation only:** Markdown, ADRs, `TASKS.json`, skills, rules, reference images; no executable configuration and no application behavior | `pnpm format:check` (it covers `TASKS.json`; Markdown is not formatted), `pnpm check:docs` (task-queue shape and relative links), and reading the change back. **No app build and no browser suite.** A change to executable configuration (`package.json` scripts, lint, TypeScript, Playwright, Next.js or CI configuration) is not documentation: it takes the checks of what it configures. |
+| **Local visual change:** styling, layout, composition or copy of one screen, inside its slice | Screenshots of the affected screen per `product-design` (widths, locales, states touched; the longest translation when copy changed). The browser specs of the affected screen, both projects (they hold axe and the 320/360 px fit). `pnpm check`. |
+| **Shared component:** an existing component in `shared/ui/` or `widgets/`, an existing token's value, layouts | `pnpm check`, screenshots of the screens that use it where it renders differently, and the browser specs of the screens whose behavior or layout it can change. A change that keeps every normal width pixel-identical (checked by screenshots) needs only the specs of the case it fixes and the specs of the component itself. When most screens are affected, that is a cross-cutting risk: integration checkpoint. A **new** token or component used by one screen counts as that screen's change. |
+| **Domain rules:** scoring, answer checking, recommendations, content validation | Domain tests with boundary cases (a failing-first regression test for a bug), `pnpm check`. Browser specs only of the screens that show the changed result. |
+| **Persistence, routing, application behavior:** device storage, sessions, cookies, routes, actions, `*.server.*` | `pnpm check` and the browser specs of the flows that read or write what changed (the browser run builds the web app itself, so a separate `pnpm --filter web build` adds nothing). New behavior is covered by a test ([TESTING_STRATEGY.md](TESTING_STRATEGY.md)). Stored-data formats get a test that reads earlier records. |
+| **API, database, authentication:** `apps/api`, migrations, sign-in and sessions on the server | `pnpm check`, `pnpm --filter api build`, the API e2e (`pnpm db:up`, then `pnpm --filter api test:e2e`), migrations with `db:deploy` and `db:check` when the schema changed, and the browser specs of the web flows that call the changed endpoints. Security tests per the [security rule](../../.claude/rules/security/security.md). |
 
 ### Reuse and invalidation
 
-- Before running a check, look at the [validation record](../execution/PROGRESS.md#validation-record). A result whose scope the later changes did not touch still holds. Cite it instead of running it again.
-- A change invalidates only the results it touches: styling screen A does not invalidate the browser results of screen B, and a shared token value invalidates every screen that uses it.
-- A local commit needs `pnpm check` passing on the tree being committed (CI parity), unless the last checkpoint ran it on the same tree.
+- Before running a check, look at the [validation record](../execution/PROGRESS.md#validation-record). A passing result holds while the code it covers, the dependencies (`pnpm-lock.yaml`) and the configuration it ran under are unchanged. Cite it ("reused: <record line>") instead of running it again, and say what evidence is reused.
+- A change invalidates only the results it touches: styling screen A does not invalidate the browser results of screen B, a documentation change invalidates no test result, and a shared token value invalidates every screen that uses it.
+- **After a small follow-up fix** (a review finding, a failing check fixed), repeat the checks that the fix invalidates, not every suite of the checkpoint.
+- A local commit needs the checks of its change class passing on the tree being committed: `pnpm check` for a commit that changes code (CI parity), the documentation checks for a documentation-only commit. A result from the same tree is reused.
+
+### Failures and flaky tests
+
+- A failing check blocks the checkpoint until its cause is understood. Investigate first: read the failure, the trace or error context, and what the change touched.
+- **Do not rerun a failing test to obtain a green result.** Rerunning is allowed only as part of the investigation, e.g. to measure how often it fails, on this tree and on the commit before the change. Record the measurement.
+- A failure shown to be caused elsewhere (a pre-existing flaky test) is recorded in PROGRESS.md with its mechanism and rate as a follow-up. It is never skipped, weakened or deleted.
 
 ### Never relaxed
 
 - Security ([security rule](../../.claude/rules/security/security.md)), data integrity (migrations, stored data) and accessibility ([ACCESSIBILITY.md](../design/ACCESSIBILITY.md)) are checked whenever their area changes. Every changed screen gets its axe specs at its checkpoint.
-- Never weaken an assertion, skip, or delete a test, and never claim a check that did not run. A failing check blocks the checkpoint.
-- The autonomous workflow always runs the task's own `validation` list ([AUTONOMOUS_WORKFLOW.md](../execution/AUTONOMOUS_WORKFLOW.md)).
+- Never weaken an assertion, skip, or delete a useful test, never bypass a gate (`--no-verify`, disabled rules), and never claim a check that did not run. A failing check blocks the checkpoint.
+- The autonomous workflow runs the task's own `validation` list ([AUTONOMOUS_WORKFLOW.md](../execution/AUTONOMOUS_WORKFLOW.md)). Task lists are written to this policy: a task's list names the checks its change class needs for that task, and a milestone's last task holds its integration checkpoint.

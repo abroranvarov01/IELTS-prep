@@ -90,11 +90,11 @@ The rule globs are scoped to the real layout (`apps/web`, `apps/api`, `packages/
 Run from the repository root with Node 24 (`.nvmrc`; e.g. `nvm use`) and pnpm via Corepack (`corepack enable`). The canonical list is `docs/engineering/QUALITY_GATES.md`.
 
 - `pnpm install --frozen-lockfile`: install
-- `pnpm check`: format check, lint (including the token check), typecheck, unit tests.
-
-**Validate by risk, at checkpoints** (owner, 2026-10-15): no automated suites between small visual adjustments; the checks of the change class once per coherent batch; the full suite once at the end of an agreed scope; reuse unchanged results from the validation record in `PROGRESS.md`. Rules: `docs/engineering/DEFINITION_OF_DONE.md` § Validation by risk.
+- `pnpm check`: format check, lint (including the token check), the docs check (`pnpm check:docs`: task queue and links), typecheck, unit tests.
 - `pnpm build`: build both apps
 - `pnpm test:e2e`: API e2e and Playwright (needs Chromium: `pnpm --filter web exec playwright install chromium`; the API e2e needs `DATABASE_URL`, see `apps/api/.env.example`)
+
+**Which checks to run, and when, is decided by risk:** the one policy is `docs/engineering/DEFINITION_OF_DONE.md` § Validation by risk (documentation-only changes never need an app build or the browser suite; the full suite runs at a milestone's end or for a named cross-cutting risk; reuse unchanged results from the validation record in `PROGRESS.md`; investigate a failing test instead of rerunning it).
 
 **Never claim a check passed if you did not run it.**
 

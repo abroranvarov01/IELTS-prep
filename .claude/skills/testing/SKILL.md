@@ -12,4 +12,4 @@ description: Procedure for deciding what to test and writing tests for new behav
 5. **Write the test first when you can.** For bug fixes that require a regression test (`docs/engineering/TESTING_STRATEGY.md` § Bug-fix verification), watch it fail for the expected reason before fixing.
 6. **Implement or adjust the code** until the tests pass. Do not bend tests to fit the implementation's quirks.
 7. **Check test quality:** deterministic, behavior-focused, minimal original fixtures, no mocks of the code under test (`.claude/rules/testing/test-code.md`).
-8. **Run the relevant suites** from `docs/engineering/QUALITY_GATES.md` and report the actual results. If no runner exists yet, say so rather than implying the tests ran.
+8. **Run the relevant suites** from `docs/engineering/QUALITY_GATES.md` (which ones: `docs/engineering/DEFINITION_OF_DONE.md` § Validation by risk) and report the actual results. If no runner exists yet, say so rather than implying the tests ran.

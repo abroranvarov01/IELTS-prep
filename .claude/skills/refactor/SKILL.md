@@ -11,5 +11,5 @@ description: Procedure for behavior-preserving restructuring of existing code. U
 4. **Change the structure in small steps,** keeping the tests green after each step. Do not change behavior. If you find a bug, note it and fix it separately (`fix-bug`), unless the user agrees to combine the two.
 5. **Avoid moving complexity around.** Check that the result has fewer concepts, layers, or files than before, not just smaller files.
 6. **Delete what is replaced:** old paths, shims, unused exports. Do not leave both versions in place.
-7. **Validate** with the relevant gates and confirm that public behavior is unchanged.
+7. **Validate** with the checks of the change class (`docs/engineering/DEFINITION_OF_DONE.md` § Validation by risk) and confirm that public behavior is unchanged.
 8. **Summarize:** reason, what moved, how behavior preservation was verified.

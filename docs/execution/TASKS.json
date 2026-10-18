@@ -4998,6 +4998,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5036,6 +5037,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5073,6 +5075,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5159,13 +5162,15 @@
       "acceptanceCriteria": [
         "Sign-in and sessions work as accepted",
         "Security tests pass",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
         "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter api build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:deploy",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:check",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api test:e2e"
       ],
       "references": [
         ".claude/rules/backend/database.md",
@@ -5191,13 +5196,15 @@
       "outOfScope": ["web client (M10-10)"],
       "acceptanceCriteria": [
         "Conflicts resolve as accepted (tested)",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
         "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter api build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:deploy",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api db:check",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api test:e2e"
       ],
       "references": [
         ".claude/rules/backend/database.md",
@@ -5224,13 +5231,11 @@
       "outOfScope": ["sync client (M10-10)"],
       "acceptanceCriteria": [
         "Practice still needs no account (tested)",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e <the specs of the screens and flows this task adds or changes>"
       ],
       "references": [
         ".claude/rules/frontend/react.md",
@@ -5293,13 +5298,14 @@
       "outOfScope": [],
       "acceptanceCriteria": [
         "Export and deletion behave as approved",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
         "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter api build",
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api test:e2e",
+        "pnpm --filter web test:e2e <the specs of the account screens this task adds or changes>"
       ],
       "references": [
         ".claude/rules/security/security.md",
@@ -5368,6 +5374,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5402,6 +5409,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5435,6 +5443,7 @@
       "acceptanceCriteria": ["Every state has flows, copy and values"],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5496,13 +5505,11 @@
         "Domain tests at every boundary, including retries and rechecks never counted as new evidence"
       ],
       "outOfScope": ["UI"],
-      "acceptanceCriteria": ["Every rule has boundary tests", "All gates pass"],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      "acceptanceCriteria": [
+        "Every rule has boundary tests",
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
+      "validation": ["pnpm check"],
       "references": [
         ".claude/rules/testing/test-code.md",
         "docs/engineering/TESTING_STRATEGY.md",
@@ -5525,13 +5532,11 @@
       "outOfScope": ["UI"],
       "acceptanceCriteria": [
         "Inputs are read as accepted (tested)",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm db:up && DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api test:e2e (only when apps/api changed)"
       ],
       "references": [
         ".claude/rules/testing/test-code.md",
@@ -5552,12 +5557,13 @@
         "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
       ],
       "outOfScope": ["the Progress screen (M11-08)"],
-      "acceptanceCriteria": ["Home keeps one primary action", "All gates pass"],
+      "acceptanceCriteria": [
+        "Home keeps one primary action",
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
+      ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e home <and the specs of the other screens this task changes>"
       ],
       "references": [
         ".claude/rules/frontend/react.md",
@@ -5586,12 +5592,13 @@
         "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
       ],
       "outOfScope": ["mock history (M12)"],
-      "acceptanceCriteria": ["No band or true-level claim", "All gates pass"],
+      "acceptanceCriteria": [
+        "No band or true-level claim",
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
+      ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e <the Progress specs and the specs of the screens that link to it>"
       ],
       "references": [
         ".claude/rules/frontend/react.md",
@@ -5665,6 +5672,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5695,6 +5703,7 @@
       "acceptanceCriteria": ["Every state has flows, copy and values"],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5732,6 +5741,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5789,13 +5799,11 @@
         "Domain and storage tests (timing, resume, time-outs, two tabs)"
       ],
       "outOfScope": ["UI"],
-      "acceptanceCriteria": ["Every approved rule is tested", "All gates pass"],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      "acceptanceCriteria": [
+        "Every approved rule is tested",
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
+      "validation": ["pnpm check"],
       "references": [
         ".claude/rules/testing/test-code.md",
         "docs/engineering/TESTING_STRATEGY.md",
@@ -5818,13 +5826,11 @@
       "outOfScope": ["results (M12-07)"],
       "acceptanceCriteria": [
         "A full mock can be taken and resumed as approved",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e <the mock specs this task adds>"
       ],
       "references": [
         ".claude/rules/frontend/react.md",
@@ -5853,12 +5859,13 @@
         "Visual review per the product-design skill (rendered screenshots at its widths, uz/ru/en, critique and fixes), compared with the approved references"
       ],
       "outOfScope": ["new review behavior"],
-      "acceptanceCriteria": ["No text claims a true level", "All gates pass"],
+      "acceptanceCriteria": [
+        "No text claims a true level",
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
+      ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e <the mock results and review specs, and the specs of the screens this task changes>"
       ],
       "references": [
         ".claude/rules/frontend/react.md",
@@ -5930,6 +5937,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -5991,14 +5999,9 @@
       "outOfScope": ["publishing (M13-05)"],
       "acceptanceCriteria": [
         "Every shipped content file validates with metadata",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
-      ],
+      "validation": ["pnpm check", "pnpm --filter web test:e2e"],
       "references": [
         ".claude/rules/testing/test-code.md",
         "docs/engineering/TESTING_STRATEGY.md",
@@ -6019,13 +6022,11 @@
         "Tests for the tooling"
       ],
       "outOfScope": ["publishing (M13-05)"],
-      "acceptanceCriteria": ["Tooling works as accepted", "All gates pass"],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+      "acceptanceCriteria": [
+        "Tooling works as accepted",
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
+      "validation": ["pnpm check"],
       "references": [
         ".claude/rules/testing/test-code.md",
         "docs/engineering/TESTING_STRATEGY.md"
@@ -6076,13 +6077,11 @@
       "outOfScope": [],
       "acceptanceCriteria": [
         "Every historical record keeps its meaning (tested)",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e <the specs this task adds>"
       ],
       "references": [
         ".claude/rules/testing/test-code.md",
@@ -6105,14 +6104,9 @@
       "outOfScope": ["audio (M13-08)", "human reviews (M15)"],
       "acceptanceCriteria": [
         "The library validates and matches the approved size",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
-      ],
+      "validation": ["pnpm check", "pnpm --filter web test:e2e practice-hub"],
       "references": [
         "docs/product/PRODUCT.md",
         "docs/architecture/INVARIANTS.md",
@@ -6212,13 +6206,11 @@
       "acceptanceCriteria": [
         "The final test validates and works end to end",
         "No test marked temporary remains unless the owner decided to keep it",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e listening practice-hub home"
       ],
       "references": [
         "docs/architecture/decisions/0012-listening-content-contract-and-audio-assets.md",
@@ -6245,6 +6237,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -6277,6 +6270,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -6338,14 +6332,9 @@
       "acceptanceCriteria": [
         "No placeholder icon remains",
         "The manifest references existing files with the right sizes and purposes",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
-      ],
+      "validation": ["pnpm check", "pnpm --filter web test:e2e pwa"],
       "references": [
         "docs/architecture/decisions/0001-initial-application-foundation.md",
         "docs/execution/PROGRESS.md"
@@ -6367,14 +6356,9 @@
       "outOfScope": ["error reporting (M14-08)"],
       "acceptanceCriteria": [
         "Offline and update behavior match the decisions (tested)",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
-      ],
+      "validation": ["pnpm check", "pnpm --filter web test:e2e"],
       "references": [
         ".claude/rules/testing/test-code.md",
         "docs/engineering/TESTING_STRATEGY.md",
@@ -6397,14 +6381,9 @@
       "outOfScope": [],
       "acceptanceCriteria": [
         "No screen is blank or stuck on a slow or dropped connection (tested)",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
-      ],
+      "validation": ["pnpm check", "pnpm --filter web test:e2e"],
       "references": [
         ".claude/rules/frontend/react.md",
         ".claude/rules/styling/visual-implementation.md",
@@ -6430,12 +6409,14 @@
         "QUALITY_GATES.md lists the new gate"
       ],
       "outOfScope": [],
-      "acceptanceCriteria": ["Budgets pass and are enforced", "All gates pass"],
+      "acceptanceCriteria": [
+        "Budgets pass and are enforced",
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
+      ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
         "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "<the new budget gate's command>"
       ],
       "references": ["docs/engineering/QUALITY_GATES.md"],
       "docsToUpdate": ["docs/engineering/QUALITY_GATES.md"]
@@ -6454,13 +6435,14 @@
       "outOfScope": [],
       "acceptanceCriteria": [
         "Errors are reported without personal data (tested)",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
         "pnpm db:up",
         "pnpm check",
         "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm --filter api test:e2e",
+        "pnpm --filter web test:e2e not-found"
       ],
       "references": [
         ".claude/rules/security/security.md",
@@ -6540,6 +6522,7 @@
       ],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -6589,13 +6572,11 @@
       "outOfScope": ["writing legal texts"],
       "acceptanceCriteria": [
         "Every legal requirement recorded at M15-02 is implemented",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e <the specs of the pages and flows this task adds or changes>"
       ],
       "references": [
         ".claude/rules/frontend/react.md",
@@ -6651,14 +6632,9 @@
       "outOfScope": ["real-device checks (M15-06)"],
       "acceptanceCriteria": [
         "The audit is recorded and every finding fixed or accepted",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
-      "validation": [
-        "pnpm db:up",
-        "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
-      ],
+      "validation": ["pnpm check", "pnpm --filter web test:e2e"],
       "references": [
         "docs/design/ACCESSIBILITY.md",
         ".claude/rules/testing/test-code.md",
@@ -6785,9 +6761,9 @@
       "acceptanceCriteria": [
         "Every English correction is reflected in ru and uz",
         "ru and uz files stay `aiDraft`",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
-      "validation": ["pnpm check", "pnpm build"],
+      "validation": ["pnpm check"],
       "references": [
         "docs/product/READING_EXPERIENCE.md",
         "docs/product/LOCALIZATION.md"
@@ -6858,13 +6834,11 @@
       "outOfScope": [],
       "acceptanceCriteria": [
         "Contact and recovery work in three languages",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e not-found <and the specs of the pages this task adds or changes>"
       ],
       "references": [
         ".claude/rules/frontend/react.md",
@@ -6892,6 +6866,7 @@
       "acceptanceCriteria": ["The runbooks exist and are linked"],
       "validation": [
         "pnpm format:check",
+        "pnpm check:docs",
         "test -z \"$(git status --porcelain -- apps packages)\""
       ],
       "references": [
@@ -6968,13 +6943,11 @@
       "outOfScope": ["approving anything not instructed"],
       "acceptanceCriteria": [
         "Statuses match the owner's instruction",
-        "All gates pass"
+        "The task's validation passes (DEFINITION_OF_DONE.md, Validation by risk)"
       ],
       "validation": [
-        "pnpm db:up",
         "pnpm check",
-        "pnpm build",
-        "DATABASE_URL=postgresql://ielts_prep:ielts_prep@localhost:5432/ielts_prep pnpm test:e2e"
+        "pnpm --filter web test:e2e <the specs of the screens that list or open the changed content>"
       ],
       "references": [
         "docs/architecture/decisions/0008-reading-answer-checking-and-explanations.md"

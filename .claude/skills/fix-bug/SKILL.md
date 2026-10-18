@@ -11,6 +11,6 @@ description: Debugging procedure for fixing a defect. Use when something behaves
 4. **Find the root cause.** Trace from the symptom to the origin. Form a hypothesis, then check it with evidence (read the code path, add temporary logging, inspect the data). Do not stop at the first place where the symptom can be suppressed.
 5. **Check the blast radius.** Search for the same faulty pattern or the same duplicated logic elsewhere. If the bug comes from duplicated knowledge (e.g. band math in two places), the fix is to converge on the single source. Mention the duplication even if consolidating it is out of scope.
 6. **Fix the cause minimally.** No unrelated refactors (`.claude/rules/01-change-discipline.md`). Do not mask the cause with defensive checks, retries, or swallowed errors.
-7. **Verify.** The new test passes (or the recorded reproduction no longer reproduces the bug), the related tests pass, and the relevant gates from `docs/engineering/QUALITY_GATES.md` pass. Re-run the original reproduction.
+7. **Verify.** The new test passes (or the recorded reproduction no longer reproduces the bug), the related tests pass, and the checks of the fix's change class pass (`docs/engineering/DEFINITION_OF_DONE.md` § Validation by risk; a flaky or failing test is investigated there, not rerun until green). Re-run the original reproduction.
 8. **Clean up.** Remove temporary logging and debugging code.
 9. **Summarize:** root cause in one sentence, the fix, how it was verified, and any similar risks found elsewhere.
