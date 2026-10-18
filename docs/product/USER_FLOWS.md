@@ -654,3 +654,102 @@ Reused without change: "See your last results" (`reading.lastResults`), "Practic
 | `home.skills.reading` | The Reading card's sentence | Build your reading skills. | Развивайте навыки чтения. | Oʻqish koʻnikmalarini rivojlantiring. |
 
 Reused: `levelCheck.*`, `home.goal.targetBandNotSet`, `home.goal.change`, `examType.*`, `practice.skill.reading`.
+
+## Level check flows (M7)
+
+> **DRAFT, awaiting owner approval (M7-05).** Drafted in M7-02 (2026-10-18) on [LEVEL_CHECK.md](LEVEL_CHECK.md) (purpose, scope, the result model and its decisions D1–D14). Visual values follow in DESIGN_SYSTEM.md (M7-03); the data in the M7 ADR (M7-04). The copy is in [Interface copy (M7)](#interface-copy-m7). Steps count from onboarding step 3 or Home; the level check replaces the interim page at `/{locale}/level-check` ([open question 1 of M3](#open-questions-m3)).
+
+**Screens:** the **intro** (`/{locale}/level-check`), the **section** (`/{locale}/level-check/reading`: the Reading engine with the check's own bar), and the **result** (`/{locale}/level-check/result`). The section and the result are the shell-less test-screen layout with their own bar, like Reading; the intro and the result are inside the shell. Only the Reading section exists in M7 (D1); M9 adds `/level-check/listening` and its result.
+
+### Onboarding step 3 → level check → result → next action
+- **Goal:** a learner who has just set a goal finds a starting point in about 15 minutes and knows what to practise first.
+- **Entry point:** "Start the level check" on onboarding step 3 or on Home's next-action card.
+- **Primary action:** on the intro, "Start"; in the section, answering; on the result, "Practise Reading".
+- **Steps:**
+  1. **Intro.** H1 "Find your level"; what it covers, as three short lines: "Reading · 2 short texts · 14 questions", "About 15 minutes. No time limit.", "Your answers are saved on this device, so you can stop and continue later."; the honest line "You get a starting point on our practice scale, not an IELTS band."; for a learner whose goal is General Training, one more line: "The texts are Academic-style. The reading skills it checks are the same." (D6); the red "Start"; the quiet "Not now" → Home.
+  2. **Tap "Start"** → the section: passage 1 with question 1 in the partial sheet, exactly the M4 reading screen in Practice without a timer, without "Mark for review" and without evidence pins (LEVEL_CHECK.md §3); highlighting stays. The bar reads "Exit" on the start side and "Passage 1 of 2" on the end side. Progress is the sheet's "Question 3 of 14" and the navigator.
+  3. **Answer and move** as in Reading ([Answer and move between questions](#answer-and-move-between-questions)); the navigator lists the 14 questions in two passages.
+  4. **"Finish"** (on question 14 or at the end of the navigator) → the confirmation in the expanded sheet: "Finish the check?", the unanswered count if any, the red "Finish" and the quiet "Keep working". **"Finish"** → the section is committed once and checked (LEVEL_CHECK.md §5), and the result opens.
+  5. **Result.** Focus on the H1. H1 "Your Reading starting point"; the level name as the page's figure ("On the way"); "9 of 14 correct"; the scope sentence "Based on 14 questions in a short check, not a full test."; the honest line "This is where to start on our practice scale. It is not an IELTS band."; **"Practise first:"** with at most two question types named in English test terms ("True / False / Not Given questions", "matching headings"), or, with none, "Any Reading practice is a good next step."; the red **"Practise Reading"** → the Practice Hub (D11); the quiet "See your answers" → the M5 review of the check's attempt (D13) and the quiet "Take the check again" (D10). For a General Training goal, the Academic-style line again.
+  6. **Home afterwards:** the next-action card reads "Practise Reading" with "You have a Reading starting point. Keep going with a practice test." and the red "Practise Reading" → the Hub; a quiet "See your starting point" link under it → the result page (D12: Home knows the state only; the result page reads the device). Onboarding step 3, if revisited, shows the same card content in place of the invitation.
+- **Step count:** 2 from step 3 or Home to the first question (intro, Start); 2 to finish from the last question (Finish, confirm); 1 from the result to Reading practice. 3-click rule: Home → intro → Start = 2.
+- **UX check:** 10-second rule: the intro is one heading, three facts and one red button; the result is one level name, one number and one red button. One primary action on every screen; "Not now", "See your answers" and "Take the check again" are quiet. Progressive disclosure: no settings, no mode choice (the check has one mode), no explanation of the scale beyond one line (the review explains the answers).
+- **Honest wording:** every result string names the skill, the scale and what it is not; the level name is never a number; the scope sentence is always shown ([LEVEL_CHECK.md §9](LEVEL_CHECK.md#9-honest-wording)).
+- **Empty / error states:**
+  - **Insufficient data** (more than half unanswered, D9): the result's H1 is "Not enough answers for a starting point", then "5 of 14 answered.", "Answer at least half of the questions to get a starting point.", the red "Take the check again" and the quiet "Practise Reading". Home's card stays "Find your level".
+  - **Storage blocked or unavailable** (private window, full storage): the intro says "Your answers can't be saved on this device. Don't close the page while you take the check." under the facts; the section runs in memory for the tab; "Exit" asks "Leave the check? Your answers can't be saved on this device." (red "Stay", quiet "Leave"); the result is shown with the M5 storage notice and Home cannot know about it (the cookie flag is still written, D12, so Home still moves on).
+  - **A result on the device from an earlier form version** (the form changed): the result page shows the stored level and score with "The check has changed since you took it, so your answers can't be reviewed." and offers "Take the check again"; Home's state stays "finished".
+  - **Offline after loading:** the section works to the end (content and checking are in the page); the result opens; nothing needs the network until the Hub. Opening offline → the M1 error state.
+  - **Without JavaScript:** the intro and the result's safe states are plain pages; the section needs JavaScript (as the Reading screen does).
+- **Accessibility:** the intro's H1 labels the page; the section's skip link, sheet, navigator and finish confirmation are the Reading screen's; the result's H1 takes focus when it replaces the section; the level name, the score and "Practise first" are text, never color or a gauge; the question-type names in English are marked `lang="en"`.
+- **Languages checked:** not yet. To verify in M7-09 and M7-10 at 320 px: the Russian intro facts, the Uzbek result H1 "Oʻqish boʻyicha boshlangʻich nuqtangiz" and the "Practise first" line with two English type names.
+
+### Leave and come back
+- **Goal:** nothing is lost when the phone locks, the tab closes, or the learner taps "Exit"; the check is finished in a later sitting.
+- **Steps:** 1. "Exit" in the section's bar → Home (no confirmation: there is no timer, and the answers are saved on the device at every change). 2. Later, "Continue the level check" on Home's card or on onboarding step 3, or opening `/{locale}/level-check` → the intro in its **in-progress form**: H1 "Continue the level check", "You answered 6 of 14 questions. Pick up where you left off.", the red "Continue" → the section at the question where the learner left, and the quiet "Start over" → the section from question 1 with the answers cleared (the old session is discarded; nothing was committed).
+- **Step count:** 1 to leave; 1 to resume from Home (the intro's "Continue"), 2 from a cold open.
+- **Empty / error states:** the saved session is unreadable or from an earlier form version → it counts as not started: the normal intro, with no error. Storage blocked → as above: nothing to resume; the intro is the normal one.
+
+### Take the check again
+- **Goal:** a learner who wants a fresh starting point takes the same check again; the latest finished result is the starting point, all results are kept (D10).
+- **Entry point:** "Take the check again" on the result page, or the intro opened after a finished check.
+- **Steps:** 1. The intro in its **finished form**: H1 "Find your level", "You took this check on {date}. Your starting point: On the way.", the same facts, the honest line, and one more: "It has the same questions as before. Practice tells you more than repeating a check." (D10), the red "Take the check again", the quiet "See your starting point" → the result. 2. "Take the check again" → the section from question 1. 3. Finish as above → the new result; Home's card is unchanged ("Practise Reading").
+- **Step count:** 2 from the result page (Take the check again on the result opens the intro's finished form; its red button starts). *Alternative for the owner:* the result's "Take the check again" starts the section directly (1 step) and the honest "same questions" line moves onto the result page. **Recommendation:** the intro in between, so the honest line is read before starting, and one entry point serves every case.
+- **Empty / error states:** a retake left unfinished → "Continue the level check" as above; it does not touch the earlier result.
+
+### Direct entry
+- **Goal:** a direct link to `/{locale}/level-check` works for anyone, with or without a goal ([PRODUCT.md, direct entry paths](PRODUCT.md#approved-product-principles)).
+- **Steps:** 1. Open the link → the intro in the form that matches the device's state (not started, in progress, finished). The goal is not required; without one, the General Training line is not shown.
+- **Step count:** 2 to the first question.
+- **Empty / error states:** `/level-check/reading` opened directly with nothing in progress → redirected to the intro. `/level-check/result` with no finished check on the device → "No starting point on this device yet", "The result appears here after you finish the check on this device.", the red "Find your level" → the intro.
+
+### Interface copy (M7)
+
+**DRAFT.** Keys are suggestions; `levelCheck.*` extends the M3 namespace. Uzbek uses U+02BB for oʻ and gʻ; band values and the English test terms (question types, TRUE / FALSE / NOT GIVEN) stay in English in every language (`lang="en"`). A fluent-speaker review of uz and ru is required before beta (M15-11). Reused without change: `levelCheck.title` ("Find your level"), `levelCheck.start` ("Start the level check"), `onboarding.notNow`, `reading.exit`, `reading.passageOf`, the sheet, navigator and answer strings, `reading.finish.unanswered`, `reading.finish.confirm`, `reading.finish.cancel`, `reading.results.storageUnavailable`, `reading.results.score` ("{score} of {total} correct"), `common.goHome`, `nav.practice`.
+
+| Key (suggested) | Used in | en | ru | uz |
+|---|---|---|---|---|
+| `levelCheck.intro.covers` | Intro fact 1 (`{passages}`, `{questions}` are numbers; "Reading" in English) | Reading · {passages} short texts · {questions} questions | Reading · коротких текстов: {passages} · вопросов: {questions} | Reading · {passages} ta qisqa matn · {questions} ta savol |
+| `levelCheck.intro.time` | Intro fact 2 | About {minutes} minutes. No time limit. | Около {minutes} минут. Без ограничения времени. | Taxminan {minutes} daqiqa. Vaqt cheklanmagan. |
+| `levelCheck.intro.saved` | Intro fact 3 | Your answers are saved on this device, so you can stop and continue later. | Ответы сохраняются на этом устройстве: можно остановиться и продолжить позже. | Javoblaringiz shu qurilmada saqlanadi: toʻxtab, keyinroq davom etishingiz mumkin. |
+| `levelCheck.intro.honest` | Intro, the honest line | You get a starting point on our practice scale, not an IELTS band. | Вы получите стартовую точку по нашей шкале практики, а не балл IELTS. | Siz IELTS balini emas, bizning mashq shkalamiz boʻyicha boshlangʻich nuqtani olasiz. |
+| `levelCheck.intro.academicNote` | Intro and result, General Training goal | The texts are Academic-style. The reading skills it checks are the same. | Тексты в стиле Academic. Навыки чтения, которые проверяются, те же. | Matnlar Academic uslubida. Tekshiriladigan oʻqish koʻnikmalari bir xil. |
+| `levelCheck.intro.start` | Intro, red (not started) | Start | Начать | Boshlash |
+| `levelCheck.intro.storageUnavailable` | Intro, storage blocked | Your answers can't be saved on this device. Don't close the page while you take the check. | Ответы не сохранятся на этом устройстве. Не закрывайте страницу, пока проходите проверку. | Javoblaringiz bu qurilmada saqlanmaydi. Tekshiruv davomida sahifani yopmang. |
+| `levelCheck.resume.title` | Intro H1 and page title, in progress; Home card title; onboarding step 3 | Continue the level check | Продолжить проверку уровня | Daraja tekshiruvini davom ettirish |
+| `levelCheck.resume.body` | Intro, in progress | You answered {answered} of {total} questions. Pick up where you left off. | Вы ответили на {answered} из {total} вопросов. Продолжите с того места, где остановились. | Siz {total} tadan {answered} ta savolga javob berdingiz. Toʻxtagan joyingizdan davom eting. |
+| `levelCheck.resume.continue` | Intro, red, in progress | Continue | Продолжить | Davom etish |
+| `levelCheck.resume.startOver` | Intro, quiet, in progress | Start over | Начать заново | Qaytadan boshlash |
+| `levelCheck.retake.body` | Intro, finished (`{date}` locale-formatted; `{level}` the level name) | You took this check on {date}. Your starting point: {level}. | Вы проходили эту проверку {date}. Ваша стартовая точка: {level}. | Siz bu tekshiruvni {date} kuni oʻtgansiz. Boshlangʻich nuqtangiz: {level}. |
+| `levelCheck.retake.sameQuestions` | Intro, finished; honest line | It has the same questions as before. Practice tells you more than repeating a check. | Вопросы те же, что и в прошлый раз. Практика скажет больше, чем повтор проверки. | Savollar avvalgidek. Tekshiruvni takrorlashdan koʻra mashq koʻproq narsani koʻrsatadi. |
+| `levelCheck.retake.start` | Intro, red, finished; result, quiet | Take the check again | Пройти проверку ещё раз | Tekshiruvni qayta oʻtish |
+| `levelCheck.section.title` | Section page title | Level check: Reading | Проверка уровня: Reading | Daraja tekshiruvi: Reading |
+| `levelCheck.finish.button` | Last question and navigator, red | Finish | Завершить | Yakunlash |
+| `levelCheck.finish.title` | Finish confirmation heading | Finish the check? | Завершить проверку? | Tekshiruv yakunlansinmi? |
+| `levelCheck.exitUnsaved.title` | "Exit" confirmation, storage blocked | Leave the check? | Выйти из проверки? | Tekshiruvdan chiqasizmi? |
+| `levelCheck.exitUnsaved.body` | "Exit" confirmation, storage blocked | Your answers can't be saved on this device. | Ответы не сохранятся на этом устройстве. | Javoblaringiz bu qurilmada saqlanmaydi. |
+| `levelCheck.result.title` | Result H1 and page title ("Reading" in English) | Your Reading starting point | Ваша стартовая точка по Reading | Reading boʻyicha boshlangʻich nuqtangiz |
+| `levelCheck.result.scope` | Result, the scope sentence | Based on {questions} questions in a short check, not a full test. | На основе {questions} вопросов короткой проверки, а не полного теста. | Toʻliq test emas, qisqa tekshiruvdagi {questions} ta savol asosida. |
+| `levelCheck.result.honest` | Result, the honest line | This is where to start on our practice scale. It is not an IELTS band. | Это стартовая точка по нашей шкале практики, а не балл IELTS. | Bu bizning mashq shkalamiz boʻyicha boshlangʻich nuqta, IELTS bali emas. |
+| `levelCheck.result.practiseFirst` | Result, label before the type names | Practise first: | Начните с: | Avval mashq qiling: |
+| `levelCheck.result.practiseAny` | Result, when no type stands out | Any Reading practice is a good next step. | Любая практика Reading будет хорошим следующим шагом. | Har qanday Reading mashqi yaxshi keyingi qadam. |
+| `levelCheck.result.practise` | Result, red; Home card, red | Practise Reading | Практиковать Reading | Reading mashq qilish |
+| `levelCheck.result.seeAnswers` | Result, quiet | See your answers | Посмотреть ответы | Javoblarni koʻrish |
+| `levelCheck.result.insufficient.title` | Result H1, insufficient data | Not enough answers for a starting point | Недостаточно ответов для стартовой точки | Boshlangʻich nuqta uchun javoblar yetarli emas |
+| `levelCheck.result.insufficient.answered` | Result, insufficient data | {answered} of {total} answered. | Дано ответов: {answered} из {total}. | {total} tadan {answered} tasiga javob berilgan. |
+| `levelCheck.result.insufficient.body` | Result, insufficient data | Answer at least half of the questions to get a starting point. | Ответьте хотя бы на половину вопросов, чтобы получить стартовую точку. | Boshlangʻich nuqtani olish uchun kamida yarim savolga javob bering. |
+| `levelCheck.result.oldForm` | Result from an earlier form version | The check has changed since you took it, so your answers can't be reviewed. | Проверка изменилась после того, как вы её прошли, поэтому разобрать ответы нельзя. | Siz oʻtganingizdan keyin tekshiruv oʻzgargan, shuning uchun javoblarni koʻrib boʻlmaydi. |
+| `levelCheck.result.none.title` | Result page, nothing finished on this device | No starting point on this device yet | На этом устройстве пока нет стартовой точки | Bu qurilmada hali boshlangʻich nuqta yoʻq |
+| `levelCheck.result.none.body` | Result page, nothing finished | The result appears here after you finish the check on this device. | Результат появится здесь, когда вы завершите проверку на этом устройстве. | Natija shu qurilmada tekshiruvni yakunlaganingizdan keyin shu yerda paydo boʻladi. |
+| `levelCheck.levels.1` | Level name (D14) | Starting out | Начало пути | Boshlanish |
+| `levelCheck.levels.2` | Level name | On the way | В пути | Yoʻlda |
+| `levelCheck.levels.3` | Level name | Strong start | Уверенный старт | Ishonchli boshlanish |
+| `levelCheck.types.trueFalseNotGiven` | "Practise first" type name (English test term inside) | <en>True / False / Not Given</en> questions | вопросы <en>True / False / Not Given</en> | <en>True / False / Not Given</en> savollari |
+| `levelCheck.types.matchingHeadings` | "Practise first" type name | matching headings | подбор заголовков (<en>matching headings</en>) | sarlavhalarni moslashtirish (<en>matching headings</en>) |
+| `levelCheck.types.sentenceCompletion` | "Practise first" type name | sentence completion | дополнение предложений (<en>sentence completion</en>) | gaplarni toʻldirish (<en>sentence completion</en>) |
+| `levelCheck.types.multipleChoice` | "Practise first" type name | multiple choice | выбор ответа (<en>multiple choice</en>) | javobni tanlash (<en>multiple choice</en>) |
+| `home.nextAction.practiseReading.body` | Home card after a finished check | You have a Reading starting point. Keep going with a practice test. | У вас есть стартовая точка по Reading. Продолжайте с практического теста. | Sizda Reading boʻyicha boshlangʻich nuqta bor. Mashq testi bilan davom eting. |
+| `home.nextAction.seeStartingPoint` | Home card, quiet | See your starting point | Посмотреть стартовую точку | Boshlangʻich nuqtani koʻrish |
+| `home.nextAction.continueCheck.body` | Home card while the check is in progress | You stopped partway. Your answers are saved on this device. | Вы остановились на середине. Ответы сохранены на этом устройстве. | Siz oʻrtasida toʻxtadingiz. Javoblaringiz shu qurilmada saqlangan. |
+
+Type names for the other M4 question types follow the same pattern when a form uses them (M7-06 adds the keys it needs). "Reading" stays in English in the level-check copy because it names the IELTS part being checked (N5: English inside test content and the level check; translated in navigation and the Hub).

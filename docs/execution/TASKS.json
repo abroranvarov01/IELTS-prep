@@ -3394,7 +3394,8 @@
       "title": "Draft the level-check flows and copy",
       "milestone": "M7",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M7-01"],
       "goal": "The level check's flows and words are specified in three languages before they are built.",
       "scope": [
@@ -3424,7 +3425,7 @@
       "title": "Draft the level-check design values",
       "milestone": "M7",
       "owner": "worker",
-      "status": "todo",
+      "status": "in_progress",
       "dependsOn": ["M7-01", "M7-02"],
       "goal": "The level check's screens are designed in the M6 language at phone and desktop widths.",
       "scope": [
