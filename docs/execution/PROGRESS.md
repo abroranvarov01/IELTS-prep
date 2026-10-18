@@ -4,8 +4,8 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 ## Current state
 
-- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). M3 Onboarding + Home is done (2026-10-10). M4 Reading Engine is done (2026-10-11). M5 Reading Review + Error Intelligence is done (2026-10-17). M6–M15 are planned (replanned 2026-10-17, see the log entry of that date); no milestone is active. Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
-- **Next:** the owner reviews the replanned roadmap ([ROADMAP.md](ROADMAP.md), M6–M15 in TASKS.json) and, if approved, activates M6 (Product UI Foundation + Practice Hub); its first task is the M6-01 UI audit. Before beta, the AI-drafted key and explanations need the human reviews M15-08 to M15-11 and M15-16 (formerly M11-04 to M11-07). CI activates when the owner pushes.
+- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). M3 Onboarding + Home is done (2026-10-10). M4 Reading Engine is done (2026-10-11). M5 Reading Review + Error Intelligence is done (2026-10-17). **M6 Product UI Foundation + Practice Hub is active** (owner, 2026-10-18). M7–M15 are planned (replanned 2026-10-17). Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
+- **Next:** M6-01 to M6-03 (worker drafts), then the owner gate M6-04. Before beta, the AI-drafted key and explanations need the human reviews M15-08 to M15-11 and M15-16 (formerly M11-04 to M11-07). CI activates when the owner pushes.
 
 ## Open questions for the owner
 
@@ -712,4 +712,9 @@ Entry format:
 - Scope assumptions (each is decided at its milestone's gate, not here): the level check is designed for Reading and Listening, with its Reading section in M7 and its Listening section in M9 (alternative: move the level check after Listening); no IELTS band anywhere before content is calibrated; Academic only at beta is the recommended answer to PRODUCT.md's open question; Writing and Speaking stay post-beta; no runtime AI without an AI provider ADR; content production by people (scripts, audio, reviews) is the critical path to beta and should start after the M8 gate.
 - Decisions left to the gates: M6-04 navigation, Practice Hub and the capped visual fix list; M7-05 the level check's skills, length, result model and wording, Academic or General Training; M8-06 Listening interactions, player behavior, content and audio ADRs, and who produces original audio; M9-04 Listening checking rules, signals and the multi-skill history ADR; M10-05 sign-in methods and providers, sync and conflict ADR, server-side data (after legal input M10-01); M11-04 recommendation rules, what "current performance" is, where Home gets its data; M12-04 mock formats and result language; M13-02 content storage and delivery, who writes and reviews, library size; M14-03 offline scope, budgets, observability and analytics, production hosting.
 - Verification: TASKS.json parses; ids unique; every task's milestone exists; every dependency exists, precedes its task in the array and never points to a later milestone; no cycles; milestone states obey AUTONOMOUS_WORKFLOW.md (6 done, 10 planned, none active); no future task is done or in progress; every reference in M6–M15 resolves (documents a task will create are named in `notes`); `pnpm format:check` passes; no file under apps/ or packages/ changed; no dependency changed.
+
+### 2026-10-18: Owner approves the replanned roadmap; M6 activated (not a task)
+- Result: done
+- Changes: Owner instruction of 2026-10-18 in the session: "I approve the replanned roadmap. Set M6 to active in TASKS.json." TASKS.json: M6 `status: "active"`. M7–M15 stay planned.
+- Verification: TASKS.json parses; exactly one milestone is active; no task status changed.
 

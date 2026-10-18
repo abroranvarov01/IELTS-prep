@@ -49,7 +49,7 @@
     {
       "id": "M6",
       "name": "Product UI Foundation + Practice Hub",
-      "status": "planned",
+      "status": "active",
       "goal": "The existing product shares one deliberate visual language with owner-approved local reference screenshots; navigation and the responsive shell are settled; a Practice Hub is the clear entry to Reading and later Listening. Not a rewrite: a capped audit list with exit criteria."
     },
     {
