@@ -4232,7 +4232,8 @@
       "title": "Listening choice, matching and typed question types",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-12"],
       "goal": "Multiple choice (one and several), matching, form, note and sentence completion and short answers work in Listening, reusing the Reading answer controls where they fit.",
       "scope": [

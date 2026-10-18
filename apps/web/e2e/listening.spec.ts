@@ -290,3 +290,46 @@ test("on desktop, the navigator bar shows the part's numbers and moves to anothe
     page.getByRole("img", { name: "Plan of a home used as a memory palace" }),
   ).toBeVisible();
 });
+
+test("answers each kind of question and the navigator counts them", async ({
+  page,
+}) => {
+  await startPractice(page);
+  await goToQuestion(page, 11);
+  await page
+    .getByRole("textbox", { name: "Answer 11", exact: true })
+    .fill("members");
+  await page
+    .getByRole("textbox", { name: "Answer 15", exact: true })
+    .fill("classrooms");
+  for (const name of [/^A How easy it is to get to/, /^B Whether it is safe/])
+    await page
+      .locator("label")
+      .filter({ has: page.getByRole("checkbox", { name }) })
+      .click();
+  await expect(
+    page.getByText(fill(en.reading.answer.chosenCount, { count: 2, total: 2 })),
+  ).toBeVisible();
+  await page
+    .locator("label")
+    .filter({
+      has: page.getByRole("radio", { name: /^A They often have enough space/ }),
+    })
+    .click();
+  if (desktop(page))
+    await expect(
+      page.getByRole("button", { name: /^Question 19, answered/ }),
+    ).toBeVisible();
+  else {
+    await page
+      .getByRole("button", { name: en.reading.navigator.open })
+      .first()
+      .click();
+    for (const n of [11, 15, 18, 19, 20])
+      await expect(
+        page.getByRole("button", {
+          name: new RegExp(`^Question ${n}, answered`),
+        }),
+      ).toBeVisible();
+  }
+});
