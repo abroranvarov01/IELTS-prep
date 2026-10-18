@@ -70,7 +70,8 @@
     {
       "id": "M9",
       "name": "Listening Review + Error Intelligence",
-      "status": "active",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "goal": "Sourced Listening checking, results and evidence-first review (audio timestamp, evidence replay, transcript excerpt, why, Explain simpler, try again), retries and justified repeated mistakes, the attempt history extended to Listening without losing Reading data, and the level check's Listening section. No runtime AI."
     },
     {
