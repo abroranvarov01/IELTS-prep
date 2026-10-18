@@ -18,13 +18,20 @@ export type ExamPlayerProps = {
   onStall: () => void;
   onResume: () => void;
   onFailed: () => void;
+  /** How far the part's audio actually played, in ms (ADR-0014 §2). */
+  onPlayed: (partNumber: number, positionMs: number) => void;
 };
+
+/** How often coverage is reported while the audio plays (as the heartbeat). */
+const REPORT_MS = 5000;
 
 /**
  * The Exam player (LISTENING_EXPERIENCE.md, The player): no pause, no
  * seeking, no speed. It follows the Exam clock (ADR-0013 §3): whenever
  * playback starts, it seeks to the clock's position. Buffering and any pause
  * the learner did not make are reported, so the clock can subtract them.
+ * So is how far the audio actually played: only progress made while playing,
+ * never the position the clock seeks to (owner, M9-04 clarification).
  */
 export function ExamPlayer({
   partNumber,
@@ -34,6 +41,7 @@ export function ExamPlayer({
   onStall,
   onResume,
   onFailed,
+  onPlayed,
 }: ExamPlayerProps) {
   const t = useTranslations("listening");
   const isDesktop = useIsDesktop();
@@ -70,6 +78,35 @@ export function ExamPlayer({
       onResume();
     } else if (status === "failed") onFailed();
   }, [status, onStall, onResume, onFailed]);
+
+  // A run of playback: where it started and how far it got. Reported every
+  // few seconds while it plays, and when it stops or the part ends.
+  const run = useRef<{ start: number; furthest: number }>(undefined);
+  const reported = useRef(0);
+  useEffect(() => {
+    run.current = undefined;
+    reported.current = 0;
+  }, [src]);
+  useEffect(() => {
+    if (status === "playing") {
+      run.current ??= { start: positionMs, furthest: positionMs };
+      run.current.furthest = Math.max(run.current.furthest, positionMs);
+      const { start, furthest } = run.current;
+      if (furthest > start && furthest - reported.current >= REPORT_MS) {
+        reported.current = furthest;
+        onPlayed(partNumber, furthest);
+      }
+      return;
+    }
+    const done = run.current;
+    run.current = undefined;
+    if (!done) return;
+    const end = status === "ended" ? durationMs : done.furthest;
+    if (end > done.start && end > reported.current) {
+      reported.current = end;
+      onPlayed(partNumber, end);
+    }
+  }, [status, positionMs, durationMs, partNumber, onPlayed]);
 
   const share = durationMs ? Math.min(1, positionMs / durationMs) : 0;
 

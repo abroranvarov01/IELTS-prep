@@ -16,6 +16,47 @@ export const SESSION_SCHEMA = 1;
 const SESSION_ID =
   /^s-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
+export function isSessionId(value: unknown): value is string {
+  return typeof value === "string" && SESSION_ID.test(value);
+}
+
+/** Answers by unit key, each valid for its unit; undefined when any is not. */
+export function parseAnswers(
+  test: ListeningTest,
+  value: unknown,
+): Record<string, Answer> | undefined {
+  if (!isRecord(value)) return undefined;
+  const units = questionUnits(test);
+  const answers: Record<string, Answer> = {};
+  for (const [key, answer] of Object.entries(value)) {
+    const unit = unitOf(units, Number(key));
+    if (!unit || unit.key !== key) return undefined;
+    if (typeof answer !== "string" && !isStringList(answer)) return undefined;
+    if (!isValidAnswer(unit, answer)) return undefined;
+    answers[key] = Array.isArray(answer) ? [...answer] : answer;
+  }
+  return answers;
+}
+
+/**
+ * Playback coverage by part number (ADR-0014 §2): a position within that
+ * part's recording. Undefined when the value is malformed.
+ */
+export function parsePlayedToMs(
+  test: ListeningTest,
+  value: unknown,
+): Record<string, number> | undefined {
+  if (!isRecord(value)) return undefined;
+  const playedToMs: Record<string, number> = {};
+  for (const [key, ms] of Object.entries(value)) {
+    const part = test.parts.find((p) => String(p.number) === key);
+    if (!part || !Number.isInteger(ms) || (ms as number) < 0) return undefined;
+    if ((ms as number) > part.audio.durationMs) return undefined;
+    playedToMs[key] = ms as number;
+  }
+  return playedToMs;
+}
+
 /**
  * Reads a stored session for `test`. Stored data is untrusted: a wrong
  * schema, another test or content version, or any invalid field means "no
@@ -29,8 +70,7 @@ export function parseStoredSession(
   const s = input.session;
   if (!isRecord(s) || s.testId !== test.id || s.testVersion !== test.version)
     return undefined;
-  if (typeof s.sessionId !== "string" || !SESSION_ID.test(s.sessionId))
-    return undefined;
+  if (!isSessionId(s.sessionId)) return undefined;
   if (s.mode !== "practice" && s.mode !== "exam") return undefined;
   if (s.status !== "inProgress" && s.status !== "finished") return undefined;
   const finished = s.status === "finished";
@@ -52,15 +92,8 @@ export function parseStoredSession(
   )
     return undefined;
 
-  if (!isRecord(s.answers)) return undefined;
-  const answers: Record<string, Answer> = {};
-  for (const [key, value] of Object.entries(s.answers)) {
-    const unit = unitOf(units, Number(key));
-    if (!unit || unit.key !== key) return undefined;
-    if (typeof value !== "string" && !isStringList(value)) return undefined;
-    if (!isValidAnswer(unit, value)) return undefined;
-    answers[key] = Array.isArray(value) ? [...value] : value;
-  }
+  const answers = parseAnswers(test, s.answers);
+  if (!answers) return undefined;
 
   const partIds = new Set(test.parts.map((p) => p.id));
   const view = s.view;
@@ -102,7 +135,7 @@ export function parseStoredSession(
     return practice && { ...base, practice };
   }
   if (s.practice !== undefined) return undefined;
-  const exam = parseExam(s.exam);
+  const exam = parseExam(test, s.exam);
   return exam && { ...base, exam };
 }
 
@@ -127,7 +160,7 @@ function parsePractice(
   return { positions, speed: value.speed as Speed };
 }
 
-function parseExam(value: unknown): ExamState | undefined {
+function parseExam(test: ListeningTest, value: unknown): ExamState | undefined {
   if (!isRecord(value)) return undefined;
   if (
     !Number.isInteger(value.pausedMs) ||
@@ -154,6 +187,11 @@ function parseExam(value: unknown): ExamState | undefined {
       return undefined;
     pause = { since: p.since as number, kind: p.kind };
   }
+  const playedToMs =
+    value.playedToMs === undefined
+      ? undefined
+      : parsePlayedToMs(test, value.playedToMs);
+  if (value.playedToMs !== undefined && !playedToMs) return undefined;
   return {
     ...(value.recordingStartedAt !== undefined && {
       recordingStartedAt: value.recordingStartedAt as number,
@@ -162,6 +200,7 @@ function parseExam(value: unknown): ExamState | undefined {
     ...(pause && { pause }),
     interruptions: value.interruptions as number,
     lastActiveAt: value.lastActiveAt as number,
+    ...(playedToMs && { playedToMs }),
   };
 }
 

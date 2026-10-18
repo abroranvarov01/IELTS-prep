@@ -75,6 +75,34 @@ describe("a stored Listening session", () => {
     }
   });
 
+  it("reads an Exam's playback coverage within each part's recording, and a session without it as unknown", () => {
+    const covered = apply(
+      exam,
+      test,
+      { type: "played", part: 1, positionMs: 400 },
+      T0 + 600,
+    );
+    expect(parseStoredSession(test, stored(covered))?.exam?.playedToMs).toEqual(
+      { "1": 400 },
+    );
+    expect(
+      parseStoredSession(test, stored(exam))?.exam?.playedToMs,
+    ).toBeUndefined();
+    for (const playedToMs of [
+      { "1": 99_999 },
+      { "5": 10 },
+      { "1": -5 },
+      [400],
+    ]) {
+      const broken = stored(covered);
+      (broken.session.exam as Record<string, unknown>).playedToMs = playedToMs;
+      expect(
+        parseStoredSession(test, broken),
+        JSON.stringify(playedToMs),
+      ).toBeUndefined();
+    }
+  });
+
   it("reads an Exam pause only once the recording has started", () => {
     const broken = stored(exam);
     delete (broken.session.exam as Record<string, unknown>).recordingStartedAt;

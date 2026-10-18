@@ -17,9 +17,12 @@ import {
   type Mode,
   apply,
   cleanUpAudioCache,
+  commitFinishedSession,
+  deviceHistory,
   downloadTestAudio,
   loadSessions,
   saveSession,
+  settleStoredSessions,
   startSession,
 } from "@/entities/listening";
 import { deviceStorage, newSessionId } from "@/shared/lib/device-storage";
@@ -92,6 +95,16 @@ export function useListeningSession(test: ListeningTest) {
     local ?? (stored && { session: stored.current, finished: stored.finished });
   const session = sessions?.session;
 
+  // What the device holds is settled once per load: M8's finished session is
+  // imported, a finished one committed (ADR-0014 §3, §5).
+  const loaded = snapshot !== null;
+  useEffect(() => {
+    if (!loaded) return;
+    void deviceHistory().then((history) =>
+      settleStoredSessions(deviceStorage(), history, test, Date.now()),
+    );
+  }, [loaded, test]);
+
   // Nothing but an Exam in progress keeps audio in the cache (ADR-0013 §2).
   useEffect(() => {
     if (stored && stored.current?.mode !== "exam") void cleanUpAudioCache([]);
@@ -116,8 +129,20 @@ export function useListeningSession(test: ListeningTest) {
           : { ...base, session: next };
       latest.current = updated;
       saveSession(deviceStorage(), test, next);
-      if (next.status === "finished" && next.mode === "exam")
-        void cleanUpAudioCache([]);
+      if (next.status === "finished") {
+        // The finished session becomes an attempt (ADR-0014 §3); its copy in
+        // localStorage stays until the commit has completed.
+        void deviceHistory().then((history) =>
+          commitFinishedSession(
+            deviceStorage(),
+            history,
+            test,
+            next,
+            Date.now(),
+          ),
+        );
+        if (next.mode === "exam") void cleanUpAudioCache([]);
+      }
       setLocal(updated);
     },
     [test],
@@ -166,7 +191,7 @@ export function useListeningSession(test: ListeningTest) {
   };
 
   return {
-    loaded: snapshot !== null,
+    loaded,
     session: session?.status === "inProgress" ? session : undefined,
     finished: session?.status === "inProgress" ? undefined : sessions?.finished,
     canSave: snapshot === null || !snapshot.startsWith("0"),

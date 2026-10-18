@@ -34,7 +34,12 @@ afterEach(() => {
 });
 
 function renderExam(props: Partial<ExamPlayerProps> = {}) {
-  const handlers = { onStall: vi.fn(), onResume: vi.fn(), onFailed: vi.fn() };
+  const handlers = {
+    onStall: vi.fn(),
+    onResume: vi.fn(),
+    onFailed: vi.fn(),
+    onPlayed: vi.fn(),
+  };
   const view = (p: Partial<ExamPlayerProps>) => (
     <NextIntlClientProvider locale="en" messages={en}>
       <ExamPlayer
@@ -107,6 +112,31 @@ describe("the Exam player", () => {
     ready();
     act(() => audio.dispatchEvent(new Event("error")));
     expect(handlers.onFailed).toHaveBeenCalled();
+  });
+
+  it("reports how far the audio actually played, never the position it seeks to", () => {
+    const { audio, ready, handlers } = renderExam({ offsetMs: 4000 });
+    ready();
+    const playTo = (seconds: number) =>
+      act(() => {
+        audio.currentTime = seconds;
+        audio.dispatchEvent(new Event("timeupdate"));
+      });
+    playTo(4);
+    expect(handlers.onPlayed).not.toHaveBeenCalled();
+    playTo(6);
+    expect(handlers.onPlayed).toHaveBeenLastCalledWith(2, 6000);
+    playTo(8);
+    expect(handlers.onPlayed).toHaveBeenCalledTimes(1);
+    act(() => audio.dispatchEvent(new Event("pause")));
+    expect(handlers.onPlayed).toHaveBeenLastCalledWith(2, 8000);
+  });
+
+  it("reports nothing when playback stops before it moved", () => {
+    const { audio, ready, handlers } = renderExam({ offsetMs: 4000 });
+    ready();
+    act(() => audio.dispatchEvent(new Event("error")));
+    expect(handlers.onPlayed).not.toHaveBeenCalled();
   });
 
   it("asks phone users to use the device's volume buttons", () => {

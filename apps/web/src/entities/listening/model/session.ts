@@ -24,6 +24,11 @@ export type ExamState = {
   interruptions: number;
   /** Saved at least every few seconds while the page is open. */
   lastActiveAt: number;
+  /**
+   * By part number, the furthest position actually played, in ms, reported
+   * by the player while the audio plays (ADR-0014 §2). Absent: unknown.
+   */
+  playedToMs?: Record<string, number>;
 };
 
 /** A Listening session (ADR-0013 §3). Change it only through `apply`. */
@@ -66,7 +71,8 @@ export type ListeningEvent =
   | { type: "stall" }
   | { type: "audioFailed" }
   | { type: "resume" }
-  | { type: "heartbeat" };
+  | { type: "heartbeat" }
+  | { type: "played"; part: number; positionMs: number };
 
 export function startSession(
   test: ListeningTest,
@@ -258,6 +264,25 @@ export function apply(
     case "heartbeat":
       if (!exam) return timed;
       return { ...timed, exam: { ...exam, lastActiveAt: now } };
+    case "played": {
+      // Coverage only grows: a lower report (a seek, a late event) is ignored.
+      const part = test.parts.find((p) => p.number === event.part);
+      const key = String(event.part);
+      if (!exam || !part || event.positionMs < 0) return timed;
+      // The element's duration may differ from the content's by rounding.
+      const positionMs = Math.min(
+        Math.round(event.positionMs),
+        part.audio.durationMs,
+      );
+      if (positionMs <= (exam.playedToMs?.[key] ?? -1)) return timed;
+      return {
+        ...timed,
+        exam: {
+          ...exam,
+          playedToMs: { ...exam.playedToMs, [key]: positionMs },
+        },
+      };
+    }
     case "finish":
       return {
         ...timed,

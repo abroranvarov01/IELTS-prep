@@ -3,7 +3,12 @@ import type { KeyValueStore } from "@/shared/lib/device-storage";
 import { fixtureTest } from "../model/listening-test.fixture";
 import { parseListeningTest } from "../model/parse-content";
 import { apply, startSession } from "../model/session";
-import { loadSessions, saveSession } from "./session-storage";
+import {
+  loadSessions,
+  removeLegacyFinished,
+  removeSession,
+  saveSession,
+} from "./session-storage";
 
 const parsed = parseListeningTest(fixtureTest());
 if (!parsed.ok) throw new Error(parsed.errors.join("\n"));
@@ -42,13 +47,42 @@ describe("Listening sessions on the device", () => {
     expect(storage.getItem("reading:fixture-listening")).toBe("reading data");
   });
 
-  it("move a finished session to its own entry and free the current one", () => {
+  it("keep a finished session in its entry until the history commits it (ADR-0014 §3)", () => {
     const storage = memoryStorage();
     const session = startSession(test, "practice", T0, ID);
     saveSession(storage, test, session);
     const done = apply(session, test, { type: "finish" }, T0 + 10);
     saveSession(storage, test, done);
+    expect(storage.data.has("listening:fixture-listening:finished")).toBe(
+      false,
+    );
     expect(loadSessions(storage, test)).toEqual({ finished: done });
+    removeSession(storage, test, done);
+    expect(loadSessions(storage, test)).toEqual({});
+  });
+
+  it("read M8's finished entry as the finished session to import, until it is removed", () => {
+    const storage = memoryStorage();
+    const done = apply(
+      startSession(test, "practice", T0, ID),
+      test,
+      { type: "finish" },
+      T0 + 10,
+    );
+    storage.setItem(
+      "listening:fixture-listening:finished",
+      JSON.stringify({ schema: 1, session: done }),
+    );
+    expect(loadSessions(storage, test)).toEqual({
+      finished: done,
+      legacyFinished: done,
+    });
+    expect(
+      saveSession(storage, test, startSession(test, "practice", T0, ID)),
+    ).toBe(true);
+    expect(loadSessions(storage, test).current).toBeUndefined();
+    removeLegacyFinished(storage, test.id);
+    expect(loadSessions(storage, test)).toEqual({});
   });
 
   it("never bring a finished session back from a stale tab", () => {

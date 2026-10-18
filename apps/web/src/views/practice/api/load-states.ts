@@ -8,7 +8,9 @@ import {
   loadSessions,
 } from "@/entities/reading";
 import {
+  type ListeningAttempt,
   type ListeningTest,
+  deviceHistory as deviceListeningHistory,
   loadSessions as loadListeningSessions,
 } from "@/entities/listening";
 import { type TestState, testState } from "../model/test-state";
@@ -39,11 +41,22 @@ export async function loadStates(
     return { readable: false, states: {}, listening: {} };
 
   const listening: Record<string, ListeningState> = {};
+  const listeningHistory = await deviceListeningHistory().catch(
+    () => undefined,
+  );
   for (const test of listeningTests) {
     const { current, finished } = loadListeningSessions(storage, test);
+    // A finished test is a committed attempt, or a finished session not
+    // committed yet (ADR-0014 §3).
+    const attempts = listeningHistory?.persistent
+      ? await listeningHistory.read(test).then(
+          (h) => h.attempts,
+          () => [] as ListeningAttempt[],
+        )
+      : [];
     listening[test.id] = current
       ? { kind: "inProgress", mode: current.mode }
-      : finished
+      : finished || attempts.length > 0
         ? { kind: "finished" }
         : { kind: "notStarted" };
   }

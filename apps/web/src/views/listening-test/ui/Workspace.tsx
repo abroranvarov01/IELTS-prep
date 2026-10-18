@@ -140,6 +140,9 @@ function Screen({
           onStall={() => send({ type: "stall" })}
           onResume={() => send({ type: "resume" })}
           onFailed={() => send({ type: "audioFailed" })}
+          onPlayed={(part, positionMs) =>
+            send({ type: "played", part, positionMs })
+          }
         />
       ) : null}
       <p aria-live="polite" className="sr-only">

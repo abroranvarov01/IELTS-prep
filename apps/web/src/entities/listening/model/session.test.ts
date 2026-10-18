@@ -237,6 +237,25 @@ describe("Exam", () => {
     });
   });
 
+  it("records how far each part actually played, a coverage that only grows (ADR-0014 §2)", () => {
+    const s = run(
+      started(),
+      [{ type: "played", part: 1, positionMs: 1200.4 }, T0 + 1300],
+      [{ type: "played", part: 1, positionMs: 800 }, T0 + 1400],
+      [{ type: "played", part: 2, positionMs: PART + 50 }, T0 + 4100],
+      [{ type: "played", part: 5, positionMs: 100 }, T0 + 4200],
+      [{ type: "played", part: 3, positionMs: -1 }, T0 + 4300],
+    );
+    expect(s.exam?.playedToMs).toEqual({ "1": 1200, "2": PART });
+  });
+
+  it("has no coverage until something played, and none in Practice", () => {
+    expect(started().exam?.playedToMs).toBeUndefined();
+    expect(
+      apply(practice(), test, { type: "played", part: 1, positionMs: 500 }, T0),
+    ).toEqual(practice());
+  });
+
   it("pauses for buffering only while the recording plays", () => {
     const checking = apply(
       started(),

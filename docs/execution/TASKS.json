@@ -4670,7 +4670,8 @@
       "title": "Listening attempts in the device history, with the migration",
       "milestone": "M9",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M9-04"],
       "goal": "Listening attempts, results and first tries are kept like Reading's, and every existing Reading record survives the upgrade.",
       "scope": [
