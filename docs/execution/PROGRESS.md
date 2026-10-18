@@ -4,8 +4,8 @@ Canonical **execution log**. The task status lives in [TASKS.json](TASKS.json). 
 
 ## Current state
 
-- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). M3 Onboarding + Home is done (2026-10-10). M4 Reading Engine is done (2026-10-11). M5 Reading Review + Error Intelligence is done (2026-10-17). **M6 Product UI Foundation + Practice Hub is active** (owner, 2026-10-18). M7–M15 are planned (replanned 2026-10-17). Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
-- **Next:** M6-01 to M6-03 (worker drafts), then the owner gate M6-04. Before beta, the AI-drafted key and explanations need the human reviews M15-08 to M15-11 and M15-16 (formerly M11-04 to M11-07). CI activates when the owner pushes.
+- **Milestones:** M0 Foundation is done (2026-10-09). M1 App Shell & Design Foundation is done (2026-10-10). M2 Backend & Persistence Foundation is done (2026-10-10). M3 Onboarding + Home is done (2026-10-10). M4 Reading Engine is done (2026-10-11). M5 Reading Review + Error Intelligence is done (2026-10-17). M6 Product UI Foundation + Practice Hub is done (2026-10-18). M7 Level Check (Diagnostic) is done (2026-10-18). **M8 Listening Engine is active** (owner, 2026-10-18). M9–M15 are planned (replanned 2026-10-17). Status lives in [TASKS.json](TASKS.json) and rationale in [ROADMAP.md](ROADMAP.md).
+- **Next:** M8-01 to M8-05 (worker drafts) are done; the owner gate M8-06 (the Listening specs and open questions L1–L7 and P1–P11, ADR-0012 and ADR-0013, the M8 design values, and who produces the original audio) blocks the rest of M8. Before beta, the AI-drafted key and explanations need the human reviews M15-08 to M15-11 and M15-16 (formerly M11-04 to M11-07). CI activates when the owner pushes.
 
 ## Open questions for the owner
 
