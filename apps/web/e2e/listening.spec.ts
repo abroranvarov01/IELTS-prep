@@ -353,3 +353,35 @@ test("the table is a table on wide screens and row blocks on phones", async ({
     await noOverflow(page);
   }
 });
+
+test("the plan can be enlarged, zoomed with buttons and closed with Escape", async ({
+  page,
+}) => {
+  await startPractice(page);
+  await goToQuestion(page, 31);
+  await page.getByRole("button", { name: L.picture.enlarge }).click();
+  const view = page.getByRole("dialog", {
+    name: "Plan of a home used as a memory palace",
+  });
+  await expect(view).toBeVisible();
+  await view.getByRole("button", { name: L.picture.zoomIn }).click();
+  await expect(
+    view.getByRole("button", { name: L.picture.zoomOut }),
+  ).toBeEnabled();
+  await page.keyboard.press("Escape");
+  await expect(view).toBeHidden();
+  await page
+    .locator("label")
+    .filter({ has: page.getByRole("radio", { name: "D, flour" }) })
+    .first()
+    .click();
+  if (!desktop(page)) {
+    await page
+      .getByRole("button", { name: en.reading.navigator.open })
+      .first()
+      .click();
+  }
+  await expect(
+    page.getByRole("button", { name: /^Question 31, answered/ }),
+  ).toBeVisible();
+});

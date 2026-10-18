@@ -118,3 +118,25 @@ describe("tables and flow charts in Listening", () => {
     expect(latest.session?.answers).toEqual({ "16": "C" });
   });
 });
+
+describe("labelling in Listening", () => {
+  it("with letters on the picture, answers each named place with a letter", () => {
+    const { latest } = renderGroup(1, 2);
+    expect(screen.getByText("Room 18")).toBeTruthy();
+    fireEvent.click(screen.getAllByRole("radio", { name: "C, C" })[0]!);
+    expect(latest.session?.answers).toEqual({ "18": "C" });
+  });
+
+  it("with numbers on the picture, types each label", () => {
+    const { latest } = renderGroup(3, 0);
+    fireEvent.change(field(32), { target: { value: "valve" } });
+    expect(latest.session?.answers).toEqual({ "32": "valve" });
+  });
+
+  it("with numbers on the picture and a word list, answers from the list", () => {
+    const { latest } = renderGroup(3, 1);
+    expect(screen.getByText("Option B")).toBeTruthy();
+    fireEvent.click(screen.getAllByRole("radio", { name: "B, Option B" })[1]!);
+    expect(latest.session?.answers).toEqual({ "35": "B" });
+  });
+});

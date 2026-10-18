@@ -4308,7 +4308,8 @@
       "title": "Shared plan, map and diagram labelling, in Listening",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-14"],
       "goal": "Plan, map and diagram labelling work in Listening with images that have text alternatives, on a component Reading can use.",
       "scope": [
