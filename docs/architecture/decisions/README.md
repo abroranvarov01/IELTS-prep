@@ -48,5 +48,6 @@ Split a choice into its own ADR only when it independently meets the criteria ab
 | [0010](0010-feature-sliced-design-in-apps-web.md) | Feature-Sliced Design in apps/web | Accepted |
 | [0011](0011-level-check-forms-results-and-storage.md) | Level-Check Forms, Results and Storage | Accepted |
 | [0012](0012-listening-content-contract-and-audio-assets.md) | Listening Content Contract and Audio Assets | Proposed |
+| [0013](0013-listening-audio-delivery-and-session-state.md) | Listening Audio Delivery, Preloading and Session State | Proposed |
 
 Candidate decisions waiting for ADRs are listed in [ARCHITECTURE.md](../ARCHITECTURE.md#open-decisions-tbd).

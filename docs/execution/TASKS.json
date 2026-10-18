@@ -3862,7 +3862,8 @@
       "title": "Draft the ADR for audio delivery, preloading and Listening session state",
       "milestone": "M8",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M8-02", "M8-03"],
       "goal": "Decide how audio reaches a mid-range phone on a weak connection and how a Listening session is kept, without deciding production hosting.",
       "scope": [

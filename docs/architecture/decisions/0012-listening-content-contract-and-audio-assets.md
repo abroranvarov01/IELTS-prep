@@ -28,7 +28,7 @@ QuestionGroup  id, type, instruction (English test text), + the fields of its ty
 Question       number (1–40), + the fields of its type
 ```
 
-- Files: `apps/web/content/listening/<testId>.json` (the test), `<testId>.key.json` (§5), `<testId>.transcript.json` (§4), and the test's assets in `apps/web/content/listening/<testId>/` (§3, §6). Where assets are served from, cached and preloaded is ADR-0013 (M8-04).
+- Files: `apps/web/content/listening/<testId>.json` (the test), `<testId>.key.json` (§5), `<testId>.transcript.json` (§4). The test's audio and image files (§3, §6) live in the asset folder [ADR-0013](0013-listening-audio-delivery-and-session-state.md) decides (`apps/web/public/media/listening/<testId>/`, hashed file names), which also decides how they are served, cached and preloaded.
 - **No `examType`:** Listening is the same test for Academic and General Training (ielts.org).
 - **No duration field:** the test's length is the sum of its parts' audio durations; the 2-minute check time is a rule in code (sourced, LISTENING_EXPERIENCE.md), not content.
 - **Explicit ids** for parts, groups, transcript segments, images and markers, never derived from positions or text (ADR-0005 §1).
@@ -67,7 +67,7 @@ Question       number (1–40), + the fields of its type
 ### 3. Audio assets
 
 ```
-AudioAsset   src (file name in the test's asset folder), mimeType ("audio/mp4"),
+AudioAsset   src (file name in the test's asset folder, ADR-0013), mimeType ("audio/mp4"),
              durationMs, bytes, sha256, provenance
 Provenance   producedBy, method ("synthetic" | "recorded"), tool?, voices[], license, consentRef?, producedAt, note?
 ```
