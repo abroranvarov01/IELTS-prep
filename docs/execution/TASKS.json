@@ -3018,7 +3018,8 @@
       "title": "Draft navigation, the responsive shell and the Practice Hub",
       "milestone": "M6",
       "owner": "worker",
-      "status": "todo",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": [],
       "goal": "Decide with the owner how learners move around the product and where practice starts, before Listening, the level check, progress and mocks add more destinations.",
       "scope": [

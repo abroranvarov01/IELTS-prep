@@ -557,3 +557,81 @@ The questions as they were put to the owner, with the options considered:
 | `reading.retry.notAllowed` | Retry safe state | These questions can't be practised from that attempt. | Эти вопросы нельзя повторить из той попытки. | Bu savollarni oʻsha urinishdan qayta ishlab boʻlmaydi. |
 
 Reused without change: "Time is up.", "Start again", "Show in passage", "Your evidence", "Paragraph {letter}", "All questions", "Previous", "Next", "Finish test" and the finish confirmation, the navigator's "no answer" and "current", the navigator item name, "Practice" / "Exam", "Start the test", and "See your last results" in the retry safe state.
+
+## Navigation and Practice Hub (M6)
+
+**DRAFT: awaiting owner approval** (task M6-02, 2026-10-18; decided at M6-04). The findings behind it are in [M6-01-ui-audit.md](../execution/M6-01-ui-audit.md) (C1: no product navigation; Reading reachable only by a direct link). Visual values follow in DESIGN_SYSTEM.md (M6-03). **This changes an approved M1 decision**: the [app shell](#app-shell-phone-and-desktop) says "No product navigation until real destinations and screens exist for it". The Practice Hub is the first such destination; Progress (M11) and an optional account (M10) follow, so the navigation is chosen now for up to four destinations, while only two exist.
+
+### Navigation and shell (M6)
+
+- **Goal:** from any shell page, a learner reaches Home or practice in one tap, and the frame never competes with the page's own primary action.
+- **Destinations now:** Home (`/{locale}`) and Practice (`/{locale}/practice`). **Later, when they exist:** Progress (M11) and the account (M10). No placeholder for a destination that does not exist (progressive disclosure, UX rule 4).
+- **Options:**
+
+  | | (a) Header links on every width | (b) Phone bottom bar, header links from the tablet breakpoint | (c) A menu button |
+  |---|---|---|---|
+  | Phone | Logo, two or three links and the language button share one 320 px row; with Progress and the account (M10, M11) they no longer fit in uz and ru | A bar of 2–4 labelled destinations at the bottom, within thumb reach; the header keeps the logo and the language | One icon opens a list |
+  | Desktop | Links in the header | Links in the header, the same destinations | A menu on a wide screen hides what has room to show |
+  | Cost | Rework in M10 or M11 when destinations grow | About 56 px of phone height on shell pages; never on test-bar screens | Destinations are invisible; an icon-only control needs explaining (UI_ANTI_PATTERNS.md) |
+  | Fits a PWA on a phone | Partly | Yes (installed apps use bottom navigation) | Poorly |
+
+  **Recommendation: (b).** Each destination is an icon with a visible label (never icon-only), the current one marked by more than color and by `aria-current="page"`, inside a `nav` landmark named "Main". It appears on shell pages only.
+- **Where navigation does not appear:** test-bar screens (Reading test, review, retry: they keep their own bar with "Exit" or "Results"), and onboarding steps (a three-step focused flow; recommended, open question N2). Not-found and error pages show it, so a lost learner has a way on.
+- **Header:** unchanged from M1 on phones (logo, language). From the tablet breakpoint: logo, the destinations, language. The header still scrolls away; the phone bar stays fixed at the bottom and respects the device's safe area and the on-screen keyboard (it hides while a text field has focus).
+- **Steps:** 1. Tap "Practice" → the Practice Hub. 1. Tap "Home" → Home.
+- **Step count:** 1 to either destination from any shell page.
+- **Keyboard and screen readers:** the skip link stays first; the navigation comes after the header in the reading order on desktop and after `main` on phones (bottom bar), so screen readers reach the page content first; every destination is a link reachable by Tab.
+- **Empty / error states:** without JavaScript the destinations are plain links. Offline: as the shell (offline scope is M14).
+- **Languages checked:** not yet (M6-05: the four-item bar at 320 px in uz and ru, for the future destinations' longest labels).
+
+### Practice Hub (M6)
+
+- **Goal:** every practice test the app ships is in one place, each with where the learner stands with it on this device, so practice never depends on having the direct link.
+- **Entry point:** "Practice" in the navigation. Direct test links keep working and keep bypassing onboarding.
+- **Address:** `/{locale}/practice`, inside the shell.
+- **Primary action:** opening a test. The Hub is a list, so no single red button: each test row is one link (the row's whole area), visually a quiet, distinct unit.
+- **What it shows at 360 px, top to bottom:** the H1 "Practice"; a section per skill that has tests, in a fixed order (Reading now, Listening from M8), headed by the skill's name and icon in its supporting color; one row per test:
+  - the test title (English test content, `lang="en"`), and its format as meta text: "3 passages · 40 questions · about 60 minutes";
+  - its state on this device, as words and a small icon: **Not started**; **In progress** with the mode ("In progress · Practice", "In progress · Exam"); **Finished** with the latest practice score in the M5 wording ("Last result: 27 of 40 correct", never a band);
+  - for a finished test, a quiet "See your last results" link next to the row (the row itself opens the test, where "Start again" is the start screen and the results are one tap away, as in M5).
+- **Where a row leads:** the test's own address (`/{locale}/reading/{testId}`): the start screen, or the session in progress (resumed as in M4), so the Hub adds no new behavior to the test.
+- **Skills without tests:** not shown (recommended, open question N3); Listening appears when M8 ships its first test.
+- **Home and the Hub:** Home keeps its one primary action (the level check until M7, then M7's and M11's next action) and gains no second button: the navigation is the way to the Hub. On desktop the same.
+- **Steps:** 1. Tap "Practice" → the Hub. 2. Tap a test → its start screen (or the session in progress). 3. Tap "Start" → the test (Practice preselected).
+- **Step count:** 3 from Home to answering the first question; 2 to resume a test in progress.
+- **States:**
+  - **Loading:** the device's sessions and attempts are read after the page mounts (ADR-0009 §9): titles and formats render at once; the state line appears when known, without the list jumping (a reserved line).
+  - **Storage blocked or failing:** titles and formats only, with the one-line notice "Your progress on this device can't be read." (proposed copy); every test still opens.
+  - **No tests at all** (not possible with the shipped content, kept for safety): "No practice tests yet." and a link to Home.
+  - **Offline after loading:** the list stays; opening a test needs the network (offline scope is M14).
+  - The Hub never changes stored sessions or attempts by being visited.
+- **Accessibility:** one H1; each skill section a heading (H2) with its list; each row a single link whose name includes the title, the format and the state; the state never by color alone.
+- **Languages checked:** not yet (M6-06: Russian and Uzbek state lines and "Last result" at 320 px).
+
+### Open questions (M6-02)
+
+- **N1 Navigation model:** (a) header links, (b) phone bottom bar with header links from the tablet breakpoint, (c) a menu. **Recommendation: (b)**, sized for four destinations so M10 and M11 add items instead of reworking the shell.
+- **N2 Navigation during onboarding:** (a) hidden on the three onboarding steps; (b) shown. **Recommendation: (a)**: onboarding is a short, focused flow, and its "Not now" already leads Home.
+- **N3 Skills without tests in the Hub:** (a) not shown; (b) shown as "coming soon". **Recommendation: (a)**: a promise of something that does not exist yet is not useful practice, and it would show Writing and Speaking, which are post-beta.
+- **N4 The finished state's score in the Hub:** (a) "Last result: 27 of 40 correct" (the M5 practice-score wording); (b) only "Finished". **Recommendation: (a)**: the learner's own fact, worded as in M5, never a band.
+- **N5 Skill names in the navigation and the Hub** (audit Q4): translated in these interface places ("Чтение", "Oʻqish") or kept as the IELTS module names in English. **Recommendation: translated here**, kept in English inside test content.
+
+### Interface copy (M6, proposed)
+
+Proposed for the M6-04 gate; keys are suggestions. Uzbek uses U+02BB for oʻ and gʻ. A fluent-speaker review of uz and ru is required before beta (M15-11).
+
+| Key (suggested) | Used in | en | ru | uz |
+|---|---|---|---|---|
+| `nav.label` | Accessible name of the navigation landmark | Main | Основная навигация | Asosiy navigatsiya |
+| `nav.home` | Navigation destination | Home | Главная | Bosh sahifa |
+| `nav.practice` | Navigation destination | Practice | Практика | Mashq |
+| `practice.title` | Hub H1 and page title | Practice | Практика | Mashq |
+| `practice.skill.reading` | Skill section heading (N5 recommendation) | Reading | Чтение | Oʻqish |
+| `practice.format` | Row meta text | {passages} passages · {questions} questions · about {minutes} minutes | Текстов: {passages} · вопросов: {questions} · около {minutes} минут | {passages} ta matn · {questions} ta savol · taxminan {minutes} daqiqa |
+| `practice.state.notStarted` | Row state | Not started | Не начат | Boshlanmagan |
+| `practice.state.inProgress` | Row state; `{mode}` is "Practice" or "Exam" (`reading.mode.*`) | In progress · {mode} | В процессе · {mode} | Davom etmoqda · {mode} |
+| `practice.state.finished` | Row state with the latest practice score | Last result: {score} of {total} correct | Последний результат: верно {score} из {total} | Oxirgi natija: {total} tadan {score} tasi toʻgʻri |
+| `practice.storageUnavailable` | Notice when the device's progress can't be read | Your progress on this device can't be read. | Не удаётся прочитать ваш прогресс на этом устройстве. | Bu qurilmadagi natijalaringizni oʻqib boʻlmadi. |
+| `practice.empty` | No tests (safety state) | No practice tests yet. | Пока нет тестов для практики. | Hozircha mashq testlari yoʻq. |
+
+Reused without change: "See your last results" (`reading.lastResults`), "Practice" and "Exam" (`reading.mode.*`), the skip link.

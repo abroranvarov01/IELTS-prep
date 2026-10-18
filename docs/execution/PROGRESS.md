@@ -724,3 +724,8 @@ Entry format:
 - Verification: 156 screenshots of 13 surfaces at 320, 390, 1024 and 1280 px in uz, ru and en from a production build of `68acbb2`, plus the phone sheet states; an automated overflow and clipping check on every capture found none; per-surface contact sheets reviewed. Screenshots stay in the session scratchpad. `pnpm format:check` passes; no file under apps/ or packages/ changed; links in the audit resolve.
 - Notes: The error page shares the not-found layout and was not triggered separately.
 
+### 2026-10-18: M6-02 Draft navigation, the responsive shell and the Practice Hub
+- Result: done
+- Changes: USER_FLOWS.md "Navigation and Practice Hub (M6)" (DRAFT): navigation options with trade-offs for up to four destinations (Home, Practice now; Progress and the account later), recommendation (b) a labelled phone bottom bar on shell pages with header links from the tablet breakpoint, never on test-bar screens or onboarding; the Practice Hub at /{locale}/practice (tests per skill, each row one link with its format and device state: not started, in progress with the mode, finished with the M5 practice-score wording), Home keeping one primary action, step counts (3 from Home to the first question, 2 to resume), loading, storage-blocked, empty and offline states, accessibility; five open questions (N1–N5) with recommendations; proposed copy in uz, ru and en. The draft states that it changes the approved M1 rule "no product navigation until real destinations exist".
+- Verification: docs only. `pnpm format:check` passes; no file under apps/ or packages/ changed.
+
