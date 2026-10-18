@@ -3556,7 +3556,8 @@
       "title": "Level-check scoring and result model in the domain",
       "milestone": "M7",
       "owner": "worker",
-      "status": "in_progress",
+      "status": "done",
+      "completedAt": "2026-10-18",
       "dependsOn": ["M7-05"],
       "goal": "A pure, versioned result model that turns a level check into the approved result, with no band and no false precision.",
       "scope": [
@@ -3588,7 +3589,7 @@
       "title": "Level-check sessions and results on the device",
       "milestone": "M7",
       "owner": "worker",
-      "status": "todo",
+      "status": "in_progress",
       "dependsOn": ["M7-07"],
       "goal": "A level check can be left, resumed, finished and retaken, and its results are kept on the device as the ADR decided.",
       "scope": [
